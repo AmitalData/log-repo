@@ -9,13 +9,46 @@
     }
 </style>
 <div style="padding:10px;">
-    <table >
+    <div style="margin: 0% 90%;">
+        <div tabindex="0" class="ToggleButton" [style.width.px]="'100'">
+
+            <table>
+                <tr>
+                    <td style="width: 2px;">
+                        <div></div>
+                    </td>
+                    <td class="TextTrimming" style="text-shadow: 1px 1px white; color: #3a3d58; padding: 0px 2px;">
+                        {{'Customs.Vehicle.O.MoreActions' | TextCodeTranslationPipe}}
+                    </td>
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+                    <td style="width: 10px;">
+                        <img class="LeftCenter" src="Images/ToggleIcon.png" style="padding-left: 3px" />
+                    </td>
+                </tr>
+            </table>
+
+            <div class="ToggleButtonMenu">
+                <div>
+                    <button style="text-align: right " (click)="OpenCopyRichbit()">
+                        <div>{{'Customs.Vehicle.O.CopyRichbit' | TextCodeTranslationPipe}}</div>
+                    </button>
+                    <div class="ToggleButtonSeparator">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table>
 
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
             <td colspan="4">
                 <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
             </td>
         </tr>
+
+        <tr></tr>
 
 
         <tr>
@@ -318,9 +351,9 @@
                         <td class="col2Label">
                             <LogLabel *ngIf="refresh" [ObjectFieldName]="'VehicleManufactureDate'"
                                 [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"></LogLabel>
-                            <LogLabel  *ngIf="!refresh" [ObjectFieldName]="'VehicleManufactureDate'"
+                            <LogLabel *ngIf="!refresh" [ObjectFieldName]="'VehicleManufactureDate'"
                                 [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"></LogLabel>
-                          
+
                         </td>
                         <td style="width: 200px;">
 
@@ -372,6 +405,9 @@
 
                     </tr>
 
+
+
+
                     <tr>
                         <td>
                             <div></div>
@@ -381,18 +417,7 @@
             </td>
         </tr>
 
-        <!--<tr style="height: 40px;">
-            <td colspan="4" style="vertical-align: bottom;">
-                <button style="width: 57px; float: left; margin-left: 10px;" class="Button" (click)="CancelButtonClicked()">
-                    {{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}
-                </button>
 
-                <custom-send-options style="float: left; margin-left: 10px;"
-                                     #MyCustomSendOptionsComponent
-                                     (SendButtonClicked)="SendButtonClicked()">
-                </custom-send-options>
-            </td>
-        </tr>-->
 
     </table>
 </div>

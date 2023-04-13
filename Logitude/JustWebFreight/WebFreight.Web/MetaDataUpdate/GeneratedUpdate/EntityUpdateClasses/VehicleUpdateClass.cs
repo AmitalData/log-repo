@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class VehicleUpdateClass
    {  		
-		public const string HashString = "f5b31873109ce8c786ae998a2598c078";
+		public const string HashString = "5f1bd273916de8625bfbb0a1be402b01";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4623,16 +4623,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature VehicleCustomsDocumentsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDOCUMENTS", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.DocumentsVehicle", NameTextCodeDefaultText = "Custom Document", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,VehicleObjectTable);
  
                  
-			   TextCode VehicleCopyRichbitTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.CopyRichbit", DefaultText = "Copy Richbit",LocalDefaultText = "העתקת רכבית", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VehicleCopyRichbitFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicle.Tab.CopyRichbit", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleFeatures.CR", NameTextCodeDefaultText = "Copy Richbit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,VehicleObjectTable);
+			   TextCode VehicleEventsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature VehicleEventsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,VehicleObjectTable);
  
                  
-			   TextCode VehicleEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VehicleEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,VehicleObjectTable);
- 
-                 
-			   TextCode VehicleCommunicationsTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.Communications", DefaultText = "Communications",LocalDefaultText = "תקשורות", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VehicleCommunicationsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.Communications", NameTextCodeDefaultText = "Communications", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,VehicleObjectTable);
+			   TextCode VehicleCommunicationsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.Communications", DefaultText = "Communications",LocalDefaultText = "תקשורות", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature VehicleCommunicationsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.Communications", NameTextCodeDefaultText = "Communications", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,VehicleObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -4648,11 +4644,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VCCD",HtmlComponentName = "CustomsDocumentsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent", FeatureId = VehicleCustomsDocumentsFeature_TH4.Id,FeatureUniqeCode = VehicleCustomsDocumentsFeature_TH4.FeatureUniqeCode, ControlPath = "", ObjectTableId = VehicleObjectTable.Id, TabNameTextCodeId = VehicleCustomsDocumentsTextCode_TH4.Id, TabNameTextCodeCode = VehicleCustomsDocumentsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CR",HtmlComponentName = "CopyRichbit",HtmlComponentUrl = "./CustomsModules/CustomsVehicle/Components/EditTabs/CopyRichbit", FeatureId = VehicleCopyRichbitFeature_TH5.Id,FeatureUniqeCode = VehicleCopyRichbitFeature_TH5.FeatureUniqeCode, ControlPath = "", ObjectTableId = VehicleObjectTable.Id, TabNameTextCodeId = VehicleCopyRichbitTextCode_TH5.Id, TabNameTextCodeCode = VehicleCopyRichbitTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VehicleEventsFeature_TH5.Id,FeatureUniqeCode = VehicleEventsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = VehicleObjectTable.Id, TabNameTextCodeId = VehicleEventsTextCode_TH5.Id, TabNameTextCodeCode = VehicleEventsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VehicleEventsFeature_TH6.Id,FeatureUniqeCode = VehicleEventsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = VehicleObjectTable.Id, TabNameTextCodeId = VehicleEventsTextCode_TH6.Id, TabNameTextCodeCode = VehicleEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
-   
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VehicleCommunicationsFeature_TH7.Id,FeatureUniqeCode = VehicleCommunicationsFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = VehicleObjectTable.Id, TabNameTextCodeId = VehicleCommunicationsTextCode_TH7.Id, TabNameTextCodeCode = VehicleCommunicationsTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = VehicleCommunicationsFeature_TH6.Id,FeatureUniqeCode = VehicleCommunicationsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = VehicleObjectTable.Id, TabNameTextCodeId = VehicleCommunicationsTextCode_TH6.Id, TabNameTextCodeCode = VehicleCommunicationsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -4787,6 +4781,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode VehicleTextCode_CustomsVehicleOSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.O.Search", DefaultText = "Search",LocalDefaultText = @"חיפוש לפי", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode VehicleTextCode_CustomsVehicleOOkCopyRichbit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.O.OkCopyRichbit", DefaultText = "Please confirm copying Richbit number",LocalDefaultText = @"נא אשר העתקת רכבית מספר", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VehicleTextCode_CustomsVehicleOCopyRichbit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.O.CopyRichbit", DefaultText = "Copy Richbit",LocalDefaultText = @"העתקת ריכבית", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VehicleTextCode_CustomsVehicleOMoreActions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.O.MoreActions", DefaultText = "More Actions",LocalDefaultText = @"פעולות נוספות", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

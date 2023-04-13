@@ -5687,19 +5687,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Copy Richbit&quot;"
-    TabLocalName="&quot;העתקת רכבית&quot;"
-    ObjectTableName="&quot;Customs.Vehicle&quot;"
-    Code="&quot;CR&quot;"
-    ControlPath="&quot;&quot;"
-    TextCode="&quot;Customs.Vehicle.TH.CopyRichbit&quot;"
-    IsPackagable="true"
-    IndexOrder="4"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsVehicle/Components/EditTabs/CopyRichbit&quot;"
-    HtmlComponentName="&quot;CopyRichbit&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;אירועים&quot;"
     ObjectTableName="&quot;Customs.Vehicle&quot;"
@@ -5804,6 +5791,18 @@
       Code="&quot;Customs.Vehicle.O.OkCopyRichbit&quot;"
       DefaultText="&quot;Please confirm copying Richbit number&quot;"
       LocalDefaultText="&quot;נא אשר העתקת רכבית מספר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Vehicle.O.CopyRichbit&quot;"
+      DefaultText="&quot;Copy Richbit&quot;"
+      LocalDefaultText="&quot;העתקת ריכבית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Vehicle.O.MoreActions&quot;"
+      DefaultText="&quot;More Actions&quot;"
+      LocalDefaultText="&quot;פעולות נוספות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
