@@ -130,6 +130,8 @@
     <None Include="DBOthers\InvoiceModel\Views\DigitalInvoicesCounterDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
+    <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedLogbox2.sxml" />
+    <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedCloud2.sxml" />
     <None Include="DBScripts\CommonModel\202208160224_AddBinaryTypeToFieldDataTypes.sxml" />
     <None Include="DBScripts\CommonModel\202212070128_AddSaleTextCodesQuotationTemplate.sxml" />
     <None Include="DBScripts\CommonModel\202217101053_UpdateLastLoginUserIP.sxml" />
