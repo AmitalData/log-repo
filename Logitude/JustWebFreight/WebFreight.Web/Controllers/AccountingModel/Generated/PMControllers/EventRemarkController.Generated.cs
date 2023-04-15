@@ -30,22 +30,24 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Logitude.BL.Helpers;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
 using System.Transactions;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel;
-using Logitude.BL.InfrastructureModel;
-using Logitude.BL.InfrastructureModel.EntityLists;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.BL.Helpers;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.BL;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.BL.EntityQueryServices;
 
-
-namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class EventTypesController : ApiController
+    public partial class EventRemarksController : ApiController
     {
 	  
        
@@ -53,20 +55,21 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
         {
 		  try
             {
-			    string logKey = PerformanceLogger.LogCurrentTime();
+                string logKey = PerformanceLogger.LogCurrentTime();
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("EventRemark", "READ", authToken.Tenant);
+	                
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                EventRemarkQueryService eventRemarkQuery = new EventRemarkQueryService(MyContext);
+				eventRemarkQuery.InitializeSettings();
+                EventRemarkPM eventRemarkPM = eventRemarkQuery.GetSingle(id,true,false);
 
-                SecurityUtility.CheckContactFeature("EventType", "READ", authToken.Tenant);
-                EventTypeQuery eventTypeQuery = new EventTypeQuery(authToken.Tenant);
-                EventTypePM eventTypePM = eventTypeQuery.GetSinglePM(id, authToken.Tenant);
-                
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                return Request.CreateResponse(HttpStatusCode.OK, eventTypePM);
-			 
-			}
+            
+                return Request.CreateResponse(HttpStatusCode.OK, eventRemarkPM);
+			 }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
@@ -76,37 +79,36 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
          
 		
-
-        public HttpResponseMessage Post(EventTypePM entityPM)
+		
+	   public HttpResponseMessage Post(EventRemarkPM entityPM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    string logKey = PerformanceLogger.LogCurrentTime();
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
+                        string logKey = PerformanceLogger.LogCurrentTime();
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("EventType", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("EventType", entityPM.Tenant, authToken.Tenant);
-                
-                        IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        EventTypeService service = new EventTypeService(MyContext, entityPM.Tenant);
-                        service.Create(entityPM);
-				
+                        SecurityUtility.CheckContactFeature("EventRemark", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("EventRemark", entityPM.Tenant, authToken.Tenant);
+	                    
+                        IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+                        EventRemarkUpdateService service = new EventRemarkUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                        service.Update(entityPM, true);
+
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("EventType", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("EventRemark", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
-                        // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                        //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                           //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
                         //}
-                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "EventType");
-
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -126,51 +128,38 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
         }
 
 
-        public HttpResponseMessage Put(EventTypePM entityPM)
+        public HttpResponseMessage Put(EventRemarkPM entityPM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    string logKey = PerformanceLogger.LogCurrentTime();
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
+                        string logKey = PerformanceLogger.LogCurrentTime();					                        
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("EventType", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("EventType", entityPM.Tenant, authToken.Tenant);
-
-                        string entityName = "EventType" + entityPM.Id + entityPM.Tenant;
-                        string entityPmName = "EventTypePM" + entityPM.Id + entityPM.Tenant;
-                        if (CacheManager.CacheWrapper.Get(entityName) != null)
-                        {
-                            CacheManager.CacheWrapper.Invalidate(entityName);
-                        }
-                        if (CacheManager.CacheWrapper.Get(entityPmName) != null)
-                        {
-                            CacheManager.CacheWrapper.Invalidate(entityPmName);
-                        }
-                
-                        IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        EventTypeService service = new EventTypeService(MyContext, entityPM.Tenant);
+                        SecurityUtility.CheckContactFeature("EventRemark", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("EventRemark", entityPM.Tenant, authToken.Tenant);
+	
+                        IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+                        EventRemarkUpdateService service = new EventRemarkUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+						service.InitializeEntityPM(entityPM);
+                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
-
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("EventType", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("EventRemark", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                           //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
-
-                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "EventType");
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
                 }

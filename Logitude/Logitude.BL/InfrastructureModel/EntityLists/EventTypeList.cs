@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.InfrastructureModel.EntityLists
@@ -33,6 +35,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string CustomField { get; set; }
         public int? EntityStatusWeight { get; set; }
         public string EventTrigger { get; set; }
+        public virtual List<EventRemark> EventRemarks { get; set; }
 
     }
 }

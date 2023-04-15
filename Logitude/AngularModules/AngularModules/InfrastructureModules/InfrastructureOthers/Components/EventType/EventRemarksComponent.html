@@ -1,0 +1,80 @@
+<div class="TabHolder">     
+            <tr class="TabTitleRow">
+                <td>View Remarks </td>
+            </tr>
+            <tr style="height: 20px;">
+
+                <td>
+                    <span class="Label">Select partners to view event remarks</span>
+                </td>
+
+                <td style="width: 57px;">
+                    <button class="Button" (click)="CancelButtonClicked()">Clear All</button>
+                </td>
+
+                <td style="width: 5px;">
+                    <div></div>
+                </td>
+
+                <td style="width: 57px;">
+                    <button class="Button" (click)="CancelButtonClicked()">Select All</button>
+                </td>
+
+                <td style="padding: 4px; width: 250px;" [style.float]="isRTL ? 'left' : 'right'">
+                    <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'General.O.Search' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                </td>
+
+            </tr>
+
+            <tr style="height: 5px;">
+                <td>
+                    <div></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div>
+                        <div class="SimpleGridView">
+                            <div class="SimpleGridViewHeader" style="position: unset;height:20px;" >
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td style="width: 600px; min-width: 600px; max-width: 600px;height:20px;">partner type</td>
+                                        <td style="width: 420px; min-width: 420px; max-width: 420px;">choose</td>
+                                        <td class="LastChild">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div>
+                                <tr >
+                                    <td colspan="2">
+                                        <table *ngFor="let item of Names"> 
+                                            <tr style="height:35px;">
+                                                <!-- <td>
+                                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>  -->
+                                                <td style="width: 600px;">
+                                                    {{item}}
+                                                </td>  
+                                                <div></div>
+                                                <td style="width: 420px;">
+                                                    <LogCheckBox [ObjectFieldName]="'Name'" [Checked]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr> 
+                            </div>   
+                        </div>
+                    </div>    
+                </td>
+            </tr>  
+    </div>
+

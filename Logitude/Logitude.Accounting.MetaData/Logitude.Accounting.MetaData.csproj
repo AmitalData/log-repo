@@ -169,6 +169,7 @@
     <None Include="DBTables\Category5.dxml" />
     <None Include="DBTables\ChartOfAccount.dxml" />
     <None Include="DBTables\ChartOfAccountsType.dxml" />
+    <None Include="DBTables\EventRemark.dxml" />
     <None Include="DBTables\ExternalPageAdditionalData.dxml" />
     <None Include="DBTables\ExternalReconciliation.dxml" />
     <None Include="DBTables\ExternalReconciliationLine.dxml" />
@@ -240,6 +241,7 @@
     <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
     <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
+    <None Include="EntityFiles\EventRemark.lxml" />
     <None Include="EntityFiles\GLAccountAgingData.lxml" />
     <None Include="EntityFiles\GLAccountCardsData.lxml" />
     <None Include="EntityFiles\GLAccountCounter.lxml" />

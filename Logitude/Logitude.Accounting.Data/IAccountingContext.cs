@@ -47,6 +47,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<Category5> Category5 { get; }
 		 IDbSet<ChartOfAccount> ChartOfAccounts { get; }
 		 IDbSet<ChartOfAccountsType> ChartOfAccountsTypes { get; }
+		 IDbSet<EventRemark> EventRemarks { get; }
 		 IDbSet<ExternalPageAdditionalData> ExternalPageAdditionalDatas { get; }
 		 IDbSet<ExternalReconciliation> ExternalReconciliations { get; }
 		 IDbSet<ExternalReconciliationLine> ExternalReconciliationLines { get; }
