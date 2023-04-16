@@ -747,6 +747,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     compareDate(firstDate:Date,secondDate:Date){
          const lastPrintDate = new Date(firstDate);
          const approvedDate = new Date(secondDate);
+
         if(lastPrintDate.getFullYear() < approvedDate.getFullYear()){
             return true;
         } else if(lastPrintDate.getFullYear() == approvedDate.getFullYear()) {
@@ -756,9 +757,9 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 return true;
             } else if(lastPrintDate.getMonth() == approvedDate.getMonth()) {
 
-                if(lastPrintDate.getDay() < approvedDate.getDay()){
+                if(lastPrintDate.getDate() < approvedDate.getDate()){
                     return true;
-                } else if(lastPrintDate.getDay() == approvedDate.getDay()) {
+                } else if(lastPrintDate.getDate() == approvedDate.getDate()) {
 
                     if(lastPrintDate.getHours() < approvedDate.getHours()){
                         return true;
@@ -825,8 +826,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     
                     item.CurrentDocumentTypeCopy.IsSelectedByDefault = true; 
                     var LastPrintDateLessThenApprovedDate = null;
+                   
                     if(item.CurrentDocumentOutCopy != null){
+                       
                         LastPrintDateLessThenApprovedDate = this.compareDate(item.CurrentDocumentOutCopy.LastPrintDate,this.ApprovedDate);
+                        
                     }
                    
                     if(this.statusCode != null && this.IsAccountingActivated) {

@@ -63,7 +63,7 @@ export class GeneralPrintHelper {
     }
 
 
-    ShowPrintControl(documentTypeTemplate: string = null,StatusCode:String = null,ApprovedDate:Date = null) {
+    ShowPrintControl(documentTypeTemplate: string = null,StatusCode:string = null,ApprovedDate:Date = null) {
         if (this.IsStartPrint) return;
             let apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
             apiQueryFilters.GetAll = true;
@@ -97,7 +97,7 @@ export class GeneralPrintHelper {
         
     }
 
-    GetDocumentOut(documentTypeTemplate:string = null,StatusCode:String = null,ApprovedDate:Date = null) {
+    GetDocumentOut(documentTypeTemplate:string = null,StatusCode:string = null,ApprovedDate:Date = null) {
         if (this.IsStartPrint) return;
             this.IsStartPrint = true;
             this.CurrentSession.StartBusyIndicatorLoading();
@@ -138,7 +138,7 @@ export class GeneralPrintHelper {
         
     }
 
-    LoadDocumentTypePm(StatusCode:String = null,ApprovedDate:Date = null) {
+    LoadDocumentTypePm(StatusCode:string = null,ApprovedDate:Date = null) {
         this.documentTypePMService.getSingleDocumentType(this.documentTypeList.Id, this.documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -156,7 +156,7 @@ export class GeneralPrintHelper {
         });                            
     }
 
-    LoadPrintControl(StatusCode:String = null,ApprovedDate:Date = null) {
+    LoadPrintControl(StatusCode:string = null,ApprovedDate:Date = null) {
        
         this.IsStartPrint = false;
         this.CurrentSession.StopBusyIndicator();
