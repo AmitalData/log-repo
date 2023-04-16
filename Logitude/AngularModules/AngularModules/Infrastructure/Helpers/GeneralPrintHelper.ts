@@ -32,7 +32,6 @@ export class GeneralPrintHelper {
 
     ChildReference: string;
     public EntityId: string;
-    public invoiceType: string;
     documentTypeList: DocumentTypeList;
     documentOutPM: DocumentOutPM;
     documentTypePM: DocumentTypePM;
@@ -41,7 +40,7 @@ export class GeneralPrintHelper {
     public IsLoadPrintControl: boolean = true;
     public IsStartPrint: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(objecttablename: string, documentTypeCode: string, entityId: string, childEntityId: string, childReference:string ,childObjectTableId:string , invoiceType:string = "") {
+    constructor(objecttablename: string, documentTypeCode: string, entityId: string, childEntityId: string, childReference:string ,childObjectTableId:string ) {
         this.ObjectTableName = objecttablename;
         if (!AppTool.IsNullOrEmpty(documentTypeCode)) {
             this.DocumentTypeCode = documentTypeCode.toUpperCase();
@@ -49,7 +48,6 @@ export class GeneralPrintHelper {
 
         this.CurrentObjectTableId = window.ObjectTables.filter(d => d.Name == objecttablename)[0].Id;
         this.EntityId = entityId == "null" || !entityId ? "" : entityId;
-        this.invoiceType = invoiceType == "null" || !invoiceType ? "" : invoiceType;
         this.ChildEntityId = childEntityId == "null" || !childEntityId ? "" : childEntityId;
         this.ChildObjectTableId = childObjectTableId == "null" || !childObjectTableId ? "" : childObjectTableId;
         this.ChildReference = childReference == "null" || !childReference ? "" : childReference;
@@ -60,13 +58,12 @@ export class GeneralPrintHelper {
 
         this.documentTypePMService = new DocumentTypePMExtendedService();
         this.documentOutPMService = new DocumentOutPMService();
-
+       
 
     }
 
 
-    ShowPrintControl(documentTypeTemplate: string = null) {
-
+    ShowPrintControl(documentTypeTemplate: string = null,StatusCode:string = null,ApprovedDate:Date = null) {
         if (this.IsStartPrint) return;
             let apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
             apiQueryFilters.GetAll = true;
@@ -79,7 +76,7 @@ export class GeneralPrintHelper {
                     this.documentTypeList = myResult.filter(d => d.Code.toUpperCase() == this.DocumentTypeCode)[0];
                     if (this.documentTypeList) {
                         if (this.documentTypeList.DocumentTypeDefaultReportTemplateId) {
-                            this.GetDocumentOut(documentTypeTemplate);
+                            this.GetDocumentOut(documentTypeTemplate,StatusCode,ApprovedDate);
 
                         }
                         else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " has no default template");
@@ -97,10 +94,10 @@ export class GeneralPrintHelper {
                     }
                 }
             });
-
+        
     }
 
-    GetDocumentOut(documentTypeTemplate:string = null) {
+    GetDocumentOut(documentTypeTemplate:string = null,StatusCode:string = null,ApprovedDate:Date = null) {
         if (this.IsStartPrint) return;
             this.IsStartPrint = true;
             this.CurrentSession.StartBusyIndicatorLoading();
@@ -117,7 +114,7 @@ export class GeneralPrintHelper {
                                 var myResult = pmResponse.Result;
                                 if (myResult) {
                                     this.documentOutPM = myResult;
-                                    this.LoadDocumentTypePm();
+                                    this.LoadDocumentTypePm(StatusCode,ApprovedDate);
                                 }
                             }
 
@@ -129,7 +126,7 @@ export class GeneralPrintHelper {
                         });
                     }
                     else {
-                        this.LoadDocumentTypePm();
+                        this.LoadDocumentTypePm(StatusCode,ApprovedDate);
                     }
                 }
 
@@ -138,17 +135,17 @@ export class GeneralPrintHelper {
                     this.CurrentSession.StopBusyIndicator();
                 }
             });
-
+        
     }
 
-    LoadDocumentTypePm() {
+    LoadDocumentTypePm(StatusCode:string = null,ApprovedDate:Date = null) {
         this.documentTypePMService.getSingleDocumentType(this.documentTypeList.Id, this.documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     this.documentTypePM = myResult;
-                    this.LoadPrintControl();
+                    this.LoadPrintControl(StatusCode,ApprovedDate);
                 }
             }
 
@@ -156,19 +153,18 @@ export class GeneralPrintHelper {
                 this.CurrentSession.StopBusyIndicator();
                 this.IsStartPrint = false;
             }
-        });
+        });                            
     }
 
-    LoadPrintControl() {
-
+    LoadPrintControl(StatusCode:string = null,ApprovedDate:Date = null) {
+       
         this.IsStartPrint = false;
         this.CurrentSession.StopBusyIndicator();
         var documentOutPmLists = new Array<DocumentOutPM>();
         documentOutPmLists.push(this.documentOutPM);
-
         var SelectedInternalDocument = new DocsOutDataViewModel(this.documentTypePM, this.EntityId, this.documentOutPM.ChildEntityId, this.CurrentObjectTableId, this.ChildObjectTableId, this.documentOutPM.ChildEntityReference,
             documentOutPmLists, null, null, null);
-        SelectedInternalDocument.invoiceType = this.invoiceType;
+
         SelectedInternalDocument.IsNotFromDocsOutListOpenPrintControl = true;
         SelectedInternalDocument.IsAWBWizard = false;
         var logitudeWindow = new LogitudeWindow();
@@ -178,6 +174,7 @@ export class GeneralPrintHelper {
         logitudeWindow.Height = heightwindwo;
         logitudeWindow.DataContext = SelectedInternalDocument;
         logitudeWindow.Title = "Print " + this.documentTypePM.Name;
+        logitudeWindow.WindowArgs = {"statusCode":StatusCode,"ApprovedDate":ApprovedDate};
         logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/PrintDocumentComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             if (this.CurrentSession.CurrentEditComponent) {

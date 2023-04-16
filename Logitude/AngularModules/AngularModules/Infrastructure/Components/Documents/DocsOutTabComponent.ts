@@ -1190,7 +1190,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     }
     ShowPrintControl() {
 
-
+     
         var logWindow = new LogitudeWindow();
         logWindow.Width = 760;
         logWindow.Height = 552;
