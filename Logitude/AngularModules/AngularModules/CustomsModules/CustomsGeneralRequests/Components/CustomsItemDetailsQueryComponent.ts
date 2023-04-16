@@ -251,10 +251,8 @@ export class CustomsItemDetailsQueryComponent
     digit: string = null;
     async OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any, isSend:boolean=false) {
 
-        debugger;
-
-
-        var newValue = this.Classification;
+        this.ClassificationValidation=[];
+       var newValue = this.Classification;
         this.Classification = newValue;
         this.valid = true;
         this.UIProperties.SetValidity("Classification", "Customs.Classification", true, "");
