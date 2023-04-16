@@ -216,6 +216,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             {
                 entity.ComputedForwarderDocumentId = entity.ForwarderDocumentId;
             }
+            entity.ComputedCustomerDocumentId = string.IsNullOrEmpty(entity.CustomerDocumentId) ? entity.Id : entity.CustomerDocumentId;
 
             context.DocumentsFilings.Add(entity);
         }
