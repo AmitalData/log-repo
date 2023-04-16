@@ -20,6 +20,7 @@ import {GLAccountPMService} from '../../Services/StandardPMs/GLAccountPMService'
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import { promise } from 'selenium-webdriver';
+import { GLAccountCurrencyPM } from '../../EntityPMs/GLAccountCurrencyPM';
 
 @Component({
 
@@ -422,22 +423,25 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                 pmGLAccount.GLAccountCurrencies.filter(r => r.CurrencyId == this.SourceGLAccountPM.CurrencyId)[0];
             if (adjustGLAccountCurrency != null) {
 
-                let selectedAccount: string = this.glAccount.LocalName + " " + this.glAccount.DisplayNumber;
+                let selectedAccount: string = this.glAccount.LocalName;// + " " + this.glAccount.DisplayNumber;
 
                 let toContinue: boolean = false;
                 const confirmMsg =
                     //TextCodeTranslator.Translate('Journal.RE.AccountingDateConfrimation');
-                    `לידיעתך הכרטיס הנבחר-${selectedAccount} שהיינו רב מטבעי
-מקושר לכרטיס-${adjustGLAccountCurrency.GLAccountName}  שמטבעו ${this.SourceGLAccountPM.CurrencyCode}
+`לידיעתך הכרטיס הנבחר ( ${selectedAccount} ) שהיינו רב מטבעי
+מקושר לכרטיס ( ${adjustGLAccountCurrency.GLAccountName} ) שמטבעו ${this.SourceGLAccountPM.CurrencyCode}
 ולכן הפקודה תירשם על הכרטיס המקושר
 האם להמשיך
 `;
+
+                let mess = this.GetMessage(selectedAccount, adjustGLAccountCurrency);
                 const confirmWindow = new ConfirmWindow();
-                confirmWindow.Width = 400;
+                //confirmWindow.LayoutDirection = "rtl";
+                confirmWindow.Width = 500;
                 confirmWindow.Left = '25%';
                 confirmWindow.YesButtonText = TextCodeTranslator.Translate('Customs.General.B.OK');
                 confirmWindow.NoButtonText = TextCodeTranslator.Translate('Customs.General.B.Cancel');
-                confirmWindow.Show(confirmMsg);
+                confirmWindow.Show(mess);
 
                 await new Promise<void>((resolve) => {
                     confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -477,6 +481,21 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         } else {
             this.Reconcile(reconciliationLines);
         }
+    }
+
+    private GetMessage(selectedAccount: string, adjustGLAccountCurrency: GLAccountCurrencyPM) {
+        let confirmMsg1 = TextCodeTranslator.Translate('Journal.RE.AdjustMulti1'); //לידיעתך הכרטיס הנבחר ( XXX ) שהיינו רב מטבעי
+        confirmMsg1 = confirmMsg1.replace('XXX', selectedAccount);
+        let confirmMsg2 = TextCodeTranslator.Translate('Journal.RE.AdjustMulti2'); //מקושר לכרטיס ( XXX ) שמטבעו YYY
+        confirmMsg2 = confirmMsg2
+            .replace('XXX', adjustGLAccountCurrency.GLAccountName)
+            .replace('YYY', this.SourceGLAccountPM.CurrencyCode);
+        let confirmMsg3 = TextCodeTranslator.Translate('Journal.RE.AdjustMulti3');
+        let mess = `${confirmMsg1}
+${confirmMsg2}
+${confirmMsg3}
+`;
+        return mess;
     }
 
     ReconcileSplit(myReconciliationLines: ReconciliationLinePM[]) {
