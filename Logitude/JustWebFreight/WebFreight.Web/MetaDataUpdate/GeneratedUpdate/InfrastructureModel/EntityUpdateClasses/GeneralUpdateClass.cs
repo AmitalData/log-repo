@@ -2728,6 +2728,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOSigneds = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Signeds", DefaultText = "Signed Fields",LocalDefaultText = @"חתימה דיגיטלית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GeneralTextCode_GeneralMCTasksTasks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tasks.Tasks", DefaultText = "Tasks",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCTasksTaskTypes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tasks.TaskTypes", DefaultText = "Task Types",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCTasksTaskPriorities = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tasks.TaskPriorities", DefaultText = "Task Priorities",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCTasksTaskStatuses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tasks.TaskStatuses", DefaultText = "Task Statuses",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
  		   TextCode GeneralTextCode_GeneralMCACCConsolidatedTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.ConsolidatedTaxReport", DefaultText = "Consolidated Tax Report",LocalDefaultText = @"דיווח מס מרוכז", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_ConsolidatedTaxReportQConsolidatedTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.Q.ConsolidatedTaxReport", DefaultText = "Consolidated Tax Report",LocalDefaultText = @"דיווח מס מרוכז", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
