@@ -194,7 +194,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         
                     sb.AppendLine("ILSWS!!!");
                     
-                    if (drityEntityPM.CourierCustomStatusCode != dbPM.CourierCustomStatusCode)
+                    if (drityEntityPM.CourierCustomStatusCode != dbPM.CourierCustomStatusCode || SuppressSend)
                     {
                         var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
                         drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
