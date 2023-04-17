@@ -27,6 +27,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.BL.Messaging.ILSWS;
 using Logitude.Customs.BL.Messaging.Maman;
 using System.Data.Entity.Validation;
+using Logitude.Customs.BL.Messaging.Maman;
 
 
 namespace Logitude.Customs.BL.EntityUpdateServices
@@ -603,7 +604,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             return (myGDFDATAPM.DEFDATA);
         }
-
         private void SendToMassof(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO, string StorageSiteCode)
         {
             CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
