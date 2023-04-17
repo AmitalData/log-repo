@@ -363,8 +363,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     if (button.EventCode == "PrintTzrufa") // moran 2.3.16 - Task 19807
                     {
                         //if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-                        if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM.CustomFileNo, this.EntityPM.IsConvertedDeclaration, this.EntityPM.IsConnectedToUnifreight) 
-                            || (AmitalGatewayUtil.Instance.AmitalBrowserInUse && this.EntityPM.IsAmendment)) {
+                        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse && !AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo)) {
                             //if (!this.EntityPM.IsAccumulated) {
                             //    button.IsDisabled = false;
                             //} else {
