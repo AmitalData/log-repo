@@ -46,6 +46,47 @@ namespace Logitude.Server.Tools.QueueService
         new private QueueResponse Receive() { throw new NotImplementedException(); }
         new private QueueResponse Receive(TimeSpan serverWaitTime) { throw new NotImplementedException(); }
         new private void Complete(string messageId) { throw new NotImplementedException(); }
+        new public List<CustomDBQueueMessage> Receive_copy(int? nextRunDelayInSec = null)
+        {
+
+
+            //var r= new DualRepository()
+            if (CurrentCustomQueueResponse != null && !String.IsNullOrWhiteSpace(CurrentCustomQueueResponse.MessageId) && CurrentCustomQueueResponse.QueueStatus == QueueStatusEnum.Received)
+            {
+                if (CustomDbQueueParams.MaxDeliveryCount < CurrentCustomQueueResponse.Retries)
+                {
+                    this.CompleteAsFailed();
+                }
+                else
+                {
+                    if (
+                    DateTime.Now
+                   // TO DO  get oracle SysDate 
+                   .Subtract(CurrentCustomQueueResponse.MessageCreatedServerTime.Value) > TimeSpan.FromHours(CustomDbQueueParams.TimeOutInHour))
+                    {
+                        this.CompleteAsFailed();
+                    }
+                }
+            }
+            CurrentCustomQueueResponse = null;
+            nextRunDelayInSec = nextRunDelayInSec ?? (int)(CustomDbQueueParams.LockDuration.TotalSeconds);
+            base.CurrentMessageId = null;
+            var q = base.Receive_copy(nextRunDelayInSec.Value);
+            if (q == null || q.Count == 0)
+            {
+                return null;
+            }
+            List<CustomDBQueueMessage> CurrentCustomQueueResponseList = new List<CustomDBQueueMessage>();
+            foreach (var item in q)
+            {
+                CurrentCustomQueueResponse = new CustomDBQueueMessage(item, CustomDbQueueParams);
+                CurrentCustomQueueResponse.QueueStatus = QueueStatusEnum.Received;
+                LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:Receive:DbQueueName=" + CustomDbQueueParams.QueueCode + ":QMId=" + base.CurrentMessageId);
+                CurrentCustomQueueResponseList.Add(CurrentCustomQueueResponse);
+            }
+            return CurrentCustomQueueResponseList;
+        }
+
 
 
         new public CustomDBQueueMessage Receive(int? nextRunDelayInSec = null)

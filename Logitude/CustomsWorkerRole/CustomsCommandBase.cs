@@ -473,7 +473,7 @@ namespace CustomsWorkerRole
 
             
             
-            CustomDBQueueMessage response=null;
+            List<CustomDBQueueMessage> response=null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
@@ -501,7 +501,9 @@ namespace CustomsWorkerRole
 
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive");
 
-                                    response = _CustomDbQueueService.Receive(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
+                                    //
+                                    response = _CustomDbQueueService.Receive_copy(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
+                                    //response = _CustomDbQueueService.Receive(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
 
                                     scopeRecive.Complete();
@@ -518,7 +520,7 @@ namespace CustomsWorkerRole
                                 }
                             }
 
-                            if (response == null || (response != null && response.MessageId == null))
+                            if (response == null || (response != null && response.Count == 0))
                             {
                                 QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
                                 Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
@@ -532,7 +534,10 @@ namespace CustomsWorkerRole
                             LastActivity = DateTime.UtcNow;
                             proccesDone = true;
                             LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
-                            bool successProcessMessage = ProcessMessage_Db(response);
+                            bool successProcessMessage = true;
+                            foreach (var item in response)
+                                Task.Factory.StartNew(() => {  successProcessMessage = ProcessMessage_Db(item); });
+                            
                             LogMessagingUtilWR.Instance.AppendLine("successProcessMessage");
                             if (successProcessMessage)
                             {
