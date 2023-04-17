@@ -41,7 +41,7 @@
   </Column>
   <Column
     Name="SearchByFieldCode"
-    Type="varchar"
+    Type="nvarchar"
     Size="2"
     DefaultValue="1">
     <Constraints
@@ -50,7 +50,7 @@
   <Column
     Name="SearchType"
     OldNames="SerachType"
-    Type="varchar"
+    Type="nvarchar"
     Size="2"
     DefaultValue="1">
     <Constraints
