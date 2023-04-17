@@ -1357,6 +1357,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
+                try {
                 selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
@@ -1435,7 +1436,11 @@ namespace Logitude.Accounting.BL.CoreBL
                         throw;
                     }
                 }
-
+                }
+                catch (Exception exc)
+                {
+                    OnException(null, null, null, 0, exc);
+                }
             }
 
             public void CreateBatchAccountingIntegrityCheck()
