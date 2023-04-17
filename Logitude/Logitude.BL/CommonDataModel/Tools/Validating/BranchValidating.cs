@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
@@ -13,6 +14,8 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
         public static void Validate(BranchPM entityPM, BranchRepository entityRepository)
         {
+            bool hasBranchCounterCodeFeature = FeatureToggleHelper.HasFeatureToggle("BCC", entityPM.Tenant);
+            if (!hasBranchCounterCodeFeature) return;
             if (string.IsNullOrEmpty(entityPM.CounterCode))
             {
                 throw new Exception("Counter Code is Required");

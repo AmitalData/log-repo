@@ -612,7 +612,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (listTransactionId.Count > 0)
             {
                 //LedgerTransactionUpdateService.Update_InProgressExternalReconcile(_JournalPM.Id, _JournalPM.Tenant, false);
-                myLedgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, _JournalPM.Tenant, true);
+                myLedgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, _JournalPM.Tenant, false);
 
             }
 

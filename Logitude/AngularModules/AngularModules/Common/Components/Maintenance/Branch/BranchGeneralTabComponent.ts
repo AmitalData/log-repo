@@ -46,6 +46,8 @@ export class BranchGeneralTabComponent extends BaseComponent implements OnDestro
         this.SetCounterCode_UIProperties();
     }
     private SetCounterCode_UIProperties() {
+        let hasBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BCC")[0] ? true : false;
+        if (!hasBranchCounterCodeFeature) return;
         this.UIProperties.SetRequired("CounterCode", this.ObjectTableName, AppTool.IsNullOrEmpty(this.CounterCode));
     }
     private SaveCompletedEvent: any = null;
