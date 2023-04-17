@@ -95,7 +95,7 @@ export class DeclarationReferantDataList {
 	DeclarationIdToDisplay: string;
 	CustomerId: string;
 	OccuredStatuses: string;
-	OccuredStatusesName: string;
+	NotOccuredStatuses: string;
 	
 }
  

@@ -98,6 +98,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.LOVListUsers = [];
             this.LOVListDepartment = [];
             this.LOVListOccuredStatuses = [];
+            this.LOVListNotOccuredStatuses = [];
             this.TransportFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "TransportModeId");
             this.UserFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "ReferentUserId");
             this.DepartmentFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "DepartmentId");
@@ -368,6 +369,14 @@ export class DeclarationReferantDataFiltersMenuComponent
         }
     }
 
+    _LOVListNotOccuredStatuses: any[] = [];
+    get LOVListNotOccuredStatuses() { return this._LOVListNotOccuredStatuses; }
+    set LOVListNotOccuredStatuses(value) {
+        if (this._LOVListNotOccuredStatuses != value) {
+            this._LOVListNotOccuredStatuses = value;
+        }
+    }
+
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
     public set SelectedValue(value: string) {
@@ -389,6 +398,22 @@ export class DeclarationReferantDataFiltersMenuComponent
     public set DepartmentListString(value: string) {
         if (this.departmentListString != value) {
             this.departmentListString = value;
+        }
+    }
+
+    private occuredStatusListString: string = "";
+    public get OccuredStatusListString() { return this.occuredStatusListString; }
+    public set OccuredStatusListString(value: string) {
+        if (this.occuredStatusListString != value) {
+            this.occuredStatusListString = value;
+        }
+    }
+
+    private notOccuredStatusListString: string = "";
+    public get NotOccuredStatusListString() { return this.notOccuredStatusListString; }
+    public set NotOccuredStatusListString(value: string) {
+        if (this.notOccuredStatusListString != value) {
+            this.notOccuredStatusListString = value;
         }
     }
 
@@ -544,10 +569,35 @@ export class DeclarationReferantDataFiltersMenuComponent
 
     }
     SelectedValueChangedEmitOccuredStatuses(){
-        debugger;
+        if (this.apiQueryFilters.AdditionalFilters.length > 0) {
+            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "OccuredStatuses");
+        }
+        this.OccuredStatusListString = "";
+
+        if (this.LOVListOccuredStatuses.length > 0) {
+            this.LOVListOccuredStatuses.forEach(item => {  this.OccuredStatusListString += item["Status_Code"] + ","; });//Id: "1-3697"
+            this.OccuredStatusListString = this.OccuredStatusListString.slice(0, -1); // trim last comma
+        } 
+        this.apiQueryFilters.addAdditionalFilter("OccuredStatuses", this.OccuredStatusListString, null, null, "InList", true, false, false, "string",this.LOVListOccuredStatuses.length == 0 );
+        this.FilterChangeSubject.next();
 
     }
 
+    SelectedValueChangedEmitNotOccuredStatuses(){
+        if (this.apiQueryFilters.AdditionalFilters.length > 0) {
+            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "NotOccuredStatuses");
+        }
+        this.NotOccuredStatusListString = "";
+
+        if (this.LOVListNotOccuredStatuses.length > 0) {
+            this.LOVListNotOccuredStatuses.forEach(item => {  this.NotOccuredStatusListString += item["Status_Code"] + ","; });//Id: "1-3697"
+            this.NotOccuredStatusListString = this.NotOccuredStatusListString.slice(0, -1); // trim last comma
+        } 
+        this.apiQueryFilters.addAdditionalFilter("NotOccuredStatuses", this.NotOccuredStatusListString, null, null, "InList", true, false, false, "string",this.LOVListNotOccuredStatuses.length == 0 );
+        this.FilterChangeSubject.next();
+
+    }
+    
     transportmodeId: string = "All";
     itemClicked(itemValue: string) {
         this.transportmodeId = itemValue;
