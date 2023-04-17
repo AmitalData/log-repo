@@ -250,6 +250,7 @@ import { CustomsDocumentUploadListService } from './Services/StandardLists/Custo
 
 import { ContainerizationListService } from './Services/StandardLists/ContainerizationListService';
 import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
+import { StatusCodeListService } from './Services/StandardLists/StatusCodeListService';
 import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
 import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
 import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
@@ -747,6 +748,7 @@ export class ModuleProviders {
             case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
             case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
             case "ContainerizationStatusCodeListService": { myResult = new ContainerizationStatusCodeListService(); break; }
+            case "StatusCodeListService": { myResult = new StatusCodeListService(); break; }
             case "ContainerizationHataraStatusListService": { myResult = new ContainerizationHataraStatusListService(); break; }
             case "CustomerIndicationTypeListService": { myResult = new CustomerIndicationTypeListService(); break; }
             case "PoaAuthorizationTypeLookupListService": { myResult = new PoaAuthorizationTypeLookupListService(); break; }

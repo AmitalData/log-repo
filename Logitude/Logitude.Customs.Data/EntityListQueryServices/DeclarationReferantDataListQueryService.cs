@@ -15,6 +15,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.CustomFilters;
 using Logitude.Customs.Data.DataContracts;
+using System.Runtime.Remoting.Contexts;
 //using System.Data.Entity;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
@@ -25,8 +26,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
         {
 
-
-
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
                                                              join d in context.Declarations
                                                              .Include("CustomerCard")
@@ -36,9 +35,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              .Include("PackageType")
                                                              on a.DeclarationIdToDisplay equals d.Id
 
-                                                             join declarationStatus in context.DeclarationStatuses
-                                                             on a.DeclarationIdToDisplay equals declarationStatus.DeclarationId into qjoinDeclarationStatuses
-                                                             from s in qjoinDeclarationStatuses.DefaultIfEmpty()
+                                                             //join declarationStatus in context.DeclarationStatuses
+                                                             //on a.DeclarationIdToDisplay equals declarationStatus.DeclarationId into qjoinDeclarationStatuses
+                                                             
 
                                                              select new DeclarationReferantDataList()
                                                              {
@@ -155,7 +154,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  ImporterApproval  = a.ImporterApproval,
                                                                  CustomerId=d.CustomerId,
                                                                  ListCounter= 0,
-
+                                                                 //OccuredStatuses = qjoinDeclarationStatuses.DefaultIfEmpty().Select(r=>r.StatusCode.Status_Code),
                                                              });
             return query;
 
@@ -165,11 +164,21 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
         {
             DeclarationReferantDataCustomFilters filters = new DeclarationReferantDataCustomFilters();
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "RetrievData");
-            if (filter == null)
+            var OccuredStatusesFilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "OccuredStatuses");
+            var NotOccuredStatusesFilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "NotOccuredStatuses");
+
+
+            if (OccuredStatusesFilter != null && !string.IsNullOrEmpty(OccuredStatusesFilter.FieldValue.ToString()))
             {
-                //iQueryable = filters.GetFilteredQuery(iQueryable);
-                //iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant,context);
+                var q = context.DeclarationStatuses.Where(decStatus => OccuredStatusesFilter.FieldValue.ToString().Contains(decStatus.StatusCode.Status_Code)).Select(r => r.DeclarationId);
+                iQueryable = (from a in iQueryable.Where(r => q.Contains(r.DeclarationId)) select a);
             }
+            if (NotOccuredStatusesFilter != null && !string.IsNullOrEmpty(NotOccuredStatusesFilter.FieldValue.ToString()))
+            {
+                var q = context.DeclarationStatuses.Where(decStatus => OccuredStatusesFilter.FieldValue.ToString().Contains(decStatus.StatusCode.Status_Code)).Select(r => r.DeclarationId);
+                iQueryable = (from a in iQueryable.Where(r => !q.Contains(r.DeclarationId)) select a);
+            }
+
             iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant, context);
 
             return iQueryable;

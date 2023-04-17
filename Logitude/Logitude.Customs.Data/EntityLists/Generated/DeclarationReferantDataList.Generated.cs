@@ -193,7 +193,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string OccuredStatuses  { get; set; }
        [DataMember]
-       public string OccuredStatusesName  { get; set; }
+       public string NotOccuredStatuses  { get; set; }
    }
 
 }
