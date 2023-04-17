@@ -92,7 +92,6 @@
     <Compile Include="EntityKeys\CalculatedChartsLineTypeKeys.cs" />
     <Compile Include="EntityKeys\CalculatedChartsOfAccountKeys.cs" />
     <Compile Include="EntityKeys\CalculatedChartsOfAccountsLineKeys.cs" />
-    <Compile Include="EntityKeys\EventRemarkKeys.cs" />
     <Compile Include="EntityKeys\ExternalPageAdditionalDataKeys.cs" />
     <Compile Include="EntityKeys\GLAccountAgingDataKeys.cs" />
     <Compile Include="EntityKeys\GLAccountCardsDataKeys.cs" />
@@ -136,7 +135,6 @@
     <Compile Include="EntityListQueryServices\CalculatedChartsLineTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CalculatedChartsOfAccountListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CalculatedChartsOfAccountsLineListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\EventRemarkListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExternalPageAdditionalDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingEntityJournalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingIntegrityCheckListQueryService.Generated.cs" />
@@ -147,7 +145,6 @@
     <Compile Include="EntityListQueryServices\Generated\CalculatedChartsLineTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CalculatedChartsOfAccountListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CalculatedChartsOfAccountsLineListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\EventRemarkListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExternalPageAdditionalDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountAgingDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountCardsDataListQueryService.Generated.cs" />
@@ -222,7 +219,6 @@
     <Compile Include="EntityLists\Generated\CalculatedChartsLineTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CalculatedChartsOfAccountList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CalculatedChartsOfAccountsLineList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\EventRemarkList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExternalPageAdditionalDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountAgingDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountCardsDataList.Generated.cs" />
@@ -265,7 +261,6 @@
     <Compile Include="EntityMapping\CalculatedChartsLineTypeMap.cs" />
     <Compile Include="EntityMapping\CalculatedChartsOfAccountMap.cs" />
     <Compile Include="EntityMapping\CalculatedChartsOfAccountsLineMap.cs" />
-    <Compile Include="EntityMapping\EventRemarkMap.cs" />
     <Compile Include="EntityMapping\ExternalPageAdditionalDataMap.cs" />
     <Compile Include="EntityMapping\GLAccountAgingDataMap.cs" />
     <Compile Include="EntityMapping\GLAccountCardsDataMap.cs" />
@@ -309,7 +304,6 @@
     <Compile Include="EntityPOCOs\CalculatedChartsLineType.cs" />
     <Compile Include="EntityPOCOs\CalculatedChartsOfAccount.cs" />
     <Compile Include="EntityPOCOs\CalculatedChartsOfAccountsLine.cs" />
-    <Compile Include="EntityPOCOs\EventRemark.cs" />
     <Compile Include="EntityPOCOs\ExternalPageAdditionalData.cs" />
     <Compile Include="EntityPOCOs\GLAccountAgingData.cs" />
     <Compile Include="EntityPOCOs\GLAccountCardsData.cs" />
@@ -355,13 +349,11 @@
     <Compile Include="Repositories\CalculatedChartsLineTypeRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsOfAccountRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsOfAccountsLineRepository.cs" />
-    <Compile Include="Repositories\EventRemarkRepository.cs" />
     <Compile Include="Repositories\Generated\AccountingEntityJournalRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\ARPaymentsJournalRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsLineTypeRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsOfAccountRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsOfAccountsLineRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\EventRemarkRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\GLAccountFollowUpDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\GLAccountRecocileDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\GLAccountAgingDataRepository.Generated.cs" />

@@ -735,8 +735,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
-    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\EventRemarkViewsController.Generated.cs" />
-    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\EventRemarkController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ChargesTypeAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ImporterPortsController.cs" />

@@ -50,17 +50,23 @@
                             <div>
                                 <tr >
                                     <td colspan="2">
-                                        <table *ngFor="let item of Names"> 
-                                            <tr style="height:35px;">
+                                        <table *ngFor="let item of PartnerTypes"> 
+                                            <tr class="SimpleGridViewRow RowHover">
                                                 <!-- <td>
                                                     <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>  -->
                                                 <td style="width: 600px;">
-                                                    {{item}}
+                                                    {{item.Name}}
                                                 </td>  
                                                 <div></div>
-                                                <td style="width: 420px;">
-                                                    <LogCheckBox [ObjectFieldName]="'Name'" [Checked]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                <td class="GridViewCell" style="width:150px;min-width:150px;border-bottom:1px solid #E4E3E1;">
+                                                    <div class="MediaFill">
+                                                        <div class="MediaFillRelative">
+                                                            <div class="CenterCenter" style="width: 16px;">
+                                                                <CheckBox [IsChecked]="item.IsSelectedByDefault" (Checked)="CheckboxIsSelectedByDefaultClick(item, $event)"></CheckBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>

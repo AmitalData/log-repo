@@ -45,7 +45,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 { 
 
     
-    public partial class EventTypesController : ApiController
+    public partial class EventRemarksController : ApiController
     {
 	  
        
@@ -58,13 +58,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                SecurityUtility.CheckContactFeature("EventType", "READ", authToken.Tenant);
-                EventTypeQuery eventTypeQuery = new EventTypeQuery(authToken.Tenant);
-                EventTypePM eventTypePM = eventTypeQuery.GetSinglePM(id, authToken.Tenant);
+                SecurityUtility.CheckContactFeature("EventRemark", "READ", authToken.Tenant);
+                EventRemarkQuery eventRemarkQuery = new EventRemarkQuery(authToken.Tenant);
+                EventRemarkPM eventRemarkPM = eventRemarkQuery.GetSinglePM(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return Request.CreateResponse(HttpStatusCode.OK, eventTypePM);
+                return Request.CreateResponse(HttpStatusCode.OK, eventRemarkPM);
 			 
 			}
             catch (Exception ex)
@@ -77,7 +77,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
          
 		
 
-        public HttpResponseMessage Post(EventTypePM entityPM)
+        public HttpResponseMessage Post(EventRemarkPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -89,15 +89,15 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("EventType", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("EventType", entityPM.Tenant, authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("EventRemark", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("EventRemark", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        EventTypeService service = new EventTypeService(MyContext, entityPM.Tenant);
+                        EventRemarkService service = new EventRemarkService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("EventType", 0, true);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("EventRemark", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -105,7 +105,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         //{
                         //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
-                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "EventType");
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -126,7 +125,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
         }
 
 
-        public HttpResponseMessage Put(EventTypePM entityPM)
+        public HttpResponseMessage Put(EventRemarkPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -138,11 +137,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("EventType", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("EventType", entityPM.Tenant, authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("EventRemark", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("EventRemark", entityPM.Tenant, authToken.Tenant);
 
-                        string entityName = "EventType" + entityPM.Id + entityPM.Tenant;
-                        string entityPmName = "EventTypePM" + entityPM.Id + entityPM.Tenant;
+                        string entityName = "EventRemark" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "EventRemarkPM" + entityPM.Id + entityPM.Tenant;
                         if (CacheManager.CacheWrapper.Get(entityName) != null)
                         {
                             CacheManager.CacheWrapper.Invalidate(entityName);
@@ -153,11 +152,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         }
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        EventTypeService service = new EventTypeService(MyContext, entityPM.Tenant);
+                        EventRemarkService service = new EventRemarkService(MyContext, entityPM.Tenant);
+ 
                         service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("EventType", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("EventRemark", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -166,7 +166,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
-                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "EventType");
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);

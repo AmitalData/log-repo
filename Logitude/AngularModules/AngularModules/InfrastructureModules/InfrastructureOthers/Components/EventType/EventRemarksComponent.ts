@@ -6,6 +6,10 @@ import { PartnerTypeListService } from 'Common/Services/StandardLists/PartnerTyp
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { PartnerTypePM } from 'Common/EntityPMs/PartnerTypePM';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { EventRemarkPM } from 'Infrastructure/EntityPMs/EventRemarkPM';
+import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
+import { EventTypePMService } from 'Infrastructure/Services/StandardPMs/EventTypePMService';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 declare var window: any;
 
@@ -16,15 +20,18 @@ declare var window: any;
 })
 
 export class EventRemarksComponent extends BaseComponent{
+    public EntityPM: EventTypePM;
     private CurrentSession = SessionLocator.SelectedSession;
     _PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
-    public  EntityPM:  PartnerTypePM[];
-    public ObjectTableName: string = "PartnerType";
+    _EventTypePMService : EventTypePMService = new EventTypePMService();
+    public  E;
+    //public ObjectTableName: string = "PartnerType";
     public DataContext = this;
-    public Names:string[]=[];
+    public PartnerTypes: PartnerTypePM[]=[];
     
-    constructor() {
+    constructor(public entityArgs: EntityArgs) {
         super();
+       
         this._PartnerTypeListService.getAll()
         .subscribe((myResponse: ServiceResponse) =>
         {
@@ -32,11 +39,47 @@ export class EventRemarksComponent extends BaseComponent{
             this.EntityPM = myResponse.Result;
             var size=myResponse.Result.length;
             for (let i = 0; i < size; i++) {
-                this.Names[i]=this.EntityPM[i].Name;
+                this.PartnerTypes[i]=this.EntityPM[i];
             }
             
         });
+        this.E = entityArgs.EntityPM; 
+    }
+    CheckboxIsSelectedByDefaultClick(selectedItem: EventTypePM, value: any) {
+        if (selectedItem == null) return;
+       
+        this._EventTypePMService.get( this.E.id)
+        .subscribe((myResponse: ServiceResponse) =>
+        {
+            this.EntityPM = myResponse.Result;
+            this.EntityPM.EventRemarks.push();
+            this.EntityPM.MarkAsDirty();
+        });
+        this._EventTypePMService.update(this.EntityPM)
+            .subscribe((myResponse: ServiceResponse) =>
+            {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        if (myResponse.Result != undefined && myResponse.Result != null) {
+                            this.CurrentSession.CloseCurrentWindow();
+                            this.EntityPM.EnglishName='x';
+                            this.EntityPM.MarkAsDirty();
+
+                        }
+                        else {
+                            const messageWindow = new MessageWindow();
+                            messageWindow.Show("Error happened while updating totals");
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        }
+                    }
+                }
+            });
+        this.E.id;
+        this.E.code;
+        this.E.tenant;
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
         
+       // selectedItem.EventRemarks[0].IsChoose = value;
     }
 
     // get Name() { return this.EntityPM.Name; }

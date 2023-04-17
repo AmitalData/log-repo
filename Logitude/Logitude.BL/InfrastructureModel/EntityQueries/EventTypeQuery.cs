@@ -13,7 +13,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
     public class EventTypeQuery
     {
         EventTypeRepository repository;
-
+        EventRemarkQueryService eventRemarkQueryService;
         public EventTypeQuery()
         {
             repository = new EventTypeRepository(); 
@@ -22,6 +22,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public EventTypeQuery(int tenant)
         {
             repository = new EventTypeRepository(tenant);
+            eventRemarkQueryService = new EventRemarkQueryService(tenant);
         }
 
         public EventTypeQuery(EventTypeRepository eventTypeRepository)
@@ -71,6 +72,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   CustomField = a.CustomField,
                                                   IsStatusNotModified = a.IsStatusNotModified,
                                                   EventTrigger = a.EventTrigger,
+                                                  EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
                                               });
 
                         foreach (var s in entitystatuses)
@@ -125,6 +127,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   CustomField = a.CustomField,
                                   IsStatusNotModified = a.IsStatusNotModified,
                                   EventTrigger = a.EventTrigger,
+                                  EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
                               }).FirstOrDefault();
                 }
 
@@ -167,6 +170,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
+                                                     EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                                                  };
             return eventTypes;
@@ -216,6 +220,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   CustomField = a.CustomField,
                                                   IsStatusNotModified = a.IsStatusNotModified,
                                                   EventTrigger = a.EventTrigger,
+                                                  EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                                               });
 
@@ -269,6 +274,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   CustomField = a.CustomField,
                                   IsStatusNotModified = a.IsStatusNotModified,
                                   EventTrigger = a.EventTrigger,
+                                  EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                               }).FirstOrDefault();
                 }
@@ -317,6 +323,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                               CustomField = a.CustomField,
                                               IsStatusNotModified = a.IsStatusNotModified,
                                               EventTrigger = a.EventTrigger,
+                                              EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
                                           }).FirstOrDefault();
 
                     return entity;
@@ -363,6 +370,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       CustomField = a.CustomField,
                                                       IsStatusNotModified = a.IsStatusNotModified,
                                                       EventTrigger = a.EventTrigger,
+                                                      EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                                                   });
 
@@ -416,6 +424,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       CustomField = a.CustomField,
                                       IsStatusNotModified = a.IsStatusNotModified,
                                       EventTrigger = a.EventTrigger,
+                                      EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                                   }).FirstOrDefault();
                     }
@@ -468,6 +477,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowedInAutomation = eventType.AllowedInAutomation,
                                                    CustomField = eventType.CustomField,
                                                    EventTrigger = eventType.EventTrigger,
+                                                   EventRemarks = (List<EventRemark>)eventRemarkQueryService.GetEventRemarksByEventTypeID(eventType.Id),
                                                };
             return result;
         }
@@ -506,6 +516,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
+                                                     EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                                                  };
             return eventTypes;
@@ -545,6 +556,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
+                                                     EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                                                  };
             return eventTypes;

@@ -181,6 +181,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new EntityLastUpdateMap());
             modelBuilder.Configurations.Add(new EntityStatuMap());
             modelBuilder.Configurations.Add(new EventTypeMap());
+            modelBuilder.Configurations.Add(new EventRemarkMap());
             modelBuilder.Configurations.Add(new FeatureMap());
             modelBuilder.Configurations.Add(new FeatureTypeMap());
             modelBuilder.Configurations.Add(new FHLStatuMap());
@@ -521,7 +522,11 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
-
+        public IDbSet<EventRemark> EventRemark
+        {
+            get;
+            set;
+        }
         public IDbSet<TraceEvent> TraceEvent
         {
             get;

@@ -905,11 +905,6 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
-	 public IDbSet<EventRemark> EventRemarks 
-	 {
-	      get; set;
-	 
-	 }
 	
 	 public IDbSet<ExternalPageAdditionalData> ExternalPageAdditionalDatas 
 	 {

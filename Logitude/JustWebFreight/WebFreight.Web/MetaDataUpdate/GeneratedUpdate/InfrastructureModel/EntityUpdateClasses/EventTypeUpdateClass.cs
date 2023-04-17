@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EventTypeUpdateClass
    {  		
-		public const string HashString = "d2b2e3e54139a8d02051c4e7e64f4e19";
+		public const string HashString = "c8a4316df342a045d38c57506d3ea745";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2479,6 +2479,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EventRemarks",
 					  						ListPropertyPath =  "EventRemarks",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2641,8 +2642,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   Feature EventTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = EventTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "EventType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,EventTypeObjectTable);
  
                  
-			   TextCode EventTypeEventRemarksTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.TH.EventRemarks", DefaultText = "Event Remarks",LocalDefaultText = null, ObjectTableId = EventTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature EventTypeEventRemarksFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EventType.Tab.EventRemarks", ObjectTableId = EventTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "EventTypeFeatures.ETER", NameTextCodeDefaultText = "Event Remarks", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,EventTypeObjectTable);
+			   TextCode EventTypeViewRemarksTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.TH.EventRemarks", DefaultText = "View Remarks",LocalDefaultText = null, ObjectTableId = EventTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature EventTypeViewRemarksFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EventType.Tab.ViewRemarks", ObjectTableId = EventTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "EventTypeFeatures.ETER", NameTextCodeDefaultText = "View Remarks", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,EventTypeObjectTable);
  
                  
 			   TextCode EventTypeEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = EventTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
@@ -2654,7 +2655,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ETGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = EventTypeGeneralFeature_TH0.Id,FeatureUniqeCode = EventTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = EventTypeObjectTable.Id, TabNameTextCodeId = EventTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = EventTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ETER",HtmlComponentName = "",HtmlComponentUrl = "./InfrastructureModules/InfrastructureOthers/Components/EventType/EventRemarksComponent", FeatureId = EventTypeEventRemarksFeature_TH1.Id,FeatureUniqeCode = EventTypeEventRemarksFeature_TH1.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureOthers/Components/EventType/EventRemarksComponent", ObjectTableId = EventTypeObjectTable.Id, TabNameTextCodeId = EventTypeEventRemarksTextCode_TH1.Id, TabNameTextCodeCode = EventTypeEventRemarksTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ETER",HtmlComponentName = "",HtmlComponentUrl = "./InfrastructureModules/InfrastructureOthers/Components/EventType/EventRemarksComponent", FeatureId = EventTypeViewRemarksFeature_TH1.Id,FeatureUniqeCode = EventTypeViewRemarksFeature_TH1.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureOthers/Components/EventType/EventRemarksComponent", ObjectTableId = EventTypeObjectTable.Id, TabNameTextCodeId = EventTypeViewRemarksTextCode_TH1.Id, TabNameTextCodeCode = EventTypeViewRemarksTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ETEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = EventTypeEventsFeature_TH2.Id,FeatureUniqeCode = EventTypeEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = EventTypeObjectTable.Id, TabNameTextCodeId = EventTypeEventsTextCode_TH2.Id, TabNameTextCodeCode = EventTypeEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    

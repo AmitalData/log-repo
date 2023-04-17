@@ -2784,6 +2784,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EventRemarks&quot;"
     ListPropertyPath="&quot;EventRemarks&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3015,7 +3016,7 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Event Remarks&quot;"
+    TabName="&quot;View Remarks&quot;"
     ObjectTableName="&quot;EventType&quot;"
     Code="&quot;ETER&quot;"
     ControlPath="&quot;./InfrastructureModules/InfrastructureOthers/Components/EventType/EventRemarksComponent&quot;"
