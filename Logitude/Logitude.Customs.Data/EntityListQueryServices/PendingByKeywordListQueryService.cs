@@ -33,15 +33,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           KeywordsList = a.KeywordsList, 
                                                            SearchByFieldCode = a.SearchByFieldCode,
                                                             SearchByFieldName = a.SearchByFieldCode!=null ? (a.SearchByFieldCode=="1" ?
-                                                            "���� �����"//"���� �����" 
+                                                            "תאור טובין"//"���� �����" 
                                                             :
-                                                            "�� �����"///"�� �����"
+                                                            "שם יבואן"///"�� �����"
                                                             ) :null,
                                                             SearchType=a.SearchType,
                                                           SearchTypesName = a.SearchType != null ? (a.SearchType == "1" ?
-                                                            "����" 
+                                                            "מילה" 
                                                             :
-                                                            "��� �����"
+                                                             "חלק ממילה"
                                                             ) : null,
                                                           Remove = "",
                                                           ExceptKeywords=a.ExceptKeywords,
