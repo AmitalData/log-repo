@@ -208,16 +208,37 @@
             <!-- [ Declaration Approval ] -->
             <panel *ngIf="ShowShipmentAsDeclaration" [ShowWhitePanelOnMobile]="true">
 
-                <div body class="declaration-approval">
-
-                    <div class="declaration-approval-message">{{ approvalMessage }}</div>
-
-                    <div class="declaration-approval-toolbar" *ngIf="!hasApprovalDeclineResponse">
-                        <button class="declaration-approval-toolbar-button__red animate"
-                            (click)="DenyDeclaration()">דחיה</button>
-                        <button class="declaration-approval-toolbar-button__green animate"
-                            (click)="ApproveDeclaration()">אישור</button>
+                <div body class="declaration-approval" style="display:flex;flex-direction: row;flex-wrap: wrap;">
+                    <div *ngIf="ShowDocumentMNO" class="declaration-approval-document" >
+                        <div *ngIf="IsPDF" style="height:100%;">
+                            <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe"  width="450px" height="500px" >Loading...</iframe>
+                        </div>
+                        <div *ngIf="!IsPDF" style="text-align:center;">
+                            <table>
+                                <tr style="height:1px;"> 
+                                    <td>
+                                        המסמך "הזמנת כסף" לא קיים במשלוח זה
+                                    </td>
+                                </tr>
+                              
+                            </table>
+                        </div>
                     </div>
+                    <div [ngClass]="ShowDocumentMNO ? 'declaration-approval-show' : 'declaration-approval-show1'" >
+                   
+                        <div class="declaration-approval-message" >{{ approvalMessage }}</div>
+    
+                        <div class="declaration-approval-toolbar"  *ngIf="!hasApprovalDeclineResponse">
+                            <div style="margin: 10px;">                  
+                              <button class="declaration-approval-toolbar-button__red animate"
+                                  (click)="DenyDeclaration()">דחיה</button>
+                              <button class="declaration-approval-toolbar-button__green animate"
+                                (click)="ApproveDeclaration()">אישור</button>
+                            </div>
+                        </div>
+                    </div>
+
+                   
                 </div>
 
             </panel>
@@ -611,7 +632,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf=" !IsOrderShipment && cargoTrackingShipmentPM.DirectionId != 'E'">
+                        <div *ngIf="cargoTrackingShipmentPM?.ImportManifest && !IsOrderShipment && cargoTrackingShipmentPM.DirectionId != 'E'">
                             <div class="title">Import Manifest</div>
                             <div class="description">
                                 {{cargoTrackingShipmentPM?.ImportManifest}}
@@ -702,12 +723,12 @@
                         </div>
                         <div>
                             <div class="title">Declaration Status</div>
-                            <div class="description TextTrimming">
-                                {{cargoTrackingShipmentPM.CustomsData.DeclarationStatus}}
-                                <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus && this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus.length > 18"
+                            
+                                <!-- <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus && this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus.length > 18"
                                     (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus)"
-                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
-                            </div>
+                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a> -->
+                                    <custom-label *ngIf="this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus && this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus.length > 18">{{this.cargoTrackingShipmentPM.CustomsData?.DeclarationStatus}}</custom-label>
+
                         </div>
                         <div>
                             <div class="title">IMPORTER VAT</div>
@@ -742,12 +763,13 @@
                         </div>
                         <div>
                             <div class="title">goods description</div>
-                            <div class="description TextTrimming">{{cargoTrackingShipmentPM.CustomsData.GoodsDescription
-                                }}
-                                <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.GoodsDescription && this.cargoTrackingShipmentPM.CustomsData.GoodsDescription.length > 18"
+                            
+                                <!-- <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.GoodsDescription && this.cargoTrackingShipmentPM.CustomsData.GoodsDescription.length > 18"
                                     (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.GoodsDescription)"
-                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
-                            </div>
+                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a> -->
+                          
+                            <custom-label >{{this.cargoTrackingShipmentPM.CustomsData?.GoodsDescription}}</custom-label>
+
                         </div>
                         <div>
                             <div class="title">total taxes nis</div>
@@ -966,13 +988,7 @@
                                                             width="14" height="14" version="1.1"
                                                             viewBox="0 0 512.17 512.17" xml:space="preserve"
                                                             xmlns="http://www.w3.org/2000/svg" class="direction-icon">
-                                                            <g xmlns="http://www.w3.org/2000/svg">
-                                                                <path class=""
-                                                                    d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
-                                                                    fill="var(--MainColor)" data-original="#000000" />
-
-
-                                                            </g>
+                                                           
                                                         </svg>
                                                         {{direction.Label}} {{direction.Date | date:'dd/MM/yyyy'}}
                                                     </div>
@@ -1150,7 +1166,7 @@
 
 
 
-            <panel *ngIf="!ShowShipmentAsDeclaration" [Title]="'SHO List'"
+            <panel *ngIf="!ShowShipmentAsDeclaration && !IsOrderShipment" [Title]="'SHO List'"
                 style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
 
                 <div body style="padding: 0px 8px 13px 0px;">
@@ -1201,7 +1217,7 @@
                             <div [class.hidden]="partnerCard.Name == null" class="card partner-card"
                                  *ngIf="checkPartnerTypePermissionSharedAccess(partnerCard.Type)">
                                 <div class="header">
-                                    <div class="partners-buttons hide-mobile" *ngIf="checkPartnerTypePermissionContactAccess(partnerCard.Type)">
+                                    <div class="partners-buttons hide-mobile" *ngIf="partnerCard.PhoneNumber && checkPartnerTypePermissionContactAccess(partnerCard.Type)">
                                         <div class="circle-icon">
                                             <a [href]="'tel:'+partnerCard.PhoneNumber">
                                                 <img src="./assets/images/icons/call-white.svg" alt="">

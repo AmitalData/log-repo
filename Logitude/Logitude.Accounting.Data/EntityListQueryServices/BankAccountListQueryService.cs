@@ -84,6 +84,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      CurrencyCode = a.Currency == null ? null : a.Currency.Code,
                                                      CurrencySign = a.Currency == null ? null : a.Currency.Sign,
                                                      CurrencyId = a.CurrencyId,
+                                                     TotalOpenExternalTransactions=a.TotalOpenExternalTransactions,
+                                                     TotalOpenPagesLines=a.TotalOpenPagesLines,
 
                                                  });
             return query;

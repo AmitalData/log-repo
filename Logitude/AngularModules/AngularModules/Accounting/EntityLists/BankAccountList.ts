@@ -45,6 +45,8 @@ export class BankAccountList {
 	CurrencySign: string;
 	PrintingBranchNumber: string;
 	PrintingAccountNumber: string;
+	TotalOpenExternalTransactions: string;
+	TotalOpenPagesLines: string;
 	
 }
  

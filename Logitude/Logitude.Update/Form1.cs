@@ -187,7 +187,7 @@ namespace Logitude.Update
 
         Stopwatch globalStopwatch;
         Label generalLabel;
-        private void UpdateModule(int tenant, string name, Label lable)
+        public void UpdateModule(int tenant, string name, Label lable)
         {
             SetControlPropertyValue(lable, "Text", "Updating...");
             SetControlPropertyValue(lable, "ForeColor", Color.Black); // timer

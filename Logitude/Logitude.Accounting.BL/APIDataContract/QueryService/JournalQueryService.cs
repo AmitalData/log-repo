@@ -297,6 +297,23 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 throw ex;
             }
         }
+
+
+        public JournalLite GetSingleJournalLiteByExternalNoAndExternalSystem(string externalNo, string externalSysem, int Tenant)
+        {
+            try
+            {
+                string journalId = query.GetSingleJournalIdByExternalNoAndExternalSystem(externalNo, externalSysem, Tenant);
+
+                return new JournalLite() { Id = journalId };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public JournalPM GetJournalPMById(string id, int Tenant)
         {
            
@@ -327,6 +344,32 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 throw ex;
             }
         }
+
+        public ARInvoiceJournalLT GetSingleJournalLiteByAccountingEntity(string accountingEntityId, string accountingEntityCode, int Tenant)
+        {
+            try
+            {
+                Logitude.Accounting.Def.EntityPMs.JournalLite journalLite = query.GetJournalLiteByAccountingEntityId(accountingEntityId, accountingEntityCode, Tenant);
+                //if (journalPM == null)
+                //    throw new ApplicationException("Journal with accounting entity id " + accountingEntityId + " and accounting entity code " + accountingEntityCode + " doesn't exist");
+
+                ARInvoiceJournalLT aRInvoiceJournalLT = new ARInvoiceJournalLT()
+                {
+                    Id = accountingEntityId,
+                    JournalId = journalLite != null ? journalLite.JournalId : "",
+                    IsLedgerCreated = journalLite != null ? journalLite.IsLedgerCreated : false,
+                };
+
+                return aRInvoiceJournalLT;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
 
     }
 }

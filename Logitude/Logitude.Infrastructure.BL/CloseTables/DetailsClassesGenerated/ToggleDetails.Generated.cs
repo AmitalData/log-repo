@@ -939,6 +939,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "RE2, Reports Execution WR Version 2", 
                 Description = "Reports Execution WR Version 2", 
 			});
+
 			
             return all;
        }

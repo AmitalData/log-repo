@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
+using Devart.Data.Linq;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
@@ -43,7 +44,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 		private IQueryable<ChartOfAccountsType> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<ChartOfAccountsType> iQueryable)
         {
 			return iQueryable;
-		}
+        }
+      
+
+
+
 	}
 
 

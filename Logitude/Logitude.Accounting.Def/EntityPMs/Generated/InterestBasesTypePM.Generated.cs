@@ -331,7 +331,7 @@ namespace Logitude.Accounting.Def.EntityPMs
               }
              set {  deletedInterestBasesPeriods = value; }
 	    }
-	     }
+	  	    }
    
 }
 	 

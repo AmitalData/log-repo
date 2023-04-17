@@ -92,6 +92,10 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string PrintingBranchNumber { get; set; }
         [Column("PrintingAccountNumber")]
 	    public string PrintingAccountNumber { get; set; }
+        [Column("TotalOpenExternalTransactions")]
+	    public string TotalOpenExternalTransactions { get; set; }
+        [Column("TotalOpenPagesLines")]
+	    public string TotalOpenPagesLines { get; set; }
     }
 }
 	 

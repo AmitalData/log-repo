@@ -295,7 +295,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 step.Directions.Add(this.BuildImportRouteDirection(shipmentPM.WarehouseLegExpectedReleaseDate, "ETA"));
 
             if (shipmentPM.WarehouseLegActualEntryDate != null)
-                step.Directions.Add(this.BuildExportRouteDirection(shipmentPM.WarehouseLegActualEntryDate, "ATD"));
+                step.Directions.Add(this.BuildExportRouteDirection(shipmentPM.WarehouseLegActualEntryDate, "ATA"));
 
             if (shipmentPM.WarehouseLegActualReleaseDate != null)
                 step.Directions.Add(this.BuildImportRouteDirection(shipmentPM.WarehouseLegActualReleaseDate, "ATA"));

@@ -32,10 +32,18 @@ namespace Simplog.Server.Infrastructure.Azure
                     }
                     else
                     {
+                        string dProtocol = @"http://";
+                        if (LogitudeSettings.IsCostomsDeploy || LogitudeSettings.StorageAccountName.Equals("amitalexporttest", StringComparison.OrdinalIgnoreCase))
+                        {
+                            dProtocol = @"httpS://";
+                        }
+
+
                         storageaccount = new CloudStorageAccount(new StorageCredentials(LogitudeSettings.StorageAccountName, LogitudeSettings.StorageAccountKey),
-    new Uri(@"http://" + LogitudeSettings.StorageAccountName + ".blob.core.windows.net/"),
-    new Uri(@"http://" + LogitudeSettings.StorageAccountName + ".queue.core.windows.net/"),
-    new Uri(@"http://" + LogitudeSettings.StorageAccountName + ".table.core.windows.net/"), null);
+    new Uri(dProtocol + LogitudeSettings.StorageAccountName + ".blob.core.windows.net/"),
+    new Uri(dProtocol + LogitudeSettings.StorageAccountName + ".queue.core.windows.net/"),
+    new Uri(dProtocol + LogitudeSettings.StorageAccountName + ".table.core.windows.net/"), null);
+
                     }
                     //                switch (LogitudeSettings.DeploymentStage)
                     //                {
@@ -277,7 +285,7 @@ namespace Simplog.Server.Infrastructure.Azure
 
              
             CloudBlobContainer blobContainer = BlobClient.GetContainerReference(containername);
-            if (!LogitudeSettings.IsCostomsDeploy)
+            //if (!LogitudeSettings.IsCostomsDeploy)//TASK 166155
             {
                 blobContainer.CreateIfNotExists();
             }

@@ -36,6 +36,7 @@ using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.Accounting.BL.CoreBL.InterestTrans;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -664,7 +665,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var myJournalStornoService = new JournalStornoService();
             IJournalStornoPrepareJReconcileService journalStornoPrepareJReconcileService = new JournalStornoPrepareJReconcileService();
             journalStornoPrepareJReconcileService.MustInitialize(newAccountingContextDueCreatedJournal, _JornalPmSource);
-            myJournalStornoService.Init(_JornalPmSource, _StornoOverrideM, _journalUpdateService, journalStornoPrepareJReconcileService);
+            IJournalStornoPrepareExternalReconcileService journalStornoPrepareExternalReconcileService = new JournalStornoPrepareExternalReconcileService(newAccountingContextDueCreatedJournal, _JornalPmSource);
+            myJournalStornoService.Init(_JornalPmSource, _StornoOverrideM, _journalUpdateService, journalStornoPrepareJReconcileService, journalStornoPrepareExternalReconcileService);
             var journalUpdate = new JournalUpdateOnUpdating(this.MainContext as IAccountingContext, myJournalStornoService);
             //if (this.GetType().Name == "JournalVoidUpdateService")//
             return journalUpdate;

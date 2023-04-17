@@ -29,6 +29,8 @@ using Logitude.BL.Resolvers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Accounting.Data.DataContract;
 using Simplog.Data.Helpers;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using System.Runtime.Remoting.Contexts;
 using Logitude.BL.Security;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
@@ -318,6 +320,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<string> GetNextGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
         {
             List<string> allIdAccounts = repository.GetNextGLAccountIdByTypeControl(tenant, accountTypeCode, isControlAccount, lastMadeGLAccountId, maxGLAccountsPerQuery);
+
+            return allIdAccounts;
+        }
+
+        public List<string> GetNextGLAccountIdByTypeControlNoParent(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
+        {
+            List<string> allIdAccounts = repository.GetNextGLAccountIdByTypeControlNoParent(tenant, accountTypeCode, isControlAccount, lastMadeGLAccountId, maxGLAccountsPerQuery);
+
+            return allIdAccounts;
+        }
+
+        public List<string> GetNextGLAccountIdByTypeControlDescendant(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
+        {
+            List<string> allIdAccounts = repository.GetNextGLAccountIdByTypeControlDescendant(tenant, accountTypeCode, isControlAccount, lastMadeGLAccountId, maxGLAccountsPerQuery);
 
             return allIdAccounts;
         }
@@ -1419,6 +1435,192 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return gLAccountRepository.GetByGLAccountsIdList(glaccountIds, tenant);
         }
 
+        public void CopyFromTenant0(int tenant, int tenatToCopy)
+        {
+            IAccountingContext context = MainContext as AccountingContext;
+            GLAccountUpdateService service = new GLAccountUpdateService(context, new Dictionary<string, IContext>(), tenatToCopy);
+            GLAccountMoreDataUpdateService glAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(context, new Dictionary<string, IContext>(), tenatToCopy);
+
+
+            ChartOfAccountRepository ChartOfAccountRepository = new ChartOfAccountRepository(context);
+            List<ChartOfAccount> chartOfAccount = ChartOfAccountRepository.GetAll(tenatToCopy).Where(t => t.Inactive == false).ToList();
+            List<GLAccount> pocosIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount==true).ToList();
+            List<GLAccount> pocosNotIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
+           
+            foreach (var item in pocosIsControlAccount)
+            {
+                GLAccountPM glAccountPM = new GLAccountPM()
+                {
+                    Tenant = tenatToCopy,
+                    AccountTypeCode = item.AccountTypeCode,
+                    DisplayNumber = item.DisplayNumber,
+                    LocalName = item.LocalName,
+                    EnglishName = item.EnglishName,
+                    SearchFields = item.SearchFields,
+                    IsMultiCurrency = item.IsMultiCurrency,
+                    CurrencyId = item.CurrencyId,
+                    RevenueExpenseType = item.RevenueExpenseType,
+                    IsControlAccount = item.IsControlAccount,
+                   ChartOfAccountsId = chartOfAccount?.Where(c=>c.TypeCode== item.ChartOfAccountsTypeCode).FirstOrDefault().Id,
+                    Inactive = item.Inactive,
+                   ChartOfAccountsTypeCode = item.ChartOfAccountsTypeCode,
+                    ReconcileMethodCode = item.ReconcileMethodCode,
+                    ControlAccountId =null,
+                    AutomaticReconcileId = item.AutomaticReconcileId,
+                    PreviousEnglishName = item.PreviousEnglishName,
+                    PreviousLocalName = item.PreviousLocalName,
+                    PreviousNumber = item.PreviousNumber,
+                    PreviousChartOfAccountsId = item.PreviousChartOfAccountsId,
+                    CustomerGLAccountId = item.CustomerGLAccountId,
+                    RevaluationEnabled = item.RevaluationEnabled,
+                    ParentAccountId = item.ParentAccountId,
+                    Category1Id = item.Category1Id,
+                    Category2Id = item.Category2Id,
+                    Category3Id = item.Category3Id,
+                    Category4Id = item.Category4Id,
+                    Category5Id = item.Category5Id,
+                    IsVATExempt = item.IsVATExempt,
+                    DeductionFileTypeId = item.DeductionFileTypeId,
+                    DeductionFileNumber = item.DeductionFileNumber,
+                    AssessingOfficeCode = item.AssessingOfficeCode,
+                    Occupation = item.Occupation,
+                    DeductionTypeId = item.DeductionTypeId,
+                    ConsolidationVat = item.ConsolidationVat,
+                    IsEquipmentVendor = item.IsEquipmentVendor,
+                    ExcludeFromDeductionReport = item.ExcludeFromDeductionReport,
+                  
+                    AllowEditChequePayToName = item.AllowEditChequePayToName,
+                    ActiveForInterest = item.ActiveForInterest,
+                    InterestCalculationStartDate = item.InterestCalculationStartDate,
+                    ActiveForInterestCreditInvoice = item.ActiveForInterestCreditInvoice,
+                    InterestCreditLimit = item.InterestCreditLimit,
+                    NameForPrintingCheques = item.NameForPrintingCheques,
+                    Smallcashbook = item.Smallcashbook,
+                    MinimumInterestInvoiceBilling = item.MinimumInterestInvoiceBilling,
+                    ReportingAsAnotherDocument = item.ReportingAsAnotherDocument,
+                    CreditAllotmentPercentage = item.CreditAllotmentPercentage,
+                    CardsDataId = item.CardsDataId,
+                    PostponedChequesCommission = item.PostponedChequesCommission,
+                    InterestOpenBalance = item.InterestOpenBalance
+
+
+
+
+                };
+
+
+
+
+
+                glAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                service.Update(glAccountPM, true);
+                context.SaveChanges();
+            }
+             pocosIsControlAccount = repository.GetAll(tenatToCopy).Where(t => t.Inactive == false && t.IsControlAccount == true).ToList();
+
+
+            foreach (var item in pocosNotIsControlAccount)
+            {
+                GLAccountPM glAccountPM = new GLAccountPM()
+                {
+                    Tenant = tenatToCopy,
+                    AccountTypeCode = item.AccountTypeCode,
+                    DisplayNumber = item.DisplayNumber,
+                    LocalName = item.LocalName,
+                    EnglishName = item.EnglishName,
+                    SearchFields = item.SearchFields,
+                    IsMultiCurrency = item.IsMultiCurrency,
+                    CurrencyId = item.CurrencyId,
+                    RevenueExpenseType = item.RevenueExpenseType,
+                    IsControlAccount = item.IsControlAccount,
+                    ChartOfAccountsId = chartOfAccount?.Where(c => c.TypeCode == item.ChartOfAccountsTypeCode).FirstOrDefault().Id,
+                    Inactive = item.Inactive,
+                    ChartOfAccountsTypeCode = item.ChartOfAccountsTypeCode,
+                    ReconcileMethodCode = item.ReconcileMethodCode,
+                    ControlAccountId = item.ChartOfAccountsTypeCode == "3" ? pocosIsControlAccount?.Where(t => t?.ChartOfAccountsTypeCode == "3").FirstOrDefault().Id : item.ChartOfAccountsTypeCode == "4" ? pocosIsControlAccount?.Where(t => t?.ChartOfAccountsTypeCode == "4").FirstOrDefault().Id : null,
+                    AutomaticReconcileId = item.AutomaticReconcileId,
+                    PreviousEnglishName = item.PreviousEnglishName,
+                    PreviousLocalName = item.PreviousLocalName,
+                    PreviousNumber = item.PreviousNumber,
+                    PreviousChartOfAccountsId = item.PreviousChartOfAccountsId,
+                    CustomerGLAccountId = item.CustomerGLAccountId,
+                    RevaluationEnabled = item.RevaluationEnabled,
+                    ParentAccountId = item.ParentAccountId,
+                    Category1Id = item.Category1Id,
+                    Category2Id = item.Category2Id,
+                    Category3Id = item.Category3Id,
+                    Category4Id = item.Category4Id,
+                    Category5Id = item.Category5Id,
+                    IsVATExempt = item.IsVATExempt,
+                    DeductionFileTypeId = item.DeductionFileTypeId,
+                    DeductionFileNumber = item.DeductionFileNumber,
+                    AssessingOfficeCode = item.AssessingOfficeCode,
+                    Occupation = item.Occupation,
+                    DeductionTypeId = item.DeductionTypeId,
+                    ConsolidationVat = item.ConsolidationVat,
+                    IsEquipmentVendor = item.IsEquipmentVendor,
+                    ExcludeFromDeductionReport = item.ExcludeFromDeductionReport,
+
+                    AllowEditChequePayToName = item.AllowEditChequePayToName,
+                    ActiveForInterest = item.ActiveForInterest,
+                    InterestCalculationStartDate = item.InterestCalculationStartDate,
+                    ActiveForInterestCreditInvoice = item.ActiveForInterestCreditInvoice,
+                    InterestCreditLimit = item.InterestCreditLimit,
+                    NameForPrintingCheques = item.NameForPrintingCheques,
+                    Smallcashbook = item.Smallcashbook,
+                    MinimumInterestInvoiceBilling = item.MinimumInterestInvoiceBilling,
+                    ReportingAsAnotherDocument = item.ReportingAsAnotherDocument,
+                    CreditAllotmentPercentage = item.CreditAllotmentPercentage,
+                    CardsDataId = item.CardsDataId,
+                    PostponedChequesCommission = item.PostponedChequesCommission,
+                    InterestOpenBalance = item.InterestOpenBalance
+
+
+
+
+                };
+
+
+
+
+
+                glAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                service.Update(glAccountPM, true);
+
+            }
+
+            GLAccountMoreDataRepository glAccountMoreDataRepository = new GLAccountMoreDataRepository(context);
+            List<GLAccountMoreData> GLAccountMoreData0 = glAccountMoreDataRepository.GetAll(tenant).ToList();
+            List<GLAccount> GLAccountTenant0 = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
+            List<GLAccount> GLAccount= repository.GetAll(tenatToCopy).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
+            foreach (var item in GLAccountMoreData0)
+            {
+                var interNumber=GLAccountTenant0.Find(c => c.Id == item.AccountId).InternalNumber;
+                var AccountId=GLAccount.Find(c => c.InternalNumber == interNumber).Id;
+                GLAccountMoreDataPM glAccountMoreDataPM = new GLAccountMoreDataPM()
+                {
+                    AccountId= AccountId,
+                    Tenant=tenatToCopy,
+                    BalanceInLocalCurrency=item.BalanceInLocalCurrency,
+                    LocalBalanceInDue=item.LocalBalanceInDue,
+                    NextDueDate=item.NextDueDate,
+                    TotalOpenChequesInLocalCur=item.TotalOpenChequesInLocalCur,
+                    TotFutureOpenChequesInLocalCur=item.TotFutureOpenChequesInLocalCur,
+                    BalanceInForeignCurrency=item.BalanceInForeignCurrency,
+                    ForeignBalanceInDue=item.ForeignBalanceInDue
+                };
+                glAccountMoreDataPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                glAccountMoreDataUpdateService.Update(glAccountMoreDataPM, true);
+                context.SaveChanges();
+
+
+            }
+
+
+
+            context.SaveChanges();
+
+        }
     }
     public class GLAccountCurrencyBalance
     {
@@ -1441,7 +1643,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
     {
         List<GLAccountPM> GetByGLAccountsIdList(List<String> GLAccountsIdList, int tenant);
     }
-    
+
+
+   
+
+
 
 }
 

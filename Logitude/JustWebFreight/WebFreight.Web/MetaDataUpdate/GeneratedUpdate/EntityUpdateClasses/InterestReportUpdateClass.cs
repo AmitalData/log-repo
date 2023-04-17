@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "b48820bf408ad27d79af1cf75df4a299";
+		public const string HashString = "a0e86489307ec5236516af5b5f0c66e7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4421,6 +4421,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOPrintInvoicesAndAttachedReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.PrintInvoicesAndAttachedReports", DefaultText = "Print Invoices and Attached Reports",LocalDefaultText = @"הדפס את החשבוניות עם דוחות הריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOPrintInvoicesAlone = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.PrintInvoicesAlone", DefaultText = "Print Invoices Alone",LocalDefaultText = @"הדפס חשבוניות בלבד", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOOpeningBalanceNotCalculated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.OpeningBalanceNotCalculated", DefaultText = "Opening balance for interest has not been calculated",LocalDefaultText = @"טרם חושבה יתרת פתיחה לריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

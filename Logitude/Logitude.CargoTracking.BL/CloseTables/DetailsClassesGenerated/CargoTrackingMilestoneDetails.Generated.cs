@@ -206,8 +206,8 @@ namespace Logitude.CargoTracking.BL
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "20", 
-                EnglishName = "Invoiced", 
-                SearchFields = "20,Invoiced,הופקה חשבונית", 
+                EnglishName = "Invoice Issued", 
+                SearchFields = "20,Invoice Issued,הופקה חשבונית", 
                 LocalName = "הופקה חשבונית", 
                 Inactive = false, 
                 Weight = 200, 

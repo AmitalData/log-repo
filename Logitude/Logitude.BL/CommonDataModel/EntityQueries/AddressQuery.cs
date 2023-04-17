@@ -326,7 +326,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   ZipCode = a.ZipCode,
                                                   City = a.City,
                                                   CountryCode = a.Country != null ? a.Country.Code : null,
-                                                  CountryName = a.Country != null? a.Country.LocalName:null,
+                                                  CountryName = a.Country != null ? a.IsLocalLanguage? a.Country.LocalName : a.Country.EnglishName  : null,
                                                   AddressTypeId = a.AddressTypeId,
                                                   Id = a.Id,
                                                   Address1 = a.Address1,

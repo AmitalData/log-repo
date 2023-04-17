@@ -49,7 +49,7 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.LineNumber == keys.LineNumber && a.GLAccountId == keys.GLAccountId
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(GLAccountInterestPeriod entity)
         {

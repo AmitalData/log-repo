@@ -8,6 +8,8 @@ import {
     OnInit,
     HostListener
 } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import {Router, ActivatedRoute, NavigationStart, NavigationEnd} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {CargoTrackingSearchService} from '../../../../Services/Others/CargoTrackingSearchService';
@@ -94,7 +96,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     get enableExportToExcel() {
         return CargoTrackingBrandingData.EnableExportToExcel;
     }
-
+    
     FiltersSelectedInvitedCustoms: any[] = [];
     ShipmentSearchInput: CargoTrackingShipmentSearchInput = new CargoTrackingShipmentSearchInput();
     MilestonesStatus: any[] = [];
@@ -104,16 +106,16 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     InvitedCustomersDictionary : {} = {};
 
     constructor(private router: Router,
-                private route: ActivatedRoute,
-                private formBuilder: FormBuilder,
-                private changeDetector: ChangeDetectorRef,
-                private cargoTrackingPortService: CargoTrackingPortService,
-                private cargoTrackingShipmentService: CargoTrackingShipmentService,
-                public dialog: MatDialog,
-                private searchService: CargoTrackingSearchService,
-                private milestonesService: CargoTrackingMilestoneService,
-                public sharedService: SharedService,
-                private logitudeGridExportToExcelService: LogitudeGridExportToExcelService) {
+        private route: ActivatedRoute,
+        private formBuilder: FormBuilder,
+        private changeDetector: ChangeDetectorRef,
+        private cargoTrackingPortService: CargoTrackingPortService,
+        private cargoTrackingShipmentService: CargoTrackingShipmentService,
+        public dialog: MatDialog,
+        private searchService: CargoTrackingSearchService,
+        private milestonesService: CargoTrackingMilestoneService,
+        public sharedService: SharedService,
+        private logitudeGridExportToExcelService: LogitudeGridExportToExcelService) {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
 
@@ -322,7 +324,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
         this.LoadScreenData();
     }
-
+    private timerToken: any;
+    onSearchChange(){
+        
+        this.timerToken = setTimeout(() => this.LoadScreenData(), 500);
+        this.ShipmentSearchInput;
+    }
     sortBySelectionChangedHandler(event) {
         switch (event) {
             case SortOptions.ASC:
@@ -357,7 +364,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.LoadScreenData();
         this.showMobileSortMenu = false;
     }
-
+    
     DeselectTransportModeFilter(code) {
         RootContext.ShipmentsScrollPosition = 0;
         this.ShipmentSearchInput.TransportModeCodes = this.ShipmentSearchInput.TransportModeCodes.filter(e => e != code)
@@ -597,6 +604,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
 
     LoadScreenData() {
+        
         if (this.tenant) {
             this.ShipmentSearchInput.Tenant = this.tenant;
             var shipmentFilters = this.BuildShipmentFilters();

@@ -512,6 +512,45 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), payment, tenant); ;
         }
+
+
+
+        public string GetSinglePaymentIdByPaymentNumber(string paymentNo, int tenant)
+        {
+            ARPayment entityPOCO =
+                (from a in repository.context.ARPayments
+                 where a.PaymentNo == paymentNo && a.Tenant == tenant
+                 select a).FirstOrDefault();
+            if (entityPOCO == null)
+            {
+                return null;
+            }
+            else
+            {
+                return entityPOCO.Id;
+            }
+        }
+
+
+
+        public string GetCheckPaymentId(string paymentId, int tenant)
+        {
+            ARPayment entityPOCO =
+                (from a in repository.context.ARPayments
+                 where a.Id == paymentId && a.Tenant == tenant
+                 select a).FirstOrDefault();
+            if (entityPOCO == null)
+            {
+                return null;
+            }
+            else
+            {
+                return entityPOCO.Id;
+            }
+        }
+
+
+
         private string GetBankAccountNumberById(string id, int tenant)
         {
             IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;

@@ -961,9 +961,16 @@ h1 {
     text-align: right;
     font-weight: 600;
     direction: rtl;
+    flex-basis: 90%;
+}
+.declaration-approval-document{
+  
+    direction: ltr;
+    padding-bottom: 25px;
+    
 }
 .declaration-approval-toolbar{
-    padding: 20px 0px 15px 0;
+    padding: 20px 0px 15px 0;   
 }
 .declaration-approval-toolbar button{
     border: none;
@@ -981,11 +988,22 @@ h1 {
 .declaration-approval-toolbar-button__red{
     background: #dd8840;
 }
-
-
+.declaration-approval-show{
+    width:72%;
+    display:flex;
+    flex-direction: column;
+}
+.declaration-approval-show1{
+    width:100%;
+    display:flex;
+    flex-direction: column;
+}
 @media screen and (max-width: 479px) and (orientation: portrait),
 (max-height: 479px) and (orientation: landscape) {
-
+    .declaration-approval-show{
+        width:100%;
+       
+    }
     .special-padding{
         padding: 50px 10px 0 10px;
         box-sizing: border-box;

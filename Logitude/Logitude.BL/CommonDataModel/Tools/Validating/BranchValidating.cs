@@ -14,19 +14,17 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
         public static void Validate(BranchPM entityPM, BranchRepository entityRepository)
         {
-            bool hasBranchCounterCodeFeature = FeatureToggleHelper.HasFeatureToggle("BCC", entityPM.Tenant);
-            if (!hasBranchCounterCodeFeature) return;
-            if (string.IsNullOrEmpty(entityPM.CounterCode))
-            {
-                throw new Exception("Counter Code is Required");
-            }
+            //if (string.IsNullOrEmpty(entityPM.CounterCode))
+            //{
+            //    throw new Exception("Counter Code is Required");
+            //}
 
-            Branch branch = entityRepository.GetBranchByCounterCode(entityPM.CounterCode, entityPM.Tenant);
+            //Branch branch = entityRepository.GetBranchByCounterCode(entityPM.CounterCode, entityPM.Tenant);
 
-            if (branch != null && branch.Id != entityPM.Id)
-            {
-                throw new Exception("Counter Code is already used in " + branch.EnglishName + " branch ");
-            }
+            //if (branch != null && branch.Id != entityPM.Id)
+            //{
+            //    throw new Exception("Counter Code is already used in " + branch.EnglishName + " branch ");
+            //}
         }
     }
 }

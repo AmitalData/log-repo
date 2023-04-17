@@ -46,14 +46,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 string xmlstring;
                 ARInvoiceQueryService Service = new ARInvoiceQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                ARInvoice aRInvoice = new ARInvoice();
+                ARInvoiceLite aRInvoice = new ARInvoiceLite();
                 if (!string.IsNullOrEmpty(id))
                 {
-                    aRInvoice = Service.GetARInvoiceById(id, tenant);
+                    //  aRInvoice = Service.GetARInvoiceById(id, tenant);
+                    aRInvoice = Service.GetARInvoiceLiteById(id, tenant);
                 }
                 else if (!string.IsNullOrEmpty(number))
                 {
-                    aRInvoice = Service.GetARInvoiceByInvoiceNumber(number, tenant);
+               //   aRInvoice = Service.GetARInvoiceByInvoiceNumber(number, tenant);
+                    aRInvoice = Service.GetARInvoiceLiteByInvoiceNumber(number, tenant);
                 }
                 ARInvoiceJournalLT journalLTResult_onlyInv = new ARInvoiceJournalLT()
                 {
@@ -66,7 +68,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 if (aRInvoice != null && !String.IsNullOrEmpty(aRInvoice.Id))
                 {
                     JournalQueryService journalQueryService = new JournalQueryService(tenant);
-                    ARInvoiceJournalLT journalLTResult = journalQueryService.GetSingleJournalByAccountingEntity(aRInvoice.Id, "2", tenant);
+                 // ARInvoiceJournalLT journalLTResult = journalQueryService.GetSingleJournalByAccountingEntity(aRInvoice.Id, "2", tenant);
+                    ARInvoiceJournalLT journalLTResult = journalQueryService.GetSingleJournalLiteByAccountingEntity(aRInvoice.Id, "2", tenant);
                     if (journalLTResult == null || String.IsNullOrEmpty(journalLTResult.JournalId))
                     {
                         Result = journalLTResult_onlyInv;

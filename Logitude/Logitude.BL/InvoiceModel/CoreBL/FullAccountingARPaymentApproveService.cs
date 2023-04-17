@@ -76,11 +76,14 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             {
                 AddNewBankTransfers();
             }
-            AddARPaymentJounal();
-            CreatePaymentJournalIfNotCreated();
+            if (String.IsNullOrEmpty(paymentPM.ExternalAccountingEntityId) || String.IsNullOrEmpty(paymentPM.JournalId))
+            {
+                AddARPaymentJournal();
+                CreatePaymentJournalIfNotCreated();
+            }
         }
 
-        private void AddARPaymentJounal()
+        private void AddARPaymentJournal()
         {
             if (!paymentPM.SetVoided)
             {

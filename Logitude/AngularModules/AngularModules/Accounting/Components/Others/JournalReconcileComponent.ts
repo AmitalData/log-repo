@@ -19,6 +19,8 @@ import {FullAccountingSettingList} from '../../EntityLists/FullAccountingSetting
 import {GLAccountPMService} from '../../Services/StandardPMs/GLAccountPMService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+import { promise } from 'selenium-webdriver';
+import { GLAccountCurrencyPM } from '../../EntityPMs/GLAccountCurrencyPM';
 
 @Component({
 
@@ -342,12 +344,24 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     TotalDifference: any;
     TotalCredit: any;
     TotalDebit: any;
-    SetWindowArgs(winArgs) {
+    SourceGLAccountPM: GLAccountPM;
+    async SetWindowArgs(winArgs) {
         this._SelectedLines = winArgs.SelectedLines;
         this._GLAccountPMId = winArgs.GLAccountPMId;
         this.TotalDifference = winArgs.TotalDifference;
         this.TotalCredit = winArgs.TotalCredit;
         this.TotalDebit = winArgs.TotalDebit;
+
+        await new Promise<void>((resolve) => { 
+        this.gLAccountPMService.get(this._GLAccountPMId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var res = myResponse.Result;
+                this.SourceGLAccountPM = res;
+                resolve();
+            }
+        });
+        });
+
     }
     FillErrors(isSplitJournal: boolean) {
         this.ValidationErrorsList = [];
@@ -382,11 +396,68 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    OkButtonClicked(isSplitJournal: boolean) {
+    async OkButtonClicked(isSplitJournal: boolean) {
         this.FillErrors(isSplitJournal);
-
+        
         if (this.ValidationErrorsList.length > 0) {
             return;
+        }
+
+        if (
+            !AppTool.IsNullOrEmpty(this.SourceGLAccountPM.CurrencyId)
+            && this.GLAccount.IsMultiCurrency) {
+            let pmGLAccount: GLAccountPM = null;
+            this.CurrentSession.StartBusyIndicator("");
+            await new Promise<void>((resolve) => {
+                this.gLAccountPMService.get(this.GLAccountId).subscribe((myResponse: ServiceResponse) => {
+                    this.CurrentSession.StopBusyIndicator();
+                    if (!myResponse.HasError) {
+                        var res = myResponse.Result;
+                        pmGLAccount = res;
+
+                        resolve();
+                    }
+                });
+            });
+            const adjustGLAccountCurrency =
+                pmGLAccount.GLAccountCurrencies.filter(r => r.CurrencyId == this.SourceGLAccountPM.CurrencyId)[0];
+            if (adjustGLAccountCurrency != null) {
+
+                let selectedAccount: string = this.glAccount.LocalName;// + " " + this.glAccount.DisplayNumber;
+
+                let toContinue: boolean = false;
+                const confirmMsg =
+                    //TextCodeTranslator.Translate('Journal.RE.AccountingDateConfrimation');
+`לידיעתך הכרטיס הנבחר ( ${selectedAccount} ) שהיינו רב מטבעי
+מקושר לכרטיס ( ${adjustGLAccountCurrency.GLAccountName} ) שמטבעו ${this.SourceGLAccountPM.CurrencyCode}
+ולכן הפקודה תירשם על הכרטיס המקושר
+האם להמשיך
+`;
+
+                let mess = this.GetMessage(selectedAccount, adjustGLAccountCurrency);
+                const confirmWindow = new ConfirmWindow();
+                //confirmWindow.LayoutDirection = "rtl";
+                confirmWindow.Width = 500;
+                confirmWindow.Left = '25%';
+                confirmWindow.YesButtonText = TextCodeTranslator.Translate('Customs.General.B.OK');
+                confirmWindow.NoButtonText = TextCodeTranslator.Translate('Customs.General.B.Cancel');
+                confirmWindow.Show(mess);
+
+                await new Promise<void>((resolve) => {
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        confirmWindow.Close();
+                        if (confirmWindow.Yes) {
+                            toContinue = true;
+                        }
+                        resolve();   
+                    });
+                });
+                if (!toContinue) {
+                    return;
+                }
+
+                
+            }
         }
 
         const reconciliationLines: ReconciliationLinePM[] = [];
@@ -410,6 +481,21 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         } else {
             this.Reconcile(reconciliationLines);
         }
+    }
+
+    private GetMessage(selectedAccount: string, adjustGLAccountCurrency: GLAccountCurrencyPM) {
+        let confirmMsg1 = TextCodeTranslator.Translate('Journal.RE.AdjustMulti1'); //לידיעתך הכרטיס הנבחר ( XXX ) שהיינו רב מטבעי
+        confirmMsg1 = confirmMsg1.replace('XXX', selectedAccount);
+        let confirmMsg2 = TextCodeTranslator.Translate('Journal.RE.AdjustMulti2'); //מקושר לכרטיס ( XXX ) שמטבעו YYY
+        confirmMsg2 = confirmMsg2
+            .replace('XXX', adjustGLAccountCurrency.GLAccountName)
+            .replace('YYY', this.SourceGLAccountPM.CurrencyCode);
+        let confirmMsg3 = TextCodeTranslator.Translate('Journal.RE.AdjustMulti3');
+        let mess = `${confirmMsg1}
+${confirmMsg2}
+${confirmMsg3}
+`;
+        return mess;
     }
 
     ReconcileSplit(myReconciliationLines: ReconciliationLinePM[]) {

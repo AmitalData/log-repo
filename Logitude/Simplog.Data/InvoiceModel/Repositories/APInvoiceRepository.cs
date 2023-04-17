@@ -77,6 +77,31 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return context.APInvoices.Where(d => d.Tenant == tenant && d.StatusCode != "WA" && d.StatusCode != "VD");
         }
 
+
+        public APInvoice GetSingleAPInvoiceByNumberAndExternalId(string number, string externalId, int tenant)
+        {
+            APInvoice APInvoice = (from a in context.APInvoices
+                                   where a.InternalNumber == number && a.ExternalAccountingEntityId == externalId && a.Tenant == tenant
+                                   select a).FirstOrDefault();
+            return APInvoice;
+        }
+
+        public APInvoice GetSingleAPInvoiceByNumber(string number, int tenant)
+        {
+            APInvoice APInvoice = (from a in context.APInvoices
+                                   where a.InternalNumber == number && a.Tenant == tenant
+                                   select a).FirstOrDefault();
+            return APInvoice;
+        }
+
+        public APInvoice GetSingleAPInvoiceByExternalId(string externalId, int tenant)
+        {
+            APInvoice APInvoice = (from a in context.APInvoices
+                                   where a.ExternalAccountingEntityId == externalId && a.Tenant == tenant
+                                   select a).FirstOrDefault();
+            return APInvoice;
+        }
+
         public IQueryable<APInvoice> GetAPInvoices(int tenant)
         {
             return (from a in context.APInvoices where a.Tenant == tenant select a);

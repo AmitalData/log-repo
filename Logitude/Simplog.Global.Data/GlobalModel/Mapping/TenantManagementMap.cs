@@ -169,6 +169,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ScheduledTasksLimitPerReport).HasColumnName("ScheduledTasksLimitPerReport");
             this.Property(t => t.WhatsAppMessagingPhoneNumber).HasColumnName("WhatsAppMessagingPhoneNumber");
             this.Property(t => t.IsContainerTrackingPrepaid).HasColumnName("IsContainerTrackingPrepaid");
+            this.Property(t => t.ShowMoneyOrder).HasColumnName("ShowMoneyOrder");
             this.Property(t => t.DigitalPortalLastDate).HasColumnName("DigitalPortalLastDate");
             this.Property(t => t.DigitalPortalTotalLastWeek).HasColumnName("DigitalPortalTotalLastWeek");
             this.Property(t => t.DigitalPortalTotalLastMonth).HasColumnName("DigitalPortalTotalLastMonth");

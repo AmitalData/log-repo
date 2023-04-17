@@ -4624,10 +4624,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (this.isApprovingInvoice)
             {
-                // Journal Work
-                if (tenantPOCO.AccountingActivated)
+                if (String.IsNullOrEmpty(entityPM.ExternalAccountingEntityId) || String.IsNullOrEmpty(entityPM.JournalId))
                 {
-                    this.AddARInvoiceJournalAndJournalLines(entityPM, this.isApprovingInvoice);
+                    // Journal Work
+                    if (tenantPOCO.AccountingActivated)
+                    {
+                        this.AddARInvoiceJournalAndJournalLines(entityPM, this.isApprovingInvoice);
+                    }
                 }
 
                 // DropBox

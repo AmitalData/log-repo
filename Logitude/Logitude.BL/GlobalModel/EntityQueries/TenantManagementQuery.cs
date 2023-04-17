@@ -290,6 +290,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                      CargoTokenTimeout = a.CargoTokenTimeout,
                                                      IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                                                     ShowMoneyOrder=a.ShowMoneyOrder,
                                                      DigitalPortalLastDate = a.DigitalPortalLastDate,
                                                      DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                                                      DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
@@ -506,6 +507,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                   CargoTokenTimeout = a.CargoTokenTimeout,
                                                   IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                                                  ShowMoneyOrder = a.ShowMoneyOrder,
+
                                                   DigitalPortalLastDate = a.DigitalPortalLastDate,
                                                   DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                                                   DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
@@ -712,6 +715,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                         CargoTokenTimeout = a.CargoTokenTimeout,
                         IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                        ShowMoneyOrder = a.ShowMoneyOrder,
+
                         DigitalPortalLastDate = a.DigitalPortalLastDate,
                         DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                         DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
@@ -864,11 +869,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     ScheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport,
                     WhatsAppMessagingPhoneNumber = entity.WhatsAppMessagingPhoneNumber,
                     IsContainerTrackingPrepaid = entity.IsContainerTrackingPrepaid,
+
+
                     DigitalPortalLastDate = entity.DigitalPortalLastDate,
                     DigitalPortalTotalLastWeek = entity.DigitalPortalTotalLastWeek,
                     DigitalPortalTotalLastMonth = entity.DigitalPortalTotalLastMonth,
                     DigitalPortalMobileLastDate = entity.DigitalPortalMobileLastDate,
                     DigitalPortalMobTotalLastWeek = entity.DigitalPortalMobTotalLastWeek,
+
+                    ShowMoneyOrder = entity.ShowMoneyOrder,
                     DigitalPortalMobTotalLastMonth = entity.DigitalPortalMobTotalLastMonth,
                     DPArchiveShipmentCreateFilter = entity.DPArchiveShipmentCreateFilter,
                     DPArchiveShipmentArrivalFilter = entity.DPArchiveShipmentArrivalFilter,
@@ -1018,6 +1027,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
                        PrivateLabelId = a.GlobalTenant != null ? a.GlobalTenant.PrivateLabelId : "",
                        PrivateLabelName = a.GlobalTenant != null ? a.GlobalTenant.TenantManagmentPrivateLabel != null ? a.GlobalTenant.TenantManagmentPrivateLabel.PrivateLabelName : "" : "",
+                       ShowMoneyOrder = a.ShowMoneyOrder,
                        DigitalPortalLastDate = a.DigitalPortalLastDate,
                        DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                        DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
@@ -1309,8 +1319,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              CargoTokenTimeout = a.CargoTokenTimeout,
                                              SecondaryColor = a.SecondaryColor,
                                              TertiaryColor = a.TertiaryColor,
-                                             ComapnylogoId = a.ComapnylogoId,
+
                                              IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                                             ComapnylogoId = a.ComapnylogoId,
+                                             ShowMoneyOrder=a.ShowMoneyOrder,
                                              DigitalPortalLastDate = a.DigitalPortalLastDate,
                                              DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
                                              DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,

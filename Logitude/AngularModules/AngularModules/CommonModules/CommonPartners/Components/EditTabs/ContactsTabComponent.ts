@@ -282,6 +282,7 @@ export class ContactItemClass {
         });
     }
 
+
     SetEmailForSendingSingArinvoices() {
         this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'] = this.Id;
         var myCardContactId = this.Id;
