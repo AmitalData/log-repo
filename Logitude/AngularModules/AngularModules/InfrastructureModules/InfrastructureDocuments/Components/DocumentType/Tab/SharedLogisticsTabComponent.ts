@@ -9,6 +9,7 @@ import { ServiceArgs } from '../../../../../Infrastructure/DataContracts/Service
 import { UIProperty, UIProperties } from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AppTool } from 'Infrastructure/Tools';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'SharedLogisticsTab',
@@ -24,7 +25,7 @@ export class SharedLogisticsTabComponent extends BaseComponent implements OnInit
     constructor(public entityArgs: EntityArgs, fb: FormBuilder) {
         super();
         this.myForm = fb.group({});
-        this.IsCustomerViewVisible = !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.CustomerURL);
+        this.IsCustomerViewVisible = FeatureLocator.HasFeaturePermession("General", "SHLOGDIGITALPORTAL");
     }
 
     ngOnInit() {
