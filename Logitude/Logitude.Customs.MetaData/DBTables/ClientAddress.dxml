@@ -62,7 +62,7 @@
   <Column
     Name="BranchName"
     Type="nvarchar"
-    Size="25">
+    Size="35">
     <Constraints
       Nullable="true" />
   </Column>
