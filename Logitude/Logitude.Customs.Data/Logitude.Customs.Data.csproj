@@ -569,6 +569,7 @@
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VendorCurrencyList.Generated.cs" />
+    <Compile Include="EntityLists\DeclarationReferantDataList.cs" />
     <Compile Include="EntityLists\Generated\StatusCodeList.Generated.cs" />
     <Compile Include="EntityLists\JoinCustomsItemList.cs" />
     <Compile Include="EntityLists\CustomsPartnersItemList.cs" />
