@@ -156,6 +156,7 @@
     <Compile Include="Azure\IErrorLogsRepository.cs" />
     <Compile Include="Azure\Repositories\CommunicationLogsRepository.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.cs" />
+    <Content Include="DecCourierStatusesView_Oracle.sql" />
     <Content Include="InfrastructureModel\DeleteQBOTranslations.sql" />
     <Content Include="InfrastructureModel\DeleteBusinessRecords.sql" />
     <Content Include="InfrastructureModel\DeleteCRMRecords.sql" />
@@ -181,6 +182,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CardExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\DecCourierStatusesView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\QuoteGroupSection.cs" />

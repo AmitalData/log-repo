@@ -28,14 +28,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         IQueryable<HawbQuantityNoTransDeclarationClass> qHawbQuantityNoTransDeclaration;
         IQueryable<HawbQuantityNoTransPaymentClass> qHawbQuantityNoTransPayment;
         private IQueryable<CourierMasterList> GetIqueryableList(IQueryable<CourierMaster> iQueryable)
-        {
+        {			
 
-           //SetQuantity();
+			//SetQuantity();
 
-            var today = DateTime.Now.Date;
+			var today = DateTime.Now.Date;
 
             IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
 
+                                                    join qCourierDeclarationStatuses in context.DecCourierStatusesViews
+                                                    on   a.Id equals qCourierDeclarationStatuses.CourierMasterId
+                                                    into qCourierDeclarationStatusesJoin
+                                                    from myJoinCourierDeclarationStatuses in qCourierDeclarationStatusesJoin.DefaultIfEmpty()
                                                        //    join recHawbQuantityNoDocuments in qHawbQuantityNoDocuments
                                                        //on a.Id equals recHawbQuantityNoDocuments.CourierMasterId
                                                        // into joingHawbQuantityNoDocuments
@@ -113,20 +117,46 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        NoOfCourierHawbwWithoutHatara = a.NoOfCourierHawbwWithoutHatara,
                                                        LandingDateDateOnly = a.LandingDate,
                                                        LandingDateTimeOnly = (DateTime)a.LandingDate,
-                                                       HawbQuantityNoTransDeclaration = 0 ,//recHawbQuantityNoTransDeclaration.HawbQuantityNoTransDeclaration != 0 ? recHawbQuantityNoTransDeclaration.HawbQuantityNoTransDeclaration : recHawbQuantityNoTransDeclaration.Status,
-                                                       HawbQuantityNoTransManifest = 0, // recHawbQuantityNoTransManifest.HawbQuantityNoTransManifest != 0 ? recHawbQuantityNoTransManifest.HawbQuantityNoTransManifest : recHawbQuantityNoTransManifest.Status,
-                                                       HawbQuantityNoClassification = 0, // recIsCourierMissingClassification.HawbQuantityNoClassification != 0 ? recIsCourierMissingClassification.HawbQuantityNoClassification : recIsCourierMissingClassification.Status,
-                                                       HawbQuantityNoDocuments = 0 ,// recHawbQuantityNoDocuments.HawbQuantityNoDocuments != 0 ? recHawbQuantityNoDocuments.HawbQuantityNoDocuments : recHawbQuantityNoDocuments.Status,
-                                                       HawbQuantityNoTransPayment = 0,// recHawbQuantityNoTransPayment.HawbQuantityNoTransPayment != 0 ? recHawbQuantityNoTransPayment.HawbQuantityNoTransPayment : recHawbQuantityNoTransPayment.Status,
+
+                                                       HawbQuantityNoDocuments = myJoinCourierDeclarationStatuses.QuantityNoDocuments,
+                                                       HawbQuantityNoClassification = myJoinCourierDeclarationStatuses.QuantityNoClassification,
+                                                       HawbQuantityNoTransManifest = myJoinCourierDeclarationStatuses.QuantityNoManifest,
+                                                       HawbQuantityNoTransDeclaration = myJoinCourierDeclarationStatuses.QuantityNoDeclaration,
+
+                                                       DocumentStatusCode= myJoinCourierDeclarationStatuses.DocumentStatusCode,
+                                                       CourierPaymentStatusCode = myJoinCourierDeclarationStatuses.CourierPaymentStatusCode,
+                                                       CourierDeclarationStatusCode = myJoinCourierDeclarationStatuses.CourierDeclarationStatusCode,
+                                                       CourierManifestStatusCode = myJoinCourierDeclarationStatuses.CourierManifestStatusCode,
+                                                       IsCourierMissingClassification = myJoinCourierDeclarationStatuses.IsCourierMissingClassification,
+
+
+                                                      
 
                                                    }); ;
 
 
-           
 
             return query;
         }
+        public class DecCourierStatuses
+        {
+          
+            public string CourierMasterId { get; set; }
 
+            public int Tenant { get; set; }
+            public int QuantityNoDocuments { get; set; }
+            public int QuantityNoClassification { get; set; }
+            public int QuantityNoManifest { get; set; }
+            public int QuantityNoDeclaration { get; set; }
+
+            public string DocumentStatusCode { get; set; }
+            public string CourierPaymentStatusCode { get; set; }
+            public string CourierDeclarationStatusCode { get; set; }
+            public string CourierManifestStatusCode { get; set; }
+            public string IsCourierMissingClassification { get; set; }
+
+
+        }
         private void SetQuantity()
         {
             var qHawbQuantity =

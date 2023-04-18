@@ -72,7 +72,11 @@ export class CourierMasterList {
 	HawbQuantityNoClassification: number;
 	HawbQuantityNoTransManifest: number;
 	HawbQuantityNoTransDeclaration: number;
-	HawbQuantityNoTransPayment: number;
+	DocumentStatusCode: string;
+	CourierPaymentStatusCode: string;
+	CourierDeclarationStatusCode: string;
+	CourierManifestStatusCode: string;
+	IsCourierMissingClassification: string;
 	
 }
  
