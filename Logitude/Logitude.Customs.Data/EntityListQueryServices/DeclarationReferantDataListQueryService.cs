@@ -153,7 +153,6 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  Mawb=a.Mawb,
                                                                  ImporterApproval  = a.ImporterApproval,
                                                                  CustomerId=d.CustomerId,
-                                                                 ListCounter= 0,
                                                                  //OccuredStatuses = qjoinDeclarationStatuses.DefaultIfEmpty().Select(r=>r.StatusCode.Status_Code),
                                                              });
             return query;
@@ -176,7 +175,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
             if (NotOccuredStatusesFilter != null && !string.IsNullOrEmpty(NotOccuredStatusesFilter.FieldValue.ToString()))
             {
                 var q = context.DeclarationStatuses.Where(decStatus => OccuredStatusesFilter.FieldValue.ToString().Contains(decStatus.StatusCode.Status_Code)).Select(r => r.DeclarationId);
-                iQueryable = (from a in iQueryable.Where(r => !q.Contains(r.DeclarationId)) select a);
+                iQueryable = (from a in iQueryable.Where(r => q.Contains(r.DeclarationId)) select a);
             }
 
             iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant, context);

@@ -186,10 +186,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string DeclarationIdToDisplay  { get; set; }
        [DataMember]
        public string CustomerId  { get; set; }
-       [DataMember]
-       public string OccuredStatuses  { get; set; }
-       [DataMember]
-       public string NotOccuredStatuses  { get; set; }
    }
 
 }

@@ -10,6 +10,8 @@ namespace Logitude.Customs.Data.EntityLists
     public partial class DeclarationReferantDataList
     {
         public IEnumerable<string> OccuredStatuses { get; set; }= new List<string>();
+        public IEnumerable<string> NotOccuredStatuses { get; set; } = new List<string>();
+
 
     }
 }
