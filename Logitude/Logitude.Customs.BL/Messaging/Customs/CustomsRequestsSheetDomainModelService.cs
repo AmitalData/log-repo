@@ -2895,6 +2895,7 @@ After that Remove file  from DCA  .. ");
         public CustomsCommandEnum? CurrentCustomsCommandWR { get; set; }
 
         public string AggregateDCAAnalyzerLogger { get; set; }
+        public bool IsCustomsMessagingSheetWR { get; set; }
     }
 
 

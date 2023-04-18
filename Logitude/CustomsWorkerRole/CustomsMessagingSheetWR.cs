@@ -70,7 +70,7 @@ namespace CustomsWorkerRole
                     return;
                 }
                 //{"InterfaceTypeCode":"8250","Tenant":"1","CorrelationId":"4292c133-b256-45b2-9c89-b439b53c2ebb"}
-                string CorrelationId= message.GetProperty<string>(QueueExt.QueuePropertyNames.CorrelationId,""); 
+                string CorrelationId = message.GetProperty<string>(QueueExt.QueuePropertyNames.CorrelationId, "");
                 if (String.IsNullOrWhiteSpace(CorrelationId))
                 {
                     message.SafeComplete();
@@ -79,7 +79,10 @@ namespace CustomsWorkerRole
                     return;//
                 }
                 var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(analyzeClass);
-
+                anaO.MyOverrideControllerModel = new OverrideControllerModel()
+                {
+                    IsCustomsMessagingSheetWR = true
+                };
                 var resDat = anaO.SendSheet(tenant, CorrelationId);
 
                 message.SafeComplete();

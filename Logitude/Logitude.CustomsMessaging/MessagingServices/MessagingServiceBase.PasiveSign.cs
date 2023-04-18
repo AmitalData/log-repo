@@ -51,7 +51,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             var toContinueNextCommand = true;
             var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>();
-        
+            RequestParams = requestParams;
+
             switch (_CustomsRequestsSheetService.CalcSignByFromStep(null))
             {
              
@@ -104,7 +105,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             if (_SignRecievedModel == null)
             {
 
-                if (SignQueue.Instance.IsPasiveSignMode() && !IsIneractiveHSM())
+                if (SignQueue.Instance.IsPasiveSignMode() && !IsInteractiveHSM())
                 {
 
                     availableSignServer = _CustomsRequestsSheetService.GetAvailableSignServer(out personId, out SignatureBy, out noAvailableSignServerErrorText);
@@ -238,9 +239,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         }
 
-        private bool IsIneractiveHSM()
+        private bool IsInteractiveHSM()
         {
-            
+            if (this.MyOverrideControllerModel?.IsCustomsMessagingSheetWR == true)
+            {
+                return true;
+            }
             if (RequestParams.SignMethodByQueue != SignMethodByQueueEnum.HSMSignQueue.ToString())
             {
                 return false;
@@ -309,7 +313,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             else
             {
 
-                if (IsIneractiveHSM())
+                if (IsInteractiveHSM())
                 {
                     customRequestSignedByteArry = TaskSignItHSM(requestParams.Tenant, customsRequest); //no catch exeption -rethrow
                 }
