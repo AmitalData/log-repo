@@ -60,11 +60,19 @@ namespace Logitude.CustomsMessaging.RequestServices
                 int responseToMessage;
                 int.TryParse(myNotificationPM.ResponseToMessage, out responseToMessage);
                 _DOC_NG_5101_GNMessageToAgent.MessageToAgent.responseToMessage = responseToMessage;
-            }            
+            }
+            var decNum = myDeclarationPM?.DeclarationNumber;
+            if (string.IsNullOrEmpty(decNum))
+            {
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(myDeclarationPM.Tenant);
+                decNum = declarationQueryService.GetDeclaratNumberByCustomFileNo(myDeclarationPM.Tenant, myDeclarationPM.CustomFileNo, myDeclarationPM.Direction);
+
+            }
+
 
             _DOC_NG_5101_GNMessageToAgent.MessageToAgent.RelatedEntity = new ConnectedEntity()
             {
-                entityIdKey1 = myDeclarationPM.DeclarationNumber,
+                entityIdKey1 = decNum,
                 entityType = myDeclarationPM.Direction == "E" ? 11188 : 1055,
             };
 
