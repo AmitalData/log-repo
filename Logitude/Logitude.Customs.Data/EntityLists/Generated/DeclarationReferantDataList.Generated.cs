@@ -190,10 +190,6 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsCloseOrOpenFromUser  { get; set; }
        [DataMember]
        public int ListCounter  { get; set; }
-       [DataMember]
-       public string OccuredStatuses  { get; set; }
-       [DataMember]
-       public string NotOccuredStatuses  { get; set; }
    }
 
 }
