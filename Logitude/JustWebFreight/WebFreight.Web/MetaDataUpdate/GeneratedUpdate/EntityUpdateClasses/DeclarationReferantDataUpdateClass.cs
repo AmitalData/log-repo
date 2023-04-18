@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "3f6b571507e7f005b85f8dab652bb1b8";
+		public const string HashString = "d591e034b725867855fdb973575972a3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5858,18 +5858,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "OccuredStatuses",
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.StatusCode",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1000,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
+					  						SystemMaxLength =  1000,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
@@ -5878,6 +5877,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OccuredStatuses",
 					  						ListPropertyPath =  "OccuredStatuses",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5895,7 +5895,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OccuredStatuses",
-					  						DefaultText =  "Customs.StatusCode",
+					  						DefaultText =  "OccuredStatuses",
 					  						ListFieldLable =  "OccuredStatusesListLable",
 					  						ListLableDefaultText =  "OccuredStatuses",
 					  						ListLocalDefaultText =  "OccuredStatuses",
@@ -5918,11 +5918,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "OccuredStatusesName",
+					 						FieldName =  "NotOccuredStatuses",
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  512,
+					  						MaxLength =  1000,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -5930,14 +5930,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  512,
+					  						SystemMaxLength =  1000,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "OccuredStatusesName",
-					  						ListPropertyPath =  "OccuredStatusesName",
+					  						PMPropertyPath =  "NotOccuredStatuses",
+					  						ListPropertyPath =  "NotOccuredStatuses",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5954,10 +5955,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "OccuredStatusesName",
+					  						FullFieldLable =  "NotOccuredStatuses",
 					  						DefaultText =  "OccuredStatusesName",
-					  						ListFieldLable =  "OccuredStatusesNameListLable",
-					  						ListLableDefaultText =  "OccuredStatusesName",
+					  						ListFieldLable =  "NotOccuredStatusesListLable",
+					  						ListLableDefaultText =  "NotOccuredStatuses",
+					  						ListLocalDefaultText =  "NotOccuredStatuses",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
