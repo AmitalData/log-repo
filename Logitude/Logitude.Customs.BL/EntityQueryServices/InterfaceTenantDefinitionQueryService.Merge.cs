@@ -49,7 +49,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         return new InterfaceTenantDefinitionPM();
                     }
                     var pm=this.GetEntityPM(poco);
-                    if (pm.TenantPriority != null)
+                    if (pm.TenantPriority == null)
                     {
 
                         var interfaceManagement = this.context.InterfaceManagements.FirstOrDefault(r => r.Code == code);
