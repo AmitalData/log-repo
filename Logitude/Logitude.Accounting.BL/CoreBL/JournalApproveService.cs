@@ -385,7 +385,7 @@ namespace Logitude.Accounting.BL.CoreBL
             allGLAccountTotalByMonths = allGLAccountTotalByMonths.OrderBy(rec => rec.AccountId).ThenBy(rec => rec.DateTypeCode).ThenBy(rec => rec.Year).ThenBy(rec => rec.Month).ThenBy(rec => rec.CurrencyId);
 
             TimeSpan? timeOut = GetTimeout(myLedgerTransactionsWithCounters, _JournalPM.JournalReconciles.Count > 0);
-            //timeOut = null;//ihab: no need to use timeout  - but have to be fast (statistic) !!!
+            timeOut = null;//ihab: no need to use timeout  - but have to be fast (statistic) !!!
             StringBuilder stringBuilderWhyTransferCardBadBalance = new StringBuilder();
             LogMessagingUtil.Instance.AppendLine("GetNewSerializableTransaction(timeOut):insec" + timeOut.GetValueOrDefault().TotalSeconds.ToString());
             using (var scope = TransactionFactory.GetNewSerializableTransaction(timeOut))
@@ -526,9 +526,6 @@ namespace Logitude.Accounting.BL.CoreBL
                     this._AccountingContext.SaveChanges();//due myJournalRepository.UpdateWhileStreaming 
                     scope.Complete();
 
-                }
-                catch (Exception exc) {
-                    OnException(null, null, _SeedJournalId, _Tenant, exc);
                 }
                 finally
                 {
@@ -740,7 +737,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //if (reduceDeadlock)
             {
                 //timeOut = TimeSpan.FromSeconds(2);
-                iTimeOut = (1200);
+                iTimeOut = (600);
                 //if (myLedgerTransactionsWithCounters.Count < 100)
                 //{
                 //    iTimeOut = (1);
@@ -759,11 +756,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 //{
                 //    iTimeOut = (20);
                 //}
-                //if (Debugger.IsAttached)
-                //{
-                //    //System.Diagnostics.Debugger.Break();
-                //    iTimeOut = (120);
-                //}
+                if (Debugger.IsAttached)
+                {
+                    //System.Diagnostics.Debugger.Break();
+                    iTimeOut = (120);
+                }
             }
             TimeSpan? timeOut = null;
 
@@ -1126,21 +1123,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myDbQueueService.Complete();
                 }
-                return;
-            } else
+            }
+
+            if (message.RetryNumber >= 2 && message.RetryNumber <= 7)
             {
-                if (message.RetryNumber >= 2 && message.RetryNumber <= 7)
+                myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
+            }
+            if (message == null || message.RetryNumber > 5)
+            {
+                var journalFailedService = new JournalFailedService(tenant, seedJournalId);
+                journalFailedService.MarkAsFailed(ex);
+                if (myDbQueueService != null)
                 {
-                    myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
-                }
-                if (message == null || message.RetryNumber > 5)
-                {
-                    var journalFailedService = new JournalFailedService(tenant, seedJournalId);
-                    journalFailedService.MarkAsFailed(ex);
-                    if (myDbQueueService != null)
-                    {
-                        myDbQueueService.Complete();
-                    }
+                    myDbQueueService.Complete();
                 }
             }
         }
@@ -1357,7 +1352,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
-                try {
                 selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
@@ -1436,11 +1430,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         throw;
                     }
                 }
-                }
-                catch (Exception exc)
-                {
-                    OnException(null, null, null, 0, exc);
-                }
+
             }
 
             public void CreateBatchAccountingIntegrityCheck()
