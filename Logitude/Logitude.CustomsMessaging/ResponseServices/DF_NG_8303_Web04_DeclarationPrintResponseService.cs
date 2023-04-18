@@ -27,6 +27,9 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.AmitalMessaging.Infrastructure.FuStatus;
+using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Server.Tools.Utils;
+using Logitude.BL.InfrastructureModel.Tools.Validating;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -50,6 +53,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
         void ShrinkCustomResponse(DF_NG_8303_Web04_DeclarationPrint_Response customResponse)
         {
+           
             if (customResponse == null) return;
             if (customResponse.DeclarationPrintAnswer == null) return;
             foreach (var item in customResponse.DeclarationPrintAnswer)
@@ -69,135 +73,149 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
-
+        public override void OnRequestFail(DF_NG_8303_Web04_DeclarationPrint_Response customResponse, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams)
+        {
+            var concurrentKiller = new ConcurrentKiller();
+            string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
+            concurrentKiller.FreeLock(CRSKey, requestParams.Tenant);
+        }
 
         public override void Update(DF_NG_8303_Web04_DeclarationPrint_Response customResponse, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams)
         {
-            _TransmitionDateTime = customResponse.ResponseContentHeader.TransmitionDateTime;
-            //Analayze 8303- Declaration Print
-            var myDeclarationQueryService = new DeclarationQueryService(requestParams.Tenant);
-            this.MyResponseData = new DeclarationPrintResponseData();
+            try {
+                _TransmitionDateTime = customResponse.ResponseContentHeader.TransmitionDateTime;
+                //Analayze 8303- Declaration Print
+                var myDeclarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+                this.MyResponseData = new DeclarationPrintResponseData();
 
-            if (customResponse.ResponseContentHeader.Exception != null)
-            {
-                this.MyResponseData.Succeeded = false;
-                this.MyResponseData.HasException = true;
-                this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription;
-                return;
-            }
-
-            if (customResponse.Exception != null)
-            {
-                this.MyResponseData.Succeeded = false;
-                this.MyResponseData.HasException = true;
-                this.MyResponseData.UserMessage = customResponse.Exception.ExeptionDescription;
-                return;
-            }
-
-            if (customResponse.DeclarationPrintAnswer == null)
-            {
-                this.MyResponseData.Succeeded = false;
-                this.MyResponseData.HasException = true;
-                this.MyResponseData.UserMessage = "לא התקבלו נתונים מהמכס";
-                return;
-            }
-
-            this.MyResponseData.Succeeded = true;
-            this.MyResponseData.HasException = false;
-            this.MyResponseData.DeclarationPrintAnswer = new List<DeclarationPrintM>();
-
-            foreach (var declarationPrintAnswerItem in customResponse.DeclarationPrintAnswer)
-            {
-
-                if (!string.IsNullOrWhiteSpace(declarationPrintAnswerItem.ExceptionPerQuery))
+                if (customResponse.ResponseContentHeader.Exception != null)
                 {
-                    var declarationPrintDetails = new DeclarationPrintM();
-                    declarationPrintDetails.SequenceNumber = declarationPrintAnswerItem.SequenceNumber;
-                    declarationPrintDetails.ErrorText = declarationPrintAnswerItem.ExceptionPerQuery;
-                    declarationPrintDetails.IsFiled = false;
-                    this.MyResponseData.DeclarationPrintAnswer.Add(declarationPrintDetails);
-                    if (customResponse.DeclarationPrintAnswer.Count() == 1)
-                    {
-                        this.MyResponseData.Succeeded = true;
-                        this.MyResponseData.HasException = true;
-                        this.MyResponseData.UserMessage = declarationPrintAnswerItem.ExceptionPerQuery;
-                        return;
-                    }
+                    this.MyResponseData.Succeeded = false;
+                    this.MyResponseData.HasException = true;
+                    this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription;
+                    return;
                 }
-                else
+
+                if (customResponse.Exception != null)
                 {
-                    try
+                    this.MyResponseData.Succeeded = false;
+                    this.MyResponseData.HasException = true;
+                    this.MyResponseData.UserMessage = customResponse.Exception.ExeptionDescription;
+                    return;
+                }
+
+                if (customResponse.DeclarationPrintAnswer == null)
+                {
+                    this.MyResponseData.Succeeded = false;
+                    this.MyResponseData.HasException = true;
+                    this.MyResponseData.UserMessage = "לא התקבלו נתונים מהמכס";
+                    return;
+                }
+
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = false;
+                this.MyResponseData.DeclarationPrintAnswer = new List<DeclarationPrintM>();
+
+                foreach (var declarationPrintAnswerItem in customResponse.DeclarationPrintAnswer)
+                {
+
+                    if (!string.IsNullOrWhiteSpace(declarationPrintAnswerItem.ExceptionPerQuery))
                     {
-                        List<String> declarationTypes = new List<string>() {
+                        var declarationPrintDetails = new DeclarationPrintM();
+                        declarationPrintDetails.SequenceNumber = declarationPrintAnswerItem.SequenceNumber;
+                        declarationPrintDetails.ErrorText = declarationPrintAnswerItem.ExceptionPerQuery;
+                        declarationPrintDetails.IsFiled = false;
+                        this.MyResponseData.DeclarationPrintAnswer.Add(declarationPrintDetails);
+                        if (customResponse.DeclarationPrintAnswer.Count() == 1)
+                        {
+                            this.MyResponseData.Succeeded = true;
+                            this.MyResponseData.HasException = true;
+                            this.MyResponseData.UserMessage = declarationPrintAnswerItem.ExceptionPerQuery;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            List<String> declarationTypes = new List<string>() {
                             "1", // Import 
                             "2", // Export 
                             "3"//"Declaration of Claim"
                         };
-                        if (!declarationTypes.Contains(declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType))
-                        {
-                            LogMessagingUtil.Instance.AppendLine("The DeclarationType must be one of Import, Export, or Declaration of Claim.");
-                        }
-                        //if (
-
-                        //    (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "1") // Import Declaration
-                        //    ||
-                        //    (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "2") // Export Declaration
-                        //    )
-                        else {
-                            var myDeclarationId = myDeclarationQueryService.GetIdByDeclarationNumber(declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID, requestParams.Tenant);
-                            _MyDeclarationPM = myDeclarationQueryService.GetSingle(myDeclarationId, true, false);
-                            if (_MyDeclarationPM == null)
+                            if (!declarationTypes.Contains(declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType))
                             {
-                                var declarationPrintDetails = new DeclarationPrintM();
-                                declarationPrintDetails.SequenceNumber = declarationPrintAnswerItem.SequenceNumber;
-                                declarationPrintDetails.DeclarationNumber = declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID;
-                                declarationPrintDetails.ErrorText = "Can not find declaration" + declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID;
-                                declarationPrintDetails.IsFiled = false;
-                                this.MyResponseData.DeclarationPrintAnswer.Add(declarationPrintDetails);
-                                if (customResponse.DeclarationPrintAnswer.Count() == 1)
-                                {
-                                    this.MyResponseData.Succeeded = true;
-                                    this.MyResponseData.HasException = true;
-                                    this.MyResponseData.UserMessage = "Can not find declaration" + declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID;
-                                    return;
-                                }
+                                LogMessagingUtil.Instance.AppendLine("The DeclarationType must be one of Import, Export, or Declaration of Claim.");
                             }
+                            //if (
+
+                            //    (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "1") // Import Declaration
+                            //    ||
+                            //    (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "2") // Export Declaration
+                            //    )
                             else
                             {
-                                //Add Document- DeclarationPrint
-                                AnalyzePaymentDocument(declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationPrint, requestParams, this._MyDeclarationPM.VersionId);
-                                var declarationPrintDetails = new DeclarationPrintM();
-                                declarationPrintDetails.SequenceNumber = declarationPrintAnswerItem.SequenceNumber;
-                                declarationPrintDetails.DeclarationNumber = _MyDeclarationPM.DeclarationNumber;
-                                declarationPrintDetails.CustomFileNo = _MyDeclarationPM.CustomFileNo;
-                                declarationPrintDetails.IsFiled = true;
-                                this.MyResponseData.DeclarationPrintAnswer.Add(declarationPrintDetails);
+                                var myDeclarationId = myDeclarationQueryService.GetIdByDeclarationNumber(declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID, requestParams.Tenant);
+                                _MyDeclarationPM = myDeclarationQueryService.GetSingle(myDeclarationId, true, false);
+                                if (_MyDeclarationPM == null)
+                                {
+                                    var declarationPrintDetails = new DeclarationPrintM();
+                                    declarationPrintDetails.SequenceNumber = declarationPrintAnswerItem.SequenceNumber;
+                                    declarationPrintDetails.DeclarationNumber = declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID;
+                                    declarationPrintDetails.ErrorText = "Can not find declaration" + declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID;
+                                    declarationPrintDetails.IsFiled = false;
+                                    this.MyResponseData.DeclarationPrintAnswer.Add(declarationPrintDetails);
+                                    if (customResponse.DeclarationPrintAnswer.Count() == 1)
+                                    {
+                                        this.MyResponseData.Succeeded = true;
+                                        this.MyResponseData.HasException = true;
+                                        this.MyResponseData.UserMessage = "Can not find declaration" + declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID;
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    //Add Document- DeclarationPrint
+                                    AnalyzePaymentDocument(declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationPrint, requestParams, this._MyDeclarationPM.VersionId);
+                                    var declarationPrintDetails = new DeclarationPrintM();
+                                    declarationPrintDetails.SequenceNumber = declarationPrintAnswerItem.SequenceNumber;
+                                    declarationPrintDetails.DeclarationNumber = _MyDeclarationPM.DeclarationNumber;
+                                    declarationPrintDetails.CustomFileNo = _MyDeclarationPM.CustomFileNo;
+                                    declarationPrintDetails.IsFiled = true;
+                                    this.MyResponseData.DeclarationPrintAnswer.Add(declarationPrintDetails);
+                                }
                             }
                         }
-                    }
-                    catch (System.Exception eeee)
-                    {
-                        throw;//20180222 -HOPE TILL NEXT PATCH - I WILL ABLE TO RESTORE THE PROBLEM (- AS EITAN ADVISE)
-                        var declarationPrintDetails = new DeclarationPrintM();
-                        declarationPrintDetails.SequenceNumber = declarationPrintAnswerItem.SequenceNumber;
-                        declarationPrintDetails.DeclarationNumber = declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID;
-                        declarationPrintDetails.ErrorText = "Can not add DeclarationPrint";
-                        declarationPrintDetails.IsFiled = false;
+                        catch (System.Exception eeee)
+                        {
+                            throw;//20180222 -HOPE TILL NEXT PATCH - I WILL ABLE TO RESTORE THE PROBLEM (- AS EITAN ADVISE)
+                            var declarationPrintDetails = new DeclarationPrintM();
+                            declarationPrintDetails.SequenceNumber = declarationPrintAnswerItem.SequenceNumber;
+                            declarationPrintDetails.DeclarationNumber = declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID;
+                            declarationPrintDetails.ErrorText = "Can not add DeclarationPrint";
+                            declarationPrintDetails.IsFiled = false;
 
-                        this.MyResponseData.Succeeded = true;
-                        this.MyResponseData.HasException = true;
-                        this.MyResponseData.UserMessage = "Crash while trying to fill:" + eeee.ToString();
-                        this.MyResponseData.DeclarationPrintAnswer.Add(declarationPrintDetails);
+                            this.MyResponseData.Succeeded = true;
+                            this.MyResponseData.HasException = true;
+                            this.MyResponseData.UserMessage = "Crash while trying to fill:" + eeee.ToString();
+                            this.MyResponseData.DeclarationPrintAnswer.Add(declarationPrintDetails);
+                        }
                     }
                 }
+                if (_MyDeclarationPM != null)
+                {
+                    this.MyRequestSheetParam = new RequestSheetParam();
+                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                    this.MyRequestSheetParam.EntityId1 = _MyDeclarationPM.Id;
+                    this.MyRequestSheetParam.RequestDescription = "בקשה לטופס הצהרה " + _MyDeclarationPM.DeclarationNumber;
+                }
             }
-            if (_MyDeclarationPM != null)
+              finally
             {
-                this.MyRequestSheetParam = new RequestSheetParam();
-                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                this.MyRequestSheetParam.EntityId1 = _MyDeclarationPM.Id;
-                this.MyRequestSheetParam.RequestDescription = "בקשה לטופס הצהרה " + _MyDeclarationPM.DeclarationNumber;
-            }
+                var concurrentKiller = new ConcurrentKiller();
+                string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
+                concurrentKiller.FreeLock(CRSKey, requestParams.Tenant);
+            }   
         }
         private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, DateTime? status_DateTime)
         {
