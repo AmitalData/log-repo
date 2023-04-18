@@ -207,29 +207,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (entityPM.Direction == "E") { entityPM.DeclarationTypeCode = "2"; } else { entityPM.DeclarationTypeCode = "1"; }
 
             }
-            if (entityPM.IsCourierDeclaration)
-            {
-              
-
-                    var ifSwiss = entityPM.Consignments.Find(c => c.StorageSiteCode == "ILSWS");
-                    if (ifSwiss != null)
-                    {
-                            var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
-                            string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.Id, entityPM.Tenant, null, null, null);
-
-                            if (drityMessage != null)
-                            {
-                                var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
-                                var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(entityPM.Id, entityPM.Tenant, XMLdrityMessage);
-                            }
-
                 
-            }
-                     
-                   
-
-                
-            }
+           
+          
              
             OnCreatingExportDeclaration(entityPM);
 
