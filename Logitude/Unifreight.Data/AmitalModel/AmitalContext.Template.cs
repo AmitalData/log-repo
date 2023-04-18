@@ -244,7 +244,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.LINENO)
                     .HasColumnName(@"LINE_NO")
@@ -322,7 +322,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUMSHGR>()
                 .Property(p => p.MISHGORNO)
                     .HasColumnName(@"MISHGOR_NO")
@@ -501,7 +501,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUPAYHAND
 
             modelBuilder.Entity<CCUPAYHAND>()
-                .HasKey(p => new { p.FILENO })
+                .HasKey(p => p.FILENO)
                 .ToTable("CCUPAYHAND", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUPAYHAND>()
@@ -509,7 +509,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.DRAFTSTATUS)
                     .HasColumnName(@"DRAFT_STATUS")
@@ -604,7 +604,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUSUPITEM
 
             modelBuilder.Entity<CCUSUPITEM>()
-                .HasKey(p => new { p.ACCLINENO, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.FILENO, p.ACCLINENO, p.LINENO })
                 .ToTable("CCUSUPITEMS", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUSUPITEM>()
@@ -612,7 +612,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.ACCLINENO)
                     .HasColumnName(@"ACC_LINE_NO")
@@ -1089,7 +1089,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.LINENO)
                     .HasColumnName(@"LINE_NO")
@@ -1441,7 +1441,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.LINENO)
                     .HasColumnName(@"LINE_NO")
@@ -1518,7 +1518,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUFILEM
 
             modelBuilder.Entity<CCUFILEM>()
-                .HasKey(p => new { p.FILENO })
+                .HasKey(p => p.FILENO)
                 .ToTable("CCUFILEM", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUFILEM>()
@@ -1526,7 +1526,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.CUSTOMERID)
                     .HasColumnName(@"CUSTOMER_ID")
@@ -3011,7 +3011,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTRANSPVAL>()
                 .Property(p => p.LINENO)
                     .HasColumnName(@"LINE_NO")
@@ -3206,7 +3206,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUMESSAGE>()
                 .Property(p => p.LINENO)
                     .HasColumnName(@"LINE_NO")
@@ -3456,7 +3456,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTSRUFOT>()
                 .Property(p => p.LINENO)
                     .HasColumnName(@"LINE_NO")
@@ -5441,7 +5441,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEMSI>()
                 .Property(p => p.ACCLINENO)
                     .HasColumnName(@"ACC_LINE_NO")
