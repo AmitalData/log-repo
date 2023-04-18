@@ -17,6 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Server.Tools.QueueService
 {
@@ -36,6 +37,8 @@ namespace Logitude.Server.Tools.QueueService
         {
             this.InitializeQueue(queueCode, tenant);
         }
+
+
         public void InitializeQueue(string queueCode, int tenant)
         {
             if (!String.IsNullOrWhiteSpace(LogitudeSettings.DebugKey))
@@ -425,7 +428,7 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         using (SqlConnection cn = new SqlConnection(strConnString))
                         {
-                            SqlCommand cmd = new SqlCommand("[dbo].[Queue_Peek]", cn);
+                            SqlCommand cmd = new SqlCommand("[dbo].[Queue_Peek_Jouranl_Approval]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
                             SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.NVarChar, 255);

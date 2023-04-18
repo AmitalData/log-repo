@@ -40,6 +40,7 @@ using Logitude.BL.InvoiceModel.CoreBL;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.Utils;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.InvoiceModel;
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -1108,13 +1109,27 @@ namespace Logitude.Accounting.BL.CoreBL
             return isSubmitApprove;
         }
 
+        private static void SetTenantIdle(QueueResponse message)
+        {
+            string sJournalTenant = message.MessageValues["JournalTenant"];
+            ICommonDataContext myContext = CommonDataContext.GetContext(int.Parse(sJournalTenant));
+            TenantRepository tenantRepository = new TenantRepository(myContext);
+            Tenant tenantObj = tenantRepository.GetSingleTenant(int.Parse(sJournalTenant));
+            tenantObj.ApproveUploadedDocuments = false;
+            tenantRepository.Update(tenantObj);
+            tenantRepository.SubmitChanges();
+
+        }
+
         private static void OnException(DbQueueService myDbQueueService, QueueResponse message, string seedJournalId, int tenant, Exception ex)
         {
 
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
+            SetTenantIdle(message);
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "AccountingJournalApproveWR", "AccountingJournalApproveWR: ProcessMessage() Method", null);
-            if (message.RetryNumber >= 2 && message.RetryNumber <= 7) {
-                    myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
+            if (message.RetryNumber >= 2 && message.RetryNumber <= 7)
+            {
+                myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
             }
             if (message == null || message.RetryNumber > 5)
             {
@@ -1329,13 +1344,16 @@ namespace Logitude.Accounting.BL.CoreBL
         public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
+
             static JournalApproveWorker()
             {
                 //_NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
                 _NextDueDoneAt = DateTime.UtcNow.Date;//today already done - do next day =tomorrow at 00:00 ///
+
             }
             public Action<int> LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
+
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
@@ -1357,17 +1375,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                     }
                     DbQueueService queueservice = null;
+
                     //ThrowNewException("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
                     try
                     {
-
-                        // string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(myClass);
                         queueservice = new DbQueueService(selectedQueue, 0);
-
                         response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
-
-
-                        // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
                     }
                     catch (Exception)
                     {
@@ -1381,13 +1394,16 @@ namespace Logitude.Accounting.BL.CoreBL
                         break;
                     }
 
+ 
 
                     SetLastActivate?.Invoke();
                     if (ProcessMessage_Db(queueservice, response, selectedQueue))
                     {
                         LogDoneItemInMemoryAction?.Invoke(1);
                     }
-                    Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
+
+                    SetTenantIdle(response);
+                    Thread.Sleep(10);
                 }
 
                 if (selectedQueue == JournalApproveService.K_AccountingJournalApproveWR)
