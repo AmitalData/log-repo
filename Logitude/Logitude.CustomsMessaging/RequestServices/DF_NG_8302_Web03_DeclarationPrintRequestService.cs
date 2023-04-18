@@ -1,7 +1,9 @@
 ﻿
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
 using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Server.Tools.Utils;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,8 +19,17 @@ namespace Logitude.CustomsMessaging.RequestServices
         : RequestServiceBase
         <DF_NG_8302_Web03_DeclarationPrint_Request, DF_NG_8302_Web03_DeclarationPrintRequestParams>
     {
+
+       
         public override DF_NG_8302_Web03_DeclarationPrint_Request GetRequest(DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams)
         {
+            var concurrentKiller = new ConcurrentKiller();
+            string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
+
+            concurrentKiller.FreeLockIfCreated15MinOld(CRSKey, requestParams.Tenant);
+
+            concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
+
             var myDF_NG_8302_Web03_DeclarationPrint_Request = new DF_NG_8302_Web03_DeclarationPrint_Request();
 
             myDF_NG_8302_Web03_DeclarationPrint_Request.QueryDetails = QueryDetails(requestParams);
@@ -28,6 +39,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DF_NG_8302_Web03_DeclarationPrint_RequestQueryDetails[] QueryDetails(DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams)
         {
+            
             const string DeclarationTypeExport = "2";
             ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
