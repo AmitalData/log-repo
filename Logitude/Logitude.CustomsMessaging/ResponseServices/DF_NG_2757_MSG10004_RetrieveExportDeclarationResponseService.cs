@@ -115,9 +115,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (this.MyRequestSheetParam == null)
                                 this.MyRequestSheetParam = new RequestSheetParam();
 
-                            this.MyRequestSheetParam.CustomFileNo = GetValueIDType(customResponse.Response.Declaration.DMExtensions?.AgentFileReferenceID); ;
+                             this.MyRequestSheetParam.CustomFileNo = !string.IsNullOrEmpty(requestParams?.CustomsFile) ? requestParams.CustomsFile :
+                         Strings.Right(GetValueIDType(customResponse.Response.Declaration.DMExtensions?.ExternalDeclarationID), 10)?.TrimStart('0');
 
-                            xml = XmlGenericUtil<Declaration>.SerializeObject(customResponse.Response.Declaration);
+                        xml = XmlGenericUtil<Declaration>.SerializeObject(customResponse.Response.Declaration);
                             _MyDefaultResponseData.ResponseStatusXML = xml;
                             if (requestParams.IsAngularClient)
                             {
@@ -235,7 +236,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (this.MyRequestSheetParam == null)
                     this.MyRequestSheetParam = new RequestSheetParam();
 
-                this.MyRequestSheetParam.CustomFileNo = Strings.Right(GetValueIDType(customResponse.Response.Declaration.DMExtensions?.ExternalDeclarationID), 10).TrimStart('0');
+                this.MyRequestSheetParam.CustomFileNo = Strings.Right(GetValueIDType(customResponse.Response.Declaration.DMExtensions?.ExternalDeclarationID), 10)?.TrimStart('0');
                 this.MyResponseData.exportDeclarationDataResponseData.Title = customResponse.Response.Declaration.ID.Value;
 
                 this.MyResponseData.exportDeclarationDataResponseData.CalculationDate = Convert.ToDateTime(customResponse.Response.Declaration.IssueDateTime).ToString("dd/MM/yyyy");
@@ -506,11 +507,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (IsUpdateDB)
                     declarationPM.DeclarationExportRecipients = GetRecipientsFromRestore(declaration, tenant, declarationPM, context);
 
-                declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
+                declarationPM.CustomFileNo = Strings.Right(GetValueIDType(declaration.DMExtensions.ExternalDeclarationID), 10)?.TrimStart('0');
 
 
                 if (!IsUpdateDB)
-                    declarationPM.ExportFile = Strings.Right(GetValueIDType(declaration.DMExtensions.ExternalDeclarationID), 10).TrimStart('0');
+                    declarationPM.ExportFile = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
                 declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.ExternalDeclarationID);
                 declarationPM.DestinationCountryCode = GetValueCodeType(declaration.DMExtensions.DestinationCountry);
                 declarationPM.ExportAutonomyRegionTypeCode = GetValueIDType(declaration.DMExtensions.AutonomyRegionType);
