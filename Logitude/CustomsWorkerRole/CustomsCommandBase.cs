@@ -86,7 +86,7 @@ namespace CustomsWorkerRole
             }
 
         }
-
+        string className;
         public override bool OnStart()
         {
             //try
@@ -99,7 +99,7 @@ namespace CustomsWorkerRole
             {
                 myClass = _QueueNameOverride;
             }
-
+            className = myClass;
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
             var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
             if (customsEnvironmentSettingPM.UseRabbitMQ)
@@ -627,7 +627,6 @@ namespace CustomsWorkerRole
                     {
                         LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
                         //int transactionTimeOutInMin = Math.Max(10, CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin());
-                        //using (TransactionScope Queue_scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(transactionTimeOutInMin)))
                         using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
                         {
                             using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
@@ -660,76 +659,31 @@ namespace CustomsWorkerRole
 
                                 break;
                             }
-                            
+
                             PerformanceM.EnqueueLastInstance();
                             PerformanceM.LastInstance.QueueStartDate = QueueStartDate;
                             PerformanceM.LastInstance.QueueReceiveDate = DateTime.Now;
 
                             LastActivity = DateTime.UtcNow;
                             proccesDone = true;
-                            LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
-                            bool successProcessMessage = true;
+                            var taskLIst = new List<Task>();
                             foreach (var item in responseList)
-                                Task.Factory.StartNew(() => {  successProcessMessage = ProcessMessage_Db(item);
-                            
-                            LogMessagingUtilWR.Instance.AppendLine("successProcessMessage");
-                            if (successProcessMessage)
                             {
-                                _CustomDbQueueService.SafeComplete();
-                                Queue_scope.Complete();
-                                PerformanceM.LastInstance.QueueSuccessComplete = true;
-                            }
-                            else if (!successProcessMessage)/// IF FAILED USE NEW TRANS !!!!
-                            {
-
-                                try
+                                var t =
+                                Task.Factory.StartNew(() =>
                                 {
+                                    CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
+                                    helper.RunTask(item, className);
+                                    LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
+                                    LogDoneItemInMemory();
+                                    LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
 
-                                    // if inner scope dispose without Complete // this can crush 
-
-                                    // but there is case that there is acrush withou transaction
-                                    // like while dca check status = so we want that the try of the step will increase in 1 - we must try commit it !!
-                                    Queue_scope.Complete();
-                                }
-                                catch (Exception)
-                                {
-                                    //throw;
-                                }
-                                try
-                                {
-                                    Queue_scope.Dispose();//remove lock !!
-                                }
-                                catch (Exception)
-                                {
-
-
-                                }
-
-                                using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew))
-                                {
-
-                                    _CustomDbQueueService.SafeAbandon();//if (CurrentCustomQueueResponse.Retries > 10)
-                                    Abandon_Queue_scope.Complete();
-                                }
-
-                            }
-                            LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
-                            LogDoneItemInMemory();
-                            LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
-                            PerformanceM.LastInstance.QueueEndDate = DateTime.Now;
-                            PerformanceM.EnqueueLastInstance();
-
-                            string logItMessagingUtilWR = ConfigurationManager.AppSettings.Get("LogMessagingUtilWR");
-
-                            if (!string.IsNullOrWhiteSpace(logItMessagingUtilWR))
-                            {
-                                string morethan = "";
-                                string str = LogMessagingUtilWR.Instance.GetString(out morethan);
-                                Logger.LogMe(str, false, this.GetType().ToString() + "_" + morethan);
-                            }
                                 });
+                                taskLIst.Add(t);
+                            }
+                            Task.WaitAll(taskLIst.ToArray());
+                            Queue_scope.Complete();
                         }
-
                     }
                     finally
                     {

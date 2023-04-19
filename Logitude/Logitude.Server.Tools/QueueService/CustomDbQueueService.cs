@@ -32,6 +32,24 @@ namespace Logitude.Server.Tools.QueueService
 
         }
 
+        public CustomDbQueueService(string queueCode, int tenant,
+           CustomDBQueueMessage customDBQueueMessage,
+           int lockDurationInMin = 2,
+           int maxDeliveryCount = 50,
+           int timeOutInHour = 24)
+           : base(queueCode, tenant)
+        {
+            CustomDbQueueParams = new CustomDbQueueModel();
+            CustomDbQueueParams.QueueCode = queueCode;
+            CustomDbQueueParams.Tenant = tenant;
+            CustomDbQueueParams.LockDuration = TimeSpan.FromMinutes(lockDurationInMin);//due debug + raise after 5 min !!
+            CustomDbQueueParams.MaxDeliveryCount = maxDeliveryCount;
+            CustomDbQueueParams.TimeOutInHour = timeOutInHour;
+
+            CurrentCustomQueueResponse = customDBQueueMessage;
+            base.CurrentMessageId = CurrentCustomQueueResponse.MessageId;
+        }
+
         public CustomDbQueueService(CustomDbQueueModel CustomDbQueueParams, CustomDBQueueMessage customDBQueueMessage)
             : base(CustomDbQueueParams.QueueCode, CustomDbQueueParams.Tenant)
         {
@@ -48,26 +66,6 @@ namespace Logitude.Server.Tools.QueueService
         new private void Complete(string messageId) { throw new NotImplementedException(); }
         new public List<CustomDBQueueMessage> Receive_new(int? nextRunDelayInSec = null)
         {
-
-
-            //var r= new DualRepository()
-            if (CurrentCustomQueueResponse != null && !String.IsNullOrWhiteSpace(CurrentCustomQueueResponse.MessageId) && CurrentCustomQueueResponse.QueueStatus == QueueStatusEnum.Received)
-            {
-                if (CustomDbQueueParams.MaxDeliveryCount < CurrentCustomQueueResponse.Retries)
-                {
-                    this.CompleteAsFailed();
-                }
-                else
-                {
-                    if (
-                    DateTime.Now
-                   // TO DO  get oracle SysDate 
-                   .Subtract(CurrentCustomQueueResponse.MessageCreatedServerTime.Value) > TimeSpan.FromHours(CustomDbQueueParams.TimeOutInHour))
-                    {
-                        this.CompleteAsFailed();
-                    }
-                }
-            }
             CurrentCustomQueueResponse = null;
             nextRunDelayInSec = nextRunDelayInSec ?? (int)(CustomDbQueueParams.LockDuration.TotalSeconds);
             base.CurrentMessageId = null;
@@ -79,10 +77,10 @@ namespace Logitude.Server.Tools.QueueService
             List<CustomDBQueueMessage> CurrentCustomQueueResponseList = new List<CustomDBQueueMessage>();
             foreach (var item in q)
             {
-                CurrentCustomQueueResponse = new CustomDBQueueMessage(item, CustomDbQueueParams);
-                CurrentCustomQueueResponse.QueueStatus = QueueStatusEnum.Received;
+                var currentCustomQueueResponse = new CustomDBQueueMessage(item, CustomDbQueueParams);
+                currentCustomQueueResponse.QueueStatus = QueueStatusEnum.Received;
                 LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:Receive:DbQueueName=" + CustomDbQueueParams.QueueCode + ":QMId=" + base.CurrentMessageId);
-                CurrentCustomQueueResponseList.Add(CurrentCustomQueueResponse);
+                CurrentCustomQueueResponseList.Add(currentCustomQueueResponse);
             }
             return CurrentCustomQueueResponseList;
         }
