@@ -225,7 +225,14 @@ namespace CustomsWorkerRole
                     case WorkerQueueType.DB:
                     default:
                         {
-                            WorkUntilQEmpty_Db();
+                            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("DQN", 0)) 
+                            {
+                                WorkUntilQEmpty_Db_new();
+                            }
+                            else
+                            {
+                                WorkUntilQEmpty_Db();
+                            }
                         }
                         break;
                 }
@@ -463,17 +470,13 @@ namespace CustomsWorkerRole
 
 
 
-
-
-
-
         // islam db queue service
         void WorkUntilQEmpty_Db()
         {
 
-            
-            
-            List<CustomDBQueueMessage> response=null;
+
+
+            CustomDBQueueMessage response = null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
@@ -501,9 +504,7 @@ namespace CustomsWorkerRole
 
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive");
 
-                                    //
-                                    response = _CustomDbQueueService.Receive_copy(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
-                                    //response = _CustomDbQueueService.Receive(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
+                                    response = _CustomDbQueueService.Receive(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
 
                                     scopeRecive.Complete();
@@ -520,7 +521,7 @@ namespace CustomsWorkerRole
                                 }
                             }
 
-                            if (response == null || (response != null && response.Count == 0))
+                            if (response == null || (response != null && response.MessageId == null))
                             {
                                 QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
                                 Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
@@ -534,9 +535,142 @@ namespace CustomsWorkerRole
                             LastActivity = DateTime.UtcNow;
                             proccesDone = true;
                             LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
+                            bool successProcessMessage = ProcessMessage_Db(response);
+                            LogMessagingUtilWR.Instance.AppendLine("successProcessMessage");
+                            if (successProcessMessage)
+                            {
+                                _CustomDbQueueService.SafeComplete();
+                                Queue_scope.Complete();
+                                PerformanceM.LastInstance.QueueSuccessComplete = true;
+                            }
+                            else if (!successProcessMessage)/// IF FAILED USE NEW TRANS !!!!
+                            {
+
+                                try
+                                {
+
+                                    // if inner scope dispose without Complete // this can crush 
+
+                                    // but there is case that there is acrush withou transaction
+                                    // like while dca check status = so we want that the try of the step will increase in 1 - we must try commit it !!
+                                    Queue_scope.Complete();
+                                }
+                                catch (Exception)
+                                {
+                                    //throw;
+                                }
+                                try
+                                {
+                                    Queue_scope.Dispose();//remove lock !!
+                                }
+                                catch (Exception)
+                                {
+
+
+                                }
+
+                                using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+                                {
+
+                                    _CustomDbQueueService.SafeAbandon();//if (CurrentCustomQueueResponse.Retries > 10)
+                                    Abandon_Queue_scope.Complete();
+                                }
+
+                            }
+                            LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
+                            LogDoneItemInMemory();
+                            LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
+                            PerformanceM.LastInstance.QueueEndDate = DateTime.Now;
+                            PerformanceM.EnqueueLastInstance();
+
+                            string logItMessagingUtilWR = ConfigurationManager.AppSettings.Get("LogMessagingUtilWR");
+
+                            if (!string.IsNullOrWhiteSpace(logItMessagingUtilWR))
+                            {
+                                string morethan = "";
+                                string str = LogMessagingUtilWR.Instance.GetString(out morethan);
+                                Logger.LogMe(str, false, this.GetType().ToString() + "_" + morethan);
+                            }
+                        }
+
+                    }
+                    finally
+                    {
+                        PerformanceM.SleepMSAfterEachQueuePeek();
+                    }
+                }
+            }
+
+
+        }
+
+
+
+
+
+        // islam db queue service
+        void WorkUntilQEmpty_Db_new()
+        {
+            List<CustomDBQueueMessage> responseList=null;
+            List<long> deferredSequenceNumbers = new List<long>();
+            bool proccesDone = false;
+            for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
+            {
+                while (!WorkerRoleServiceLocator.PleaseShutDown)
+                {
+                    LogMessagingUtilWR.Instance.Clear();
+                    LogMessagingUtil.Instance.Clear();
+
+                    DateTime QueueStartDate = DateTime.Now;
+                    //throw new Exception("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
+                    try
+                    {
+                        LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
+                        //int transactionTimeOutInMin = Math.Max(10, CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin());
+                        //using (TransactionScope Queue_scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(transactionTimeOutInMin)))
+                        using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
+                        {
+                            using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
+                            {
+
+
+                                try
+                                {
+
+                                    LogMessagingUtilWR.Instance.AppendLine("QRecive");
+
+                                    responseList = _CustomDbQueueService.Receive_new(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
+                                    LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
+
+                                    scopeRecive.Complete();
+
+                                    // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
+                                }
+                                catch (Exception)
+                                {
+
+                                    throw;
+                                }
+                            }
+
+                            if (responseList == null || (responseList != null && responseList.Count == 0))
+                            {
+                                QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
+                                Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
+
+                                break;
+                            }
+                            
+                            PerformanceM.EnqueueLastInstance();
+                            PerformanceM.LastInstance.QueueStartDate = QueueStartDate;
+                            PerformanceM.LastInstance.QueueReceiveDate = DateTime.Now;
+
+                            LastActivity = DateTime.UtcNow;
+                            proccesDone = true;
+                            LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
                             bool successProcessMessage = true;
-                            foreach (var item in response)
-                                Task.Factory.StartNew(() => {  successProcessMessage = ProcessMessage_Db(item); });
+                            foreach (var item in responseList)
+                                Task.Factory.StartNew(() => {  successProcessMessage = ProcessMessage_Db(item);
                             
                             LogMessagingUtilWR.Instance.AppendLine("successProcessMessage");
                             if (successProcessMessage)
@@ -593,6 +727,7 @@ namespace CustomsWorkerRole
                                 string str = LogMessagingUtilWR.Instance.GetString(out morethan);
                                 Logger.LogMe(str, false, this.GetType().ToString() + "_" + morethan);
                             }
+                                });
                         }
 
                     }

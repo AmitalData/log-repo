@@ -755,18 +755,16 @@ namespace Logitude.Server.Tools.QueueService
             return response;
         }
 
-        public List<QueueResponse> Receive_copy(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null)
+        public List<QueueResponse> Receive_new(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null)
         {
-            //
             if (LogitudeSettings.IsCostomsDeploy)
             {
-                return ReceiveCustoms_copy(nextRunDelayInSec);
+                return ReceiveCustoms_new(nextRunDelayInSec);
             }
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
             long messageId = -1;
 
             string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
-            QueueResponse response = new QueueResponse();
             List<QueueResponse> responseList = new List<QueueResponse>();
             if (string.IsNullOrEmpty(this.CurrentMessageId))
             {
@@ -776,201 +774,80 @@ namespace Logitude.Server.Tools.QueueService
                 {
                     if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                     {
-
-                        using (OracleConnection cn = new OracleConnection(strConnString))
+                        using (OracleConnection DBConnection = new OracleConnection(strConnString))
                         {
-                            OracleCommand cmd = new OracleCommand();
-                            cmd.Connection = cn;
-                            cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Queue_Peek", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
-                            cmd.CommandType = CommandType.StoredProcedure;
-
-                            #region inputs
-                            OracleParameter nextRunDelayInSecPar = new OracleParameter("v_NextRunDelayInSec", OracleDbType.Number);
-                            OracleParameter selectCountPar = new OracleParameter("v_SelectCount", OracleDbType.Number);
-                            OracleParameter queueCodePar = new OracleParameter("v_QueueDefinitionCode", OracleDbType.VarChar, 255);
-                            OracleParameter watingStatusPar = new OracleParameter("v_WatingStatus", OracleDbType.Number);
-
-                            nextRunDelayInSecPar.Direction = ParameterDirection.Input;
-                            selectCountPar.Direction = ParameterDirection.Input;
-                            queueCodePar.Direction = ParameterDirection.Input;
-                            watingStatusPar.Direction = ParameterDirection.Input;
-
-                            nextRunDelayInSecPar.Value = nextRunDelayInSec;
-                            selectCountPar.Value = 10;//todo
-                            queueCodePar.Value = QueueCode;
-                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
-
-                            cmd.Parameters.Add(nextRunDelayInSecPar);
-                            cmd.Parameters.Add(selectCountPar);
-                            cmd.Parameters.Add(queueCodePar);
-                            cmd.Parameters.Add(watingStatusPar);
-                            #endregion
-
-                            #region outputs
-                            OracleParameter vQueueMessages = new OracleParameter("v_QueueMessages", OracleDbType.Object);
-                            //OracleParameter messageIdPar = new OracleParameter("v_MessageId", OracleDbType.Number);
-                            //OracleParameter messageBodyPar = new OracleParameter("v_MessageBody", OracleDbType.VarChar, 1000);
-                            //OracleParameter retryNumberPar = new OracleParameter("v_RetryNumber", OracleDbType.Number);
-                            //OracleParameter messageCreatedServerTimePar = new OracleParameter("v_MessageCreatedServerTime", OracleDbType.Date);
-                            vQueueMessages.Direction = ParameterDirection.Output;
-                            vQueueMessages.ObjectTypeName = "QUEUE_MESSAGE_TABLE"; // Use the type name of the user-defined table type
-
-                            //messageIdPar.Direction = ParameterDirection.Output;
-                            //messageBodyPar.Direction = ParameterDirection.Output;
-                            //retryNumberPar.Direction = ParameterDirection.Output;
-                            //messageCreatedServerTimePar.Direction = ParameterDirection.Output;
-                            
-                            //cmd.Parameters.Add(messageIdPar);
-                            //cmd.Parameters.Add(messageBodyPar);
-                            //cmd.Parameters.Add(retryNumberPar);
-                            //cmd.Parameters.Add(messageCreatedServerTimePar);
-                            cmd.Parameters.Add(vQueueMessages);
-                            #endregion
-
+                            OracleCommand cmd = new OracleCommand(DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_List", LogitudeDBSchema.LOGITUDE_MAIN, DBConnection.ConnectionString), DBConnection);
                             try
                             {
-                                cn.Open();
-                                var output = cmd.ExecuteNonQuery();
-                                cn.Close();
+                                DBConnection.Open();
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                var nextRunDelayInSecPar = cmd.CreateParameter(); nextRunDelayInSecPar.ParameterName = "v_NextRunDelayInSec"; nextRunDelayInSecPar.DbType = DbType.Double;
+                                var queueCodePar = cmd.CreateParameter(); queueCodePar.ParameterName = "v_QueueDefinitionCode"; queueCodePar.DbType = DbType.String; queueCodePar.Size = 255;
+                                var watingStatusPar = cmd.CreateParameter(); watingStatusPar.ParameterName = "v_WatingStatus"; watingStatusPar.DbType = DbType.Double;
+                                var selectCountPar = cmd.CreateParameter(); selectCountPar.ParameterName = "v_SelectCount"; selectCountPar.DbType = DbType.Double;
+                                OracleParameter vQueueMessages = new OracleParameter("cursor_", OracleDbType.Cursor, 18);
 
-                                /*object messageOb = cmd.Parameters["v_MessageId"].Value;
-                                if (messageOb != null)
+                                queueCodePar.Direction = ParameterDirection.Input;
+                                nextRunDelayInSecPar.Direction = ParameterDirection.Input;
+                                selectCountPar.Direction = ParameterDirection.Input;
+                                vQueueMessages.Direction = ParameterDirection.Output;
+                                watingStatusPar.Direction = ParameterDirection.Input;
+
+                                var num = System.Configuration.ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
+                                if (!string.IsNullOrEmpty(num))
                                 {
-
-                                    if (long.TryParse(cmd.Parameters["v_MessageId"].Value.ToString(), out messageId))
-                                    {
-                                        this.CurrentMessageId = response.MessageId = messageId.ToString();
-                                        response.RetryNumber = Convert.ToInt32(cmd.Parameters["v_RetryNumber"].Value);
-                                        response.MessageCreatedServerTime = (DateTime)cmd.Parameters["v_MessageCreatedServerTime"].Value;
-                                        string messageBody = cmd.Parameters["v_MessageBody"].Value as string;
-                                        if (!string.IsNullOrEmpty(messageBody))
-                                        {
-                                            Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
-                                            response.MessageValues = messageValues;
-                                        }
-
-                                        RunDebuggerBreak();
-                                    }
-
-
-                                }*/
-
-                                object messageOb = cmd.Parameters["v_QueueMessages"].Value;
-                                if (messageOb != null)
-                                {
-
-                                    OracleObject[] oracleObjects = (OracleObject[])vQueueMessages.Value;
-                                    List<QueueResponse> dtQueueMessages = new List<QueueResponse>();
-
-                                    // Loop through each OracleObject and add its properties to the DataTable
-                                    foreach (OracleObject oracleObject in oracleObjects)
-                                    {
-                                        /*Queue_Message queueMessage = (Queue_Message)oracleObject.GetOracleValue("");
-
-                                        response.MessageId = queueMessage.MessageId;
-                                        //response.MessageValues = queueMessage.MessageBody;
-                                        if (!string.IsNullOrEmpty(queueMessage.MessageBody))
-                                        {
-                                            Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(queueMessage.MessageBody);
-                                            response.MessageValues = messageValues;
-                                        }
-                                        response.RetryNumber = queueMessage.RetryNumber;
-                                        response.MessageCreatedServerTime = queueMessage.MessageCreatedServerTime;*/
-
-                                        response.MessageId = oracleObject.GetOracleValue("MessageId").ToString();
-                                        var messageBody = oracleObject.GetOracleValue("MessageBody").ToString();
-                                        if (!string.IsNullOrEmpty(messageBody))
-                                        {
-                                            Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
-                                            response.MessageValues = messageValues;
-                                        }
-                                        response.RetryNumber = int.Parse(oracleObject.GetOracleValue("RetryNumber").ToString());
-                                        response.MessageCreatedServerTime = DateTime.Parse(oracleObject.GetOracleValue("MessageCreatedServerTime").ToString());
-                                        //response = (QueueResponse)oracleObject.Value;
-                                        responseList.Add(response);
-
-                                    }
-
-                                    RunDebuggerBreak();
-                                    
+                                    selectCountPar.Value = int.Parse(num);
                                 }
+                                else
+                                {
+                                    selectCountPar.Value = 10;
+                                }
+                                watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
+                                queueCodePar.Value = QueueCode;
+                                nextRunDelayInSecPar.Value = nextRunDelayInSec;
 
+                                cmd.Parameters.Add(vQueueMessages);
+                                cmd.Parameters.Add(queueCodePar);
+                                cmd.Parameters.Add(nextRunDelayInSecPar);
+                                cmd.Parameters.Add(watingStatusPar);
+                                cmd.Parameters.Add(selectCountPar);
+
+                                var output = cmd.ExecuteNonQuery();
+                                OracleDataReader reader = ((OracleCursor)vQueueMessages.Value).GetDataReader();
+                                while (reader.Read())
+                                {
+                                    var response = new QueueResponse()
+                                    {
+                                        MessageId = reader.GetString(0),
+                                        RetryNumber = reader.GetInt32(2),
+                                        MessageCreatedServerTime = reader.GetDateTime(3),
+                                    };
+                                    if (!string.IsNullOrEmpty(reader.GetString(1).ToString()))
+                                    {
+                                        Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary((reader.GetString(1).ToString()));
+                                        response.MessageValues = messageValues;
+                                    }
+                                    responseList.Add(response);
+                                }
                             }
                             catch (Exception ex)
                             {
                                 System.Console.WriteLine("Exception: {0}", ex.ToString());
                                 throw;
                             }
-
-                            cn.Close();
+                            finally
+                            {
+                                cmd.Connection.Close();
+                            }
                         }
-
-
                     }
                     else
                     {
-                        using (SqlConnection cn = new SqlConnection(strConnString))
-                        {
-                            SqlCommand cmd = new SqlCommand("[dbo].[Queue_Peek]", cn);
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
-                            SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.NVarChar, 255);
-                            SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, 1000);
-                            SqlParameter retryNumberPar = new SqlParameter("@RetryNumber", SqlDbType.Int);
-                            SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
-
-                            messageIdPar.Direction = ParameterDirection.Output;
-                            messageBodyPar.Direction = ParameterDirection.Output;
-                            queueCodePar.Direction = ParameterDirection.Input;
-                            retryNumberPar.Direction = ParameterDirection.Output;
-                            watingStatusPar.Direction = ParameterDirection.Input;
-
-                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
-                            queueCodePar.Value = QueueCode;
-
-                            cmd.Parameters.Add(messageIdPar);
-                            cmd.Parameters.Add(messageBodyPar);
-                            cmd.Parameters.Add(retryNumberPar);
-                            cmd.Parameters.Add(queueCodePar);
-                            cmd.Parameters.Add(watingStatusPar);
-
-                            cn.Open();
-                            var output = cmd.ExecuteNonQuery();
-                            cn.Close();
-
-                            object messageOb = cmd.Parameters["@MessageId"].Value;
-                            if (messageOb != null)
-                            {
-
-                                if (long.TryParse(cmd.Parameters["@MessageId"].Value.ToString(), out messageId))
-                                {
-                                    this.CurrentMessageId = response.MessageId = messageId.ToString();
-                                    response.RetryNumber = (int)cmd.Parameters["@RetryNumber"].Value;
-                                    string messageBody = cmd.Parameters["@MessageBody"].Value as string;
-                                    if (!string.IsNullOrEmpty(messageBody))
-                                    {
-                                        Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
-                                        response.MessageValues = messageValues;
-                                    }
-
-                                    RunDebuggerBreak();
-                                }
-                            }
-
-
-
-                        }
+                        //sql will be in the future
                     }
 
                     scope.Complete();
                 }
-
-
-            }
-
-            if (string.IsNullOrEmpty(response.MessageId))
-            {
-                Thread.Sleep(serverWaitTime.Value);
             }
 
             return responseList;
