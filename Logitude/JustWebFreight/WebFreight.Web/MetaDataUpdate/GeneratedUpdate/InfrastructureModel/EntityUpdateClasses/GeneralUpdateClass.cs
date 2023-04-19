@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "23c3cd825950fa41c872b79263d188fc";
+		public const string HashString = "9e4d9ba67aa53167b29332e9dc85d390";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "1f80",
+			      				    Code =  "ba78",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2256,7 +2256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralONo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.No", DefaultText = "No",LocalDefaultText = @"לא", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralOShowNewRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ShowNewRelease", DefaultText = "Read what is new in Logitude",LocalDefaultText = @"גרסה חדשה עלתה לאוויר - לפירוט השינויים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralOShowNewRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ShowNewRelease", DefaultText = "Read what is new in the latest release",LocalDefaultText = @"גרסה חדשה עלתה לאוויר - לפירוט השינויים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralBPressHere = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.PressHere", DefaultText = "Press Here",LocalDefaultText = @"לחץ כאן", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2296,9 +2296,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOFieldInterestCalculationStartDateismandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.FieldInterestCalculationStartDateismandatory", DefaultText = "Field Interest Calculation Start Date is mandatory",LocalDefaultText = @"שדה תאריך הוא חובה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-            TextCode GeneralTextCode_AccountingGeneralOAtleastoneGLAccountInterestPeriodsrecordisrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", DefaultText = "At least one GLAccount Interest Periods record is required", LocalDefaultText = @"חובה להזין לפחות רשומה אחת של תקופת ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOAtleastoneGLAccountInterestPeriodsrecordisrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", DefaultText = "If you want that this glaccount will be active for interest,  At least one GLAccount Interest Periods record is required",LocalDefaultText = @"אם ברצונך שחשבון זה יהיה פעיל לריבית ,יש להגדיר לפחות תקופת ריבית אחת", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-            TextCode GeneralTextCode_GeneralOUsedSpace = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.UsedSpace", DefaultText = "Used Space",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralOUsedSpace = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.UsedSpace", DefaultText = "Used Space",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMHContainersFU = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ContainersFU", DefaultText = "ContainersFU",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2720,6 +2720,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOChartOfAccountsTypesOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ChartOfAccountsTypesOrder", DefaultText = "Chart Of Accounts Types Order",LocalDefaultText = @"Chart Of Accounts Types Order", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   //TextCode GeneralTextCode_AccountingOChangeMadeToConnectedAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ChangeMadeToConnectedAccounts", DefaultText = "A change was made in the connected accounts. The connected accounts must be returned to their state as it was when the original journal was prodiced. Line ",LocalDefaultText = @"בוצע שינוי בחיבור החשבונות. יש להחזיר את חיבור החשבונות למצבם כפי שהיה בעת רישום פקודת היומן המקורית. שורה ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode GeneralTextCode_GeneralMCCustomObjectsCustomObjects = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.CustomObjects.CustomObjects", DefaultText = "Custom Objects",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCCustomizationDeploymentPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customization.DeploymentPackage", DefaultText = "Deployment Package",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -2736,8 +2738,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMCTasksTaskStatuses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tasks.TaskStatuses", DefaultText = "Task Statuses",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
  		   TextCode GeneralTextCode_GeneralMCACCConsolidatedTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.ConsolidatedTaxReport", DefaultText = "Consolidated Tax Report",LocalDefaultText = @"דיווח מס מרוכז", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_ConsolidatedTaxReportQConsolidatedTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.Q.ConsolidatedTaxReport", DefaultText = "Consolidated Tax Report",LocalDefaultText = @"דיווח מס מרוכז", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
