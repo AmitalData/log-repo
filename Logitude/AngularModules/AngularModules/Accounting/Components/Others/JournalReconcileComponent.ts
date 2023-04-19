@@ -44,7 +44,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     GLAccountsFilterItems: ApiQueryFilters;
     gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     public isRTL: boolean = false;
-    public ValidationErrorsList: string[];
+    public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         super();
@@ -350,14 +350,12 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         this.TotalDebit = winArgs.TotalDebit;
     }
     FillErrors(isSplitJournal: boolean) {
-        this.ValidationErrorsList = [];
+
         if (AppTool.IsNullOrEmpty(this.glAccount)) {
             this.ValidationErrorsList.push('GLAccount is Required');
         }
         else if (AppTool.IsNullOrEmpty(this.AccountingDate) && !isSplitJournal) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate('Journal.RE.AccountingDateRequired'));
-        } else {
-            this.ValidationErrorsList = [];
         }
     }
 
@@ -384,11 +382,11 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
     OkButtonClicked(isSplitJournal: boolean) {
 
+        this.FillErrors(isSplitJournal);
+
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
-
-        this.FillErrors(isSplitJournal);
 
         const reconciliationLines: ReconciliationLinePM[] = [];
         this.BuildReconciliationLines(reconciliationLines);
