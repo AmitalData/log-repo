@@ -227,7 +227,9 @@ export class ContactItemClass {
         this.EntityPM = item;
         this.IsNewEntity = isNewEntity; 
         this.CheckPrimary();
-        this.CheckEmailForSending(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'])
+        if(fatherComponent != null) {
+            this.CheckEmailForSending(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'])
+        }
       
     }
     GetIsHasExternalId() {
