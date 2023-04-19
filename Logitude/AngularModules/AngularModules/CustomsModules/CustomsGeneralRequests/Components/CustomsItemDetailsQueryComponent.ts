@@ -31,13 +31,11 @@ export class CustomsItemDetailsQueryComponent
     implements AfterViewInit, IRequestsSheetMassagingComponent {
     public DataContext: CustomsItemDetailsQueryComponent = this;
     public ObjectTableName: string = "Customs.Declaration";//TODO
-
+    public ClassificationValidation: string[] = []
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
-    public ExchangeRatesQueryObservableList: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.ExchangeRatesQueryObservableList = new ObservableCollection([]);
         this.UIProperties.SetRequired("Classification", "Customs.Classification", true);
         this.RequestParams.CustomsBookType = "1";
         this.RequestParams.ValidToDate = new Date()
@@ -63,13 +61,11 @@ export class CustomsItemDetailsQueryComponent
         if (this.RequestParams == null) {
             this.RequestParams = new ExchangeRatesQueryRequestParams();
             this.UIProperties.SetRequired("ValidToDate", this.ObjectTableName, true);
-           
+
 
         }
 
-        if (this.ResponseData && this.ResponseData.CurrencyRateList) {
-            this.ExchangeRatesQueryObservableList.InsertCollection(this.ResponseData.CurrencyRateList);
-        }
+
     }
 
 
@@ -120,7 +116,7 @@ export class CustomsItemDetailsQueryComponent
         return this.RequestParams.Classification;
     }
     set Classification(value: string) {
-  
+
         if (this.RequestParams.Classification != value) {
             this.RequestParams.Classification = value;
         }
@@ -146,10 +142,10 @@ export class CustomsItemDetailsQueryComponent
         }
     }
 
-    get StatisticMeasurementUnitCode() { return this.RequestParams.statisticMeasurementUnitCode; }
-    set StatisticMeasurementUnitCode(value: string) {
-        if (this.RequestParams.statisticMeasurementUnitCode != value) {
-            this.RequestParams.statisticMeasurementUnitCode = value;
+    get StatisticMeasurementUnitExternalID() { return this.RequestParams.statisticMeasurementUnitExternalID; }
+    set StatisticMeasurementUnitExternalID(value: string) {
+        if (this.RequestParams.statisticMeasurementUnitExternalID != value) {
+            this.RequestParams.statisticMeasurementUnitExternalID = value;
         }
     }
 
@@ -160,7 +156,7 @@ export class CustomsItemDetailsQueryComponent
         }
     }
     get IsDiscountCode() { return this.RequestParams.IsDiscountCode; }
-    set IsDiscountCode(value: string) {
+    set IsDiscountCode(value: boolean) {
         if (this.RequestParams.IsDiscountCode != value) {
             this.RequestParams.IsDiscountCode = value;
         }
@@ -172,7 +168,9 @@ export class CustomsItemDetailsQueryComponent
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
-
+        this.ClassificationValidation.forEach(element => {
+            this.ValidationErrorsList.push(element);
+        });
         if (AppTool.IsNullOrEmpty(this.ValidToDate)) {
             var msg = "תאריך שליפה שדה חובה";
             this.ValidationErrorsList.push(msg);
@@ -189,22 +187,21 @@ export class CustomsItemDetailsQueryComponent
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
-        
+
         //alert(customSendOptionsArgs.Option);
+        this.OnClassificationLostFocus(null, null, true)
+
         this.FillErrors();
-        if (this.ValidationErrorsList.length > 0) {
+         
+        if (this.ValidationErrorsList.length > 0 ) {
             return;
         }
 
-        this.ExchangeRatesQueryObservableList.Clear();
-
-
-
 
         var currRequestParams = new CustomsItemDetailsQueryRequestParams();///Force new GUID On Each Send !!
-        currRequestParams.ValidToDate=this.ValidToDate;
-        currRequestParams.Classification=this.Classification;
-        currRequestParams.CustomsBookType=this.CustomsBookType;
+        currRequestParams.ValidToDate = this.ValidToDate;
+        currRequestParams.Classification = this.Classification;
+        currRequestParams.CustomsBookType = this.CustomsBookType;
 
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -213,14 +210,22 @@ export class CustomsItemDetailsQueryComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            //.ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
-            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId, "שאילתא לנתוני פרט מכס", false)
+            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId, "שאילתא לנתוני פרט מכס", true)
             .then((res) => {
+
+
                 this.ResponseData = res;
+                this.FullClassification = this.ResponseData?.CustomsItemList[0]?.fullClassification
+                this.CustomsBookTypeName = this.ResponseData?.CustomsItemList[0]?.customsBookTypeName;
+                this.GoodsDescription = this.ResponseData?.CustomsItemList[0]?.goodsDescription
+                this.StatisticMeasurementUnitExternalID = this.ResponseData?.CustomsItemList[0]?.statisticMeasurementUnitExternalID?.toString();
+                this.IsDiscountCode = this.ResponseData?.CustomsItemList[0]?.isDiscountCode;
+
                 this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {
+
                 this.ValidationErrorsList.push(err);
             });
 
@@ -244,12 +249,10 @@ export class CustomsItemDetailsQueryComponent
     valid: boolean = true;
     checkDigit: number = 0;
     digit: string = null;
-    async OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
+    async OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any, isSend:boolean=false) {
 
-        debugger;
-       
-       
-        var newValue = this.Classification;
+        this.ClassificationValidation=[];
+       var newValue = this.Classification;
         this.Classification = newValue;
         this.valid = true;
         this.UIProperties.SetValidity("Classification", "Customs.Classification", true, "");
@@ -260,11 +263,13 @@ export class CustomsItemDetailsQueryComponent
         else if (newValue.toString().length > 11) {
             this.valid = false;
             this.UIProperties.SetValidity("Classification", "Customs.Classification", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
+            this.ClassificationValidation.push(TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
 
         }
         else if (newValue.toString().length < 8) {
             this.valid = false;
             this.UIProperties.SetValidity("Classification", "Customs.Classification", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
+            this.ClassificationValidation.push(TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
 
         }
         else if (newValue.toString().length == 8) {
@@ -283,6 +288,7 @@ export class CustomsItemDetailsQueryComponent
             if (this.digit != this.checkDigit.toString()) {
                 this.valid = false;
                 this.UIProperties.SetValidity("Classification", "Customs.Classification", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
+                this.ClassificationValidation.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
 
             }
             else {
@@ -302,7 +308,7 @@ export class CustomsItemDetailsQueryComponent
             if (this.digit != this.checkDigit.toString()) {
                 this.valid = false;
                 this.UIProperties.SetValidity("Classification", "Customs.Classification", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
-
+                this.ClassificationValidation.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
             }
             else {
                 this.valid = true;
@@ -316,13 +322,15 @@ export class CustomsItemDetailsQueryComponent
             this.UIProperties.SetValidity("Classification", "Customs.Classification", true, "");
         }
 
-        
+
 
         if (this.valid) {
-
+              this.ClassificationValidation=[]
         }
         else {
+            
             SessionLocator.SustainFocusOnCell = true;
+            if(!isSend)
             this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: classificationTextBox.InputId });
 
         }

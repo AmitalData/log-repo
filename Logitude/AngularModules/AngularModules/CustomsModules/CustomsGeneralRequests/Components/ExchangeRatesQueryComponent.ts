@@ -160,9 +160,9 @@ export class ExchangeRatesQueryComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            //.ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
             .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
             .then((res) => {
+                debugger
                 this.ResponseData = res;
                 this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();

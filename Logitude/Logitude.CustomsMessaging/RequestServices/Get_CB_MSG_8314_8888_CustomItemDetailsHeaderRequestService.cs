@@ -15,16 +15,21 @@ using UnifreightIIG.Common.CurrencyRateServiceReference;
 using UnifreightIIG.Common.CustomItemDetailsServiceReference;
 using RequestContentHeader = UnifreightIIG.Common.CustomItemDetailsServiceReference.RequestContentHeader;
 
+
 namespace Logitude.CustomsMessaging.RequestServices
 {
     public class Get_CB_MSG_8314_8888_CustomItemDetailsHeaderRequestService: RequestServiceBase<CB_NG_8314_CustomItemDetailsHeaderIn, CD_NG_8314_Web01_CustomsItemDetailsRequestParams>
     {
         public override CB_NG_8314_CustomItemDetailsHeaderIn GetRequest(CD_NG_8314_Web01_CustomsItemDetailsRequestParams requestParams)
         {
-           var myMsg=new CB_NG_8314_CustomItemDetailsHeaderIn();
+            var myMsg = new CB_NG_8314_CustomItemDetailsHeaderIn();
             myMsg.RequestContentHeader = new RequestContentHeader() { Convertor = "1", RecieverID = new int[] { 1 } };
 
             myMsg.CIDetailsHeaderIn = new CustomsBookItemHeaderIn();
+            if (requestParams.Classification.Length > 10)
+            {
+                requestParams.Classification = requestParams.Classification.Substring(0, 10);
+            }
             myMsg.CIDetailsHeaderIn.classification = requestParams.Classification;
             myMsg.CIDetailsHeaderIn.customsBookType = requestParams.CustomsBookType;
             myMsg.CIDetailsHeaderIn.validToDate = requestParams.ValidToDate;
@@ -35,7 +40,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //this.MyRequestSheetParam.CustomFileNo= requestParams.c
             this.MyRequestSheetParam.RequestDescription = "נתוני פרט מכס";
             return myMsg;
-           
+
         }
     }
 }

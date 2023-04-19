@@ -138,6 +138,7 @@
     <Compile Include="ResponseData\AddAttachmentResponseData.Shared.cs" />
     <Compile Include="ResponseData\BlockListInWarehouseResponseData.Shared.cs" />
     <Compile Include="ResponseData\CargoQueryResponseData.Shared.cs" />
+    <Compile Include="ResponseData\CB_NG_8314_8888_CustomsItemDetailsResponseData.cs" />
     <Compile Include="ResponseData\CD_NG_8348_Web02_CurrencyRateDetailResponseData.Shared.cs" />
     <Compile Include="ResponseData\CH_NG_192_MSG3_ApproveChangeTimeResponseData.Shared.cs" />
     <Compile Include="ResponseData\ClaimAnswerResponseData.Shared.cs" />
