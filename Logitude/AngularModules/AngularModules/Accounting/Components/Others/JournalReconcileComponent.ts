@@ -383,11 +383,12 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     }
 
     OkButtonClicked(isSplitJournal: boolean) {
-        this.FillErrors(isSplitJournal);
 
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
+
+        this.FillErrors(isSplitJournal);
 
         const reconciliationLines: ReconciliationLinePM[] = [];
         this.BuildReconciliationLines(reconciliationLines);
