@@ -1289,15 +1289,7 @@ namespace Logitude.Server.Tools.QueueService
 
         }
 
-        private class Queue_Message
-        {
-            public string MessageId { get; set; }
-            public int RetryNumber { get; set; }
-            public string MessageBody { get; set; }
-            public DateTime? MessageCreatedServerTime { get; set; }
-
-        }
-
+       
 
     }
 }
