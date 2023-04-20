@@ -830,8 +830,8 @@ Line3
             return;
         }
         let objToCheck1 = JSON.parse(this._TextBoxParam);
-        let _GLAccountInterestDeactivationBalanceUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountInterestDeactivationBalance';
-        let myUrl = _GLAccountInterestDeactivationBalanceUrl + "?tenant=" + objToCheck1.Tenant;
+        let _GLAccountInterestActivationBalanceUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountInterestActivationBalance';
+        let myUrl = _GLAccountInterestActivationBalanceUrl + "?tenant=" + objToCheck1.Tenant;
         myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
         myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
         myUrl = myUrl + "&interestActivationDate=" + objToCheck1.InterestActivationDate;
@@ -873,8 +873,8 @@ Line3
             return;
         }
         let objToCheck1 = JSON.parse(this._TextBoxParam);
-        let _GLAccountInterestActivationBalanceUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountInterestActivationBalance';
-        let myUrl = _GLAccountInterestActivationBalanceUrl + "?tenant=" + objToCheck1.Tenant;
+        let _GLAccountInterestDeactivationBalanceUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountInterestDeactivationBalance';
+        let myUrl = _GLAccountInterestDeactivationBalanceUrl + "?tenant=" + objToCheck1.Tenant;
         myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
 //        myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
 //        myUrl = myUrl + "&interestActivationDate=" + objToCheck1.InterestActivationDate;

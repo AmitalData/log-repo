@@ -69,7 +69,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     gLAccountInterestActivationBalanceBatch.RunGLAccountInterestActivationBalance(args);
                     string responseText = gLAccountInterestActivationBalanceBatch.ResponseText();
                     HttpStatusCode StatusCode = gLAccountInterestActivationBalanceBatch.StatusCode();
-                    var res1 = new { Success = true, Message = responseText };
+                    var res1 = new { Success = (StatusCode == HttpStatusCode.Accepted), Message = responseText };
 
                     return Request.CreateResponse(StatusCode, res1);
                 }
