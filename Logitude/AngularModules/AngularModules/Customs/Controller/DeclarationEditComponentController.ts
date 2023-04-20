@@ -108,10 +108,13 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 return;
             }
             //if (!(this._CurrentEntity.IsConvertedDeclaration || this._CurrentEntity.IsConnectedToUnifreight)) {
-            if (!(this._CurrentEntity.IsConnectedToUnifreight)) {
-                this._ControllerOn = false;
-                resolve(this._ControllerOn);
-                return;
+            const allowUnifreightLocksInCloud = true;
+            if (!allowUnifreightLocksInCloud) {
+                if (!(this._CurrentEntity.IsConnectedToUnifreight)) {
+                    this._ControllerOn = false;
+                    resolve(this._ControllerOn);
+                    return;
+                }
             }
             this.RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve)
 

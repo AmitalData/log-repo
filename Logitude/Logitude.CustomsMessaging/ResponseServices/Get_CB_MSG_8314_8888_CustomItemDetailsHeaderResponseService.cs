@@ -57,6 +57,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
            
         }
+
         public override void Update(CB_NG_8888_CustomsItemOut customResponse, CD_NG_8314_Web01_CustomsItemDetailsRequestParams requestParams)
         {
 
