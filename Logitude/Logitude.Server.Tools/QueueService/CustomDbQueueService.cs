@@ -32,6 +32,24 @@ namespace Logitude.Server.Tools.QueueService
 
         }
 
+        public CustomDbQueueService(string queueCode, int tenant,
+           CustomDBQueueMessage customDBQueueMessage,
+           int lockDurationInMin = 2,
+           int maxDeliveryCount = 50,
+           int timeOutInHour = 24)
+           : base(queueCode, tenant)
+        {
+            CustomDbQueueParams = new CustomDbQueueModel();
+            CustomDbQueueParams.QueueCode = queueCode;
+            CustomDbQueueParams.Tenant = tenant;
+            CustomDbQueueParams.LockDuration = TimeSpan.FromMinutes(lockDurationInMin);//due debug + raise after 5 min !!
+            CustomDbQueueParams.MaxDeliveryCount = maxDeliveryCount;
+            CustomDbQueueParams.TimeOutInHour = timeOutInHour;
+
+            CurrentCustomQueueResponse = customDBQueueMessage;
+            base.CurrentMessageId = CurrentCustomQueueResponse.MessageId;
+        }
+
         public CustomDbQueueService(CustomDbQueueModel CustomDbQueueParams, CustomDBQueueMessage customDBQueueMessage)
             : base(CustomDbQueueParams.QueueCode, CustomDbQueueParams.Tenant)
         {
@@ -46,6 +64,27 @@ namespace Logitude.Server.Tools.QueueService
         new private QueueResponse Receive() { throw new NotImplementedException(); }
         new private QueueResponse Receive(TimeSpan serverWaitTime) { throw new NotImplementedException(); }
         new private void Complete(string messageId) { throw new NotImplementedException(); }
+        new public List<CustomDBQueueMessage> Receive_new(int? nextRunDelayInSec = null)
+        {
+            CurrentCustomQueueResponse = null;
+            nextRunDelayInSec = nextRunDelayInSec ?? (int)(CustomDbQueueParams.LockDuration.TotalSeconds);
+            base.CurrentMessageId = null;
+            var q = base.Receive_new(nextRunDelayInSec.Value);
+            if (q == null || q.Count == 0)
+            {
+                return null;
+            }
+            List<CustomDBQueueMessage> CurrentCustomQueueResponseList = new List<CustomDBQueueMessage>();
+            foreach (var item in q)
+            {
+                var currentCustomQueueResponse = new CustomDBQueueMessage(item, CustomDbQueueParams);
+                currentCustomQueueResponse.QueueStatus = QueueStatusEnum.Received;
+                LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:Receive:DbQueueName=" + CustomDbQueueParams.QueueCode + ":QMId=" + base.CurrentMessageId);
+                CurrentCustomQueueResponseList.Add(currentCustomQueueResponse);
+            }
+            return CurrentCustomQueueResponseList;
+        }
+
 
 
         new public CustomDBQueueMessage Receive(int? nextRunDelayInSec = null)

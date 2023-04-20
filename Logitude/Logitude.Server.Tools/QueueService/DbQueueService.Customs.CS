@@ -306,7 +306,7 @@ namespace Logitude.Server.Tools.QueueService
                 throw new Exception("ReceiveCustoms  use in LogitudeSettings.IsCostomsDeploy");
             }
 
-
+            //
             long messageId = -1;
 
             string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
@@ -424,6 +424,106 @@ namespace Logitude.Server.Tools.QueueService
 
             return response;
         }
+
+        public List<QueueResponse> ReceiveCustoms_new(int nextRunDelayInSec = 60)
+        {
+            if (!LogitudeSettings.IsCostomsDeploy)
+            {
+                throw new Exception("ReceiveCustoms  use in LogitudeSettings.IsCostomsDeploy");
+            }
+
+            List<QueueResponse> responseList = new List<QueueResponse>();
+
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
+            //using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                using (var context = WebFreightContext.GetContext(this.Tenant) as DbContext)
+                {
+                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                    {
+                        using (OracleConnection DBConnection = new OracleConnection(context.Database.Connection.ConnectionString))
+                        {
+                            OracleCommand cmd = new OracleCommand(DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_List", LogitudeDBSchema.LOGITUDE_MAIN, DBConnection.ConnectionString), DBConnection);
+                            try
+                            {
+                                DBConnection.Open();
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                var nextRunDelayInSecPar = cmd.CreateParameter(); nextRunDelayInSecPar.ParameterName = "v_NextRunDelayInSec"; nextRunDelayInSecPar.DbType = DbType.Double;
+                                var queueCodePar = cmd.CreateParameter(); queueCodePar.ParameterName = "v_QueueDefinitionCode"; queueCodePar.DbType = DbType.String; queueCodePar.Size = 255;
+                                var watingStatusPar = cmd.CreateParameter(); watingStatusPar.ParameterName = "v_WatingStatus"; watingStatusPar.DbType = DbType.Double;
+                                var selectCountPar = cmd.CreateParameter(); selectCountPar.ParameterName = "v_SelectCount"; selectCountPar.DbType = DbType.Double;
+                                OracleParameter vQueueMessages = new OracleParameter("l_cursor", OracleDbType.Cursor, 18);
+
+                                queueCodePar.Direction = ParameterDirection.Input;
+                                nextRunDelayInSecPar.Direction = ParameterDirection.Input;
+                                selectCountPar.Direction = ParameterDirection.Input;
+                                vQueueMessages.Direction = ParameterDirection.Output;
+                                watingStatusPar.Direction = ParameterDirection.Input;
+                                
+                                var num = System.Configuration.ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
+                                if (!string.IsNullOrEmpty(num))
+                                {
+                                    selectCountPar.Value = int.Parse(num);
+                                }
+                                else
+                                {
+                                    selectCountPar.Value = 10;
+                                }
+                                watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
+                                queueCodePar.Value = QueueCode;
+                                nextRunDelayInSecPar.Value = nextRunDelayInSec;
+
+                                cmd.Parameters.Add(vQueueMessages);
+                                cmd.Parameters.Add(queueCodePar);
+                                cmd.Parameters.Add(nextRunDelayInSecPar);
+                                cmd.Parameters.Add(watingStatusPar);
+                                cmd.Parameters.Add(selectCountPar);
+
+                                var ou = cmd.ExecuteNonQuery();
+
+                                if (vQueueMessages.Value != DBNull.Value)
+                                {
+                                    OracleDataReader reader = ((OracleCursor)vQueueMessages.Value).GetDataReader();
+                                    while (reader.Read())
+                                    {
+                                        var response = new QueueResponse()
+                                        {
+                                            MessageId = reader.GetString(0),
+                                            RetryNumber = reader.GetInt32(2),
+                                            MessageCreatedServerTime = reader.GetDateTime(3),
+                                        };
+                                        if (!string.IsNullOrEmpty(reader.GetString(1).ToString()))
+                                        {
+                                            Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary((reader.GetString(1).ToString()));
+                                            response.MessageValues = messageValues;
+                                        }
+                                        responseList.Add(response);
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Console.WriteLine("Exception: {0}", ex.ToString());
+                                throw;
+                            }
+                            finally
+                            {
+                                cmd.Connection.Close();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //sql will be in the future
+                    }
+
+                    scope.Complete();
+                }
+            }
+
+            return responseList;
+        }
+
 
 
         public void CompleteCustoms(bool Failed)

@@ -406,7 +406,7 @@ namespace Logitude.Server.Tools.QueueService
         public QueueResponse ReceiveDetail(TimeSpan? serverWaitTime,bool suppressSleep)
         {
 
-
+            //
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
@@ -589,6 +589,7 @@ namespace Logitude.Server.Tools.QueueService
         }
         public QueueResponse Receive(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null)
         {
+            //
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 return ReceiveCustoms(nextRunDelayInSec);
@@ -752,6 +753,104 @@ namespace Logitude.Server.Tools.QueueService
             }
 
             return response;
+        }
+
+        public List<QueueResponse> Receive_new(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null)
+        {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                return ReceiveCustoms_new(nextRunDelayInSec);
+            }
+            if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
+            long messageId = -1;
+
+            string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
+            List<QueueResponse> responseList = new List<QueueResponse>();
+            if (string.IsNullOrEmpty(this.CurrentMessageId))
+            {
+                DataTable tblQueue = new DataTable();
+
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
+                {
+                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                    {
+                        using (OracleConnection DBConnection = new OracleConnection(strConnString))
+                        {
+                            OracleCommand cmd = new OracleCommand(DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_List", LogitudeDBSchema.LOGITUDE_MAIN, DBConnection.ConnectionString), DBConnection);
+                            try
+                            {
+                                DBConnection.Open();
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                var nextRunDelayInSecPar = cmd.CreateParameter(); nextRunDelayInSecPar.ParameterName = "v_NextRunDelayInSec"; nextRunDelayInSecPar.DbType = DbType.Double;
+                                var queueCodePar = cmd.CreateParameter(); queueCodePar.ParameterName = "v_QueueDefinitionCode"; queueCodePar.DbType = DbType.String; queueCodePar.Size = 255;
+                                var watingStatusPar = cmd.CreateParameter(); watingStatusPar.ParameterName = "v_WatingStatus"; watingStatusPar.DbType = DbType.Double;
+                                var selectCountPar = cmd.CreateParameter(); selectCountPar.ParameterName = "v_SelectCount"; selectCountPar.DbType = DbType.Double;
+                                OracleParameter vQueueMessages = new OracleParameter("cursor_", OracleDbType.Cursor, 18);
+
+                                queueCodePar.Direction = ParameterDirection.Input;
+                                nextRunDelayInSecPar.Direction = ParameterDirection.Input;
+                                selectCountPar.Direction = ParameterDirection.Input;
+                                vQueueMessages.Direction = ParameterDirection.Output;
+                                watingStatusPar.Direction = ParameterDirection.Input;
+
+                                var num = System.Configuration.ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
+                                if (!string.IsNullOrEmpty(num))
+                                {
+                                    selectCountPar.Value = int.Parse(num);
+                                }
+                                else
+                                {
+                                    selectCountPar.Value = 10;
+                                }
+                                watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
+                                queueCodePar.Value = QueueCode;
+                                nextRunDelayInSecPar.Value = nextRunDelayInSec;
+
+                                cmd.Parameters.Add(vQueueMessages);
+                                cmd.Parameters.Add(queueCodePar);
+                                cmd.Parameters.Add(nextRunDelayInSecPar);
+                                cmd.Parameters.Add(watingStatusPar);
+                                cmd.Parameters.Add(selectCountPar);
+
+                                var output = cmd.ExecuteNonQuery();
+                                OracleDataReader reader = ((OracleCursor)vQueueMessages.Value).GetDataReader();
+                                while (reader.Read())
+                                {
+                                    var response = new QueueResponse()
+                                    {
+                                        MessageId = reader.GetString(0),
+                                        RetryNumber = reader.GetInt32(2),
+                                        MessageCreatedServerTime = reader.GetDateTime(3),
+                                    };
+                                    if (!string.IsNullOrEmpty(reader.GetString(1).ToString()))
+                                    {
+                                        Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary((reader.GetString(1).ToString()));
+                                        response.MessageValues = messageValues;
+                                    }
+                                    responseList.Add(response);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Console.WriteLine("Exception: {0}", ex.ToString());
+                                throw;
+                            }
+                            finally
+                            {
+                                cmd.Connection.Close();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //sql will be in the future
+                    }
+
+                    scope.Complete();
+                }
+            }
+
+            return responseList;
         }
 
 
@@ -1190,7 +1289,7 @@ namespace Logitude.Server.Tools.QueueService
 
         }
 
-
+       
 
     }
 }

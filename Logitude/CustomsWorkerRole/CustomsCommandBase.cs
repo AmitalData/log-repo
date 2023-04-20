@@ -86,7 +86,7 @@ namespace CustomsWorkerRole
             }
 
         }
-
+        string className;
         public override bool OnStart()
         {
             //try
@@ -99,7 +99,7 @@ namespace CustomsWorkerRole
             {
                 myClass = _QueueNameOverride;
             }
-
+            className = myClass;
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
             var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
             if (customsEnvironmentSettingPM.UseRabbitMQ)
@@ -225,7 +225,14 @@ namespace CustomsWorkerRole
                     case WorkerQueueType.DB:
                     default:
                         {
-                            WorkUntilQEmpty_Db();
+                            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("DQN", 0)) 
+                            {
+                                WorkUntilQEmpty_Db_new();
+                            }
+                            else
+                            {
+                                WorkUntilQEmpty_Db();
+                            }
                         }
                         break;
                 }
@@ -463,17 +470,13 @@ namespace CustomsWorkerRole
 
 
 
-
-
-
-
         // islam db queue service
         void WorkUntilQEmpty_Db()
         {
 
-            
-            
-            CustomDBQueueMessage response=null;
+
+
+            CustomDBQueueMessage response = null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
@@ -590,6 +593,97 @@ namespace CustomsWorkerRole
                             }
                         }
 
+                    }
+                    finally
+                    {
+                        PerformanceM.SleepMSAfterEachQueuePeek();
+                    }
+                }
+            }
+
+
+        }
+
+
+
+
+
+        // islam db queue service
+        void WorkUntilQEmpty_Db_new()
+        {
+            List<CustomDBQueueMessage> responseList=null;
+            List<long> deferredSequenceNumbers = new List<long>();
+            bool proccesDone = false;
+            for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
+            {
+                while (!WorkerRoleServiceLocator.PleaseShutDown)
+                {
+                    LogMessagingUtilWR.Instance.Clear();
+                    LogMessagingUtil.Instance.Clear();
+
+                    DateTime QueueStartDate = DateTime.Now;
+                    //throw new Exception("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
+                    try
+                    {
+                        LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
+                        //int transactionTimeOutInMin = Math.Max(10, CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin());
+                        using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
+                        {
+                            using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
+                            {
+
+
+                                try
+                                {
+
+                                    LogMessagingUtilWR.Instance.AppendLine("QRecive");
+
+                                    responseList = _CustomDbQueueService.Receive_new(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
+                                    LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
+
+                                    scopeRecive.Complete();
+
+                                    // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
+                                }
+                                catch (Exception)
+                                {
+
+                                    throw;
+                                }
+                            }
+
+                            if (responseList == null || (responseList != null && responseList.Count == 0))
+                            {
+                                QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
+                                Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
+
+                                break;
+                            }
+
+                            PerformanceM.EnqueueLastInstance();
+                            PerformanceM.LastInstance.QueueStartDate = QueueStartDate;
+                            PerformanceM.LastInstance.QueueReceiveDate = DateTime.Now;
+
+                            LastActivity = DateTime.UtcNow;
+                            proccesDone = true;
+                            var taskLIst = new List<Task>();
+                            foreach (var item in responseList)
+                            {
+                                var t =
+                                Task.Factory.StartNew(() =>
+                                {
+                                    CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
+                                    helper.RunTask(item, className);
+                                    LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
+                                    LogDoneItemInMemory();
+                                    LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
+
+                                });
+                                taskLIst.Add(t);
+                            }
+                            Task.WaitAll(taskLIst.ToArray());
+                            Queue_scope.Complete();
+                        }
                     }
                     finally
                     {
