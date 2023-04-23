@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.DataContracts;
+using Simplog.Data.InfrastructureModel;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -60,8 +61,23 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public List<PriorityRequestsSheetSummary> GetStatisticsByCourierDeclarations(int tenant,string courierMasterId)
         {
+
+            string key = "ObjectTable" + "Customs.Declaration" + "," + tenant.ToString();
+           var val = CacheManager.GetOrInsertNewObject<string>(key, () =>
+           {
+              var result= string.Empty; 
+              IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+              ObjectTable DeclarationObjectTable = webFreightContext.ObjectTables.Where(d => d.Name == "Customs.Declaration" && d.Tenant == 0).FirstOrDefault();
+              ObjectTable CourierMasterObjectTable = webFreightContext.ObjectTables.Where(d => d.Name == "Customs.CourierMaster" && d.Tenant == 0).FirstOrDefault();
+
+                result = DeclarationObjectTable.Id + "," + CourierMasterObjectTable.Id;
+                return result;
+           });
+           var objectIdDec = val.Split(',')[0];
+           var objectIdCour = val.Split(',')[1];
+
             var lastweek = DateTime.Now.Date.AddDays(-7);
-            var query1 = (from b in context.CourierDeclarations
+           var query1 = (from b in context.CourierDeclarations
                           where b.Tenant == tenant && b.CourierMasterId == courierMasterId
                           select b.DeclarationId).ToList();
 
@@ -77,11 +93,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   InterfaceTypeName = a.InterfaceManagement != null ? a.InterfaceManagement.Description : null,
                                                               });
 
-
             var qGroupIt = query.GroupBy(q =>new { q.InterfaceTypeName, q.InterfaceTypeCode }).Select(g => new PriorityRequestsSheetSummary
             {
                 Id = new Guid(),
-                count = g.Where(y => (y.ObjectTableId1 == "1-343" && query1.Contains(y.EntityId1))||(y.ObjectTableId1== "1-655"&& y.EntityId1== courierMasterId)).Select(x => x.InterfaceTypeCode).Count(),
+                count = g.Where(y => (y.ObjectTableId1 == objectIdDec && query1.Contains(y.EntityId1))||(y.ObjectTableId1== objectIdCour && y.EntityId1== courierMasterId)).Select(x => x.InterfaceTypeCode).Count(),
                 totalCount=g.Select(x => x.InterfaceTypeCode).Count(),
                 InterfaceTypeName = g.Key.InterfaceTypeName,
                 InterfaceTypeCode = g.Key.InterfaceTypeCode
