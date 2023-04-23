@@ -5134,6 +5134,7 @@
     <Content Include="WcfApi\AutoSignUpWcfService.svc" />
     <Content Include="WcfApi\CardContactWcfService.svc" />
     <Content Include="WcfApi\ChargeTypeWcfService.svc" />
+    <Content Include="WcfApi\BusinessHoursHolidayWcfService.svc" />
     <Content Include="WcfApi\DefaultValueWcfService.svc" />
     <Content Include="WcfApi\DefaultTypeWcfService.svc" />
     <Content Include="WcfApi\CityWcfService.svc" />
@@ -6693,6 +6694,9 @@
     <Compile Include="WcfApi\ChargeTypeWcfService.svc.cs">
       <DependentUpon>ChargeTypeWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\BusinessHoursHolidayWcfService.svc.cs">
+      <DependentUpon>BusinessHoursHolidayWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\DefaultValueWcfService.svc.cs">
       <DependentUpon>DefaultValueWcfService.svc</DependentUpon>
     </Compile>
@@ -6727,6 +6731,7 @@
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
     <Compile Include="WcfApi\ExternalTasksQueueWcfService.ExportSignQ.cs" />
+    <Compile Include="WcfApi\IBusinessHoursHolidayWcfService.cs" />
     <Compile Include="WcfApi\IDefaultValueWcfService.cs" />
     <Compile Include="WcfApi\IDefaultTypeWcfService.cs" />
     <Compile Include="WcfApi\IExternalTasksQueueExportSignWcfService.cs" />
