@@ -253,9 +253,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (requestParams.GetType() == typeof(DeclarationRestoreRequestParams))// moran 10.1.16 Task 19724 // Mirit 24/01/16 19845 
             {
-                
 
-                if (this._MyDeclarationPM.PaymentDate.HasValue && !_MyDeclarationPM.IsCourierDeclaration) //If declaration was already paid 
+              
+                if (this._MyDeclarationPM.PaymentDate.HasValue && !_MyDeclarationPM.IsCourierDeclaration && customResponse?.Response?.Status[0]?.NameCode?.Value != "36") //If declaration was already paid 
                 {
                     //Task 44715 allow update of 1.0 if current <1.0 and it's a restore response
                     if (!(requestParams.GetType() == typeof(DeclarationRestoreRequestParams) && System.Convert.ToDouble(_MyDeclarationPM.VersionId) < 1.0 && System.Convert.ToDouble(customResponse.Response.Declaration.DMExtensions.VersionID.Value) == 1.0) //restored version 1.0 and current 0.x
