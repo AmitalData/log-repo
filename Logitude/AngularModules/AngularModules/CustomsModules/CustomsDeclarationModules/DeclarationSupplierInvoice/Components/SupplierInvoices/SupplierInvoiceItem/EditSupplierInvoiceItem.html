@@ -591,9 +591,14 @@
 
                                                 <tr style="height: 25px;">
                                                     <td><span style="font-size: 13px; color: #1b90cb;"></span></td>
-                                                    <td style="width: 30px;"><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddConnDeclarButton()"></IconButton></td>
+                                                    <td style="width: 45px;">
+                                                        <span (click)="OpenExportOrImportDecData()">
+                                                            <img style="vertical-align: middle; width: 16px; height: 16px; cursor: pointer; margin-top: 1px;" src="./Images/LOVSearch.png" />
+                                                        </span>
+                                                        <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddConnDeclarButton()"></IconButton>
+                                                    </td>
                                                 </tr>
-
+                                                                                              
                                                 <tr>
                                                     <td colspan="2" style="height: 100%;">
                                                         <div class="CellContent">
@@ -1613,8 +1618,11 @@
                                             <table>
 
                                                 <tr style="height: 25px;">
-                                                    <td style=" width: 500px;"><span style="font-size: 13px; color: #1b90cb; width: 500px;">{{'Customs.Declaration.O.ConnectedDeclarations' | TextCodeTranslationPipe}}</span></td>
+                                                    <td style=" width: 500px;"><span style="font-size: 13px; color: #1b90cb; width: 500px;">{{'Customs.Declaration.O.ConnectedDeclarations' | TextCodeTranslationPipe}}</span></td>                                                   
                                                     <td>
+                                                        <span (click)="OpenExportOrImportDecData()">
+                                                            <img style="vertical-align: middle; width: 16px; height: 16px; cursor: pointer; margin-right: 10px; margin-top: 2px" src="./Images/LOVSearch.png" />
+                                                        </span>
                                                         <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddConnDeclarButton()"></IconButton>
                                                     </td>
                                                     <!--<td style="width: 30px;"><div></div></td>-->
