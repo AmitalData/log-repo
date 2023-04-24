@@ -55,7 +55,7 @@ namespace CustomsWorkerRole
                 CustomDbQueueService _CustomDbQueueService = new CustomDbQueueService(myClass, 0, item);
                 bool successProcessMessage = true;
 
-                successProcessMessage = ProcessMessage_Db(item);
+                successProcessMessage = ProcessMessage_Db(item, myClass);
 
                 LogMessagingUtilWR.Instance.AppendLine("successProcessMessage");
                 if (successProcessMessage)
@@ -103,7 +103,7 @@ namespace CustomsWorkerRole
             }
         }
 
-        protected virtual bool ProcessMessage_Db(CustomDBQueueMessage msgResponse)
+        protected virtual bool ProcessMessage_Db(CustomDBQueueMessage msgResponse, string myClass)
         {
             LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
             try
@@ -144,7 +144,7 @@ namespace CustomsWorkerRole
                 // var correlationId = message.CorrelationId;
                 //LogMessagingUtil.Instance.AppendLine("receivedMessage.DeliveryCount =" + message.DeliveryCount.ToString());
 
-                var s = this.GetType().Name;
+                var s = myClass;
                 CustomsCommandEnum myCustomsCommandEnum;
                 if (Enum.TryParse<CustomsCommandEnum>(s, out myCustomsCommandEnum))
                 {
@@ -161,7 +161,7 @@ namespace CustomsWorkerRole
                 try
                 {
                     QueueThreadStateService.Upsert(
-        QueueThreadStateService.GetWRKey(this.GetType().Name),
+        QueueThreadStateService.GetWRKey(s),
         $"Interface:{analyzeClass},RequestSheetID:{correlationId},QId:{msgResponse?.MessageId},QDefinition:{PerformanceM.LastInstance?.QueueDefinitionCode}"
         );
 
