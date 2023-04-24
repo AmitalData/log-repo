@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { AppTool, ArrayTool } from '../../../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { LogTab } from '../../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
@@ -22,6 +22,7 @@ import { SupplierInvoiceItemsDescriptPM } from '../../../../../../Customs/Entity
 import { SupplierInvoiceItemsProdIdentPM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsProdIdentPM';
 import { SupplierInvoiceItemsLevyPM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsLevyPM';
 import { CustomsItemPM } from '../../../../../../Customs/EntityPMs/CustomsItemPM';
+import { Subject } from 'rxjs';
 
 import { CustomsRequiredFieldListService } from '../../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 
@@ -117,7 +118,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     }
 
     FillGridsData() {
-
+        
         // Modification List
         this.ModificationsList = new ObservableCollection([]);
         for (let item of this.OriginalItemPM.SupplierInvoiceItemsMods) {
@@ -659,7 +660,64 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         this.ConDeclarList.Remove(item);
         this.OriginalItemPM.RemoveSupplierInvoiceItemsConDeclar(item.ConnDeclarPM); // remove from entity
     }
+    
+    onApprove =  new Subject(); 
 
+    OpenExportOrImportDecData() {
+        
+        this.onApprove.subscribe((ConDeclaration: any) => {
+            
+            ConDeclaration.requestList.forEach((requestLine) => {
+                var item = new SupplierInvoiceItemsConDeclarPM(this.OriginalItemPM);
+                if (this.ConDeclarList.Length > 0) {
+                    this.myNumber = this.getMax(this.ConDeclarList.Collection, "LineNumber");
+                }
+        
+                item.LineNumber = ++this.myNumber;
+                item.DeclarationId = this.OriginalItemPM.DeclarationId;
+                item.Tenant = this.OriginalItemPM.Tenant;
+                item.InvoiceCounterKey = this.OriginalItemPM.CounterKey;
+                item.InvoiceItemLineNumber = this.OriginalItemPM.LineNumber;
+                item.DeclarationNumber = ConDeclaration?.DeclarationNumber; 
+                item.DeclarationTypeCode = ConDeclaration?.IsExport ? "2" : "1";
+                item.DeclarationTypeName = ConDeclaration?.IsExport ? TextCodeTranslator.Translate("Customs.Declaration.O.Export") : 
+                    TextCodeTranslator.Translate("Customs.ImporterDeclarationQuery.O.DeclarationConect.ImportDeclaration");
+
+                item.InvoiceNumber = requestLine?.InvoiceSequenceNumber;
+                item.ItemSequence = requestLine?.SequenceNumber;
+                item.Quantity = requestLine?.ValueQuantity;
+                if(this.ValidateConDeclaration(item)){
+                    this.OriginalItemPM.AddSupplierInvoiceItemsConDeclar(item);
+                    this.ConDeclarList.Insert(new ConDeclarItemModel(item));
+                }
+               
+                    });
+                });
+
+
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 700;
+        logWindow.Height = 720;
+        windowArgs.FromConnectedDeclarations = true;
+        windowArgs.DeclarationTypeCode = this.CurrentSession.CurrentEditComponent.EntityPM.DeclarationTypeCode;
+        windowArgs.DeclarationNumber = this.CurrentSession.CurrentEditComponent.EntityPM.DeclarationNumber;
+        windowArgs.OnApprove = this.onApprove;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.General.O.DecDataQuery");
+        logWindow.Show('./CustomsModules/CustomsRequests/Components/DeclarationRequests/ExportOrImportDeclarationDataComponent');
+
+
+    }
+
+    ValidateConDeclaration(conDec: any){
+    var a = this.ConDeclarList.Collection.findIndex(item=>
+            item.DeclarationNumber == conDec.DeclarationNumber && item.DeclarationTypeCode == conDec.DeclarationTypeCode
+                && item.InvoiceNumber == conDec.InvoiceNumber && item.ItemSequence == conDec.ItemSequence && item.Quantity == conDec.Quantity)
+                   if(a != -1)
+                    return false
+        return true;
+    }
     //#endregion
 
     //#region Tab: Serial Numbers

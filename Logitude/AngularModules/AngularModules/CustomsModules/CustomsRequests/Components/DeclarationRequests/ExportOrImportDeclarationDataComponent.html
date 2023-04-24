@@ -260,7 +260,7 @@
                                         </log-column>
 
                                         <!-- Buttons -->
-                                        <log-column [width]="'60'" [Alignment]="'right'">
+                                        <log-column [width]="'80'" [Alignment]="'right'">
                                             <ng-template let-item>
 <log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                 <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"
@@ -271,12 +271,15 @@
                                                         <img style="left: 1px; position:absolute;top:1px; width:17px;height:15px" src="./Images/car.png" />
                                                     </button>
                                                 </div>
-
+                                                <div *ngIf="FromConnectedDec" style="display: inline-block; padding-top: 3px; height: 20px; ">
+                                                    <CheckBox [IsChecked]="item.IsChecked"  (Checked)="item.IsChecked = $event"></CheckBox>
+                                                </div>
+                                                
                                             </log-cell-template>
 </ng-template>
                                         </log-column>
-
-                                    </logitude-edit-grid>
+                                        
+                                    </logitude-edit-grid>                                    
                                 </div>
                             </td>
                         </tr>
@@ -284,8 +287,11 @@
                         <tr>
                             <td><div></div></td>
                         </tr>
-                    </table>
-                </div>
+                        <div *ngIf="FromConnectedDec && HasResponse" style="width: 75px; float: left;padding-left: 15px;"> 
+                            <button class="RedButton" (click)="OkButtonClicked(ResponseItemList)">{{'Customs.General.B.OK' |TextCodeTranslationPipe}}</button>
+                        </div>
+                    </table>                   
+                </div>              
             </div>
         </div>
 
