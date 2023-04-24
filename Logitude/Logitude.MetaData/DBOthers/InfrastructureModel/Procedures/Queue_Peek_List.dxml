@@ -11,6 +11,15 @@
 	</SqlScript>-->
   <OracleScript>
     <![CDATA[
+    create or replace TYPE Queue_Message AS OBJECT (
+    MessageId NUMBER,
+    MessageBody VARCHAR2(4000),
+    RetryNumber NUMBER,
+    MessageCreatedServerTime DATE
+);
+
+create or replace TYPE Queue_Message_Table AS TABLE OF Queue_Message;
+
    create or replace PROCEDURE Queue_Peek_list(
     --v_QueueMessages in OUT Queue_Message_Table,
     l_cursor OUT SYS_REFCURSOR,

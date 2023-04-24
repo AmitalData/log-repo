@@ -434,9 +434,9 @@ namespace Logitude.Server.Tools.QueueService
 
             List<QueueResponse> responseList = new List<QueueResponse>();
 
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
+            //using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
             //using (TransactionScope scope = TransactionFactory.GetTransaction())
-            {
+            //{
                 using (var context = WebFreightContext.GetContext(this.Tenant) as DbContext)
                 {
                     if (LogitudeSettings.DatabaseManagementSystem == "oracle")
@@ -517,9 +517,9 @@ namespace Logitude.Server.Tools.QueueService
                         //sql will be in the future
                     }
 
-                    scope.Complete();
+                    //scope.Complete();
                 }
-            }
+           // }
 
             return responseList;
         }

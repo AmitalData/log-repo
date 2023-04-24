@@ -647,7 +647,7 @@ namespace CustomsWorkerRole
                                 }
                                 catch (Exception)
                                 {
-
+                                    scopeRecive.Dispose();
                                     throw;
                                 }
                             }
