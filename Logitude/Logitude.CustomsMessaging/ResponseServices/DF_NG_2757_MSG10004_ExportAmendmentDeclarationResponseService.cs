@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnifreightIIG.Common.ExportDeclarationServiceReference;
 using Logitude.Customs.BL.BL;
+using System.Web.UI.WebControls;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -1540,7 +1541,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     supplierInvioceItemCertificatPM.ResConfirmationTypeCode = GetValueCodeType(additionalDocument.DMExtensions.LPCOTypeCode);
                     supplierInvioceItemCertificatPM.ReqConfirmationTypeCode = GetValueCodeType(additionalDocument.DMExtensions.RequirementLicenseType);
-                    supplierInvioceItemCertificatPM.CustomsAttachmentID = GetValueIDType(additionalDocument.DMExtensions.ExternalAttachmentID);
+                    var entity = CustomsAttachmentID(declarationId, Convert.ToInt32(additionalDocument.DMExtensions.SequenceNumeric), tenant);
+                    supplierInvioceItemCertificatPM.CustomsAttachmentID = GetValueIDType(additionalDocument.DMExtensions.ExternalAttachmentID) ?? entity;
                     supplierInvioceItemCertificatPM.SequenceNumeric = Convert.ToInt32(additionalDocument.DMExtensions.SequenceNumeric);
 
                 }
@@ -1550,7 +1552,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             return supplierInvioceItemCertificatPMs;
         }
+          private string CustomsAttachmentID(string declarationId, int SequenceNumeric,int tenant)
+          {
+          var   context = CustomContext.GetContext(tenant);
 
+            string entity = (from a in context.SupplierInvioceItemCertificats
+                             where (a.DeclarationId == declarationId && a.SequenceNumeric == SequenceNumeric)
+                             select a.CustomsAttachmentID).FirstOrDefault();
+            return entity;
+        }
         private List<SupplierInvioceItemCertificatPM> GetSupplierInvioceItemCertificats(SupplierInvoicePM supplierInvoicePM, SupplierInvoiceItemPM supplierInvoiceItemPM)
         {
             //if (supplierInvoiceItemPM.SupplierInvioceItemCertificats != null && supplierInvoiceItemPM.SupplierInvioceItemCertificats.Count() > 0)
