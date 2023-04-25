@@ -341,7 +341,7 @@ h1 {
             top: 2px; 
             padding-right: 7px;
         }
-
+        
 @media screen and (max-width: 479px) and (orientation: portrait),
 (max-height: 479px) and (orientation: landscape) {
     .back-to-shipments{

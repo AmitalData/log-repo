@@ -1309,7 +1309,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
                                              DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
                                              DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
-                                             ComapnylogoId = a.ComapnylogoId,
+                                           //  ComapnylogoId = a.ComapnylogoId,
                                              ShowMoneyOrder=a.ShowMoneyOrder
                                          }).FirstOrDefault();
 
