@@ -216,7 +216,7 @@
                                href="javascript:;" (click)="OpenJournal(_NewJournalPM['Id'])">
                                 Adjust Journal have created :{{ _NewJournalPM['JournalNumber'] }}
                             </a>
-                            <div *ngIf="_NewJournals">
+                            <div *ngIf="_NewJournals && _NewJournals.length > 0">
                                 Adjust in split journals have been created
                             </div>
                         </td>

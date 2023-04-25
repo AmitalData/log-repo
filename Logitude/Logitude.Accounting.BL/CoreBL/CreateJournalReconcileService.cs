@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
@@ -362,14 +363,16 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         JournalPM journal = CreateJournalForReconciliationLine(reconciliationLine, TheAccountId, AdjustAccountId, DueDate, RefDate, theCurrencyId, rate, Ref1, Ref2, Ref3, Remarks,
                             tenant, @now, usrid, AccountDate, adjustmentAccountingEntityDetails.Code);
-                        var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-                        JournalUP.Update(journal, true);
-                        addedJournalPMs.Add(journal);
+                        if(journal != null) {
+                            var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+                            JournalUP.Update(journal, true);
+                            addedJournalPMs.Add(journal);
                         var journalReconciles = journalReconcileRepository
                         .GetJournalReconcilesForJournalsWithoutLedgers(journal.JournalReconciles.Select(x => x.LedgerTransactionId).ToList(), tenant);
                         if (journalReconciles.Where(x => x.JournalId != journal.Id).Any())
                         {
                             throw new ApplicationException("There is already journal reconciliation has been created.");
+                        }
                         }
                     });
                     scope.Complete();
@@ -387,6 +390,10 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 JournalRepository repo = new JournalRepository(tenant);
                 accountingDate = repo.GetSingleJournalByNumber(reconciliationLine.JournalNumber, tenant).AccountingDate;
+                if (!IsMonthOpenForAccountingDate(accountingDate, tenant))
+                {
+                    return null;
+                }
             }
             else
             {
@@ -537,6 +544,20 @@ namespace Logitude.Accounting.BL.CoreBL
                         item.Reference3 = Ref3 != null ? Ref3 : reconciliationLine.Reference3;
                         item.Notes = Remarks != null ? Remarks : reconciliationLine.Notes;
                     }
+        }
+
+        private bool IsMonthOpenForAccountingDate(DateTime accountingDate, int tenant)
+        {
+            var typeregular = "1"; //1 Regular רגיל        1,Regular,רגיל   0
+            var accountingPeriodQueryService = new AccountingPeriodQueryService(tenant);
+            var accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodByType(typeregular, tenant); ;
+
+            return
+            JournalValidatorNotStatic
+                 .IsMonthOpenForAccountingDate(
+                accountingPeriodsByTypeRegular.AsQueryable(),
+                 new DateTime(accountingDate.Year, accountingDate.Month, 1)
+                 );
         }
 
     }
