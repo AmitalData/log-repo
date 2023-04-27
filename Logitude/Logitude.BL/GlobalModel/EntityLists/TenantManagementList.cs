@@ -171,10 +171,8 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string WhatsAppMessagingPhoneNumber { get; set; }
         public bool ActivatedforDeclarationApprove { get; set; }
         public string DeclarationMessage { get; set; }
-        public bool ActivatePrivateSite { get; set; }
-        public bool ShowMoneyOrder { get; set; }
+        public bool ActivatePrivateSite { get; set; }       
         public bool IsContainerTrackingPrepaid { get; set; }
-
         public DateTime? DigitalPortalLastDate { get; set; }
         public int? DigitalPortalTotalLastWeek { get; set; }
         public int? DigitalPortalTotalLastMonth { get; set; }
@@ -184,5 +182,6 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int? DPArchiveShipmentCreateFilter { get; set; }
         public int? DPArchiveShipmentArrivalFilter { get; set; }
         public int? DPArchiveShipmentDepartFilter { get; set; }
+        public bool ShowMoneyOrder { get; set; }
     }
 }
