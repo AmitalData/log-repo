@@ -21,6 +21,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         [ThreadStatic]
         public static bool SuppressSend=false;
+        [ThreadStatic]
+        public static bool IsNewFromU2L=false;
          public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM,bool forceSend=false, CourierMasterPM courierMasterPM=null)
         {
             var sb=new StringBuilder();
@@ -195,7 +197,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         
                     sb.AppendLine("ILSWS!!!");
                     
-                    if (drityEntityPM.CourierCustomStatusCode != dbPM.CourierCustomStatusCode || SuppressSend)
+                    if (drityEntityPM.CourierCustomStatusCode != dbPM.CourierCustomStatusCode || IsNewFromU2L)
                     {
                         var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
                         drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, courierMasterPM);
