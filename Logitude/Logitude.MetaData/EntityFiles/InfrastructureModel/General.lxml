@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;1f80&quot;"
+  Code="&quot;ba78&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -4331,7 +4331,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.O.ShowNewRelease&quot;"
-      DefaultText="&quot;Read what is new in Logitude&quot;"
+      DefaultText="&quot;Read what is new in the latest release&quot;"
       LocalDefaultText="&quot;גרסה חדשה עלתה לאוויר - לפירוט השינויים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
