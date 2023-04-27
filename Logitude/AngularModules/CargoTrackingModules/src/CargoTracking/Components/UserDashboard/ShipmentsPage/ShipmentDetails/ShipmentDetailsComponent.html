@@ -209,11 +209,11 @@
 
         <div  style="display:flex;align-items: center;justify-content: center; margin-top: 30px;flex-wrap: wrap;">
        
-        <panel *ngIf="ShowShipmentAsDeclaration"  [ShowWhitePanelOnMobile]="true" style="min-width: 35%;">
+        <panel *ngIf="ShowShipmentAsDeclaration&&ShowDocumentMNO" [Width]="'100%'" [ShowWhitePanelOnMobile]="true" class="panel1" >
             <div body class="declaration-approval" style="min-height: 110px">
-            <div *ngIf="ShowDocumentMNO" class="declaration-approval-document" >
+            <div  class="declaration-approval-document" >
                 <div *ngIf="IsPDF" style="height:100%;">
-                    <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe"  width="460px" height="500px" >Loading...</iframe>
+                    <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe"  width="470px" height="500px" >Loading...</iframe>
                 </div>
                 <div *ngIf="!IsPDF" style="display: flex;justify-content: center;">
                     <table>
@@ -228,7 +228,7 @@
             </div>
            </div>
         </panel>
-        <panel *ngIf="ShowShipmentAsDeclaration" [Width]="'100%'"  [ShowWhitePanelOnMobile]="true" style="min-width: 65%;align-self: start;">
+        <panel *ngIf="ShowShipmentAsDeclaration" [Width]="ShowDocumentMNO?'100%':null"  [ShowWhitePanelOnMobile]="true" [ngClass]="ShowDocumentMNO ? 'panel2' : 'panel3'"  >
 
             <div body class="declaration-approval">
            
