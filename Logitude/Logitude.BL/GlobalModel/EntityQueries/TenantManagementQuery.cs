@@ -300,7 +300,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                                                      DPArchiveShipmentArrivalFilter= a.DPArchiveShipmentArrivalFilter, 
                                                      DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
-                                                     ShowMoneyOrder=a.ShowMoneyOrder
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -520,7 +519,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
                                                   DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
 
-                                                  ShowMoneyOrder = a.ShowMoneyOrder
 
                                               }).FirstOrDefault();
 
@@ -730,7 +728,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                         DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
                         DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
-                        ShowMoneyOrder = a.ShowMoneyOrder
 
                     });
         }
@@ -1043,7 +1040,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                        DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
                        DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
-                       ShowMoneyOrder = a.ShowMoneyOrder
                    };
         }
 
@@ -1340,7 +1336,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
                                              DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
 
-                                             ShowMoneyOrder=a.ShowMoneyOrder
                                          }).FirstOrDefault();
 
             return tenant;
