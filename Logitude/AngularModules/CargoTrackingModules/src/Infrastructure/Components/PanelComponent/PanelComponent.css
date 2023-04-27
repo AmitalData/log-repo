@@ -1,5 +1,5 @@
 .panel{
-    width: calc(100% - 150px);
+    /* width: calc(100% - 150px); */
     margin: 0 auto;
     margin-bottom: 25px;
     min-height: 100px;

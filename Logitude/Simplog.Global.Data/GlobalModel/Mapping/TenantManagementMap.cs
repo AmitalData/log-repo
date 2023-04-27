@@ -180,6 +180,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.DPArchiveShipmentArrivalFilter).HasColumnName("DPArchiveShipmentArrivalFilter");
             this.Property(t => t.DPArchiveShipmentDepartFilter).HasColumnName("DPArchiveShipmentDepartFilter");
 
+            this.Property(t => t.ShowMoneyOrder).HasColumnName("ShowMoneyOrder");
 
         string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

@@ -299,7 +299,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
                                                      DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                                                      DPArchiveShipmentArrivalFilter= a.DPArchiveShipmentArrivalFilter, 
-                                                     DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter
+                                                     DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+                                                     ShowMoneyOrder=a.ShowMoneyOrder
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -517,7 +518,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
                                                   DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                                                   DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
-                                                  DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter
+                                                  DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+
+                                                  ShowMoneyOrder = a.ShowMoneyOrder
+
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -725,7 +729,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
                         DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                         DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
-                        DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter
+                        DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+                        ShowMoneyOrder = a.ShowMoneyOrder
+
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -877,11 +883,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     DigitalPortalMobileLastDate = entity.DigitalPortalMobileLastDate,
                     DigitalPortalMobTotalLastWeek = entity.DigitalPortalMobTotalLastWeek,
 
-                    ShowMoneyOrder = entity.ShowMoneyOrder,
-                    DigitalPortalMobTotalLastMonth = entity.DigitalPortalMobTotalLastMonth,
                     DPArchiveShipmentCreateFilter = entity.DPArchiveShipmentCreateFilter,
                     DPArchiveShipmentArrivalFilter = entity.DPArchiveShipmentArrivalFilter,
-                    DPArchiveShipmentDepartFilter = entity.DPArchiveShipmentDepartFilter
+                    DPArchiveShipmentDepartFilter = entity.DPArchiveShipmentDepartFilter,
+                    DigitalPortalMobTotalLastMonth = entity.DigitalPortalMobTotalLastMonth,
+                    ShowMoneyOrder = entity.ShowMoneyOrder
                 };
             }
 
@@ -1036,7 +1042,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
                        DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                        DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
-                       DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter
+                       DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+                       ShowMoneyOrder = a.ShowMoneyOrder
                    };
         }
 
@@ -1331,7 +1338,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
                                              DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                                              DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
-                                             DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter
+                                             DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+
+                                             ShowMoneyOrder=a.ShowMoneyOrder
                                          }).FirstOrDefault();
 
             return tenant;

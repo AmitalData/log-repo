@@ -1081,6 +1081,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShowMoneyOrder"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

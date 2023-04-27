@@ -163,6 +163,7 @@ export class TenantManagementList {
 		ActivatedforDeclarationApprove: boolean;
 		DeclarationMessage: string;
 		ActivatePrivateSite: boolean;
+		ShowMoneyOrder:boolean;
 		IsContainerTrackingPrepaid: boolean;
 		ShowMoneyOrder: boolean;
 		DigitalPortalLastDate: Date;

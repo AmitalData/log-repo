@@ -341,7 +341,18 @@ h1 {
             top: 2px; 
             padding-right: 7px;
         }
-
+       .panel1 {
+        min-width: 28%;
+        margin-right: 4%;
+       } 
+       .panel2 {
+        min-width: 60%;
+        align-self: start;
+       } 
+       .panel3 {
+        min-width: 100%;
+       
+       } 
 @media screen and (max-width: 479px) and (orientation: portrait),
 (max-height: 479px) and (orientation: landscape) {
     .back-to-shipments{
@@ -1016,5 +1027,12 @@ h1 {
     .declaration-approval-toolbar {
         padding: 20px 0px 0 0;
     }
-
+    .panel1 {
+        min-width: 100%;
+        margin-right: 0%;
+       } 
+       .panel2 {
+        min-width: 100%;
+       
+       } 
 }
