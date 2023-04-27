@@ -663,11 +663,14 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     
     onApprove =  new Subject(); 
 
-    OpenExportOrImportDecData() {
+    OpenExportOrImportDecData(ConDeclarItem: ConDeclarItemModel) {
         
         this.onApprove.subscribe((ConDeclaration: any) => {
-            
+            var declarationType = ConDeclaration?.IsExport ? "2" : "1";
             ConDeclaration.requestList.forEach((requestLine) => {
+                if(ConDeclarItem.DeclarationNumber == ConDeclaration.DeclarationNumber && ConDeclarItem.DeclarationTypeCode == declarationType)
+                    this.RemoveConnDeclar(ConDeclarItem)
+
                 var item = new SupplierInvoiceItemsConDeclarPM(this.OriginalItemPM);
                 if (this.ConDeclarList.Length > 0) {
                     this.myNumber = this.getMax(this.ConDeclarList.Collection, "LineNumber");
@@ -679,8 +682,8 @@ export class EditSupplierInvoiceItem extends BaseComponent {
                 item.InvoiceCounterKey = this.OriginalItemPM.CounterKey;
                 item.InvoiceItemLineNumber = this.OriginalItemPM.LineNumber;
                 item.DeclarationNumber = ConDeclaration?.DeclarationNumber; 
-                item.DeclarationTypeCode = ConDeclaration?.IsExport ? "2" : "1";
-                item.DeclarationTypeName = ConDeclaration?.IsExport ? TextCodeTranslator.Translate("Customs.Declaration.O.Export") : 
+                item.DeclarationTypeCode = declarationType;
+                item.DeclarationTypeName = declarationType == "2" ? TextCodeTranslator.Translate("Customs.Declaration.O.Export") : 
                     TextCodeTranslator.Translate("Customs.ImporterDeclarationQuery.O.DeclarationConect.ImportDeclaration");
 
                 item.InvoiceNumber = requestLine?.InvoiceSequenceNumber;
@@ -700,8 +703,8 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         logWindow.Width = 700;
         logWindow.Height = 720;
         windowArgs.FromConnectedDeclarations = true;
-        windowArgs.DeclarationTypeCode = this.CurrentSession.CurrentEditComponent.EntityPM.DeclarationTypeCode;
-        windowArgs.DeclarationNumber = this.CurrentSession.CurrentEditComponent.EntityPM.DeclarationNumber;
+        windowArgs.DeclarationTypeCode = ConDeclarItem?.DeclarationTypeCode;
+        windowArgs.DeclarationNumber = ConDeclarItem?.DeclarationNumber;
         windowArgs.OnApprove = this.onApprove;
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = TextCodeTranslator.Translate("Customs.General.O.DecDataQuery");
