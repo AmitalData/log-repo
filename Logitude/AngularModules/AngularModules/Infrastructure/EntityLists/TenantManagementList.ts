@@ -163,7 +163,6 @@ export class TenantManagementList {
 		ActivatedforDeclarationApprove: boolean;
 		DeclarationMessage: string;
 		ActivatePrivateSite: boolean;
-		ShowMoneyOrder:boolean;
 		IsContainerTrackingPrepaid: boolean;
 		DigitalPortalLastDate: Date;
 		DigitalPortalTotalLastWeek: number;
@@ -171,7 +170,9 @@ export class TenantManagementList {
 		DigitalPortalMobileLastDate: Date;
 		DigitalPortalMobTotalLastWeek: number;
 		DigitalPortalMobTotalLastMonth: number;
-		DPArchiveShipmentCreateFilter : number;
-		DPArchiveShipmentArrivalFilter : number;
-		DPArchiveShipmentDepartFilter : number;
-}
+		DPArchiveShipmentCreateFilter: number;
+		DPArchiveShipmentArrivalFilter: number;
+		DPArchiveShipmentDepartFilter: number;
+		ShowMoneyOrder: boolean;
+	
+}

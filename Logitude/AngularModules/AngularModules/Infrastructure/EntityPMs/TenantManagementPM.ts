@@ -758,7 +758,7 @@ export class TenantManagementPM {
     public get PrivateLabelId() { return this.privateLabelId; }
     public set PrivateLabelId(newValue: string) { if (this.privateLabelId != newValue) { this.privateLabelId = newValue; this.MarkAsDirty("PrivateLabelId"); } }
        
-    
+	 
 
     public PackagesCodes_PK: Array<string>= [];
 		 
@@ -1008,18 +1008,23 @@ export class TenantManagementPM {
     private digitalPortalMobTotalLastMonth: number;
     public get DigitalPortalMobTotalLastMonth() { return this.digitalPortalMobTotalLastMonth; }
     public set DigitalPortalMobTotalLastMonth(newValue: number) { if (this.digitalPortalMobTotalLastMonth != newValue) { this.digitalPortalMobTotalLastMonth = newValue; this.MarkAsDirty("DigitalPortalMobTotalLastMonth"); } }
-
+       
+	 
     private dPArchiveShipmentCreateFilter: number;
     public get DPArchiveShipmentCreateFilter() { return this.dPArchiveShipmentCreateFilter; }
     public set DPArchiveShipmentCreateFilter(newValue: number) { if (this.dPArchiveShipmentCreateFilter != newValue) { this.dPArchiveShipmentCreateFilter = newValue; this.MarkAsDirty("DPArchiveShipmentCreateFilter"); } }
-
+       
+	 
     private dPArchiveShipmentArrivalFilter: number;
     public get DPArchiveShipmentArrivalFilter() { return this.dPArchiveShipmentArrivalFilter; }
     public set DPArchiveShipmentArrivalFilter(newValue: number) { if (this.dPArchiveShipmentArrivalFilter != newValue) { this.dPArchiveShipmentArrivalFilter = newValue; this.MarkAsDirty("DPArchiveShipmentArrivalFilter"); } }
-
+       
+	 
     private dPArchiveShipmentDepartFilter: number;
     public get DPArchiveShipmentDepartFilter() { return this.dPArchiveShipmentDepartFilter; }
     public set DPArchiveShipmentDepartFilter(newValue: number) { if (this.dPArchiveShipmentDepartFilter != newValue) { this.dPArchiveShipmentDepartFilter = newValue; this.MarkAsDirty("DPArchiveShipmentDepartFilter"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		
@@ -1047,4 +1052,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
