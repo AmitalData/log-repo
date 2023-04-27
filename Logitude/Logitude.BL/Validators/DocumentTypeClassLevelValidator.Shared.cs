@@ -47,20 +47,20 @@ namespace Logitude.BL.Validators
 
 
 
-            ObjectTable objectTable = GetObjectTableByName(documentType.ObjectTableName, documentType.Tenant);
-            if(objectTable == null)
-            {
-                return new ValidationResult("Object Table is Required");
-            }
-            if (!string.IsNullOrEmpty(documentType.ObjectTableName) && !objectTable.AvailableInDocumentTypes)
-            {
-                return new ValidationResult(TextCodesTranslator.TranslateText("DocumentType.M.TableNameDoesNotExist", documentType.Tenant));
-            }
+            //ObjectTable objectTable = GetObjectTableByName(documentType.ObjectTableName, documentType.Tenant);
+            //if(objectTable == null)
+            //{
+            //    return new ValidationResult("Object Table is Required");
+            //}
+            //if (!string.IsNullOrEmpty(documentType.ObjectTableName) && !objectTable.AvailableInDocumentTypes)
+            //{
+            //    return new ValidationResult(TextCodesTranslator.TranslateText("DocumentType.M.TableNameDoesNotExist", documentType.Tenant));
+            //}
 
-            if (objectTable.IsCustom && !documentType.IsDocIn)
-            {
-                return new ValidationResult("Please choose Doc in");
-            }
+            //if (objectTable.IsCustom && !documentType.IsDocIn)
+            //{
+            //    return new ValidationResult("Please choose Doc in");
+            //}
             if (documentType.IsDocOut)
             {
                 if (documentType.TemplateFormatCode == null)
