@@ -457,7 +457,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             //}
             var supplierInvoiceRepo = new SupplierInvoiceRepository(entityPOCO.Tenant);
-            entityPM.IsAccumulated = supplierInvoiceRepo.DeclarationIsAccumulated(entityPOCO.Id);
+            //entityPM.IsAccumulated = supplierInvoiceRepo.DeclarationIsAccumulated(entityPOCO.Id); ביצועים
 
             //var dCustomsSetting = CustomsSettingQueryService.GetSettingByTenant(entityPOCO.Tenant);
             //if (dCustomsSetting.CompanyType == "B")//Courier
@@ -484,7 +484,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (automaticPaymentMustBeAccurate)
             {
                 
-                entityPM.AutomaticPayment = declarationPaymentQueryService.GetAutomaticPayment(declarationid:entityPOCO.Id);
+                entityPM.AutomaticPayment = declarationPaymentQueryService.GetAutomaticPayment(declarationid:entityPOCO.Id,entityPOCO.Direction);
             }
             else
             {
