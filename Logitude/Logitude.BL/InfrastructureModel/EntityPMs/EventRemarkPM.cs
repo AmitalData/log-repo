@@ -8,25 +8,36 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 	[DataContract]
 	public partial class EventRemarkPM
 		{
-			public string Id { get; set; }
-
-			private int Tenant { get; set; }
-
-			private DateTime CreateDate { get; set; }
-
-			private string CreatedByUserId { get; set; }
-
-			private DateTime UpdateDate { get; set; }
-
-			private string UpdatedByUserId { get; set; }
-
-			private string SearchFields { get; set; }
-
-			private string EventTypeId { get; set; }
-
-			private string PartnerTypeId { get; set; }
-
-			private bool IsChoose { get; set; }
+		[Key]
+		[DataMember]
+		public string Id { get; set; }
+		[DataMember]
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		public int Tenant { get; set; }
+		[DataMember]
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		public DateTime CreateDate { get; set; }
+		[DataMember]
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		public string CreatedByUserId { get; set; }
+		[DataMember]
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		public DateTime UpdateDate { get; set; }
+		[DataMember]
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		public string UpdatedByUserId { get; set; }
+		[DataMember]
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		public string SearchFields { get; set; }
+		[DataMember]
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		public string EventTypeId { get; set; }
+		[DataMember]
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		public string PartnerTypeId { get; set; }
+		[DataMember]
+		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+		public bool IsChoose { get; set; }
 	}
 
 }

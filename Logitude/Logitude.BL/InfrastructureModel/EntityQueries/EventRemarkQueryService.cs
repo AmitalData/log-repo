@@ -7,6 +7,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using System.Web;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.Server.Tools.Counters;
+using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -15,10 +17,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             EventRemarkRepository repository;
             IAccountingContext context;
-            public EventRemarkQueryService(int tenant)
+            bool isNewEntity;
+            public EventRemark Poco { get; set; }
+        public EventRemarkQueryService(int tenant)
             {
                 context = AccountingContext.GetContext(tenant);
-                repository = new EventRemarkRepository(repository.context);
+                repository = new EventRemarkRepository(tenant);
             }
 
             public EventRemarkQueryService(EventRemarkRepository repository)
@@ -59,6 +63,29 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
             return null;
         }
+        private EventRemarkPM eventRemarkPM;
+        public void Update(EventRemarkPM eventRemarkPM)
+        {
+            this.isNewEntity = false;
+            this.eventRemarkPM = eventRemarkPM;
+            this.Poco = repository.GetSingle(eventRemarkPM.Id, eventRemarkPM.Tenant);
+
+            EventRemarkMapping.MapEntity(eventRemarkPM, Poco, isNewEntity);
+            repository.Update(Poco);
+            repository.SubmitChanges();
+        }
+        public void Create(EventRemarkPM eventRemarkPM)
+        {
+            this.isNewEntity = true;
+            this.eventRemarkPM = eventRemarkPM;
+            this.eventRemarkPM.Id = IdCounter.GetNumber("EventRemark", eventRemarkPM.Tenant).ToString();
+            this.Poco = new EventRemark();
+            this.Poco.Id = this.eventRemarkPM.Id;
+
+            EventRemarkMapping.MapEntity(eventRemarkPM, Poco, isNewEntity);
+            repository.Add(Poco);
+            repository.SubmitChanges();
+        }
         public IQueryable<EventRemarkList> GetIQueryableEntityList(IQueryable<EventRemark> iQueryable)
         {
             IQueryable<EventRemarkList> result = from entity in iQueryable
@@ -70,11 +97,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                };
             return result;
         }
-        public IQueryable<EventRemarkList> GetEventRemarksByEventTypeID(string EventTypeID)
+        public IQueryable<EventRemark> GetEventRemarksByEventTypeID(string EventTypeID)
         {
             var eventRemarks = (from a in repository.context.EventRemarks
                                 where a.EventTypeId == EventTypeID
-                                select new EventRemarkList() { 
+                                select new EventRemark() { 
                                     Id = a.Id,
                                     Tenant= a.Tenant,
                                     CreateDate= a.CreateDate,

@@ -522,11 +522,11 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
-        public IDbSet<EventRemark> EventRemark
+       /* public IDbSet<EventRemark> EventRemark
         {
             get;
             set;
-        }
+        }*/
         public IDbSet<TraceEvent> TraceEvent
         {
             get;
@@ -1116,6 +1116,12 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
         public IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<EventRemark> EventRemarks
         {
             get;
             set;

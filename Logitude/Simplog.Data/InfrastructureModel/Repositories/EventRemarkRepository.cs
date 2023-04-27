@@ -41,8 +41,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                         where a.Id == id && a.Tenant == tenant
                         select a).FirstOrDefault();
             }
+        public EventRemark GetEventRemarkByPartnerTypeId(string PartnerTypeId, string EventTypeId, int tenant)
+        {
+            var eventRemark = (from a in context.EventRemarks
+                               where a.PartnerTypeId == PartnerTypeId && a.EventTypeId== EventTypeId && a.Tenant == tenant
+                               select a).FirstOrDefault();
+            return eventRemark;
+        }
 
-            public IQueryable<EventRemark> GetAll(int tenant)
+        public IQueryable<EventRemark> GetAll(int tenant)
             {
                 return from a in context.EventRemarks
                        where a.Tenant == tenant
@@ -67,7 +74,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             public void Remove(EventRemark entity)
             {
-                context.EventRemarks.Attach(entity);
+                //context.EventRemarks.Attach(entity);
                 context.EventRemarks.Remove(entity);
             }
 

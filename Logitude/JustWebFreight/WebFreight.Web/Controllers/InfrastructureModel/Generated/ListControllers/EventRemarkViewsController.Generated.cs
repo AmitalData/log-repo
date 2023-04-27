@@ -64,14 +64,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				EventRemarkRepository  eventRemarkRepository = new EventRemarkRepository(MyContext);
 				EventRemarkList entityList = null;
-				EventRemark entityPoco = eventRemarkRepository.GetSingleEventRemark(id , authToken.Tenant);
+				EventRemark entityPoco = eventRemarkRepository.GetSingle(id , authToken.Tenant);
                 
                 if (entityPoco != null)
 				{
 									List<EventRemark> singleEntityList = new List<EventRemark>();
 					singleEntityList.Add(entityPoco);
 
-					EventRemarkQuery eventRemarkQuery = new EventRemarkQuery(eventRemarkRepository);
+                    EventRemarkQueryService eventRemarkQuery = new EventRemarkQueryService(eventRemarkRepository);
 					IQueryable<EventRemark> iQueryable = singleEntityList.AsQueryable();
 					IQueryable<EventRemarkList> iQueryableEntityList = eventRemarkQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
@@ -102,9 +102,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 				IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				EventRemarkRepository  eventRemarkRepository = new EventRemarkRepository(MyContext);
-				IQueryable<EventRemark> entityPocos = eventRemarkRepository.GetEventRemarks(authToken.Tenant);
+				IQueryable<EventRemark> entityPocos = eventRemarkRepository.GetAll(authToken.Tenant);
 
-				EventRemarkQuery eventRemarkQuery = new EventRemarkQuery(eventRemarkRepository);
+                EventRemarkQueryService eventRemarkQuery = new EventRemarkQueryService(eventRemarkRepository);
 			    IQueryable<EventRemarkList> entityLists = eventRemarkQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderByDescending(d => d.CreateDate);
 				List<EventRemarkList> listResult = entityLists.ToList();
@@ -230,9 +230,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 								
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 EventRemarkRepository  eventRemarkRepository = new EventRemarkRepository(MyContext);
-                IQueryable<EventRemark> entityPocos = eventRemarkRepository.GetEventRemarks(tenant);
+                IQueryable<EventRemark> entityPocos = eventRemarkRepository.GetAll(tenant);
 
-                EventRemarkQuery eventRemarkQuery = new EventRemarkQuery(eventRemarkRepository);
+                EventRemarkQueryService eventRemarkQuery = new EventRemarkQueryService(eventRemarkRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();

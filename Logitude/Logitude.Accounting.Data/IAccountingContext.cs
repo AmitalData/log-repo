@@ -119,4 +119,4 @@ namespace Logitude.Accounting.Data
          int SaveChanges();
 
     }
-}
+}

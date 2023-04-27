@@ -59,8 +59,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 SecurityUtility.CheckContactFeature("EventRemark", "READ", authToken.Tenant);
-                EventRemarkQuery eventRemarkQuery = new EventRemarkQuery(authToken.Tenant);
-                EventRemarkPM eventRemarkPM = eventRemarkQuery.GetSinglePM(id, authToken.Tenant);
+                EventRemarkQueryService eventRemarkQuery = new EventRemarkQueryService(authToken.Tenant);
+                EventRemarkPM eventRemarkPM = eventRemarkQuery.GetSingle(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -93,7 +93,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         SecurityUtility.AuthenticationOnEntityTenant("EventRemark", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        EventRemarkService service = new EventRemarkService(MyContext, entityPM.Tenant);
+                        EventRemarkQueryService service = new EventRemarkQueryService(entityPM.Tenant);
                         service.Create(entityPM);
 				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
@@ -152,8 +152,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         }
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        EventRemarkService service = new EventRemarkService(MyContext, entityPM.Tenant);
- 
+                        EventRemarkQueryService service = new EventRemarkQueryService(entityPM.Tenant);
+
                         service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);

@@ -34,8 +34,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             if (!string.IsNullOrEmpty(id))
             {
-                string entityName = "EventTypePM" + id + tenant;
-                EventTypePM entity;
+                 string entityName = "EventTypePM" + id + tenant;
+                 EventTypePM entity;
                 if (HttpContext.Current != null)
                 {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
@@ -72,8 +72,29 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   CustomField = a.CustomField,
                                                   IsStatusNotModified = a.IsStatusNotModified,
                                                   EventTrigger = a.EventTrigger,
-                                                  EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
-                                              });
+                                             });
+                        var e1 = new List<EventRemarkPM>();
+                        foreach (var e in entitystatuses)
+                        {
+                            //e1 = eventRemarkQueryService.GetEventRemarksByEventTypeID(e.Id).ToList();
+                            //EventRemarkRepository repository = new EventRemarkRepository(e.Tenant);
+                            e1 = (from a in repository.context.EventRemarks.AsEnumerable()
+                                  where a.EventTypeId == e.Id
+                                  select new EventRemarkPM
+                                  {
+                                      Id = a.Id,
+                                      Tenant = a.Tenant,
+                                      CreateDate = a.CreateDate,
+                                      CreatedByUserId = a.CreatedByUserId,
+                                      UpdateDate = a.UpdateDate,
+                                      UpdatedByUserId = a.UpdatedByUserId,
+                                      SearchFields = a.SearchFields,
+                                      EventTypeId = a.EventTypeId,
+                                      PartnerTypeId = a.PartnerTypeId,
+                                      IsChoose = a.IsChoose,
+                                  }).ToList();
+                            e.EventRemarks = e1;
+                        }
 
                         foreach (var s in entitystatuses)
                         {
@@ -94,7 +115,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 }
 
                 else
-                {
+                { 
                     entity = (from a in repository.context.EventType.Include("EntityStatus").Include("EventTypeCategory")
                               where a.Tenant == tenant && a.Id == id
                               select new EventTypePM()
@@ -127,9 +148,30 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   CustomField = a.CustomField,
                                   IsStatusNotModified = a.IsStatusNotModified,
                                   EventTrigger = a.EventTrigger,
-                                  EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
-                              }).FirstOrDefault();
-                }
+                             }).FirstOrDefault();
+                
+                var e1 = new List<EventRemarkPM>();
+               // foreach (var e in entity)
+               // {
+                    //e1 = eventRemarkQueryService.GetEventRemarksByEventTypeID(e.Id).ToList();
+                    //EventRemarkRepository repository = new EventRemarkRepository(e.Tenant);
+                    e1 = (from a in repository.context.EventRemarks.AsEnumerable()
+                          where a.EventTypeId == entity.Id
+                          select new EventRemarkPM
+                          {
+                              Id = a.Id,
+                              Tenant = a.Tenant,
+                              CreateDate = a.CreateDate,
+                              CreatedByUserId = a.CreatedByUserId,
+                              UpdateDate = a.UpdateDate,
+                              UpdatedByUserId = a.UpdatedByUserId,
+                              SearchFields = a.SearchFields,
+                              EventTypeId = a.EventTypeId,
+                              PartnerTypeId = a.PartnerTypeId,
+                              IsChoose = a.IsChoose,
+                          }).ToList();
+                entity.EventRemarks = e1;
+               }
 
                 return entity;
             }
@@ -170,8 +212,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
-                                                     EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
-
+ 
                                                  };
             return eventTypes;
         }
@@ -220,7 +261,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   CustomField = a.CustomField,
                                                   IsStatusNotModified = a.IsStatusNotModified,
                                                   EventTrigger = a.EventTrigger,
-                                                  EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                                               });
 
@@ -274,7 +314,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   CustomField = a.CustomField,
                                   IsStatusNotModified = a.IsStatusNotModified,
                                   EventTrigger = a.EventTrigger,
-                                  EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                               }).FirstOrDefault();
                 }
@@ -323,8 +362,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                               CustomField = a.CustomField,
                                               IsStatusNotModified = a.IsStatusNotModified,
                                               EventTrigger = a.EventTrigger,
-                                              EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
-                                          }).FirstOrDefault();
+                                         }).FirstOrDefault();
 
                     return entity;
                 }
@@ -370,8 +408,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       CustomField = a.CustomField,
                                                       IsStatusNotModified = a.IsStatusNotModified,
                                                       EventTrigger = a.EventTrigger,
-                                                      EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
-
                                                   });
 
                             foreach (var s in entitystatuses)
@@ -424,7 +460,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       CustomField = a.CustomField,
                                       IsStatusNotModified = a.IsStatusNotModified,
                                       EventTrigger = a.EventTrigger,
-                                      EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                                   }).FirstOrDefault();
                     }
@@ -477,11 +512,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowedInAutomation = eventType.AllowedInAutomation,
                                                    CustomField = eventType.CustomField,
                                                    EventTrigger = eventType.EventTrigger,
-                                                   EventRemarks = (List<EventRemark>)eventRemarkQueryService.GetEventRemarksByEventTypeID(eventType.Id),
-                                               };
+                                             };                                                 
             return result;
         }
-
+ 
         public IQueryable<EventTypePM> GetEventTypesByObjectTable(string objectTableId, int tenant)
         {
             IQueryable<EventTypePM> eventTypes = from a in repository.context.EventType.Include("EntityStatus")
@@ -516,7 +550,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
-                                                     EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                                                  };
             return eventTypes;
@@ -556,7 +589,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
-                                                     EventRemarks = (List<EventRemarkPM>)eventRemarkQueryService.GetEventRemarksByEventTypeID(a.Id),
 
                                                  };
             return eventTypes;

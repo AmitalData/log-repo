@@ -10,21 +10,18 @@
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {Output, EventEmitter, Component}  from '@angular/core';
+import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-@Component({
-    template: ''
-  })
 
 export class EventRemarkPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-    EntityParentPM: this;
-    UniqueKey: string;
     ChangeSetOp: string;
+    UniqueKey: string;
+    EntityParentPM: any;
 	  constructor() {
 		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;

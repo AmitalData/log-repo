@@ -14,6 +14,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -73,6 +74,52 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             {
                 EventTypeTracing.Trace(theEntityPm, Poco, isNewEntity);
             }
+
+            EventRemarkQueryService service = new EventRemarkQueryService(theEntityPm.Tenant);
+            EventRemarkRepository eventRemarkRepository = new EventRemarkRepository(objectContext);
+            #region EventRemarks
+
+            if (theEntityPm.EventRemarks != null)
+            {
+                foreach (EventRemarkPM r in theEntityPm.EventRemarks)
+                {
+                    if(r.IsChoose)
+                     service.Create(r);
+                    else
+                    {
+                        EventRemark eventRemark = eventRemarkRepository.GetEventRemarkByPartnerTypeId(r.PartnerTypeId, r.EventTypeId, r.Tenant);
+                        eventRemarkRepository.Remove(eventRemark);
+                    }
+                   /* switch (r.PartnerTypeId)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                service.Create(r);
+                                break;
+                            }
+                        case ChangeSetOperation.Update:
+                            {
+                                service.Update(r);
+                                break;
+                            }
+                        case ChangeSetOperation.Delete:
+                            {
+                                EventRemark eventRemark = eventRemarkRepository.GetSingle( r.Id , r.Tenant );
+                                eventRemarkRepository.Remove(eventRemark);
+                                break;
+                            }
+                        case ChangeSetOperation.None:
+                            {
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }*/
+                }
+            }
+            # endregion
 
             EventTypeMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);

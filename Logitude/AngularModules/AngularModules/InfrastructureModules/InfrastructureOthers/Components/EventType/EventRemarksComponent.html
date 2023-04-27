@@ -9,7 +9,7 @@
                 </td>
 
                 <td style="width: 57px;">
-                    <button class="Button" (click)="CancelButtonClicked()">Clear All</button>
+                    <button class="Button" (click)="ClearAllClicked($event)">Clear All</button>
                 </td>
 
                 <td style="width: 5px;">
@@ -17,10 +17,10 @@
                 </td>
 
                 <td style="width: 57px;">
-                    <button class="Button" (click)="CancelButtonClicked()">Select All</button>
+                    <button class="Button" (click)="SelectAllClicked($event)">Select All</button>
                 </td>
 
-                <td style="padding: 4px; width: 250px;" [style.float]="isRTL ? 'left' : 'right'">
+                <td style="padding: 4px; width: 250px;" >
                     <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'General.O.Search' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                 </td>
 
@@ -50,20 +50,20 @@
                             <div>
                                 <tr >
                                     <td colspan="2">
-                                        <table *ngFor="let item of PartnerTypes"> 
+                                        <table *ngFor="let item of partnerTypesEvent"> 
                                             <tr class="SimpleGridViewRow RowHover">
                                                 <!-- <td>
                                                     <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>  -->
                                                 <td style="width: 600px;">
-                                                    {{item.Name}}
+                                                    {{item.PartnerTypeName}}
                                                 </td>  
                                                 <div></div>
                                                 <td class="GridViewCell" style="width:150px;min-width:150px;border-bottom:1px solid #E4E3E1;">
                                                     <div class="MediaFill">
                                                         <div class="MediaFillRelative">
                                                             <div class="CenterCenter" style="width: 16px;">
-                                                                <CheckBox [IsChecked]="item.IsSelectedByDefault" (Checked)="CheckboxIsSelectedByDefaultClick(item, $event)"></CheckBox>
+                                                                <CheckBox [IsChecked]="item.IsChoose || IsAllSelected" (Checked)="CheckboxIsSelectedByDefaultClick(item,$event)"></CheckBox>
                                                             </div>
                                                         </div>
                                                     </div>

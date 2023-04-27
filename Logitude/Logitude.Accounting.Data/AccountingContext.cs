@@ -128,8 +128,6 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new ChartOfAccountsTypeMap());
 	
-            modelBuilder.Configurations.Add(new EventRemarkMap());
-	
             modelBuilder.Configurations.Add(new ExternalPageAdditionalDataMap());
 	
             modelBuilder.Configurations.Add(new ExternalReconciliationMap());
@@ -904,7 +902,6 @@ namespace Logitude.Accounting.Data
 	      get; set;
 	 
 	 }
-	
 	
 	 public IDbSet<ExternalPageAdditionalData> ExternalPageAdditionalDatas 
 	 {
