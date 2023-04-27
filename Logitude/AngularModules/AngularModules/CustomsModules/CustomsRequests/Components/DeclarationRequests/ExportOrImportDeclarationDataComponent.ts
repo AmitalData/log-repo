@@ -83,6 +83,7 @@ export class ExportOrImportDeclarationDataComponent
             this.FromConnectedDec = true;
             this.DeclarationNubmer = args.DeclarationNumber;
             this.IsExport = args.DeclarationTypeCode == 1 ? false : true;
+            this.SetIsExport(this.IsExport);
             this.RequestListIsChecked = args.OnApprove;
         }
     }
