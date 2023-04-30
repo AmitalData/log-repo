@@ -157,7 +157,6 @@
     <None Include="DBScripts\Pre\202230102_UpdateIsCloseForFollowUp.sxml" />
     <None Include="DBScripts\Pre\20221219_AddonExitEntry.sxml" />
     <None Include="DBScripts\Post\202211291005_CreateIndexQueueMessagesInterfaceTypeCode.sxml" />
-
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
@@ -261,6 +260,7 @@
     <None Include="DBTables\ClientAddress.dxml" />
     <None Include="DBTables\ClientDrivingLicense.dxml" />
     <None Include="DBTables\ClientDrivingLicenseType.dxml" />
+    <None Include="DBTables\ClientItem.dxml" />
     <None Include="DBTables\ClientsAddressCommType.dxml" />
     <None Include="DBTables\ClientsPoa.dxml" />
     <None Include="DBTables\ClientsTapag.dxml" />
