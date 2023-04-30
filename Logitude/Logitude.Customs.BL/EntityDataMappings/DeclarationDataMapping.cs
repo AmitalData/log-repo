@@ -484,7 +484,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (automaticPaymentMustBeAccurate)
             {
                 
-                entityPM.AutomaticPayment = declarationPaymentQueryService.GetAutomaticPayment(declarationid:entityPOCO.Id,entityPOCO.Direction);
+                entityPM.AutomaticPayment = declarationPaymentQueryService.GetAutomaticPayment(entityPOCO.Id,entityPOCO.Direction);
             }
             else
             {
