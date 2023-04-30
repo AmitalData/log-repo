@@ -12,9 +12,7 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class ClientItemList
    {
-   
-       [Key]
-       [DataMember]
+          [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }

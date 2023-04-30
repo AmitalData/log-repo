@@ -19,9 +19,7 @@ namespace Logitude.Customs.Def.EntityPMs
    public partial class ClientItemPM : EntityPM
    {
    	  private int tenant ;
-	  
-       [Key]
-	  
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
