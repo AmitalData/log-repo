@@ -4,11 +4,11 @@
   Name="Queue_Peek_List"
   Schema="dbo"
   Module="Infrastructure">
-  <!--<SqlScript_>
+  <SqlScript_>
  </SqlScript_>
 	<SqlScript>
 
-	</SqlScript>-->
+	</SqlScript>
   <OracleScript>
     <![CDATA[
     create or replace TYPE Queue_Message AS OBJECT (
