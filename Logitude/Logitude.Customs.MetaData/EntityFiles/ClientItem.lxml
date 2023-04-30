@@ -38,7 +38,7 @@
   ParentTableName="Client"
   LocalDefaultText="&quot;Client Items&quot;"
   DefaultText="&quot;Client Items&quot;"
-  Code="&quot;1ad8&quot;"
+  Code="&quot;2a4c&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -74,7 +74,7 @@
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -90,6 +90,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -162,6 +163,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -234,6 +236,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ItemDescription&quot;"
     ListPropertyPath="&quot;ItemDescription&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -308,6 +311,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ClassificationCode&quot;"
     ListPropertyPath="&quot;ClassificationCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -382,6 +386,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ItemNumber&quot;"
     ListPropertyPath="&quot;ItemNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -458,6 +463,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;OriginCountryCode&quot;"
     ListPropertyPath="&quot;OriginCountryCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -534,6 +540,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;OriginCountryName&quot;"
     ListPropertyPath="&quot;OriginCountryName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -608,6 +615,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ClientCode&quot;"
     ListPropertyPath="&quot;ClientCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -655,6 +663,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.ClientItemHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.ClientItem&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -683,6 +700,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
