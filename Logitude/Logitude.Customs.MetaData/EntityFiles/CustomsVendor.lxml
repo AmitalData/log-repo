@@ -2032,38 +2032,38 @@
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;InActive&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;AllVendors&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;CountryCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;CityName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;MainAddressLine&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
-        IndexOrder="6"
+        IndexOrder="5"
         ObjectFieldName="&quot;VATNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
-        IndexOrder="7"
+        IndexOrder="6"
         ObjectFieldName="&quot;DunsNumber&quot;"
         ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;AllVendors&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;InActive&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />
   </Query>
