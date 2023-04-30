@@ -2032,31 +2032,36 @@
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;InActive&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllVendors&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;CountryCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;CityName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;MainAddressLine&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;VATNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;AllVendors&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;DunsNumber&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -2502,6 +2507,12 @@
       Code="&quot;Customs.Vendor.O.NewClientE&quot;"
       DefaultText="&quot;New Client&quot;"
       LocalDefaultText="&quot;שליפת לקוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Vendor.O.InActiveVendor&quot;"
+      DefaultText="&quot;InActive Vendor&quot;"
+      LocalDefaultText="&quot;חסימת ספק&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

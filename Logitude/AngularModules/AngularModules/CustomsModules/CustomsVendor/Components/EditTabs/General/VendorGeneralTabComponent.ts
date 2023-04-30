@@ -47,6 +47,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
     ResponseData: INF_MSG_GenericResponseData;
     vendorMessagesService: VendorMessagesService = new VendorMessagesService();
     customsVendorPMService: CustomsVendorPMService = new CustomsVendorPMService();
+    InActiveVendor: string = TextCodeTranslator.Translate("Customs.Vendor.O.InActiveVendor");
 
     RequestVIA: SendRequestVIA;
 
@@ -133,6 +134,10 @@ export class VendorGeneralTabComponent extends BaseComponent {
     public get TransactionTypeID() { return this.EntityPM.TransactionTypeID; }
     public set TransactionTypeID(newValue: string) {
         this.EntityPM.TransactionTypeID = newValue;
+    }
+    public get InActive() { return this.EntityPM.InActive; }
+    public set InActive(newValue: boolean) {
+        this.EntityPM.InActive = newValue;
     }
 
     //#endregion
@@ -383,6 +388,8 @@ export class VendorGeneralTabComponent extends BaseComponent {
         addParams.ExternalId = this.EntityPM.ExternalId;
         addParams.ConcurrencyGUID = this.EntityPM.ConcurrencyGUID;
         addParams.RequestVIA = this.RequestVIA;
+        addParams.InActive = this.EntityPM.InActive;
+
         //addParams.TestCase = SelectedTest; // this is should be in RequestParamsBase but it does not
         addParams.IsAfterWarning = isAfterWarning;
 
