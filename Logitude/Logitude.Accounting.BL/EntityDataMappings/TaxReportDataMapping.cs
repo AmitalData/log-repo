@@ -33,6 +33,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
             entityPOCO.SearchFields = entityPM.SearchFields;
+
+            if (!this.CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+                this.CustomMappedPOCOProperties.Add(POCOPropertyNames.StatusCode);
+            }
+            entityPOCO.StatusCode = entityPM.StatusCode;
         }
 
         public void CustomPOCOToPM(TaxReportPM entityPM, TaxReport entityPOCO)
@@ -48,6 +54,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.StatusEnglishName = status.EnglishName;
                     entityPM.StatusLocalName = status.LocalName;
                 }
+                entityPM.StatusCode = entityPOCO.StatusCode;
             }
 
             MapClosingJournalFields(entityPM, entityPOCO);
