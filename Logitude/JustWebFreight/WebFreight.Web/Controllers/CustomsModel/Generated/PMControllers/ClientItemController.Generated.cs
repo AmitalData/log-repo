@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(int tenant, int itemnumber, string clientcode)
+        public HttpResponseMessage GetSingle(int itemnumber, string clientcode)
         {
 		  try
             {
@@ -64,7 +64,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 ClientItemQueryService clientItemQuery = new ClientItemQueryService(MyContext);
 				clientItemQuery.InitializeSettings();
-                ClientItemPM clientItemPM = clientItemQuery.GetSingle(tenant, itemnumber, clientcode,true,false);
+                ClientItemPM clientItemPM = clientItemQuery.GetSingle(itemnumber, clientcode,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

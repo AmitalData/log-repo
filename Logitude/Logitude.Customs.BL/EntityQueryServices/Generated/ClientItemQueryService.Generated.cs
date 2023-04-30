@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new ClientItemDataMapping();
         }
 		 
-		public  ClientItemPM GetSingle(int tenant, int itemnumber, string clientcode,bool getComposition, bool getFromCache)
+		public  ClientItemPM GetSingle(int itemnumber, string clientcode,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new ClientItemKeys(){ Tenant = tenant, ItemNumber = itemnumber, ClientCode = clientcode };
+             EntityKeys = new ClientItemKeys(){ ItemNumber = itemnumber, ClientCode = clientcode };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(ClientItem entityPOCO)
         {
-            ClientItemKeys entityKeys = new ClientItemKeys() { Tenant = entityPOCO.Tenant, ItemNumber = entityPOCO.ItemNumber, ClientCode = entityPOCO.ClientCode,  };
+            ClientItemKeys entityKeys = new ClientItemKeys() { ItemNumber = entityPOCO.ItemNumber, ClientCode = entityPOCO.ClientCode,  };
             return entityKeys;
         }
      

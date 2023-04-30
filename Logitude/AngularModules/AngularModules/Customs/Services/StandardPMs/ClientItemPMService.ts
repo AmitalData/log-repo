@@ -32,12 +32,12 @@ export class ClientItemPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/clientitems';      
     }
 
-	get(tenant: number, itemnumber: number, clientcode: string) {       
+	get(itemnumber: number, clientcode: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'tenant=' + tenant+'&'+'itemnumber=' + itemnumber+'&'+'clientcode=' + clientcode, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'itemnumber=' + itemnumber+'&'+'clientcode=' + clientcode, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class ClientItemPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientItem", "GetSinglePM", 'tenant=' + tenant+'&'+'itemnumber=' + itemnumber+'&'+'clientcode=' + clientcode);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientItem", "GetSinglePM", 'itemnumber=' + itemnumber+'&'+'clientcode=' + clientcode);
 				 
 						return serviceResponse;
 

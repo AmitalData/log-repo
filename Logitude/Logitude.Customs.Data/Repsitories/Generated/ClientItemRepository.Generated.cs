@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  ClientItem GetSingle(int tenant, int itemnumber, string clientcode, int tenant)
+		public  ClientItem GetSingle(int itemnumber, string clientcode, int tenant)
         {
             return (from a in context.ClientItems
-                    where a.Tenant == tenant && a.ItemNumber == itemnumber && a.ClientCode == clientcode && a.Tenant == tenant
+                    where a.ItemNumber == itemnumber && a.ClientCode == clientcode && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             ClientItemKeys keys = entityKeys as ClientItemKeys;
             return (from a in context.ClientItems
-                    where a.Tenant == keys.Tenant && a.ItemNumber == keys.ItemNumber && a.ClientCode == keys.ClientCode
+                    where a.ItemNumber == keys.ItemNumber && a.ClientCode == keys.ClientCode
                     select a).FirstOrDefault();
         }
 		         

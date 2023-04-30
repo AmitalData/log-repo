@@ -21,9 +21,9 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("ClientItems", "Customs");
 		
-		    this.HasKey(t => new { t.Tenant, t.ItemNumber, t.ClientCode });
+		    this.HasKey(t => new { t.ItemNumber, t.ClientCode });
 	 
-            this.Property(t => t.Tenant).HasColumnName("Tenant").HasDatabaseGeneratedOption(null);
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
