@@ -1668,6 +1668,8 @@
     <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DefaultTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DefaultValueUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CountryCurrencyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DefaultTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DefaultValueUpdateService.Generated.cs" />
