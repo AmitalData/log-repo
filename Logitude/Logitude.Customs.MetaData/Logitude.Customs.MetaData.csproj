@@ -586,6 +586,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AddressCurrency.lxml" />
+    <None Include="EntityFiles\ClientItem.lxml" />
     <None Include="EntityFiles\CountryCurrency.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />

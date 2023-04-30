@@ -1,0 +1,43 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure; 
+  
+namespace Logitude.Customs.Data.EntityKeys
+{
+   public partial class ClientItemKeys : EntityKeyFields
+   {
+   	  public int Tenant  { get; set; }
+	  
+				 
+	    			   
+	  public int ItemNumber  { get; set; }
+	  
+				 
+	    			   
+	  public string ClientCode  { get; set; }
+	  
+				 
+	    			   
+	
+	 
+	  public override string GetFullKey()
+      {
+                 return Tenant+'_'+ItemNumber+'_'+ClientCode ;
+                 
+      }
+
+      public override string GetEntityPMName()
+      {
+          return "ClientItemPM";
+      }
+	 
+   }
+
+}
+	 

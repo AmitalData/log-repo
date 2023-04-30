@@ -113,6 +113,8 @@ export class ClientEditComponent extends BaseComponent{
         this.TabsItemsSource.push(new TabItem("REQUESTSHEET", "General.O.RequestSheets"));
         this.TabsItemsSource.push(new TabItem("MOREDATA", "Customs.Client.TH.MoreData"));
         this.TabsItemsSource.push(new TabItem("CLIENTPOA", "General.O.ClientPoas"));
+        this.TabsItemsSource.push(new TabItem("ITEMS", "General.O.Items"));
+
         this.BuildClientsTapagList();
 
         this.selectedTabCode = "GENERAL";
@@ -162,6 +164,8 @@ export class ClientEditComponent extends BaseComponent{
     private COMMUNICATION: any = null;
     private EVENTS: any = null;
     private REQUESTSHEET: any = null;
+    private ITEMS: any = null;
+
     public SelectedTab: TabItem;
     SelectionChanged() {
         if (!AppTool.IsNullOrEmpty(this.SelectedTabCode)) {
@@ -265,6 +269,21 @@ export class ClientEditComponent extends BaseComponent{
                                     .then(cmpRef => {
                                         this.CLIENTPOA = cmpRef.instance;
                                         this.CLIENTPOA.InitTab(this.CurrentEntity);
+                                    });
+                            });
+                        }
+                        break;
+
+                    }
+                    case "ITEMS": {
+                        
+
+                        if (this.ITEMS == null) {
+                            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsPoa").subscribe((response: any) => {
+                                SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsClient/Components/EditTabs/Items/ClientItemsTabComponent', myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.ITEMS = cmpRef.instance;
+                                        this.ITEMS.InitTab(this.CurrentEntity);
                                     });
                             });
                         }

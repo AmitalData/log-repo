@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class ClientItemList
+   {
+   
+       [Key]
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string ItemDescription  { get; set; }
+       [DataMember]
+       public string ClassificationCode  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int ItemNumber  { get; set; }
+       [DataMember]
+       public string OriginCountryCode  { get; set; }
+       [DataMember]
+       public string OriginCountryName  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string ClientCode  { get; set; }
+   }
+
+}
+	 
