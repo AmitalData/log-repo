@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsVendorUpdateClass
    {  		
-		public const string HashString = "08d1f5bbdf61c96e6e6a99ee9bda601d";
+		public const string HashString = "9951b7076042b4ecba0f1e8f55f3fe90";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1663,17 +1663,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllVendorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsVendor.VendorNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsVendor.VendorName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsVendor.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsVendor.CountryCode" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsVendor.VendorName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsVendor.CityName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsVendor.CountryCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CustomsVendor.MainAddressLine" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CustomsVendor.CityName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CustomsVendor.VATNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CustomsVendor.MainAddressLine" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CustomsVendor.DunsNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CustomsVendor.VATNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllVendorsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CustomsVendor.DunsNumber" , ColumnWidth = 130 }, addedQueryColumns);
   
 	      
 
@@ -1950,6 +1952,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsVendorTextCode_CustomsCustomsVendorOmustEnterAtLeast2Chars = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsVendor.O.mustEnterAtLeast2Chars", DefaultText = "Must enter at least two chars in supplier name",LocalDefaultText = @"יש להזין לפחות 2 תווים בשם הספק", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsVendorTextCode_CustomsVendorONewClientE = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vendor.O.NewClientE", DefaultText = "New Client",LocalDefaultText = @"שליפת לקוח", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsVendorTextCode_CustomsVendorOInActiveVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vendor.O.InActiveVendor", DefaultText = "InActive Vendor",LocalDefaultText = @"חסימת ספק", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
