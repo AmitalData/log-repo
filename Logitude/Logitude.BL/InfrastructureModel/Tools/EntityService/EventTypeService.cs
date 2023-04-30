@@ -81,42 +81,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             if (theEntityPm.EventRemarks != null)
             {
-                foreach (EventRemarkPM r in theEntityPm.EventRemarks)
+                foreach (EventRemarkPM eventRemarkPM in theEntityPm.EventRemarks)
                 {
-                    if(r.IsChoose)
-                     service.Create(r);
-                    else
-                    {
-                        EventRemark eventRemark = eventRemarkRepository.GetEventRemarkByPartnerTypeId(r.PartnerTypeId, r.EventTypeId, r.Tenant);
+                    EventRemark eventRemark = eventRemarkRepository.GetEventRemarkByPartnerTypeId(eventRemarkPM.PartnerTypeId, eventRemarkPM.EventTypeId, eventRemarkPM.Tenant);
+                    if (eventRemark == null && eventRemarkPM.IsChoose)
+                     service.Create(eventRemarkPM);
+                    else if (!eventRemarkPM.IsChoose)
+                    {   
                         eventRemarkRepository.Remove(eventRemark);
                     }
-                   /* switch (r.PartnerTypeId)
-                    {
-                        case ChangeSetOperation.Insert:
-                            {
-                                service.Create(r);
-                                break;
-                            }
-                        case ChangeSetOperation.Update:
-                            {
-                                service.Update(r);
-                                break;
-                            }
-                        case ChangeSetOperation.Delete:
-                            {
-                                EventRemark eventRemark = eventRemarkRepository.GetSingle( r.Id , r.Tenant );
-                                eventRemarkRepository.Remove(eventRemark);
-                                break;
-                            }
-                        case ChangeSetOperation.None:
-                            {
-                                break;
-                            }
-                        default:
-                            {
-                                break;
-                            }
-                    }*/
                 }
             }
             # endregion

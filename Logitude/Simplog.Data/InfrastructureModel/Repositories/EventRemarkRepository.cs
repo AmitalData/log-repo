@@ -74,7 +74,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             public void Remove(EventRemark entity)
             {
-                //context.EventRemarks.Attach(entity);
+                context.EventRemarks.Attach(entity);
                 context.EventRemarks.Remove(entity);
             }
 

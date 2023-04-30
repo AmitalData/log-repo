@@ -23,6 +23,7 @@ export class EventRemarksComponent extends BaseComponent{
     _PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
     public EventRemarksLists: EventRemarkPM[] = [];
     public partnerTypesEvent: PartnerTypesEvent[];
+    public tempPartnerTypesEvent: PartnerTypesEvent[];
     public eventRemarkPM : EventRemarkPM=new EventRemarkPM();
     public ObjectTableName: string = "EventRemark";
     public DataContext = this;
@@ -37,12 +38,20 @@ export class EventRemarksComponent extends BaseComponent{
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) { this.Run(); }
         });
-
-           
+      
     }
     
     Run() {
-        this.partnerTypesEvent=[]
+        this.partnerTypesEvent=[];
+
+        if (!this.EntityPM.EventRemarks) return;
+        this.EventRemarksLists = [];
+        this.EntityPM.EventRemarks.forEach((copy) => {
+            this.EventRemarksLists.push(copy);
+            this.partnerTypesEvent.push(new PartnerTypesEvent(copy,true, "" ,copy.PartnerTypeId,""));
+        });
+
+        
         this._PartnerTypeListService.getAll()
         .subscribe((myResponse: ServiceResponse) =>
         {
@@ -62,51 +71,95 @@ export class EventRemarksComponent extends BaseComponent{
                     this.partnerTypesEvent[indexToUpdate] = x;
                 }
                 else 
-                this.partnerTypesEvent.push(new PartnerTypesEvent( false, this.PartnerTypes[i].Name ,this.PartnerTypes[i].Id,this.PartnerTypes[i].SearchFields));
+                this.partnerTypesEvent.push(new PartnerTypesEvent( new EventRemarkPM(),false, this.PartnerTypes[i].Name ,this.PartnerTypes[i].Id,this.PartnerTypes[i].SearchFields));
             }        
         }); 
 
-        if (!this.EntityPM.EventRemarks) return;
-        this.EventRemarksLists = [];
-        this.EntityPM.EventRemarks.forEach((copy) => {
-            this.EventRemarksLists.push(copy);
-            this.partnerTypesEvent.push(new PartnerTypesEvent( true, "" ,copy.PartnerTypeId,""));
-        });
     }
 
     CheckboxIsSelectedByDefaultClick(selectedItem: PartnerTypesEvent ,value: any) {
         if (selectedItem == null) return;
         this.EntityPM = this.entityArgs.EntityPM;
-        this.eventRemarkPM.Tenant = this.EntityPM.Tenant;
-        this.eventRemarkPM.CreateDate = new Date(Date.now());
-        this.eventRemarkPM.CreatedByUserId = SessionLocator.LoggedUserId;;
-        this.eventRemarkPM.UpdateDate =  new Date(Date.now());
-        this.eventRemarkPM.UpdatedByUserId = SessionLocator.LoggedUserId;;
-        this.eventRemarkPM.SearchFields =selectedItem.PartnerTypeSearchFields;
-        this.eventRemarkPM.EventTypeId = this.EntityPM.Id;
-        this.eventRemarkPM.PartnerTypeId =selectedItem.PartnerTypeId;
-        this.eventRemarkPM.IsChoose=value;
-        this.EventRemarksLists.push(this.eventRemarkPM);
+    
+            selectedItem.EventRemark.Tenant = this.EntityPM.Tenant;
+            selectedItem.EventRemark.CreateDate = new Date(Date.now());
+            selectedItem.EventRemark.CreatedByUserId = SessionLocator.LoggedUserId;;
+            selectedItem.EventRemark.UpdateDate =  new Date(Date.now());
+            selectedItem.EventRemark.UpdatedByUserId = SessionLocator.LoggedUserId;;
+            selectedItem.EventRemark.SearchFields =selectedItem.PartnerTypeSearchFields;
+            selectedItem.EventRemark.EventTypeId = this.EntityPM.Id;
+            selectedItem.EventRemark.PartnerTypeId =selectedItem.PartnerTypeId;
+            let index =this.EventRemarksLists.findIndex(x => x.PartnerTypeId === selectedItem.PartnerTypeId && x.EventTypeId ===selectedItem.EventRemark.EventTypeId);
+            if(index == -1 || selectedItem.IsChoose != value){
+                selectedItem.EventRemark.IsChoose=value;
+                this.EventRemarksLists.push(selectedItem.EventRemark);
+            }   
+      
         this.EntityPM.EventRemarks = this.EventRemarksLists;
         this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
     }
 
     ClearAllClicked(event){
-        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
-        this. SelectAllClicked(event);
+        this.EntityPM = this.entityArgs.EntityPM;
+        //this. SelectAllClicked(false);
         this.IsAllSelected = false;
+        var size=this.EventRemarksLists.length;
+        for (let i = 0; i < size; i++) 
+        {
+            this.EventRemarksLists[i].IsChoose=false;
+            this.EventRemarksLists.push(this.EventRemarksLists[i]);
+            this.partnerTypesEvent[i].IsChoose=false;
+        }
+        this.EntityPM.EventRemarks = this.EventRemarksLists;
+        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
     }
     SelectAllClicked(event){
+        this.EntityPM = this.entityArgs.EntityPM;
         this.IsAllSelected = event;
+        var size=this.partnerTypesEvent.length;
+        for (let i = 0; i < size; i++) 
+        {
+            this.partnerTypesEvent[i].EventRemark.Tenant = this.EntityPM.Tenant;
+            this.partnerTypesEvent[i].EventRemark.CreateDate = new Date(Date.now());
+            this.partnerTypesEvent[i].EventRemark.CreatedByUserId = SessionLocator.LoggedUserId;;
+            this.partnerTypesEvent[i].EventRemark.UpdateDate =  new Date(Date.now());
+            this.partnerTypesEvent[i].EventRemark.UpdatedByUserId = SessionLocator.LoggedUserId;;
+            this.partnerTypesEvent[i].EventRemark.SearchFields =this.partnerTypesEvent[i].PartnerTypeSearchFields;
+            this.partnerTypesEvent[i].EventRemark.EventTypeId = this.EntityPM.Id;
+            this.partnerTypesEvent[i].EventRemark.PartnerTypeId =this.partnerTypesEvent[i].PartnerTypeId;
+            let index =this.EventRemarksLists.findIndex(x => x.PartnerTypeId === this.partnerTypesEvent[i].PartnerTypeId && x.EventTypeId ===this.partnerTypesEvent[i].EventRemark.EventTypeId);
+            if(index == -1 || this.partnerTypesEvent[i].IsChoose != true){
+                this.partnerTypesEvent[i].EventRemark.IsChoose=true;
+                this.EventRemarksLists.push( this.partnerTypesEvent[i].EventRemark);
+                this.partnerTypesEvent[i].IsChoose=true;
+            }  
+        }
+        this.EntityPM.EventRemarks = this.EventRemarksLists;
+        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+    }
+
+    TextChanged(searchEvent){
+        if(searchEvent=="" || searchEvent==null){
+            this.partnerTypesEvent = this.tempPartnerTypesEvent;
+        }
+        else{
+            let x =this.partnerTypesEvent.find(x => x.PartnerTypeName ===searchEvent); 
+            this.tempPartnerTypesEvent = this.partnerTypesEvent;
+            this.partnerTypesEvent=[];
+            this.partnerTypesEvent.push(x);
+        }
+
     }
     
 }
 class PartnerTypesEvent {
+    public EventRemark: EventRemarkPM;
     public IsChoose: boolean
     public PartnerTypeName: string
     public PartnerTypeId: string
     public PartnerTypeSearchFields: string
-    constructor(IsChoose: boolean , PartnerTypeName:string , PartnerTypeId: string,PartnerTypeSearchFields: string) {
+    constructor(EventRemark: EventRemarkPM,IsChoose: boolean , PartnerTypeName:string , PartnerTypeId: string,PartnerTypeSearchFields: string) {
+        this.EventRemark= EventRemark;
         this.IsChoose = IsChoose;
         this.PartnerTypeName = PartnerTypeName;
         this.PartnerTypeId = PartnerTypeId;
