@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  ClientItem GetSingle(int tenant, int itemnumber, string clientcode)
+		public  ClientItem GetSingle(int tenant, int itemnumber, string clientcode, int tenant)
         {
             return (from a in context.ClientItems
                     where a.Tenant == tenant && a.ItemNumber == itemnumber && a.ClientCode == clientcode && a.Tenant == tenant
