@@ -200,6 +200,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     {
                         var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
                         drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
+                        if (IsNewFromU2L) dataHaveChangeSendIt = true;
                         if (!dataHaveChangeSendIt && dbPM != null)
                         {
 
