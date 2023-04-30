@@ -715,7 +715,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
                 if (this.IsProcedureCurrentCodeChanged) declarationUpdateService.IsProcedureCurrentCodeChanged = true;
                 Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
-                Customs.BL.Messaging.Maman.Send2MasofIfNeededService.IsNewFromU2L = true;
+                if (this._IsNewDeclaration)
+                    Customs.BL.Messaging.Maman.Send2MasofIfNeededService.IsNewFromU2L = true;
 
                 this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
                 {
