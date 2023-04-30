@@ -254,6 +254,7 @@
     <None Include="DBTables\ClientAddress.dxml" />
     <None Include="DBTables\ClientDrivingLicense.dxml" />
     <None Include="DBTables\ClientDrivingLicenseType.dxml" />
+    <None Include="DBTables\ClientItem.dxml" />
     <None Include="DBTables\ClientsAddressCommType.dxml" />
     <None Include="DBTables\ClientsPoa.dxml" />
     <None Include="DBTables\ClientsTapag.dxml" />
