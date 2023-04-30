@@ -620,7 +620,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (StorageSiteCode == "ILSWS" && courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant).SwissportSuspendedCode != null)
                 {
                     var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
-                    string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM);
+                    string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM, true);
                     if (drityMessage != null)
                     {
                         var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
