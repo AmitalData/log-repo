@@ -5,6 +5,7 @@ import {ClientAddressesTabComponent} from  './Components/EditTabs/Addresses/Clie
 import {AddEditAddressComponent} from './Components/EditTabs/Addresses/AddEditAddressComponent';
 import {ClientDrivingLicenseTabComponent} from './Components/EditTabs/License/ClientDrivingLicenseTabComponent';
 import { ClientPoaTabComponent } from './Components/EditTabs/ClientPoa/ClientPoaTabComponent';
+import { ClientItemsTabComponent } from './Components/EditTabs/ClientItems/ClientItemsTabComponent';
 
 
 
@@ -17,6 +18,7 @@ export const Components =
         AddEditAddressComponent,
         ClientDrivingLicenseTabComponent,
         ClientPoaTabComponent,
+        ClientItemsTabComponent
 
     ];
 
@@ -33,6 +35,7 @@ export class ModuleDeclarations {
             case "AddEditAddressComponent": { myResult = AddEditAddressComponent; break; }
             case "ClientDrivingLicenseTabComponent": { myResult = ClientDrivingLicenseTabComponent; break; } 
             case "ClientPoaTabComponent": { myResult = ClientPoaTabComponent; break; }
+            case "ClientItemsTabComponent": { myResult = ClientItemsTabComponent; break; }
         }
 
         return myResult;

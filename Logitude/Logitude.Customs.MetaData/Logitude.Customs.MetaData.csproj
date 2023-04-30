@@ -10,7 +10,6 @@
     <RootNamespace>Logitude.Customs.MetaData</RootNamespace>
     <AssemblyName>Logitude.Customs.MetaData</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -576,6 +575,7 @@
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
+    <None Include="EntityFiles\ClientItem.lxml" />
     <None Include="EntityFiles\CountryCurrency.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />

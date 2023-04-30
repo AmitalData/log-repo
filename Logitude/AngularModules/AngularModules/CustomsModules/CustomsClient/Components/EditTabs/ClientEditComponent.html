@@ -135,7 +135,7 @@
                                                                         *ngFor="let item of ClientsTapagList">
                                                                         <div
                                                                             style="width: 98px; text-align: right; height: 100%;float: right; padding-top: 10px">
-                                                                            <LogLabel 
+                                                                            <LogLabel
                                                                                 [ObjectTableName]="'Customs.ClientsTapag'"
                                                                                 [ObjectFieldName]="tapagNumberName"
                                                                                 [DataContext]="DataContext"></LogLabel>
@@ -147,7 +147,7 @@
                                                                         </div>
                                                                         <div [class.disabled]="IsDisplayOnly"
                                                                             style="position: relative; width: 48%; text-align: center; height: 100%;float: right; padding-top: 3px;right: 26px;">
-                                                                            
+
                                                                             <LogTextBox
                                                                                 [ObjectFieldName]="'TapagNumber'"
                                                                                 [InputType]="'text'"
@@ -171,17 +171,17 @@
                                                                 </ul>
                                                                 <div style="clear: both;"></div>
                                                             </div>
-                                                           
+
                                                         </td>
-                                                        
-                                                            <div
+
+                                                        <div
                                                             style="vertical-align:top;padding-top:15px; padding-right: 13px; float: right; ">
-                                                            <IconButton  [IsSmall]="true"
-                                                                [Name]="'Add'" (click)="AddTapagNumberButtonClicked()"
+                                                            <IconButton [IsSmall]="true" [Name]="'Add'"
+                                                                (click)="AddTapagNumberButtonClicked()"
                                                                 [IsEnabled]="AddTapagEnabled"></IconButton>
-                                                            </div>
+                                                        </div>
                                                     </tr>
-                                                     
+
 
                                                 </table>
 
@@ -190,7 +190,10 @@
                                             <div class="MediaStretch" [hidden]="SelectedTabCode != 'CLIENTPOA'">
                                                 <div LocationDirective Code="CLIENTPOA"></div>
                                             </div>
-
+                                            <!-- ITEMS -->
+                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'ITEMS'">
+                                                <div LocationDirective Code="ITEMS"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
