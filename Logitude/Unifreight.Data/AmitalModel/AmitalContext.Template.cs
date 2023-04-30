@@ -904,7 +904,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCRREQ>()
                 .Property(p => p.ACCLINENO)
                     .HasColumnName(@"ACC_LINE_NO")
