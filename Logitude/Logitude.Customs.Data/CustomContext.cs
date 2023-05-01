@@ -282,6 +282,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomDocumentTypeMetaDataMap());
 	
+            modelBuilder.Configurations.Add(new CustomDocumentTypeTenantMap());
+	
             modelBuilder.Configurations.Add(new CustomerActivityTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomerClassificationTypeMap());
@@ -2000,6 +2002,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomDocumentTypeMetaData> CustomDocumentTypeMetaData 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomDocumentTypeTenant> CustomDocumentTypeTenants 
 	 {
 	      get; set;
 	 

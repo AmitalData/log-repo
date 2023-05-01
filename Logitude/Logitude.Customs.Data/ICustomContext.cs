@@ -124,6 +124,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomBanksCard> CustomBanksCards { get; }
 		 IDbSet<CustomDocumentType> CustomDocumentTypes { get; }
 		 IDbSet<CustomDocumentTypeMetaData> CustomDocumentTypeMetaData { get; }
+		 IDbSet<CustomDocumentTypeTenant> CustomDocumentTypeTenants { get; }
 		 IDbSet<CustomerActivityType> CustomerActivityTypes { get; }
 		 IDbSet<CustomerClassificationType> CustomerClassificationTypes { get; }
 		 IDbSet<CustomerIdentificationType> CustomerIdentificationTypes { get; }

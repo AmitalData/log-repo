@@ -157,7 +157,6 @@
     <None Include="DBScripts\Pre\202230102_UpdateIsCloseForFollowUp.sxml" />
     <None Include="DBScripts\Pre\20221219_AddonExitEntry.sxml" />
     <None Include="DBScripts\Post\202211291005_CreateIndexQueueMessagesInterfaceTypeCode.sxml" />
-
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
@@ -589,6 +588,7 @@
     <None Include="EntityFiles\CountryCurrency.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
+    <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\DefaultType.lxml" />
     <None Include="EntityFiles\DefaultValue.lxml" />
