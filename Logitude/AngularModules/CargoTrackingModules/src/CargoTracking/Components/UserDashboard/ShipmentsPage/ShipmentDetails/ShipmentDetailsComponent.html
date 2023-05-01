@@ -499,7 +499,11 @@
                         </div>
                         <div *ngIf="!IsOrderShipment">
                             <div class="title">declaration status</div>
-                            <div class="description"></div>
+                            <div class="description" *ngIf="cargoTrackingShipmentPM.CustomsData?.DeclarationStatus">
+                                <span>
+                                    {{cargoTrackingShipmentPM.CustomsData?.DeclarationStatus}}
+                                </span>
+                            </div>
                         </div>
                         <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'">
                             <div class="title">Supply Date Time</div>
