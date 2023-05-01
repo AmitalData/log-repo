@@ -30,9 +30,9 @@
                             <tr class="FormFieldRow" style="height:1px">
 
                                 <td>
-                                   <RadioButton [Name]="'IsExportRadio'" [IsChecked]="IsExport" (Checked)="SetIsExport(true)" [Text]="'יצום'"></RadioButton>
+                                   <RadioButton [Name]="'IsExportRadio'" [IsChecked]="IsExport" (Checked)="SetIsExport(true)" [Text]="'יצוא'"></RadioButton>
                                    <div style="height:10px;"></div>
-                                   <RadioButton [Name]="'IsImportRadio'" [IsChecked]="!IsExport" (Checked)="SetIsExport(false)" [Text]="'יבום'"></RadioButton>
+                                   <RadioButton [Name]="'IsImportRadio'" [IsChecked]="!IsExport" (Checked)="SetIsExport(false)" [Text]="'יבוא'"></RadioButton>
                                </td>
 
                                <!-- <td>
@@ -287,10 +287,11 @@
                         <tr>
                             <td><div></div></td>
                         </tr>
-                        <div *ngIf="FromConnectedDec && HasResponse" style="width: 75px; float: left;padding-left: 15px;"> 
-                            <button class="RedButton" (click)="OkButtonClicked(ResponseItemList)">{{'Customs.General.B.OK' |TextCodeTranslationPipe}}</button>
-                        </div>
-                    </table>                   
+                        
+                    </table>    
+                    <div *ngIf="FromConnectedDec && HasResponse" style="width: 75px; float: right;padding-right: 10px;"> 
+                        <button class="RedButton" (click)="OkButtonClicked(ResponseItemList)">{{'Customs.General.O.Copy' |TextCodeTranslationPipe}}</button>
+                    </div>               
                 </div>              
             </div>
         </div>

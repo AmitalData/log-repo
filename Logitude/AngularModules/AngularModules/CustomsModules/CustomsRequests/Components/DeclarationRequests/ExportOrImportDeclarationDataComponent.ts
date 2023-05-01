@@ -313,7 +313,7 @@ export class ExportOrImportDeclarationDataComponent
 
             });
             if (response.requestList.length == 0)
-                this.ValidationErrorsList.push("לא סומנו שורות");
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.General.O.NoRowsSelected"));
             else {
                 
                 this.ValidationErrorsList = [];
