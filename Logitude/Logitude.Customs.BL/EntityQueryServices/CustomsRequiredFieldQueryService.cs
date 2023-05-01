@@ -20,27 +20,25 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant, string type = "A")
 
         {
-            if (type == "A")
+            string entityKeyString = $"GetCustomRequiredFieldsByObjectTableFromCache({ObjectTableId},{Tenant},{type})";
+            var res = CacheManager.GetOrInsertNewObject<List<CustomsRequiredFieldPM>>(entityKeyString, () =>
             {
-                string entityKeyString = $"GetCustomRequiredFieldsByObjectTableFromCache({ObjectTableId},{Tenant},{type})";
-                var res = CacheManager.GetOrInsertNewObject<List<CustomsRequiredFieldPM>>(entityKeyString, () =>
-                {
 
-                    return this.GetCustomRequiredFieldsByObjectTableNoCache(ObjectTableId, Tenant, type);
-
-                });
-                return res;
-            }
-            else
-            {
                 return this.GetCustomRequiredFieldsByObjectTableNoCache(ObjectTableId, Tenant, type);
-            }
+
+            });
+            return res;
         }
 
         public List<CustomsRequiredFieldPM> GetCustomWarningFieldsByObjectTable(string ObjectTableId, int Tenant, string type = "A")
 
         {
-            return this.GetCustomWarningFieldsByObjectTableNoCache(ObjectTableId, Tenant, type);
+            string entityKeyString = $"GetCustomWarningFieldsByObjectTable({ObjectTableId},{Tenant},{type})";
+            var res = CacheManager.GetOrInsertNewObject<List<CustomsRequiredFieldPM>>(entityKeyString, () =>
+            {
+                return this.GetCustomWarningFieldsByObjectTableNoCache(ObjectTableId, Tenant, type);
+            });
+            return res;
         }
         /*
         private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant,string type="A")

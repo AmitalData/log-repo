@@ -52,11 +52,11 @@ namespace Logitude.Customs.BL.Validators
             }
 
             string isExport = declaration.Direction == "E" ? "E" : "I";
-            var fromCache =  false ;
+            var fromCache =  true ;
 
 
             DeclarationPaymentQueryService DeclarationPaymentQuery = new DeclarationPaymentQueryService(context);
-            DeclarationPaymentPM payment = DeclarationPaymentQuery.GetSingle(declarationId, true, fromCache);
+            DeclarationPaymentPM payment = DeclarationPaymentQuery.GetSingle(declarationId, true, false);
 
 
             #region declaration entity
@@ -751,13 +751,13 @@ namespace Logitude.Customs.BL.Validators
             IncotemrsFileValidationQueryService incotemrsFileValidationQuery = new IncotemrsFileValidationQueryService(context);
             List<IncotemrsFileValidationPM> incotemrsFileValidationPMs = incotemrsFileValidationQuery.GetAllFromCache();
 
-            var fromCache = false;
-            if (fromCache)
+            var fromCache = true;
+            /*if (fromCache)
             {
                 var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
                 declaration = CacheManager.CacheWrapper.Remove(cacheKey) as DeclarationPM;
 
-            }
+            }*/
             declaration = declaration ?? declarationPM;//courier.CalcAll()
             if (declaration == null)
             {
@@ -776,8 +776,6 @@ namespace Logitude.Customs.BL.Validators
                 return requiredErrors;
             }
 
-            DeclarationPaymentQueryService DeclarationPaymentQuery = new DeclarationPaymentQueryService(context);
-            DeclarationPaymentPM payment = DeclarationPaymentQuery.GetSingle(declarationId, true, fromCache);
 
 
             #region declaration entity
@@ -820,7 +818,7 @@ namespace Logitude.Customs.BL.Validators
             List<SupplierInvoiceFreightAmountPM> supplierInvoicFreightAmounts = new List<SupplierInvoiceFreightAmountPM>();
             List<SupplierInvoicePaymentPM> supplierInvoicePayments = new List<SupplierInvoicePaymentPM>();
 
-            ObjectTable supplierInvoiceTable = objectTabelRepository.GetObjectTableByName("Customs.SupplierInvoice", 0, true);
+            ObjectTable supplierInvoiceTable = objectTabelRepository.GetObjectTableByName("Customs.SupplierInvoice", 0, fromCache);
             List<CustomsRequiredFieldPM> supplierInvoiceRequiredFields = customsRequiredFieldQueryService.GetCustomWarningFieldsByObjectTable(supplierInvoiceTable.Id, tenant, isExport);
             List<PropertyInfo> SupplierInvoiceProperties = GetPropertiesForEntity("SupplierInvoicePM");
             //string[] supplierInvoiceArray = new string[declaration.SupplierInvoices.Count() + 1]; // Alaa: array index out of bounds problem
