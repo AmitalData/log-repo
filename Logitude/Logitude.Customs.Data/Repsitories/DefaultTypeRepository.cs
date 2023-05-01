@@ -21,7 +21,14 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public DefaultType GetSingleByCode(string code, int tenant)
+        {
+            return (from a in context.DefaultTypes
+                    where a.Code == code && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+    }
 
 }
    
