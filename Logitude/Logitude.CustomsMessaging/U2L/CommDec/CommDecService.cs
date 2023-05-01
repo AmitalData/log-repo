@@ -715,6 +715,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
                 if (this.IsProcedureCurrentCodeChanged) declarationUpdateService.IsProcedureCurrentCodeChanged = true;
                 Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
+                if (this._IsNewDeclaration)
+                    Customs.BL.Messaging.Maman.Send2MasofIfNeededService.IsNewFromU2L = true;
+
                 this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
                 {
                     MyCourierMasterPM = _CourierMasterPM,
@@ -727,7 +730,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         }
                 };
                 declarationUpdateService.Update(this._MyDeclarationPM, true);
-
+                Customs.BL.Messaging.Maman.Send2MasofIfNeededService.IsNewFromU2L = false;
 
                 string defValueB = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _MyDeclarationPM.Tenant);
 
@@ -791,6 +794,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             finally
             {
                 Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = false;
+                Customs.BL.Messaging.Maman.Send2MasofIfNeededService.IsNewFromU2L = false;
             }
         }
 
