@@ -175,7 +175,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             var currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(correlationId, queueSendModel.Tenant);
 
             var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
-            var currInterfaceTenantDefinition = interfaceTenantDefinitionQueryService.GetFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
+            var currInterfaceTenantDefinition = interfaceTenantDefinitionQueryService.GetInterfaceDefWithPriorityFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
 
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
             var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();

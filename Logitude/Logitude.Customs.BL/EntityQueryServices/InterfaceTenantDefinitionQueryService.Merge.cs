@@ -34,7 +34,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-        public InterfaceTenantDefinitionPM GetFromCacheByTenatCode(int tenant, string code)
+        public InterfaceTenantDefinitionPM GetInterfaceDefWithPriorityFromCacheByTenatCode(int tenant, string code)
         {
 
             string entityKeyString = $"InterfaceTenantDefinitionByTenatCode ({tenant},{code})";
