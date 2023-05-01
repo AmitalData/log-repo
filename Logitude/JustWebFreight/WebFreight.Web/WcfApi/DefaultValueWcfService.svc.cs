@@ -67,21 +67,27 @@ namespace WebFreight.Web.WcfApi
                     }
 
 
-                    if (entityPM.Id != null)
+                    if (entityPM.DefaultTypeId != null)
                     {
-                        DefaultValue defaultType = defaultValueRepository.GetSingle(entityPM.Id, entityPM.Tenant);
+                        DefaultValue defaultValue = defaultValueRepository.GetSingleByDefaultTypeId(entityPM.DefaultTypeId, entityPM.Tenant);
                        
-                        if (defaultType == null)
+                        if (defaultValue == null)
                         {
                             entityPM.ChangeSetOp = ChangeSetOperation.Insert;
                         }
                         else
                         {
                             entityPM.ChangeSetOp = ChangeSetOperation.Update;
+                            entityPM.Id = defaultValue.Id;
                         }
 
                         defaultValueUpdateService.Update(entityPM, true);
-                        response.Result = entityPM.Id;
+                        if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+                        {
+                            DefaultValue entity = defaultValueRepository.GetSingleByDefaultTypeId(entityPM.DefaultTypeId, entityPM.Tenant);
+                            entityPM.Id = entity?.Id;
+                        }
+                    response.Result = entityPM.Id;
 
                    
                     }
