@@ -445,6 +445,7 @@ export class Milestone
     public Done: boolean;
     public IsEstimation: boolean;
     public IsCurrent: boolean;
+    public InActive: boolean;
 }
 
 
