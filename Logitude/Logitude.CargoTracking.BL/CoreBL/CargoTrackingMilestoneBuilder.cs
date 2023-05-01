@@ -59,7 +59,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = true,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = false
+                IsEstimation = false,
+                InActive= created.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.Booking))
@@ -79,7 +80,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.BookingDone,
                 Notes = shipment.BookingNotes,
                 IsCurrent = false,
-                IsEstimation = shipment.BookingDate == null && shipment.BookingEstimationDate != null
+                IsEstimation = shipment.BookingDate == null && shipment.BookingEstimationDate != null,
+                InActive = booking.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.Pickup))
@@ -98,7 +100,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.PickupDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = shipment.PickupDate == null && shipment.PickupEstimationDate != null
+                IsEstimation = shipment.PickupDate == null && shipment.PickupEstimationDate != null,
+                InActive = pickup.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.FromWarehouse))
@@ -117,7 +120,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.FromWarehouseDone,
                 Notes = shipment.FromWarehouseNotes,
                 IsCurrent = false,
-                IsEstimation = shipment.FromWarehouseDate == null && shipment.FromWarehouseEstimationDate != null
+                IsEstimation = shipment.FromWarehouseDate == null && shipment.FromWarehouseEstimationDate != null,
+                InActive = fromwarehouse.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.Departure))
@@ -136,7 +140,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.DepartureDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = shipment.DepartureDate == null && shipment.DepartureEstimationDate != null
+                IsEstimation = shipment.DepartureDate == null && shipment.DepartureEstimationDate != null,
+                InActive = departure.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.Arrival))
@@ -155,7 +160,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.ArrivalDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = shipment.ArrivalDate == null && shipment.ArrivalEstimationDate != null
+                IsEstimation = shipment.ArrivalDate == null && shipment.ArrivalEstimationDate != null,
+                InActive = arrival.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.ToWarehouse))
@@ -174,7 +180,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.ToWarehouseDone,
                 Notes = shipment.ToWarehouseNotes,
                 IsCurrent = false,
-                IsEstimation = shipment.ToWarehouseDate == null && shipment.ToWarehouseEstimationDate != null
+                IsEstimation = shipment.ToWarehouseDate == null && shipment.ToWarehouseEstimationDate != null,
+                InActive = towarehouse.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.AssignedToCustomsBroker))
@@ -193,7 +200,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.AssignedCustomsAgentDone,
                 Notes = shipment.AssignedCustomsAgentNotes,
                 IsCurrent = false,
-                IsEstimation = shipment.AssignedCustomsAgentDate == null && shipment.AssignedCustomsAgentEstDate != null
+                IsEstimation = shipment.AssignedCustomsAgentDate == null && shipment.AssignedCustomsAgentEstDate != null,
+                InActive = assignedToCustomsBroker.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.CustomsProcess))
@@ -212,7 +220,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 //Done = Shipment.CustomsPaymentDone,
                 Notes = null,
                 IsCurrent = false,
-                //IsEstimation = !Shipment.CustomsPaymentDone
+                //IsEstimation = !Shipment.CustomsPaymentDone,
+                InActive = customsProcess.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.GoodsClassification))
@@ -231,7 +240,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.GoodsClassificationDone,
                 Notes = shipment.GoodsClassificationNotes,
                 IsCurrent = false,
-                IsEstimation = shipment.GoodsClassificationDate == null && shipment.GoodsClassificationEstDate != null
+                IsEstimation = shipment.GoodsClassificationDate == null && shipment.GoodsClassificationEstDate != null,
+                InActive = goodsClassification.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.DocumentInspection))
@@ -250,7 +260,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.DocumentInspectionDone,
                 Notes = shipment.DocumentInspectionNotes,
                 IsCurrent = false,
-                IsEstimation = shipment.DocumentInspectionDate == null && shipment.DocumentInspectionEstDate != null
+                IsEstimation = shipment.DocumentInspectionDate == null && shipment.DocumentInspectionEstDate != null,
+                InActive = documentInspection.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.PaymentRequested))
@@ -269,7 +280,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.PaymentRequiredDone,
                 Notes = shipment.PaymentRequiredNotes,
                 IsCurrent = false,
-                IsEstimation = shipment.PaymentRequiredDate == null && shipment.PaymentRequiredEstimationDate != null
+                IsEstimation = shipment.PaymentRequiredDate == null && shipment.PaymentRequiredEstimationDate != null,
+                InActive = paymentRequested.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.PaymentReceived))
@@ -288,7 +300,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.PaymentReceivedDone,
                 Notes = shipment.PaymentReceivedNotes,
                 IsCurrent = false,
-                IsEstimation = shipment.PaymentReceivedDate == null && shipment.PaymentReceivedEstomationDate != null
+                IsEstimation = shipment.PaymentReceivedDate == null && shipment.PaymentReceivedEstomationDate != null,
+                InActive = paymentReceived.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.CustomsPayment))
@@ -307,7 +320,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.CustomsPaymentDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = shipment.CustomsPaymentDone != true
+                IsEstimation = shipment.CustomsPaymentDone != true,
+                InActive = customsPayment.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.Clearance))
@@ -326,7 +340,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.ClearanceDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = shipment.ClearanceDone != true
+                IsEstimation = shipment.ClearanceDone != true,
+                InActive = clearance.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.GatepassArrived))
@@ -345,7 +360,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.GatepassArrivedDone,
                 Notes = shipment.GatepassArrivedNotes,
                 IsCurrent = false,
-                IsEstimation = shipment.GatepassArrivedDate == null && shipment.GatepassArrivedEstDate != null
+                IsEstimation = shipment.GatepassArrivedDate == null && shipment.GatepassArrivedEstDate != null,
+                InActive = gatepassArrived.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.AssignedToTrucker))
@@ -364,7 +380,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.AssignedTruckerDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = shipment.AssignedTruckerDate == null && shipment.AssignedTruckerEstimationDate != null
+                IsEstimation = shipment.AssignedTruckerDate == null && shipment.AssignedTruckerEstimationDate != null,
+                InActive = assignedToTrucker.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.DeliveryOut))
@@ -383,7 +400,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.DeliveryDone,
                 Notes = shipment.DeliveryNotes,
                 IsCurrent = false,
-                IsEstimation = shipment.DeliveryDate == null && shipment.DeliveryEstimationDate != null
+                IsEstimation = shipment.DeliveryDate == null && shipment.DeliveryEstimationDate != null,
+                InActive = deliveryOut.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.Delivered))
@@ -402,7 +420,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.DeliveredDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = shipment.DeliveredDate == null && shipment.DeliveredEstimationDate != null
+                IsEstimation = shipment.DeliveredDate == null && shipment.DeliveredEstimationDate != null,
+                InActive = delivered.Inactive
             });
 
             if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.Invoiced))
@@ -420,6 +439,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Done = shipment.InvoicedDone,
                 Notes = null,
                 IsCurrent = false,
+                InActive = invoiced.Inactive
             });
 
             milestones = milestones.OrderByDescending(d => d.Weight).ToList();

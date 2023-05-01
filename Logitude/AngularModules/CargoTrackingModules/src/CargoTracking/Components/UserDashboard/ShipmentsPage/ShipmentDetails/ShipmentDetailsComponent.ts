@@ -661,7 +661,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
         this.SliderCards = this.cargoTrackingShipmentPM.Milestones
             .filter(milstone => {
                 var date = milstone.EstimationDate || milstone.Date;
-                if (date)
+                if (date && !milstone.InActive)
                     return true;
                 return false;
             })
