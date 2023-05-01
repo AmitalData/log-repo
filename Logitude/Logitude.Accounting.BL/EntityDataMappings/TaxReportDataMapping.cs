@@ -13,6 +13,7 @@ using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.CloseTables;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -22,6 +23,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(TaxReportPM entityPM, TaxReport entityPOCO)
         {
+            //DateTime stopLogAt = new DateTime(2023, 06, 01);
+            //LogitudeSettings.HandleLogMe("TaxReportDataMapping.CustomPMToPOCO(*1*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode, false, "TaxReportPMToPOCO", stopLogAt);
+            //Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe?.Invoke("TaxReportPMToPOCO_1", false, "", DateTime.MaxValue);
+            Logger.LogMe("TaxReportDataMapping.CustomPMToPOCO(*1L*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode, false, "TaxReportPMToPOCO_1L");
+
             AddPOCOPropertyName(POCOPropertyNames.Id);
             AddPOCOPropertyName(POCOPropertyNames.Tenant);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -39,10 +45,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 this.CustomMappedPOCOProperties.Add(POCOPropertyNames.StatusCode);
             }
             entityPOCO.StatusCode = entityPM.StatusCode;
+            //LogitudeSettings.HandleLogMe("TaxReportDataMapping.CustomPMToPOCO(*9*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode, false, "TaxReportPMToPOCO", stopLogAt);
+            Logger.LogMe("TaxReportDataMapping.CustomPMToPOCO(*9L*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode, false, "TaxReportPMToPOCO_1L");
+
         }
 
         public void CustomPOCOToPM(TaxReportPM entityPM, TaxReport entityPOCO)
         {
+            //DateTime stopLogAt = new DateTime(2023, 06, 01);
+            //LogitudeSettings.HandleLogMe("TaxReportDataMapping.CustomPOCOToPM(*1*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode, false, "TaxReportPOCOToPM", stopLogAt);
+            //Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe?.Invoke("TaxReportPOCOToPM_1", false, "", DateTime.MaxValue);
+            Logger.LogMe("TaxReportDataMapping.CustomPOCOToPM(*1L*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode, false, "TaxReportPOCOToPM_1L");
+
             CustomMappedPOCOProperties.Add(POCOPropertyNames.StatusCode);
 
             if (entityPOCO.StatusCode != null)
@@ -56,8 +70,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
                 entityPM.StatusCode = entityPOCO.StatusCode;
             }
+            //LogitudeSettings.HandleLogMe("TaxReportDataMapping.CustomPOCOToPM(*9*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode, false, "TaxReportPOCOToPM", stopLogAt);
+            Logger.LogMe("TaxReportDataMapping.CustomPOCOToPM(*9L*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode, false, "TaxReportPOCOToPM_1L");
 
             MapClosingJournalFields(entityPM, entityPOCO);
+
+            //LogitudeSettings.HandleLogMe("TaxReportDataMapping.CustomPOCOToPM(*9*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode, false, "TaxReportPOCOToPM", stopLogAt);
+            Logger.LogMe("TaxReportDataMapping.CustomPOCOToPM(*9L*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode, false, "TaxReportPOCOToPM_1L");
         }
 
         private void MapClosingJournalFields(TaxReportPM entityPM, TaxReport entityPOCO)
