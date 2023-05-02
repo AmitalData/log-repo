@@ -1115,7 +1115,7 @@ namespace Logitude.Accounting.BL.CoreBL
             ICommonDataContext myContext = CommonDataContext.GetContext(int.Parse(sJournalTenant));
             TenantRepository tenantRepository = new TenantRepository(myContext);
             Tenant tenantObj = tenantRepository.GetSingleTenant(int.Parse(sJournalTenant));
-            tenantObj.ApproveUploadedDocuments = false;
+            tenantObj.JouranlApprovalIsIdle = false;
             tenantRepository.Update(tenantObj);
             tenantRepository.SubmitChanges();
 
