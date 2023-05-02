@@ -34,10 +34,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
                 this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-                this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
-
-                this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
-
                 this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
                 this.Property(t => t.EventTypeId).HasColumnName("EventTypeId").HasMaxLength(15).IsUnicode(false);

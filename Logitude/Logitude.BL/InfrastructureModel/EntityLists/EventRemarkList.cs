@@ -29,10 +29,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
             [DataMember]
             public string CreatedByUserId { get; set; }
             [DataMember]
-            public DateTime UpdateDate { get; set; }
-            [DataMember]
-            public string UpdatedByUserId { get; set; }
-            [DataMember]
             public string SearchFields { get; set; }
             [DataMember]
             public string EventTypeId { get; set; }

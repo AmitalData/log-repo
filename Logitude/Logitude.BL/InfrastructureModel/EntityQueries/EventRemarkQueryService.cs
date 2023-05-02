@@ -106,8 +106,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     Tenant= a.Tenant,
                                     CreateDate= a.CreateDate,
                                     CreatedByUserId= a.CreatedByUserId,
-                                    UpdateDate= a.UpdateDate,
-                                    UpdatedByUserId=a.UpdatedByUserId,
                                     SearchFields= a.SearchFields,
                                     EventTypeId= a.EventTypeId,
                                     PartnerTypeId =a.PartnerTypeId,

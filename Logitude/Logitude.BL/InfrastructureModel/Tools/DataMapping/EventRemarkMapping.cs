@@ -15,8 +15,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             eventRemark.EventTypeId = eventRemarkPM.EventTypeId;
             eventRemark.PartnerTypeId = eventRemarkPM.PartnerTypeId;
             eventRemark.Tenant = eventRemarkPM.Tenant;
-            eventRemark.UpdatedByUserId = eventRemarkPM.UpdatedByUserId;
-            eventRemark.UpdateDate = eventRemarkPM.UpdateDate;
             eventRemark.CreateDate = eventRemarkPM.CreateDate;
             eventRemark.CreatedByUserId = eventRemarkPM.CreatedByUserId;
             eventRemark.SearchFields = eventRemarkPM.SearchFields;

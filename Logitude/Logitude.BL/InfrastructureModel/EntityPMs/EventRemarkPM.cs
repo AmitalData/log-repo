@@ -22,12 +22,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 		public string CreatedByUserId { get; set; }
 		[DataMember]
 		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-		public DateTime UpdateDate { get; set; }
-		[DataMember]
-		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-		public string UpdatedByUserId { get; set; }
-		[DataMember]
-		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
 		public string SearchFields { get; set; }
 		[DataMember]
 		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

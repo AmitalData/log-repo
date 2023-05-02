@@ -24,6 +24,7 @@ export class EventRemarksComponent extends BaseComponent{
     public EventRemarksLists: EventRemarkPM[] = [];
     public partnerTypesEvent: PartnerTypesEvent[];
     public tempPartnerTypesEvent: PartnerTypesEvent[];
+    public tempEventRemarks: EventRemarkPM[] = [];
     public eventRemarkPM : EventRemarkPM=new EventRemarkPM();
     public ObjectTableName: string = "EventRemark";
     public DataContext = this;
@@ -84,8 +85,6 @@ export class EventRemarksComponent extends BaseComponent{
             selectedItem.EventRemark.Tenant = this.EntityPM.Tenant;
             selectedItem.EventRemark.CreateDate = new Date(Date.now());
             selectedItem.EventRemark.CreatedByUserId = SessionLocator.LoggedUserId;;
-            selectedItem.EventRemark.UpdateDate =  new Date(Date.now());
-            selectedItem.EventRemark.UpdatedByUserId = SessionLocator.LoggedUserId;;
             selectedItem.EventRemark.SearchFields =selectedItem.PartnerTypeSearchFields;
             selectedItem.EventRemark.EventTypeId = this.EntityPM.Id;
             selectedItem.EventRemark.PartnerTypeId =selectedItem.PartnerTypeId;
@@ -101,13 +100,14 @@ export class EventRemarksComponent extends BaseComponent{
 
     ClearAllClicked(event){
         this.EntityPM = this.entityArgs.EntityPM;
-        //this. SelectAllClicked(false);
         this.IsAllSelected = false;
         var size=this.EventRemarksLists.length;
+        this.tempEventRemarks=this.EventRemarksLists;
+        this.EventRemarksLists=[];
         for (let i = 0; i < size; i++) 
         {
-            this.EventRemarksLists[i].IsChoose=false;
-            this.EventRemarksLists.push(this.EventRemarksLists[i]);
+            this.tempEventRemarks[i].IsChoose=false;
+            this.EventRemarksLists.push(this.tempEventRemarks[i]);
             this.partnerTypesEvent[i].IsChoose=false;
         }
         this.EntityPM.EventRemarks = this.EventRemarksLists;
@@ -122,13 +122,11 @@ export class EventRemarksComponent extends BaseComponent{
             this.partnerTypesEvent[i].EventRemark.Tenant = this.EntityPM.Tenant;
             this.partnerTypesEvent[i].EventRemark.CreateDate = new Date(Date.now());
             this.partnerTypesEvent[i].EventRemark.CreatedByUserId = SessionLocator.LoggedUserId;;
-            this.partnerTypesEvent[i].EventRemark.UpdateDate =  new Date(Date.now());
-            this.partnerTypesEvent[i].EventRemark.UpdatedByUserId = SessionLocator.LoggedUserId;;
             this.partnerTypesEvent[i].EventRemark.SearchFields =this.partnerTypesEvent[i].PartnerTypeSearchFields;
             this.partnerTypesEvent[i].EventRemark.EventTypeId = this.EntityPM.Id;
             this.partnerTypesEvent[i].EventRemark.PartnerTypeId =this.partnerTypesEvent[i].PartnerTypeId;
             let index =this.EventRemarksLists.findIndex(x => x.PartnerTypeId === this.partnerTypesEvent[i].PartnerTypeId && x.EventTypeId ===this.partnerTypesEvent[i].EventRemark.EventTypeId);
-            if(index == -1 || this.partnerTypesEvent[i].IsChoose != true){
+            if(index == -1 && this.partnerTypesEvent[i].IsChoose != true){
                 this.partnerTypesEvent[i].EventRemark.IsChoose=true;
                 this.EventRemarksLists.push( this.partnerTypesEvent[i].EventRemark);
                 this.partnerTypesEvent[i].IsChoose=true;
@@ -139,14 +137,21 @@ export class EventRemarksComponent extends BaseComponent{
     }
 
     TextChanged(searchEvent){
+
         if(searchEvent=="" || searchEvent==null){
-            this.partnerTypesEvent = this.tempPartnerTypesEvent;
+            this.partnerTypesEvent = this.tempPartnerTypesEvent;  
         }
         else{
-            let x =this.partnerTypesEvent.find(x => x.PartnerTypeName ===searchEvent); 
             this.tempPartnerTypesEvent = this.partnerTypesEvent;
-            this.partnerTypesEvent=[];
-            this.partnerTypesEvent.push(x);
+            let x =this.partnerTypesEvent.find(x => x.PartnerTypeName.toLocaleLowerCase() === searchEvent.toLocaleLowerCase()); 
+            if(x!=null){
+                this.partnerTypesEvent=[];
+                this.partnerTypesEvent.push(x);
+            }
+            else{
+                this.tempPartnerTypesEvent = this.partnerTypesEvent;  
+            }
+           
         }
 
     }

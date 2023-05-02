@@ -11,11 +11,9 @@ export class EventRemarkList {
 		Tenant: number;
 		CreateDate: Date;
 		CreatedByUserId: string;
-		UpdateDate: Date;
-		UpdatedByUserId: string;
 		SearchFields: string;
 		EventTypeId: string;
 		PartnerTypeId: string;
 		IsChoose: boolean;
 	
-}
+}
