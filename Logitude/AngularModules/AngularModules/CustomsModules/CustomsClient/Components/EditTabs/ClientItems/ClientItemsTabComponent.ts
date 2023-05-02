@@ -1,4 +1,4 @@
-import {Component}  from '@angular/core';
+import {Component, EventEmitter, Output}  from '@angular/core';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -13,6 +13,11 @@ import { ClaimGeneralTabComponent } from '../../../../CustomsClaim/Components/Ed
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ClientPM } from 'Customs/EntityPMs/ClientPM';
+import { ClientItemListService } from 'Customs/Services/StandardLists/ClientItemListService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { forEach } from 'cypress/types/lodash';
+import { ClientItemPM } from 'Customs/EntityPMs/ClientItemPM';
+import { AppTool } from 'Infrastructure/Tools';
 
 @Component({
     
@@ -21,36 +26,67 @@ import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 export class ClientItemsTabComponent extends BaseComponent{
 
-    public entityResourceService: EntityResourceService = new EntityResourceService();
-    objectTableName: string = "Customs.ClientsPoa";
-    public PoaList: ObservableCollection;
+    ClientItemsL
+    @Output() ClientItemsList: EventEmitter<any> = new EventEmitter();
+
+
+    objectTableName: string = "Customs.ClientItem";
     entityPM: ClientPM;
     clientMessageService: ClientMessagesService = new ClientMessagesService();
     responseData: INF_MSG_GenericResponseData;
-
-    Mode: string = "";
+    public load=false
+    SequenceNumeric: string = "מס'";
     Parent: ClaimGeneralTabComponent;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private _EntityArgs: EntityArgs) {
+    private myService: ClientItemListService=new ClientItemListService();;
+    public ItemsList: ObservableCollection;
+
+    constructor(private _EntityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
-        this.PoaList = new ObservableCollection([]);
+        this.EntityResourceService.getEntityResourceByTableName("Customs.ClientItem").subscribe((response: any) => {
+            
+                 
+        });
+       // this.ItemsList = new ObservableCollection([]);
+
+    
 
     }
+    LoadDate(){
+        debugger
+        this.ItemsList = new ObservableCollection([]);
 
+        var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 100;
+        
+        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+        filters.addAdditionalFilter("ClientCode",this.entityPM.Code , null, null, "Contains", false, false, false, "string");
+
+
+        this.myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+          
+            myResponse?.Result.forEach(element => {
+               
+                this.ItemsList.Insert(new ClientItemModel(element,this))
+                
+            });
+            this.ItemsList.Collection.forEach((obj, index) => obj.SequenceNumeric = index + 1)
+            
+            this.load=true 
+        })
+
+
+    }
     InitTab(EntityPM: ClientPM) {
 
         this.entityPM = EntityPM;
-        if (this.entityPM.ClientPoas) {
-            this.entityPM.ClientPoas.forEach((item) => {
-                this.PoaList.Insert(item);
-            });
-        }
-
+        this.LoadDate();
     }
 
     SetWindowArgs(args: any) {
         if (args != null) {
-            this.Mode = "Claims";
+           
             this.entityPM = args.EntityPM;
             this.Parent = args.Parent;
         }
@@ -67,6 +103,79 @@ export class ClientItemsTabComponent extends BaseComponent{
 
     
    
+}
+export class ClientItemModel extends BaseComponent {
+    public ClientItemPM: ClientItemPM = null;
+    
+    public ObjectTableName = "Customs.ClientItem";
+    public DataContext = this;
+
+    constructor(private clientItemPM: ClientItemPM ,private parent: ClientItemsTabComponent) {
+        super();
+        this.ClientItemPM = clientItemPM;
+    }
+
+    //#region Properties
+
+    get ItemCode() { return this.ClientItemPM.ItemCode; }
+    set ItemCode(value: string) {
+        if (this.ClientItemPM.ItemCode != value) {
+            this.ClientItemPM.ItemCode = value;
+              this.parent.ClientItemsList.emit(this.parent.ItemsList.Collection)
+        }
+    }
+
+    get ClassificationCode() { return this.ClientItemPM.ClassificationCode; }
+    set ClassificationCode(value: string) {
+        if (this.ClientItemPM.ClassificationCode != value) {
+            this.ClientItemPM.ClassificationCode = value;
+            this.parent.ClientItemsList.emit(this.parent.ItemsList.Collection)
+        }
+    }
+
+    get ClientCode() { return this.ClientItemPM.ClientCode; }
+    set ClientCode(value: string) {
+        if (this.ClientItemPM.ClientCode != value) {
+            this.ClientItemPM.ClientCode = value;
+            this.parent.ClientItemsList.emit(this.parent.ItemsList.Collection)
+        }
+    }
+
+    get OriginCountryName() { return this.ClientItemPM.OriginCountryName; }
+    set OriginCountryName(value: string) {
+        if (this.ClientItemPM.OriginCountryName != value) {
+            this.ClientItemPM.OriginCountryName = value;
+            this.parent.ClientItemsList.emit(this.parent.ItemsList.Collection)
+        }
+    }
+    get OriginCountryCode() { return this.ClientItemPM.OriginCountryCode; }
+    set OriginCountryCode(value: string) {
+        if (this.ClientItemPM.OriginCountryCode != value) {
+            this.ClientItemPM.OriginCountryCode = value;
+            this.parent.ClientItemsList.emit(this.parent.ItemsList.Collection)
+        }
+    }
+    get ItemDescription() { return this.ClientItemPM.ItemDescription; }
+    set ItemDescription(value: string) {
+        if (this.ClientItemPM.ItemDescription != value) {
+            this.ClientItemPM.ItemDescription = value;
+            this.parent.ClientItemsList.emit(this.parent.ItemsList.Collection)
+        }
+    }
+
+
+    //#endregion
+
+
+    SetLocalName(entity, fieldName) {
+        
+        if (!AppTool.IsNullOrEmpty(entity)) {
+            this[fieldName] = entity.LocalName;
+        } else {
+            this[fieldName] = null;
+        }
+
+    }
 }
 
 

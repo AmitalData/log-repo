@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientItemUpdateClass
    {  		
-		public const string HashString = "7872c88b2033643ac1b3d765ad753711";
+		public const string HashString = "7c6e5fa818d4756a2e49bdb0762b6921";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "Client Items",
 			      				    DefaultText =  "Client Items",
-			      				    Code =  "b311",
+			      				    Code =  "02d3",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -334,9 +334,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ItemNumber",
+					 						FieldName =  "ItemCode",
 					  						ObjectTableName =  "Customs.ClientItem",
-					  						FieldsDataType =  "Integer",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
@@ -352,8 +352,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ItemNumber",
-					  						ListPropertyPath =  "ItemNumber",
+					  						PMPropertyPath =  "ItemCode",
+					  						ListPropertyPath =  "ItemCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -371,11 +371,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ItemNumber",
-					  						DefaultText =  "Item Number",
+					  						FullFieldLable =  "ItemCode",
+					  						DefaultText =  "Item Coder",
 					  						FullLocalDefaultText =  "מספר פריט",
-					  						ListFieldLable =  "ItemNumberListLable",
-					  						ListLableDefaultText =  "Item Number",
+					  						ListFieldLable =  "ItemCodeListLable",
+					  						ListLableDefaultText =  "Item Code",
 					  						ListLocalDefaultText =  "מספר פריט",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,

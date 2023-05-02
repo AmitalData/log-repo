@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class ClientItemQueryService: EntityQueryService<ClientItem,ClientItemKeys,ClientItemPM,ClientPM,ClientKeys>
+   public partial class ClientItemQueryService: EntityQueryService<ClientItem,ClientItemKeys,ClientItemPM,object,ClientItemKeys>
    {
    
         ClientItemRepository repository;
@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new ClientItemDataMapping();
         }
 		 
-		public  ClientItemPM GetSingle(int itemnumber, string clientcode,bool getComposition, bool getFromCache)
+		public  ClientItemPM GetSingle(string itemcode, string clientcode,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new ClientItemKeys(){ ItemNumber = itemnumber, ClientCode = clientcode };
+             EntityKeys = new ClientItemKeys(){ ItemCode = itemcode, ClientCode = clientcode };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(ClientItem entityPOCO)
         {
-            ClientItemKeys entityKeys = new ClientItemKeys() { ItemNumber = entityPOCO.ItemNumber, ClientCode = entityPOCO.ClientCode,  };
+            ClientItemKeys entityKeys = new ClientItemKeys() { ItemCode = entityPOCO.ItemCode, ClientCode = entityPOCO.ClientCode,  };
             return entityKeys;
         }
      

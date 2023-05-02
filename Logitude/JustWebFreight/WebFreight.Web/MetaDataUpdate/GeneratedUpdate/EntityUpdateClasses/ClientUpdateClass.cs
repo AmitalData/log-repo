@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientUpdateClass
    {  		
-		public const string HashString = "37d6fab7f1e6c366152a9074580dd8dc";
+		public const string HashString = "b39e53abe79dd75d649ad522d432ebc7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2789,6 +2789,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ClientTextCode_CustomsClientAuthorizationLetters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.AuthorizationLetters", DefaultText = "Authorization Letters",LocalDefaultText = @"שליפת כתבי הרשאה", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClientTextCode_CustomsClientIsSelectAuthorizationLetters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.IsSelectAuthorizationLetters", DefaultText = "Is it possible to retrieve authorization letters for all customers in the system?",LocalDefaultText = @"האם לבצע שליפת כתבי הרשאה לכל הלקוחות במערכת ?", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientTextCode_CustomsClientItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.Items", DefaultText = "Items",LocalDefaultText = @"פריטים", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

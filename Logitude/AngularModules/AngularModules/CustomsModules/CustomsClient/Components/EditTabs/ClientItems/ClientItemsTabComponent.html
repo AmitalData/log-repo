@@ -4,87 +4,153 @@
         font-size: 16px;
         padding-left: 5px;
     }
+
     .FormFieldRow {
         height: auto !important;
     }
 
-    
 
-    .InnerGrid td, .InnerGrid li span{
+
+    .InnerGrid td,
+    .InnerGrid li span {
         color: #00338b;
         font-size: 10px;
         line-height: 1.5;
     }
 </style>
-<table>
+<table *ngIf="load">
     <!-- subtitle -->
     <tr style="height: 30px; padding-bottom: 3px;">
         <td class="subTitle">{{'Customs.ClientSearchByIDQuery.O.AgentAuthorization' | TextCodeTranslationPipe}}</td>
         <td width="10%"></td>
     </tr>
     <tr>
-        <td >
-            <div>
-                <logitude-edit-grid GridWidth="100%"
-                                    GridHeight="100%"
-                                    [IsReadOnly]="true"
-                                    [ItemSource]="PoaList">
+        <td colspan="3" style="height: 100%;">
 
-                    <log-column [header]="'Customs.ClientsPoa.F.PoaID' | TextCodeTranslationPipe"
-                                [binding]="'PoaID'" [width]="'100'" [Alignment]="'right'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div class="TextTrimming" style="text-align:right">
-                                    <span>{{item.PoaID}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
-                    </log-column>
+            <div style="height: 100%;">
 
-                    <log-column [header]="'Customs.ClientsPoa.F.PoaStatusName' | TextCodeTranslationPipe"
-                                [binding]="'PoaStatus'" [width]="'140'" [Alignment]="'right'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div class="TextTrimming" style="text-align:right">
-                                    <span>{{item.PoaStatusName}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
-                    </log-column>
+                <table style="height: 100%;">
+                    <tr>
+                        <td>
+                            <!-- Grid -->
+                            <table>
 
-                    <log-column [header]="'Customs.ClientsPoa.F.PoaAuthorizationTypeName' | TextCodeTranslationPipe"
-                                [binding]="'PoaAuthorizationType'" [width]="'140'" [Alignment]="'right'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div class="TextTrimming" style="text-align:right">
-                                    <span>{{item.PoaAuthorizationTypeName}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
-                    </log-column>
-                    <log-column [header]="'Customs.ClientsPoa.F.StartDate' | TextCodeTranslationPipe"
-                                [binding]="'StartDate'" [width]="'150'" [Alignment]="'right'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div class="TextTrimming" style="text-align:right">
-                                    <span>{{item.StartDate | DateTimePipe}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
-                    </log-column>
-                    <log-column [header]="'Customs.ClientsPoa.F.EndDate' | TextCodeTranslationPipe"
-                                [binding]="'EndDate'" [width]="'150'" [Alignment]="'right'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div class="TextTrimming" style="text-align:right">
-                                    <span>{{item.EndDate | DateTimePipe}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
-                    </log-column>
-                </logitude-edit-grid>
+                                <tr>
+                                    <td colspan="2" style="height: 100%;">
+                                        <div class="CellContent">
+                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                [ItemSource]="ItemsList">
+                                                <!-- Buttons -->
+                                                <log-column [width]="'40'" [Alignment]="'right'" [header]="SequenceNumeric">
+                                                    <ng-template let-item>
+                                                        <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <span class="CellSeparator" [style.float]="'right'">{{item.SequenceNumeric}}</span>
+                                                           
+                                                        </log-cell-template>
+                                                    </ng-template>
+                                                </log-column>
+                                                <!-- ItemNumber -->
+                                                <log-column
+                                                    [header]="'Customs.ClientItem.F.ItemCode' | TextCodeTranslationPipe"
+                                                    [width]="'160'" [Alignment]="'right'" [binding]="'ItemCode'">
+                                                    <ng-template let-item>
+                                                        <log-cell-template #logcelltemplate>
+                                                            <div style="text-align: right;" class="TextTrimming"
+                                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                                <span>{{item.ItemCode}}</span>
+                                                            </div>
+                                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                                <LogTextBox [ObjectFieldName]="'ItemCode'"
+                                                                    [InputType]="'ntext'" [DataContext]="item"
+                                                                    [ObjectTableName]="'Customs.ClientItem'"
+                                                                    [HideColumns]="true" [FocusOnMe]="true">
+                                                                </LogTextBox>
+                                                            </div>
+                                                        </log-cell-template>
+                                                    </ng-template>
+                                                </log-column>
+                                                <!-- ItemDescription -->
+                                                <log-column
+                                                    [header]="'Customs.ClientItem.F.ItemDescription' | TextCodeTranslationPipe"
+                                                    [width]="'200'" [Alignment]="'right'" [binding]="'ItemDescription'">
+                                                    <ng-template let-item>
+                                                        <log-cell-template #logcelltemplate>
+                                                            <div style="text-align: right;" class="TextTrimming"
+                                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                                <span>{{item.ItemDescription}}</span>
+                                                            </div>
+                                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                                <LogTextBox [ObjectFieldName]="'ItemDescription'"
+                                                                    [InputType]="'ntext'" [DataContext]="item"
+                                                                    [ObjectTableName]="'Customs.ClientItem'"
+                                                                    [HideColumns]="true" [FocusOnMe]="true">
+                                                                </LogTextBox>
+                                                            </div>
+                                                        </log-cell-template>
+                                                    </ng-template>
+                                                </log-column>
+                                                <!-- ClassificationCode -->
+                                                <log-column
+                                                    [header]="'Customs.ClientItem.F.ClassificationCode' | TextCodeTranslationPipe"
+                                                    [width]="'150'" [Alignment]="'right'"
+                                                    [binding]="'ClassificationCode'">
+                                                    <ng-template let-item>
+                                                        <log-cell-template #logcelltemplate>
+                                                            <div style="text-align: right;" class="TextTrimming"
+                                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                                <span>{{item.ClassificationCode}}</span>
+                                                            </div>
+                                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                                <LogTextBox [ObjectFieldName]="'ClassificationCode'"
+                                                                    [InputType]="'ntext'" [DataContext]="item"
+                                                                    [ObjectTableName]="'Customs.ClientItem'"
+                                                                    [HideColumns]="true" [FocusOnMe]="true">
+                                                                </LogTextBox>
+                                                            </div>
+                                                        </log-cell-template>
+                                                    </ng-template>
+                                                </log-column>
+                                                <!-- CommunicationTypeCode -->
+                                                <log-column
+                                                    [header]="'Customs.ClientItem.F.OriginCountryCode' | TextCodeTranslationPipe"
+                                                    [width]="'130'" [Alignment]="'right'"
+                                                    [binding]="'OriginCountryCode'">
+                                                    <ng-template let-item>
+                                                        <log-cell-template #logcelltemplate>
+                                                            <div style="text-align: right;" class="TextTrimming"
+                                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                                <span>{{item.OriginCountryName}}</span>
+                                                            </div>
+                                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                                <LogLov [ObjectFieldName]="'OriginCountryCode'"
+                                                                    [ObjectTableName]="'Customs.ClientItem'"
+                                                                    [DataContext]="item" [HideColumns]="true"
+                                                                    [LookUpTableName]="'Customs.CustomsCountry'"
+                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'OriginCountryName')"
+                                                                    [FocusOnMe]="true"
+                                                                   >
+                                                                </LogLov>
+
+                                                            </div>
+                                                        </log-cell-template>
+                                                    </ng-template>
+                                                </log-column>
+
+
+
+                                            </logitude-edit-grid>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+
             </div>
         </td>
-        <td width="10%"></td>
     </tr>
 </table>

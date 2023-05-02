@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public ClientItemList GetSingle(int itemnumber, string clientcode)
+        public ClientItemList GetSingle(string itemcode, string clientcode)
         {
             IQueryable<ClientItem> ClientItemQuery = (from a in context.ClientItems
-                                                       where a.ItemNumber == itemnumber && a.ClientCode == clientcode
+                                                       where a.ItemCode == itemcode && a.ClientCode == clientcode
                                                        select a);
 
              

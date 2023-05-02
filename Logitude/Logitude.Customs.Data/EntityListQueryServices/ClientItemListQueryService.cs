@@ -21,22 +21,28 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<ClientItemList> GetIqueryableList(IQueryable<ClientItem> iQueryable)
         {
-		IQueryable<ClientItemList> query = (from a in iQueryable
+		IQueryable<ClientItemList> query = (from a in iQueryable.Include("OriginCountry")
                                             select new ClientItemList()
 											{
                      
 					                          Tenant = a.Tenant,
-					
+					                          ClientCode=a.ClientCode,
+					                          ClassificationCode=a.ClassificationCode,
+											  ItemDescription=a.ItemDescription,
+											  ItemCode=a.ItemCode,
 					                          SearchFields = a.SearchFields,
-					
-		                    	            });
+                                              OriginCountryName = a.OriginCountry.LocalName,
+                                               OriginCountryCode = a.OriginCountryCode
+
+
+                                            });
             return query;
 		}
 
 		private IQueryable<ClientItem> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ClientItem> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 			}
 
 
