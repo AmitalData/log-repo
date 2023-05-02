@@ -376,6 +376,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                                        select a).ToList();
             return externalDocuments;
         }
+        public double? GetDocumentFileSizeByDocumentFilingId(string DocumentsFilingId,int tenant)
+        {
+            
+            return   (from a in context.Documents
+                          join d in context.DocumentsFilings
+                          on a.Id equals d.DocumentId
+                          where d.Id == DocumentsFilingId && a.Tenant == tenant
+                          select a.FileSize).FirstOrDefault();
+        }
 
 
 

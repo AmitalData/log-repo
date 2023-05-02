@@ -789,8 +789,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //}
                 //else
                 {
+                    DocumentsFilingRepository rep = new DocumentsFilingRepository(entityPM.Tenant);
+                    var fileSize = rep.GetDocumentFileSizeByDocumentFilingId(requestParams.DocumentsFilingId, requestParams.Tenant);
                     var hugeFile = false;
-                    CustomsSettingQueryService settingService = new CustomsSettingQueryService(entityPM.Tenant);
+                    /*CustomsSettingQueryService settingService = new CustomsSettingQueryService(entityPM.Tenant);
                     CustomsSettingPM setting = settingService.GetSettingByTenantN(entityPM.Tenant);
 
                     if (setting.IsConnectedToUniFreight)
@@ -802,26 +804,26 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             var lastVer = list.Max(r => r.VERSION);
                             var lastGDMFILEVER = list.First(r => r.VERSION == lastVer);
                             //9558452
-                            //7000000
-                            if (lastGDMFILEVER.FILESIZE > HugeFileSizeSendToDCA)
-                            {
-                                if (lastGDMFILEVER.FILESIZE > MaxFileSizeDONOTSendToDCA)
-                                {
-                                    throw new Exception("המסמך מעל 200MB - לא תתאפשר שליחה");
-                                }
-                                hugeFile = true;
-
-                            }
-                        }
-                        else
+                            //7000000*/
+                    if (fileSize > HugeFileSizeSendToDCA)
+                    {
+                        if (fileSize > MaxFileSizeDONOTSendToDCA)
                         {
+                            throw new Exception("המסמך מעל 200MB - לא תתאפשר שליחה");
+                        }
+                        hugeFile = true;
 
-                            if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > HugeFileSizeSendToDCA)
-                            {
-                                hugeFile = true;
-                            }
+                    }
+
+                    else
+                    {
+
+                        if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > HugeFileSizeSendToDCA)
+                        {
+                            hugeFile = true;
                         }
                     }
+
                     if (hugeFile)
                     {
                         SendDCA(requestParams);
