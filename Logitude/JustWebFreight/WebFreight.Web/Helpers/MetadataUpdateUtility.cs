@@ -47,7 +47,7 @@ namespace WebFreight.Web.Helpers
 
                         };
 
-            //ExecuteStoredProcedures.Execute("dbo.usp_ReconnectObjectTableMetadata", 0, paramList);
+            ExecuteStoredProcedures.Execute("dbo.usp_ReconnectObjectTableMetadata", 0, paramList);
 
 
         }
