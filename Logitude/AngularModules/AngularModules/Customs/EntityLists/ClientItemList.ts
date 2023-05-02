@@ -12,7 +12,7 @@ export class ClientItemList {
 	SearchFields: string;
 	ItemDescription: string;
 	ClassificationCode: string;
-	ItemNumber: number;
+	ItemCode: string;
 	OriginCountryCode: string;
 	OriginCountryName: string;
 	ClientCode: string;

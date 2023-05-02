@@ -27,8 +27,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("ClassificationCode")]
 	    public string ClassificationCode { get; set; }
      [Key]
-        [Column("ItemNumber")]
-	    public int ItemNumber { get; set; }
+        [Column("ItemCode")]
+	    public string ItemCode { get; set; }
         [ForeignKey("OriginCountry")]
         [Column("OriginCountryCode")]
 	    public string OriginCountryCode { get; set; }

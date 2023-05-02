@@ -32,8 +32,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ItemNumber"
-    Type="int">
+    Name="ItemCode"
+    OldNames="ItemNumber"
+    Type="varchar">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />

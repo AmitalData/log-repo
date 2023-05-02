@@ -17,6 +17,7 @@ import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 import { ClientPMService } from 'Customs/Services/StandardPMs/ClientPMService';
 import { ClientsTapagPM } from 'Customs/EntityPMs/ClientsTapagPM';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { ClientItemPMService } from 'Customs/Services/StandardPMs/ClientItemPMService';
 
 
 @Component({
@@ -34,6 +35,8 @@ export class ClientEditComponent extends BaseComponent{
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentEntity: ClientPM;
    clientPMService: ClientPMService = new ClientPMService();
+   clientItemPMService: ClientItemPMService = new ClientItemPMService();
+
    public entityResourceService: EntityResourceService = new EntityResourceService();
    public DataContext: any = this;
    isNewClient: boolean;
@@ -165,7 +168,8 @@ export class ClientEditComponent extends BaseComponent{
     private EVENTS: any = null;
     private REQUESTSHEET: any = null;
     private ITEMS: any = null;
-
+ 
+    public ClientItemsList=null;
     public SelectedTab: TabItem;
     SelectionChanged() {
         if (!AppTool.IsNullOrEmpty(this.SelectedTabCode)) {
@@ -278,12 +282,16 @@ export class ClientEditComponent extends BaseComponent{
                     case "ITEMS": {
                         
 
-                        if (this.ITEMS == null) {
+                        if (this.ITEMS == null ) {
                             this.entityResourceService.getEntityResourceByTableName("Customs.ClientsPoa").subscribe((response: any) => {
                                 SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsClient/Components/EditTabs/Items/ClientItemsTabComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.ITEMS = cmpRef.instance;
                                         this.ITEMS.InitTab(this.CurrentEntity);
+                                        this.ITEMS.ClientItemsList.subscribe(response=>{
+                                           this.ClientItemsList=response;
+                                            
+                                        })
                                     });
                             });
                         }
@@ -313,6 +321,13 @@ export class ClientEditComponent extends BaseComponent{
 
             });
 
+        }
+        if(this.ClientItemsList!=null){
+            this.ClientItemsList.forEach(element => {
+                this.clientItemPMService.update(element.ClientItemPM).subscribe((response:any) => {
+                });
+            });
+           
         }
         
     }

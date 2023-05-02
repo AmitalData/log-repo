@@ -26,7 +26,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         ItemDescription, 
 	         ClassificationCode, 
-	         ItemNumber, 
+	         ItemCode, 
 	         OriginCountryCode, 
 	         ClientCode,
 	      }
@@ -39,7 +39,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         ItemDescription, 
 	         ClassificationCode, 
-	         ItemNumber, 
+	         ItemCode, 
 	         OriginCountryCode, 
 	         OriginCountryName, 
 	         ClientCode,
@@ -102,9 +102,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ClassificationCode = entityPOCO.ClassificationCode;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemNumber))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemCode))
             {
-					entityPM.ItemNumber = entityPOCO.ItemNumber;
+					entityPM.ItemCode = entityPOCO.ItemCode;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OriginCountryCode))
