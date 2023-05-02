@@ -292,7 +292,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             foreach (var item in payment.PaymentInvoices)
             {
                 paymentChequeLine = new PaymentChequeLinePM();
-                paymentChequeLine.Notes = item.APInvoiceNumber;
+                paymentChequeLine.Notes = "חשבונית "+item.APInvoiceNumber;
                 paymentChequeLine.Amount = (decimal?)(item.ForeignAmount) * calculatePercent;
                 paymentChequeLine.ChangeSetOp = ChangeSetOperation.Insert;
                 paymentChequeLine.Line = paymentChequeLines.Count() + 1;
