@@ -1380,7 +1380,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     try
                     {
                         queueservice = new DbQueueService(selectedQueue, 0);
-                        response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
+                        response = queueservice.ReceiveJournal(new TimeSpan(0, 0, 0, 5));
                     }
                     catch (Exception)
                     {
