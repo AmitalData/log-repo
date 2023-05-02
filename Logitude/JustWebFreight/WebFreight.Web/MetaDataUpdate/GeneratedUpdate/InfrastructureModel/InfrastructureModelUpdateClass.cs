@@ -36,8 +36,6 @@ using System.Data.Common;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses;
-using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses;
-using EventRemarkUpdateClass = WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.EventRemarkUpdateClass;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 {

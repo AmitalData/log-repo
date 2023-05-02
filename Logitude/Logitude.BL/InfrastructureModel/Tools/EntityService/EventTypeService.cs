@@ -15,6 +15,8 @@ using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -75,29 +77,51 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 EventTypeTracing.Trace(theEntityPm, Poco, isNewEntity);
             }
 
-            EventRemarkQueryService service = new EventRemarkQueryService(theEntityPm.Tenant);
-            EventRemarkRepository eventRemarkRepository = new EventRemarkRepository(objectContext);
-            #region EventRemarks
-
-            if (theEntityPm.EventRemarks != null)
+            if ( IsFullAccountingActivated(theEntityPm.Tenant))
             {
-                foreach (EventRemarkPM eventRemarkPM in theEntityPm.EventRemarks)
+                EventRemarkQueryService service = new EventRemarkQueryService(theEntityPm.Tenant);
+                EventRemarkRepository eventRemarkRepository = new EventRemarkRepository(objectContext);
+                #region EventRemarks
+
+                if (theEntityPm.EventRemarks != null)
                 {
-                    EventRemark eventRemark = eventRemarkRepository.GetEventRemarkByPartnerTypeId(eventRemarkPM.PartnerTypeId, eventRemarkPM.EventTypeId, eventRemarkPM.Tenant);
-                    if (eventRemark == null && eventRemarkPM.IsChoose)
-                     service.Create(eventRemarkPM);
-                    else if (!eventRemarkPM.IsChoose)
-                    {   
-                        eventRemarkRepository.Remove(eventRemark);
+                    foreach (EventRemarkPM eventRemarkPM in theEntityPm.EventRemarks)
+                    {
+                        EventRemark eventRemark = eventRemarkRepository.GetEventRemarkByPartnerTypeId(eventRemarkPM.PartnerTypeId, eventRemarkPM.EventTypeId, eventRemarkPM.Tenant);
+                        if (eventRemark == null && eventRemarkPM.IsChoose)
+                            service.Create(eventRemarkPM);
+                        else if (!eventRemarkPM.IsChoose)
+                        {
+                            eventRemarkRepository.Remove(eventRemark);
+                        }
                     }
                 }
+                #endregion
             }
-            # endregion
+
+
 
             EventTypeMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
+ 
+
+        public bool IsFullAccountingActivated(int tenant)
+
+        {
+
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+
+            return isFullAccountingActivated;
+
+        }
+
+
 
     }
 }
