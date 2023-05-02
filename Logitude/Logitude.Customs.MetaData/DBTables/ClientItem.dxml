@@ -34,7 +34,8 @@
   <Column
     Name="ItemCode"
     OldNames="ItemNumber"
-    Type="varchar">
+    Type="varchar"
+    Size="30">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
