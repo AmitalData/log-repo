@@ -3968,7 +3968,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
 
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 1000;
+            logWindow.Width = 1010;
             logWindow.Height = 600;
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = false;

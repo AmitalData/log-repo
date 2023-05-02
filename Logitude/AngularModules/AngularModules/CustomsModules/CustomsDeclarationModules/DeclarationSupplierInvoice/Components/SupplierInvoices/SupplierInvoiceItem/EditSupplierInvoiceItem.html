@@ -591,9 +591,11 @@
 
                                                 <tr style="height: 25px;">
                                                     <td><span style="font-size: 13px; color: #1b90cb;"></span></td>
-                                                    <td style="width: 30px;"><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddConnDeclarButton()"></IconButton></td>
+                                                    <td style="width: 45px;">
+                                                        <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddConnDeclarButton()"></IconButton>
+                                                    </td>
                                                 </tr>
-
+                                                                                              
                                                 <tr>
                                                     <td colspan="2" style="height: 100%;">
                                                         <div class="CellContent">
@@ -705,7 +707,18 @@
                                                                 </log-column>
 
                                                                 <!-- Buttons -->
-                                                                <log-column [width]="'40'" [Alignment]="'right'">
+                                                                <log-column [width]="'30'" [Alignment]="'right'">
+                                                                    <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" (click)="OpenExportOrImportDecData(item)">
+                                                                            <img style="vertical-align: middle; width: 15px; height: 15px; cursor: pointer; margin-right: 10px; " src="./Images/LOVSearch.png" />
+                                                                        </span>
+                                                                      
+                                                                    </log-cell-template>
+</ng-template>
+                                                                </log-column>
+
+                                                                <log-column [width]="'30'" [Alignment]="'right'">
                                                                     <ng-template let-item>
 <log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                                         <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
@@ -1613,10 +1626,10 @@
                                             <table>
 
                                                 <tr style="height: 25px;">
-                                                    <td style=" width: 500px;"><span style="font-size: 13px; color: #1b90cb; width: 500px;">{{'Customs.Declaration.O.ConnectedDeclarations' | TextCodeTranslationPipe}}</span></td>
-                                                    <td>
+                                                    <td style=" width: 560px;"><span style="font-size: 13px; color: #1b90cb; width: 500px;">{{'Customs.Declaration.O.ConnectedDeclarations' | TextCodeTranslationPipe}}</span></td>                                                   
+                                                     <td>
                                                         <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddConnDeclarButton()"></IconButton>
-                                                    </td>
+                                                    </td> 
                                                     <!--<td style="width: 30px;"><div></div></td>-->
                                                     <td style="width: 30px;"><div></div></td>
 
@@ -1629,7 +1642,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td style="height: 100%;width: 550px;" colspan="2">
+                                                    <td style="height: 100%;width: 560px;" colspan="2">
                                                         <div class="CellContent">
                                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsDisplayOnly" [ItemSource]="ConDeclarList">
 
@@ -1738,10 +1751,20 @@
                                                                     </ng-template>
                                                                 </log-column>
                                                                 <!-- Buttons -->
-                                                                <log-column [width]="'40'" [Alignment]="'right'">
+                                                                <log-column [width]="'30'" [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [TabIndex]="0" [IgnoreMods]="true">
+                                                                            <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
+                                                                            <span (click)="OpenExportOrImportDecData(item)">
+                                                                                <img style="vertical-align: middle; width: 15px; height: 15px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                                            </span>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column [width]="'30'" [Alignment]="'right'">
                                                                     <ng-template let-item>
                                                                         <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
-                                                                            <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
+                                                                            <span [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
                                                                             <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Delete'" [IsSmall]="true" (click)="RemoveConnDeclar(item)"
                                                                                         style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                                         </log-cell-template>
