@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityLists
 
        [Key]
        [DataMember]
-       public int ItemNumber  { get; set; }
+       public string ItemCode  { get; set; }
        [DataMember]
        public string OriginCountryCode  { get; set; }
        [DataMember]

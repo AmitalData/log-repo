@@ -12,7 +12,7 @@ namespace Logitude.Customs.Data.EntityKeys
 {
    public partial class ClientItemKeys : EntityKeyFields
    {
-   	  public int ItemNumber  { get; set; }
+   	  public string ItemCode  { get; set; }
 	  
 				 
 	    			   
@@ -24,7 +24,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return ItemNumber+'_'+ClientCode ;
+                 return ItemCode+'_'+ClientCode ;
                  
       }
 

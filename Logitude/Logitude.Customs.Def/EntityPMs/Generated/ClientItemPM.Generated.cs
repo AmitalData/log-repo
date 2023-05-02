@@ -110,27 +110,27 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int itemNumber ;
+	  private string itemCode ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int ItemNumber  
+       public string ItemCode  
 	   {
 	    
 	     get
 		{
-		   return itemNumber;
+		   return itemCode;
 		 }
 		 set
 		 {
-		   if(itemNumber != value)
+		   if(itemCode != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemNumber",OldValue=itemNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemCode",OldValue=itemCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   itemNumber=value;
+		   itemCode=value;
 		   }
 			
 		 }

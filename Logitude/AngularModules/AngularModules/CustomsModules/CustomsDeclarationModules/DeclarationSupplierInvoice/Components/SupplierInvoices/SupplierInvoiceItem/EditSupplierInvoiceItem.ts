@@ -668,8 +668,9 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         this.onApprove.subscribe((ConDeclaration: any) => {
             var declarationType = ConDeclaration?.IsExport ? "2" : "1";
             ConDeclaration.requestList.forEach((requestLine) => {
-                if(ConDeclarItem.DeclarationNumber == ConDeclaration.DeclarationNumber && ConDeclarItem.DeclarationTypeCode == declarationType)
-                    this.RemoveConnDeclar(ConDeclarItem)
+                if((ConDeclarItem.DeclarationNumber == ConDeclaration.DeclarationNumber && ConDeclarItem.DeclarationTypeCode == declarationType)
+                    || (AppTool.IsNullOrEmpty(ConDeclarItem.DeclarationTypeCode) && AppTool.IsNullOrEmpty(ConDeclarItem.DeclarationNumber)))
+                        this.RemoveConnDeclar(ConDeclarItem)
 
                 var item = new SupplierInvoiceItemsConDeclarPM(this.OriginalItemPM);
                 if (this.ConDeclarList.Length > 0) {

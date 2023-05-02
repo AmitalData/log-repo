@@ -31,7 +31,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
                 InterfaceTenantDefinitionQueryService interfaceTenantDefinitionQuery = new InterfaceTenantDefinitionQueryService(MyContext);
-                InterfaceTenantDefinitionPM interfaceTenantDefinitionPM = interfaceTenantDefinitionQuery.GetFromCacheByTenatCode(tenant, code);
+                InterfaceTenantDefinitionPM interfaceTenantDefinitionPM = interfaceTenantDefinitionQuery.GetInterfaceDefWithPriorityFromCacheByTenatCode(tenant, code);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, interfaceTenantDefinitionPM);
