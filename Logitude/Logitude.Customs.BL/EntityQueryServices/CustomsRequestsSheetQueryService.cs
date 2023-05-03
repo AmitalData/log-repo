@@ -863,6 +863,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return customsRequestsSheet;
         }
+        public int? GetTenantPriorityByEntityIDAndTeant(string EntityID, int tenant)
+        {
+            return repository.GetTenantPriorityByEntityIDAndTeant(EntityID, tenant);
+        }
 
     }
 

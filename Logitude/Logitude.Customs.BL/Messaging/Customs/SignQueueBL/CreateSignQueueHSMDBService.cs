@@ -1,4 +1,5 @@
-﻿using Logitude.CustomsMessaging.Common.RequestParams;
+﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Server.Tools.ExternalServices;
 using Logitude.Server.Tools.Helpers;
 using System;
@@ -19,7 +20,8 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             Dictionary<string, string> messageProperties = new Dictionary<string, string>();
             messageProperties.Add("SignByPersonalId", requestParams.SignByPersonalId);//SignBy
             messageProperties.Add("SignQueueByCompanyOrPersonal", requestParams.SignQueueByCompanyOrPersonal);//SignBy
-            
+            var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(requestParams.Tenant);
+            var tenantPrioirty = customsRequestsSheetQueryService.GetTenantPriorityByEntityIDAndTeant(requestParams.CustomsRequestsSheetId, requestParams.Tenant);
             messageProperties.Add("InterfaceTypeCode", requestParams.InterfaceTypeCode);
             messageProperties.Add("Tenant", requestParams.Tenant.ToString());
             messageProperties.Add("CorrelationId", requestParams.CustomsRequestsSheetId);
@@ -30,6 +32,10 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             queueSendModel.UseRabbitMQ = false;//never use rabbit !!!!
             queueSendModel.InterfaceTypeCode = requestParams.InterfaceTypeCode;
             queueSendModel.Tenant = requestParams.Tenant;
+            if (tenantPrioirty > 0)
+            {
+                queueSendModel.TenantPriority = tenantPrioirty;
+            }
             queueService.Send(messageProperties, requestParams.Tenant, null, queueSendModel);
         }
     }
