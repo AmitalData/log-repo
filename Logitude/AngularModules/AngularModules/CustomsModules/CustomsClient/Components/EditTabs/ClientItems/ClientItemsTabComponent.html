@@ -21,39 +21,43 @@
 <table *ngIf="load">
     <!-- subtitle -->
     <tr style="height: 30px; padding-bottom: 3px;">
-         
-        <td   colspan="4" style="width: 620px; padding: 2px;">
+
+        <td colspan="4" style="width: 620px; padding: 2px;">
             <div>
                 <div style=" width: 150;" [style.float]=" 'left' ">
-                    <SearchTextBox [ObjectTableName]="'Customs.ClientItem'" [PlaceHolder]="'Customs.Client.O.ItemOrClassificationSearch' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                    <SearchTextBox [ObjectTableName]="'Customs.ClientItem'"
+                        [PlaceHolder]="'Customs.Client.O.ItemOrClassificationSearch' | TextCodeTranslationPipe"
+                        (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                 </div>
             </div>
-           
-        </td>      
+
+        </td>
         <td width="10%"></td>
     </tr>
     <tr>
-        <td colspan="3" style="height: 100%;">
+        <td colspan="3" style="height: 100%;width: 100%;">
 
             <div style="height: 100%;">
 
-                <table style="height: 100%;">
+                <table style="height: 100%;width: 100%;">
                     <tr>
                         <td>
                             <!-- Grid -->
                             <table>
 
                                 <tr>
-                                    <td colspan="2" style="height: 100%;">
+                                    <td colspan="2" style="height: 100%;width: 100%;">
                                         <div class="CellContent">
                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                                 [ItemSource]="ItemsList">
                                                 <!-- SequenceNumeric -->
-                                                <log-column [width]="'40'" [Alignment]="'right'" [header]="SequenceNumeric">
+                                                <log-column [width]="'40'" [Alignment]="'right'"
+                                                    [header]="SequenceNumeric">
                                                     <ng-template let-item>
                                                         <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
-                                                            <span class="CellSeparator" [style.float]="'right'">{{item.SequenceNumeric}}</span>
-                                                           
+                                                            <span class="CellSeparator"
+                                                                [style.float]="'right'">{{item.SequenceNumeric}}</span>
+
                                                         </log-cell-template>
                                                     </ng-template>
                                                 </log-column>
@@ -80,7 +84,7 @@
                                                 <!-- ItemDescription -->
                                                 <log-column
                                                     [header]="'Customs.ClientItem.F.ItemDescription' | TextCodeTranslationPipe"
-                                                    [width]="'200'" [Alignment]="'right'" [binding]="'ItemDescription'">
+                                                    [width]="'250'" [Alignment]="'right'" [binding]="'ItemDescription'">
                                                     <ng-template let-item>
                                                         <log-cell-template #logcelltemplate>
                                                             <div style="text-align: right;" class="TextTrimming"
@@ -100,7 +104,7 @@
                                                 <!-- ClassificationCode -->
                                                 <log-column
                                                     [header]="'Customs.ClientItem.F.ClassificationCode' | TextCodeTranslationPipe"
-                                                    [width]="'150'" [Alignment]="'right'"
+                                                    [width]="'190'" [Alignment]="'right'"
                                                     [binding]="'ClassificationCode'">
                                                     <ng-template let-item>
                                                         <log-cell-template #logcelltemplate>
@@ -135,11 +139,19 @@
                                                                     [DataContext]="item" [HideColumns]="true"
                                                                     [LookUpTableName]="'Customs.CustomsCountry'"
                                                                     (SelectedItemChanged)="item.SetLocalName($event, 'OriginCountryName')"
-                                                                    [FocusOnMe]="true"
-                                                                   >
+                                                                    [FocusOnMe]="true">
                                                                 </LogLov>
 
                                                             </div>
+                                                        </log-cell-template>
+                                                    </ng-template>
+                                                </log-column>
+
+
+                                                <log-column [width]="'50'" [Alignment]="'right'">
+                                                    <ng-template let-item>
+                                                        <log-cell-template #logcelltemplate>
+
                                                         </log-cell-template>
                                                     </ng-template>
                                                 </log-column>

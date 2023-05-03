@@ -395,9 +395,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             this.SetDeclarationChanged(entityPM);
             this.UpdateDeclarationPlatformFeeAndPrimaryInvoice(entityPM);
-             if (_DeclarationPM.Direction == "E" && SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant)) 
-                      this.UpdateOrInsertInClientItems(entityPM,_DeclarationPM?.ExporterImporterCode);
-        }
+                  }
 
 
 
@@ -1766,46 +1764,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 
-        private void UpdateOrInsertInClientItems(SupplierInvoicePM entityPM , string exporterCode)
-        {
-            ClientItemQueryService clientItemQueryService = new ClientItemQueryService(entityPM.Tenant);
-            ClientItemUpdateService clientItemUpdateServicev = new ClientItemUpdateService(_Context, new Dictionary<string, IContext>(),entityPM.Tenant);
-
-            if (entityPM != null && entityPM.SupplierInvoiceItems!=null)
-            {
-                foreach (var item in entityPM.SupplierInvoiceItems)
-                {
-                    if(item.ChangeSetOp!= ChangeSetOperation.None && !string.IsNullOrEmpty(item.ItemCode)) {
-                        ClientItemPM clientItem = clientItemQueryService.GetSingle(item.ItemCode, exporterCode, false, false);
-                        if (clientItem == null)
-                        {
-                            clientItem = new ClientItemPM()
-                            {
-                                ItemCode = item.ItemCode,
-                                Tenant = entityPM.Tenant,
-                                ItemDescription = item.ItemDescription,
-                                ClassificationCode = item.ClassificationCode,
-                                OriginCountryCode = item.OriginCountryCode,
-                                ClientCode= exporterCode,
-                                ChangeSetOp = ChangeSetOperation.Insert
-
-                            };
-
-                        }
-                        else
-                        {
-                            clientItem.ItemDescription = item.ItemDescription;
-                            clientItem.ClassificationCode = item.ClassificationCode;
-                            clientItem.OriginCountryCode = item.OriginCountryCode;
-                            clientItem.ChangeSetOp = ChangeSetOperation.Update;
-                        }
-                       EventTracer.CreateTraceEvent(new EventTracerArgs() { EntityId = clientItem.ItemCode, ObjectTableName = "Customs.Client", Tenant = entityPM.Tenant, UserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant), EventTypeCode = "CUCI", Notes = "item code:"+ clientItem.ItemCode });
-
-                        clientItemUpdateServicev.Update(clientItem, true);
-                    }
-                    
-                }
-            }
-        }
+      
     }
 }
