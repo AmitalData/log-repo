@@ -9,6 +9,7 @@ namespace Logitude.Server.Tools.QueueService
         void Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null);
         //QueueResponse Receive();
         QueueResponse Receive(TimeSpan? serverWaitTime = null);
+        QueueResponse ReceiveJournal(TimeSpan? serverWaitTime = null);
         void Complete();
         void Delay(TimeSpan delayTime);
         void Return();

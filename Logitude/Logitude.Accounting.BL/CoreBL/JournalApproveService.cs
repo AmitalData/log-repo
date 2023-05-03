@@ -41,6 +41,7 @@ using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.Utils;
 using Simplog.Data.InvoiceModel;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -1110,10 +1111,23 @@ namespace Logitude.Accounting.BL.CoreBL
             return isSubmitApprove;
         }
 
+        private static void SetTenantIdle(QueueResponse message)
+        {
+            string sJournalTenant = message.MessageValues["JournalTenant"];
+            ICommonDataContext myContext = CommonDataContext.GetContext(int.Parse(sJournalTenant));
+            TenantRepository tenantRepository = new TenantRepository(myContext);
+            Tenant tenantObj = tenantRepository.GetSingleTenant(int.Parse(sJournalTenant));
+            tenantObj.JouranlApprovalIsIdle = false;
+            tenantRepository.Update(tenantObj);
+            tenantRepository.SubmitChanges();
+
+        }
+
         private static void OnException(DbQueueService myDbQueueService, QueueResponse message, string seedJournalId, int tenant, Exception ex)
         {
 
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
+            SetTenantIdle(message);
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "AccountingJournalApproveWR", "AccountingJournalApproveWR: ProcessMessage() Method", null);
             if (message.RetryNumber >= 2 && message.RetryNumber <= 7) {
                     myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
@@ -1362,14 +1376,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     //ThrowNewException("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
                     try
                     {
-
-                        // string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(myClass);
                         queueservice = new DbQueueService(selectedQueue, 0);
 
-                        response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
+                        if (FeatureToggleHelper.HasFeatureToggle("JAM", 0))
+                            response = queueservice.ReceiveJournal(new TimeSpan(0, 0, 0, 5));
+                        else
+                            response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
 
-
-                        // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
                     }
                     catch (Exception)
                     {
@@ -1389,6 +1402,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         LogDoneItemInMemoryAction?.Invoke(1);
                     }
+
+                    SetTenantIdle(response);
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
