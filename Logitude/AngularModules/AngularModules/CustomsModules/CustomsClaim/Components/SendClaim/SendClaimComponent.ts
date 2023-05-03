@@ -218,9 +218,9 @@ export class SendClaimComponent {
                 }
             }
             if (this.sendClaimsRelatedEntitiesList == null || (this.sendClaimsRelatedEntitiesList != null && this.sendClaimsRelatedEntitiesList.length == 0)) {
-                var errorMessage: string = "חובה לבחור לפחות ישות תביעה אחת לשליחה";
+                var errorMessage: string = TextCodeTranslator.Translate("Customs.General.O.SelectOneEntityAtLeast");
                 if (this.EntityPM.ClaimsRelatedEntities.length == counter) {
-                    errorMessage = "בתביעה זו לא ניתן לבצע שליחה, כיוון שכל תיקי התביעה עודכנו וקיבלו תיק תביעה במכס";
+                    errorMessage = TextCodeTranslator.Translate("Customs.General.O.CanotSendReceivedClaim");
                 }
                 this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 var winConfirmation: ConfirmWindow = new ConfirmWindow();
@@ -243,7 +243,7 @@ export class SendClaimComponent {
             winConfirmation.ShowNoButton = false;
             winConfirmation.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             winConfirmation.ShowCancelButton = false;
-            winConfirmation.Show("חובה לבחור לפחות ישות תביעה אחת לשליחה");
+            winConfirmation.Show(TextCodeTranslator.Translate("Customs.General.O.SelectOneEntityAtLeast"));
             return;
         }
         this.PreClaimSendChecks();

@@ -291,7 +291,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         clientSelectionChangedWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
         clientSelectionChangedWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
         clientSelectionChangedWindow.ShowCancelButton = false;
-        clientSelectionChangedWindow.Show("בפעולה זו ימחקו כל הכתובות של הלקוח, האם להמשיך?");
+        clientSelectionChangedWindow.Show(TextCodeTranslator.Translate("Customs.General.O.DeleteCustomerAddresses"));
 
         clientSelectionChangedWindow.WindowClosed.subscribe((event: any) => {
             if (clientSelectionChangedWindow.Yes) {
@@ -360,9 +360,9 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         if ((item.AddressMode == "AddressCode" && AppTool.IsNullOrEmpty(item.ClientPM.Id)
             || (item.AddressMode == "CustomsAddressCode" || item.AddressMode == "ContactPhoneAddressCode") && AppTool.IsNullOrEmpty(item.ClientPM.Id) && AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber))) {
 
-            var text: string = "ראשית חובה לבחור לקוח";
+            var text: string = TextCodeTranslator.Translate("Customs.General.O.ChooseAClient");
             if (item.AddressMode == "AddressCode") {
-                text = "ראשית חובה לבחור מגיש לתביעה";
+                text = TextCodeTranslator.Translate("Customs.General.O.ChoosePlaintiffClaim");
             }
             
             var messageWindow = new MessageWindow();
@@ -386,7 +386,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             logWindow.Height = 500;
             logWindow.ShowCloseButton = true;
             logWindow.WindowArgs = windowArgs;
-            logWindow.Title = "כתובות לקוח " + item.ClientPM.Code;
+            logWindow.Title = TextCodeTranslator.Translate("Customs.General.O.CustomerAddresses") + item.ClientPM.Code;
             logWindow.Show('./CustomsModules/CustomsClient/Components/EditTabs/Addresses/ClientAddressesTabComponent');
         });
     }
@@ -403,7 +403,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("לא ניתן לבחור כתובת זו, אנא שלוף לקוח מחדש");
+            messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.CannotSelected"));
             return;
         }
 
@@ -492,7 +492,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("לא ניתן למחוק ישות תביעה המקושרת לתיק תפג");
+            messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.CannotDeletedClaim"));
             return;
         }
 
@@ -540,7 +540,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                     messageWindow.Width = 250;
                     messageWindow.Height = 150;
                     messageWindow.RTL = true;
-                    messageWindow.Show("לא נמצאה הצהרה");
+                    messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.NoStatementFound"));
                 }
             }
         });
@@ -554,7 +554,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("לא ניתן לבטל/ערר ישות תביעה שאינה המקושרת לתיק תפג");
+            messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.CannotCancelDeleteClaim"));
             return;
         }
 

@@ -132,7 +132,7 @@ export class ClaimRelatedEntityReasonsTabComponent extends BaseComponent {
 
         if (this.ClaimsRelatedEntityReasonslist != null && this.ClaimsRelatedEntityReasonslist.Length >= 6) {
             this.ValidationErrors = [];
-            this.ValidationErrors.push("לא ניתן להוסיף יותר מ 6 שורות");
+            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Claim.O.JustSixLines"));
             return;
         }
 
@@ -161,7 +161,7 @@ export class ClaimRelatedEntityReasonsTabComponent extends BaseComponent {
         this.ValidationErrors = [];
         if (AppTool.IsNullOrEmpty(item.ReasonListTypeCode)) {
             this.ValidationErrors = [];
-            this.ValidationErrors.push("חובה להזין סיבת תביעה");
+            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Claim.O.EnterClaimReason"));
             return;
         }
 

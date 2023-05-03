@@ -211,7 +211,7 @@ export class ClaimImporterDeclATabComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(item)) {
             this.ValidationErrorsList = [];
             if (AppTool.IsNullOrEmpty(item.ImporterLoiDeclarationTypeCode)) {
-                this.ValidationErrorsList.push("חובה להזין הצהרת יבואן");
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.General.O.MandatoryImporterDeclaration"));
                 return;
             }
 
@@ -265,7 +265,7 @@ export class ClaimImporterDeclATabComponent extends BaseComponent {
         }
 
         if (this.ClaimImporterDeclAlist != null && this.ClaimImporterDeclAlist.Length >= 3) {
-            this.ValidationErrorsList.push("לא ניתן להוסיף יותר מ 3 שורות לתצהיר היבואן");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.General.O.CnnotAddMoreThanThree"));
             return;
         }
     }
@@ -314,13 +314,13 @@ export class ClaimImporterDeclATabComponent extends BaseComponent {
         if (this.CommercialSalelist != null && this.CommercialSalelist.Length > 0) {
             var nullVM = this.CommercialSalelist.Collection.filter(vm => vm.CommercialSaleTypeCode == null);
             if (nullVM.length > 0) {
-                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Claim.O.UseEmptyRow") + " (פרטי המישור המסחרי)");
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Claim.O.UseEmptyRow") + TextCodeTranslator.Translate("Customs.General.O.CommercialPlaneDetails"));
                 return;
             }
         }
 
         if (this.CommercialSalelist != null && this.CommercialSalelist.Length >= 4) {
-            this.ValidationErrorsList.push("לא ניתן להוסיף יותר מ 4 שורות לפרטי המישור המסחרי");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.General.O.CnnotAddMoreThanFour"));
             return;
         }
 
@@ -394,7 +394,7 @@ export class ClaimImporterDeclarsPage3LineComponent extends BaseComponent {
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("יש להזין מספר הצהרה");
+            messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.AddDeclarationNumber"));
 
             this.MyDeclarationList = "";
             return;

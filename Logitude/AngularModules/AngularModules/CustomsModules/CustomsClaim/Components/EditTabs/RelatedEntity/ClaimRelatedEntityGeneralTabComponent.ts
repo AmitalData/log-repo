@@ -216,7 +216,7 @@ export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
         rfundDemandUncheckedWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
         rfundDemandUncheckedWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
         rfundDemandUncheckedWindow.ShowCancelButton = false;
-        rfundDemandUncheckedWindow.Show("בפעולה זו ימחקו כל סעיפי החיוב, האם להמשיך?");
+        rfundDemandUncheckedWindow.Show(TextCodeTranslator.Translate("Customs.General.O.BillingItemsDeleted"));
         rfundDemandUncheckedWindow.WindowClosed.subscribe((event: any) => {
             if (rfundDemandUncheckedWindow.Yes) {
                 this.DeletePaymentAmoutLines();

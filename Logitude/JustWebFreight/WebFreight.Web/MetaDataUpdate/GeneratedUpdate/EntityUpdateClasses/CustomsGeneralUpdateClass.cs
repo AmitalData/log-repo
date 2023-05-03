@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "6f6abf7ae780f3148c073edf039ddb01";
+		public const string HashString = "3387eb4ca27d09f3731217d03de46bcc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "604a",
+			      				    Code =  "34d8",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2145,6 +2145,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOCannotDetachDocumentWithCustomsDocId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CannotDetachDocumentWithCustomsDocId", DefaultText = "Cannot detach a document with CustomsDocId - declaration for display only",LocalDefaultText = @"לא ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsCreditGoldQueryOCustomFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CreditGoldQuery.O.CustomFileNo", DefaultText = "Custom File No",LocalDefaultText = @"תיק עמילות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralODocumentDisplayOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DocumentDisplayOnly", DefaultText = "Document For Display Only",LocalDefaultText = @"מסמך לתצוגה בלבד", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralODeleteCustomerAddresses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DeleteCustomerAddresses", DefaultText = "In this operation, all the customer's addresses will be deleted, should I continue?",LocalDefaultText = @"בפעולה זו ימחקו כל הכתובות של הלקוח, האם להמשיך?", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOChooseAClient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ChooseAClient", DefaultText = "First you must choose a client",LocalDefaultText = @"ראשית חובה לבחור לקוח", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOChoosePlaintiffClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ChoosePlaintiffClaim", DefaultText = "First, it is necessary to choose a plaintiff for the claim",LocalDefaultText = @"ראשית חובה לבחור מגיש לתביעה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCustomerAddresses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CustomerAddresses", DefaultText = "Customer Addresses",LocalDefaultText = @"כתובות לקוח", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCannotSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CannotSelected", DefaultText = "This address cannot be selected, please retrieve a client again",LocalDefaultText = @"לא ניתן לבחור כתובת זו, אנא שלוף לקוח מחדש", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCannotDeletedClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CannotDeletedClaim", DefaultText = "A claim entity linked to an expired case cannot be deleted",LocalDefaultText = @"לא ניתן למחוק ישות תביעה המקושרת לתיק תפג", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralONoStatementFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NoStatementFound", DefaultText = "No Statement Found",LocalDefaultText = @"לא נמצאה הצהרה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCannotCancelDeleteClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CannotCancelDeleteClaim", DefaultText = "It is not possible to cancel/appeal a claim entity that is not linked to an expired case",LocalDefaultText = @"לא ניתן לבטל/ערר ישות תביעה שאינה המקושרת לתיק תפג", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOMandatoryImporterDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.MandatoryImporterDeclaration", DefaultText = "It is mandatory to enter an importer's declaration",LocalDefaultText = @"חובה להזין הצהרת יבואן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCnnotAddMoreThanThree = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CnnotAddMoreThanThree", DefaultText = "It is not possible to add more than 3 lines to the importer's affidavit",LocalDefaultText = @"לא ניתן להוסיף יותר מ 3 שורות לתצהיר היבואן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCommercialPlaneDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CommercialPlaneDetails", DefaultText = "The details of the commercial plane",LocalDefaultText = @"פרטי המישור המסחרי", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCnnotAddMoreThanFour = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CnnotAddMoreThanFour", DefaultText = "It is not possible to add more than 4 lines to the details of the commercial level",LocalDefaultText = @"לא ניתן להוסיף יותר מ 4 שורות לפרטי המישור המסחרי", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOAddDeclarationNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.AddDeclarationNumber", DefaultText = "Add Declaration Number",LocalDefaultText = @"יש להזין מספר הצהרה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOEnterApplicationType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.EnterApplicationType", DefaultText = "You must enter an application type",LocalDefaultText = @"חובה להזין סוג פנייה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOEnterExplanation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.EnterExplanation", DefaultText = "An explanation must be entered",LocalDefaultText = @"חובה להזין הסבר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOBillingItemsDeleted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.BillingItemsDeleted", DefaultText = "In this operation, all the billing items will be deleted, should I continue?",LocalDefaultText = @"בפעולה זו ימחקו כל סעיפי החיוב, האם להמשיך?", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOSelectOneEntityAtLeast = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.SelectOneEntityAtLeast", DefaultText = "You must select at least one claim entity to send",LocalDefaultText = @"חובה לבחור לפחות ישות תביעה אחת לשליחה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCanotSendReceivedClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CanotSendReceivedClaim", DefaultText = "In this claim it is not possible to send, because all the claim files have been updated and received a claim file in customs",LocalDefaultText = @"בתביעה זו לא ניתן לבצע שליחה, כיוון שכל תיקי התביעה עודכנו וקיבלו תיק תביעה במכס", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

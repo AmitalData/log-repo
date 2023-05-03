@@ -3,6 +3,7 @@ import { AppTool } from '../../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ClaimPM } from '../../../../../Customs/EntityPMs/ClaimPM';
 import { ClaimsRelatedEntityPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntityPM';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
@@ -150,11 +151,11 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
         this.ValidationErrors = errors;
 
         if (AppTool.IsNullOrEmpty(this.ContinuousRequestTypeCode)) {
-            this.ValidationErrors.push("חובה להזין סוג פנייה");
+            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.General.O.EnterApplicationType"));
             //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.OriginSiteCodeMandatory"));
         }
         if (AppTool.IsNullOrEmpty(this.Explanation)) {
-            this.ValidationErrors.push("חובה להזין הסבר");
+            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.General.O.EnterExplanation"));
             //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.DesignateSiteCodeMandatory"));
         }
 
