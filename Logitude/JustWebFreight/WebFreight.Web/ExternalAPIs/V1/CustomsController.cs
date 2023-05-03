@@ -34,7 +34,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+                //SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
 
                 CustomsQueryService Service = new CustomsQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
@@ -57,7 +57,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+                //SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
 
                 CustomsQueryService Service = new CustomsQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
@@ -82,7 +82,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                    SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+                    //SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
 
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     CustomsQueryService mappingService = new CustomsQueryService(authToken.Tenant);
@@ -198,7 +198,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                    SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+                    //SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
 
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     CustomsQueryService mappingService = new CustomsQueryService(authToken.Tenant);
