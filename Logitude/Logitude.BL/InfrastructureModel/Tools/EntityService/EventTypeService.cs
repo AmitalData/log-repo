@@ -90,7 +90,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         EventRemark eventRemark = eventRemarkRepository.GetEventRemarkByPartnerTypeId(eventRemarkPM.PartnerTypeId, eventRemarkPM.EventTypeId, eventRemarkPM.Tenant);
                         if (eventRemark == null && eventRemarkPM.IsChoose)
                             service.Create(eventRemarkPM);
-                        else if (!eventRemarkPM.IsChoose)
+                        else if (eventRemark != null && !eventRemarkPM.IsChoose)
                         {
                             eventRemarkRepository.Remove(eventRemark);
                         }
