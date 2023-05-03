@@ -37,7 +37,7 @@ export class PointersFromClaimRelatedEntitiesSelectionComponent {
         this.BuildClaimsRelatedEntitiesList();
         if (this.CustomsDocumentsTicket.RequestedCustomsDocId) {
             this.IsDisplayOnly = true;
-            this.DisplayOnlyMessage = "מסמך לתצוגה בלבד";
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.General.O.DocumentDisplayOnly");
         }
         else {
             this.IsDisplayOnly = false;
