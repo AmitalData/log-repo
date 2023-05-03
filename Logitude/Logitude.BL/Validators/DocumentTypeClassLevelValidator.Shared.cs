@@ -30,7 +30,7 @@ namespace Logitude.BL.Validators
 
                 foreach (string specialCharacter in speCharLists)
                 {
-                   if(documentType.FileName.Contains(specialCharacter))
+                    if(documentType.FileName.Contains(specialCharacter))
                     {
                         return new ValidationResult("FileName field can't contain any of the following characters:" + speCharLists[0] + speCharLists[1] + speCharLists[2] + speCharLists[3] + speCharLists[4] + speCharLists[5] + speCharLists[6] + speCharLists[7] + speCharLists[8] );
                     }
@@ -46,21 +46,22 @@ namespace Logitude.BL.Validators
             }
 
 
+            ObjectTable objectTable = GetObjectTable(documentType);
 
-            //ObjectTable objectTable = GetObjectTableByName(documentType.ObjectTableName, documentType.Tenant);
-            //if(objectTable == null)
-            //{
-            //    return new ValidationResult("Object Table is Required");
-            //}
-            //if (!string.IsNullOrEmpty(documentType.ObjectTableName) && !objectTable.AvailableInDocumentTypes)
-            //{
-            //    return new ValidationResult(TextCodesTranslator.TranslateText("DocumentType.M.TableNameDoesNotExist", documentType.Tenant));
-            //}
+            if(objectTable == null)
+            {
+                return new ValidationResult("Object Table is Required");
+            }
 
-            //if (objectTable.IsCustom && !documentType.IsDocIn)
-            //{
-            //    return new ValidationResult("Please choose Doc in");
-            //}
+            if (!string.IsNullOrEmpty(documentType.ObjectTableName) && !objectTable.AvailableInDocumentTypes)
+            {
+                return new ValidationResult(TextCodesTranslator.TranslateText("DocumentType.M.TableNameDoesNotExist", documentType.Tenant));
+            }
+
+            if (!string.IsNullOrEmpty(documentType.ObjectTableName) && objectTable.IsCustom && !documentType.IsDocIn)
+            {
+                return new ValidationResult("Please choose Doc in");
+            }
             if (documentType.IsDocOut)
             {
                 if (documentType.TemplateFormatCode == null)
@@ -82,11 +83,13 @@ namespace Logitude.BL.Validators
             return null;
         }
 
-        private static ObjectTable GetObjectTableByName(string objectTableName, int tenant)
+        private static ObjectTable GetObjectTable(DocumentTypePM documentType)
         {
-            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
-            ObjectTable objectTable = objectTableRepository.GetObjectTableByName(objectTableName, tenant, true);
-            return objectTable;
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(documentType.Tenant);
+            if (!string.IsNullOrEmpty(documentType.ObjectTableId)) return objectTableRepository.GetObjectTableById(documentType.ObjectTableId, documentType.Tenant);
+            if (!string.IsNullOrEmpty(documentType.ObjectTableName)) return objectTableRepository.GetObjectTableByName(documentType.ObjectTableName, documentType.Tenant, true);
+            return null;
         }
+
     }
 }
