@@ -123,6 +123,21 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     else
                     {
                         entity = (EventTypePM)CacheManager.CacheWrapper.Get(entityName);
+                        var e2 = new List<EventRemarkPM>();
+                        e2 = (from a in repository.context.EventRemarks.AsEnumerable()
+                              where a.EventTypeId == entity.Id
+                              select new EventRemarkPM
+                              {
+                                  Id = a.Id,
+                                  Tenant = a.Tenant,
+                                  CreateDate = a.CreateDate,
+                                  CreatedByUserId = a.CreatedByUserId,
+                                  SearchFields = a.SearchFields,
+                                  EventTypeId = a.EventTypeId,
+                                  PartnerTypeId = a.PartnerTypeId,
+                                  IsChoose = a.IsChoose,
+                              }).ToList();
+                        entity.EventRemarks = e2;
                     }
                 }
 

@@ -9,11 +9,11 @@
                 <span class="Label">Select partners to view event remarks</span>
             </td>
 
-            <td style="width: 57px;">
+            <td style="padding: 4px;width: 57px;">
                 <button class="Button" (click)="ClearAllClicked($event)">Clear All</button>
             </td>
 
-            <td style="width: 57px;">
+            <td style="padding: 4px;width: 57px;">
                 <button class="Button" (click)="SelectAllClicked($event)">Select All</button>
             </td>
 
@@ -45,7 +45,7 @@
                         <div class="MediaFill">
                             <div class="MediaFillRelative">
                                 <div class="CenterCenter" style="vertical-align:central">
-                                    <CheckBox [IsChecked]="item.IsChoose || IsAllSelected" (Checked)="CheckboxIsSelectedByDefaultClick(item,$event)"></CheckBox>
+                                    <CheckBox [IsChecked]="item.IsChoose" (Checked)="CheckboxIsSelectedByDefaultClick(item,$event)"></CheckBox>
                                 </div>
                             </div>
                         </div>
