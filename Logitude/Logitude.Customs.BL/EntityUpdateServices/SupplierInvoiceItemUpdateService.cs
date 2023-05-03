@@ -21,6 +21,8 @@ using System.Transactions;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
 using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.BL.Security;
+using System.Data.Entity;
 /*using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;*/
@@ -150,11 +152,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             DateTime stopLogAt = new DateTime(2020, 06, 01);
             string logData = "";
+            DeclarationPM declarationPM = null;
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+
             if (entityPM.ClassificationCode != entityPOCO.ClassificationCode)
             {
                 var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
                 logData = $"entityPM.ClassificationCode(New value)={entityPM.ClassificationCode},entityPOCO.ClassificationCode(Old value)={entityPOCO.ClassificationCode}, User name={loggedUser}"; 
                 LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
+            }
+            if(entityPM.ClassificationCode!=entityPOCO.ClassificationCode || entityPM.ItemCode!=entityPOCO.ItemCode ||entityPM.OriginCountryCode!=entityPOCO.OriginCountryCode || entityPM.ItemDescription != entityPOCO.ItemDescription)
+            {
+                declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
+
+                if (declarationPM.Direction == "E" && SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant))
+                    this.UpdateOrInsertInClientItems(entityPM, declarationPM?.ExporterImporterCode, declarationPM.ImporterId);
             }
             base.OnUpdating(entityPM, entityPOCO);
         }
@@ -553,6 +565,48 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return (from a in dbContext.SupplierInvoiceItems
                     where a.DeclarationId == declarationId && a.CounterKey == invoiceCounterKey && a.IsParent == true
                     select a.LineNumber).ToList();
+        }
+
+        private void UpdateOrInsertInClientItems(SupplierInvoiceItemPM entityPM, string exporterCode, string exporterId)
+        {
+            ICustomContext context = this.MainContext as CustomContext;
+            ClientItemQueryService clientItemQueryService = new ClientItemQueryService(entityPM.Tenant);
+            ClientItemUpdateService clientItemUpdateServicev = new ClientItemUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+
+            if (entityPM != null )
+            {
+               
+                    if (entityPM.ChangeSetOp != ChangeSetOperation.None && !string.IsNullOrEmpty(entityPM.ItemCode))
+                    {
+                        ClientItemPM clientItem = clientItemQueryService.GetSingle(entityPM.ItemCode, exporterCode, false, false);
+                        if (clientItem == null)
+                        {
+                            clientItem = new ClientItemPM()
+                            {
+                                ItemCode = entityPM.ItemCode,
+                                Tenant = entityPM.Tenant,
+                                ItemDescription = entityPM.ItemDescription,
+                                ClassificationCode = entityPM.ClassificationCode,
+                                OriginCountryCode = entityPM.OriginCountryCode,
+                                ClientCode = exporterCode,
+                                ChangeSetOp = ChangeSetOperation.Insert
+
+                            };
+
+                        }
+                        else
+                        {
+                            clientItem.ItemDescription = entityPM.ItemDescription;
+                            clientItem.ClassificationCode = entityPM.ClassificationCode;
+                            clientItem.OriginCountryCode = entityPM.OriginCountryCode;
+                            clientItem.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+
+                        clientItemUpdateServicev.Update(clientItem, true);
+                   
+
+                }
+            }
         }
 
     }
