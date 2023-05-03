@@ -18,6 +18,7 @@ import { ClientPMService } from 'Customs/Services/StandardPMs/ClientPMService';
 import { ClientsTapagPM } from 'Customs/EntityPMs/ClientsTapagPM';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { ClientItemPMService } from 'Customs/Services/StandardPMs/ClientItemPMService';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class ClientEditComponent extends BaseComponent{
    public ValidationErrorsList: string[] = [];
    private CurrentSession = SessionLocator.SelectedSession;
    public isEntityChange: boolean = false;
-
+   ocrFeature:any=null;
    ClientsTapagList: ClientsTapag[] = [];
     tapagNumberName = '';
 
@@ -116,10 +117,10 @@ export class ClientEditComponent extends BaseComponent{
         this.TabsItemsSource.push(new TabItem("REQUESTSHEET", "General.O.RequestSheets"));
         this.TabsItemsSource.push(new TabItem("MOREDATA", "Customs.Client.TH.MoreData"));
         this.TabsItemsSource.push(new TabItem("CLIENTPOA", "General.O.ClientPoas"));
-        this.TabsItemsSource.push(new TabItem("ITEMS", "General.O.Items"));
+        this.TabsItemsSource.push(new TabItem("ITEMS", "Customs.Client.Items"));
 
         this.BuildClientsTapagList();
-
+        this.ocrFeature = FeatureLocator.Features.filter(f => (f.Code == "OCR") && f.ObjectTableId == window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0].Id)[0];
         this.selectedTabCode = "GENERAL";
     }
 
@@ -174,6 +175,7 @@ export class ClientEditComponent extends BaseComponent{
     SelectionChanged() {
         if (!AppTool.IsNullOrEmpty(this.SelectedTabCode)) {
             let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedTabCode)[0];
+
             if (myLocation != null) {
                 switch (this.SelectedTabCode) {
 
@@ -282,8 +284,8 @@ export class ClientEditComponent extends BaseComponent{
                     case "ITEMS": {
                         
 
-                        if (this.ITEMS == null ) {
-                            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsPoa").subscribe((response: any) => {
+                        if (this.ITEMS == null && this.ocrFeature ) {
+                            this.entityResourceService.getEntityResourceByTableName("Customs.ClientItem").subscribe((response: any) => {
                                 SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsClient/Components/EditTabs/Items/ClientItemsTabComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.ITEMS = cmpRef.instance;

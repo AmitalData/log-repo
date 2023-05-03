@@ -1,16 +1,16 @@
-import {Component, EventEmitter, Output}  from '@angular/core';
-import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
-import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
-import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
-import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { CustomMessageProgressComponent } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
-import {ClientMessagesService} from '../../../../../Customs/Services/WebServices/ClientMessagesService';
+import { ClientMessagesService } from '../../../../../Customs/Services/WebServices/ClientMessagesService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
 import { ClaimGeneralTabComponent } from '../../../../CustomsClaim/Components/EditTabs/General/ClaimGeneralTabComponent';
-import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
+import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 import { ClientItemListService } from 'Customs/Services/StandardLists/ClientItemListService';
@@ -20,11 +20,11 @@ import { ClientItemPM } from 'Customs/EntityPMs/ClientItemPM';
 import { AppTool } from 'Infrastructure/Tools';
 
 @Component({
-    
+
     templateUrl: './ClientItemsTabComponent.html',
 })
 
-export class ClientItemsTabComponent extends BaseComponent{
+export class ClientItemsTabComponent extends BaseComponent {
 
     ClientItemsL
     @Output() ClientItemsList: EventEmitter<any> = new EventEmitter();
@@ -34,46 +34,46 @@ export class ClientItemsTabComponent extends BaseComponent{
     entityPM: ClientPM;
     clientMessageService: ClientMessagesService = new ClientMessagesService();
     responseData: INF_MSG_GenericResponseData;
-    public load=false
+    public load = false
     SequenceNumeric: string = "מס'";
     Parent: ClaimGeneralTabComponent;
     private CurrentSession = SessionLocator.SelectedSession;
-    private myService: ClientItemListService=new ClientItemListService();;
+    private myService: ClientItemListService = new ClientItemListService();;
     public ItemsList: ObservableCollection;
-
+    public filters = new ApiQueryFilters();
     constructor(private _EntityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.ClientItem").subscribe((response: any) => {
-            
-                 
-        });
-       // this.ItemsList = new ObservableCollection([]);
 
-    
+
+        });
+        // this.ItemsList = new ObservableCollection([]);
+
+
 
     }
-    LoadDate(){
-        debugger
+    LoadDate() {
+
         this.ItemsList = new ObservableCollection([]);
 
-        var filters = new ApiQueryFilters();
-        filters.PageIndex = 0;
-        filters.PageSize = 100;
-        
-        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-        filters.addAdditionalFilter("ClientCode",this.entityPM.Code , null, null, "Contains", false, false, false, "string");
+
+        this.filters.PageIndex = 0;
+        this.filters.PageSize = 100;
+
+        this.filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+        this.filters.addAdditionalFilter("ClientCode", this.entityPM.Code, null, null, "Contains", false, false, false, "string");
 
 
-        this.myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-          
+        this.myService.getByFilters(this.filters).subscribe((myResponse: ServiceResponse) => {
+
             myResponse?.Result.forEach(element => {
-               
-                this.ItemsList.Insert(new ClientItemModel(element,this))
-                
+
+                this.ItemsList.Insert(new ClientItemModel(element, this))
+
             });
             this.ItemsList.Collection.forEach((obj, index) => obj.SequenceNumeric = index + 1)
-            
-            this.load=true 
+            this.originalItemList.InsertCollection(this.ItemsList.Collection);
+            this.load = true
         })
 
 
@@ -86,31 +86,48 @@ export class ClientItemsTabComponent extends BaseComponent{
 
     SetWindowArgs(args: any) {
         if (args != null) {
-           
+
             this.entityPM = args.EntityPM;
             this.Parent = args.Parent;
         }
     }
 
-   
+
     public operationType: any;
-    
+
     ReloadEntityPM() {
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
+    originalItemList: ObservableCollection = new ObservableCollection([]);
+    public SearchFilterChangedEvent: any;
 
-   
+    TextChanged(searchText) {
+        
+        if (AppTool.IsNullOrEmpty(searchText))
+            this.LoadDate();
+        else {
+            var items: any = this.originalItemList;
+            items = items.Collection.filter(f => f.ClassificationCode != null || f.ItemCode != null);
+            var TempItemList: ClientItemPM[] = [];
+            TempItemList = items.filter(f => f.ClassificationCode.toUpperCase().includes(searchText.toUpperCase()) || f.ItemCode.toUpperCase().includes(searchText.toUpperCase()));
+            this.ItemsList.InsertCollection(TempItemList);
+           
+        }
 
-    
-   
+    }
+
+
+
+
+
 }
 export class ClientItemModel extends BaseComponent {
     public ClientItemPM: ClientItemPM = null;
-    
+
     public ObjectTableName = "Customs.ClientItem";
     public DataContext = this;
 
-    constructor(private clientItemPM: ClientItemPM ,private parent: ClientItemsTabComponent) {
+    constructor(private clientItemPM: ClientItemPM, private parent: ClientItemsTabComponent) {
         super();
         this.ClientItemPM = clientItemPM;
     }
@@ -121,7 +138,7 @@ export class ClientItemModel extends BaseComponent {
     set ItemCode(value: string) {
         if (this.ClientItemPM.ItemCode != value) {
             this.ClientItemPM.ItemCode = value;
-              this.parent.ClientItemsList.emit(this.parent.ItemsList.Collection)
+            this.parent.ClientItemsList.emit(this.parent.ItemsList.Collection)
         }
     }
 
@@ -168,7 +185,7 @@ export class ClientItemModel extends BaseComponent {
 
 
     SetLocalName(entity, fieldName) {
-        
+
         if (!AppTool.IsNullOrEmpty(entity)) {
             this[fieldName] = entity.LocalName;
         } else {
@@ -176,6 +193,7 @@ export class ClientItemModel extends BaseComponent {
         }
 
     }
+
 }
 
 
