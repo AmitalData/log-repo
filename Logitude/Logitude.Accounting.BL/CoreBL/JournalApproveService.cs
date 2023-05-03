@@ -1115,7 +1115,7 @@ namespace Logitude.Accounting.BL.CoreBL
             ICommonDataContext myContext = CommonDataContext.GetContext(int.Parse(sJournalTenant));
             TenantRepository tenantRepository = new TenantRepository(myContext);
             Tenant tenantObj = tenantRepository.GetSingleTenant(int.Parse(sJournalTenant));
-            tenantObj.ApproveUploadedDocuments = false;
+            tenantObj.JouranlApprovalIsIdle = false;
             tenantRepository.Update(tenantObj);
             tenantRepository.SubmitChanges();
 
@@ -1380,7 +1380,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     try
                     {
                         queueservice = new DbQueueService(selectedQueue, 0);
-                        response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
+                        response = queueservice.ReceiveJournal(new TimeSpan(0, 0, 0, 5));
                     }
                     catch (Exception)
                     {
