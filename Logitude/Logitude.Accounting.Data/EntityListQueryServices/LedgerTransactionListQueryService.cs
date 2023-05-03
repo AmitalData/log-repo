@@ -216,8 +216,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                     into transactiosjoin
                                                                     from taxreport in transactiosjoin.DefaultIfEmpty()
                                                                     where ledger.AccountId == accountId && journal.AccountingEntityCode == AccountingEntities.ARInvoice
-                                                                    && ledger.Tenant == transactionBalanceFilter.Tenant && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
-
+                                                                    && ledger.Tenant == transactionBalanceFilter.Tenant && ( additional.TaxReportId == null)
+                                                                    // && ledger.Tenant == transactionBalanceFilter.Tenant && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
                                                                     select new LedgerTransactionList()
                                                                     {
                                                                         Id = ledger.Id,

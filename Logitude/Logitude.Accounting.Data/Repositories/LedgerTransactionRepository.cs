@@ -1534,8 +1534,8 @@ on record.JournalId equals j.Id
                                                        && ledger.Tenant == ledgerTransactionBalanceFilter.Tenant
                                                       && ledger.LocalAmountDebit != 0
                                                       && ledger.AccountId == setting.VATInputsGLAccountId 
-                                                      && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
-                                                      
+                                                      && additional.TaxReportId == null
+                                                      // && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
                                                         select ledger).Distinct();
             if (!string.IsNullOrWhiteSpace(ledgerTransactionBalanceFilter.SearchFields)) {
                 inputLines = inputLines.Where(x => x.SearchFields.Contains(ledgerTransactionBalanceFilter.SearchFields));
