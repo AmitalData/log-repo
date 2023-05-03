@@ -1380,7 +1380,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     try
                     {
                         queueservice = new DbQueueService(selectedQueue, 0);
-                        response = queueservice.ReceiveJournal(new TimeSpan(0, 0, 0, 5));
+                        if (FeatureToggleHelper.HasFeatureToggle("JAM", tenant))
+                            response = queueservice.ReceiveJournal(new TimeSpan(0, 0, 0, 5));
+                        else
+                            response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
+
                     }
                     catch (Exception)
                     {
