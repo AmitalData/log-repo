@@ -137,6 +137,16 @@ namespace Logitude.Customs.Data.Repsitories
             return query;
          
         }
+        public int? GetTenantPriorityByEntityIDAndTeant(string EntityID, int tenant)
+        {
+
+
+            return (from a in context.CustomsRequestsSheets
+                         where a.Tenant == tenant && a.Id == EntityID
+                         select a.TenantPriority).FirstOrDefault();
+
+
+        }
     }
 
 }
