@@ -35,7 +35,7 @@ export class EventRemarksComponent extends BaseComponent {
 
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
-        this._entityResourceService.getEntityResourceByTableName("EventRemark", 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("EventType", 0).subscribe((response: any) => {
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) { this.Run(); }
         });
