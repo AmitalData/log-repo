@@ -36,6 +36,8 @@ using Logitude.Customs.BL.TraceEvents;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.BL;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.Security;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -307,7 +309,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //}
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             _DeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
-                      
+
             if (_DeclarationPM != null && _DeclarationPM.IsConnectedToUnifreight)
             {
                 base.OnUpdating(entityPM);
@@ -373,7 +375,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //    util.CalculateFreightForInvoice(entityPM, _DeclarationPM.TaxationDateTime);
             //    entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(_DeclarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
             //}
-            
+
 
 
             object entityPOCO; object entityPM1; object entityParentPM;
@@ -392,11 +394,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             util.CalculateFreightForInvoice(entityPM, myTaxationDateTime/* _DeclarationPM.TaxationDateTime*/);
             entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(myTaxationDateTime/*_DeclarationPM.TaxationDateTime*/, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
 
-            
+
 
             this.SetDeclarationChanged(entityPM);
             this.UpdateDeclarationPlatformFeeAndPrimaryInvoice(entityPM);
-            this.UpdateOrInsertInClientItems(entityPM);
+             if (_DeclarationPM.Direction == "E" && SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant)) 
+                      this.UpdateOrInsertInClientItems(entityPM,_DeclarationPM?.ExporterImporterCode);
         }
 
 
@@ -1766,17 +1769,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 
-        private void UpdateOrInsertInClientItems(SupplierInvoicePM entityPM)
+        private void UpdateOrInsertInClientItems(SupplierInvoicePM entityPM , string exporterCode)
         {
             ClientItemQueryService clientItemQueryService = new ClientItemQueryService(entityPM.Tenant);
-            ClientItemUpdateService clientItemUpdateServicev = new ClientItemUpdateService(this.currentContext, new Dictionary<string, IContext>(),entityPM.Tenant);
+            ClientItemUpdateService clientItemUpdateServicev = new ClientItemUpdateService(_Context, new Dictionary<string, IContext>(),entityPM.Tenant);
 
             if (entityPM != null && entityPM.SupplierInvoiceItems!=null)
             {
                 foreach (var item in entityPM.SupplierInvoiceItems)
                 {
                     if(item.ChangeSetOp!= ChangeSetOperation.None && !string.IsNullOrEmpty(item.ItemCode)) {
-                        ClientItemPM clientItem = clientItemQueryService.GetSingle(item.ItemCode, "", false, false);
+                        ClientItemPM clientItem = clientItemQueryService.GetSingle(item.ItemCode, exporterCode, false, false);
                         if (clientItem == null)
                         {
                             clientItem = new ClientItemPM()
@@ -1786,6 +1789,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 ItemDescription = item.ItemDescription,
                                 ClassificationCode = item.ClassificationCode,
                                 OriginCountryCode = item.OriginCountryCode,
+                                ClientCode= exporterCode,
                                 ChangeSetOp = ChangeSetOperation.Insert
 
                             };
@@ -1798,6 +1802,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             clientItem.OriginCountryCode = item.OriginCountryCode;
                             clientItem.ChangeSetOp = ChangeSetOperation.Update;
                         }
+                       EventTracer.CreateTraceEvent(new EventTracerArgs() { EntityId = clientItem.ItemCode, ObjectTableName = "Customs.Client", Tenant = entityPM.Tenant, UserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant), EventTypeCode = "CUCI", Notes = "item code:"+ clientItem.ItemCode });
+
                         clientItemUpdateServicev.Update(clientItem, true);
                     }
                     
