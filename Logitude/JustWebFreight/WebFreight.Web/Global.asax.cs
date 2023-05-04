@@ -365,12 +365,7 @@ namespace WebFreight.Web
                 LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;// this project no need but in FilingManager is must 
                 LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
-                Logger.OverrideExecutablePath = HttpContext.Current.Server.MapPath("App_Data");
-                LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
-                {
-                    if (DateTime.Now > stopLogAt) return;
-                    Logger.LogMe(mess, err, suffix);
-                });
+              
                 LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
                 createAmitalRestrictOwnerModelService = () =>
@@ -379,6 +374,17 @@ namespace WebFreight.Web
                     return amitalRestrictOwnerService;
                 };
             }
+
+
+            //logging
+            Logger.OverrideExecutablePath = HttpContext.Current.Server.MapPath("App_Data");
+            LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
+            {
+                if (DateTime.Now > stopLogAt) return;
+                Logger.LogMe(mess, err, suffix);
+            });
+
+
 
             LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
             LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
