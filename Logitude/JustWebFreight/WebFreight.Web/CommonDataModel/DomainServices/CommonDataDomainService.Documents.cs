@@ -33,7 +33,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using ICSharpCode.SharpZipLib.Zip;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using ICSharpCode.SharpZipLib.Checksums;
+using ICSharpCode.SharpZipLib.Checksum;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {

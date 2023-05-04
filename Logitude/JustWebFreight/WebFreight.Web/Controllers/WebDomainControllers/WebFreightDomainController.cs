@@ -1,5 +1,4 @@
-﻿using ICSharpCode.SharpZipLib.Checksums;
-using ICSharpCode.SharpZipLib.Zip;
+﻿using ICSharpCode.SharpZipLib.Zip;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
@@ -41,6 +40,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.SystemLogs;
+using ICSharpCode.SharpZipLib.Checksum;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
