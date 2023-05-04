@@ -78,14 +78,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         private static void ULog(string text, DateTime stopLogAt)
         {
-            if (LogitudeSettings.HandleLogMe != null)
-            {
-                LogitudeSettings.HandleLogMe(text, false, "TaxReportPMToPOCO", new DateTime(2023, 6, 1));
-            }
-            else
-            {
-                Logger.LogMe(text, false, "TaxReportPMToPOCO_1L");
-            }
+            LogitudeSettings.HandleLogMe(text, false, "TaxReportPMToPOCO", new DateTime(2023, 6, 1));
         }
 
 
