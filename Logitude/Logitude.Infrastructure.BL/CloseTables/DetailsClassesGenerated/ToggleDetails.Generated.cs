@@ -946,7 +946,7 @@ namespace Logitude.Infrastructure.BL
                 Code = "JAM", 
                 Name = "Journal Approval MultiThreading", 
                 SearchFields = "JAM, Journal Approval MultiThreading", 
-                Description = "Journal Approval MultiThreading", 
+                Description = "Journal Approval MultiThreading ", 
 			});
 			
             return all;
