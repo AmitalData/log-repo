@@ -734,15 +734,20 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AccountingModel\CopyFromTenant0ExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CopyFromTenant0ViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\CopyFromTenant0Controller.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ChargesTypeAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ImporterPortsController.cs" />
     <Compile Include="Controllers\CommonDataModel\Services\ImporterPortsExtendedService.cs" />
     <Compile Include="Controllers\DashboardModel\Extended\DashboardListExtendedController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardGlobalPresetFilterViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\GLAccountInterestDeactivationBalanceController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardsUserSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardGlobalPresetFilterController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\GLAccountInterestActivationBalanceController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardsUserSettingController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AddressTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\PortGroupViewsController.Generated.cs" />
@@ -1435,13 +1440,17 @@
     <Compile Include="ExternalAPIs\GetShipmentsByReferencesController.cs" />
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
+    <Compile Include="ExternalAPIs\V1\APInvoiceLiteController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceJournalLTController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARInvoiceLiteController.cs" />
     <Compile Include="ExternalAPIs\V1\ARPaymentChqStsController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARPaymentLiteController.cs" />
     <Compile Include="ExternalAPIs\V1\ClosedMonthCheckController.cs" />
     <Compile Include="ExternalAPIs\V1\ContainerController.cs" />
     <Compile Include="ExternalAPIs\V1\EventTypeModule\EventTypeController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountChequeDetailsController.cs" />
     <Compile Include="ExternalAPIs\V1\CargoTrackingShipmentDetailsController.cs" />
+    <Compile Include="ExternalAPIs\V1\JournalLiteController.cs" />
     <Compile Include="ExternalAPIs\V1\ShipmentOrderModule\ShipmentOrderController.cs" />
     <Compile Include="ExternalAPIs\V1\ShipmentStatusesController.cs" />
     <Compile Include="FileNotFound.aspx.cs">
@@ -3493,6 +3502,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContinuousRequestTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CopyFromTenant0UpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierCustomStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationUpdateClass.cs" />
@@ -4031,11 +4041,19 @@
     <Content Include="css\kendo.mobile.all.min.css.map" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamIslam\LoginVars.csv" />
     <Content Include="ApplicationInsights.config" />
+    <None Include="Properties\PublishProfiles\AmitalTestNewProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
+    <None Include="Properties\PublishProfiles\AmitalProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\Customs.pubxml" />
+    <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\LogboxProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\master.pubxml" />
     <None Include="Properties\PublishProfiles\MasterDev.pubxml" />
     <None Include="Properties\PublishProfiles\CustomsDev.pubxml" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
+    <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="Properties\PublishProfiles\testR4.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
     <None Include="Resources\Stimulsoft Reports.Ultimate 2013.1 Trial A252_020150909133627201254900033002.mrt.txt" />

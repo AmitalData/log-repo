@@ -154,6 +154,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
            .HasMaxLength(40)
            .IsUnicode(false);
 
+            this.Property(t => t.ComputedCustomerDocumentId)
+           .HasMaxLength(40)
+           .IsUnicode(false);
+
             this.Property(t => t.SecurityId)
                 .HasMaxLength(60)
                 .IsUnicode(false);

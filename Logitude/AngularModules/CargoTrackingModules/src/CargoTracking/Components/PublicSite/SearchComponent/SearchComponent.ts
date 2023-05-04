@@ -24,8 +24,7 @@ import { MatDialog } from '@angular/material/dialog';
     templateUrl: './SearchComponent.html',
     styleUrls: ['./SearchComponent.css']
 })
-export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
-{
+export class SearchComponent implements AfterViewInit, OnInit, OnDestroy {
 
     @ViewChild('input') input: ElementRef;
     isLoading: boolean = false;
@@ -37,7 +36,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     searchForm;
     ServiceError;
     Shipments: CargoTrackingShipmentList[] = [];
-    searchCounter: number =+ sessionStorage.getItem("searchCounter");
+    searchCounter: number = + sessionStorage.getItem("searchCounter");
     public CaptchaImageUrl: any;
     public ShowCaptcha: boolean = false
     public CaptchaKey: string = "";
@@ -45,7 +44,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     private captchaParameters: CaptchaParameters;
     public errorMessage: string;
     public ShortSearchValueBlockingMessage: string = "Search value must have at least three characters";
-    MobileReferencesViewCount = 1 ;
+    MobileReferencesViewCount = 1;
     WebReferencesViewCount = 3
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -54,8 +53,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         private searchService: CargoTrackingSearchService,
         public dialog: MatDialog,
         public DatePipe: DatePipe,
-        public dateTimeFormatPipe: DateTimeFormatPipe)
-    {
+        public dateTimeFormatPipe: DateTimeFormatPipe) {
         this.GetSearchTextFromURI();
         this.listenToRouterEvents();
 
@@ -65,20 +63,19 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         this.InitForm();
     }
 
-   get  tenant(){
-    return CargoTrackingBrandingData.Tenant;
-   }
-    ngOnInit()
-    {
+    get tenant() {
+        return CargoTrackingBrandingData.Tenant;
+    }
+    ngOnInit() {
 
-        if(this.SearchText){
-               if(SearchComponent.Last_Search_Shipments){
+        if (this.SearchText) {
+            if (SearchComponent.Last_Search_Shipments) {
                 this.Shipments = SearchComponent.Last_Search_Shipments;
-               }
-               else{
-                 this.Search("on init");
-               }
-           }
+            }
+            else {
+                this.Search("on init");
+            }
+        }
         // if(localStorage.getItem('SearchKey') == this.SearchText){
         //     if (localStorage.getItem('Shipments'))
         //         this.Shipments = JSON.parse(localStorage.getItem('Shipments'));
@@ -92,8 +89,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         // }
     }
 
-    ngOnDestroy()
-    {
+    ngOnDestroy() {
         if (this.Shipments.length > 0) {
             //localStorage.setItem('SearchKey', this.SearchText);
             //localStorage.setItem('Shipments', JSON.stringify(this.Shipments));
@@ -101,14 +97,13 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         }
     }
 
-    private static Last_Search_Shipments:CargoTrackingShipmentList[];
+    private static Last_Search_Shipments: CargoTrackingShipmentList[];
 
-    private GetSearchTextFromURI()
-    {
+    private GetSearchTextFromURI() {
         let searchKey = this.route.snapshot.paramMap.get('searchKey');
 
         const queryParams = this.route.snapshot.queryParams;
-        if(queryParams){
+        if (queryParams) {
             var searchKeyFromQueryParams = queryParams['searchKey'];
             this.SearchText = searchKeyFromQueryParams;
         }
@@ -117,20 +112,17 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
 
 
-    private InitForm()
-    {
+    private InitForm() {
         this.searchForm = this.formBuilder.group({
             SearchText: ''
         });
     }
 
-    ngAfterViewInit()
-    {
+    ngAfterViewInit() {
         //   document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
     }
 
-    SubscribeInputTextChanges()
-    {
+    SubscribeInputTextChanges() {
         // server-side search // after view init
         // fromEvent(this.input.nativeElement,'keyup')
         //     .pipe(
@@ -174,10 +166,8 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
 
 
-    private listenToRouterEvents()
-    {
-        this.router.events.subscribe((event: Event) =>
-        {
+    private listenToRouterEvents() {
+        this.router.events.subscribe((event: Event) => {
             if (event instanceof RoutesRecognized) {
 
                 var url = event.urlAfterRedirects;
@@ -194,12 +184,10 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
 
     private _SearchText: string;
-    public get SearchText(): string
-    {
+    public get SearchText(): string {
         return this._SearchText;
     }
-    public set SearchText(v: string)
-    {
+    public set SearchText(v: string) {
         this._SearchText = v;
         if (!this.SearchText)
             this.Search("searchText");
@@ -207,37 +195,46 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
 
 
-    get IsMobileView(){
+    get IsMobileView() {
         const isPortrait = window.innerHeight > window.innerWidth;
         return (window.innerWidth <= mobileScreenMaxWidth && isPortrait)
-        || ( window.innerHeight <= mobileScreenMaxWidth && !isPortrait);
+            || (window.innerHeight <= mobileScreenMaxWidth && !isPortrait);
     }
 
-    Clear()
-    {
+    Clear() {
+        
         this.SearchText = '';
         this.noResult = false;
         this.Shipments = [];
-        this.location.go( 'public-tracking/search/' );
-    }
+        this.location.go('public-tracking/search/');
 
-    Search(searchSource:any)
-    {
+    }
+    private timerToken: any;
+    onSearchChange() {
+        
+        if (this.SearchText == "" || this.SearchText == null){
+            this.timerToken = setTimeout(() =>   this.LoadShipments(), 800);
+
+        }
+        
+         
+    }
+    Search(searchSource: any) {
 
         //if (this.IsShowAreaCaptcha) {
         //    this.ValidateUser();
         //}
         //else {
-            this.CheckSearchTimes(searchSource);
-            var minimumCharactersLimitForSearch = 3;
-            if (this.SearchText?.length < minimumCharactersLimitForSearch && searchSource != "searchText") {
-                this.OpenMessageWindow(this.ShortSearchValueBlockingMessage);
-            }
-            else if (this.tenant != null && this.SearchText) {
+        this.CheckSearchTimes(searchSource);
+        var minimumCharactersLimitForSearch = 3;
+        if (this.SearchText?.length < minimumCharactersLimitForSearch && searchSource != "searchText") {
+            this.OpenMessageWindow(this.ShortSearchValueBlockingMessage);
+        }
+        else if (this.tenant != null && this.SearchText) {
             this.router.navigate(['public-tracking/search'], { queryParams: { searchKey: this.SearchText } });
             this.LoadShipments();
-       // }
-    }
+            // }
+        }
 
     }
     CheckSearchTimes(searchSource: any) {
@@ -280,8 +277,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         });
     }
 
-    ItemClicked(item)
-    {
+    ItemClicked(item) {
         var selection = window.getSelection();
         if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
@@ -289,8 +285,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
             this.router.navigate(['public-tracking/search', 'shipment', SecurityKey]);
         }
     }
-    LoadShipments()
-    {
+    LoadShipments() {
         this.noResult = false;
         var searchText = this._SearchText.trim().toLowerCase();
         if (searchText) {
@@ -301,8 +296,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
             let searchRequest = this.BuildSearchRequest(searchText);
             this.searchService.getShipments(searchRequest).subscribe(
-                (result: any) =>
-                {
+                (result: any) => {
                     RootContext.StopBusyIndicator();
                     this.isLoading = false;
                     console.log("[getShipments]", result);
@@ -310,16 +304,14 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
                     var searchResponse: CargoTrackingSearchResponse = result;
                     if (searchResponse.CaptchaRequired)
                         this.ShowCaptchaCode(searchResponse);
-                    else
-                    {
+                    else {
                         this.ResetCaptcha();
                         this.Shipments = this.SortShipmentsBasedOnCurrentMilestoneDate(searchResponse.Shipments);
                         this.noResult = this.Shipments.length == 0 && !!this.SearchText;
                     }
 
                 },
-                errorObject =>
-                {
+                errorObject => {
                     RootContext.StopBusyIndicator();
                     this.isLoading = false;
                     this.hasError = true;
@@ -337,14 +329,12 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         }
     }
 
-    private ResetCaptcha()
-    {
+    private ResetCaptcha() {
         this.ShowCaptcha = false;
         this.CaptchaKey = "";
     }
 
-    private ShowCaptchaCode(searchResponse: CargoTrackingSearchResponse)
-    {
+    private ShowCaptchaCode(searchResponse: CargoTrackingSearchResponse) {
         this.CaptchaTextValue = "";
         this.CaptchaImageUrl = searchResponse.CaptchaImage;
         this.CaptchaKey = searchResponse.CaptchaKey;
@@ -352,8 +342,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         this.errorMessage = searchResponse.InvalidCaptcha ? invalidCaptchaMessage : '';
     }
 
-    private BuildSearchRequest(searchText: string)
-    {
+    private BuildSearchRequest(searchText: string) {
         let searchRequest = new CargoTrackingSearchRequest();
         searchRequest.Tenant = this.tenant;
         searchRequest.SearchKey = searchText;
@@ -362,7 +351,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         return searchRequest;
     }
 
-    private SortShipmentsBasedOnCurrentMilestoneDate(result: any) : CargoTrackingShipmentList[] {
+    private SortShipmentsBasedOnCurrentMilestoneDate(result: any): CargoTrackingShipmentList[] {
         var sortedShipments: CargoTrackingShipmentList[] = result.sort((first, second) => {
             var isBothCurrentMilestoneDateExistAndNotEqual = first.CurrentMilestoneDate != null && second.CurrentMilestoneDate != null && first.CurrentMilestoneDate != second.CurrentMilestoneDate;
             if (isBothCurrentMilestoneDateExistAndNotEqual) {
@@ -391,49 +380,48 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
 
     references: string[];
-    SplitReference(shipment: CargoTrackingShipmentList){
-       
-        
+    SplitReference(shipment: CargoTrackingShipmentList) {
+
+
         this.references = this.getReference(shipment);
         this.references = this.references.filter((el, i, a) => i === a.indexOf(el));
 
     }
-    getReference(shipment: CargoTrackingShipmentList): string[]{
+    getReference(shipment: CargoTrackingShipmentList): string[] {
         var references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : [];
-        references = references.filter(e=>e.length > 0);
+        references = references.filter(e => e.length > 0);
         var houseReferences = this.getHouseReferences(shipment);
-        
-        references = [...houseReferences,...references]
+
+        references = [...houseReferences, ...references]
         return references;
     }
     getHouseReferences(shipment): string[] {
-        var houseReferences:string[] = [];
-        if(shipment.House && !houseReferences.find(e=>e == shipment.House)){
+        var houseReferences: string[] = [];
+        if (shipment.House && !houseReferences.find(e => e == shipment.House)) {
             houseReferences.push(shipment.House);
         }
-        if(shipment.ForwardingHouse && !houseReferences.find(e=>e == shipment.ForwardingHouse)){
+        if (shipment.ForwardingHouse && !houseReferences.find(e => e == shipment.ForwardingHouse)) {
             houseReferences.push(shipment.ForwardingHouse);
         }
-        if(shipment.SHOHouse && !houseReferences.find(e=>e == shipment.SHOHouse)){
+        if (shipment.SHOHouse && !houseReferences.find(e => e == shipment.SHOHouse)) {
             houseReferences.push(shipment.SHOHouse);
         }
         return houseReferences;
     }
-    showReference(event,shipment: CargoTrackingShipmentList,isMobile){
+    showReference(event, shipment: CargoTrackingShipmentList, isMobile) {
         event.stopPropagation();
         var references = this.getReference(shipment);
-        references = references.filter(e=>e.length > 0);
-        references = references.slice(isMobile? this.MobileReferencesViewCount : this.WebReferencesViewCount )
+        references = references.filter(e => e.length > 0);
+        references = references.slice(isMobile ? this.MobileReferencesViewCount : this.WebReferencesViewCount)
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
-                description:  references.join("\n") ,
+                description: references.join("\n"),
             }
         });
     }
     public transform: string;
-    GetModeIcon(mode: string)
-    {
+    GetModeIcon(mode: string) {
         var iconPath = "";
         switch (mode) {
             case 'A':
@@ -455,33 +443,30 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         return iconPath;
     }
 
-    GetShipmentStatus(shipment: CargoTrackingShipmentList)
-    {
-        if(shipment.CurrentMilestoneCode)
+    GetShipmentStatus(shipment: CargoTrackingShipmentList) {
+        if (shipment.CurrentMilestoneCode)
             var status = this.GetShipmentStatusFromCurrentMilestone(shipment);
-        else if(shipment.FutureMilstoneCode)
+        else if (shipment.FutureMilstoneCode)
             var status = this.GetShipmentStatusFromFutureMilestone(shipment);
 
         return status;
     }
 
-    private GetShipmentStatusFromFutureMilestone(shipment: CargoTrackingShipmentList)
-    {
+    private GetShipmentStatusFromFutureMilestone(shipment: CargoTrackingShipmentList) {
         let name = shipment.FutureMilstoneName;
         let status = name;
-        if (shipment.FutureMilstoneDate){
+        if (shipment.FutureMilstoneDate) {
             let date = shipment.FutureMilstoneDate;
             status += "\n on " + this.dateTimeFormatPipe.transform(this.DatePipe.transform(date, 'd-MMM-y, HH:mm'));
         }
         return status;
     }
 
-    private GetShipmentStatusFromCurrentMilestone(shipment: CargoTrackingShipmentList)
-    {
+    private GetShipmentStatusFromCurrentMilestone(shipment: CargoTrackingShipmentList) {
         let name = shipment.CurrentMilestoneName;
         var status = name;
 
-        if (shipment.CurrentMilestoneDate){
+        if (shipment.CurrentMilestoneDate) {
             var date = shipment.CurrentMilestoneDate;
             status += "\n on " + this.dateTimeFormatPipe.transform(this.DatePipe.transform(date, 'd-MMM-y, HH:mm'));
         }

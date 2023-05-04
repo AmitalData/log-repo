@@ -18,6 +18,10 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -2043,5 +2047,40 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             TenantRepository tenantRepository = new TenantRepository(tenant);
             return tenantRepository.GetLocalCurrencyFromTenant(tenant);
         }
+        public void CopyFromTenant0(int tenant, int tenatToCopy)
+        {
+
+            TenantService service = new TenantService(repository.context, tenatToCopy);
+
+            List<Tenant> pocos = this.repository.context.Tenants.Where(r =>  r.Id == tenant).ToList();
+            TenantPM myTenant = this.GetTenantFromDB(tenatToCopy);
+            
+
+            foreach (var item in pocos)
+            {
+
+                myTenant.ApplyVATForAllPartners = item.ApplyVATForAllPartners;
+                myTenant.VatFormatTypeCode = item.VatFormatTypeCode;
+                myTenant.VatFormatCountryId = item.VatFormatCountryId;
+                myTenant.IsNumeric = item.IsNumeric;
+                myTenant.VatSize = item.VatSize;
+                myTenant.CheckDigitControlAlgorithmCode = item.CheckDigitControlAlgorithmCode;
+                myTenant.VatMandatoryTypeCode = item.VatMandatoryTypeCode;
+                myTenant.VatMandatoryCountryId = item.VatMandatoryCountryId;
+                myTenant.VatMandatoryForPotentialCustomers = item.VatMandatoryForPotentialCustomers;
+                myTenant.VatUniqueTypeCode = item.VatUniqueTypeCode;
+                myTenant.VatUniqueCountryId = item.VatUniqueCountryId;
+                myTenant.VatUniquePartnerTypeCode = item.VatUniquePartnerTypeCode;
+
+
+
+                service.Update(myTenant);
+
+            }
+            this.repository.context.SaveChanges();
+
+        }
+
     }
+
 }

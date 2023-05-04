@@ -47,6 +47,7 @@ export class Export2ExcelControl {
     queryId: string;
     userid: string;
     QueryType: string;
+    Type: string
     ExportExcelArgs: any;
     WebFreightDomainService: WebFreightDomainService;
     ReconcileExcelDataArgs : ReconcileExcelDataArgs;
@@ -56,6 +57,7 @@ export class Export2ExcelControl {
         this.queryName = args.QueryName;
         this.ExportExcelArgs = args.ExportExcelArgs;
         this.ReconcileExcelDataArgs = args.ReconcileExcelDataArgs;
+        this.Type = args.Type ? args.Type : "";
 
        if (this.QueryType == "LogBox") {
             var logboxShipmentExportExcelService: LogboxShipmentExportExcelService = new LogboxShipmentExportExcelService();
@@ -226,10 +228,10 @@ export class Export2ExcelControl {
     }
 
 
-    SaveExcelFile(tenant: number, FileName: string, OTName: string) {
+    SaveExcelFile(tenant: number, FileName: string, OTName: string , Type: string) {
         var tempDate = new Date();
         var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() +  "&qname=" + this.queryName + "_" + MyDate;
+        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() +  "&qname=" + this.queryName + "_" + MyDate+ "&type=" + this.Type ;
         //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         //    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(url);
         //} else
@@ -241,7 +243,7 @@ export class Export2ExcelControl {
     }
 
     SaveBtnCLicked() {
-        this.SaveExcelFile(this.tenant, this.FileName, this.ObjectTableName);
+        this.SaveExcelFile(this.tenant, this.FileName, this.ObjectTableName, this.Type);
     }
     RetryBtnClicked() {
 

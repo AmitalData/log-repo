@@ -20,13 +20,13 @@
 
                 <div class="search-text" [class.hide-mobile]="!ShipmentSearchInput.SearchText">
                     <input #input type="text " class="gray " [(ngModel)]="ShipmentSearchInput.SearchText" placeholder="Free search ..."
-                        formControlName="SearchText" name="SearchText " />
+                        formControlName="SearchText" name="SearchText " (input)="onSearchChange()"/>
                 </div>
 
-                <button mat-button matSuffix mat-stroked-button aria-label="search" class="search-button" type="submit"
+                <!-- <button mat-button matSuffix mat-stroked-button aria-label="search" class="search-button" type="submit"
                     (onsubmit)="LoadScreenData()">
                     <i class="las la-search"></i>
-                </button>
+                </button> -->
             </form>
         </div>
 

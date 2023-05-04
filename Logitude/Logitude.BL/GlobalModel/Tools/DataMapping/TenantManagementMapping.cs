@@ -122,6 +122,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.ContactEmail = entityPM.ContactEmail;
             entityPOCO.CustomerURL = entityPM.CustomerURL;
             entityPOCO.ActivatedforDeclarationApprove = entityPM.ActivatedforDeclarationApprove;
+            entityPOCO.ShowMoneyOrder = entityPM.ShowMoneyOrder;
             entityPOCO.DeclarationMessage = entityPM.DeclarationMessage;
             entityPOCO.HideSharedlogistics = entityPM.HideSharedlogistics;
             entityPOCO.SilverlightEndDate = entityPM.SilverlightEndDate;

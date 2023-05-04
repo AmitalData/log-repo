@@ -209,8 +209,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
        
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             FullAccountingSetting setting = GetTenantFullAccountingSetting(entityPM.Tenant);
-            string vatNumber = tenantQuery.GetTenantVatNumber(entityPM.Tenant);         
-            entityPM.StatusCode = "6";
+            string vatNumber = tenantQuery.GetTenantVatNumber(entityPM.Tenant);
+            if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
+            {
+                entityPM.StatusCode = "6";
+            }
             entityPM.VatNumber = ModifyVatNumberToValidLength(entityPM.VatNumber);
             string trimmedZeros = entityPM.VatNumber != null ? entityPM.VatNumber.Trim('0') : null;
             bool zerosVatNumber;
@@ -274,6 +277,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         }
 
                     }
+                    
                 }
 
                 if (entityPM.VatableInvoiceAmount != null && entityPM.VatableInvoiceAmount != 0)

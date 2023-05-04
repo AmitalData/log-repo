@@ -36,6 +36,7 @@ using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.Accounting.BL.CoreBL.InterestTrans;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -116,9 +117,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (listTransactionId.Count > 0)
                 {
                     var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-                    //ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant, inReconcileProgress /*true*/);
+                    ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant, inReconcileProgress /*true*/);
 
-                    LedgerTransactionUpdateService.UpdateInReconcileProgress(entityPM.Id, entityPM.Tenant, inReconcileProgress);
+                    //LedgerTransactionUpdateService.UpdateInReconcileProgress(entityPM.Id, entityPM.Tenant, inReconcileProgress);
                 }
             }
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert
@@ -140,7 +141,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (listTransactionId.Count > 0)
                 {
                     var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-                    LedgerTransactionUpdateService.Update_InProgressExternalReconcile(entityPM.Id, Tenant, true);
+                    // LedgerTransactionUpdateService.Update_InProgressExternalReconcile(entityPM.Id, Tenant, true);
+                    ledgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, Tenant, true);
                 }
                 var listReconcileExternalPageLineId = entityPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
                 if (listReconcileExternalPageLineId.Count > 0)
@@ -663,7 +665,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var myJournalStornoService = new JournalStornoService();
             IJournalStornoPrepareJReconcileService journalStornoPrepareJReconcileService = new JournalStornoPrepareJReconcileService();
             journalStornoPrepareJReconcileService.MustInitialize(newAccountingContextDueCreatedJournal, _JornalPmSource);
-            myJournalStornoService.Init(_JornalPmSource, _StornoOverrideM, _journalUpdateService, journalStornoPrepareJReconcileService);
+            IJournalStornoPrepareExternalReconcileService journalStornoPrepareExternalReconcileService = new JournalStornoPrepareExternalReconcileService(newAccountingContextDueCreatedJournal, _JornalPmSource);
+            myJournalStornoService.Init(_JornalPmSource, _StornoOverrideM, _journalUpdateService, journalStornoPrepareJReconcileService, journalStornoPrepareExternalReconcileService);
             var journalUpdate = new JournalUpdateOnUpdating(this.MainContext as IAccountingContext, myJournalStornoService);
             //if (this.GetType().Name == "JournalVoidUpdateService")//
             return journalUpdate;

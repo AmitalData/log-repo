@@ -24,6 +24,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
 using System.Data.Entity.Core.Objects;
 using System.Text.RegularExpressions;
+using System.Numerics;
 
 namespace Logitude.Accounting.BL.DataContract
 {
@@ -68,32 +69,38 @@ namespace Logitude.Accounting.BL.DataContract
 
         List<string> GetARInvoicesSequnaces(List<string> invoicesNumbers)
         {
+            List<string> FormatedinvoicesNumbers = new List<string>();
+            foreach (string a in invoicesNumbers)
+            {
+                FormatedinvoicesNumbers.Add(FormatInvocieNumber(a));
+            }
+            FormatedinvoicesNumbers = FormatedinvoicesNumbers.Select(BigInteger.Parse).OrderBy(e => e).Select(e => e.ToString()).Distinct().ToList();
             List<string> sequances = new List<string>();
             string seqFrom = null;
-            for (var i = 0; i < invoicesNumbers.Count - 1; i++)
+            for (var i = 0; i < FormatedinvoicesNumbers.Count - 1; i++)
             {
                 if (seqFrom == null)
                 {
-                    seqFrom = invoicesNumbers[i];
+                    seqFrom = FormatedinvoicesNumbers[i];
                 }
 
-                if (int.TryParse(Regex.Replace(invoicesNumbers[i], @"[^\d]", ""), out int curr) && int.TryParse(Regex.Replace(invoicesNumbers[i + 1], @"[^\d]", ""), out int next))
+                if (int.TryParse(Regex.Replace(FormatedinvoicesNumbers[i], @"[^\d]", ""), out int curr) && int.TryParse(Regex.Replace(FormatedinvoicesNumbers[i + 1], @"[^\d]", ""), out int next))
                 {
 
                     if ((next - curr) == 1)
                     {
-                        if ((i + 1) == invoicesNumbers.Count - 1)
+                        if ((i + 1) == FormatedinvoicesNumbers.Count - 1)
                         {
-                            sequances.Add(FormatInvocieNumber(seqFrom) + " - " + FormatInvocieNumber(invoicesNumbers[i + 1]));
+                            sequances.Add(seqFrom + " - " + FormatedinvoicesNumbers[i + 1]);
                         }
                         continue;
                     }
                     else
                     {
-                        sequances.Add(FormatInvocieNumber(seqFrom) + " - " + FormatInvocieNumber(invoicesNumbers[i]));
-                        if ((i + 1) == invoicesNumbers.Count - 1)
+                        sequances.Add(seqFrom + " - " + FormatedinvoicesNumbers[i]);
+                        if ((i + 1) == FormatedinvoicesNumbers.Count - 1)
                         {
-                            sequances.Add(FormatInvocieNumber(invoicesNumbers[i + 1]) + " - " + FormatInvocieNumber(invoicesNumbers[i + 1]));
+                            sequances.Add(FormatedinvoicesNumbers[i + 1] + " - " + FormatedinvoicesNumbers[i + 1]);
                         }
                         seqFrom = null;
                     }

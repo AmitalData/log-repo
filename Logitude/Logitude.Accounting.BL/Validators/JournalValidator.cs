@@ -182,7 +182,8 @@ namespace Logitude.Accounting.BL.Validators
             }
             currDateTimeUtcNow = currDateTimeUtcNow ?? TenantServerConfigration.GetCurrentDateTime(myJournalPM.Tenant); //DateTime.UtcNow;
 
-            if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_AccountingPeriodsByTypeRegular))
+            //Use SearchFields as an indicator to apply validation only for one-line reconciliation if the journal is one or split.
+            if ((myJournalPM.SearchFields== "OneLineReconciliation") && accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_AccountingPeriodsByTypeRegular))
             {
                 var accountingPeriodsByTypeRegular = accountingValidationContextServiceProvider.Items[JournalValidator.K_AccountingPeriodsByTypeRegular] as List<AccountingPeriodPM>;
                 if (accountingPeriodsByTypeRegular != null)
@@ -731,12 +732,17 @@ accountingValidationContextServiceProvider
                 return;
             }
 
-            if (myJournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
+
+            if (!string.IsNullOrWhiteSpace(myJournalPM.OriginalJournalId))
+            {
+                //CancelDeposit no validation needed
+            }
+            else if (myJournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
             {
                 var myExternalReconcileAdjustBankFeesService = new ExternalReconcileAdjustBankFeesService();
                 myExternalReconcileAdjustBankFeesService.MustInit(myIExternalReconcileDataProvider);
 
-                List<string> reconcileExternalPageLineIdList = myJournalPM.JournalExternalReconciles.Where(r=>!string.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId)).Select(r => r.ReconcileExternalPageLineId).ToList();
+                List<string> reconcileExternalPageLineIdList = myJournalPM.JournalExternalReconciles.Where(r => !string.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId)).Select(r => r.ReconcileExternalPageLineId).ToList();
                 string adjustGLAccountId = CreateAutoExternalReconcileWhileStreamingService.GetAdjustGLAccountId(myJournalPM);
 
                 List<ReconcileExternalPageLineList> listOfpageLineList;
@@ -749,7 +755,7 @@ accountingValidationContextServiceProvider
 
                 myExternalReconcileAdjustBankFeesService.PrapareAndValid(myJournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming,
 
-            
+
                     ledgerTransactionIds,
                     out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList,
                     skipAccountValidation
@@ -778,7 +784,7 @@ accountingValidationContextServiceProvider
                     string errString;
                     myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.PrepareAndValidate(myJournalPM.Tenant, false,
                         ///myJournalPM.JournalExternalReconciles[0].LedgerTransactionId
-                        myJournalPM.JournalExternalReconciles.Select(r=>r.LedgerTransactionId).ToList()
+                        myJournalPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList()
                         , myJournalPM.JournalExternalReconciles[0].ReconcileExternalPageLineId, out myLedgerTransactionBankTransferPMs, out bankAccountFromTransfer, out myReconcileExternalPageLinePM, out errString);
                     if (!string.IsNullOrWhiteSpace(errString))
                     {
@@ -1100,7 +1106,7 @@ accountingValidationContextServiceProvider
                 //    + " ( " + TranslateMyTextCode("Accounting.General.O.GLAccountIs",0) + " " + GetAccountName(myGLAccountDataProvider, pmAcc.Id, myJournalPM.Tenant) + " )");
 
                 // WI:48580
-                if(myJournalPM.AccountingEntityCode != "2")
+                //if(myJournalPM.AccountingEntityCode != "2")//REM by A. Khitrik--04.Apr.2023--180465-- 
                 errorsList.Add(TranslateMyTextCode("Accounting.General.O.PaymentBankAccountCurrencyDifferent", myJournalPM.Tenant));
             }
             if (pmAcc.IsMultiCurrency.GetValueOrDefault())

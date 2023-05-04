@@ -1,4 +1,4 @@
-@smoke
+@smoke @CloudSmokeTestingTag
 Feature: Bank Accounts
     The user creates new GL Account, new Deffered GL Account, new Transfer GL Acccount and new Bank Accounts
 

@@ -614,6 +614,11 @@ export class TenantManagementPM {
     public set ActivatedforDeclarationApprove(newValue: boolean) { if (this.activatedforDeclarationApprove != newValue) { this.activatedforDeclarationApprove = newValue; this.MarkAsDirty("ActivatedforDeclarationApprove"); } }
        
 	 
+    private showMoneyOrder: boolean;
+    public get ShowMoneyOrder() { return this.showMoneyOrder; }
+    public set ShowMoneyOrder(newValue: boolean) { if (this.showMoneyOrder != newValue) { this.showMoneyOrder = newValue; this.MarkAsDirty("ShowMoneyOrder"); } }
+       
+	 
     private declarationMessage: string;
     public get DeclarationMessage() { return this.declarationMessage; }
     public set DeclarationMessage(newValue: string) { if (this.declarationMessage != newValue) { this.declarationMessage = newValue; this.MarkAsDirty("DeclarationMessage"); } }
@@ -1003,18 +1008,23 @@ export class TenantManagementPM {
     private digitalPortalMobTotalLastMonth: number;
     public get DigitalPortalMobTotalLastMonth() { return this.digitalPortalMobTotalLastMonth; }
     public set DigitalPortalMobTotalLastMonth(newValue: number) { if (this.digitalPortalMobTotalLastMonth != newValue) { this.digitalPortalMobTotalLastMonth = newValue; this.MarkAsDirty("DigitalPortalMobTotalLastMonth"); } }
-
+       
+	 
     private dPArchiveShipmentCreateFilter: number;
     public get DPArchiveShipmentCreateFilter() { return this.dPArchiveShipmentCreateFilter; }
     public set DPArchiveShipmentCreateFilter(newValue: number) { if (this.dPArchiveShipmentCreateFilter != newValue) { this.dPArchiveShipmentCreateFilter = newValue; this.MarkAsDirty("DPArchiveShipmentCreateFilter"); } }
-
+       
+	 
     private dPArchiveShipmentArrivalFilter: number;
     public get DPArchiveShipmentArrivalFilter() { return this.dPArchiveShipmentArrivalFilter; }
     public set DPArchiveShipmentArrivalFilter(newValue: number) { if (this.dPArchiveShipmentArrivalFilter != newValue) { this.dPArchiveShipmentArrivalFilter = newValue; this.MarkAsDirty("DPArchiveShipmentArrivalFilter"); } }
-
+       
+	 
     private dPArchiveShipmentDepartFilter: number;
     public get DPArchiveShipmentDepartFilter() { return this.dPArchiveShipmentDepartFilter; }
     public set DPArchiveShipmentDepartFilter(newValue: number) { if (this.dPArchiveShipmentDepartFilter != newValue) { this.dPArchiveShipmentDepartFilter = newValue; this.MarkAsDirty("DPArchiveShipmentDepartFilter"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		
@@ -1042,4 +1052,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

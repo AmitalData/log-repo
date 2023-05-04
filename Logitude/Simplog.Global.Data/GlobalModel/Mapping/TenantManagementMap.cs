@@ -169,6 +169,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ScheduledTasksLimitPerReport).HasColumnName("ScheduledTasksLimitPerReport");
             this.Property(t => t.WhatsAppMessagingPhoneNumber).HasColumnName("WhatsAppMessagingPhoneNumber");
             this.Property(t => t.IsContainerTrackingPrepaid).HasColumnName("IsContainerTrackingPrepaid");
+            this.Property(t => t.ShowMoneyOrder).HasColumnName("ShowMoneyOrder");
             this.Property(t => t.DigitalPortalLastDate).HasColumnName("DigitalPortalLastDate");
             this.Property(t => t.DigitalPortalTotalLastWeek).HasColumnName("DigitalPortalTotalLastWeek");
             this.Property(t => t.DigitalPortalTotalLastMonth).HasColumnName("DigitalPortalTotalLastMonth");
@@ -179,6 +180,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.DPArchiveShipmentArrivalFilter).HasColumnName("DPArchiveShipmentArrivalFilter");
             this.Property(t => t.DPArchiveShipmentDepartFilter).HasColumnName("DPArchiveShipmentDepartFilter");
 
+            this.Property(t => t.ShowMoneyOrder).HasColumnName("ShowMoneyOrder");
 
         string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

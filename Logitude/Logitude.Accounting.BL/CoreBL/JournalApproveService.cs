@@ -612,7 +612,9 @@ namespace Logitude.Accounting.BL.CoreBL
             var listTransactionId = _JournalPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
             if (listTransactionId.Count > 0)
             {
-                LedgerTransactionUpdateService.Update_InProgressExternalReconcile(_JournalPM.Id, _JournalPM.Tenant, false);
+                //LedgerTransactionUpdateService.Update_InProgressExternalReconcile(_JournalPM.Id, _JournalPM.Tenant, false);
+                myLedgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, _JournalPM.Tenant, false);
+
             }
 
             var listReconcileExternalPageLineId = _JournalPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
@@ -631,8 +633,8 @@ namespace Logitude.Accounting.BL.CoreBL
             var listTransactionId = _JournalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
             if (listTransactionId.Count > 0)
             {
-                //myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, _JournalPM.Tenant, false);
-                LedgerTransactionUpdateService.UpdateInReconcileProgress(_JournalPM.Id, _JournalPM.Tenant, false);
+                myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, _JournalPM.Tenant, false);
+                //LedgerTransactionUpdateService.UpdateInReconcileProgress(_JournalPM.Id, _JournalPM.Tenant, false);
                 _AccountingContext.SaveChanges();// >>VALIDATION SHOULD NOT FAIL
             }
         }
@@ -1127,6 +1129,16 @@ namespace Logitude.Accounting.BL.CoreBL
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
             SetTenantIdle(message);
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "AccountingJournalApproveWR", "AccountingJournalApproveWR: ProcessMessage() Method", null);
+            if (message == null || message.RetryNumber >= 9)
+            {
+                var journalFailedService = new JournalFailedService(tenant, seedJournalId);
+                journalFailedService.MarkAsFailed(ex);
+                if (myDbQueueService != null)
+                {
+                    myDbQueueService.Complete();
+                }
+            }
+
             if (message.RetryNumber >= 2 && message.RetryNumber <= 7)
             {
                 myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));

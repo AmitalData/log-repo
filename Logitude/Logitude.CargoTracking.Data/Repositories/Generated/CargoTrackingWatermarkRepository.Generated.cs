@@ -48,7 +48,7 @@ namespace Logitude.CargoTracking.Data.Repositories
                     where a.TableName == keys.TableName
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(CargoTrackingWatermark entity)
         {

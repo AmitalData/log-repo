@@ -239,7 +239,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ChartOfAccountSecurityLevel,
 			 Obligo,
 			 CreditUsed,
-			 CreditLimitDifference,
+			InsuredCreditPercentage,
 		}
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

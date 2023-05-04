@@ -133,12 +133,15 @@
     <None Include="DBScripts\202210111701_Update_PRVR_ReportLocalName.sxml" />
     <None Include="DBScripts\20230130_UpdateSearchFieldsForBankDepositsLocalAmountsOnly.sxml" />
     <None Include="DBScripts\20230130_UpdateSearchFieldsForBankDepositsLocalAndForeignAmounts.sxml" />
+    <None Include="DBScripts\20230219_UpdateBankAccountTotalOpenTran.sxml" />
+    <None Include="DBScripts\20230219_UpdateBankAccountTotalOpenPageLines.sxml" />
     <None Include="DBScripts\20230207_JournalsExternalCodeAndExternalSystemConstraint.sxml" />
     <None Include="DBScripts\20230131_UpdateSearchFieldsForBankDepositsWithNoLine.sxml" />
     <None Include="DBScripts\20230504_Queue_Peek_Jouranl_Approval.dxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
+    <None Include="DBScripts\Post\202302191141_InsertValuesInCopyFromTenant0.sxml" />
     <None Include="DBTables\AccountingCompanyType.dxml" />
     <None Include="DBTables\AccountingEntity.dxml" />
     <None Include="DBTables\AccountingEntityJournal.dxml" />
@@ -169,6 +172,7 @@
     <None Include="DBTables\Category5.dxml" />
     <None Include="DBTables\ChartOfAccount.dxml" />
     <None Include="DBTables\ChartOfAccountsType.dxml" />
+    <None Include="DBTables\CopyFromTenant0.dxml" />
     <None Include="DBTables\ExternalPageAdditionalData.dxml" />
     <None Include="DBTables\ExternalReconciliation.dxml" />
     <None Include="DBTables\ExternalReconciliationLine.dxml" />
@@ -240,6 +244,7 @@
     <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
     <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
+    <None Include="EntityFiles\CopyFromTenant0.lxml" />
     <None Include="EntityFiles\GLAccountAgingData.lxml" />
     <None Include="EntityFiles\GLAccountCardsData.lxml" />
     <None Include="EntityFiles\GLAccountCounter.lxml" />

@@ -1015,6 +1015,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ShowMoneyOrder"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="MobileBackgroundId"
     Type="varchar"
     Size="15">
@@ -1074,6 +1080,12 @@
     Type="int">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="ShowMoneyOrder"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"

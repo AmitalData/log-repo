@@ -809,6 +809,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
             }
             else {
                 this.EntityPM = serviceResponse.Result;
+                this.NewShipmentMixPanelLocator(this.EntityPM);
                 this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
 
             }

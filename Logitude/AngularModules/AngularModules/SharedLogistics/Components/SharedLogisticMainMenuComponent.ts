@@ -16,8 +16,7 @@ export class SharedLogisticMainMenuComponent {
     public CargoTrackingAccessVisibility: boolean = false;
     public CtoolAccessVisibility: boolean = false;
     public IsDigitalPortalVisibile: boolean = false;
-    public IsSharedLogisticsDisabled: boolean = false;
-
+    public SharedLogisticAndMobileVisibility: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService) {
         this.RunComponent();
@@ -55,15 +54,16 @@ export class SharedLogisticMainMenuComponent {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
-
-    private SetSelectedItem() {
+    private CheckFeatures() {
         this.CustomerTenantAccessVisibility = false;
         this.CargoTrackingAccessVisibility = false;
         this.CtoolAccessVisibility = false;
         this.IsDigitalPortalVisibile = false;
-        this.IsSharedLogisticsDisabled = false;
+        this.SharedLogisticAndMobileVisibility = false;
 
-        this.SelectedItem = "SHLO";
+        if (FeatureLocator.HasFeaturePermession("General", "SHLOGANDMOBILE")) {
+            this.SharedLogisticAndMobileVisibility = true;
+        }
 
         if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES")) {
             this.CustomerTenantAccessVisibility = true;
@@ -81,13 +81,25 @@ export class SharedLogisticMainMenuComponent {
         if (FeatureLocator.HasFeaturePermession("General", "SHLOGDIGITALPORTAL")) {
             this.IsDigitalPortalVisibile = true;
         }
-        
-        let isSharedLogisticsDisabled = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RSL")[0];
-
-        if (isSharedLogisticsDisabled) {
-            this.IsSharedLogisticsDisabled = true;
+    }
+    private SetSelectedItem() {
+        this.CheckFeatures();
+        if (this.SharedLogisticAndMobileVisibility) {
+            this.SelectedItem = "SHLO";
+        }
+        else if (this.IsDigitalPortalVisibile) {
             this.SelectedItem = "DIGP";
         }
+        else if (this.CustomerTenantAccessVisibility) {
+            this.SelectedItem = "LOBO";
+        }
+        else if (this.CargoTrackingAccessVisibility) {
+            this.SelectedItem = "CATR";
+        }
+        else if (this.CtoolAccessVisibility) {
+            this.SelectedItem = "CTOOL";
+        }
+        return;
     }
 
     private selectedItem: string;
@@ -115,7 +127,7 @@ export class SharedLogisticMainMenuComponent {
                     switch (this.SelectedItem) {
                         //SharedLogistics
                         case "SHLO": {
-                            if (this.Page_SHIP == null && !this.IsSharedLogisticsDisabled) {
+                            if (this.Page_SHIP == null) {
                                 SessionLocator.DynamicLoader.Load('./SharedLogistics/Components/SharedLogisticsMainComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.Page_SHIP = cmpRef.instance;

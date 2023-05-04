@@ -622,9 +622,18 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private createdFromInvoiceLine: APPaymentInvoiceArgs;
     private ConnectedList: APInvoiceList[] = [];
     private IsMatchedList: APInvoiceList[] = [];
+    private ReconcileInvoiceList: APInvoiceList[] = [];
     LoadData() {
         this.ItemsSource.Clear();
-
+        if(this.EntityPM.ReconcileInternalTrans.length > 0) {
+            var invoiceNumbers="";
+            this.EntityPM.ReconcileInternalTrans.forEach(element => {
+                invoiceNumbers=invoiceNumbers+element.SourceNumber+",";
+              
+            });
+            invoiceNumbers = invoiceNumbers.substring(0,invoiceNumbers.length-1)
+            this.LoadPaymentInvoices(invoiceNumbers);
+        }
         if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId) && this.EntityPM.StatusCode != "VD") {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 this.LoadPaymentInvoices_IsMatched();
@@ -703,7 +712,21 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         var unConnectedMatchedList: APPaymentInvoiceArgs[] = [];
         var unConnectedListNotMatched: APPaymentInvoiceArgs[] = [];
         var itemsCollection: APPaymentInvoiceArgs[] = [];
-
+        
+     
+         
+            if (this.ReconcileInvoiceList.length > 0) {
+                this.ReconcileInvoiceList.forEach(item => {
+                  
+                        connectedList.push(new APPaymentInvoiceArgs(item, this));
+                });
+    
+                connectedList.sort((a, b) => { return (a.SortingValue === b.SortingValue) ? 0 : (a.SortingValue < b.SortingValue) ? -1 : 1 }).forEach(item => {
+                    itemsCollection.push(item);
+                });
+            }
+            
+       
         if (this.ConnectedList.length > 0) {
             this.ConnectedList.forEach(item => {
                 if (this.EntityPM.PaymentInvoices.filter(d => d.APInvoiceId == item.Id)[0]) {
@@ -779,7 +802,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 itemsCollection.push(item);
             });
         }
-
+            
         this.ItemsSource.InsertCollection(itemsCollection);
         this.UpdateSummary();
         this.IsDataLoaded = true;
@@ -798,15 +821,36 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 });
         }
     }
+    LoadPaymentInvoices(invoiceNumbers) {
+        var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 1000;
+        filters.SortBy = "DueDate";
+        filters.SortDirection = "Descending";
 
+        //filters.addAdditionalFilter("VendorId", this.EntityPM.VendorId, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("InvoiceNumber", invoiceNumbers, null, null, "InList", false, true, false, "string");
+
+      
+
+
+        this.APInvoiceListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.ReconcileInvoiceList = myResponse.Result; 
+                this.FillBaselist();
+            }
+           
+           
+        });
+    }
     // Vendor Properties
-    get VendorId() {
+    get VendorId() {        
         if (this.EntityPM == null) {
             return null;
         }
         return this.EntityPM.VendorId;
     }
-    set VendorId(value: string) {
+    set VendorId(value: string) {       
         if (!this.EntityPM.IsCreatedFromInvoiceSide) {
             if (this.EntityPM != null) {
                 if (this.EntityPM.VendorId != value || (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0)) {
@@ -1087,7 +1131,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     async setPaymentCurrencyId(value: string) {
-        debugger;
         if (!this.EntityPM.IsCreatedFromInvoiceSide) {
             if (this.EntityPM != null) {
                 if (this.EntityPM.PaymentCurrencyId != value) {

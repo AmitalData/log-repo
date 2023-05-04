@@ -28,7 +28,7 @@ namespace Logitude.Accounting.Data.Repositories
 
 		 
 		
-		public  ARPaymentsJournal GetSingle(int tenant, string paymentid, bool isvoided, int tenan0t)
+		public  ARPaymentsJournal GetSingle(int tenant, string paymentid, bool isvoided)
         {
             return (from a in context.ARPaymentsJournals
                     where a.Tenant == tenant && a.PaymentId == paymentid && a.IsVoided == isvoided && a.Tenant == tenant
@@ -49,7 +49,7 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.Tenant == keys.Tenant && a.PaymentId == keys.PaymentId && a.IsVoided == keys.IsVoided
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(ARPaymentsJournal entity)
         {

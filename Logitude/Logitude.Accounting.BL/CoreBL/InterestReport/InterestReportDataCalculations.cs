@@ -318,8 +318,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         private DateTime? GetInterestCalculationStartDate()
         {
-            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
-            DateTime? interestCalculationStartDate = gLAccountQueryService.GetInterestCalculationStartDate(interestReportPM.GLAccountId, tenant);
+            // GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+            // DateTime? interestCalculationStartDate = gLAccountQueryService.GetInterestCalculationStartDate(interestReportPM.GLAccountId, tenant);
+            DateTime? interestCalculationStartDate = DateTime.MinValue;
             return interestCalculationStartDate;
         }
 

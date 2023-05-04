@@ -426,13 +426,21 @@ namespace WebFreight.Web.Helpers
                 if (count > 0)
                 {
                     // Get dataList
-                    int pagesize = count;
-                    if (pagesize > 65534)
+                    if (exportToExcelArgs.IsXslxFormat)
                     {
-                        queryOperations.GetAll = false;
-                        pagesize = 65000;
+                        queryOperations.PageSize = count;
                     }
-                    queryOperations.PageSize = pagesize;
+                    else
+                    {
+                        int pagesize = count;
+                        if (pagesize > 65534)
+                        {
+                            queryOperations.GetAll = false;
+                            pagesize = 65000;
+                        }
+                        queryOperations.PageSize = pagesize;
+                    }
+                    
                     xmlFilters = filterSerializer.SerializeFilterItems(queryOperations);
 
                     parameters = new object[] { xmlFilters, tenant };
@@ -532,7 +540,7 @@ namespace WebFreight.Web.Helpers
                         int start = 65;
                         foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
                         {
-                            string nodename = TranslateTextsClass.Translate(node.Name, tenant);
+                            string nodename = TranslateTextsClass.Translate(node.Name, tenant,true,true);
                             QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == node.Name || q.ObjectFieldFullNameTextCodeCode == node.Name).FirstOrDefault();
                             if (column != null)
                             {
@@ -710,8 +718,16 @@ namespace WebFreight.Web.Helpers
                                 i++;
                             }
                         }
-
-                        workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
+                        if (exportToExcelArgs.IsXslxFormat)
+                        {
+                            workbook.Version = ExcelVersion.Excel2010;
+                            workbook.SaveAs(memory);
+                        }
+                        else
+                        {
+                            workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
+                        }
+                        
 
                         //No exception will be thrown if there are unsaved workbooks.
                         excelEngine.ThrowNotSavedOnDestroy = false;
@@ -1242,4 +1258,5 @@ public class ExportToExcelArgs
     public QueryPM QueryPM { get; set; }
     public  List<QueryColumnPM> QueryColumns { get; set; }
     public IEnumerator Data { get; set; }
+    public bool IsXslxFormat { get; set; }
 }

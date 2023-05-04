@@ -214,6 +214,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         {
             TenantManagementPM tenantManagment = GetTenantManagement(cargoShipmentPM.Tenant);
             cargoShipmentPM.ActivatedForDeclarationApprove = tenantManagment?.ActivatedforDeclarationApprove ?? false;
+            cargoShipmentPM.ShowMoneyOrder = tenantManagment?.ShowMoneyOrder ?? false;
             cargoShipmentPM.TenantDeclarationMessage = tenantManagment?.DeclarationMessage;
         }
 
@@ -423,7 +424,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 IsDigitallySigned = document.IsDigitallySigned,
                 SecurityId = document.SecurityId,
                 CustomReference = document.CustomReference,
-                FileExtension = document.FileExtension
+                FileExtension = document.FileExtension,
+                Descreption = document.Description
             });
         }
         public void SetMilestonesStatus()

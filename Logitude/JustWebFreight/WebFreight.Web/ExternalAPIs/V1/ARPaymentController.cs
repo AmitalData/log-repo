@@ -24,6 +24,7 @@ using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
 using Logitude.SystemLogs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Accounting.Def.EntityPMs;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -102,12 +103,19 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         ARPaymentQueryService mappingService = new ARPaymentQueryService(tenant);
-                        if (tenant == 1153) entity = mappingService.SetARPaymentSystemUser(entity);
+                        entity = mappingService.SetARPaymentSystemUser(entity);
+                        JournalPM journalPM = mappingService.GetARPaymentExistingJournalPM(entity);
                         ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
                         entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
                         entityPM.Tenant = tenant;
                         entityPM.SetApproved = true;
                         entityPM.IsExternalEntity = true;
+                        if (entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true && journalPM != null && String.IsNullOrEmpty(journalPM.Id))
+                        {
+                            entityPM.JournalId = journalPM.Id;
+                            entityPM.JournalNumber = journalPM.JournalNumber;
+                            entityPM.ExternalAccountingEntityId = journalPM.Id;
+                        }
                         mappingService.CheckARPaymentNumber(entityPM.PaymentNo,entityPM.Id, entityPM.Tenant);
                         
                         ARPaymentService service = new ARPaymentService(MyContext, tenant);
@@ -186,9 +194,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             throw new ApplicationException("ARPayment with number " + entity.PaymentNo + " doesn't exist");
                         }
                         entity.Id = payment.Id;
-                        if (tenant == 1153) entity = mappingService.SetARPaymentSystemUser(entity);
+                        entity = mappingService.SetARPaymentSystemUser(entity);
+                        JournalPM journalPM = mappingService.GetARPaymentExistingJournalPM(entity);
                         ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
                         entityPM.IsExternalEntity = true;
+                        if (entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true && journalPM != null && String.IsNullOrEmpty(journalPM.Id))
+                        {
+                            entityPM.JournalId = journalPM.Id;
+                            entityPM.JournalNumber = journalPM.JournalNumber;
+                            entityPM.ExternalAccountingEntityId = journalPM.Id;
+                        }
                         mappingService.CheckARPaymentNumber(entityPM.PaymentNo, entityPM.Id, entityPM.Tenant);
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {

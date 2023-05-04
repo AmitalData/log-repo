@@ -44,7 +44,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     GLAccountsFilterItems: ApiQueryFilters;
     gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     public isRTL: boolean = false;
-    public ValidationErrorsList: string[];
+    public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         super();
@@ -350,14 +350,12 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         this.TotalDebit = winArgs.TotalDebit;
     }
     FillErrors(isSplitJournal: boolean) {
-        this.ValidationErrorsList = [];
+
         if (AppTool.IsNullOrEmpty(this.glAccount)) {
             this.ValidationErrorsList.push('GLAccount is Required');
         }
         else if (AppTool.IsNullOrEmpty(this.AccountingDate) && !isSplitJournal) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate('Journal.RE.AccountingDateRequired'));
-        } else {
-            this.ValidationErrorsList = [];
         }
     }
 
@@ -383,6 +381,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     }
 
     OkButtonClicked(isSplitJournal: boolean) {
+
         this.FillErrors(isSplitJournal);
 
         if (this.ValidationErrorsList.length > 0) {
@@ -392,7 +391,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         const reconciliationLines: ReconciliationLinePM[] = [];
         this.BuildReconciliationLines(reconciliationLines);
 
-        if (isSplitJournal && AppTool.IsNullOrEmpty(this.AccountingDate)) {
+        if (isSplitJournal) {
             const confirmMsg = TextCodeTranslator.Translate('Journal.RE.AccountingDateConfrimation');
             const confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
@@ -426,6 +425,9 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                 (res: ServiceResponse) => {
 
                     this.CurrentSession.StopBusyIndicator();
+                    if(!this.AccountingDate)
+                        this.checkSelectedLinesClosedMonth();
+
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;
 
@@ -451,7 +453,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
                     this.CurrentSession.StopBusyIndicator();
 
-                    this.checkSelectedLinesClosedMonth();
 
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;

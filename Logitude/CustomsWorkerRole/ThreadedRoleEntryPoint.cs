@@ -230,11 +230,6 @@ namespace CustomsWorkerRole
                 he.DateTimeFormat.ShortDatePattern = "dd-MM-yy";// ' "yyyy/MM/dd" '  ' "DD/MM/YYYY"
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
                 
-                LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
-                {
-                    if (DateTime.Now > stopLogAt) return;
-                    Logger.LogMe(mess, err, suffix);
-                });
 
                 LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = false;
 
@@ -244,6 +239,12 @@ namespace CustomsWorkerRole
             //string queueServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("QueueServiceMode");
             ContainerAccessor.InitContainer();
            
+            // logging
+            LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
+            {
+                if (DateTime.Now > stopLogAt) return;
+                Logger.LogMe(mess, err, suffix);
+            });
 
 
         }

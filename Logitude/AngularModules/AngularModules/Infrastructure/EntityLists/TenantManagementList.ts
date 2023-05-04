@@ -170,7 +170,9 @@ export class TenantManagementList {
 		DigitalPortalMobileLastDate: Date;
 		DigitalPortalMobTotalLastWeek: number;
 		DigitalPortalMobTotalLastMonth: number;
-		DPArchiveShipmentCreateFilter : number;
-		DPArchiveShipmentArrivalFilter : number;
-		DPArchiveShipmentDepartFilter : number;
-}
+		DPArchiveShipmentCreateFilter: number;
+		DPArchiveShipmentArrivalFilter: number;
+		DPArchiveShipmentDepartFilter: number;
+		ShowMoneyOrder: boolean;
+	
+}

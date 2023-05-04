@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;f037&quot;"
+  Code="&quot;ba78&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -4332,7 +4332,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.O.ShowNewRelease&quot;"
-      DefaultText="&quot;Read what is new in Logitude&quot;"
+      DefaultText="&quot;Read what is new in the latest release&quot;"
       LocalDefaultText="&quot;גרסה חדשה עלתה לאוויר - לפירוט השינויים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
@@ -8214,6 +8214,15 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.DocumentType.CustomizedResetPasswordEmail &quot;"
       FeatureDefaultText="&quot;Customized Reset Password Email &quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SHLOGANDMOBILE&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SHLOGANDMOBILE&quot;"
+      FeatureDefaultText="&quot;Shared Logistics and Mobile&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

@@ -1,4 +1,4 @@
-@smoke
+@smoke @CloudSmokeTestingTag
 Feature: Customer GLA
     The user creates new Customer and activate it in accounting system
 

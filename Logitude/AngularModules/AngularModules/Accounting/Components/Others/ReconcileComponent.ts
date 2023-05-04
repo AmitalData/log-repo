@@ -1499,15 +1499,26 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 
                 if (!mm.HasError) {
 
-                        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
-                        if(_callback){
-                            this.RecoPM = _callback.reconciliationPM;
-                        }
-                        this.recoCallback = _callback;
-                        this.ShowSuccessAlert();
-                        this.SelectedLines.Clear();
-                        this.CurrentSession.StopBusyIndicator();
-                    }
+                //});
+
+                this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+                if(_callback){
+                    this.RecoPM = _callback.reconciliationPM;
+                }
+
+                this.recoCallback = _callback;
+                this.ShowSuccessAlert();
+
+                this.SelectedLines.Clear();
+
+
+                this.CurrentSession.StopBusyIndicator();
+
+                this.ReloadScreen();
+                //this.SelectedLines.Clear();
+                this.CalculateTotals();
+
+            }
 
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
