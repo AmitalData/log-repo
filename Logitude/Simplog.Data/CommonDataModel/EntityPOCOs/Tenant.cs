@@ -205,5 +205,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool UseNewTermsOfUse { get; set; }
         public string ShipmentATADateIndicator { get; set; }
         public bool ApproveUploadedDocuments { get; set; }
+        public bool JouranlApprovalIsIdle { get; set; }
+        
     }
 }

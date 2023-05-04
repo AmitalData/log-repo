@@ -979,7 +979,11 @@
       Name="&quot;Reports Execution WR Version 2&quot;"
       SearchFields="&quot;RE2, Reports Execution WR Version 2&quot;"
       Description="&quot;Reports Execution WR Version 2&quot;" />
-
+    <Record
+      Code="&quot;JAM&quot;"
+      Name="&quot;Journal Approval MultiThreading&quot;"
+      SearchFields="&quot;JAM, Journal Approval MultiThreading&quot;"
+      Description="&quot;Journal Approval MultiThreading&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
