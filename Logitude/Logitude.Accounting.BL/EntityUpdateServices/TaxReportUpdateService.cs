@@ -50,6 +50,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.TaxableOutputsWithDiffPercent = 0;
             entityPM.NeedsRebulid = true;
             entityPM.StatusCode = "P";
+
+
+            DateTime stopLogAt = new DateTime(2023, 06, 01);
+            string text = "TaxReportUpdateService.OnCreating(*1*): " + entityPM.Id + " entityPM.StatusCode : " + entityPM.StatusCode;
+            ULog(text, stopLogAt);
+
+
             entityPM.ProcessStartDate = DateTime.Now;
             entityPM.TaxReportNumber = entityPM.TaxReportMonth.Month.ToString() + entityPM.Year.ToString();
             entityPM.IsNew = true;
@@ -281,6 +288,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     taxReportPM.StatusCode = VatReportStatusValues.Error;
 
+                    DateTime stopLogAt = new DateTime(2023, 06, 01);
+                    string text = "TaxReportUpdateService.UpdateReportStatus(*1*): " + taxReportPM.Id + " taxReportPM.StatusCode : " + taxReportPM.StatusCode;
+                    ULog(text, stopLogAt);
+
+
                     taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
                     taxReportUpdateService.Update(taxReportPM, true);
                 }
@@ -288,10 +300,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
                     taxReportPM.StatusCode = VatReportStatusValues.Draft;
+
+                    DateTime stopLogAt = new DateTime(2023, 06, 01);
+                    string text = "TaxReportUpdateService.UpdateReportStatus(*2*): " + taxReportPM.Id + " taxReportPM.StatusCode : " + taxReportPM.StatusCode;
+                    ULog(text, stopLogAt);
+
                     taxReportUpdateService.Update(taxReportPM, true);
                 }
             }
 
+        }
+
+
+        private static void ULog(string text, DateTime stopLogAt)
+        {
+            string log_text = text + System.Environment.NewLine;
+            log_text = log_text + String.Format("{0:HH:mm:ss.ffff}", DateTime.Now.ToString()) + System.Environment.NewLine;
+            System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
+            log_text = log_text + t.ToString();
+            LogitudeSettings.HandleLogMe(text, false, "TaxReportPMToPOCO", new DateTime(2023, 6, 1));
         }
 
         protected override void OnUpdating(TaxReportPM entityPM, TaxReport entityPOCO)
@@ -366,6 +393,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CheckLaterReports(entityPM);
 
             entityPM.StatusCode = "C"; // C- Cancelled מבוטל
+
+            DateTime stopLogAt = new DateTime(2023, 06, 01);
+            string text = "TaxReportUpdateService.CancelTaxReport(*1*): " + entityPM.Id + " entityPM.StatusCode : " + entityPM.StatusCode;
+            ULog(text, stopLogAt);
 
             ResetJournalAdditionalDatasFields(entityPM);
 

@@ -24,7 +24,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         public void CustomPMToPOCO(TaxReportPM entityPM, TaxReport entityPOCO)
         {
             DateTime stopLogAt = new DateTime(2023, 06, 01);
-            string text = "TaxReportDataMapping.CustomPMToPOCO(*1L*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;
+            string text = "TaxReportDataMapping.CustomPMToPOCO(*1L*): " + entityPM.Id + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;
             ULog(text, stopLogAt);
 
             AddPOCOPropertyName(POCOPropertyNames.Id);
@@ -44,14 +44,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 this.CustomMappedPOCOProperties.Add(POCOPropertyNames.StatusCode);
             }
             entityPOCO.StatusCode = entityPM.StatusCode;
-            text = "TaxReportDataMapping.CustomPMToPOCO(*9L*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;//, false, "TaxReportPMToPOCO_1L");
+            text = "TaxReportDataMapping.CustomPMToPOCO(*9L*): " + entityPM.Id + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;//, false, "TaxReportPMToPOCO_1L");
             ULog(text, stopLogAt);
         }
 
         public void CustomPOCOToPM(TaxReportPM entityPM, TaxReport entityPOCO)
         {
             DateTime stopLogAt = new DateTime(2023, 06, 01);
-            string text = "TaxReportDataMapping.CustomPOCOToPM(*1L*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;
+            string text = "TaxReportDataMapping.CustomPOCOToPM(*1*): " + entityPM.Id + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;
             ULog(text, stopLogAt);
 
             CustomMappedPOCOProperties.Add(POCOPropertyNames.StatusCode);
@@ -67,17 +67,21 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
                 entityPM.StatusCode = entityPOCO.StatusCode;
             }
-            text = "TaxReportDataMapping.CustomPOCOToPM(*9L*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;
+            text = "TaxReportDataMapping.CustomPOCOToPM(*7*): " + entityPM.Id + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;
             ULog(text, stopLogAt);
 
             MapClosingJournalFields(entityPM, entityPOCO);
 
-            text = "TaxReportDataMapping.CustomPOCOToPM(*9L*): " + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;
+            text = "TaxReportDataMapping.CustomPOCOToPM(*9*): " + entityPM.Id + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;
             ULog(text, stopLogAt);
         }
 
         private static void ULog(string text, DateTime stopLogAt)
         {
+            string log_text = text + System.Environment.NewLine;
+            log_text = log_text + String.Format("{0:HH:mm:ss.ffff}", DateTime.Now.ToString()) + System.Environment.NewLine;
+            System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
+            log_text = log_text + t.ToString();
             LogitudeSettings.HandleLogMe(text, false, "TaxReportPMToPOCO", new DateTime(2023, 6, 1));
         }
 
