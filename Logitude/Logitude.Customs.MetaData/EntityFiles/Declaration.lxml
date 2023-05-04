@@ -20775,6 +20775,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ExcludeManifest&quot;"
     ListPropertyPath="&quot;ExcludeManifest&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -26657,6 +26658,12 @@
       LocalDefaultText="&quot;שים לב יש אחסנות שלא קושרו להצהרה , האם להמשיך ?&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.IsSendManifest&quot;"
+      DefaultText="&quot;This field is intended for situations where it is required to field the statement without declaration data&quot;"
+      LocalDefaultText="&quot;שדה זה מיועד למצבים בהם נדרש לשדה את ההצהרה ללא נתוני מצהר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -26916,6 +26923,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.UploadExportInvoicesFromCsv&quot;"
       FeatureDefaultText="&quot;הצגת כפתור טעינת חשבונות יצואן מקובץ&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ISEXCLUDEMANIFEST&quot;"
+      FeatureTypeCode="&quot;IAM&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.ISEXCLUDEMANIFEST&quot;"
+      FeatureDefaultText="&quot;Is Exclude Manifest&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

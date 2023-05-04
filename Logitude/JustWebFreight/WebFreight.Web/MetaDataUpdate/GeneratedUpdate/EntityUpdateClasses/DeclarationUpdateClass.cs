@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "e85cf100c7877e4677b36c3560ade54c";
+		public const string HashString = "ff2049240643cac68338cd48f021363d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17034,6 +17034,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExcludeManifest",
 					  						ListPropertyPath =  "ExcludeManifest",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -18124,6 +18125,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_ISACTIVATEINSURANCE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ISACTIVATEINSURANCE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISACTIVATEINSURANCE", NameTextCodeDefaultText = @"Is Activate Insurance" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_UploadExportInvoicesFromCsv = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UploadExportInvoicesFromCsv", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.UploadExportInvoicesFromCsv", NameTextCodeDefaultText = @"הצגת כפתור טעינת חשבונות יצואן מקובץ" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
+		   Feature DeclarationFeature_ISEXCLUDEMANIFEST = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ISEXCLUDEMANIFEST", FeatureTypeCode = "IAM", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISEXCLUDEMANIFEST", NameTextCodeDefaultText = @"Is Exclude Manifest" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
@@ -21006,6 +21009,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOMustCustomDocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MustCustomDocumentType", DefaultText = "Must Custom Document Type",LocalDefaultText = @"יש לבחור סוג מסמך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOStoragesNotConnectToDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StoragesNotConnectToDeclaration", DefaultText = "Note that there are storages that were not linked to the declaration, should we continue?",LocalDefaultText = @"שים לב יש אחסנות שלא קושרו להצהרה , האם להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIsSendManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsSendManifest", DefaultText = "This field is intended for situations where it is required to field the statement without declaration data",LocalDefaultText = @"שדה זה מיועד למצבים בהם נדרש לשדה את ההצהרה ללא נתוני מצהר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
