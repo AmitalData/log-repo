@@ -1534,8 +1534,7 @@ on record.JournalId equals j.Id
                                                        && ledger.Tenant == ledgerTransactionBalanceFilter.Tenant
                                                       && ledger.LocalAmountDebit != 0
                                                       && ledger.AccountId == setting.VATInputsGLAccountId 
-                                                      && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
-                                                      
+                                                      && ((taxreport.StatusCode != VatReportStatuses.Transmitted && taxreport.StatusCode != VatReportStatuses.TransmittedAndClosingJournal) || additional.TaxReportId == null)
                                                         select ledger).Distinct();
             if (!string.IsNullOrWhiteSpace(ledgerTransactionBalanceFilter.SearchFields)) {
                 inputLines = inputLines.Where(x => x.SearchFields.Contains(ledgerTransactionBalanceFilter.SearchFields));
@@ -1615,6 +1614,7 @@ on record.JournalId equals j.Id
     public struct VatReportStatuses
     {
        public const string Transmitted ="T";
+       public const string TransmittedAndClosingJournal = "J";
     }
     public struct JournalStatuses
     {
