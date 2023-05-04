@@ -177,7 +177,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ClosingXml, 
 	         ExportCloseAmendRequestNumber, 
 	         ExportCloseAmendmentStatus, 
-	         CasualImporterCountry,
+	         CasualImporterCountry, 
+	         ExcludeManifest,
 	      }
 
 
@@ -428,7 +429,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportDecWithoutRelease, 
 	         CasualImporterCountry, 
 	         ExportCloseAmendStatusName, 
-	         IsAramex,
+	         IsAramex, 
+	         ExcludeManifest,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1210,6 +1212,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualImporterCountry))
             {
 				entityPOCO.CasualImporterCountry = entityPM.CasualImporterCountry;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeManifest))
+            {
+				entityPOCO.ExcludeManifest = entityPM.ExcludeManifest;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1998,6 +2005,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CasualImporterCountry = entityPOCO.CasualImporterCountry;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExcludeManifest))
+            {
+					entityPM.ExcludeManifest = entityPOCO.ExcludeManifest;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2777,6 +2789,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualImporterCountry))
             {
                 oldEntityPM.CasualImporterCountry = entityPM.CasualImporterCountry;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeManifest))
+            {
+                oldEntityPM.ExcludeManifest = entityPM.ExcludeManifest;
             }
 			
 		}

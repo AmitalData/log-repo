@@ -5964,6 +5964,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool excludeManifest ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ExcludeManifest  
+	   {
+	    
+	     get
+		{
+		   return excludeManifest;
+		 }
+		 set
+		 {
+		   if(excludeManifest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExcludeManifest",OldValue=excludeManifest,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   excludeManifest=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
