@@ -86,7 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class DeclarationUpdateClass
    {  		
 
-		public const string HashString = "e85cf100c7877e4677b36c3560ade54c";
+		public const string HashString = "ff2049240643cac68338cd48f021363d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17093,6 +17093,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExcludeManifest",
 					  						ListPropertyPath =  "ExcludeManifest",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -18187,6 +18188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.AUTOMATION", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_OCR = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OCR", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.OCR", NameTextCodeDefaultText = @"OCR" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_ISEXCLUDEMANIFEST = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ISEXCLUDEMANIFEST", FeatureTypeCode = "IAM", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISEXCLUDEMANIFEST", NameTextCodeDefaultText = @"Is Exclude Manifest" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
@@ -21113,6 +21115,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationONoNotificationsReceived = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoNotificationsReceived", DefaultText = "No notifications have been received from customs for this declaration",LocalDefaultText = @"לא התקבלו הודעות מהמכס עבור הצהרה זו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOSendReplyMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendReplyMessage", DefaultText = "Sending a reply to a message",LocalDefaultText = @"שליחת תשובה להודעה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIsSendManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsSendManifest", DefaultText = "This field is intended for situations where it is required to field the statement without declaration data",LocalDefaultText = @"שדה זה מיועד למצבים בהם נדרש לשדה את ההצהרה ללא נתוני מצהר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
