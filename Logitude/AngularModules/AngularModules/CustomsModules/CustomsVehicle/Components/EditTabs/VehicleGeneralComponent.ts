@@ -176,8 +176,9 @@ export class VehicleGeneralComponent extends BaseComponent {
         }
 
     }
-
+    showCopyRichbit:boolean=false
     OpenCopyRichbit(){
+        
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         var logWindow = new LogitudeWindow();
@@ -190,7 +191,7 @@ export class VehicleGeneralComponent extends BaseComponent {
         logWindow.Show('./CustomsModules/CustomsVehicle/Components/EditTabs/CopyRichbitComponent');
 
         logWindow.WindowClosed.subscribe(($event: any) => {
-           //this.SaveEvent.emit(true);
+            this.showCopyRichbit=true
         });
     }
 
