@@ -324,6 +324,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             taxReport.StatusCode = "D";
+
+            DateTime stopLogAt = new DateTime(2023, 06, 01);
+            string text = "TaxReportService.CreateTaxReportLines(*1*): " + taxReport.Id + " taxReport.StatusCode : " + taxReport.StatusCode;
+            ULog(text, stopLogAt);
+
             taxReport.ProcessEndDate = DateTime.Now;
 
 
@@ -334,6 +339,14 @@ namespace Logitude.Accounting.BL.CoreBL
             return reportLinesList;
         }
 
+        private static void ULog(string text, DateTime stopLogAt)
+        {
+            string log_text = text + System.Environment.NewLine;
+            log_text = log_text + String.Format("{0:HH:mm:ss.ffff}", DateTime.Now.ToString()) + System.Environment.NewLine;
+            System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
+            log_text = log_text + t.ToString();
+            LogitudeSettings.HandleLogMe(text, false, "TaxReportPMToPOCO", new DateTime(2023, 6, 1));
+        }
 
 
         private static void MarkDuplicateLines(TaxReportPM taxReportPM, List<TaxReportLinePM> taxReportLines)
@@ -906,6 +919,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (taxReport.StatusCode != "J")
                     {
                         taxReport.StatusCode = "T"; // T- Transmitted
+
+                        DateTime stopLogAt = new DateTime(2023, 06, 01);
+                        string text = "TaxReportService.CreatePNC874File(*1*): " + taxReport.Id + " taxReport.StatusCode : " + taxReport.StatusCode;
+                        ULog(text, stopLogAt);
                     }
                     taxReport.NeedsRebulid = false;
                     updateService.Update(taxReport, true);
@@ -921,6 +938,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (taxReport.StatusCode != "J")
                     {
                         taxReport.StatusCode = "T"; // T- Transmitted
+
+                        DateTime stopLogAt = new DateTime(2023, 06, 01);
+                        string text = "TaxReportService.CreatePNC874File(*2*): " + taxReport.Id + " taxReport.StatusCode : " + taxReport.StatusCode;
+                        ULog(text, stopLogAt);
                     }
                     updateService.Update(taxReport, true);
 

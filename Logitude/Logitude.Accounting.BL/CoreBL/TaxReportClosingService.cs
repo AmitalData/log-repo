@@ -214,13 +214,31 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             taxReportPM.StatusCode = VatReportStatusValues.TransmittedAndClosingJournal;
 
+            DateTime stopLogAt = new DateTime(2023, 06, 01);
+            string text = "TaxReportClosingservice.SetTaxReportAsTransmittedAndClosingJournal(*1*): " + taxReportPM.Id + " taxReportPM.StatusCode : " + taxReportPM.StatusCode;
+            ULog(text, stopLogAt);
+
             SubmitTaxReport();
         }
+
+        private static void ULog(string text, DateTime stopLogAt)
+        {
+            string log_text = text + System.Environment.NewLine;
+            log_text = log_text + String.Format("{0:HH:mm:ss.ffff}", DateTime.Now.ToString()) + System.Environment.NewLine;
+            System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
+            log_text = log_text + t.ToString();
+            LogitudeSettings.HandleLogMe(text, false, "TaxReportPMToPOCO", new DateTime(2023, 6, 1));
+        }
+
 
         private void SetTaxReportAsCancelled()
         {
             taxReportPM.IsCancelled = true;
             taxReportPM.StatusCode = VatReportStatusValues.Cancelled;
+
+            DateTime stopLogAt = new DateTime(2023, 06, 01);
+            string text = "TaxReportClosingservice.SetTaxReportAsCancelled(*1*): " + taxReportPM.Id + " taxReportPM.StatusCode : " + taxReportPM.StatusCode;
+            ULog(text, stopLogAt);
 
             SubmitTaxReport();
         }
