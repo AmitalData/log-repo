@@ -699,6 +699,24 @@ IN6566	I10	USD	1
 <DAT name=""EXAMPLE_RESULT"">84158100002</DAT>
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
 <OCC>
+<DAT name=""CODE"">A66</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select Currency from VendorCurrencies</DAT>
+<DAT name=""REFERENCE"">CFIFFORMS.Lp_Currency_Check</DAT>
+<DAT name=""PARAMETERS"">VendorId=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select Currency from VendorCurrencies where Tenant='1' and VendorId='1-584'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select Currency from VendorCurrencies where Tenant=@Tenant and VendorId=@VendorId</DAT>
+<DAT name=""EXAMPLE_RESULT""></DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A67</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select Currency from CountryCurrencies</DAT>
+<DAT name=""REFERENCE"">CFIFFORMS.Lp_Currency_Check</DAT>
+<DAT name=""PARAMETERS"">CountryId=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT Currency FROM CountryCurrencies WHERE Tenant='1' AND CountryId='AF'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT Currency FROM CountryCurrencies WHERE Tenant=@Tenant AND CountryId=@CountryId</DAT>
+<DAT name=""EXAMPLE_RESULT""></DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
 <DAT name=""CODE"">A7</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>get VERSIONID</DAT>
 <DAT name=""REFERENCE"">CFIFFORMS.Lp_Importer_Decl_Conf</DAT>
