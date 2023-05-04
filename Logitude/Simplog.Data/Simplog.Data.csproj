@@ -182,6 +182,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CardExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\RequestSheetInQueueMessagesView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DecCourierStatusesView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
