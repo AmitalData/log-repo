@@ -105,6 +105,7 @@
     <None Include="DBOthers\Procedures\Usp_DeleteCommLogs.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBOthers\Views\RequestSheetInQueueMessagesView.dxml" />
     <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
     <None Include="DBScripts\Post\202303211232_AddCOURIERPENDINGREASONS907.sxml" />
