@@ -932,6 +932,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CPI,Centralized POD images when convert to PDF files", 
                 Description = "Centralized POD images when convert to PDF files", 
 			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "RE2", 
@@ -939,7 +940,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "RE2, Reports Execution WR Version 2", 
                 Description = "Reports Execution WR Version 2", 
 			});
-
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "JAM", 
+                Name = "Journal Approval MultiThreading", 
+                SearchFields = "JAM, Journal Approval MultiThreading", 
+                Description = "Journal Approval MultiThreading", 
+			});
 			
             return all;
        }
