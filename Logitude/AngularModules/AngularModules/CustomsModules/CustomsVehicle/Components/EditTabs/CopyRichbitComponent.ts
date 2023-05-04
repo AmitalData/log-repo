@@ -47,10 +47,10 @@ export class CopyRichbitComponent extends BaseComponent {
     public SetWindowArgs(args: any) {
 
         this.EntityPM = args.EntityPM;
-        this.ImporterIdentityId = this.EntityPM.ImporterIdentityId;
-        this.RichbitFileNumber = this.EntityPM.RichbitFileNumber;
-        this.VehicleChassisNumber = this.EntityPM.VehicleChassisNumber;
-        this.VehicleChassisNumber2 = this.EntityPM.VehicleChassisNumber;
+        // this.ImporterIdentityId = this.EntityPM.ImporterIdentityId;
+        // this.RichbitFileNumber = this.EntityPM.RichbitFileNumber;
+        // this.VehicleChassisNumber = this.EntityPM.VehicleChassisNumber;
+        //this.VehicleChassisNumber2 = this.EntityPM.VehicleChassisNumber;
 
       
 
@@ -170,6 +170,8 @@ export class CopyRichbitComponent extends BaseComponent {
             filters.addAdditionalFilter("RichbitFileNumber", this.RichbitFileNumber, null, null, "Equals", false, false, false, "string");
 
         }
+        
+
         if (!AppTool.IsNullOrEmpty(this.VehicleChassisNumber)) {
 
             filters.addAdditionalFilter("VehicleChassisNumber", this.VehicleChassisNumber, null, null, "Equals", false, false, false, "string");

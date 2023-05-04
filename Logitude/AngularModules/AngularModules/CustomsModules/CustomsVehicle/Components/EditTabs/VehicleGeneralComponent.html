@@ -10,7 +10,7 @@
 </style>
 <div style="padding:10px;">
     <div style="margin: 0% 90%;">
-        <div tabindex="0" class="ToggleButton" [style.width.px]="'100'">
+        <div  *ngIf="EntityPM.Id==null || showCopyRichbit" tabindex="0" class="ToggleButton" [style.width.px]="'100'">
 
             <table>
                 <tr>
@@ -34,8 +34,7 @@
                     <button style="text-align: right " (click)="OpenCopyRichbit()">
                         <div>{{'Customs.Vehicle.O.CopyRichbit' | TextCodeTranslationPipe}}</div>
                     </button>
-                    <div class="ToggleButtonSeparator">
-                    </div>
+                  
                 </div>
             </div>
         </div>
