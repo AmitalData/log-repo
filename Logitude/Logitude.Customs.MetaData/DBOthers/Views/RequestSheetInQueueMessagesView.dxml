@@ -9,10 +9,9 @@
 	  <![CDATA[
 CREATE OR REPLACE VIEW RequestSheetInQueueMessagesView
     AS
-select ObjectTableId1,EntityId1,InterfaceTypeCode,interface.description as InterfaceTypeName  from CustomsRequestsSheets customsRequestsSheets
+select ObjectTableId1,Tenant,EntityId1,InterfaceTypeCode,interface.description as InterfaceTypeName  from CustomsRequestsSheets customsRequestsSheets
 join interfacemanagements interface
 on customsRequestsSheets.InterfaceTypeCode = interface.Code
-where Tenant=1 
 and 
 (RequestStatusCode = '5' or RequestStatusCode = '1' or RequestStatusCode = '2' or RequestStatusCode = '21') and 
 RequestCreateDate >= sysdate-7 and

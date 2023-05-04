@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.DataContracts;
+using System.Runtime.Remoting.Contexts;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -60,12 +61,23 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public List<PriorityRequestsSheetSummary> GetStatisticsByCourierDeclarations(int tenant,string courierMasterId)
         {
-            var lastweek = DateTime.Now.Date.AddDays(-7);
-            var query1 = (from b in context.CourierDeclarations
+            //var lastweek = DateTime.Now.Date.AddDays(-7);
+            /*var query1 = (from b in context.CourierDeclarations
                           where b.Tenant == tenant && b.CourierMasterId == courierMasterId
-                          select b.DeclarationId).ToList();
+                          select b.DeclarationId).ToList();*/
 
-            IQueryable < CustomsRequestsSheetList > query = (from a in context.CustomsRequestsSheets
+            var query = (from a in context.RequestSheetInQueueMessagesView
+                          join c in context.CourierDeclarations on
+                          a.EntityId1 equals c.DeclarationId
+                          where a.Tenant == tenant && c.CourierMasterId == courierMasterId
+                          select new CustomsRequestsSheetList()
+                          {
+                              ObjectTableId1 = a.ObjectTableId1,
+                              EntityId1 = a.EntityId1,
+                              InterfaceTypeCode = a.InterfaceTypeCode,
+                              InterfaceTypeName = a.InterfaceTypeName,
+                          }); 
+            /*IQueryable < CustomsRequestsSheetList > query = (from a in context.CustomsRequestsSheets
                                                               where a.Tenant == tenant &&  (a.RequestStatusCode == "5" || a.RequestStatusCode == "1" ||
                                                               a.RequestStatusCode == "2" || a.RequestStatusCode == "21")
                                                               && a.RequestCreateDate >= lastweek
@@ -75,13 +87,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   EntityId1 = a.EntityId1,
                                                                   InterfaceTypeCode = a.InterfaceTypeCode,
                                                                   InterfaceTypeName = a.InterfaceManagement != null ? a.InterfaceManagement.Description : null,
-                                                              });
+                                                              });*/
 
 
             var qGroupIt = query.GroupBy(q =>new { q.InterfaceTypeName, q.InterfaceTypeCode }).Select(g => new PriorityRequestsSheetSummary
             {
                 Id = new Guid(),
-                count = g.Where(y => (y.ObjectTableId1 == "1-343" && query1.Contains(y.EntityId1))||(y.ObjectTableId1== "1-655"&& y.EntityId1== courierMasterId)).Select(x => x.InterfaceTypeCode).Count(),
+                count = g.Select(x => x.InterfaceTypeCode).Count(),
                 totalCount=g.Select(x => x.InterfaceTypeCode).Count(),
                 InterfaceTypeName = g.Key.InterfaceTypeName,
                 InterfaceTypeCode = g.Key.InterfaceTypeCode

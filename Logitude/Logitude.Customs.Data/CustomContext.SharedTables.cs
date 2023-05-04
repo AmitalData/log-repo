@@ -15,8 +15,8 @@ namespace Logitude.Customs.Data
         public IDbSet<Card> Cards { get; set; }
 
         public IDbSet<DecCourierStatusesView> DecCourierStatusesViews { get; set; }
-        IDbSet<RequestSheetInQueueMessagesView> RequestSheetInQueueMessagesView { get; set; }
-
+        public IDbSet<RequestSheetInQueueMessagesView> RequestSheetInQueueMessagesView { get; set; }
+         
 
     }
     public partial interface ICustomContext : IContext
