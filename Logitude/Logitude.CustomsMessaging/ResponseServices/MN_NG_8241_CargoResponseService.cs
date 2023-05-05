@@ -239,11 +239,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     Boolean _IsChanged = false;
                     if (_MyDeclarationPM.Consignments != null && _MyDeclarationPM.Consignments.Count() > 0)
                     {
-                        string defValue = GetDefault("ISRAEL", "CGG_MAN_RUNOVR", "NON", "NON", _MyDeclarationPM.Tenant);
-                        if (defValue == "Y")
+                        var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
+                        if (setting != null)
                         {
-                            _IsRunOver = true;
+                            if (setting.IsConnectedToUniFreight)
+                            {
+                                string defValue = GetDefault("ISRAEL", "CGG_MAN_RUNOVR", "NON", "NON", _MyDeclarationPM.Tenant);
+                                if (defValue == "Y")
+                                {
+                                    _IsRunOver = true;
+                                }
+                            }
                         }
+                               
                         if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].UnloadPortCode) || _IsRunOver) && _MyDeclarationPM.Consignments[0].UnloadPortCode != customResponse.Cargo.CargoAdditionalData.First().unloadingLocationID)
                         {
                             _MyDeclarationPM.Consignments[0].UnloadPortCode = customResponse.Cargo.CargoAdditionalData.First().unloadingLocationID;
