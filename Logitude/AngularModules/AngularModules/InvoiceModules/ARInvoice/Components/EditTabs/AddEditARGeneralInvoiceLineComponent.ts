@@ -34,7 +34,7 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
 
     SetDefaultValues() {
         this.Quantity = this.EntityPM.Quantity != null ? this.EntityPM.Quantity : 1;
-        this.ForiegnCurrencyId = this.EntityPM.ForiegnCurrencyId?.length != 0 ? this.EntityPM.ForiegnCurrencyId : SessionLocator.TenantPM.CurrencyId;
+        this.ForiegnCurrencyId = this.EntityPM.ForiegnCurrencyId?.length != 0 ? this.EntityPM.ForiegnCurrencyId : this.EntityPM.InvoiceCurrencyId;
     }
 
     FillChargesTypesCustomLOVColumnsWidths()
