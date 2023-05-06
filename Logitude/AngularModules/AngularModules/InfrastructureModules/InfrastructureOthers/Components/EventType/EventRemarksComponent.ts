@@ -8,7 +8,6 @@ import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/Base
 import { EventRemarkPM } from 'Infrastructure/EntityPMs/EventRemarkPM';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
-import { BatchServicesComponent } from 'InfrastructureModules/InfrastructureBatchService/Components/BatchService/BatchServicesComponent';
 
 @Component({
 
@@ -21,7 +20,7 @@ export class EventRemarksComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     _PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
-    public EventRemarksLists: EventRemarkPM[] = [];
+    public EventRemarksList: EventRemarkPM[] = [];
     public partnerTypesEvent: PartnerTypesEvent[];
     public tempPartnerTypesEvent: PartnerTypesEvent[] = [];
     public tempEventRemarks: EventRemarkPM[] = [];
@@ -46,13 +45,10 @@ export class EventRemarksComponent extends BaseComponent {
         this.partnerTypesEvent = [];
 
         if (!this.EntityPM.EventRemarks) return;
-        this.EventRemarksLists = [];
+        this.EventRemarksList = [];
         this.EntityPM.EventRemarks.forEach((copy) => {
-            this.EventRemarksLists.push(copy);
-            this.partnerTypesEvent.push(new PartnerTypesEvent(copy, true, "", copy.PartnerTypeId, ""));
+            this.EventRemarksList.push(copy);
         });
-
-        this.EventRemarksLists.forEach(val => this.tempEventRemarks.push(val));
 
         this._PartnerTypeListService.getAll()
             .subscribe((myResponse: ServiceResponse) => {
@@ -61,109 +57,99 @@ export class EventRemarksComponent extends BaseComponent {
                 var size = myResponse.Result.length;
                 for (let i = 0; i < size; i++) {
                     this.PartnerTypes[i] = this.EntityPM[i];
-
-
-                    let indexToUpdate = this.partnerTypesEvent.findIndex(x => x.PartnerTypeId === this.PartnerTypes[i].Id);
-                    var x = this.partnerTypesEvent.find(x => x.PartnerTypeId === this.PartnerTypes[i].Id);
+                    var x = this.EventRemarksList.find(x => x.PartnerTypeId === this.PartnerTypes[i].Id);
                     if (x != null) {
-                        x.IsChoose = true;
-                        x.PartnerTypeName = this.PartnerTypes[i].Name;
-                        x.PartnerTypeSearchFields = this.PartnerTypes[i].SearchFields;
-                        this.partnerTypesEvent[indexToUpdate] = x;
-                    }
-                    else
+                        this.partnerTypesEvent.push(new PartnerTypesEvent(new EventRemarkPM(), true, this.PartnerTypes[i].Name, this.PartnerTypes[i].Id, this.PartnerTypes[i].SearchFields));
+
+                    } else {
                         this.partnerTypesEvent.push(new PartnerTypesEvent(new EventRemarkPM(), false, this.PartnerTypes[i].Name, this.PartnerTypes[i].Id, this.PartnerTypes[i].SearchFields));
+
+                    }
                 }
                 this.partnerTypesEvent.forEach(val => this.tempPartnerTypesEvent.push(val));
             });
-        this.partnerTypesEvent.forEach(val => this.tempPartnerTypesEvent.push(val));
+
     }
 
     CheckboxIsSelectedByDefaultClick(selectedItem: PartnerTypesEvent, value: any) {
         if (selectedItem == null) return;
         this.EntityPM = this.entityArgs.EntityPM;
+        let index = this.partnerTypesEvent.findIndex(x => x.PartnerTypeId === selectedItem.PartnerTypeId);
+        if (index > -1) {
+            this.partnerTypesEvent[index].IsChoose = value;
+        }
+        this.FullEventRemarksList(this.partnerTypesEvent);
 
-        selectedItem.EventRemark.Tenant = this.EntityPM.Tenant;
-        selectedItem.EventRemark.CreateDate = new Date(Date.now());
-        selectedItem.EventRemark.CreatedByUserId = SessionLocator.LoggedUserId;;
-        selectedItem.EventRemark.SearchFields = selectedItem.PartnerTypeSearchFields;
-        selectedItem.EventRemark.EventTypeId = this.EntityPM.Id;
-        selectedItem.EventRemark.PartnerTypeId = selectedItem.PartnerTypeId;
-        let indexInDB = this.tempEventRemarks.findIndex(x => x.PartnerTypeId === selectedItem.EventRemark.PartnerTypeId && x.EventTypeId === selectedItem.EventRemark.EventTypeId);
-        let index = this.EventRemarksLists.findIndex(x => x.PartnerTypeId === selectedItem.PartnerTypeId && x.EventTypeId === selectedItem.EventRemark.EventTypeId);
-        if (index == -1 && selectedItem.IsChoose != value) {
-            selectedItem.EventRemark.IsChoose = value;
-            this.EventRemarksLists.push(selectedItem.EventRemark);
+        this.EntityPM.EventRemarks = [];
+        this.EventRemarksList.forEach( val=> this.EntityPM.EventRemarks.push(val) );
+        if(this.CurrentSession.CurrentEditComponent!=null)
+        {
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+            this.CurrentSession.CurrentEditComponent.EntityPM.OldEntityPM=null;
         }
-        else {
-            this.EventRemarksLists[index].IsChoose = value;
-        }
-        this.EntityPM.EventRemarks = this.EventRemarksLists;
-        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
     }
 
-    ClearAllClicked(event) {
+    ClearAllClicked() {
         this.EntityPM = this.entityArgs.EntityPM;
-        var size = this.EventRemarksLists.length;
-        for (let i = 0; i < size; i++) {
-            this.partnerTypesEvent[i].EventRemark.Tenant = this.EntityPM.Tenant;
-            this.partnerTypesEvent[i].EventRemark.CreateDate = new Date(Date.now());
-            this.partnerTypesEvent[i].EventRemark.CreatedByUserId = SessionLocator.LoggedUserId;;
-            this.partnerTypesEvent[i].EventRemark.SearchFields = this.partnerTypesEvent[i].PartnerTypeSearchFields;
-            this.partnerTypesEvent[i].EventRemark.EventTypeId = this.EntityPM.Id;
-            this.partnerTypesEvent[i].EventRemark.PartnerTypeId = this.partnerTypesEvent[i].PartnerTypeId;
-            let indexInDB = this.tempEventRemarks.findIndex(x => x.PartnerTypeId === this.EventRemarksLists[i].PartnerTypeId && x.EventTypeId === this.EventRemarksLists[i].EventTypeId);
-             if (indexInDB > -1) {
-            let index = this.EventRemarksLists.findIndex(x => x.PartnerTypeId === this.partnerTypesEvent[i].PartnerTypeId && x.EventTypeId === this.partnerTypesEvent[i].EventRemark.EventTypeId);
-            if (index == -1) {
-                this.EventRemarksLists.push(this.partnerTypesEvent[i].EventRemark);
-            }
-            else {
-                this.EventRemarksLists[index].IsChoose = false;
-            }
-
-              }
-              else {
-                 this.tempEventRemarks1.push(this.partnerTypesEvent[i].EventRemark);
-                 this.partnerTypesEvent[i].IsChoose = false;
-             }
-             this.partnerTypesEvent[i].EventRemark.IsChoose = false;
-             this.partnerTypesEvent[i].IsChoose = false;
-        }
-       var size = this.tempEventRemarks1.length;
-        for (let i = 0; i < size; i++) {
-            let index = this.EventRemarksLists.findIndex(x => x.PartnerTypeId === this.tempEventRemarks1[i].PartnerTypeId && x.EventTypeId === this.tempEventRemarks1[i].EventTypeId);
-
-            this.EventRemarksLists.splice(index, 1);
+        for (let i = 0; i < this.partnerTypesEvent.length; i++) {
             this.partnerTypesEvent[i].IsChoose = false;
         }
-        this.tempEventRemarks1 = [];
+        this.FullEventRemarksList(this.partnerTypesEvent);
 
-        this.EntityPM.EventRemarks = this.EventRemarksLists;
-        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+        this.EntityPM.EventRemarks = [];
+        this.EventRemarksList.forEach( val=> this.EntityPM.EventRemarks.push(val) );
+        if(this.CurrentSession.CurrentEditComponent!=null)
+        {
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+            this.CurrentSession.CurrentEditComponent.EntityPM.OldEntityPM=null;
+        }  
     }
-    SelectAllClicked(event) {
+
+    SelectAllClicked() {
         this.EntityPM = this.entityArgs.EntityPM;
         var size = this.partnerTypesEvent.length;
         for (let i = 0; i < size; i++) {
-            this.partnerTypesEvent[i].EventRemark.Tenant = this.EntityPM.Tenant;
-            this.partnerTypesEvent[i].EventRemark.CreateDate = new Date(Date.now());
-            this.partnerTypesEvent[i].EventRemark.CreatedByUserId = SessionLocator.LoggedUserId;;
-            this.partnerTypesEvent[i].EventRemark.SearchFields = this.partnerTypesEvent[i].PartnerTypeSearchFields;
-            this.partnerTypesEvent[i].EventRemark.EventTypeId = this.EntityPM.Id;
-            this.partnerTypesEvent[i].EventRemark.PartnerTypeId = this.partnerTypesEvent[i].PartnerTypeId;
-            let index = this.EventRemarksLists.findIndex(x => x.PartnerTypeId === this.partnerTypesEvent[i].PartnerTypeId && x.EventTypeId === this.partnerTypesEvent[i].EventRemark.EventTypeId);
-            if (index == -1 && this.partnerTypesEvent[i].IsChoose != true) {
-                this.EventRemarksLists.push(this.partnerTypesEvent[i].EventRemark);
-            }
-            else {
-                this.EventRemarksLists[i].IsChoose = true;
-            }
-            this.partnerTypesEvent[i].EventRemark.IsChoose = true;
             this.partnerTypesEvent[i].IsChoose = true;
         }
-        this.EntityPM.EventRemarks = this.EventRemarksLists;
-        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+        this.FullEventRemarksList(this.partnerTypesEvent);
+
+        this.EntityPM.EventRemarks = [];
+        this.EventRemarksList.forEach( val=> this.EntityPM.EventRemarks.push(val) );
+        if(this.CurrentSession.CurrentEditComponent!=null)
+        {
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
+            this.CurrentSession.CurrentEditComponent.EntityPM.OldEntityPM=null;
+        }
+    }
+
+    FullEventRemarksList(partnerTypesEvent) {
+        this.EventRemarksList = [];
+
+        for (let i = 0; i < partnerTypesEvent.length; i++) {
+            partnerTypesEvent[i].EventRemark.Tenant = this.EntityPM.Tenant;
+            partnerTypesEvent[i].EventRemark.CreateDate = new Date(Date.now());
+            partnerTypesEvent[i].EventRemark.CreatedByUserId = SessionLocator.LoggedUserId;;
+            partnerTypesEvent[i].EventRemark.SearchFields = partnerTypesEvent[i].PartnerTypeSearchFields;
+            partnerTypesEvent[i].EventRemark.EventTypeId = this.EntityPM.Id;
+            partnerTypesEvent[i].EventRemark.PartnerTypeId = partnerTypesEvent[i].PartnerTypeId;
+            if (partnerTypesEvent[i].IsChoose == true) {
+                this.FindInEventRemarksList(partnerTypesEvent[i], true);
+            }
+            else {
+                this.FindInEventRemarksList(partnerTypesEvent[i], false);
+            }
+        }
+    }
+
+    FindInEventRemarksList(partnerTypesEvent, value) {
+        let index = this.EventRemarksList.findIndex(x => x.PartnerTypeId === partnerTypesEvent.PartnerTypeId);
+        if (index == -1) {
+            this.EventRemarksList.push(partnerTypesEvent.EventRemark);
+        }
+        else {
+            this.EventRemarksList[index].IsChoose = value;
+        }
+        partnerTypesEvent.EventRemark.IsChoose = value;
     }
 
     TextChanged(searchEvent) {
@@ -182,6 +168,7 @@ export class EventRemarksComponent extends BaseComponent {
         }
     }
 }
+
 class PartnerTypesEvent {
     public EventRemark: EventRemarkPM;
     public IsChoose: boolean

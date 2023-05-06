@@ -7,6 +7,8 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Collections.Generic;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -14,6 +16,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
     {
         EventTypeRepository repository;
         EventRemarkQueryService eventRemarkQueryService;
+        List<EventRemarkPM> eventRemarkPM;
         public EventTypeQuery()
         {
             repository = new EventTypeRepository(); 
@@ -23,6 +26,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             repository = new EventTypeRepository(tenant);
             eventRemarkQueryService = new EventRemarkQueryService(tenant);
+            eventRemarkPM = new List<EventRemarkPM>();
         }
 
         public EventTypeQuery(EventTypeRepository eventTypeRepository)
@@ -73,25 +77,27 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   IsStatusNotModified = a.IsStatusNotModified,
                                                   EventTrigger = a.EventTrigger,
                                              });
-                        var e1 = new List<EventRemarkPM>();
-                        foreach (var e in entitystatuses)
+                        if (IsFullAccountingActivated(tenant))
                         {
-                            e1 = (from a in repository.context.EventRemarks.AsEnumerable()
-                                  where a.EventTypeId == e.Id
-                                  select new EventRemarkPM
-                                  {
-                                      Id = a.Id,
-                                      Tenant = a.Tenant,
-                                      CreateDate = a.CreateDate,
-                                      CreatedByUserId = a.CreatedByUserId,
-                                      SearchFields = a.SearchFields,
-                                      EventTypeId = a.EventTypeId,
-                                      PartnerTypeId = a.PartnerTypeId,
-                                      IsChoose = a.IsChoose,
-                                  }).ToList();
-                            e.EventRemarks = e1;
+                            foreach (var e in entitystatuses)
+                            {
+                                eventRemarkPM = (from a in repository.context.EventRemarks.AsEnumerable()
+                                      where a.EventTypeId == e.Id
+                                      select new EventRemarkPM
+                                      {
+                                          Id = a.Id,
+                                          Tenant = a.Tenant,
+                                          CreateDate = a.CreateDate,
+                                          CreatedByUserId = a.CreatedByUserId,
+                                          SearchFields = a.SearchFields,
+                                          EventTypeId = a.EventTypeId,
+                                          PartnerTypeId = a.PartnerTypeId,
+                                          IsChoose = a.IsChoose,
+                                      }).ToList();
+                                e.EventRemarks = eventRemarkPM;
+                            }
                         }
-                        
+ 
                         foreach (var s in entitystatuses)
                         {
                             string name = "EventTypePM" + s.Id + tenant;
@@ -103,41 +109,49 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
 
                         entity = (EventTypePM)CacheManager.CacheWrapper.Get(entityName);
-                        var e2 = new List<EventRemarkPM>();
-                        e2 = (from a in repository.context.EventRemarks.AsEnumerable()
-                              where a.EventTypeId == entity.Id
-                              select new EventRemarkPM
-                              {
-                                  Id = a.Id,
-                                  Tenant = a.Tenant,
-                                  CreateDate = a.CreateDate,
-                                  CreatedByUserId = a.CreatedByUserId,
-                                  SearchFields = a.SearchFields,
-                                  EventTypeId = a.EventTypeId,
-                                  PartnerTypeId = a.PartnerTypeId,
-                                  IsChoose = a.IsChoose,
-                              }).ToList();
-                        entity.EventRemarks = e2;
+
+                        if (IsFullAccountingActivated(tenant))
+                        {
+                            eventRemarkPM = (from a in repository.context.EventRemarks.AsEnumerable()
+                                  where a.EventTypeId == entity.Id
+                                  select new EventRemarkPM
+                                  {
+                                      Id = a.Id,
+                                      Tenant = a.Tenant,
+                                      CreateDate = a.CreateDate,
+                                      CreatedByUserId = a.CreatedByUserId,
+                                      SearchFields = a.SearchFields,
+                                      EventTypeId = a.EventTypeId,
+                                      PartnerTypeId = a.PartnerTypeId,
+                                      IsChoose = a.IsChoose,
+                                  }).ToList();
+                            entity.EventRemarks = eventRemarkPM;
+                        }
+                           
                     }
 
                     else
                     {
                         entity = (EventTypePM)CacheManager.CacheWrapper.Get(entityName);
-                        var e2 = new List<EventRemarkPM>();
-                        e2 = (from a in repository.context.EventRemarks.AsEnumerable()
-                              where a.EventTypeId == entity.Id
-                              select new EventRemarkPM
-                              {
-                                  Id = a.Id,
-                                  Tenant = a.Tenant,
-                                  CreateDate = a.CreateDate,
-                                  CreatedByUserId = a.CreatedByUserId,
-                                  SearchFields = a.SearchFields,
-                                  EventTypeId = a.EventTypeId,
-                                  PartnerTypeId = a.PartnerTypeId,
-                                  IsChoose = a.IsChoose,
-                              }).ToList();
-                        entity.EventRemarks = e2;
+
+                        if (IsFullAccountingActivated(tenant))
+                        {
+                            eventRemarkPM = (from a in repository.context.EventRemarks.AsEnumerable()
+                                  where a.EventTypeId == entity.Id
+                                  select new EventRemarkPM
+                                  {
+                                      Id = a.Id,
+                                      Tenant = a.Tenant,
+                                      CreateDate = a.CreateDate,
+                                      CreatedByUserId = a.CreatedByUserId,
+                                      SearchFields = a.SearchFields,
+                                      EventTypeId = a.EventTypeId,
+                                      PartnerTypeId = a.PartnerTypeId,
+                                      IsChoose = a.IsChoose,
+                                  }).ToList();
+                            entity.EventRemarks = eventRemarkPM;
+                        }
+                           
                     }
                 }
 
@@ -176,22 +190,25 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   IsStatusNotModified = a.IsStatusNotModified,
                                   EventTrigger = a.EventTrigger,
                              }).FirstOrDefault();
-                
-                            var e1 = new List<EventRemarkPM>();
-                                e1 = (from a in repository.context.EventRemarks.AsEnumerable()
-                                      where a.EventTypeId == entity.Id
-                                      select new EventRemarkPM
-                                      {
-                                          Id = a.Id,
-                                          Tenant = a.Tenant,
-                                          CreateDate = a.CreateDate,
-                                          CreatedByUserId = a.CreatedByUserId,
-                                          SearchFields = a.SearchFields,
-                                          EventTypeId = a.EventTypeId,
-                                          PartnerTypeId = a.PartnerTypeId,
-                                          IsChoose = a.IsChoose,
-                                      }).ToList();
-                            entity.EventRemarks = e1;
+
+                    if (IsFullAccountingActivated(tenant))
+                    {
+                        eventRemarkPM = (from a in repository.context.EventRemarks.AsEnumerable()
+                              where a.EventTypeId == entity.Id
+                              select new EventRemarkPM
+                              {
+                                  Id = a.Id,
+                                  Tenant = a.Tenant,
+                                  CreateDate = a.CreateDate,
+                                  CreatedByUserId = a.CreatedByUserId,
+                                  SearchFields = a.SearchFields,
+                                  EventTypeId = a.EventTypeId,
+                                  PartnerTypeId = a.PartnerTypeId,
+                                  IsChoose = a.IsChoose,
+                              }).ToList();
+                        entity.EventRemarks = eventRemarkPM;
+                    }
+                        
                 }
 
                 return entity;
@@ -199,6 +216,19 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return null;
         }
 
+        public bool IsFullAccountingActivated(int tenant)
+
+        {
+
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+
+            return isFullAccountingActivated;
+
+        }
         public IQueryable<EventTypePM> GetEventTypePMsByTenant(int tenant)
         {
             IQueryable<EventTypePM> eventTypes = from a in repository.context.EventType.Include("EntityStatus").Include("EventTypeCategory")

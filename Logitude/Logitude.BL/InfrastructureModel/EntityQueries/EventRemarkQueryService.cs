@@ -74,11 +74,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             repository.Update(Poco);
             repository.SubmitChanges();
         }
-        public void Create(EventRemarkPM eventRemarkPM)
+        public void Create(EventRemarkPM eventRemarkPM, string eventTypeId)
         {
             this.isNewEntity = true;
             this.eventRemarkPM = eventRemarkPM;
             this.eventRemarkPM.Id = IdCounter.GetNumber("EventRemark", eventRemarkPM.Tenant).ToString();
+            this.eventRemarkPM.EventTypeId = eventTypeId;
             this.Poco = new EventRemark();
             this.Poco.Id = this.eventRemarkPM.Id;
 

@@ -62,6 +62,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             EventTypeMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+            AddEventRemarks(theEntityPm);
         }
 
         public void Update(EventTypePM theEntityPm)
@@ -76,12 +77,17 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             {
                 EventTypeTracing.Trace(theEntityPm, Poco, isNewEntity);
             }
-
-            if ( IsFullAccountingActivated(theEntityPm.Tenant))
+            AddEventRemarks(theEntityPm);
+            EventTypeMapping.MapEntity(theEntityPm, Poco, isNewEntity);
+            entityRepository.Update(Poco);
+            entityRepository.SubmitChanges();
+        }
+        public void AddEventRemarks(EventTypePM theEntityPm)
+        {
+            if (IsFullAccountingActivated(theEntityPm.Tenant))
             {
                 EventRemarkQueryService service = new EventRemarkQueryService(theEntityPm.Tenant);
                 EventRemarkRepository eventRemarkRepository = new EventRemarkRepository(objectContext);
-                #region EventRemarks
 
                 if (theEntityPm.EventRemarks != null)
                 {
@@ -89,23 +95,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     {
                         EventRemark eventRemark = eventRemarkRepository.GetEventRemarkByPartnerTypeId(eventRemarkPM.PartnerTypeId, eventRemarkPM.EventTypeId, eventRemarkPM.Tenant);
                         if (eventRemark == null && eventRemarkPM.IsChoose)
-                            service.Create(eventRemarkPM);
+                            service.Create(eventRemarkPM, theEntityPm.Id);
                         else if (eventRemark != null && !eventRemarkPM.IsChoose)
                         {
                             eventRemarkRepository.Remove(eventRemark);
                         }
                     }
                 }
-                #endregion
             }
-
-
-
-            EventTypeMapping.MapEntity(theEntityPm, Poco, isNewEntity);
-            entityRepository.Update(Poco);
-            entityRepository.SubmitChanges();
         }
- 
 
         public bool IsFullAccountingActivated(int tenant)
 

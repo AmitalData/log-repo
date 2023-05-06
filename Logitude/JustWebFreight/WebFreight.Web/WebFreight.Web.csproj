@@ -776,7 +776,6 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalPreDefinedComponentController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalProfileController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalTextCodeController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\EventRemarkController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ObjectTableController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DataCustomObjectViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ReferenceCustomObjectViewsController.Generated.cs" />
