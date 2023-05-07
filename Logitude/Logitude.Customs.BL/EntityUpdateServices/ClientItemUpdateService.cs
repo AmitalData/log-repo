@@ -18,15 +18,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     public partial class ClientItemUpdateService : EntityUpdateService<ClientItem, ClientItemPM, EntityPM>
     {
         
-        protected override void OnUpdating(ClientItemPM entityPM)
+       
+        protected override void OnUpdating(ClientItemPM entityPM, ClientItem entityPOCO)
         {
-            if (entityPM!=null && entityPM.ChangeSetOp != ChangeSetOperation.None) {
-                ClientQueryService ClientQueryService = new ClientQueryService(entityPM.Tenant);
-                var clientId = ClientQueryService.GetIdByCode(entityPM?.ClientCode, entityPM.Tenant);
-                if(clientId!=null) 
-                EventTracer.CreateTraceEvent(new EventTracerArgs() { EntityId = clientId, ObjectTableName = "Customs.Client", Tenant = entityPM.Tenant, UserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant), EventTypeCode = "CUCI", Notes = "item code:" + entityPM.ItemCode });
+            if (entityPM != null && entityPM.ChangeSetOp != ChangeSetOperation.None)
+            {
+                if(entityPM.ItemDescription != entityPOCO.ItemDescription || entityPM.OriginCountryCode != entityPOCO.OriginCountryCode || entityPM.ClassificationCode != entityPOCO.ClassificationCode) {
+                    ClientQueryService ClientQueryService = new ClientQueryService(entityPM.Tenant);
+                    var clientId = ClientQueryService.GetIdByCode(entityPM?.ClientCode, entityPM.Tenant);
+                    if (clientId != null)
+                        EventTracer.CreateTraceEvent(new EventTracerArgs() { EntityId = clientId, ObjectTableName = "Customs.Client", Tenant = entityPM.Tenant, UserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant), EventTypeCode = "CUCI", Notes = "item code:" + entityPM.ItemCode });
+                }
+               
             }
-
+            base.OnUpdating(entityPM, entityPOCO);
         }
 
 
