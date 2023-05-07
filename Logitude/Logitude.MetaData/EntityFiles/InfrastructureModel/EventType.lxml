@@ -2784,6 +2784,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;RemarksView&quot;"
     ListPropertyPath="&quot;RemarksView&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2966,6 +2967,11 @@
         Column="1"
         Row="5"
         ObjectFieldName="&quot;InActive&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="6"
+        ObjectFieldName="&quot;RemarksView&quot;"
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>

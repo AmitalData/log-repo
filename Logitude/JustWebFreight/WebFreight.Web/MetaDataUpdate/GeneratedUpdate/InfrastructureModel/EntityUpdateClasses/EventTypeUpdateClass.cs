@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EventTypeUpdateClass
    {  		
-		public const string HashString = "8d94c768efecee2e19760f72a454b25f";
+		public const string HashString = "29ac5b2dc1b09ff61cced92454677694";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2479,6 +2479,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RemarksView",
 					  						ListPropertyPath =  "RemarksView",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2609,6 +2610,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
              ScreenField EventTypeEventTypeGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsAgentView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField EventTypeEventTypeGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField EventTypeEventTypeGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.RemarksView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 	      
 
