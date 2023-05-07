@@ -628,6 +628,7 @@
     <Compile Include="InfrastructureModel\DataContracts\CustomFieldDataContractList.cs" />
     <Compile Include="InfrastructureModel\DataContracts\MultiEntityUpdateData.cs" />
     <Compile Include="InfrastructureModel\DataContracts\ObjectCustomFieldDataContractPM.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\EventRemarkList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldsMainObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DataCustomObjectList.cs" />
@@ -640,6 +641,7 @@
     <Compile Include="InfrastructureModel\EntityLists\ReferenceCustomObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ScreenSectionList.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ChildEntitiesCustomFieldPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\EventRemarkPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildEntity.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomFieldsMainObjectPM.cs" />
@@ -655,6 +657,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\ReferenceCustomObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ScreenSectionPM.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ChildEntitiesCustomFieldQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\EventRemarkQueryService.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CustomChildObjectQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CustomFieldsMainObjectQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DeploymentPackagesVersionQuery.cs" />
@@ -718,6 +721,7 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DataCustomObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageExecutionLogMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\EventRemarkMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\ReferenceCustomObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\CustomChildObjectService.cs" />
     <Compile Include="InfrastructureModel\Services\QuoteUpdateService.cs" />

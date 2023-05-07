@@ -154,7 +154,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         EventTypeService service = new EventTypeService(MyContext, entityPM.Tenant);
- 
                         service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);

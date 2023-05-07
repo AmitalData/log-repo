@@ -21,6 +21,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
 
 import {EventTypePM} from '../../EntityPMs/EventTypePM';
 
+import {EventRemarkPM} from '../../EntityPMs/EventRemarkPM';
 import {EventTypePMInitService} from '../../EntityPMInitServices/EventTypePMInitService';
 import {EventTypeValidator} from '../../Validators/EventTypeValidator';
 
@@ -198,12 +199,22 @@ export class EventTypePMService {
                  
             }
 			
+               this.MapEventRemarks(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.EventRemarks = [];
+            for (var item in entityPM.EventRemarks) {
+            var myEventRemarkPM = entityPM.EventRemarks[item];
+            var newEventRemarkPM: EventRemarkPM = this.clone(myEventRemarkPM);
+						
+							 
+            entityPM.OldEntityPM.EventRemarks.push(newEventRemarkPM);
+            }
+			   
 		}
         else {
 
@@ -215,6 +226,98 @@ export class EventTypePMService {
         return entityPM;
     }
 
+    MapEventRemarks(entityPM: EventTypePM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldEventRemarks: EventRemarkPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldEventRemarks = entityPM.OldEntityPM.EventRemarks;
+        }
+
+        entityPM.EventRemarks = new Array<EventRemarkPM>();
+        for (var item in jsonPM.EventRemarks) {
+            var jItem = jsonPM.EventRemarks[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newEventRemarkPM: EventRemarkPM;
+	  
+            if (mapParent) {
+                newEventRemarkPM = new EventRemarkPM();
+            }
+            else
+            {
+                newEventRemarkPM = new EventRemarkPM();
+            }
+ 			newEventRemarkPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+				                  var pmProperty = pmKeysArray[pmKey];
+                newEventRemarkPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newEventRemarkPM.UniqueKey = Guid.newGuid();
+                newEventRemarkPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newEventRemarkPM.OldEntityPM = this.clone(newEventRemarkPM);
+
+				
+            }
+            else {
+                if (newEventRemarkPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newEventRemarkPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newEventRemarkPM.ChangeSetOp = "Insert";
+                }
+ 
+                newEventRemarkPM.OldEntityPM = null;
+                newEventRemarkPM.EntityParentPM = null;
+            }
+			 newEventRemarkPM.DisableMarkAsDirty = false;
+			 newEventRemarkPM.IsDirty = false;
+            entityPM.EventRemarks.push(newEventRemarkPM);
+        }
+        if (oldEventRemarks) {
+            
+            for (var itemKey in oldEventRemarks) {
+                if (entityPM.EventRemarks.filter(p=> p.UniqueKey === oldEventRemarks[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldEventRemarks[itemKey]) {
+                        //oldEventRemarks[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.EventRemarks.push(oldEventRemarks[itemKey]);
+						var oldItemJson = oldEventRemarks[itemKey];
+                        var deletedPM: EventRemarkPM = new EventRemarkPM();
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.EventRemarks.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

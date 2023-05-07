@@ -36,6 +36,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<TextCodeType> TextCodeTypes { get; }
         IDbSet<RatesTable> RatesTable { get; }
         IDbSet<EventType> EventType { get; }
+        IDbSet<EventRemark> EventRemarks { get; }
         IDbSet<TraceEvent> TraceEvent { get; }
         IDbSet<Rank> Ranks { get; }
         IDbSet<Document> Documents { get; }

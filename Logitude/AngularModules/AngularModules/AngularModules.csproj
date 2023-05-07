@@ -1083,6 +1083,7 @@
     <Content Include="InfrastructureModules\InfrastructureHelpResource\Components\NewHelpResouceComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\CreateTenant\CreateTenantComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\EventType\CustomEventTypeComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureOthers\Components\EventType\EventRemarksComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\MoveType\NewMoveTypeComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAdaptationItemComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineMessagingRuleComponent.html" />
@@ -2115,6 +2116,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\ModuleInfrastructureHelpResource.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\CreateTenant\CreateTenantComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\EventType\CustomEventTypeComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\EventType\EventRemarksComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\OceanInsightsSetting\OceanInsightsSettingsComponent.ts" />

@@ -2119,6 +2119,6 @@ namespace Simplog.Data.InfrastructureModel
         public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects => throw new NotImplementedException();
         public IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs => throw new NotImplementedException();
 
-
+        public IDbSet<EventRemark> EventRemarks => throw new NotImplementedException();
     }
 }

@@ -7,6 +7,8 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+
+import {EventRemarkPM} from './EventRemarkPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -185,7 +187,44 @@ export class EventTypePM {
     public set EventTrigger(newValue: string) { if (this.eventTrigger != newValue) { this.eventTrigger = newValue; this.MarkAsDirty("EventTrigger"); } }
        
 	 
+     
+	private eventRemarks: EventRemarkPM[];
+    get  EventRemarks() {
+        if (this.eventRemarks == null) {
+            this.eventRemarks = [];
+        }
 
+        return this.eventRemarks;
+    }
+    set  EventRemarks(newValue: EventRemarkPM[]) {
+        if (this.eventRemarks != newValue) {
+            this.eventRemarks = newValue;
+            this.MarkAsDirty("EventRemarks");
+        }
+    }
+    public AddEventRemarkPM(item: EventRemarkPM) {
+        if (item != null) {
+            var index = this.EventRemarks.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. EventRemarks.push(item);
+                this.MarkAsDirty("EventRemarks");
+            }
+        }
+    }
+    public RemoveEventRemarkPM(item: EventRemarkPM) {
+        if (item != null) {
+            var index = this.EventRemarks.indexOf(item);
+            if (index > -1) {
+                this. EventRemarks.splice(index, 1);
+                this.MarkAsDirty("EventRemarks");
+            }
+        }
+    }
+	    //public EventRemarks: Array<EventRemarkPMPM>= [];
+ 
     public OldEntityPM: EventTypePM;
 		
     public IsDirty: boolean;
@@ -212,4 +251,4 @@ export class EventTypePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
