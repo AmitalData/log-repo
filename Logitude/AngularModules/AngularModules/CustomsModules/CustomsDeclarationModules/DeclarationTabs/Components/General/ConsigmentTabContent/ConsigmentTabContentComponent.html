@@ -488,13 +488,13 @@
                                                 </td>
 
                                             </tr>
-                                            <tr *ngIf="ShowExcludeConsignmentBoolean">
-                                                <td style="vertical-align: middle;padding-top: 2px;">
+                                            <tr>
+                                                <td *ngIf="ShowExcludeConsignmentBoolean" style="vertical-align: middle;padding-top: 2px;">
                                                     <LogLabel [ObjectFieldName]="'ExcludeConsignment'"
                                                         [DataContext]="DataContext"
                                                         [ObjectTableName]="'Customs.Declaration'"></LogLabel>
                                                 </td>
-                                                <td>
+                                                <td *ngIf="ShowExcludeConsignmentBoolean">
                                                     <CheckBox style="float: right;" [IsEnabled]="!ParentIsDisplayOnly"
                                                         [IsChecked]="ExcludeConsignment"
                                                         (Checked)="ExcludeConsignment = $event"></CheckBox>
@@ -503,7 +503,27 @@
                                                         [Text]="'Customs.Declaration.O.consignmentShoudlnotSent' | TextCodeTranslationPipe"
                                                         [IconSize]="14"></HelpIcon>
                                                 </td>
-                                                <td></td>
+                                                <td *ngIf="ShowExcludeConsignmentBoolean" style="width: 10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td *ngIf="_ShowExcludeManifest" style="vertical-align: middle;padding-top: 2px;">
+                                                    <LogLabel [ObjectFieldName]="'ExcludeManifest'"
+                                                        [DataContext]="DataContext"
+                                                        [ObjectTableName]="'Customs.Declaration'"></LogLabel>
+                                                </td>
+                                                <td *ngIf="_ShowExcludeManifest">
+                                                    <CheckBox style="float: right;" [IsEnabled]="!ParentIsDisplayOnly"
+                                                        [IsChecked]="ExcludeManifest"
+                                                        (Checked)="ExcludeManifest = $event"></CheckBox>
+                                                    <HelpIcon style="float: right; padding-right: 10px;"
+                                                        [HideHeader]="true"
+                                                        [Text]="'Customs.Declaration.O.IsSendManifest' | TextCodeTranslationPipe"
+                                                        [IconSize]="14"></HelpIcon>
+                                                </td>
+                                                <td style="width: 10px;">
+                                                    <div></div>
+                                                </td>
                                                 <!--removed due task 45549-->
                                                 <!--<td>
             <div *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)">
