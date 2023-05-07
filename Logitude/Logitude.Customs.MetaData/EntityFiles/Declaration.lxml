@@ -27152,7 +27152,7 @@
       IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;ISEXCLUDEMANIFEST&quot;"
-      FeatureTypeCode="&quot;IAM&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.ISEXCLUDEMANIFEST&quot;"
       FeatureDefaultText="&quot;Is Exclude Manifest&quot;"
       IsPackagable="true"
