@@ -96,7 +96,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             log_text = log_text + String.Format("{0:HH:mm:ss.ffff}", DateTime.Now.ToString()) + System.Environment.NewLine;
             System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
             log_text = log_text + t.ToString();
-            LogitudeSettings.HandleLogMe(text, false, "TaxReportPMToPOCO", new DateTime(2023, 6, 1));
+            LogitudeSettings.HandleLogMe(log_text, false, "TaxReportPMToPOCO", new DateTime(2023, 6, 1));
         }
 
     }
