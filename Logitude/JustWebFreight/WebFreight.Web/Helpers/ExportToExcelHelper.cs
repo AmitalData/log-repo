@@ -1306,8 +1306,11 @@ namespace WebFreight.Web.Helpers
                         string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode)
                                       ? column.ObjectFieldListLabelTextCodeCode
                                       : column.ObjectFieldFullNameTextCodeCode;
-
-                        sheet.AutoSizeColumn(i);
+                        if (!FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
+                        {
+                            sheet.AutoSizeColumn(column.IndexOrder + 1);
+                        }
+                        sheet.SetColumnWidth(i, 20 * 256);
                         cell = row.CreateCell(i);
                         cell.CellStyle = QueryNameHeaderCellFontStyle;
 
@@ -1336,7 +1339,7 @@ namespace WebFreight.Web.Helpers
 
                             cell = row.CreateCell(i);
                             cell.CellStyle = DataCellFontStyle;
-                            sheet.AutoSizeColumn(i);
+                            sheet.SetColumnWidth(i, 20 * 256);
 
 
                             var b = column.ObjectFieldName.ToString();
@@ -1359,8 +1362,10 @@ namespace WebFreight.Web.Helpers
 
                             if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Numeric)
                                 cell.SetCellValue((double)value);
+                            else if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Boolean)
+                                cell.SetCellValue(bool.Parse(value));
                             else
-                                cell.SetCellValue(value);
+                                cell.SetCellValue(value.ToString());
                             i++;
                         }
                         
@@ -1381,6 +1386,7 @@ namespace WebFreight.Web.Helpers
             }
 
             LogTime("Stop NpoiExcelGenerator Func at : ",true);
+
             return ms.ToArray();
 
         }
