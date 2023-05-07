@@ -150,7 +150,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             if (pm.AccountTypeCode != "1" && String.IsNullOrWhiteSpace(pm.ControlAccountId))
             {
-                throw new ApplicationException("GLAccount is not card (AccountTypeCode != 1 ) and there isn't any ControlAccountId(Alex not check in ?!?!) " + pm.SearchFields);
+                throw new ApplicationException("GLAccount is not a card (AccountTypeCode != 1 ) and there is no ControlAccountId " + pm.SearchFields);
             }
 
             return pm;
