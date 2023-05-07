@@ -431,6 +431,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          AmendmentStatusName = myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName : null,
                                                          ExportLoadingPortCode = a.ExportLoadingPortCode,
                                                          LoadingPortName = a.ExportLoadingPort.LocalName,
+                                                         ExcludeManifest=a.ExcludeManifest,
 
                                                      });
 

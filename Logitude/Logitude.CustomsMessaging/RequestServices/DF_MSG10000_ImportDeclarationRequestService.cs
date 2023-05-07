@@ -2058,16 +2058,20 @@ namespace Logitude.CustomsMessaging.RequestServices
                   {
                       declarationConsignment.UnloadingLocation.ArrivalDateTime = DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value);
                   }*/
-
-                declarationConsignment.UnloadingLocation = new DeclarationGoodsShipmentConsignmentUnloadingLocation()
+                if (!this._DeclarationPM.ExcludeManifest)
                 {
-                    ID = SetIDTypeValue<UnloadingLocationIdentificationIDType>(consignmentPM.UnloadPortCode), // new UnloadingLocationIdentificationIDType() { Value = consignmentPM.UnloadPortCode },
-                    ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
-                };
-                declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentConsignmentLoadingLocation()
-                {
-                    ID = SetIDTypeValue<LoadingLocationIdentificationIDType>(consignmentPM.LoadingPortCode) // new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
-                };
+                    declarationConsignment.UnloadingLocation = new DeclarationGoodsShipmentConsignmentUnloadingLocation()
+                    {
+                        ID = SetIDTypeValue<UnloadingLocationIdentificationIDType>(consignmentPM.UnloadPortCode), // new UnloadingLocationIdentificationIDType() { Value = consignmentPM.UnloadPortCode },
+                        ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
+                    };
+                }
+				if (!this._DeclarationPM.ExcludeManifest) {
+                   declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentConsignmentLoadingLocation()
+                   {
+                       ID = SetIDTypeValue<LoadingLocationIdentificationIDType>(consignmentPM.LoadingPortCode) // new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
+                   };
+                }
                 declarationConsignment.DMExtensions = GetDMExtensionsConsignment(consignmentPM);
 
 
@@ -2080,8 +2084,11 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationGoodsShipmentConsignmentDMExtensions GetDMExtensionsConsignment(ConsignmentPM consignmentPM)
         {
             var DMExtensions = new DeclarationGoodsShipmentConsignmentDMExtensions();
-            DMExtensions.CargoDescription = new DeclarationGoodsShipmentConsignmentDMExtensionsCargoDescription() { Value = consignmentPM.CargoDescription };
-            //DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = consignmentPM.IsLastReleaseFromWarehous };
+            if (!this._DeclarationPM.ExcludeManifest)
+            {
+                DMExtensions.CargoDescription = new DeclarationGoodsShipmentConsignmentDMExtensionsCargoDescription() { Value = consignmentPM.CargoDescription };
+            }
+                //DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = consignmentPM.IsLastReleaseFromWarehous };
             if (consignmentPM.IsLastReleaseFromWarehous == "T") // temporary treatment - Task 9683
             {
                 //mohammad temp treatment due to the change of task 9684
@@ -2091,9 +2098,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = false };
             }
-
-            DMExtensions.ExportationCountryCode = new DeclarationGoodsShipmentConsignmentDMExtensionsExportationCountryCode() { Value = consignmentPM.OriginCountryCode };
-
+            if (!this._DeclarationPM.ExcludeManifest)
+            {
+                DMExtensions.ExportationCountryCode = new DeclarationGoodsShipmentConsignmentDMExtensionsExportationCountryCode() { Value = consignmentPM.OriginCountryCode };
+            }
             var registeredFacilitylist = new List<DeclarationGoodsShipmentConsignmentDMExtensionsRegisteredFacility>();
             int seqnum = 0;
 
