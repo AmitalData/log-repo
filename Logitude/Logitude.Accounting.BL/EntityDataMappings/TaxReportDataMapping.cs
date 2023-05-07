@@ -14,6 +14,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.CloseTables;
 
+
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
    
@@ -22,6 +23,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(TaxReportPM entityPM, TaxReport entityPOCO)
         {
+            DateTime stopLogAt = new DateTime(2023, 06, 01);
+            string text = "TaxReportDataMapping.CustomPMToPOCO(*1L*): " + entityPM.Id + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;
+            ULog(text, stopLogAt);
+
             AddPOCOPropertyName(POCOPropertyNames.Id);
             AddPOCOPropertyName(POCOPropertyNames.Tenant);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -33,6 +38,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
             entityPOCO.SearchFields = entityPM.SearchFields;
+
+            if (!this.CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+                this.CustomMappedPOCOProperties.Add(POCOPropertyNames.StatusCode);
+            }
+            entityPOCO.StatusCode = entityPM.StatusCode;
         }
 
         public void CustomPOCOToPM(TaxReportPM entityPM, TaxReport entityPOCO)
@@ -48,9 +59,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.StatusEnglishName = status.EnglishName;
                     entityPM.StatusLocalName = status.LocalName;
                 }
+                entityPM.StatusCode = entityPOCO.StatusCode;
             }
 
             MapClosingJournalFields(entityPM, entityPOCO);
+        }
+
+
+        private static void ULog(string text, DateTime stopLogAt)
+        {
+            string log_text = text + System.Environment.NewLine;
+            log_text = log_text + String.Format("{0:HH:mm:ss.ffff}", DateTime.Now.ToString()) + System.Environment.NewLine;
+            System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
+            log_text = log_text + t.ToString();
+            LogitudeSettings.HandleLogMe(log_text, false, "TaxReportPMToPOCO", new DateTime(2023, 6, 1));
         }
 
         private void MapClosingJournalFields(TaxReportPM entityPM, TaxReport entityPOCO)

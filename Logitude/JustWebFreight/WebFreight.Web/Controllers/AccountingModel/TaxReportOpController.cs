@@ -374,11 +374,21 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                 SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
                 int tenant = authToken.Tenant;
+                bool batchIt = true;
+                if (batchIt)
+                {
+                    BatchTaskExecutionPM btePM = TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, tenant);
 
-                BatchTaskExecutionPM btePM = TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, tenant);
 
+                    return Request.CreateResponse(HttpStatusCode.OK, btePM);
+                }
+                else
+                {
+                    DirectRun(entityPM, tenant);
+                    var res1 = new { Success = true, Message = "" };
+                    return Request.CreateResponse(HttpStatusCode.OK, res1);
 
-                return Request.CreateResponse(HttpStatusCode.OK, btePM);
+                }
             }
 
             catch (Exception ex)
@@ -387,6 +397,23 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+
+
+        private void DirectRun(TaxReportPM taxReportPM, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+
+            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
+
+            // Call the service
+            List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(taxReportPM, tenant);
+            TaxReportService.CalculateReportTotals(taxReportPM, lines);
+            taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+            taxReportUpdateService.Update(taxReportPM, true);
+        }
+
+
+
 
         public HttpResponseMessage GetTenantTransmittedTaxReports()
         {
