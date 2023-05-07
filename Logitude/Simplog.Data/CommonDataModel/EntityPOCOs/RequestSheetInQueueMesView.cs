@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
-    public class RequestSheetInQueueMessagesView
+    public class RequestSheetInQueueMesView
     {
         
         public string ObjectTableId1 { get; set; }

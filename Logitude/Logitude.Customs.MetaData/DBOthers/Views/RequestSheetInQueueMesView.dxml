@@ -1,4 +1,4 @@
-<View DBType="Main" Name="RequestSheetInQueueMessagesView" Schema="dbo" Module="Customs">
+<View DBType="Main" Name="RequestSheetInQueueMesView" Schema="dbo" Module="Customs">
   <SqlScript>
     <![CDATA[
    
@@ -7,7 +7,7 @@
   <OracleScript>
 	  
 	  <![CDATA[
-CREATE OR REPLACE VIEW RequestSheetInQueueMessagesView
+CREATE OR REPLACE VIEW RequestSheetInQueueMesViews
     AS
 select ObjectTableId1,Tenant,EntityId1,InterfaceTypeCode,interface.description as InterfaceTypeName  from CustomsRequestsSheets customsRequestsSheets
 join interfacemanagements interface
@@ -22,7 +22,7 @@ RequestCreateDate >= sysdate-7 and
 )
 and id in (
 select EntityId from QueueMessages
-where Tenant=1 and NextRunDateTime
+where NextRunDateTime
 NOT BETWEEN  SYSTIMESTAMP + INTERVAL '10' MINUTE    AND   SYSTIMESTAMP + INTERVAL '25' MINUTE
 );
 ]]>

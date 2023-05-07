@@ -104,15 +104,15 @@
     <None Include="DBOthers\Procedures\Usp_DeleteQueMessMoreDet.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteCommLogs.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
+    <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority2.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
-    <None Include="DBOthers\Views\RequestSheetInQueueMessagesView.dxml" />
+    <None Include="DBOthers\Views\RequestSheetInQueueMesView.dxml" />
     <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
     <None Include="DBScripts\Post\202303211232_AddCOURIERPENDINGREASONS907.sxml" />
     <None Include="DBScripts\Post\20230125_AddCourierPendingReasons905.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS906.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
-    <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
     <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />
     <None Include="DBScripts\Post\202005210124_InsertFieldDataTypes.sxml" />

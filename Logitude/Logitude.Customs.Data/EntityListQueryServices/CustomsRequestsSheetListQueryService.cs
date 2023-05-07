@@ -82,8 +82,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                           where b.Tenant == tenant && b.CourierMasterId == courierMasterId
                           select b.DeclarationId).ToList();*/
 
-            var query = (from a in context.RequestSheetInQueueMessagesView
-                          join c in context.CourierDeclarations on
+            var query = (from a in context.RequestSheetInQueueMesViews
+                         join c in context.CourierDeclarations on
                           a.EntityId1 equals c.DeclarationId
                           where a.Tenant == tenant && c.CourierMasterId == courierMasterId
                           select new CustomsRequestsSheetList()
