@@ -365,7 +365,7 @@ namespace WebFreight.Web
                 LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;// this project no need but in FilingManager is must 
                 LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
-              
+
                 LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
                 createAmitalRestrictOwnerModelService = () =>
@@ -383,6 +383,7 @@ namespace WebFreight.Web
                 if (DateTime.Now > stopLogAt) return;
                 Logger.LogMe(mess, err, suffix);
             });
+
 
 
 

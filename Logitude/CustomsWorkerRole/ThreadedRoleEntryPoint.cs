@@ -231,6 +231,7 @@ namespace CustomsWorkerRole
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
                 
 
+
                 LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = false;
 
                 LogitudeSettings.WorkerRoleName = LogitudeSettings.WorkerRoleName ?? "production";
@@ -239,6 +240,8 @@ namespace CustomsWorkerRole
             //string queueServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("QueueServiceMode");
             ContainerAccessor.InitContainer();
            
+            // logging
+
             // logging
             LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
             {

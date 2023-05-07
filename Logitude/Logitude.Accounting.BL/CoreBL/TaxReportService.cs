@@ -398,6 +398,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             oneLine.StatusCode = "6";
                             removeDupLines.Add(oneLine);
                         }
+
                     }
 
                     if (duplicateLines.Count > 0 || removeDupLines.Count > 0)

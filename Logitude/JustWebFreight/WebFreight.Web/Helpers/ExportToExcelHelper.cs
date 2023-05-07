@@ -19,6 +19,19 @@ using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
 using static Stimulsoft.Report.StiOptions.Export;
+using System.Diagnostics;
+using NPOI.XSSF.UserModel;
+using NPOI.SS.Util;
+using NPOI.SS.UserModel;
+using System.Web.UI.WebControls;
+using IWorkbook = Syncfusion.XlsIO.IWorkbook;
+using static NPOI.HSSF.Util.HSSFColor;
+using NPOI.SS.Formula.Functions;
+using Match = System.Text.RegularExpressions.Match;
+using Logitude.Customs.Def.EntityPMs;
+using Simplog.Server.Infrastructure;
+using System.Globalization;
+using System.Configuration;
 
 namespace WebFreight.Web.Helpers
 {
@@ -27,6 +40,12 @@ namespace WebFreight.Web.Helpers
     {
         public byte[] ExportQueryToExcel(ExportToExcelArgs exportToExcelArgs)
         {
+            Stopwatch _Stopwatch;
+            Stopwatch _Stopwatch1;
+
+
+            LogTime("start all at : ", exportToExcelArgs.IsXslxFormat);
+            _Stopwatch1 = Stopwatch.StartNew();
             string xmlData = "";
             MemoryStream memory = new MemoryStream();
 
@@ -418,14 +437,18 @@ namespace WebFreight.Web.Helpers
             if (getListMethodInfo != null && getCountMethodInfo != null)
             {
                 //Get data count
+                _Stopwatch = Stopwatch.StartNew();
                 xmlFilters = filterSerializer.SerializeFilterItems(queryOperations);
 
                 object[] parameters = new object[] { xmlFilters, tenant };
-                int count = (int)getCountMethodInfo.Invoke(context, parameters);
+                int count = 0;
+                if (!Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) || (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant)) && !exportToExcelArgs.IsXslxFormat)
+                     count = (int)getCountMethodInfo.Invoke(context, parameters);
 
-                if (count > 0)
+                LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "1 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                if (count > 0 || Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
                 {
-                    // Get dataList
+                    //Get dataList
                     if (exportToExcelArgs.IsXslxFormat)
                     {
                         queryOperations.PageSize = count;
@@ -440,13 +463,17 @@ namespace WebFreight.Web.Helpers
                         }
                         queryOperations.PageSize = pagesize;
                     }
-                    
+
                     xmlFilters = filterSerializer.SerializeFilterItems(queryOperations);
 
                     parameters = new object[] { xmlFilters, tenant };
-
+                    _Stopwatch = Stopwatch.StartNew();
+                    LogTime("start queryResult at : ", exportToExcelArgs.IsXslxFormat);
                     var queryResult = getListMethodInfo.Invoke(context, parameters);
                     querableEntities = queryResult as IQueryable;
+                    LogTime("stop queryResult at : ", exportToExcelArgs.IsXslxFormat);
+                    LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "2 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
+
                     IEnumerator datalist = null;
                     if (querableEntities == null)
                     {
@@ -470,269 +497,286 @@ namespace WebFreight.Web.Helpers
 
                     if (datalist != null)
                     {
-
+                        _Stopwatch = Stopwatch.StartNew();
                         //IEnumerator datalist = querableEntities.GetEnumerator();
-                        xmlData = ConvertDataList2Xml(datalist, query, queryColumns, tenant);
 
 
-                        //New instance of XlsIO is created.[Equivalent to launching MS Excel with no workbooks open].
-                        //The instantiation process consists of two steps.
-
-                        //Step 1 : Instantiate the spreadsheet creation engine.
-                        ExcelEngine excelEngine = new ExcelEngine();
-                        //Step 2 : Instantiate the excel application object.
-                        IApplication application = excelEngine.Excel;
-
-                        //A new workbook is created.[Equivalent to creating a new workbook in MS Excel]
-                        //The new workbook will have 5 worksheets
-                        IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
-                        //The first worksheet object in the worksheets collection is accessed.
-                        IWorksheet sheet = workbook.Worksheets[0];
-                        //****************************** Creating excel from xml string *****************************
-
-                        //sheet.Range["A2:H2"].Merge();
-                        //sheet.Range["A1:P1"].Merge();
-                        //sheet.Range["A1:H2"].Merge();
-                        //sheet.Range["A2:H2"].CellStyle.FillBackground = ExcelKnownColors.LightGreen;
-
-                        sheet.Range["A2:C2"].Merge();
-                        sheet.Range["A2:C2"].Text = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TextCodesTranslator.TranslateText(query.NameTextCodeCode, tenant);
-                        sheet.Range["A2:C2"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-                        sheet.Range["A2:C2"].CellStyle.Font.Bold = true;
-                        sheet.Range["A2:C2"].CellStyle.Font.Color = ExcelKnownColors.Black;
-                        sheet.Range["A2:C2"].CellStyle.Font.Size = 12;
-                        sheet.Range["A2:C2"].CellStyle.Font.FontName = "Thoma";
-                        sheet.Range["A2:Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-                        sheet.Range["A3:Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-
-                        if (!FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
+                        if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) && exportToExcelArgs.IsXslxFormat)
                         {
-                            foreach (QueryColumnPM column in queryColumns)
-                            {
-                                sheet.AutofitColumn(column.IndexOrder + 1);
-                            }
-                        }
-
-                        XmlReader reader = XmlReader.Create(new StringReader(xmlData));
-                        XmlDataDocument doc = new XmlDataDocument();
-                        doc.Load(reader);
-
-                        doc.GetElementsByTagName(query.ObjectTableName);
-                        XmlNodeList entitiesList = doc.GetElementsByTagName(query.ObjectTableName);
-
-                        if (entitiesList.Count == 0)
-                        {
-                            string ip = "";
-                            if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                            {
-                                string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                                if (string.IsNullOrEmpty(currentIP))
-                                {
-                                    currentIP = HttpContext.Current.Request.UserHostAddress;
-                                }
-                                ip = currentIP;
-                            }
-                            //ExceptionHandler.HandleException(new Exception("Error while building xml file, table columns are empty!"), DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
-                            return null;
-                        }
-
-                        int[,] array = new int[,] { { 65, 0 } };
-                        int start = 65;
-                        foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
-                        {
-                            string nodename = TranslateTextsClass.Translate(node.Name, tenant,true,true);
-                            QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == node.Name || q.ObjectFieldFullNameTextCodeCode == node.Name).FirstOrDefault();
-                            if (column != null)
-                            {
-                                if (!string.IsNullOrEmpty(column.DisplayText))
-                                {
-
-                                    nodename = column.DisplayText;
-                                }
-                            }
-
-                            nodename = nodename != null ? nodename : "";
-                            nodename = nodename.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
-                            
-                            string sheetColumn = "";
-                            if (array[0, 0] <= 90 && array[0, 1] == 0)
-                            {
-                                char a = (char)array[0, 0];
-                                sheetColumn = a.ToString();
-                                array[0, 0]++;
-                            }
-                            else
-                            {
-                                if (array[0, 1] == 0)
-                                {
-                                    array[0, 0] = start;
-                                    array[0, 1] = 65;
-
-                                    sheet.Range["AA2:AZ2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-                                    sheet.Range["AA3:AZ3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-
-                                }
-                                if (array[0, 1] <= 90)
-                                {
-                                    string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
-                                    array[0, 1]++;
-                                }
-                                else
-                                {
-                                    start += 1;
-                                    array[0, 0] = start;
-                                    array[0, 1] = 65;
-                                    string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
-                                    array[0, 1]++;
-                                    char startCharacter = Convert.ToChar(start);
-                                    sheet.Range["AA2:" + startCharacter + "Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-                                    sheet.Range["AA3:" + startCharacter + "Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-                                }
-
-                            };
-
-                            sheet.Range[sheetColumn.ToString() + "3"].Text = nodename;
-                            IRange range = sheet.Range[sheetColumn + "3"];
-                            //sheet.Range.NumberFormat = "yyyy-mm-dd;@";
-                            range.CellStyle.Font.FontName = "Times New Roman";
-                            range.CellStyle.Font.Bold = true;
-
-                        }
-                        //TenantRepository tenantRepoitory = new TenantRepository(tenant);
-                        //var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-                        int cellRow = 4;
-                        TenantRepository tenantRepoitory = new TenantRepository(tenant);
-                        var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-                        foreach (XmlNode node in entitiesList)
-                        {
-                            int cellCol = 1;
-                            foreach (XmlNode childNode in node.ChildNodes)
-                            {
-
-                                QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == childNode.Name || q.ObjectFieldFullNameTextCodeCode == childNode.Name).FirstOrDefault();
-
-                                switch (column.ObjectFieldDataTypeCode)
-                                {
-                                    case "Text":
-                                        {
-                                            sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
-                                            break;
-                                        }
-
-                                    case "Boolean":
-                                        {
-                                            Boolean b = false;
-                                            Boolean.TryParse(childNode.InnerText.Trim(), out b);
-                                            sheet.Range[cellRow, cellCol].Boolean = b;
-                                            break;
-                                        }
-
-                                    case "Constant":
-                                        {
-                                            sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
-                                            break;
-                                        }
-
-                                    case "DateTime":
-                                        {
-                                            DateTime date;
-                                            if (DateTime.TryParse(childNode.InnerText.Trim(), out date))
-                                            {
-                                                sheet.Range[cellRow, cellCol].DateTime = date.Date;
-                                                string datetimeformat = @"dd\/MM\/yyyy";
-                                                if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
-                                                {
-                                                    datetimeformat = CurTenant.DateTimeFormat;
-                                                }
-                                                sheet.Range[cellRow, cellCol].NumberFormat = datetimeformat;
-                                            }
-                                            else
-                                            {
-                                                sheet.Range[cellRow, cellCol].Text = "";
-                                            }
-                                            break;
-                                        }
-
-                                    case "Decimal":
-                                        {
-                                            double dex = 0;
-                                            double.TryParse(childNode.InnerText.Trim(), out dex);
-                                            sheet.Range[cellRow, cellCol].Number = dex;
-                                            break;
-                                        }
-
-                                    case "SigDouble":
-                                    case "Double":
-                                        {
-                                            double d = 0;
-                                            double.TryParse(childNode.InnerText.Trim(), out d);
-                                            sheet.Range[cellRow, cellCol].Number = d;
-                                            break;
-                                        }
-
-                                    case "Integer":
-                                        {
-                                            int x = 0;
-                                            int.TryParse(childNode.InnerText.Trim(), out x);
-                                            sheet.Range[cellRow, cellCol].Number = x;
-                                            break;
-                                        }
-
-                                    default:
-                                        {
-                                            sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
-                                            break;
-                                        }
-                                }
-
-                                //sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
-                                //if (cellCol <= 2)
-                                //    sheet.Range[cellRow, cellCol].ColumnWidth = 30;
-
-
-
-                                cellCol++;
-                            }
-                            cellRow++;
-
-
-                        }
-
-
-                        //***************************************************************************
-                        //Inserting sample text into the range of cells of the first worksheet.
-                        //sheet.Range["A1:N30"].Text = "Hello World";
-
-                        //Saving the workbook to disk.
-
-
-                        if (FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
-                        {
-                            int i = 1;
-                            
-                            foreach (QueryColumnPM _ in queryColumns)
-                            {
-                                sheet.AutofitColumn(i);
-                                if (_.ObjectFieldName == "CustomerReference" && sheet.GetColumnWidth(i) > 30)
-                                    sheet.SetColumnWidth(i,30);
-                                i++;
-                            }
-                        }
-                        if (exportToExcelArgs.IsXslxFormat)
-                        {
-                            workbook.Version = ExcelVersion.Excel2010;
-                            workbook.SaveAs(memory);
+                            this.NpoiExcelGenerator(datalist, query, queryColumns, tenant);
                         }
                         else
                         {
-                            workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
-                        }
-                        
+                            xmlData = ConvertDataList2Xml(datalist, query, queryColumns, tenant);
+                            LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "3 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                            //New instance of XlsIO is created.[Equivalent to launching MS Excel with no workbooks open].
+                            //The instantiation process consists of two steps.
 
-                        //No exception will be thrown if there are unsaved workbooks.
-                        excelEngine.ThrowNotSavedOnDestroy = false;
-                        excelEngine.Dispose();
+                            //Step 1 : Instantiate the spreadsheet creation engine.
+                            ExcelEngine excelEngine = new ExcelEngine();
+                            //Step 2 : Instantiate the excel application object.
+                            IApplication application = excelEngine.Excel;
+
+                            //A new workbook is created.[Equivalent to creating a new workbook in MS Excel]
+                            //The new workbook will have 5 worksheets
+                            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+                            //The first worksheet object in the worksheets collection is accessed.
+                            IWorksheet sheet = workbook.Worksheets[0];
+                            //****************************** Creating excel from xml string *****************************
+
+                            //sheet.Range["A2:H2"].Merge();
+                            //sheet.Range["A1:P1"].Merge();
+                            //sheet.Range["A1:H2"].Merge();
+                            //sheet.Range["A2:H2"].CellStyle.FillBackground = ExcelKnownColors.LightGreen;
+
+                            sheet.Range["A2:C2"].Merge();
+                            sheet.Range["A2:C2"].Text = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TextCodesTranslator.TranslateText(query.NameTextCodeCode, tenant);
+                            sheet.Range["A2:C2"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+                            sheet.Range["A2:C2"].CellStyle.Font.Bold = true;
+                            sheet.Range["A2:C2"].CellStyle.Font.Color = ExcelKnownColors.Black;
+                            sheet.Range["A2:C2"].CellStyle.Font.Size = 12;
+                            sheet.Range["A2:C2"].CellStyle.Font.FontName = "Thoma";
+                            sheet.Range["A2:Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                            sheet.Range["A3:Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+
+                            if (!FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
+                            {
+                                foreach (QueryColumnPM column in queryColumns)
+                                {
+                                    sheet.AutofitColumn(column.IndexOrder + 1);
+                                }
+                            }
+
+                            XmlReader reader = XmlReader.Create(new StringReader(xmlData));
+                            XmlDataDocument doc = new XmlDataDocument();
+                            doc.Load(reader);
+
+                            doc.GetElementsByTagName(query.ObjectTableName);
+                            XmlNodeList entitiesList = doc.GetElementsByTagName(query.ObjectTableName);
+
+                            if (entitiesList.Count == 0)
+                            {
+                                string ip = "";
+                                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                                {
+                                    string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                                    if (string.IsNullOrEmpty(currentIP))
+                                    {
+                                        currentIP = HttpContext.Current.Request.UserHostAddress;
+                                    }
+                                    ip = currentIP;
+                                }
+                                //ExceptionHandler.HandleException(new Exception("Error while building xml file, table columns are empty!"), DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
+                                return null;
+                            }
+
+                            int[,] array = new int[,] { { 65, 0 } };
+                            int start = 65;
+                            _Stopwatch = Stopwatch.StartNew();
+                            foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
+                            {
+                            string nodename = TranslateTextsClass.Translate(node.Name, tenant,true,true);
+
+                                QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == node.Name || q.ObjectFieldFullNameTextCodeCode == node.Name).FirstOrDefault();
+                                if (column != null)
+                                {
+                                    if (!string.IsNullOrEmpty(column.DisplayText))
+                                    {
+
+                                        nodename = column.DisplayText;
+                                    }
+                                }
+
+                                nodename = nodename != null ? nodename : "";
+                                nodename = nodename.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
+
+                                string sheetColumn = "";
+                                if (array[0, 0] <= 90 && array[0, 1] == 0)
+                                {
+                                    char a = (char)array[0, 0];
+                                    sheetColumn = a.ToString();
+                                    array[0, 0]++;
+                                }
+                                else
+                                {
+                                    if (array[0, 1] == 0)
+                                    {
+                                        array[0, 0] = start;
+                                        array[0, 1] = 65;
+
+                                        sheet.Range["AA2:AZ2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                                        sheet.Range["AA3:AZ3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+
+                                    }
+                                    if (array[0, 1] <= 90)
+                                    {
+                                        string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
+                                        array[0, 1]++;
+                                    }
+                                    else
+                                    {
+                                        start += 1;
+                                        array[0, 0] = start;
+                                        array[0, 1] = 65;
+                                        string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
+                                        array[0, 1]++;
+                                        char startCharacter = Convert.ToChar(start);
+                                        sheet.Range["AA2:" + startCharacter + "Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                                        sheet.Range["AA3:" + startCharacter + "Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                                    }
+
+                                };
+
+                                sheet.Range[sheetColumn.ToString() + "3"].Text = nodename;
+                                IRange range = sheet.Range[sheetColumn + "3"];
+                                //sheet.Range.NumberFormat = "yyyy-mm-dd;@";
+                                range.CellStyle.Font.FontName = "Times New Roman";
+                                range.CellStyle.Font.Bold = true;
+
+                            }
+                            LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "4 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                            //TenantRepository tenantRepoitory = new TenantRepository(tenant);
+                            //var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+                            int cellRow = 4;
+                            _Stopwatch = Stopwatch.StartNew();
+                            TenantRepository tenantRepoitory = new TenantRepository(tenant);
+                            var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+                            LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "5 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                            _Stopwatch = Stopwatch.StartNew();
+                            foreach (XmlNode node in entitiesList)
+                            {
+                                int cellCol = 1;
+                                foreach (XmlNode childNode in node.ChildNodes)
+                                {
+
+                                    QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == childNode.Name || q.ObjectFieldFullNameTextCodeCode == childNode.Name).FirstOrDefault();
+
+                                    switch (column.ObjectFieldDataTypeCode)
+                                    {
+                                        case "Text":
+                                            {
+                                                sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                                break;
+                                            }
+
+                                        case "Boolean":
+                                            {
+                                                Boolean b = false;
+                                                Boolean.TryParse(childNode.InnerText.Trim(), out b);
+                                                sheet.Range[cellRow, cellCol].Boolean = b;
+                                                break;
+                                            }
+
+                                        case "Constant":
+                                            {
+                                                sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                                break;
+                                            }
+
+                                        case "DateTime":
+                                            {
+                                                DateTime date;
+                                                if (DateTime.TryParse(childNode.InnerText.Trim(), out date))
+                                                {
+                                                    sheet.Range[cellRow, cellCol].DateTime = date.Date;
+                                                    string datetimeformat = @"dd\/MM\/yyyy";
+                                                    if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                                                    {
+                                                        datetimeformat = CurTenant.DateTimeFormat;
+                                                    }
+                                                    sheet.Range[cellRow, cellCol].NumberFormat = datetimeformat;
+                                                }
+                                                else
+                                                {
+                                                    sheet.Range[cellRow, cellCol].Text = "";
+                                                }
+                                                break;
+                                            }
+
+                                        case "Decimal":
+                                            {
+                                                double dex = 0;
+                                                double.TryParse(childNode.InnerText.Trim(), out dex);
+                                                sheet.Range[cellRow, cellCol].Number = dex;
+                                                break;
+                                            }
+
+                                        case "SigDouble":
+                                        case "Double":
+                                            {
+                                                double d = 0;
+                                                double.TryParse(childNode.InnerText.Trim(), out d);
+                                                sheet.Range[cellRow, cellCol].Number = d;
+                                                break;
+                                            }
+
+                                        case "Integer":
+                                            {
+                                                int x = 0;
+                                                int.TryParse(childNode.InnerText.Trim(), out x);
+                                                sheet.Range[cellRow, cellCol].Number = x;
+                                                break;
+                                            }
+
+                                        default:
+                                            {
+                                                sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                                break;
+                                            }
+                                    }
+
+                                    //sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                    //if (cellCol <= 2)
+                                    //    sheet.Range[cellRow, cellCol].ColumnWidth = 30;
+
+
+
+                                    cellCol++;
+                                }
+                                cellRow++;
+
+
+                            }
+                            LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "6 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+                            //***************************************************************************
+                            //Inserting sample text into the range of cells of the first worksheet.
+                            //sheet.Range["A1:N30"].Text = "Hello World";
+
+                            //Saving the workbook to disk.
+
+
+                            if (FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
+                            {
+                                int i = 1;
+                            
+                                foreach (QueryColumnPM _ in queryColumns)
+                                {
+                                    sheet.AutofitColumn(i);
+                                if (_.ObjectFieldName == "CustomerReference" && sheet.GetColumnWidth(i) > 30)
+                                    sheet.SetColumnWidth(i,30);
+                                i++;
+
+                                }
+                            }
+                            _Stopwatch = Stopwatch.StartNew();
+                            if (exportToExcelArgs.IsXslxFormat)
+                            {
+                                workbook.Version = ExcelVersion.Excel2010;
+                                workbook.SaveAs(memory);
+                            }
+                            else
+                            {
+                                workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
+                            }
+                            LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "7 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                            //No exception will be thrown if there are unsaved workbooks.
+                            excelEngine.ThrowNotSavedOnDestroy = false;
+                            excelEngine.Dispose();
+                        }
                     }
+
+                       
                 }
             }
             //}
@@ -745,7 +789,10 @@ namespace WebFreight.Web.Helpers
             //    }
             //    ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
             //}
+            LogTime("stop all  at : ", exportToExcelArgs.IsXslxFormat);
 
+
+            LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "8 allTheFunction Took:" + _Stopwatch1.Elapsed.ToString()); _Stopwatch1.Restart();
 
             return memory.ToArray();
         }
@@ -1222,17 +1269,424 @@ namespace WebFreight.Web.Helpers
             }
             return ReturnData;
         }
+
+        private void NpoiExcelGenerator(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant)
+        {
+            LogTime("start NpoiExcelGenerator Func at : ",true);
+
+            TextCodeRepository textCodeRepoitory = new TextCodeRepository(tenant);
+            TenantRepository tenantRepoitory = new TenantRepository(tenant);
+            var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+            string queryName = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TranslateTextsClass.Translate(query.NameTextCodeCode, tenant).Replace(" ", "_") + "_" + query.ObjectTableName + "s";
+
+            queryName = ExportToExcelHelper.GetValidFileName(queryName);//queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
+            queryName = queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
+
+            if (queryName.Length > 31)
+                queryName = queryName.Substring(0, 31);
+
+            //System.Xml.Linq.XElement entities = new System.Xml.Linq.XElement(queryName);
+            try
+            {
+                int datacount = 0;
+
+                if (dataList != null)
+
+
+                {
+
+                   
+                    var workbook = new XSSFWorkbook();
+
+                    #region Styles
+
+                    var DataHeaderCellFont = workbook.CreateFont();
+                    DataHeaderCellFont.Color = IndexedColors.Black.Index;
+                    DataHeaderCellFont.IsBold = true;
+                    DataHeaderCellFont.FontHeightInPoints = 12;
+                    DataHeaderCellFont.FontName = "Thoma";
+
+                    var QueryNameHeaderCellFont = workbook.CreateFont();
+                    //QueryNameHeaderCellFont.Color = IndexedColors.Black.Index;
+                    QueryNameHeaderCellFont.IsBold = true;
+                    QueryNameHeaderCellFont.FontHeightInPoints = 10;
+                    QueryNameHeaderCellFont.FontName = "Times New Roman";
+
+
+                    var DataCellFont = workbook.CreateFont();
+                    DataCellFont.FontHeightInPoints = 10;
+                    DataCellFont.FontName = "Thoma";
+
+
+                    var DataHeaderCellFontStyle = workbook.CreateCellStyle();
+                    DataHeaderCellFontStyle.SetFont(DataHeaderCellFont);
+                    //DataHeaderCellFontStyle.FillBackgroundColor = NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index;
+                    DataHeaderCellFontStyle.FillForegroundColor = NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index;
+                    DataHeaderCellFontStyle.FillPattern = FillPattern.SolidForeground;
+
+                    DataHeaderCellFontStyle.Alignment = HorizontalAlignment.Center;
+
+
+                    var QueryNameHeaderCellFontStyle = workbook.CreateCellStyle();
+                    QueryNameHeaderCellFontStyle.SetFont(QueryNameHeaderCellFont);
+                    QueryNameHeaderCellFontStyle.FillForegroundColor = NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index;
+                    QueryNameHeaderCellFontStyle.FillPattern = FillPattern.SolidForeground;
+
+                    var DataCellFontStyle = workbook.CreateCellStyle();
+                    DataCellFontStyle.SetFont(DataCellFont);
+
+
+                    #endregion
+
+
+
+                    var sheet = workbook.CreateSheet(queryName);
+                    sheet.SetColumnWidth(0, 1000);
+                    int WorkingRowIndex = 1;
+                    ICell cell;
+                    IRow row;
+                    #region header
+
+                    row = sheet.CreateRow(WorkingRowIndex);
+                    CellRangeAddress region = new CellRangeAddress(WorkingRowIndex, WorkingRowIndex, 0, queryColumns.Count -1);
+
+                    sheet.AddMergedRegion(region);
+
+
+                    cell = row.CreateCell(0);
+                    cell.CellStyle = DataHeaderCellFontStyle;
+
+                    cell.SetCellType(NPOI.SS.UserModel.CellType.String);
+                    var Text = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TextCodesTranslator.TranslateText(query.NameTextCodeCode, tenant);
+                    cell.SetCellValue(Text);
+                    WorkingRowIndex++;
+
+                    #endregion
+                    var i = 0;
+                    row = sheet.CreateRow(WorkingRowIndex);
+                    foreach (QueryColumnPM column in queryColumns)
+                    {
+                        string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode)
+                                      ? column.ObjectFieldListLabelTextCodeCode
+                                      : column.ObjectFieldFullNameTextCodeCode;
+
+                        sheet.SetColumnWidth(i, 20 * 256);
+                        cell = row.CreateCell(i);
+                        cell.CellStyle = QueryNameHeaderCellFontStyle;
+
+                        cell.SetCellType(NPOI.SS.UserModel.CellType.String);
+                        cell.SetCellValue(text);
+                        i++;
+                        //PropertyInfo info = entity.GetType().GetProperty(column.ObjectFieldName);
+                        //    if (info != null)
+                        //    {
+                        //        value = info.GetValue(entity, null) != null ? info.GetValue(entity, null).ToString() : " ";
+                        //    }
+                        
+
+                        //var temp = Fix(value);
+                        //col.Value = temp;
+
+                        //table.Add(col);
+
+                    }
+                   
+                    while (dataList.MoveNext())
+                    {
+                        var a = dataList.Current; 
+
+                        WorkingRowIndex++;
+
+                        row = sheet.CreateRow(WorkingRowIndex);
+
+                       
+                        i = 0;
+
+                        //for (int j = 0; j < queryColumns.Count; j++)
+
+                        //{
+                        //    var value = " ";
+
+                        //    cell = row.CreateCell(j);
+                        //    var b = queryColumns[j].ObjectFieldName.ToString();
+                        //    PropertyInfo info = a.GetType().GetProperty(b);
+                        //    if (info != null)
+                        //    {
+                        //        value = info.GetValue(a, null) != null ? info.GetValue(a, null).ToString() : " ";
+                        //    }
+                        //    cell.SetCellType(GetCellType(queryColumns[j].ObjectFieldDataTypeCode));
+
+                        //    cell.SetCellValue(value.ToString());
+
+
+
+                        //}
+
+                        foreach(QueryColumnPM column in queryColumns)
+                        {
+                            dynamic value = null;
+
+
+                            cell = row.CreateCell(i);
+                            cell.CellStyle = DataCellFontStyle;
+                            sheet.SetColumnWidth(i, 20 * 256);
+
+                            var b = column.ObjectFieldName.ToString();
+                            PropertyInfo info = a.GetType().GetProperty(b);
+                            if (info != null)
+                            {
+                                value = info.GetValue(a, null) != null ? info.GetValue(a, null) : null ;
+                            }
+                            
+                            if(column.ObjectFieldDataTypeCode == "DateTime")
+                            {
+                                
+                                    //DateTime date;
+                                    //if (DateTime.TryParse(value.Trim(), out date))
+                                    //{
+                                    //    //sheet.Range[cellRow, cellCol].DateTime = date.Date;
+                                    //    string datetimeformat = @"dd\/MM\/yyyy";
+                                    //    if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                                    //    {
+                                    //        datetimeformat = CurTenant.DateTimeFormat;
+                                    //}
+                                        value = value.ToString("dd/MM/yyyy");
+                                    
+                             }
+                                cell.SetCellType(GetCellType(column.ObjectFieldDataTypeCode));
+
+                            value = value != null ? value.ToString() : "";
+
+                            cell.SetCellValue(value);
+                            i++;
+                        }
+                        
+
+                    }
+
+
+
+
+
+                    string DestinationFolder = "c:\\temp";
+
+                    //if (reportInfo != null)
+
+                    //{
+
+                    //    if (!string.IsNullOrWhiteSpace(reportInfo?.DestinationFolder))
+
+                    //    {
+
+                    //        DestinationFolder = reportInfo.DestinationFolder;
+
+                    //    }
+
+                    //}
+
+                    if (!Directory.Exists(DestinationFolder))
+
+                    {
+
+                        Directory.CreateDirectory(DestinationFolder);
+
+                    }
+
+
+
+                    string DestinationFileName = "report_{0}.xlsx";
+
+                    //if (reportInfo != null)
+
+                    //{
+
+                    //    if (!string.IsNullOrWhiteSpace(reportInfo?.DestinationFileName))
+
+                    //    {
+
+                    //        DestinationFileName = reportInfo.DestinationFileName;
+
+                    //    }
+
+                    //}
+
+                    DestinationFileName = string.Format(DestinationFileName, Guid.NewGuid().ToString());
+
+
+                    string filePath = Path.Combine(DestinationFolder, DestinationFileName);
+
+                    //Write to file using file stream  
+
+                    using (FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+
+                    {
+
+                        workbook.Write(file);
+
+                        file.Close();
+
+
+                    };
+
+                    GC.Collect();
+
+
+                    System.Threading.Thread.Sleep(100);
+
+
+
+
+                    //while (dataList.MoveNext())
+                    //{
+                    //    object entity = dataList.Current;
+                    //    System.Xml.Linq.XElement table = new System.Xml.Linq.XElement(query.ObjectTableName);
+
+                    //    foreach (QueryColumnPM column in queryColumns)
+                    //    {
+                    //        string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode)
+                    //                      ? column.ObjectFieldListLabelTextCodeCode
+                    //                      : column.ObjectFieldFullNameTextCodeCode;
+
+                    //        System.Xml.Linq.XElement col = new System.Xml.Linq.XElement(text);
+                    //        string value = " ";
+
+                    //        if (query.EditWizardName == "LogBoxMainComponent")
+                    //        {
+                    //            value = ResoloveLogBoxShipmentFieldValue(entity, column);
+                    //        }
+                    //        else
+                    //        {
+                    //            PropertyInfo info = entity.GetType().GetProperty(column.ObjectFieldName);
+                    //            if (info != null)
+                    //            {
+                    //                value = info.GetValue(entity, null) != null ? info.GetValue(entity, null).ToString() : " ";
+                    //            }
+                    //        }
+
+                    //        var temp = Fix(value);
+                    //        col.Value = temp;
+
+                    //        table.Add(col);
+
+                    //    }
+
+                    //    entities.Add(table);
+
+                    //    datacount++;
+                    //}
+                }
+
+                //if (dataList == null || datacount == 0)
+                //{
+                //    System.Xml.Linq.XElement table = new System.Xml.Linq.XElement(query.ObjectTableName);
+
+                //    foreach (QueryColumnPM column in queryColumns)
+                //    {
+                //        string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode) ? column.ObjectFieldListLabelTextCodeCode : column.ObjectFieldFullNameTextCodeCode;
+                //        System.Xml.Linq.XElement col = new System.Xml.Linq.XElement(text);
+                //        string value = " ";
+                //        col.Value = value;
+                //        table.Add(col);
+                //    }
+
+
+                //    entities.Add(table);
+                //}
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            LogTime("Stop NpoiExcelGenerator Func at : ",true);
+
+        }
+
+        private static CellType GetCellType(string ObjectFieldDataTypeCode)
+        {
+            switch (ObjectFieldDataTypeCode)
+            {
+                case "Text":
+                    {
+                        return  CellType.String;
+                    }
+
+                case "Boolean":
+                    {
+                        return CellType.Boolean;
+                    }
+
+                case "Constant":
+                    {
+                        //sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                        return CellType.String; ;
+                    }
+
+                case "DateTime":
+                    {
+                        DateTime date;
+                        //if (DateTime.TryParse(childNode.InnerText.Trim(), out date))
+                        //{
+                        //    sheet.Range[cellRow, cellCol].DateTime = date.Date;
+                        //    string datetimeformat = @"dd\/MM\/yyyy";
+                        //    if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                        //    {
+                        //        datetimeformat = CurTenant.DateTimeFormat;
+                        //    }
+                        //    sheet.Range[cellRow, cellCol].NumberFormat = datetimeformat;
+                        //}
+                        //else
+                        //{
+                        //    sheet.Range[cellRow, cellCol].Text = "";
+                        //}
+                        //break;
+                        return CellType.String;
+                    }
+
+                case "Decimal":
+                    {
+                        return CellType.Numeric;
+                    }
+
+                case "SigDouble":
+                case "Double":
+                    {
+                        return CellType.Numeric;
+                    }
+
+                case "Integer":
+                    {
+                        return CellType.Numeric;
+                    }
+
+                default:
+                    {
+                        return CellType.String;
+                    }
+            }
+        }
+        private void LogTime(string msg, bool isXslx)
+        {
+            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", 127) && isXslx)
+            {
+                //DateTime stopLogAt = DateTime.MinValue;
+                string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
+                //if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                //stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+                msg += DateTime.Now.ToString();
+                DateTime date = new DateTime(2023, 06, 01);
+                LogitudeSettings.HandleLogMe(msg, false, "ExportToExcel", date);
+            }
+
+        }
     }
 }
-
 class ReflectionProperties
 {
     public MethodInfo ListMethodInfo { get; set; }
     public MethodInfo CountMethodInfo { get; set; }
     public object context { get; set; }
-
 }
-
 public class ExcelTotals
 {
     public ExcelTotals(string fieldCode, double total, int indexOrder)
@@ -1241,7 +1695,6 @@ public class ExcelTotals
         Total = total;
         IndexOrder = indexOrder;
     }
-
     public string FieldCode { get; set; }
     public double Total { get; set; }
     public int IndexOrder { get; set; }

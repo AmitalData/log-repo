@@ -411,6 +411,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
             taxReportUpdateService.Update(taxReportPM, true);
         }
 
+        }
+
+
 
 
         public HttpResponseMessage GetTenantTransmittedTaxReports()

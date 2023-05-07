@@ -15,6 +15,7 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.Server.Tools.Utils;
 
+
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
    
@@ -47,6 +48,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             text = "TaxReportDataMapping.CustomPMToPOCO(*9L*): " + entityPM.Id + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;//, false, "TaxReportPMToPOCO_1L");
             ULog(text, stopLogAt);
         }
+
 
         public void CustomPOCOToPM(TaxReportPM entityPM, TaxReport entityPOCO)
         {
