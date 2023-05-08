@@ -89,6 +89,7 @@
     <Compile Include="EntityPMs\Generated\ContainerTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CoolingReportingMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CountryCurrencyPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomDocumentTypeTenantPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerClassificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerIdentificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerIndicationTypePM.Generated.cs" />

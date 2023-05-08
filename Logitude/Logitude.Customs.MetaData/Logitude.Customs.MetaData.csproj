@@ -306,6 +306,7 @@
     <None Include="DBTables\CustomBanksCard.dxml" />
     <None Include="DBTables\CustomDocumentType.dxml" />
     <None Include="DBTables\CustomDocumentTypeMetaData.dxml" />
+    <None Include="DBTables\CustomDocumentTypeTenant.dxml" />
     <None Include="DBTables\CustomerActivityType.dxml" />
     <None Include="DBTables\CustomerClassificationType.dxml" />
     <None Include="DBTables\CustomerIdentificationType.dxml" />

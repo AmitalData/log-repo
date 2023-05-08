@@ -436,6 +436,7 @@
     <Compile Include="EntityDataMappings\CustomBanksCardDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomDocumentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomDocumentTypeMetaDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomDocumentTypeTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerActivityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerClassificationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerIdentificationTypeDataMapping.cs" />
@@ -653,6 +654,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomBanksCardDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomDocumentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomDocumentTypeMetaDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomDocumentTypeTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerActivityTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerClassificationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerIdentificationTypeDataMapping.Generated.cs" />
@@ -1132,6 +1134,7 @@
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomDocumentTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultValueQueryService.Generated.cs" />
@@ -1661,6 +1664,7 @@
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsItemDetailsHistoryUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomDocumentTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />

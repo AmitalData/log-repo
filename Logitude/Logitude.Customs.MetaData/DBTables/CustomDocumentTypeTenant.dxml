@@ -45,6 +45,31 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AutoSetOriginalDocumentTrue"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCourierManadatory"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsDiamondManadatory"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomsDocumentUpload"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
@@ -53,6 +78,11 @@
   <Relation
     ForeignKeyColumn="PointerLevel"
     ReferencedTable="PointerLevels"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomsDocumentUpload"
+    ReferencedTable="CustomsDocumentUploads"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
