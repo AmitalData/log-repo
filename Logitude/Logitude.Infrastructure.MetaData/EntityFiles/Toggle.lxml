@@ -950,10 +950,11 @@
       Name="&quot;Centralized POD images when convert to PDF files&quot;"
       SearchFields="&quot;CPI,Centralized POD images when convert to PDF files&quot;"
       Description="&quot;Centralized POD images when convert to PDF files&quot;" />
-    <Record Code="&quot;JAM&quot;"
-            Name="&quot;Journal Approval MultiThreading&quot;"
-            SearchFields="&quot;JAM, Journal Approval MultiThreading&quot;"
-            Description="&quot;Journal Approval MultiThreading&quot;" />
+    <Record
+      Code="&quot;JAM&quot;"
+      Name="&quot;Journal Approval MultiThreading&quot;"
+      SearchFields="&quot;JAM, Journal Approval MultiThreading&quot;"
+      Description="&quot;Journal Approval MultiThreading 2&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
