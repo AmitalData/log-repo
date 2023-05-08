@@ -24,6 +24,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data.EntityMapping;
+using Logitude.Customs.Data;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -54,10 +55,7 @@ namespace WebFreight.Web.WcfApi
                         return response;
                     }
 
-                DefaultValueRepository defaultValueRepository = new DefaultValueRepository(entityPM.Tenant);
-
-                DefaultValueUpdateService defaultValueUpdateService = new DefaultValueUpdateService(entityPM.Tenant);
-
+               
 
                     if (string.IsNullOrEmpty(entityPM.DefaultTypeId))
                     {
@@ -65,9 +63,15 @@ namespace WebFreight.Web.WcfApi
                         response.ErrorMessage = "DefaultTypeId field is required";
                         return response;
                     }
+                ICustomContext customContext = CustomContext.GetContext(entityPM.Tenant);
+
+                DefaultValueRepository defaultValueRepository = new DefaultValueRepository(entityPM.Tenant);
+
+                DefaultValueUpdateService defaultValueUpdateService = new DefaultValueUpdateService(customContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 
 
-                    if (entityPM.DefaultTypeId != null)
+
+                if (entityPM.DefaultTypeId != null)
                     {
                         DefaultValue defaultValue = defaultValueRepository.GetSingleByDefaultTypeId(entityPM.DefaultTypeId, entityPM.Tenant);
                        
