@@ -895,8 +895,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 ConsignmentPackagePM consignmentPackagePM = new ConsignmentPackagePM();
                 consignmentPackagePM.ChangeSetOp = ChangeSetOperation.Insert;
                 consignmentPackagePM.PackageMeasureQualifierCode = GetValueCodeType(packagesMeasure.PackageMeasureQualifier);
-                consignmentPackagePM.PackageQuantityTypeCode = packagesMeasure.TotalPackageQuantity.unitCode.ToString();
-                consignmentPackagePM.PackageQuantity = Convert.ToInt32(packagesMeasure.TotalPackageQuantity.Value);
+                if (packagesMeasure.TotalPackageQuantity != null)
+                {
+                    consignmentPackagePM.PackageQuantityTypeCode = packagesMeasure.TotalPackageQuantity.unitCode.ToString();
+                    consignmentPackagePM.PackageQuantity = Convert.ToInt32(packagesMeasure.TotalPackageQuantity.Value);
+                }
                 if(packagesMeasure.GrossMassMeasure != null)
                 {
                     consignmentPackagePM.GrossMassMeasureTypeCode = packagesMeasure.GrossMassMeasure.unitCode.ToString();
