@@ -9,10 +9,12 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -424,14 +426,23 @@ namespace Logitude.Server.Tools.QueueService
 
             return response;
         }
+        private void LogTime(string msg)
+        {
+            DateTime stopLogAt = new DateTime(2023, 06, 01);
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+            msg += DateTime.Now.ToString();
 
+            LogitudeSettings.HandleLogMe(msg, false, "WorkUntilQEmpty_Db_new", stopLogAt);
+        }
         public List<QueueResponse> ReceiveCustoms_new(int nextRunDelayInSec = 60)
         {
             if (!LogitudeSettings.IsCostomsDeploy)
             {
                 throw new Exception("ReceiveCustoms  use in LogitudeSettings.IsCostomsDeploy");
             }
-
+            //
             List<QueueResponse> responseList = new List<QueueResponse>();
 
             //using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
@@ -443,7 +454,9 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         using (OracleConnection DBConnection = new OracleConnection(context.Database.Connection.ConnectionString))
                         {
-                            OracleCommand cmd = new OracleCommand(DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_List", LogitudeDBSchema.LOGITUDE_MAIN, DBConnection.ConnectionString), DBConnection);
+                        LogTime("start ReceiveCustoms_new at : ");
+
+                        OracleCommand cmd = new OracleCommand(DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_List", LogitudeDBSchema.LOGITUDE_MAIN, DBConnection.ConnectionString), DBConnection);
                             try
                             {
                                 DBConnection.Open();
@@ -479,9 +492,13 @@ namespace Logitude.Server.Tools.QueueService
                                 cmd.Parameters.Add(watingStatusPar);
                                 cmd.Parameters.Add(selectCountPar);
 
-                                var ou = cmd.ExecuteNonQuery();
+                            LogTime("start Execute proc at : ");
 
-                                if (vQueueMessages.Value != DBNull.Value)
+                            var ou = cmd.ExecuteNonQuery();
+                            LogTime("end Execute proc at : ");
+                            LogTime("start extract data returnd from proc at : ");
+
+                            if (vQueueMessages.Value != DBNull.Value)
                                 {
                                     OracleDataReader reader = ((OracleCursor)vQueueMessages.Value).GetDataReader();
                                     while (reader.Read())
@@ -500,8 +517,9 @@ namespace Logitude.Server.Tools.QueueService
                                         responseList.Add(response);
                                     }
                                 }
-                            }
-                            catch (Exception ex)
+                            LogTime("end extract data returnd from proc at : ");
+                        }
+                        catch (Exception ex)
                             {
                                 System.Console.WriteLine("Exception: {0}", ex.ToString());
                                 throw;
@@ -510,8 +528,9 @@ namespace Logitude.Server.Tools.QueueService
                             {
                                 cmd.Connection.Close();
                             }
-                        }
+                        LogTime("send ReceiveCustoms_new at : ");
                     }
+                }
                     else
                     {
                         //sql will be in the future
