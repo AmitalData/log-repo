@@ -829,7 +829,7 @@ AS */
                     cmd.Connection = cn;
                     cmd.CommandText =
                     //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "usp_GetNextTableIdValue";
-                    DbContextBaseUtil.GetStoredProcedureName("usp_UpdateQueueMessagePriority2", LogitudeDBSchema.LOGITUDE_MAIN,
+                    DbContextBaseUtil.GetStoredProcedureName("usp_UpdateQueueMessagePrio2", LogitudeDBSchema.LOGITUDE_MAIN,
                     cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
                     /*
@@ -879,7 +879,7 @@ AS */
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    SqlCommand cmd = new SqlCommand("Customs.usp_UpdateQueueMessagePriority2", cn);
+                    SqlCommand cmd = new SqlCommand("Customs.usp_UpdateQueueMessagePrio2", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.Int);
