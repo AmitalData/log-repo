@@ -171,6 +171,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   LastMileStatusName = a.LastMileStatusName,
                                                                   LastMileStatusRemarks = a.LastMileStatusRemarks,
                                                                   StorageSiteStatusCode = a.StorageSiteStatusCode,
+                                                                  StorageSiteStatusCodeText = a.StorageSiteStatusCode,
                                                                   StorageSiteStatusName = a.MamanStatus != null ? a.MamanStatus.LocalName : null,
                                                                   StorageSiteErrorText = a.StorageSiteErrorText,
                                                                   CourierPendingReasonList = a.CourierPendingReasonList,

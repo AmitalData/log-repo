@@ -1331,7 +1331,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         });
 
         this.columns.push({
-            FieldName: 'StorageSiteStatusCode',
+            FieldName: 'StorageSiteStatusCodeText',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.StorageSiteStatusCode"),
             Styles: { width: '98px' },
@@ -1339,7 +1339,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
-            SortByName: 'StorageSiteStatusCode'
+            SortByName: 'StorageSiteStatusCodeText'
         });
 
         this.columns.push({
