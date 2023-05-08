@@ -14,6 +14,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using Newtonsoft.Json;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -118,19 +121,26 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void SubmitReconciliations(int tenant, List<ReconciliationPM> paymentReconciliations)
         {
+            bool updateGLAccountAgingDataUsingWR = FeatureToggleHelper.HasFeatureToggle("UAD", tenant);
             var accountingContext = AccountingContext.GetContext(tenant);
             ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
+            service.updateGLAccountAgingDataUsingWR = updateGLAccountAgingDataUsingWR;
             foreach (ReconciliationPM recoPM in paymentReconciliations)
             {
                 service.Update(recoPM, true);
+            }
+            if (updateGLAccountAgingDataUsingWR) {
+                WriteEntityPMOnCommunicationLog(paymentReconciliations, tenant);
             }
         }
 
         private RecoCallback SplitAndSubmitReconciliationByGroupNumber(ReconciliationPM reconciliationPM)
         {
+            bool updateGLAccountAgingDataUsingWR = FeatureToggleHelper.HasFeatureToggle("UAD", reconciliationPM.Tenant);
             var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
             RecoCallback recoCallBack;
             ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), reconciliationPM.Tenant);
+            service.updateGLAccountAgingDataUsingWR = updateGLAccountAgingDataUsingWR;
             int groupsCount = reconciliationPM.ReconciliationLines.GroupBy(d => d.GroupNumber).Count();
             if (groupsCount > 1)
             {
@@ -139,17 +149,47 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     service.Update(recoPM, true);
                 }
-
+                if (updateGLAccountAgingDataUsingWR)
+                {
+                    WriteEntityPMOnCommunicationLog(recoPMs, reconciliationPM.Tenant);
+                }
                 recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = recoPMs.Count };
             }
             else
             {
                 service.Update(reconciliationPM, true);
+                if (updateGLAccountAgingDataUsingWR)
+                {
+                    WriteEntityPMOnCommunicationLog(new List<ReconciliationPM>
+                    {
+                       reconciliationPM
+                    }, reconciliationPM.Tenant);
+                }
                 recoCallBack = new RecoCallback(reconciliationPM);
 
             }
 
             return recoCallBack;
+        }
+
+        private void WriteEntityPMOnCommunicationLog(List<ReconciliationPM> reconciliations, int tenant)
+        {
+            string jsonString = JsonConvert.SerializeObject(reconciliations);
+            byte[] xmlFile = Encoding.UTF8.GetBytes(jsonString);
+            string communicationLogId = Communications.AddCommunicationLog(new CommunicationsParams()
+            {
+                Tenant = tenant,
+                CommunicationLogTypeCode = "Q",
+                Priority = 1,
+                InOut = "O",
+                Status = "W",
+                Subject = "Update GLAccount Aging Data",
+                FolderName = "Other",
+                ByteData = xmlFile
+            });
+            var queueService = new DbQueueService();
+            queueService.InitializeQueue("AccountingJournalApproveWR", tenant);
+            queueService.Send(new Dictionary<string, string>() { { "tenant", tenant.ToString() }, { "communicationLogId", communicationLogId } }, tenant, null, null);
         }
 
         private static bool CheckIfHasMultiplePayment(ReconciliationPM reconciliationPM, List<LedgerTransactionPM> recoTransactions)

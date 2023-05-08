@@ -47,7 +47,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     public partial class ReconciliationUpdateService : EntityUpdateService<Reconciliation, ReconciliationPM, EntityPM>
     {
         private bool _CancelledAction;
-
+        public bool updateGLAccountAgingDataUsingWR = false;
         protected override void OnCreating(ReconciliationPM entityPM, EntityPM entityParentPM)
         {
             if (String.IsNullOrEmpty(entityPM.Id) || entityPM.Id == "new") entityPM.Id = IdCounter.GetNumber("Reconciliation", entityPM.Tenant);
@@ -478,33 +478,32 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ledgerTransactionUpdateService.UpdateMulti(LedgerTransactionPMsUpdated, new List<LedgerTransactionPM>(), entityPM, false);
 
             bool getNewContextWhileStreamingLedger = true;
-            if (getNewContextWhileStreamingLedger)
+            if (getNewContextWhileStreamingLedger && (this._CancelledAction || !updateGLAccountAgingDataUsingWR))
             {
-                var newContextWhileStreamingLedger = AccountingContext.GetContext(entityPM.Tenant);
-                var reconciliationUpdateAgingService = new ReconciliationUpdateAgingService(newContextWhileStreamingLedger);
-                var deltaGLAccountAgingDataPM = reconciliationUpdateAgingService.GetDelta(this._CancelledAction, entityPM);
-                if (!string.IsNullOrWhiteSpace(deltaGLAccountAgingDataPM.AccountId))
-                {
-                    if (
-                        deltaGLAccountAgingDataPM.Tenant == 127 &&
-                        Math.Abs(deltaGLAccountAgingDataPM.TotalOpenTransactions.GetValueOrDefault()) > 10_000
-                        )
-                    {
-                        Debug.WriteLine("Ohad: Given Reconciliation Update And tenant == Ship2u and the Delta of TotalOpenTransactions > 10,000 ,Do not Update (Cause lock cause Fail Journal Streaming  ) .... ");
-                    }
-                    else
-                    {
-                        reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM, false);
-                        newContextWhileStreamingLedger.SaveChanges();// MUST SAVE DUE NEW CONTEXT !!!
-
-                    }
-                }
-
-
+                UpdateGLaccountAgingData(entityPM);
             }
+        }
 
+        public void UpdateGLaccountAgingData(ReconciliationPM entityPM) {
+            var newContextWhileStreamingLedger = AccountingContext.GetContext(entityPM.Tenant);
+            var reconciliationUpdateAgingService = new ReconciliationUpdateAgingService(newContextWhileStreamingLedger);
+            var deltaGLAccountAgingDataPM = reconciliationUpdateAgingService.GetDelta(this._CancelledAction, entityPM);
+            if (!string.IsNullOrWhiteSpace(deltaGLAccountAgingDataPM.AccountId))
+            {
+                if (
+                    deltaGLAccountAgingDataPM.Tenant == 127 &&
+                    Math.Abs(deltaGLAccountAgingDataPM.TotalOpenTransactions.GetValueOrDefault()) > 10_000
+                    )
+                {
+                    Debug.WriteLine("Ohad: Given Reconciliation Update And tenant == Ship2u and the Delta of TotalOpenTransactions > 10,000 ,Do not Update (Cause lock cause Fail Journal Streaming  ) .... ");
+                }
+                else
+                {
+                    reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM, false);
+                    newContextWhileStreamingLedger.SaveChanges();// MUST SAVE DUE NEW CONTEXT !!!
 
-
+                }
+            }
         }
 
         public bool SuppressResetDraftOpenReconciliation { get; set; }
