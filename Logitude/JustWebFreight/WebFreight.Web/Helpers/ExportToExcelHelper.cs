@@ -33,6 +33,7 @@ using Simplog.Server.Infrastructure;
 using System.Globalization;
 using System.Configuration;
 using NPOI.HSSF.UserModel;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WebFreight.Web.Helpers
 {
@@ -1303,10 +1304,24 @@ namespace WebFreight.Web.Helpers
                     row = sheet.CreateRow(WorkingRowIndex);
                     foreach (QueryColumnPM column in queryColumns)
                     {
+                        
                         string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode)
                                       ? column.ObjectFieldListLabelTextCodeCode
-                                      : column.ObjectFieldFullNameTextCodeCode;
-                        if (!FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
+                                     : column.ObjectFieldFullNameTextCodeCode;
+
+
+                        if (!string.IsNullOrEmpty(column.DisplayText))
+                        {
+
+                            text = column.DisplayText;
+                        }
+                    
+
+                    text = text != null ? text : "";
+                    text = text.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
+
+
+                    if (!FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
                         {
                             sheet.AutoSizeColumn(column.IndexOrder + 1);
                         }
