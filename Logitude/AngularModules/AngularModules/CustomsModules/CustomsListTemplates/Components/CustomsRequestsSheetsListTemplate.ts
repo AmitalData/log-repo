@@ -163,7 +163,7 @@ export class CustomsRequestsSheetsListTemplate {
     OnShowLogclick() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 1000;
-        logitudeWindow.Height = 900;
+        logitudeWindow.Height = 700;
         logitudeWindow.IsShowCloseButton = true;
         logitudeWindow.Title = TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
         logitudeWindow.WindowArgs = this._CustomsRequestsSheet;
