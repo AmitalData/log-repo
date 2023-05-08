@@ -928,6 +928,7 @@
     <Compile Include="EntityDataMappings\Generated\TreatmentWayDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UIMessageAdditionalDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UIMessageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UIMessageTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UnloadingSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UpdateCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ValidCustomsItemDataMapping.Generated.cs" />
@@ -1112,6 +1113,7 @@
     <Compile Include="EntityDataMappings\TreatmentWayDataMapping.cs" />
     <Compile Include="EntityDataMappings\UIMessageAdditionalDataMapping.cs" />
     <Compile Include="EntityDataMappings\UIMessageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UIMessageTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\UnloadingSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\UpdateCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ValidCustomsItemDataMapping.cs" />
@@ -1144,6 +1146,7 @@
     <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultValueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GovernmentProcTypeTenantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\UIMessageTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VendorCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StatusCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SchedulerParamQueryService.cs" />
@@ -1673,6 +1676,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomDocumentTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsHouseTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GovernmentProcTypeTenantUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\UIMessageTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />

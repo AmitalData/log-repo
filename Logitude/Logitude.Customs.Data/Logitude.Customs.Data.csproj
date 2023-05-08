@@ -259,6 +259,7 @@
     <Compile Include="EntityKeys\TreatmentWayKeys.cs" />
     <Compile Include="EntityKeys\UIMessageAdditionalKeys.cs" />
     <Compile Include="EntityKeys\UIMessageKeys.cs" />
+    <Compile Include="EntityKeys\UIMessageTenantKeys.cs" />
     <Compile Include="EntityKeys\UpdateCodeKeys.cs" />
     <Compile Include="EntityKeys\VendorCurrencyKeys.cs" />
     <Compile Include="EntityListQueryServices\AcceptanceStatusListQueryService.cs" />
@@ -511,6 +512,7 @@
     <Compile Include="EntityListQueryServices\Generated\TreatmentWayListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageAdditionalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\UIMessageTenantListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UpdateCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\VendorCurrencyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\GovernmentProcTypeTenantListQueryService.cs" />
@@ -572,6 +574,7 @@
     <Compile Include="EntityListQueryServices\TreatmentWayListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageAdditionalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\UIMessageTenantListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UpdateCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
     <Compile Include="EntityLists\Generated\CountryCurrencyList.Generated.cs" />
@@ -580,6 +583,7 @@
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\UIMessageTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VendorCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\DeclarationReferantDataList.cs" />
     <Compile Include="EntityLists\Generated\StatusCodeList.Generated.cs" />
@@ -892,6 +896,7 @@
     <Compile Include="EntityMapping\TreatmentWayMap.cs" />
     <Compile Include="EntityMapping\UIMessageAdditionalMap.cs" />
     <Compile Include="EntityMapping\UIMessageMap.cs" />
+    <Compile Include="EntityMapping\UIMessageTenantMap.cs" />
     <Compile Include="EntityMapping\UpdateCodeMap.cs" />
     <Compile Include="EntityMapping\VendorCurrencyMap.cs" />
     <Compile Include="EntityPOCOs\AcceptanceStatus.cs" />
@@ -1051,6 +1056,7 @@
     <Compile Include="EntityPOCOs\TreatmentWay.cs" />
     <Compile Include="EntityPOCOs\UIMessage.cs" />
     <Compile Include="EntityPOCOs\UIMessageAdditional.cs" />
+    <Compile Include="EntityPOCOs\UIMessageTenant.cs" />
     <Compile Include="EntityPOCOs\UpdateCode.cs" />
     <Compile Include="EntityPOCOs\VendorCurrency.cs" />
     <Compile Include="Repsitories\AcceptanceStatusRepository.cs" />
@@ -1304,6 +1310,7 @@
     <Compile Include="Repsitories\Generated\TreatmentWayRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageAdditionalRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\UIMessageTenantRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UpdateCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\VendorCurrencyRepository.Generated.cs" />
     <Compile Include="Repsitories\GovernmentProcTypeTenantRepository.cs" />
@@ -1365,6 +1372,7 @@
     <Compile Include="Repsitories\TreatmentWayRepository.cs" />
     <Compile Include="Repsitories\UIMessageAdditionalRepository.cs" />
     <Compile Include="Repsitories\UIMessageRepository.cs" />
+    <Compile Include="Repsitories\UIMessageTenantRepository.cs" />
     <Compile Include="Repsitories\UpdateCodeRepository.cs" />
     <Compile Include="Repsitories\VendorCurrencyRepository.cs" />
     <Compile Include="Utils\CacheHelper.cs" />

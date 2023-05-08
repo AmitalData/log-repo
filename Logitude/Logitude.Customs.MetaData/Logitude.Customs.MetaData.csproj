@@ -1020,6 +1020,7 @@
     <None Include="EntityFiles\UIMessageAdditional.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\UIMessageTenant.lxml" />
     <None Include="EntityFiles\UnloadingSiteType.lxml" />
     <None Include="EntityFiles\LogisticActionResponseReqS.lxml" />
     <None Include="EntityFiles\UpdateCode.lxml" />

@@ -1042,6 +1042,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DefaultTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DefaultValueViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GovernmentProcTypeTenantViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\UIMessageTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\VendorCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CountryCurrencyController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomDocumentTypeTenantController.Generated.cs" />
@@ -1049,6 +1050,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DefaultTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DefaultValueController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GovernmentProcTypeTenantController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\UIMessageTenantController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\VendorCurrencyController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StatusCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\StatusCodeController.Generated.cs" />
@@ -3427,6 +3429,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TransportMeansTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TreatmentWayUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UIMessageAdditionalUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UIMessageTenantUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UIMessageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UpdateCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UserDefinedReportUpdateClass.cs" />

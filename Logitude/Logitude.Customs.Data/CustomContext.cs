@@ -816,6 +816,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new UIMessageAdditionalMap());
 	
+            modelBuilder.Configurations.Add(new UIMessageTenantMap());
+	
             modelBuilder.Configurations.Add(new UnloadingSiteTypeMap());
 	
             modelBuilder.Configurations.Add(new UpdateCodeMap());
@@ -3608,6 +3610,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<UIMessageAdditional> UIMessageAdditionals 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<UIMessageTenant> UIMessageTenants 
 	 {
 	      get; set;
 	 
