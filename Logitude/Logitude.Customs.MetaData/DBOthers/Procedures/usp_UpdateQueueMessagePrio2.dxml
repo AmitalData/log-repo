@@ -1,8 +1,8 @@
-﻿<Procedure DBType="Main" Name="usp_UpdateQueueMessagePriority2" Schema="dbo" Module="Customs">
+﻿<Procedure DBType="Main" Name="usp_UpdateQueueMessagePrio2" Schema="dbo" Module="Customs">
   <SqlScript>
 	  <![CDATA[
 
-   create procedure usp_UpdateQueueMessagePriority2
+   create procedure usp_UpdateQueueMessagePrio2
    @Tenant int,
    @CourierMasterId varchar,
    @InterfaceTypeCode varchar,
@@ -36,7 +36,7 @@
 
   <OracleScript>
     <![CDATA[
- 	create or replace PROCEDURE usp_UpdateQueueMessagePriority2
+ 	create or replace PROCEDURE usp_UpdateQueueMessagePrio2
 		(
           v_Tenant IN NUMBER DEFAULT NULL ,
           v_CourierMasterId  IN VARCHAR2 DEFAULT NULL ,
