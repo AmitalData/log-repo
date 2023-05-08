@@ -454,6 +454,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string IntegratorName  { get; set; }
        [DataMember]
        public string ExportCloseAmendStatusName  { get; set; }
+       [DataMember]
+       public bool ExcludeManifest  { get; set; }
    }
 
 }

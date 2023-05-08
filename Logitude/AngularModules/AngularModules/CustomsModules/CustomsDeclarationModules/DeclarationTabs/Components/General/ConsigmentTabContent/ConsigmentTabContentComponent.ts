@@ -98,7 +98,14 @@ export class ConsigmentTabContentComponent
         this.LoadingPortFilterItems = new ApiQueryFilters();//38388
 
         this.Listen();
+       
 
+        var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
+
+        var IsExcludeManifestFeature = FeatureLocator.Features.filter(f => (f.Code == "ISEXCLUDEMANIFEST") && f.ObjectTableId == table.Id)[0];
+        if (IsExcludeManifestFeature) {
+              this._ShowExcludeManifest= true;
+        }
 
     }
     private _SubDisplayModeChanged;
@@ -612,6 +619,13 @@ export class ConsigmentTabContentComponent
         }
         this.SetScreenFieldsEditability();
     }
+    public get ExcludeManifest() { return this.declarationPM.ExcludeManifest; }
+    public set ExcludeManifest(newValue: boolean) {
+        this.declarationPM.ExcludeManifest = newValue;
+
+    }
+    public _ShowExcludeManifest = false;
+
 
     public get WeightValue() { return this.declarationPM.WeightValue; }
     public set WeightValue(newValue: string) { this.declarationPM.WeightValue = newValue; }

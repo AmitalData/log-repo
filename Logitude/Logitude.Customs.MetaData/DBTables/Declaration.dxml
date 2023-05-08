@@ -1072,6 +1072,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExcludeManifest"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"

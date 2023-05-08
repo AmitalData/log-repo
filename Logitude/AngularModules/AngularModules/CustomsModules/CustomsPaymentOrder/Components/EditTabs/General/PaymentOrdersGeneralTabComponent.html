@@ -519,6 +519,23 @@
                                                             </log-cell-template>
 </ng-template>
                                                         </log-column>
+                                                        <!-- GoodsItemLineNumber -->
+                                                        <log-column [width]="'110'" [binding]="'GoodsItemLineNumber'" [Alignment]="'right'"
+                                                                    [header]="'Customs.PaymentOrderProtestReason.F.GoodsItemLineNumber' | TextCodeTranslationPipe">
+                                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
+                                                                <div style="width:100%;height:100%;">
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                        <span>{{item.GoodsItemLineNumber}}</span>
+                                                                    </div>
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsEditMode">
+                                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GoodsItemLineNumber'" [InputType]="'integer'" [DataContext]="item"
+                                                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </log-cell-template>
+</ng-template>
+                                                        </log-column>
 
                                                                          <!-- GoodsItemClassification -->
                                                         <log-column [header]="'Customs.PaymentOrderProtestReason.F.GoodsItemClassification' | TextCodeTranslationPipe"

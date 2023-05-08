@@ -1504,6 +1504,11 @@ export class DeclarationPM {
     public set IsAramex(newValue: boolean) { if (this.isAramex != newValue) { this.isAramex = newValue; this.MarkAsDirty("IsAramex"); } }
        
 	 
+    private excludeManifest: boolean;
+    public get ExcludeManifest() { return this.excludeManifest; }
+    public set ExcludeManifest(newValue: boolean) { if (this.excludeManifest != newValue) { this.excludeManifest = newValue; this.MarkAsDirty("ExcludeManifest"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
