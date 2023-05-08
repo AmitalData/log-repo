@@ -83,20 +83,20 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class CustomDocumentTypeTenantUpdateClass
+   public class GovernmentProcTypeTenantUpdateClass
    {  		
-		public const string HashString = "24dfae59910c640826510688fe68fd38";
+		public const string HashString = "d6c75a94d2c0740f9ce239fd70665f89";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.CustomDocumentTypeTenant",
+	             				    ObjectTableName =  "Customs.GovernmentProcTypeTenant",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Customs.CustomDocumentTypeTenants",
-			      				    ObjectTableSingular =  "CustomDocumentTypeTenant",
-			      				    ObjectTablePlural =  "CustomDocumentTypeTenants",
+			      				    DBTableName =  "Customs.GovernmentProcTypeTenants",
+			      				    ObjectTableSingular =  "Customs.GovernmentProcTypeTenant",
+			      				    ObjectTablePlural =  "Customs.GovernmentProcTypeTenants",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -109,9 +109,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
-			      				    CacheOnClient =  true,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
-			      				    HasCounter =  false,
+			      				    HasCounter =  true,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
@@ -121,13 +121,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "BR",
+			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Custom Document Type Tenant",
-			      				    Code =  "c593",
+			      				    DefaultText =  "Government Proc Type Tenant",
+			      				    Code =  "9aaa",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -140,7 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  CustomDocumentTypeTenantUpdateClass.HashString,
+			      				    HashString =  GovernmentProcTypeTenantUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -152,7 +152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						ObjectTableName =  "Customs.CustomDocumentTypeTenant",
+					  						ObjectTableName =  "Customs.GovernmentProcTypeTenant",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -171,7 +171,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UpdateDate",
 					  						ListPropertyPath =  "UpdateDate",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -179,7 +178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "CustomDocumentTypeTenant",
+					  						ValidForQuerySection1 =  "GovernmentProcTypeTenant",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -212,7 +211,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						ObjectTableName =  "Customs.CustomDocumentTypeTenant",
+					  						ObjectTableName =  "Customs.GovernmentProcTypeTenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
@@ -232,7 +231,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UpdatedByUserId",
 					  						ListPropertyPath =  "UpdatedByUserId",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -270,7 +268,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Customs.CustomDocumentTypeTenant",
+					  						ObjectTableName =  "Customs.GovernmentProcTypeTenant",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -289,7 +287,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -297,7 +294,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "CustomDocumentTypeTenant",
+					  						ValidForQuerySection1 =  "GovernmentProcTypeTenant",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -329,72 +326,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PointerLevel",
-					  						ObjectTableName =  "Customs.CustomDocumentTypeTenant",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.PointerLevel",
-					  						MinLength =  0,
-					  						MaxLength =  1,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  1,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PointerLevel",
-					  						ListPropertyPath =  "PointerLevel",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomDocumentTypeTenant",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PointerLevel",
-					  						DefaultText =  "PointerLevel",
-					  						FullLocalDefaultText =  "קשור ל",
-					  						ListFieldLable =  "PointerLevelListLable",
-					  						ListLableDefaultText =  "Pointer level",
-					  						ListLocalDefaultText =  "קשור ל",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "AutoSetOriginalDocumentTrue",
-					  						ObjectTableName =  "Customs.CustomDocumentTypeTenant",
+					 						FieldName =  "IsImport",
+					  						ObjectTableName =  "Customs.GovernmentProcTypeTenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -403,7 +336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
-					  						DisplayOnly =  false,
+					  						DisplayOnly =  true,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
@@ -412,9 +345,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "AutoSetOriginalDocumentTrue",
-					  						ListPropertyPath =  "AutoSetOriginalDocumentTrue",
-					  						DisplayInLookUpIndex =  0,
+					  						PMPropertyPath =  "IsImport",
+					  						ListPropertyPath =  "IsImport",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -422,7 +354,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomDocumentTypeTenant",
+					  						ValidForQuerySection1 =  "Customs.GovernmentProcTypeTenant",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -431,12 +363,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "AutoSetOriginalDocumentTrue",
-					  						DefaultText =  "AutoSetOriginalDocument",
-					  						FullLocalDefaultText =  "סימון אוטומטי של מסמך מקורי",
-					  						ListFieldLable =  "AutoSetOriginalDocumentTrueListLable",
-					  						ListLableDefaultText =  "Auto Set Original Document",
-					  						ListLocalDefaultText =  "סימון אוטומטי של מסמך מקורי",
+					  						FullFieldLable =  "IsImport",
+					  						DefaultText =  "Is Import",
+					  						FullLocalDefaultText =  "האם יבוא",
+					  						ListFieldLable =  "IsImportListLable",
+					  						ListLableDefaultText =  "Is Import",
+					  						ListLocalDefaultText =  "האם יבוא",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -456,134 +388,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PointerLevelName",
-					  						ObjectTableName =  "Customs.CustomDocumentTypeTenant",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  40,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  40,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PointerLevelName",
-					  						ListPropertyPath =  "PointerLevelName",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomDocumentTypeTenant",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PointerLevelName",
-					  						DefaultText =  "Pointer Level",
-					  						FullLocalDefaultText =  "קשור ל",
-					  						ListFieldLable =  "PointerLevelNameListLable",
-					  						ListLableDefaultText =  "Pointer Level",
-					  						ListLocalDefaultText =  "קשור ל",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "IsCourierManadatory",
-					  						ObjectTableName =  "Customs.CustomDocumentTypeTenant",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsCourierManadatory",
-					  						ListPropertyPath =  "IsCourierManadatory",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomDocumentTypeTenant",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsCourierManadatory",
-					  						DefaultText =  "Courier Manadatory",
-					  						FullLocalDefaultText =  "חובה לבלדרות",
-					  						ListFieldLable =  "IsCourierManadatoryListLable",
-					  						ListLableDefaultText =  "Courier Manadatory",
-					  						ListLocalDefaultText =  "חובה לבלדרות",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "IsDiamondManadatory",
-					  						ObjectTableName =  "Customs.CustomDocumentTypeTenant",
-					  						FieldsDataType =  "Boolean",
+					 						FieldName =  "IndexOrder",
+					  						ObjectTableName =  "Customs.GovernmentProcTypeTenant",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -595,14 +402,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
-					  						IsCustomFilter =  true,
-					  						Operator =  "Equals",
+					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsDiamondManadatory",
-					  						ListPropertyPath =  "IsDiamondManadatory",
-					  						DisplayInLookUpIndex =  0,
+					  						PMPropertyPath =  "IndexOrder",
+					  						ListPropertyPath =  "IndexOrder",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -610,7 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomDocumentTypeTenant",
+					  						ValidForQuerySection1 =  "Customs.GovernmentProcTypeTenant",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -619,12 +424,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsDiamondManadatory",
-					  						DefaultText =  "Is Diamond Manadatory",
-					  						FullLocalDefaultText =  "מסמך חובה ליהלומים",
-					  						ListFieldLable =  "IsDiamondManadatoryListLable",
-					  						ListLableDefaultText =  "Is Diamond Manadatory",
-					  						ListLocalDefaultText =  "מסמך חובה ליהלומים",
+					  						FullFieldLable =  "IndexOrder",
+					  						DefaultText =  "Order",
+					  						ListFieldLable =  "IndexOrderListLable",
+					  						ListLableDefaultText =  "Order",
+					  						ListLocalDefaultText =  "להזמין",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -644,29 +448,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CustomsDocumentUpload",
-					  						ObjectTableName =  "Customs.CustomDocumentTypeTenant",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.CustomsDocumentUpload",
+					 						FieldName =  "IsExport",
+					  						ObjectTableName =  "Customs.GovernmentProcTypeTenant",
+					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
-					  						DisplayOnly =  false,
+					  						DisplayOnly =  true,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  1,
+					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CustomsDocumentUpload",
-					  						ListPropertyPath =  "CustomsDocumentUpload",
-					  						DisplayInLookUpIndex =  0,
+					  						PMPropertyPath =  "IsExport",
+					  						ListPropertyPath =  "IsExport",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -674,7 +476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomDocumentTypeTenant",
+					  						ValidForQuerySection1 =  "Customs.GovernmentProcTypeTenant",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -683,74 +485,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CustomsDocumentUpload",
-					  						DefaultText =  "CustomsDocumentUpload",
-					  						FullLocalDefaultText =  "העלאת מסמך למכס",
-					  						ListFieldLable =  "CustomsDocumentUploadListLable",
-					  						ListLableDefaultText =  "Customs Document Upload",
-					  						ListLocalDefaultText =  "העלאת מסמך למכס",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "CustomsDocumentUploadName",
-					  						ObjectTableName =  "Customs.CustomDocumentTypeTenant",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  40,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  40,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CustomsDocumentUploadName",
-					  						ListPropertyPath =  "CustomsDocumentUploadName",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomDocumentTypeTenant",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CustomsDocumentUploadName",
-					  						DefaultText =  "Customs Document Upload",
-					  						FullLocalDefaultText =  "העלאת מסמך למכס",
-					  						ListFieldLable =  "CustomsDocumentUploadNameListLable",
-					  						ListLableDefaultText =  "Customs Document Upload",
-					  						ListLocalDefaultText =  "העלאת מסמך למכס",
+					  						FullFieldLable =  "IsExport",
+					  						DefaultText =  "Is Export",
+					  						FullLocalDefaultText =  "האם יצוא",
+					  						ListFieldLable =  "IsExportListLable",
+					  						ListLableDefaultText =  "Is Export",
+					  						ListLocalDefaultText =  "האם יצוא",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -773,19 +513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {   
-
-		   ObjectTable CustomDocumentTypeTenantObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomDocumentTypeTenant" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> CustomDocumentTypeTenantObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomDocumentTypeTenant").ToList();
-		       
-	      
-
-	         Screen CustomDocumentTypeTenantCustomsCustomDocumentTypeTenantHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomDocumentTypeTenant.HeaderScreen", Name = "Customs.CustomDocumentTypeTenantHeaderScreen", ObjectTableId = CustomDocumentTypeTenantObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
-		    CustomDocumentTypeTenantObjectTable.HeaderScreenId = CustomDocumentTypeTenantCustomsCustomDocumentTypeTenantHeaderScreenScreen0.Id;
-		    CustomDocumentTypeTenantObjectTable.HeaderScreenCode = CustomDocumentTypeTenantCustomsCustomDocumentTypeTenantHeaderScreenScreen0.Code;
-
-	   		  
+	    {    
 
 	    }
 
@@ -795,18 +523,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable CustomDocumentTypeTenantObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomDocumentTypeTenant" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable GovernmentProcTypeTenantObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.GovernmentProcTypeTenant" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CustomDocumentTypeTenantFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomDocumentTypeTenantObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentTypeTenant.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeTenantObjectTable);
-		   Feature CustomDocumentTypeTenantFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomDocumentTypeTenantObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentTypeTenant.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeTenantObjectTable);
-		   Feature CustomDocumentTypeTenantFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomDocumentTypeTenantObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentTypeTenant.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeTenantObjectTable);
-		   Feature CustomDocumentTypeTenantFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CustomDocumentTypeTenantObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentTypeTenant.Features.PackageFeature", NameTextCodeDefaultText = "CustomDocumentTypeTenant Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeTenantObjectTable);    
+		   Feature GovernmentProcTypeTenantFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = GovernmentProcTypeTenantObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcTypeTenant.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GovernmentProcTypeTenantObjectTable);
+		   Feature GovernmentProcTypeTenantFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = GovernmentProcTypeTenantObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcTypeTenant.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GovernmentProcTypeTenantObjectTable);
+		   Feature GovernmentProcTypeTenantFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = GovernmentProcTypeTenantObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcTypeTenant.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GovernmentProcTypeTenantObjectTable);
+		   Feature GovernmentProcTypeTenantFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = GovernmentProcTypeTenantObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcTypeTenant.Features.PackageFeature", NameTextCodeDefaultText = "GovernmentProcTypeTenant Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GovernmentProcTypeTenantObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable CustomDocumentTypeTenantObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomDocumentTypeTenant" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable GovernmentProcTypeTenantObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.GovernmentProcTypeTenant" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -820,7 +548,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = CustomDocumentTypeTenantObjectTable.Id,
+                ObjectTableId = GovernmentProcTypeTenantObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -838,7 +566,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = CustomDocumentTypeTenantObjectTable.Id,
+                ObjectTableId = GovernmentProcTypeTenantObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

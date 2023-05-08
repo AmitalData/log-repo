@@ -16,7 +16,7 @@ namespace Logitude.Customs.Def.EntityPMs
 {
    [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class CustomDocumentTypeTenantPM : EntityPM
+   public partial class GovernmentProcTypeTenantPM : EntityPM
    {
    	  private string id ;
 	  
@@ -135,163 +135,71 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string pointerLevel ;
+	  private bool isImport ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string PointerLevel  
+       public bool IsImport  
 	   {
 	    
 	     get
 		{
-		   return pointerLevel;
+		   return isImport;
 		 }
 		 set
 		 {
-		   if(pointerLevel != value)
+		   if(isImport != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PointerLevel",OldValue=pointerLevel,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsImport",OldValue=isImport,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
-		   pointerLevel=value;
+		   isImport=value;
 		   }
 			
 		 }
 	   }
-	  private bool autoSetOriginalDocumentTrue ;
+	  private int? indexOrder ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool AutoSetOriginalDocumentTrue  
+       public int? IndexOrder  
 	   {
 	    
 	     get
 		{
-		   return autoSetOriginalDocumentTrue;
+		   return indexOrder;
 		 }
 		 set
 		 {
-		   if(autoSetOriginalDocumentTrue != value)
+		   if(indexOrder != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutoSetOriginalDocumentTrue",OldValue=autoSetOriginalDocumentTrue,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IndexOrder",OldValue=indexOrder,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
-		   autoSetOriginalDocumentTrue=value;
+		   indexOrder=value;
 		   }
 			
 		 }
 	   }
-	  private string pointerLevelName ;
+	  private bool? isExport ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string PointerLevelName  
+       public bool? IsExport  
 	   {
 	    
 	     get
 		{
-		   return pointerLevelName;
+		   return isExport;
 		 }
 		 set
 		 {
-		   if(pointerLevelName != value)
+		   if(isExport != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PointerLevelName",OldValue=pointerLevelName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExport",OldValue=isExport,NewValue=value,PropertyType="bool?"};
 		    NotifyPropertyChanged(values);
-		   pointerLevelName=value;
-		   }
-			
-		 }
-	   }
-	  private bool isCourierManadatory ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsCourierManadatory  
-	   {
-	    
-	     get
-		{
-		   return isCourierManadatory;
-		 }
-		 set
-		 {
-		   if(isCourierManadatory != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCourierManadatory",OldValue=isCourierManadatory,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isCourierManadatory=value;
-		   }
-			
-		 }
-	   }
-	  private bool isDiamondManadatory ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsDiamondManadatory  
-	   {
-	    
-	     get
-		{
-		   return isDiamondManadatory;
-		 }
-		 set
-		 {
-		   if(isDiamondManadatory != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDiamondManadatory",OldValue=isDiamondManadatory,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isDiamondManadatory=value;
-		   }
-			
-		 }
-	   }
-	  private string customsDocumentUpload ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomsDocumentUpload  
-	   {
-	    
-	     get
-		{
-		   return customsDocumentUpload;
-		 }
-		 set
-		 {
-		   if(customsDocumentUpload != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsDocumentUpload",OldValue=customsDocumentUpload,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   customsDocumentUpload=value;
-		   }
-			
-		 }
-	   }
-	  private string customsDocumentUploadName ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomsDocumentUploadName  
-	   {
-	    
-	     get
-		{
-		   return customsDocumentUploadName;
-		 }
-		 set
-		 {
-		   if(customsDocumentUploadName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsDocumentUploadName",OldValue=customsDocumentUploadName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   customsDocumentUploadName=value;
+		   isExport=value;
 		   }
 			
 		 }

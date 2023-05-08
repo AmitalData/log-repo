@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class CustomDocumentTypeTenantPM {
+export class GovernmentProcTypeTenantPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -49,43 +49,23 @@ export class CustomDocumentTypeTenantPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private pointerLevel: string;
-    public get PointerLevel() { return this.pointerLevel; }
-    public set PointerLevel(newValue: string) { if (this.pointerLevel != newValue) { this.pointerLevel = newValue; this.MarkAsDirty("PointerLevel"); } }
+    private isImport: boolean;
+    public get IsImport() { return this.isImport; }
+    public set IsImport(newValue: boolean) { if (this.isImport != newValue) { this.isImport = newValue; this.MarkAsDirty("IsImport"); } }
        
 	 
-    private autoSetOriginalDocumentTrue: boolean;
-    public get AutoSetOriginalDocumentTrue() { return this.autoSetOriginalDocumentTrue; }
-    public set AutoSetOriginalDocumentTrue(newValue: boolean) { if (this.autoSetOriginalDocumentTrue != newValue) { this.autoSetOriginalDocumentTrue = newValue; this.MarkAsDirty("AutoSetOriginalDocumentTrue"); } }
+    private indexOrder: number;
+    public get IndexOrder() { return this.indexOrder; }
+    public set IndexOrder(newValue: number) { if (this.indexOrder != newValue) { this.indexOrder = newValue; this.MarkAsDirty("IndexOrder"); } }
        
 	 
-    private pointerLevelName: string;
-    public get PointerLevelName() { return this.pointerLevelName; }
-    public set PointerLevelName(newValue: string) { if (this.pointerLevelName != newValue) { this.pointerLevelName = newValue; this.MarkAsDirty("PointerLevelName"); } }
-       
-	 
-    private isCourierManadatory: boolean;
-    public get IsCourierManadatory() { return this.isCourierManadatory; }
-    public set IsCourierManadatory(newValue: boolean) { if (this.isCourierManadatory != newValue) { this.isCourierManadatory = newValue; this.MarkAsDirty("IsCourierManadatory"); } }
-       
-	 
-    private isDiamondManadatory: boolean;
-    public get IsDiamondManadatory() { return this.isDiamondManadatory; }
-    public set IsDiamondManadatory(newValue: boolean) { if (this.isDiamondManadatory != newValue) { this.isDiamondManadatory = newValue; this.MarkAsDirty("IsDiamondManadatory"); } }
-       
-	 
-    private customsDocumentUpload: string;
-    public get CustomsDocumentUpload() { return this.customsDocumentUpload; }
-    public set CustomsDocumentUpload(newValue: string) { if (this.customsDocumentUpload != newValue) { this.customsDocumentUpload = newValue; this.MarkAsDirty("CustomsDocumentUpload"); } }
-       
-	 
-    private customsDocumentUploadName: string;
-    public get CustomsDocumentUploadName() { return this.customsDocumentUploadName; }
-    public set CustomsDocumentUploadName(newValue: string) { if (this.customsDocumentUploadName != newValue) { this.customsDocumentUploadName = newValue; this.MarkAsDirty("CustomsDocumentUploadName"); } }
+    private isExport: boolean;
+    public get IsExport() { return this.isExport; }
+    public set IsExport(newValue: boolean) { if (this.isExport != newValue) { this.isExport = newValue; this.MarkAsDirty("IsExport"); } }
        
 	 
 
-    public OldEntityPM: CustomDocumentTypeTenantPM;
+    public OldEntityPM: GovernmentProcTypeTenantPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -96,13 +76,13 @@ export class CustomDocumentTypeTenantPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomDocumentTypeTenant");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.GovernmentProcTypeTenant");
            
         }
        }
     }
 
-    private MyClone: CustomDocumentTypeTenantPM;
+    private MyClone: GovernmentProcTypeTenantPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

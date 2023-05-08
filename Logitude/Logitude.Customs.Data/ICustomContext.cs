@@ -235,6 +235,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<GatepassReturnCode> GatepassReturnCodes { get; }
 		 IDbSet<Gender> Genders { get; }
 		 IDbSet<GovernmentProcedureType> GovernmentProcedureTypes { get; }
+		 IDbSet<GovernmentProcTypeTenant> GovernmentProcTypeTenants { get; }
 		 IDbSet<Guarantee> Guarantees { get; }
 		 IDbSet<GuaranteeCertificateType> GuaranteeCertificateTypes { get; }
 		 IDbSet<GuaranteeCondition> GuaranteeConditions { get; }

@@ -14,7 +14,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.Customs.Data.EntityPOCOs
 {
    
-    public class CustomDocumentTypeTenant
+    public class GovernmentProcTypeTenant
     {
 	 string dbms;
 
@@ -32,22 +32,12 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual User UpdatedByUser { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
-        [ForeignKey("Pointer")]
-        [Column("PointerLevel")]
-	    public string PointerLevel { get; set; }
-	      
-        public virtual PointerLevel Pointer { get; set; }
-        [Column("AutoSetOriginalDocumentTrue")]
-	    public bool AutoSetOriginalDocumentTrue { get; set; }
-        [Column("IsCourierManadatory")]
-	    public bool IsCourierManadatory { get; set; }
-        [Column("IsDiamondManadatory")]
-	    public bool IsDiamondManadatory { get; set; }
-        [ForeignKey("CustomsDocumentUploadT")]
-        [Column("CustomsDocumentUpload")]
-	    public string CustomsDocumentUpload { get; set; }
-	      
-        public virtual CustomsDocumentUpload CustomsDocumentUploadT { get; set; }
+        [Column("IsImport")]
+	    public bool IsImport { get; set; }
+        [Column("IndexOrder")]
+	    public int? IndexOrder { get; set; }
+        [Column("IsExport")]
+	    public bool? IsExport { get; set; }
     }
 }
 	 

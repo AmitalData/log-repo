@@ -504,6 +504,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new GovernmentProcedureTypeMap());
 	
+            modelBuilder.Configurations.Add(new GovernmentProcTypeTenantMap());
+	
             modelBuilder.Configurations.Add(new GuaranteeMap());
 	
             modelBuilder.Configurations.Add(new GuaranteeCertificateTypeMap());
@@ -2668,6 +2670,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<GovernmentProcedureType> GovernmentProcedureTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<GovernmentProcTypeTenant> GovernmentProcTypeTenants 
 	 {
 	      get; set;
 	 

@@ -14,12 +14,12 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.Data.EntityMapping
 {
  
-    public class CustomDocumentTypeTenantMap : EntityTypeConfiguration<CustomDocumentTypeTenant>
+    public class GovernmentProcTypeTenantMap : EntityTypeConfiguration<GovernmentProcTypeTenant>
     {
 	    string dbms;
-        public CustomDocumentTypeTenantMap()
+        public GovernmentProcTypeTenantMap()
         { 
-			  this.ToTable("CustomDocumentTypeTenants", "Customs");
+			  this.ToTable("GovernmentProcTypeTenants", "Customs");
 		
 		    this.HasKey(t => new { t.Id });
 	 
@@ -33,15 +33,11 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.PointerLevel).HasColumnName("PointerLevel").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.IsImport).HasColumnName("IsImport");
 
-            this.Property(t => t.AutoSetOriginalDocumentTrue).HasColumnName("AutoSetOriginalDocumentTrue");
+            this.Property(t => t.IndexOrder).HasColumnName("IndexOrder");
 
-            this.Property(t => t.IsCourierManadatory).HasColumnName("IsCourierManadatory");
-
-            this.Property(t => t.IsDiamondManadatory).HasColumnName("IsDiamondManadatory");
-
-            this.Property(t => t.CustomsDocumentUpload).HasColumnName("CustomsDocumentUpload").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.IsExport).HasColumnName("IsExport");
         }
     }
 }

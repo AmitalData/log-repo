@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class CustomDocumentTypeTenantDataMapping: IMapping<CustomDocumentTypeTenantPM, CustomDocumentTypeTenant>,IMappingEncodeBase64NVARCHARFields<CustomDocumentTypeTenantPM>
+   public partial class GovernmentProcTypeTenantDataMapping: IMapping<GovernmentProcTypeTenantPM, GovernmentProcTypeTenant>,IMappingEncodeBase64NVARCHARFields<GovernmentProcTypeTenantPM>
    {
           public enum POCOPropertyNames
           { 
@@ -27,11 +27,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UpdateDate, 
 	         UpdatedByUserId, 
 	         SearchFields, 
-	         PointerLevel, 
-	         AutoSetOriginalDocumentTrue, 
-	         IsCourierManadatory, 
-	         IsDiamondManadatory, 
-	         CustomsDocumentUpload,
+	         IsImport, 
+	         IndexOrder, 
+	         IsExport,
 	      }
 
 
@@ -43,19 +41,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UpdateDate, 
 	         UpdatedByUserId, 
 	         SearchFields, 
-	         PointerLevel, 
-	         AutoSetOriginalDocumentTrue, 
-	         PointerLevelName, 
-	         IsCourierManadatory, 
-	         IsDiamondManadatory, 
-	         CustomsDocumentUpload, 
-	         CustomsDocumentUploadName,
+	         IsImport, 
+	         IndexOrder, 
+	         IsExport,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(CustomDocumentTypeTenantPM entityPM, CustomDocumentTypeTenant entityPOCO)
+	    public void PMToPOCO(GovernmentProcTypeTenantPM entityPM, GovernmentProcTypeTenant entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
@@ -78,35 +72,25 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PointerLevel))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsImport))
             {
-				entityPOCO.PointerLevel = entityPM.PointerLevel;
+				entityPOCO.IsImport = entityPM.IsImport;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoSetOriginalDocumentTrue))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IndexOrder))
             {
-				entityPOCO.AutoSetOriginalDocumentTrue = entityPM.AutoSetOriginalDocumentTrue;
+				entityPOCO.IndexOrder = entityPM.IndexOrder;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCourierManadatory))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExport))
             {
-				entityPOCO.IsCourierManadatory = entityPM.IsCourierManadatory;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondManadatory))
-            {
-				entityPOCO.IsDiamondManadatory = entityPM.IsDiamondManadatory;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsDocumentUpload))
-            {
-				entityPOCO.CustomsDocumentUpload = entityPM.CustomsDocumentUpload;
+				entityPOCO.IsExport = entityPM.IsExport;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
-		public void POCOToPM(CustomDocumentTypeTenantPM entityPM, CustomDocumentTypeTenant entityPOCO)
+		public void POCOToPM(GovernmentProcTypeTenantPM entityPM, GovernmentProcTypeTenant entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
@@ -134,34 +118,24 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PointerLevel))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsImport))
             {
-					entityPM.PointerLevel = entityPOCO.PointerLevel;
+					entityPM.IsImport = entityPOCO.IsImport;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutoSetOriginalDocumentTrue))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IndexOrder))
             {
-					entityPM.AutoSetOriginalDocumentTrue = entityPOCO.AutoSetOriginalDocumentTrue;
+					entityPM.IndexOrder = entityPOCO.IndexOrder;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCourierManadatory))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExport))
             {
-					entityPM.IsCourierManadatory = entityPOCO.IsCourierManadatory;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDiamondManadatory))
-            {
-					entityPM.IsDiamondManadatory = entityPOCO.IsDiamondManadatory;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsDocumentUpload))
-            {
-					entityPM.CustomsDocumentUpload = entityPOCO.CustomsDocumentUpload;
+					entityPM.IsExport = entityPOCO.IsExport;
             }
 
 		}
 
-		public void PMToOldPM(CustomDocumentTypeTenantPM entityPM, CustomDocumentTypeTenantPM oldEntityPM)
+		public void PMToOldPM(GovernmentProcTypeTenantPM entityPM, GovernmentProcTypeTenantPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -185,34 +159,24 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.SearchFields = entityPM.SearchFields;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PointerLevel))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsImport))
             {
-                oldEntityPM.PointerLevel = entityPM.PointerLevel;
+                oldEntityPM.IsImport = entityPM.IsImport;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoSetOriginalDocumentTrue))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IndexOrder))
             {
-                oldEntityPM.AutoSetOriginalDocumentTrue = entityPM.AutoSetOriginalDocumentTrue;
+                oldEntityPM.IndexOrder = entityPM.IndexOrder;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCourierManadatory))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExport))
             {
-                oldEntityPM.IsCourierManadatory = entityPM.IsCourierManadatory;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondManadatory))
-            {
-                oldEntityPM.IsDiamondManadatory = entityPM.IsDiamondManadatory;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsDocumentUpload))
-            {
-                oldEntityPM.CustomsDocumentUpload = entityPM.CustomsDocumentUpload;
+                oldEntityPM.IsExport = entityPM.IsExport;
             }
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(CustomDocumentTypeTenantPM entityPM)
+	    public void EncodeBase64NVARCHARFields(GovernmentProcTypeTenantPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
@@ -237,7 +201,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             CustomMappedPMProperties.Add(pocoPropertyName);
         }
 		
-		private void BuildSearchFieldsGenerated(CustomDocumentTypeTenantPM entityPM, CustomDocumentTypeTenant entityPOCO, bool isNewEntity)
+		private void BuildSearchFieldsGenerated(GovernmentProcTypeTenantPM entityPM, GovernmentProcTypeTenant entityPOCO, bool isNewEntity)
         {
             string mySearchFields = "";
 			

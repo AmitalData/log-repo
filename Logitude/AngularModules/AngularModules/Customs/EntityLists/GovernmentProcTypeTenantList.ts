@@ -6,20 +6,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class CustomDocumentTypeTenantList {
+export class GovernmentProcTypeTenantList {
    
 	Id: string;
 	Tenant: number;
 	UpdateDate: Date;
 	UpdatedByUserId: string;
 	SearchFields: string;
-	PointerLevel: string;
-	AutoSetOriginalDocumentTrue: boolean;
-	PointerLevelName: string;
-	IsCourierManadatory: boolean;
-	IsDiamondManadatory: boolean;
-	CustomsDocumentUpload: string;
-	CustomsDocumentUploadName: string;
+	IsImport: boolean;
+	IndexOrder: number;
+	IsExport: boolean;
 	
 }
  

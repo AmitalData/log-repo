@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace Logitude.Customs.Data.EntityLists
 {
    [DataContract]
-   public partial class CustomDocumentTypeTenantList
+   public partial class GovernmentProcTypeTenantList
    {
    
        [Key]
@@ -25,19 +25,11 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
-       public string PointerLevel  { get; set; }
+       public bool IsImport  { get; set; }
        [DataMember]
-       public bool AutoSetOriginalDocumentTrue  { get; set; }
+       public int? IndexOrder  { get; set; }
        [DataMember]
-       public string PointerLevelName  { get; set; }
-       [DataMember]
-       public bool IsCourierManadatory  { get; set; }
-       [DataMember]
-       public bool IsDiamondManadatory  { get; set; }
-       [DataMember]
-       public string CustomsDocumentUpload  { get; set; }
-       [DataMember]
-       public string CustomsDocumentUploadName  { get; set; }
+       public bool? IsExport  { get; set; }
    }
 
 }
