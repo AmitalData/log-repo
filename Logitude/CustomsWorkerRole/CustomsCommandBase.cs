@@ -37,6 +37,7 @@ using RabbitMQ.Client;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace CustomsWorkerRole
 {
@@ -611,6 +612,7 @@ namespace CustomsWorkerRole
         // islam db queue service
         void WorkUntilQEmpty_Db_new()
         {
+            LogTime("start all at : ");
             List<CustomDBQueueMessage> responseList=null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
@@ -637,8 +639,9 @@ namespace CustomsWorkerRole
                                 {
 
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive");
-
+                                    LogTime("start get data from DB at : ");
                                     responseList = _CustomDbQueueService.Receive_new(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
+                                    LogTime("end get data from DB at : ");
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
 
                                     scopeRecive.Complete();
@@ -667,20 +670,23 @@ namespace CustomsWorkerRole
                             LastActivity = DateTime.UtcNow;
                             proccesDone = true;
                             var taskLIst = new List<Task>();
+                            LogTime("start open tasks for returnd rows from Db at : ");
                             foreach (var item in responseList)
                             {
                                 var t =
                                 Task.Factory.StartNew(() =>
                                 {
+                                    LogTime("start task for row MessageId:" + item.MessageId + " at : ");
                                     CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
                                     helper.RunTask(item, className);
                                     LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
                                     LogDoneItemInMemory();
                                     LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
-
+                                    LogTime("end task for row MessageId:" + item.MessageId + " at : ");
                                 });
                                 taskLIst.Add(t);
                             }
+                            LogTime("end open tasks for returnd rows from Db at : ");
                             Task.WaitAll(taskLIst.ToArray());
                             Queue_scope.Complete();
                         }
@@ -691,11 +697,19 @@ namespace CustomsWorkerRole
                     }
                 }
             }
-
-
+            LogTime("end all at : ");
+        }
+        private void LogTime(string msg)
+        {
+            DateTime stopLogAt = new DateTime(2023, 06, 01);
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+            msg += DateTime.Now.ToString();
+            
+            LogitudeSettings.HandleLogMe(msg, false, "WorkUntilQEmpty_Db_new", stopLogAt);
         }
 
-        
 
         protected virtual bool ProcessMessage_Db(CustomDBQueueMessage msgResponse)
         {
