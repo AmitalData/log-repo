@@ -37,6 +37,7 @@ using RabbitMQ.Client;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace CustomsWorkerRole
 {
@@ -103,11 +104,24 @@ namespace CustomsWorkerRole
             }
         }
 
+        private void LogTime(string msg)
+        {
+            DateTime stopLogAt = new DateTime(2023, 06, 01);
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+            msg += DateTime.Now.ToString();
+
+            LogitudeSettings.HandleLogMe(msg, false, "WorkUntilQEmpty_Db_new", stopLogAt);
+        }
+
         protected virtual bool ProcessMessage_Db(CustomDBQueueMessage msgResponse, string myClass)
         {
             LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
             try
             {
+                LogTime("start ProcessMessage_Db MessageId:" + msgResponse.MessageId + " at : ");
+
                 int tenant = -1;
                 string analyzeClass = msgResponse.Properties["InterfaceTypeCode"].ToString();
 
@@ -174,6 +188,7 @@ namespace CustomsWorkerRole
 
                 MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
 
+                LogTime("end ProcessMessage_Db MessageId:" + msgResponse.MessageId + " at : ");
 
 
                 //_CustomDbQueueService.SafeComplete();
