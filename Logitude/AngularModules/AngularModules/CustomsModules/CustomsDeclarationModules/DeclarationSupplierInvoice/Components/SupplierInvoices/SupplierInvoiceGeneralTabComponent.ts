@@ -4164,7 +4164,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             }
             this.GetQuantityType(); 
             logCellTemplate.IsDisplayMode = true;
-            logCellTemplate.IsEditMode = false;          
+            //logCellTemplate.IsEditMode = false;          
         }
         else {
             //var element = document.getElementById(logCellTemplate.OuterDivId);
