@@ -348,6 +348,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsHouseTypeAdditionalMap());
 	
+            modelBuilder.Configurations.Add(new CustomsHouseTypeTenantMap());
+	
             modelBuilder.Configurations.Add(new CustomsInsuranceCompanyMap());
 	
             modelBuilder.Configurations.Add(new CustomsItemMap());
@@ -2202,6 +2204,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsHouseTypeAdditional> CustomsHouseTypeAdditionals 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsHouseTypeTenant> CustomsHouseTypeTenants 
 	 {
 	      get; set;
 	 

@@ -157,6 +157,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsGeneral> CustomsGenerals { get; }
 		 IDbSet<CustomsHouseType> CustomsHouseTypes { get; }
 		 IDbSet<CustomsHouseTypeAdditional> CustomsHouseTypeAdditionals { get; }
+		 IDbSet<CustomsHouseTypeTenant> CustomsHouseTypeTenants { get; }
 		 IDbSet<CustomsInsuranceCompany> CustomsInsuranceCompanies { get; }
 		 IDbSet<CustomsItem> CustomsItems { get; }
 		 IDbSet<CustomsItemDetailsHistory> CustomsItemDetailsHistorys { get; }

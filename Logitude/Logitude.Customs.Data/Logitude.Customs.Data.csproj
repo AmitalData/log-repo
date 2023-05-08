@@ -159,6 +159,7 @@
     <Compile Include="EntityKeys\CustomsDocumentUploadKeys.cs" />
     <Compile Include="EntityKeys\CustomsEnvironmentSettingKeys.cs" />
     <Compile Include="EntityKeys\CustomsGeneralKeys.cs" />
+    <Compile Include="EntityKeys\CustomsHouseTypeTenantKeys.cs" />
     <Compile Include="EntityKeys\CustomsPartnerFtpKeys.cs" />
     <Compile Include="EntityKeys\CustomsShipKeys.cs" />
     <Compile Include="EntityKeys\DBMigrationKeys.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="EntityKeys\FullnessCodeKeys.cs" />
     <Compile Include="EntityKeys\GatepassRequestKeys.cs" />
     <Compile Include="EntityKeys\GatepassReturnCodeKeys.cs" />
+    <Compile Include="EntityKeys\GovernmentProcTypeTenantKeys.cs" />
     <Compile Include="EntityKeys\GTBFUSTATUKeys.cs" />
     <Compile Include="EntityKeys\HandingCodeKeys.cs" />
     <Compile Include="EntityKeys\HazardousSubstanceKeys.cs" />
@@ -315,6 +317,7 @@
     <Compile Include="EntityListQueryServices\CustomsDocumentUploadListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsEnvironmentSettingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsGeneralListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomsHouseTypeTenantListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsPartnerFtpListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsShipListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DBMigrationLineListQueryService.cs" />
@@ -410,6 +413,7 @@
     <Compile Include="EntityListQueryServices\Generated\CustomsDocumentUploadListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsEnvironmentSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsGeneralListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomsHouseTypeTenantListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsPartnerFtpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsShipListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DBMigrationLineListQueryService.Generated.cs" />
@@ -449,6 +453,7 @@
     <Compile Include="EntityListQueryServices\Generated\FullnessCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GatepassRequestListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GatepassReturnCodeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\GovernmentProcTypeTenantListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\HandingCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\HazardousSubstanceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\IncotemrsFileValidationListQueryService.Generated.cs" />
@@ -508,6 +513,7 @@
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UpdateCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\VendorCurrencyListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\GovernmentProcTypeTenantListQueryService.cs" />
     <Compile Include="EntityListQueryServices\GTBFUSTATUListQueryService.cs" />
     <Compile Include="EntityListQueryServices\HandingCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\HazardousSubstanceListQueryService.cs" />
@@ -570,8 +576,10 @@
     <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
     <Compile Include="EntityLists\Generated\CountryCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomDocumentTypeTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsHouseTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VendorCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\DeclarationReferantDataList.cs" />
     <Compile Include="EntityLists\Generated\StatusCodeList.Generated.cs" />
@@ -784,6 +792,7 @@
     <Compile Include="EntityMapping\CustomsDocumentUploadMap.cs" />
     <Compile Include="EntityMapping\CustomsEnvironmentSettingMap.cs" />
     <Compile Include="EntityMapping\CustomsGeneralMap.cs" />
+    <Compile Include="EntityMapping\CustomsHouseTypeTenantMap.cs" />
     <Compile Include="EntityMapping\CustomsPartnerFtpMap.cs" />
     <Compile Include="EntityMapping\CustomsShipMap.cs" />
     <Compile Include="EntityMapping\DBMigrationLineMap.cs" />
@@ -823,6 +832,7 @@
     <Compile Include="EntityMapping\FullnessCodeMap.cs" />
     <Compile Include="EntityMapping\GatepassRequestMap.cs" />
     <Compile Include="EntityMapping\GatepassReturnCodeMap.cs" />
+    <Compile Include="EntityMapping\GovernmentProcTypeTenantMap.cs" />
     <Compile Include="EntityMapping\GTBFUSTATUMap.cs" />
     <Compile Include="EntityMapping\HandingCodeMap.cs" />
     <Compile Include="EntityMapping\HazardousSubstanceMap.cs" />
@@ -940,6 +950,7 @@
     <Compile Include="EntityPOCOs\CustomsDocumentUpload.cs" />
     <Compile Include="EntityPOCOs\CustomsEnvironmentSetting.cs" />
     <Compile Include="EntityPOCOs\CustomsGeneral.cs" />
+    <Compile Include="EntityPOCOs\CustomsHouseTypeTenant.cs" />
     <Compile Include="EntityPOCOs\CustomsPartnerFtp.cs" />
     <Compile Include="EntityPOCOs\CustomsShip.cs" />
     <Compile Include="EntityPOCOs\DBMigration.cs" />
@@ -979,6 +990,7 @@
     <Compile Include="EntityPOCOs\FullnessCode.cs" />
     <Compile Include="EntityPOCOs\GatepassRequest.cs" />
     <Compile Include="EntityPOCOs\GatepassReturnCode.cs" />
+    <Compile Include="EntityPOCOs\GovernmentProcTypeTenant.cs" />
     <Compile Include="EntityPOCOs\GTBFUSTATU.cs" />
     <Compile Include="EntityPOCOs\HandingCode.cs" />
     <Compile Include="EntityPOCOs\HazardousSubstance.cs" />
@@ -1097,6 +1109,7 @@
     <Compile Include="Repsitories\CustomsDocumentUploadRepository.cs" />
     <Compile Include="Repsitories\CustomsEnvironmentSettingRepository.cs" />
     <Compile Include="Repsitories\CustomsGeneralRepository.cs" />
+    <Compile Include="Repsitories\CustomsHouseTypeTenantRepository.cs" />
     <Compile Include="Repsitories\CustomsPartnerFtpRepository.cs" />
     <Compile Include="Repsitories\CustomsShipRepository.cs" />
     <Compile Include="Repsitories\DBMigrationLineRepository.cs" />
@@ -1192,6 +1205,7 @@
     <Compile Include="Repsitories\Generated\CustomsDocumentUploadRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsEnvironmentSettingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsGeneralRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomsHouseTypeTenantRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsPartnerFtpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsShipRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DBMigrationLineRepository.Generated.cs" />
@@ -1231,6 +1245,7 @@
     <Compile Include="Repsitories\Generated\FullnessCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\GatepassRequestRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\GatepassReturnCodeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\GovernmentProcTypeTenantRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\HandingCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\HazardousSubstanceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\IncotemrsFileValidationRepository.Generated.cs" />
@@ -1291,6 +1306,7 @@
     <Compile Include="Repsitories\Generated\UIMessageRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UpdateCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\VendorCurrencyRepository.Generated.cs" />
+    <Compile Include="Repsitories\GovernmentProcTypeTenantRepository.cs" />
     <Compile Include="Repsitories\HandingCodeRepository.cs" />
     <Compile Include="Repsitories\HazardousSubstanceRepository.cs" />
     <Compile Include="Repsitories\IncotemrsFileValidationRepository.cs" />
