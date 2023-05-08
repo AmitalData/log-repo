@@ -24,6 +24,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data.EntityMapping;
+using Logitude.Customs.Data;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -56,7 +57,10 @@ namespace WebFreight.Web.WcfApi
 
                     DefaultTypeRepository defaultTypeRepository = new DefaultTypeRepository(entityPM.Tenant);
 
-                    DefaultTypeUpdateService defaultTypeUpdateService = new DefaultTypeUpdateService(entityPM.Tenant);
+                    ICustomContext objectContext = CustomContext.GetContext(entityPM.Tenant);
+
+
+                    DefaultTypeUpdateService defaultTypeUpdateService = new DefaultTypeUpdateService(objectContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 
 
                     if (string.IsNullOrEmpty(entityPM.Code))
