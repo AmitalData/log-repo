@@ -1148,7 +1148,7 @@
 
 
 
-            <panel *ngIf="!ShowShipmentAsDeclaration" [Title]="'SHO List'"
+            <panel *ngIf="!ShowShipmentAsDeclaration && !IsOrderShipment" [Title]="'SHO List'"
                 style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
 
                 <div body style="padding: 0px 8px 13px 0px;">
