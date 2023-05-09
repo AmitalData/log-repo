@@ -148,6 +148,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public string Description { get; set; }
         public string TransportModeCode { get; set; }
         public List<RouteDirection> Directions { get; set; }
+        public string Type { get; set; }    
 
     }
     public class RouteDirection

@@ -970,7 +970,7 @@
                                         </div>
                                         <div class="routing-card">
                                             <div class="route-card-body">
-                                                <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null"
+                                                <div *ngIf="(step.FromPortLabel != null || step.ToPortLabel != null) && step.Type == null"
                                                     class="route-label">
                                                     <div class="mobile-font-12">
                                                         <span
@@ -984,6 +984,17 @@
                                                         <span
                                                             [attr.title]="step.ToolTipToPortLabel != null ? step.ToolTipToPortLabel : step.ToPortLabel?.length > 5 ? step.ToPortLabel : ''">{{GetSlice(step.ToPortLabel,5)}}</span>
                                                     </div>
+                                                </div>
+                                                <div *ngIf="step.Type != null"
+                                                  class="route-label">
+                                                    <div class="mobile-font-12">
+                                                        <span
+                                                            [attr.title]="step.Type">
+                                                            {{ step.Type }}
+                                                           
+                                                        </span>
+                                                    </div>
+                                                   
                                                 </div>
                                                 <div class="route-description TextTrimming" [title]="step.Description">
                                                     {{step.Description}}
