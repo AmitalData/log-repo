@@ -893,11 +893,19 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     ReturnChequeButtonClicked(line: BankDepositLinePM) {
 
         // validate redeemed cheque
-        
-            // var msg = new MessageWindow();
-            // msg.Show(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
+
+        // if (line.ChequeStatusCode == "6") { // 6- Redeemed
+        //     // var msg = new MessageWindow();
+        //     // msg.Show(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
+        //     this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        //     this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
+
+        //     return;
+        // } else {
 
             this.showReturnChequeWindow(line);
+
+       // }
 
     }
     showReturnChequeWindow(line){

@@ -157,7 +157,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             var fullAccountingSettings = settingQueryService.GetSingleFullAccountingSetting(tenant);
 
             // Reconciled / in progress Ledger Transaction Lines linked to this TaxReport
-            List<LedgerTransaction> reconciledLTLines = (from line in context.TaxReportLines
+           var reconciledLTLines = (from line in context.TaxReportLines
                                                    join ledger in context.LedgerTransactions on line.JournalId equals ledger.JournalId
                                                    where line.OutputOrInput == TaxReportLineOutType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == fullAccountingSettings.VATOutputGLAccountId
                                                         //  && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
@@ -168,23 +168,23 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                             where line.OutputOrInput == TaxReportLineInputType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == fullAccountingSettings.VATInputsGLAccountId
                                                 //   && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
                                                      && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
-                                            select ledger).ToList();
+                                            select ledger);
 
             // Reconciliation Lines of the reconciledLTLines
-            List<ReconciliationLine> ourRecoLines = (from ledger in reconciledLTLines
+            var ourRecoLines = (from ledger in reconciledLTLines
                                                   join reconcLine in context.ReconciliationLines on ledger.Id equals reconcLine.TransactionId
                                                   where reconcLine.Tenant == tenant
-                                                  select reconcLine).ToList();
+                                                  select reconcLine);
             List<int> ourRecoLines_Line = ourRecoLines.Select(rl => rl.Line).ToList();
 
             // ALL Reconciliation Lines of the recoLines
-            List<ReconciliationLine> allRecoLines = (from ourRecoLine in ourRecoLines
+            var allRecoLines = (from ourRecoLine in ourRecoLines
                                                      join reconcLine in context.ReconciliationLines on ourRecoLine.ReconciliationId equals reconcLine.ReconciliationId
                                                      where reconcLine.Tenant == tenant && reconcLine.Line != ourRecoLine.Line && !ourRecoLines_Line.Contains(reconcLine.Line)
-                                                     select reconcLine).ToList();//.Union(ourRecoLines);
+                                                     select reconcLine);//.Union(ourRecoLines);
 
             // ALL Ledger Transaction Lines of the allRecoLines
-            List<LedgerTransaction> allReconciledLTLines = allRecoLines.Select(rl => rl.LedgerTransaction).ToList();
+            var allReconciledLTLines = allRecoLines.Select(rl => rl.LedgerTransaction);
 
 
             // ALL Tax Report Lines of the allRecoLines, where there's different Tax Report 
