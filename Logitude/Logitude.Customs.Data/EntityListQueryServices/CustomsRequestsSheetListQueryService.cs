@@ -84,7 +84,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             var query = (from a in context.RequestSheetInQueueMesViews
                          join c in context.CourierDeclarations on
-                          a.EntityId1 equals c.DeclarationId
+                          a.EntityId1 equals c.DeclarationId 
                           where a.Tenant == tenant && c.CourierMasterId == courierMasterId
                           select new CustomsRequestsSheetList()
                           {
@@ -92,7 +92,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                               EntityId1 = a.EntityId1,
                               InterfaceTypeCode = a.InterfaceTypeCode,
                               InterfaceTypeName = a.InterfaceTypeName,
-                          }); 
+                          });
+            var query2 = (from a in context.RequestSheetInQueueMesViews
+                         join c in context.CourierDeclarations on
+                          a.EntityId1 equals c.CourierMasterId
+                         where a.Tenant == tenant && c.CourierMasterId == courierMasterId
+                         select new CustomsRequestsSheetList()
+                         {
+                             ObjectTableId1 = a.ObjectTableId1,
+                             EntityId1 = a.EntityId1,
+                             InterfaceTypeCode = a.InterfaceTypeCode,
+                             InterfaceTypeName = a.InterfaceTypeName,
+                         }).Distinct();
+            var resultQuery = query.Concat(query2);
+
             /*IQueryable < CustomsRequestsSheetList > query = (from a in context.CustomsRequestsSheets
                                                               where a.Tenant == tenant &&  (a.RequestStatusCode == "5" || a.RequestStatusCode == "1" ||
                                                               a.RequestStatusCode == "2" || a.RequestStatusCode == "21")
@@ -105,7 +118,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   InterfaceTypeName = a.InterfaceManagement != null ? a.InterfaceManagement.Description : null,
                                                               });*/
 
-            var qGroupIt = query.GroupBy(q =>new { q.InterfaceTypeName, q.InterfaceTypeCode }).Select(g => new PriorityRequestsSheetSummary
+
+            var qGroupIt = resultQuery.GroupBy(q =>new { q.InterfaceTypeName, q.InterfaceTypeCode }).Select(g => new PriorityRequestsSheetSummary
             {
                 Id = new Guid(),
                 count = g.Select(x => x.InterfaceTypeCode).Count(),
