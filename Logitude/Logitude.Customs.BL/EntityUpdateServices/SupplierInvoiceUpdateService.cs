@@ -1162,21 +1162,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     SubmitChanges();
                     isSubmitChanges = true;
                 }
-
-                if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                if (!this._DeclarationPM.IsAmendment == true)
                 {
+                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                    {
 
 
-                    CustomsStoredProcedures.UpdateSupplierInvoiceItemsSequenceOracle
-                        (entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
+                        CustomsStoredProcedures.UpdateSupplierInvoiceItemsSequenceOracle
+                            (entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
 
-                    CustomsStoredProcedures.UpdateParentSupplierInvoiceItemsSequenceOracle
-                        (entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
-                }
-                else
-                {
-                    CustomsStoredProcedures.UpdateSupplierInvoiceItemsSequence(entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
-                    CustomsStoredProcedures.UpdateParentSupplierInvoiceItemsSequence(entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
+                        CustomsStoredProcedures.UpdateParentSupplierInvoiceItemsSequenceOracle
+                            (entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
+                    }
+                    else
+                    {
+                        CustomsStoredProcedures.UpdateSupplierInvoiceItemsSequence(entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
+                        CustomsStoredProcedures.UpdateParentSupplierInvoiceItemsSequence(entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
+                    }
                 }
 
 
