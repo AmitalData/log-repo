@@ -10,5 +10,5 @@ export class RoutingStep
     Description: string;
     TransportModeCode: string;
     Directions: RouteDirection[] = [];
-
+    Type: string;
 }

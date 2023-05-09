@@ -72,7 +72,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     TransportModeCode = InlandTransportMode,
                     FromPortLabel = GetFromPortLabelFromPickup(delivery),
                     ToPortLabel = GetToPortLabelFromPickup(delivery),
-                    Description = delivery != null ? delivery.CarrierTypeName + " " + delivery.CarrierLocalName : null
+                    Description = delivery != null ? delivery.CarrierTypeName + " " + delivery.CarrierLocalName : null,
+                    Type = "Delivery"
                 };
                 SetDeliveryDirections(delivery, step);
                 steps.Add(step);
@@ -168,6 +169,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     ToPortLabel = GetToPortLabelFromPickup(pickup),
                     ToolTipFromPortLabel = GetToolTipFromPortLabelFromPickup(pickup),
                     ToolTipToPortLabel = GetToolTipToPortLabelFromPickup(pickup),
+                    Type = "Pickup"
                 };
 
                 if (pickup.CarrierLocalName != null || pickup.CarrierTypeName != null )
