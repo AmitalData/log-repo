@@ -37,5 +37,6 @@ export class EventTypeList {
 		EntityStatusWeight: number;
 		EventTrigger: string;
 		EventRemarks: Array<EventRemarkPM>;
+		RemarksView: boolean;
 	
 }

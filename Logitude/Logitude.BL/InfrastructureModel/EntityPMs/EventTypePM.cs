@@ -138,5 +138,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
             set { eventRemarks = value; }
         }
 
+        [DataMember]
+        public bool RemarksView { get; set; }
     }
 }

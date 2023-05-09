@@ -38,6 +38,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 eventType.IsSharedLogisticsEnabled = eventTypeDetails.IsSharedLogisticsEnabled;
                 eventType.AllowedInAutomation = eventTypeDetails.AllowedInAutomation;
                 eventType.UpdateDate = DateTime.Now;
+                eventType.RemarksView = eventTypeDetails.RemarksView;
+
                 eventTypeRepository.Update(eventType);
             }
 
@@ -67,7 +69,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     IsSharedLogisticsEnabled = eventTypeDetails.IsSharedLogisticsEnabled,
                     AllowedInAutomation = eventTypeDetails.AllowedInAutomation,
                     UpdateDate = DateTime.Now,
-            };
+                    RemarksView = eventTypeDetails.RemarksView,
+
+                };
 
                 eventTypeRepository.Add(newEventType);
             }
