@@ -183,7 +183,11 @@ export class EventTypePM {
     private eventTrigger: string;
     public get EventTrigger() { return this.eventTrigger; }
     public set EventTrigger(newValue: string) { if (this.eventTrigger != newValue) { this.eventTrigger = newValue; this.MarkAsDirty("EventTrigger"); } }
-       
+     
+    private remarksView: boolean;
+    public get RemarksView() { return this.remarksView; }
+    public set RemarksView(newValue: boolean) { if (this.remarksView != newValue) { this.remarksView = newValue; this.MarkAsDirty("RemarksView"); } }
+   
 	 
 
     public OldEntityPM: EventTypePM;
@@ -212,4 +216,4 @@ export class EventTypePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

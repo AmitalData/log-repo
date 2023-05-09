@@ -71,6 +71,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   CustomField = a.CustomField,
                                                   IsStatusNotModified = a.IsStatusNotModified,
                                                   EventTrigger = a.EventTrigger,
+                                                  RemarksView = a.RemarksView
+
                                               });
 
                         foreach (var s in entitystatuses)
@@ -125,6 +127,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   CustomField = a.CustomField,
                                   IsStatusNotModified = a.IsStatusNotModified,
                                   EventTrigger = a.EventTrigger,
+                                  RemarksView = a.RemarksView
                               }).FirstOrDefault();
                 }
 
@@ -167,7 +170,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
-
+                                                     RemarksView = a.RemarksView
                                                  };
             return eventTypes;
         }
@@ -216,6 +219,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   CustomField = a.CustomField,
                                                   IsStatusNotModified = a.IsStatusNotModified,
                                                   EventTrigger = a.EventTrigger,
+                                                  RemarksView = a.RemarksView
 
                                               });
 
@@ -269,7 +273,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   CustomField = a.CustomField,
                                   IsStatusNotModified = a.IsStatusNotModified,
                                   EventTrigger = a.EventTrigger,
-
+                                  RemarksView = a.RemarksView
                               }).FirstOrDefault();
                 }
 
@@ -317,6 +321,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                               CustomField = a.CustomField,
                                               IsStatusNotModified = a.IsStatusNotModified,
                                               EventTrigger = a.EventTrigger,
+                                              RemarksView = a.RemarksView
                                           }).FirstOrDefault();
 
                     return entity;
@@ -363,7 +368,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       CustomField = a.CustomField,
                                                       IsStatusNotModified = a.IsStatusNotModified,
                                                       EventTrigger = a.EventTrigger,
-
+                                                      RemarksView = a.RemarksView
                                                   });
 
                             foreach (var s in entitystatuses)
@@ -416,7 +421,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       CustomField = a.CustomField,
                                       IsStatusNotModified = a.IsStatusNotModified,
                                       EventTrigger = a.EventTrigger,
-
+                                      RemarksView = a.RemarksView
                                   }).FirstOrDefault();
                     }
                     return entity;
@@ -468,6 +473,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowedInAutomation = eventType.AllowedInAutomation,
                                                    CustomField = eventType.CustomField,
                                                    EventTrigger = eventType.EventTrigger,
+                                                   RemarksView = eventType.RemarksView
                                                };
             return result;
         }
@@ -506,7 +512,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
-
+                                                     RemarksView = a.RemarksView
                                                  };
             return eventTypes;
         }
@@ -545,7 +551,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
                                                      EventTrigger = a.EventTrigger,
-
+                                                     RemarksView = a.RemarksView
                                                  };
             return eventTypes;
         }

@@ -116,6 +116,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string PartnerCode { get; set; }
         [DataMember]
         public string EventTrigger { get; set; }
-
+        [DataMember]
+        public bool RemarksView { get; set; }
     }
 }

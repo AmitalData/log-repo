@@ -33,6 +33,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string CustomField { get; set; }
         public int? EntityStatusWeight { get; set; }
         public string EventTrigger { get; set; }
+        public bool RemarksView { get; set; }
 
     }
 }

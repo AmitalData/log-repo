@@ -34,5 +34,6 @@ export class EventTypeList {
 		CustomField: string;
 		EntityStatusWeight: number;
 		EventTrigger: string;
+		RemarksView: boolean;
 	
-}
+}
