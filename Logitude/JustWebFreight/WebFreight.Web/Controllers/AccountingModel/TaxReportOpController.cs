@@ -411,8 +411,6 @@ namespace WebFreight.Web.Controllers.AccountingModel
             taxReportUpdateService.Update(taxReportPM, true);
         }
 
-        }
-
 
 
 
