@@ -45,13 +45,13 @@ namespace WebFreight.Web.Helpers
             Stopwatch _Stopwatch;
             Stopwatch _Stopwatch1;
 
+            int tenant = exportToExcelArgs.Tenant;
 
-            LogTime("start all at : ", exportToExcelArgs.IsXslxFormat);
+            LogTime("start all at : ", tenant);
             _Stopwatch1 = Stopwatch.StartNew();
             string xmlData = "";
             MemoryStream memory = new MemoryStream();
 
-            int tenant = exportToExcelArgs.Tenant;
             byte[] xmlFilters = exportToExcelArgs.XmlFilters;
             string typename = exportToExcelArgs.TypeName;
 
@@ -444,14 +444,14 @@ namespace WebFreight.Web.Helpers
 
                 object[] parameters = new object[] { xmlFilters, tenant };
                 int count = 0;
-                if (!Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) || (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant)) && !exportToExcelArgs.IsXslxFormat)
+                if (!Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
                      count = (int)getCountMethodInfo.Invoke(context, parameters);
 
                 LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "1 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 if (count > 0 || Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
                 {
                     //Get dataList
-                    if (exportToExcelArgs.IsXslxFormat)
+                    if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
                     {
                         queryOperations.PageSize = count;
                     }
@@ -470,10 +470,10 @@ namespace WebFreight.Web.Helpers
 
                     parameters = new object[] { xmlFilters, tenant };
                     _Stopwatch = Stopwatch.StartNew();
-                    LogTime("start queryResult at : ", exportToExcelArgs.IsXslxFormat);
+                    LogTime("start queryResult at : ", tenant);
                     var queryResult = getListMethodInfo.Invoke(context, parameters);
                     querableEntities = queryResult as IQueryable;
-                    LogTime("stop queryResult at : ", exportToExcelArgs.IsXslxFormat);
+                    LogTime("stop queryResult at : ", tenant);
                     LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "2 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
 
                     IEnumerator datalist = null;
@@ -503,7 +503,7 @@ namespace WebFreight.Web.Helpers
                         //IEnumerator datalist = querableEntities.GetEnumerator();
 
 
-                        if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) && exportToExcelArgs.IsXslxFormat)
+                        if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
                         {
                             return this.NpoiExcelGenerator(datalist, query, queryColumns, tenant);
                         }
@@ -762,15 +762,15 @@ namespace WebFreight.Web.Helpers
                                 }
                             }
                             _Stopwatch = Stopwatch.StartNew();
-                            if (exportToExcelArgs.IsXslxFormat)
-                            {
-                                workbook.Version = ExcelVersion.Excel2010;
-                                workbook.SaveAs(memory);
-                            }
-                            else
-                            {
+                            //if (exportToExcelArgs.IsXslxFormat)
+                            //{
+                            //    workbook.Version = ExcelVersion.Excel2010;
+                            //    workbook.SaveAs(memory);
+                            //}
+                            //else
+                            //{
                                 workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
-                            }
+                            //}
                             LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "7 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                             //No exception will be thrown if there are unsaved workbooks.
                             excelEngine.ThrowNotSavedOnDestroy = false;
@@ -791,7 +791,7 @@ namespace WebFreight.Web.Helpers
             //    }
             //    ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
             //}
-            LogTime("stop all  at : ", exportToExcelArgs.IsXslxFormat);
+            LogTime("stop all  at : ", tenant);
 
 
             LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "8 allTheFunction Took:" + _Stopwatch1.Elapsed.ToString()); _Stopwatch1.Restart();
@@ -1274,7 +1274,7 @@ namespace WebFreight.Web.Helpers
 
         private byte[] NpoiExcelGenerator(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant)
         {
-            LogTime("start NpoiExcelGenerator Func at : ",true);
+            LogTime("start NpoiExcelGenerator Func at : ", tenant);
 
             MemoryStream ms = new MemoryStream();
             TextCodeRepository textCodeRepoitory = new TextCodeRepository(tenant);
@@ -1326,7 +1326,7 @@ namespace WebFreight.Web.Helpers
                     DataHeaderCellFontStyle.FillForegroundColor = NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index;
                     DataHeaderCellFontStyle.FillPattern = FillPattern.SolidForeground;
 
-                    DataHeaderCellFontStyle.Alignment = HorizontalAlignment.Center;
+                    DataHeaderCellFontStyle.Alignment = HorizontalAlignment.Left;
 
 
                     var QueryNameHeaderCellFontStyle = workbook.CreateCellStyle();
@@ -1464,7 +1464,7 @@ namespace WebFreight.Web.Helpers
 
             }
 
-            LogTime("Stop NpoiExcelGenerator Func at : ",true);
+            LogTime("Stop NpoiExcelGenerator Func at : ", tenant);
 
             return ms.ToArray();
 
@@ -1502,9 +1502,9 @@ namespace WebFreight.Web.Helpers
                     }
             }
         }
-        private void LogTime(string msg, bool isXslx)
+        private void LogTime(string msg, int tenant)
         {
-            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", 127) && isXslx)
+            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
             {
                 //DateTime stopLogAt = DateTime.MinValue;
                 string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
