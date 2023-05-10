@@ -206,23 +206,49 @@
             </div>
 
             <!-- [ Declaration Approval ] -->
-            <panel *ngIf="ShowShipmentAsDeclaration" [ShowWhitePanelOnMobile]="true">
 
-                <div body class="declaration-approval">
+        <div  style="display:flex;align-items: center;justify-content: center; margin-top: 30px;flex-wrap: wrap;">
+       
+        <panel *ngIf="ShowShipmentAsDeclaration&&ShowDocumentMNO" [Width]="'100%'" [ShowWhitePanelOnMobile]="true" class="panel1" >
+            <div body class="declaration-approval" style="min-height: 110px">
+            <div  class="declaration-approval-document" >
+                <div *ngIf="IsPDF" style="height:100%;">
+                    <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe"  width="470px" height="500px" >Loading...</iframe>
+                </div>
+                <div *ngIf="!IsPDF" style="display: flex;justify-content: center;">
+                    <table>
+                        <tr style="height:1px;"> 
+                            <td>
+                                המסמך "הזמנת כסף" לא קיים במשלוח זה
+                            </td>
+                        </tr>
+                      
+                    </table>
+                </div>
+            </div>
+           </div>
+        </panel>
+        <panel *ngIf="ShowShipmentAsDeclaration" [Width]="ShowDocumentMNO?'100%':null"  [ShowWhitePanelOnMobile]="true" [ngClass]="ShowDocumentMNO ? 'panel2' : 'panel3'"  >
 
-                    <div class="declaration-approval-message">{{ approvalMessage }}</div>
+            <div body class="declaration-approval">
+           
 
-                    <div class="declaration-approval-toolbar" *ngIf="!hasApprovalDeclineResponse">
-                        <button class="declaration-approval-toolbar-button__red animate"
-                            (click)="DenyDeclaration()">דחיה</button>
-                        <button class="declaration-approval-toolbar-button__green animate"
-                            (click)="ApproveDeclaration()">אישור</button>
+                <div class="declaration-approval-message">{{ approvalMessage }}</div>
+             
+                <div class="declaration-approval-toolbar" *ngIf="!hasApprovalDeclineResponse">
+           
+                             
+                      <button class="declaration-approval-toolbar-button__red animate"
+                          (click)="DenyDeclaration()">דחיה</button>
+                      <button class="declaration-approval-toolbar-button__green animate"
+                        (click)="ApproveDeclaration()">אישור</button>
                     </div>
                 </div>
 
-            </panel>
+           
 
-
+        </panel>  
+    </div>
             <!-- Milestones Slider -->
             <div *ngIf="!ShowShipmentAsDeclaration" style="order: 2;" #SliderWrapper class="slider-wrapper"
                 [ngClass]="NoMilstonesFound ? 'slider-wrapper no-milestones': 'slider-wrapper'"

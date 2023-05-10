@@ -295,7 +295,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
                                                      DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
                                                      DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
-                                                     DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
+                                                     DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
+                                                     ShowMoneyOrder=a.ShowMoneyOrder
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -508,7 +509,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
                                                   DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
                                                   DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
-                                                  DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
+                                                  DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
+                                                  ShowMoneyOrder = a.ShowMoneyOrder
+
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -711,7 +714,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
                         DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
                         DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
-                        DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
+                        DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
+                        ShowMoneyOrder = a.ShowMoneyOrder
+
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -860,7 +865,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     DigitalPortalTotalLastMonth = entity.DigitalPortalTotalLastMonth,
                     DigitalPortalMobileLastDate = entity.DigitalPortalMobileLastDate,
                     DigitalPortalMobTotalLastWeek = entity.DigitalPortalMobTotalLastWeek,
-                    DigitalPortalMobTotalLastMonth = entity.DigitalPortalMobTotalLastMonth
+                    DigitalPortalMobTotalLastMonth = entity.DigitalPortalMobTotalLastMonth,
+                    ShowMoneyOrder = entity.ShowMoneyOrder
                 };
             }
 
@@ -1011,7 +1017,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
                        DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
                        DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
-                       DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
+                       DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
+                       ShowMoneyOrder = a.ShowMoneyOrder
                    };
         }
 
@@ -1301,7 +1308,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
                                              DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
                                              DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
-                                             DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth
+                                             DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
+                                           //  ComapnylogoId = a.ComapnylogoId,
+                                             ShowMoneyOrder=a.ShowMoneyOrder
                                          }).FirstOrDefault();
 
             return tenant;

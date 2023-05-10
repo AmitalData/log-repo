@@ -662,6 +662,9 @@ export class CargoTrackingShipmentMappedPM {
     public get ChargeableWeightInKG() { return this.chargeableWeightInKG; }
     public set ChargeableWeightInKG(newValue: number) { if (this.chargeableWeightInKG != newValue) { this.chargeableWeightInKG = newValue; this.MarkAsDirty("ChargeableWeightInKG"); } }
      
+    private showMoneyOrder: boolean;
+    public get ShowMoneyOrder() { return this.showMoneyOrder; }
+    public set ShowMoneyOrder(newValue: boolean) { if (this.showMoneyOrder != newValue) { this.showMoneyOrder = newValue; this.MarkAsDirty("ShowMoneyOrder"); } }
 
 
     public OldEntityPM: CargoTrackingShipmentMappedPM;

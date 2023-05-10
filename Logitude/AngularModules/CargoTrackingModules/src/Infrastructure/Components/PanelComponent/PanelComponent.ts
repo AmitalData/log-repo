@@ -21,6 +21,7 @@ export class PanelComponent implements OnInit
     @Input() TransparentBackground: boolean = false;
     @Input() InputDetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
     @Input() AlwaysExpanded: boolean = false;
+    @Input() Width: string = null;    
     @Output() OutputDetailsSectionToggleEvent = new EventEmitter<boolean>();
 
     constructor() { }

@@ -3240,6 +3240,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool showMoneyOrder ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ShowMoneyOrder  
+	   {
+	    
+	     get
+		{
+		   return showMoneyOrder;
+		 }
+		 set
+		 {
+		   if(showMoneyOrder != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShowMoneyOrder",OldValue=showMoneyOrder,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   showMoneyOrder=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
