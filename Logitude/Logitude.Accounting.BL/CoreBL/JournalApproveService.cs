@@ -84,6 +84,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public ResultApproveJournalM SubmitApprove(MyActions actions)
         {
             var sw = Stopwatch.StartNew();
+
             _ExecAsSP = true;
             try
             {
@@ -389,11 +390,13 @@ namespace Logitude.Accounting.BL.CoreBL
             timeOut = null;//ihab: no need to use timeout  - but have to be fast (statistic) !!!
             StringBuilder stringBuilderWhyTransferCardBadBalance = new StringBuilder();
             LogMessagingUtil.Instance.AppendLine("GetNewSerializableTransaction(timeOut):insec" + timeOut.GetValueOrDefault().TotalSeconds.ToString());
-            using (var scope = TransactionFactory.GetNewSerializableTransaction(timeOut))
+
+            using (var scope = GetTransactionScope(timeOut))
             {
                 IDbContextLogger logger = null;
                 try
                 {
+
                     _AccountingContext = AccountingContext.GetContext(_Tenant);
                     logger = (_AccountingContext as DbContextBase).CreateLogger();
 
@@ -541,7 +544,17 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     LogMessagingUtil.Instance.AppendLine("AccountingStreamingInNewSerializableTransaction:Took:" + sw.Elapsed.ToString());
                 }
+
             }
+        }
+
+        private TransactionScope GetTransactionScope(TimeSpan timeout)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("JAM", 0))
+                return TransactionFactory.GetTransaction(timeout);
+
+            return TransactionFactory.GetNewSerializableTransaction(timeout);
+
         }
 
         private void WriteLogWhyTransferCardBadBalance(int tenant, string seedJournalId, IAccountingContext accountingContext, StringBuilder sb)
@@ -1167,7 +1180,6 @@ namespace Logitude.Accounting.BL.CoreBL
             bool complete = false;
             try
             {
-
 
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
                 {
