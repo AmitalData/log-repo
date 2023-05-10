@@ -178,13 +178,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         private AuthenticationToken GetAuthinticated()
         {
-            string logKey = PerformanceLogger.LogCurrentTime();
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            return authToken;
-        }
-    }
+			string logKey = PerformanceLogger.LogCurrentTime();
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			return authToken;
+		}
+	}
 
 
 
