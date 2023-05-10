@@ -186,10 +186,10 @@
                                     <!-- InActive -->
                                     <td>
                                         <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext" [Text]="InActiveVendor"></LogLabel>
+                                                  [DataContext]="DataContext" [Text]="inActiveVendor"></LogLabel>
                                     </td>
                                     <td>
-                                        <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        <CheckBox [IsChecked]="InActive"  (NotChecked)="InActiveVendor($event)"></CheckBox>
                                     </td>
                                 </tr>
 
