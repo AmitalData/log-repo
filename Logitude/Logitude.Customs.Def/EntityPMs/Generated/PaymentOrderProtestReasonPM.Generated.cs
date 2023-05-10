@@ -137,12 +137,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal? goodsItemLineNumber ;
+	  private int? goodsItemLineNumber ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal? GoodsItemLineNumber  
+       public int? GoodsItemLineNumber  
 	   {
 	    
 	     get
@@ -153,7 +153,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(goodsItemLineNumber != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GoodsItemLineNumber",OldValue=goodsItemLineNumber,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GoodsItemLineNumber",OldValue=goodsItemLineNumber,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   goodsItemLineNumber=value;
 		   }

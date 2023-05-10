@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.InvoiceNumber).HasColumnName("InvoiceNumber").HasMaxLength(35).IsUnicode(false);
 
-            this.Property(t => t.GoodsItemLineNumber).HasColumnName("GoodsItemLineNumber").HasPrecision(5, 0);
+            this.Property(t => t.GoodsItemLineNumber).HasColumnName("GoodsItemLineNumber");
 
             this.Property(t => t.GoodsItemClassification).HasColumnName("GoodsItemClassification").HasMaxLength(13).IsUnicode(false);
 

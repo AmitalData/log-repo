@@ -37,7 +37,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("InvoiceNumber")]
 	    public string InvoiceNumber { get; set; }
         [Column("GoodsItemLineNumber")]
-	    public decimal? GoodsItemLineNumber { get; set; }
+	    public int? GoodsItemLineNumber { get; set; }
         [Column("GoodsItemClassification")]
 	    public string GoodsItemClassification { get; set; }
         [Column("AmountInDispute")]

@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string InvoiceNumber  { get; set; }
        [DataMember]
-       public decimal? GoodsItemLineNumber  { get; set; }
+       public int? GoodsItemLineNumber  { get; set; }
        [DataMember]
        public string GoodsItemClassification  { get; set; }
        [DataMember]
