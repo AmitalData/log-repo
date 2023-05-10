@@ -296,7 +296,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             address = city;
             if (string.IsNullOrEmpty(countryName))
                 return address;
-            return address + "," + countryName;
+            return address + ", " + countryName;
 
         }
 
