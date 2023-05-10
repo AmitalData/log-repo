@@ -89,6 +89,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public bool ShowDetailsMenu { get; set; }
         public string CalculatedFileName { get; set; }
         public string FileExtension { get; set; }
+        public string Descreption { get; set; }
     }
 
     public class ShipmentCustomsData
