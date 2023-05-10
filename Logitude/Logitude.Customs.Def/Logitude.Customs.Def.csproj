@@ -121,6 +121,7 @@
     <Compile Include="EntityPMs\Generated\GTBFUSTATUPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\HandingCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\IncotemrsFileValidationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InternationalSiteTenantPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LoadingSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LogisticActionRequestPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LogisticActionRequestTypePM.Generated.cs" />

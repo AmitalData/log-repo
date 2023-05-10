@@ -432,6 +432,7 @@
     <None Include="DBTables\InterfaceTenantDefinition.dxml" />
     <None Include="DBTables\InternalBorderSiteType.dxml" />
     <None Include="DBTables\InternationalSite.dxml" />
+    <None Include="DBTables\InternationalSiteTenant.dxml" />
     <None Include="DBTables\InvoiceType.dxml" />
     <None Include="DBTables\ItemGovernmentProcedureType.dxml" />
     <None Include="DBTables\LastReleaseFromWarehouse.dxml" />
@@ -597,6 +598,7 @@
     <None Include="EntityFiles\DefaultType.lxml" />
     <None Include="EntityFiles\DefaultValue.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />
+    <None Include="EntityFiles\InternationalSiteTenant.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />
     <None Include="EntityFiles\SignStation.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />

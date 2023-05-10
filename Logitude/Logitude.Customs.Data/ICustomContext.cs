@@ -254,6 +254,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<InterfaceTenantDefinition> InterfaceTenantDefinitions { get; }
 		 IDbSet<InternalBorderSiteType> InternalBorderSiteTypes { get; }
 		 IDbSet<InternationalSite> InternationalSites { get; }
+		 IDbSet<InternationalSiteTenant> InternationalSiteTenants { get; }
 		 IDbSet<InvoiceType> InvoiceTypes { get; }
 		 IDbSet<ItemGovernmentProcedureType> ItemGovernmentProcedureTypes { get; }
 		 IDbSet<LastReleaseFromWarehouse> LastReleaseFromWarehouses { get; }

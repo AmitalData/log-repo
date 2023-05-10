@@ -542,6 +542,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new InternationalSiteMap());
 	
+            modelBuilder.Configurations.Add(new InternationalSiteTenantMap());
+	
             modelBuilder.Configurations.Add(new InvoiceTypeMap());
 	
             modelBuilder.Configurations.Add(new ItemGovernmentProcedureTypeMap());
@@ -2790,6 +2792,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<InternationalSite> InternationalSites 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InternationalSiteTenant> InternationalSiteTenants 
 	 {
 	      get; set;
 	 

@@ -786,6 +786,7 @@
     <Compile Include="EntityDataMappings\Generated\InterfaceTenantDefinitionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InternalBorderSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InternationalSiteDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InternationalSiteTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InvoiceTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ItemGovernmentProcedureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LastReleaseFromWarehouseDataMapping.Generated.cs" />
@@ -971,6 +972,7 @@
     <Compile Include="EntityDataMappings\InterfaceTenantDefinitionDataMapping.cs" />
     <Compile Include="EntityDataMappings\InternalBorderSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\InternationalSiteDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InternationalSiteTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\InvoiceTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ItemGovernmentProcedureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\LastReleaseFromWarehouseDataMapping.cs" />
@@ -1149,6 +1151,7 @@
     <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultValueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GovernmentProcTypeTenantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InternationalSiteTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\UIMessageTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VendorCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StatusCodeQueryService.Generated.cs" />
@@ -1680,6 +1683,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsCountryTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsHouseTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GovernmentProcTypeTenantUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InternationalSiteTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\UIMessageTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
