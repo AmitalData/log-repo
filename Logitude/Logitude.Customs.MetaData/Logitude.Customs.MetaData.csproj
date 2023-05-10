@@ -326,6 +326,7 @@
     <None Include="DBTables\CustomsCollateralsAnswer.dxml" />
     <None Include="DBTables\CustomsCollateralsCondition.dxml" />
     <None Include="DBTables\CustomsCountry.dxml" />
+    <None Include="DBTables\CustomsCountryTenant.dxml" />
     <None Include="DBTables\CustomsDocument.dxml" />
     <None Include="DBTables\CustomsDocumentMetaDataValue.dxml" />
     <None Include="DBTables\CustomsDocumentPointer.dxml" />
@@ -590,6 +591,7 @@
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
     <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
+    <None Include="EntityFiles\CustomsCountryTenant.lxml" />
     <None Include="EntityFiles\CustomsHouseTypeTenant.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\DefaultType.lxml" />

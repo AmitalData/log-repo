@@ -456,6 +456,7 @@
     <Compile Include="EntityDataMappings\CustomsCollateralsAnswerDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsCollateralsConditionDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsCountryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsCountryTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsDocumentDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsDocumentMetaDataValueDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsDocumentPointerDataMapping.cs" />
@@ -675,6 +676,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomsCollateralsAnswerDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsCollateralsConditionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsCountryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsCountryTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentMetaDataValueDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentPointerDataMapping.Generated.cs" />
@@ -1141,6 +1143,7 @@
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomDocumentTypeTenantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsCountryTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsHouseTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />
@@ -1674,6 +1677,7 @@
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsItemDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomDocumentTypeTenantUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsCountryTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsHouseTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GovernmentProcTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\UIMessageTenantUpdateService.Generated.cs" />

@@ -144,6 +144,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsCollateralsAnswer> CustomsCollateralsAnswers { get; }
 		 IDbSet<CustomsCollateralsCondition> CustomsCollateralsConditions { get; }
 		 IDbSet<CustomsCountry> CustomsCountries { get; }
+		 IDbSet<CustomsCountryTenant> CustomsCountryTenants { get; }
 		 IDbSet<CustomsDocument> CustomsDocuments { get; }
 		 IDbSet<CustomsDocumentMetaDataValue> CustomsDocumentMetaDataValues { get; }
 		 IDbSet<CustomsDocumentPointer> CustomsDocumentPointers { get; }

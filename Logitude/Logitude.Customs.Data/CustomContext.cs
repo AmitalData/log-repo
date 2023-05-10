@@ -322,6 +322,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsCountryMap());
 	
+            modelBuilder.Configurations.Add(new CustomsCountryTenantMap());
+	
             modelBuilder.Configurations.Add(new CustomsDocumentMap());
 	
             modelBuilder.Configurations.Add(new CustomsDocumentMetaDataValueMap());
@@ -2128,6 +2130,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsCountry> CustomsCountries 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsCountryTenant> CustomsCountryTenants 
 	 {
 	      get; set;
 	 
