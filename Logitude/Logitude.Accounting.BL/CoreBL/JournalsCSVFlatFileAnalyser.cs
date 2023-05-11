@@ -192,9 +192,11 @@ namespace Logitude.Accounting.BL.CoreBL
             bool finished = false;
             var JournalSrcLines = new List<JournalSrcLineDTO>();
             var lines = FileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            int currentLine = 0;
 
             foreach (string rawLine in lines)
             {
+                currentLine++;
                 if (rawLine.StartsWith("//"))//edi
                 {
                     if (rawLine.StartsWith("//Tenant="))//for tester 
@@ -221,7 +223,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         string text_2 = TranslateTextsClassTranslate("JournalsCSV.O.HeaderType", 0, useLocal);
                         throw new ApplicationException($"{text_3} {rowtype} {text_44} {text_2} {Opening_LineDTO_JCSV.RowType} ");
                     }
-                    JournalSrcLineDTO taxLine = JournalSrcLineDTO.Create(rawLine);
+                    JournalSrcLineDTO taxLine = JournalSrcLineDTO.Create(rawLine, currentLine);
                     JournalSrcLines.Add(taxLine);
 
                 }
@@ -239,14 +241,15 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        public static DateTime TryGetDateTime(string rawLine, string txtDateTime, string fieldname, string pos, string @format = "yyyyMMddHHmm")
+        public static DateTime TryGetDateTime(string rawLine, string txtDateTime, string fieldname, string pos, int currentLine, string @format = "yyyyMMddHHmm")
         {
             DateTime date = DateTime.MinValue;
             DateTime.TryParseExact(txtDateTime, @format/*"yyyyMMddHHmm"*/, CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
             if (date == DateTime.MinValue)
             {
                 throw new
-                    Exception($"{fieldname} should be  yyyyMMddHHmm  Substring({pos}) ={txtDateTime}  ");
+                //  Exception($"{fieldname} should be  yyyyMMddHHmm  Substring({pos}) ={txtDateTime}  ");
+                    Exception($"Line {currentLine}: {fieldname} should be {@format}  Substring({pos}) ={txtDateTime}  ");
             }
 
             return date;
@@ -582,7 +585,7 @@ namespace Logitude.Accounting.BL.CoreBL
         // public string Cancelled { get; private set; }
         // public bool IsCancelled { get; private set; }
 
-        internal static JournalSrcLineDTO Create(string rawLine)
+        internal static JournalSrcLineDTO Create(string rawLine, int currentLine)
         {
 
             rawLine = rawLine ?? "";
@@ -709,7 +712,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //{
                 //    fieldname = "AccountingDate";
                 //    pos = "0, 8";
-                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
                 //    rec.AccountingDate = date;
                 //}
                 txtDateTime = values[3].TrimEnd(' ');
@@ -721,7 +724,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         fieldname = "AccountingDate";
                         pos = "0, 10";
-                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, format: "dd.MM.yyyy");
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yyyy");
                         rec.AccountingDate = date;
                     }
                 }
@@ -733,7 +736,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         fieldname = "AccountingDate";
                         pos = "0, 8";
-                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
                         rec.AccountingDate = date;
                     }
                 }
@@ -748,7 +751,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //{
                 //    fieldname = "DocumentDate";
                 //    pos = "0, 8";
-                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
                 //    rec.DocumentDate = date;
                 //}
                 txtDateTime = values[4].TrimEnd(' ');
@@ -760,7 +763,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         fieldname = "DocumentDate";
                         pos = "0, 10";
-                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, format: "dd.MM.yyyy");
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yyyy");
                         rec.DocumentDate = date;
                     }
                 }
@@ -772,7 +775,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         fieldname = "DocumentDate";
                         pos = "0, 8";
-                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
                         rec.DocumentDate = date;
                     }
                 }
@@ -787,7 +790,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //{
                 //    fieldname = "DueDate";
                 //    pos = "0, 8";
-                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
                 //    rec.DueDate = date;
                 //}
 
@@ -800,7 +803,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         fieldname = "DueDate";
                         pos = "0, 10";
-                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, format: "dd.MM.yyyy");
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yyyy");
                         rec.DueDate = date;
                     }
                 }
@@ -812,7 +815,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         fieldname = "DueDate";
                         pos = "0, 8";
-                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
                         rec.DueDate = date;
                     }
                 }
