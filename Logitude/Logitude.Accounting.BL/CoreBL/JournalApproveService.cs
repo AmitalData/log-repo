@@ -799,7 +799,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void FillIdCountersUseNewDBTransaction(List<LedgerTransactionPM> myLedgerTransactionsWithOutCounters)
         {
             var sw = Stopwatch.StartNew();
-            using (var newScope = TransactionFactory.GetNewTransaction()) /// inside IdCounter.GetNumber there is --- GetNewReadCommittedTransaction
+            using (var newScope = GetTransactionScope(null)) /// inside IdCounter.GetNumber there is --- GetNewReadCommittedTransaction
             {
                 foreach (var entityPM in myLedgerTransactionsWithOutCounters)
                 {
