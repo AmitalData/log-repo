@@ -49,11 +49,20 @@
  set TenantPriority=v_TenantPriority
  where  Tenant = v_Tenant and InterfaceTypeCode = v_InterfaceTypeCode and EntityId in 
  ( select Id from RequestSheetInQueueMesViews where EntityId1 in  (  select DeclarationId from CourierDeclarations  where Tenant = v_Tenant and  CourierMasterId = v_CourierMasterId));
+ 
+        update  QueueMessages 
+ set TenantPriority=v_TenantPriority
+ where  Tenant = v_Tenant and InterfaceTypeCode = v_InterfaceTypeCode and EntityId in 
+ ( select Id from RequestSheetInQueueMesViews where EntityId1  = v_CourierMasterId);
 
 
 update  CustomsRequestsSheets
 set TenantPriority=v_TenantPriority 
  where Tenant = v_Tenant and InterfaceTypeCode = v_InterfaceTypeCode and Id IN ( select Id from RequestSheetInQueueMesViews where EntityId1 in  (  select DeclarationId from CourierDeclarations  where Tenant = v_Tenant and  CourierMasterId = v_CourierMasterId));
+ 
+ update  CustomsRequestsSheets
+set TenantPriority=v_TenantPriority 
+ where Tenant = v_Tenant and InterfaceTypeCode = v_InterfaceTypeCode and Id IN ( select Id from RequestSheetInQueueMesViews where EntityId1 = v_CourierMasterId);
 
 		COMMIT;											 
 
