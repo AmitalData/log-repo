@@ -79,13 +79,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var commentsDriverName = !string.IsNullOrEmpty(customResponse.TransferDetails.driverName) ? ", שם נהג: " + customResponse.TransferDetails.driverName : "";
                     var commentsDriverIdentityNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.driverIdentityNumber) ? ", ת.ז נהג: " + customResponse.TransferDetails.driverIdentityNumber : "";
                     var commentsVehicleNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.vehicleNumber) ? ", מספר משאית: " + customResponse.TransferDetails.vehicleNumber : "";
+                    var commentsCargoWeight = customResponse.General.cargoWeight != null ? ", משקל: " + customResponse.General.cargoWeight.ToString() : "";
                     var comments = commentsStorageSite + commentsContainerNumber + commentsExpectedArrivalSiteNumber + commentsDriverName + commentsDriverIdentityNumber + commentsVehicleNumber;
 
 
 
 
-                    RaiseEvent(requestParams.Tenant, "EXT", "Exit From Storage Site", declaration, customResponse, comments);
+                    RaiseEvent(requestParams.Tenant, "EXT", "Exit From Storage Site", declaration, customResponse, comments + commentsCargoWeight);
                     if (customResponse.ReportingDetails.isLastExiOrLasttEntry == true)
+                       
                         RaiseEvent(requestParams.Tenant, "LEX", "Last Exit From Storage Site", declaration, customResponse, comments);
 
                     
@@ -121,18 +123,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     loggingUserId = user.Id;
                 }
 
-                DeliverySiteTypeQueryService deliverySiteTypeQueryService = new DeliverySiteTypeQueryService(Tanent);
-                var deliverySiteType = deliverySiteTypeQueryService.GetSingle(customResponse.ReportingDetails.exitEntrySiteNumber, false, true);
-                var storageSite = deliverySiteType?.LocalName;
-                
-
-                var commentsStorageSite = !string.IsNullOrEmpty(storageSite) ? " שם אתר: " + storageSite + " " : "";
-                var commentsContainerNumber = !string.IsNullOrEmpty(customResponse.ReportingDetails.containerNumber) ? ", מכולה: " + customResponse.ReportingDetails.containerNumber : "";
-                var commentsExpectedArrivalSiteNumber = !string.IsNullOrEmpty(customResponse.ReportingDetails.expectedArrivalSiteNumber)  ? ", אתר הגעה צפוי: " + customResponse.ReportingDetails.expectedArrivalSiteNumber : "";
-                var commentsDriverName = !string.IsNullOrEmpty(customResponse.TransferDetails.driverName) ? ", שם נהג: " + customResponse.TransferDetails.driverName : "";
-                var commentsDriverIdentityNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.driverIdentityNumber) ? ", ת.ז נהג: " + customResponse.TransferDetails.driverIdentityNumber : "";
-                var commentsVehicleNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.vehicleNumber)  ? ", מספר משאית: " + customResponse.TransferDetails.vehicleNumber : "";
-
+               
               
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
