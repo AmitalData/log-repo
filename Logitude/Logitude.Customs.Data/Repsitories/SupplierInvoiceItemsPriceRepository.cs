@@ -22,7 +22,7 @@ namespace Logitude.Customs.Data.Repsitories
             SupplierInvoiceItemKeys supplierInvoiceItemKeys = entityKeys as SupplierInvoiceItemKeys;
 
             return (from a in context.SupplierInvoiceItemsPrices
-                    where a.DeclarationId == supplierInvoiceItemKeys.DeclarationId && a.InvoiceCounterKey == supplierInvoiceItemKeys.CounterKey && a.LineNumber == supplierInvoiceItemKeys.LineNumber
+                    where a.DeclarationId == supplierInvoiceItemKeys.DeclarationId && a.InvoiceCounterKey == supplierInvoiceItemKeys.CounterKey && a.InvoiceItemLineNumber == supplierInvoiceItemKeys.LineNumber
                     select a).ToList();
         }
 
