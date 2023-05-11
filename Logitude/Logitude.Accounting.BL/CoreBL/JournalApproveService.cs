@@ -389,7 +389,7 @@ namespace Logitude.Accounting.BL.CoreBL
             timeOut = null;//ihab: no need to use timeout  - but have to be fast (statistic) !!!
             StringBuilder stringBuilderWhyTransferCardBadBalance = new StringBuilder();
             LogMessagingUtil.Instance.AppendLine("GetNewSerializableTransaction(timeOut):insec" + timeOut.GetValueOrDefault().TotalSeconds.ToString());
-            using (var scope = TransactionFactory.GetNewSerializableTransaction(timeOut))
+            using (var scope = GetTransactionScope(timeOut))
             {
                 IDbContextLogger logger = null;
                 try
@@ -542,6 +542,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     LogMessagingUtil.Instance.AppendLine("AccountingStreamingInNewSerializableTransaction:Took:" + sw.Elapsed.ToString());
                 }
             }
+        }
+
+        private TransactionScope GetTransactionScope(TimeSpan? timeout)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("JAM", 0))
+                return TransactionFactory.GetNewReadCommittedTransaction(timeout);
+            return TransactionFactory.GetNewSerializableTransaction(timeout);
         }
 
         private void WriteLogWhyTransferCardBadBalance(int tenant, string seedJournalId, IAccountingContext accountingContext, StringBuilder sb)
@@ -786,7 +793,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void FillIdCountersUseNewDBTransaction(List<LedgerTransactionPM> myLedgerTransactionsWithOutCounters)
         {
             var sw = Stopwatch.StartNew();
-            using (var newScope = TransactionFactory.GetNewTransaction()) /// inside IdCounter.GetNumber there is --- GetNewReadCommittedTransaction
+            using (var newScope = GetTransactionScope(null)) /// inside IdCounter.GetNumber there is --- GetNewReadCommittedTransaction
             {
                 foreach (var entityPM in myLedgerTransactionsWithOutCounters)
                 {
