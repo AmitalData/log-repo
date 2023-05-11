@@ -551,7 +551,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private TransactionScope GetTransactionScope(TimeSpan? timeout)
         {
             if (FeatureToggleHelper.HasFeatureToggle("JAM", 0))
-                return TransactionFactory.GetTransaction(timeout);
+                return TransactionFactory.GetNewReadCommittedTransaction(timeout);
 
             return TransactionFactory.GetNewSerializableTransaction(timeout);
 
