@@ -19774,7 +19774,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-     Id="&quot;9e77ea75-43a4-4c80-b877-43021c65342e&quot;"
+    Id="&quot;9e77ea75-43a4-4c80-b877-43021c65342e&quot;"
     FieldName="&quot;DeclarationFollowUp&quot;"
     OldNames="DeclarationFollowUp"
     IsNew="true"
@@ -20446,7 +20446,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-     Id="&quot;f48e52f3-846c-4e36-9064-11f4815f2f2a&quot;"
+    Id="&quot;f48e52f3-846c-4e36-9064-11f4815f2f2a&quot;"
     FieldName="&quot;CasualImporterCountry&quot;"
     OldNames="CasualImporterCountry"
     IsNew="true"
@@ -20522,7 +20522,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-     Id="&quot;a88b9ba3-fca2-4615-b80c-133eebff3bec&quot;"
+    Id="&quot;a88b9ba3-fca2-4615-b80c-133eebff3bec&quot;"
     FieldName="&quot;IntegratorName&quot;"
     OldNames="IntegratorName"
     IsNew="true"
@@ -20596,7 +20596,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-   <field
+  <field
     Id="&quot;823294dc-d2da-4355-b32f-4de15884d302&quot;"
     FieldName="&quot;ExportCloseAmendStatusName&quot;"
     OldNames="ExportCloseAmendStatusName"
@@ -20672,7 +20672,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
- 
   <field
     Id="&quot;e9da7280-f386-4f83-b916-92954fb0b087&quot;"
     FieldName="&quot;IsAramex&quot;"
@@ -24064,7 +24063,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-     <EventType
+    <EventType
       Code="&quot;TAS&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
       EnglishName="&quot;Transshipment Approved&quot;"
@@ -24090,7 +24089,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-     <EventType
+    <EventType
       Code="&quot;LEX&quot;"
       ObjectTableName="&quot;Customs.Declaration&quot;"
       EnglishName="&quot;Last Exit From Storage Site&quot;"
@@ -24103,7 +24102,7 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-   </EventTypes>
+  </EventTypes>
   <Records />
   <MenuButtons
     MenuButtonGroupType="&quot;Customs.DeclarationEdit&quot;"
@@ -26573,19 +26572,19 @@
       LocalDefaultText="&quot;מספר יצואן קצר מידי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-     <TextCode
+    <TextCode
       Code="&quot;Customs.Declaration.O.MustCustomDocumentType&quot;"
       DefaultText="&quot;Must Custom Document Type&quot;"
       LocalDefaultText="&quot;יש לבחור סוג מסמך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-     <TextCode
+    <TextCode
       Code="&quot;Customs.Declaration.O.StoragesNotConnectToDeclaration&quot;"
       DefaultText="&quot;Note that there are storages that were not linked to the declaration, should we continue?&quot;"
       LocalDefaultText="&quot;שים לב יש אחסנות שלא קושרו להצהרה , האם להמשיך ?&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-   </AdditionalTextCodes>
+  </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;PAYMENTS&quot;"
@@ -26844,6 +26843,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.UploadExportInvoicesFromCsv&quot;"
       FeatureDefaultText="&quot;הצגת כפתור טעינת חשבונות יצואן מקובץ&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;PrintDeclarationForm&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.PrintDeclarationForm&quot;"
+      FeatureDefaultText="&quot;Print Declaration Form&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
