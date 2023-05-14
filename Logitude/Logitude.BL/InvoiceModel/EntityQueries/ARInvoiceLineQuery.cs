@@ -104,7 +104,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               IsExchangeRateFixed = a.IsExchangeRateFixed,
                                               ProfitCurrencyAmount = a.ProfitCurrencyAmount,
                                               InvoiceCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrency == null ? "" : a.ARInvoice.InvoiceCurrency.Code),
-                                              InvoiceCurrencyId = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrencyId == null ? "" : a.ARInvoice.InvoiceCurrency.Id),
+                                              InvoiceCurrencyId = IsFullAccountingActivated(a.Tenant) ? (a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrencyId == null ? "" : a.ARInvoice.InvoiceCurrency.Id)) : null,
                                               InvoiceLocalCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.LocalCurrency == null ? "" : a.ARInvoice.LocalCurrency.Code),
                                               MeasurementCode = a.Measurement == null ? "" : a.Measurement.Code,
                                               ExchangeRateDate = a.ExchangeRateDate,
@@ -299,7 +299,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                   IsExchangeRateFixed = a.IsExchangeRateFixed,
                                                   ProfitCurrencyAmount = a.ProfitCurrencyAmount,
                                                   InvoiceCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrency == null ? "" : a.ARInvoice.InvoiceCurrency.Code),
-                                                  InvoiceCurrencyId = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrencyId == null ? "" : a.ARInvoice.InvoiceCurrency.Id),
+                                                  InvoiceCurrencyId = IsFullAccountingActivated(a.Tenant) ? (a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrencyId == null ? "" : a.ARInvoice.InvoiceCurrency.Id) ) : null,
                                                   InvoiceLocalCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.LocalCurrency == null ? "" : a.ARInvoice.LocalCurrency.Code),
                                                   MeasurementCode = a.Measurement == null ? "" : a.Measurement.Code,
                                                   ExchangeRateDate = a.ExchangeRateDate,
@@ -322,6 +322,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 list.AddRange(tempList);
             }
             return list;
+        }
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
         }
     }
 }

@@ -22,11 +22,13 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     ColumnsWidths: ColumnsWidths[] = [];
+    IsAccountingActivated: boolean = false;
 
     constructor() {
         if (SessionLocator.TenantPM.AccountingActivated) {
             this.FillChargesTypesCustomLOVColumnsWidths();
         }
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
     }
     ngOnInit(): void {
         this.SetDefaultValues(); 
@@ -34,7 +36,9 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
 
     SetDefaultValues() {
         this.Quantity = this.EntityPM.Quantity != null ? this.EntityPM.Quantity : 1;
-        this.ForiegnCurrencyId = this.EntityPM.ForiegnCurrencyId?.length != 0 ? this.EntityPM.ForiegnCurrencyId : this.EntityPM.InvoiceCurrencyId;
+            this.ForiegnCurrencyId = this.EntityPM.ForiegnCurrencyId?.length != 0 ? this.EntityPM.ForiegnCurrencyId : 
+            ( this.IsAccountingActivated ? this.EntityPM.InvoiceCurrencyId : SessionLocator.TenantPM.CurrencyId );
+
     }
 
     FillChargesTypesCustomLOVColumnsWidths()
