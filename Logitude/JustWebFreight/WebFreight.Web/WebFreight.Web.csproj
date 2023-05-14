@@ -752,6 +752,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountingModel\DomainServices\TaxDeductionReportDomainService.cs" />
+    <Compile Include="AccountingModel\DomainServices\OpenFormatReportDomainService.cs" />
+    <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
     <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" />
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ChargesTypeAPiHelper.cs" />

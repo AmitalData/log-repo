@@ -46,7 +46,7 @@ namespace WebFreight.Web.Helpers
             Stopwatch _Stopwatch1;
 
 
-            LogTime("start all at : ", exportToExcelArgs.IsXslxFormat);
+            LogTime("start all at : ", exportToExcelArgs.IsXslxFormat,exportToExcelArgs.Tenant);
             _Stopwatch1 = Stopwatch.StartNew();
             string xmlData = "";
             MemoryStream memory = new MemoryStream();
@@ -372,6 +372,42 @@ namespace WebFreight.Web.Helpers
                         stop = true;
                     }
                 }
+
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.TaxReportDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.TaxDeductionReportDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.OpenFormatReportDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
             }
 
             IQueryable querableEntities = null;
@@ -410,10 +446,10 @@ namespace WebFreight.Web.Helpers
 
                     parameters = new object[] { xmlFilters, tenant };
                     _Stopwatch = Stopwatch.StartNew();
-                    LogTime("start queryResult at : ", exportToExcelArgs.IsXslxFormat);
+                    LogTime("start queryResult at : ", exportToExcelArgs.IsXslxFormat,tenant);
                     var queryResult = getListMethodInfo.Invoke(context, parameters);
                     querableEntities = queryResult as IQueryable;
-                    LogTime("stop queryResult at : ", exportToExcelArgs.IsXslxFormat);
+                    LogTime("stop queryResult at : ", exportToExcelArgs.IsXslxFormat, tenant);
                     LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "2 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
 
                     IEnumerator datalist = null;
@@ -727,7 +763,7 @@ namespace WebFreight.Web.Helpers
             //    }
             //    ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
             //}
-            LogTime("stop all  at : ", exportToExcelArgs.IsXslxFormat);
+            LogTime("stop all  at : ", exportToExcelArgs.IsXslxFormat, tenant);
 
 
             LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "8 allTheFunction Took:" + _Stopwatch1.Elapsed.ToString()); _Stopwatch1.Restart();
@@ -1438,9 +1474,14 @@ namespace WebFreight.Web.Helpers
                     }
             }
         }
-        private void LogTime(string msg, bool isXslx)
+        private void LogTime(string msg, bool isXslx,int tenant = 0)
         {
-            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", 127) && isXslx)
+
+            if(tenant == 0)
+            {
+                tenant = 127;
+            } 
+            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) && isXslx)
             {
                 //DateTime stopLogAt = DateTime.MinValue;
                 string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
