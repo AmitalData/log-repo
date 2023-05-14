@@ -468,7 +468,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 var nFromDoubleQuote = nSubStrined.IndexOf("\"");
                                 NewValue = nSubStrined.Substring(0, nFromDoubleQuote);
                             }
-                            if (OldValue != NewValue)
+                            if (OldValue != NewValue && !change.Contains("CreatedByUserId"))
                             {
                                 entityPM.IsChanged = true;
                                 break;
