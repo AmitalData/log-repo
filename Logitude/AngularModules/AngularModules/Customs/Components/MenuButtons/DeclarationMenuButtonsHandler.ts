@@ -337,7 +337,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         //if (!declaration.HasDocument)
                         //if (AppTool.IsNullOrEmpty(this.EntityPM.DocumentDeclarationId)) {
                         if (AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber) || 
-                            (FeatureLocator.IsFeatureGrantedByCode("PrintDeclarationForm") && this.EntityPM.Direction == "E" && !this.EntityPM.IsExportClosed)) {
+                            (FeatureLocator.Features.filter(f=> f.Code =="PrintDeclarationForm") && this.EntityPM.Direction == "E" && !this.EntityPM.IsExportClosed)) {
                             button.IsDisabled = true;
                         }
                         else {

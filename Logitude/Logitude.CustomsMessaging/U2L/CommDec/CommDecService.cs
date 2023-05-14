@@ -706,9 +706,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             {
 
                                 UpdateDeclarationPending(pending.PendingCode);
-
-
                             }
+                            currentDeclarationCourierStatusPM.IsClosedForFollowUp = _LogitudeCommDecFile.IsClosedForFollowUp;
+                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
                     }
 
