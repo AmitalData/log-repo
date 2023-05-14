@@ -2337,9 +2337,10 @@ After that Remove file  from DCA  .. ");
             if (requestParams != null)
             {
                 var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(this._Tenant);
-                tenantPriority = customsRequestsSheetQueryService.GetTenantPriorityByEntityIDAndTeant(requestParams.ParentId, this._Tenant);
+                currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(requestParams.ParentId, this._Tenant);
+                tenantPriority = currCustomsRequestsSheet?.TenantPriority;
             }
-            if(tenantPriority == null)
+            if (tenantPriority == null)
             {
                 InterfaceTenantDefinitionQueryService interfaceTenantDefinitionQuery = new InterfaceTenantDefinitionQueryService(_CustomContext);
                 InterfaceTenantDefinitionPM interfaceTenantDefinitionPM = interfaceTenantDefinitionQuery.GetInterfaceDefWithPriorityFromCacheByTenatCode(this._Tenant, requestParams.InterfaceTypeCode);
