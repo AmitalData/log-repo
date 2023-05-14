@@ -28,7 +28,9 @@ import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { ImageParameter } from 'Infrastructure/DataContracts/ImageParameter';
 import { Guid } from 'Infrastructure/Utilities/Guid';
 import * as moment from 'moment';
-declare var attachmentUploader, ResultAsArray,resultToUnitArray: any;
+import { PartnersUploadExcelParameter } from 'Common/Services/CommonDomainService';
+import { DocumentsFilingExtendedPMService } from 'Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+declare var attachmentUploader, ResultAsArray, resultToUnitArray: any;
 @Component({
     selector: 'AddEditRecoExPageComponent',
 
@@ -73,19 +75,8 @@ export class AddEditRecoExPageComponent extends BaseComponent {
     IsEditButtonDisabled: boolean = false;
     EditWindowToolTip: string = null;
     IsRestoreButtonEnabled: boolean;
-    public UploadFileId: string = Guid.NewRandomString();
-    FileName: string;
-    FileSize: string;
-    FileExtension: string;
-    File: any;
-    filterImageParameter: ImageParameter;
-    FileData: number;
-    ProgressBarPercentText: string;
-    IsShowProgressBar: boolean = false;
-    IsUploadCanceled: boolean;
-    IsUploadInProgress: boolean;
-    UploadSuccessLabel: boolean;
     UploadButtonIsEnabled: boolean = true;
+
 
 
 
@@ -608,100 +599,139 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         }
     }
 
-    OpenUpLoadFile() {
-        document.getElementById(this.UploadFileId).click();
-    }
 
     public ShowMessage(message: string) {
         var messageWindow: MessageWindow = new MessageWindow();
         messageWindow.Show(message);
     }
 
-    async UploadFile() {
-        var file: any = attachmentUploader(this.UploadFileId);
+    private fileName: string;
+    private fileExtension: string;
+    OnFileChanged(fileEvent) {
+        var file = fileEvent.target.files[0];
+
         if (file) {
-            var temp = file.name.split('.');
-            this.FileExtension = temp[temp.length - 1];
-            this.FileName = file.name.replace("." + this.FileExtension, "");
+            var extension: string = file.name.split('.')[1];
 
-            if (this.FileExtension != "csv") {
-                this.ShowMessage("חובה קובץ CSV");
-                return;
+            if (extension.includes("xls")) {
+                var file = fileEvent.target.files[0];
+                this.UploadExcel(file);
             }
 
-            this.File = file;
-
-            if (this.FileExtension && this.FileExtension.length > 10) {
-                this.ShowMessage("File extension should be less than or equal 10 characters");
-            }
             else {
-                this.IsShowProgressBar = true;
-                this.UploadButtonIsEnabled = false;
-
-                this.filterImageParameter = new ImageParameter();
-                this.filterImageParameter.Key = Guid.newGuid();
-                this.filterImageParameter.IsFirstTry = true;
-                this.filterImageParameter.Extension = this.FileExtension;
-                this.filterImageParameter.UploadMode = "Block";
-                this.filterImageParameter.FileSize = file.size;
-                this.filterImageParameter.Tenant = SessionLocator.Tenant;
-                this.UploadSuccessLabel = true;
-                await this.ArrayBufferToBase64(file, this);
-                var line = 0;
-                if (this.ReconcileExternalPagePM.ReconcileExternalPageLines.length > 0) {
-                    var line = this.ReconcileExternalPagePM.ReconcileExternalPageLines.reduce(function (prev, current) { return (prev.LineNumber > current.LineNumber) ? prev : current }).LineNumber;
-                }
-                line++; // last no.
-                this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromCsv(this.filterImageParameter).subscribe((myServiceResponse: ServiceResponse) => {
-                    if (myServiceResponse?.Result != null) {
-                        this.ReconcileExternalPagePM.EntryTypeCode = "2";
-                        myServiceResponse?.Result.forEach(element => {
-                            var pageLine: ReconcileExternalPageLinePM = new ReconcileExternalPageLinePM(this.ReconcileExternalPagePM);
-                            pageLine.Tenant = SessionLocator.Tenant;
-                            pageLine.ReconcileExternalPageId = this.isNewEntity ? "new" : this.ReconcileExternalPagePM.Id;
-                            var datemomentobject=moment.utc(element.ReferenceDate,"YYYY-DD-MM")
-                            pageLine.ReferenceDate = datemomentobject.toDate();
-                            pageLine.DebitAmount = element.DebitAmount;
-                            pageLine.CreditAmount = element.CreditAmount;
-                            pageLine.Reference = element.Reference;
-                            pageLine.Notes = element.Notes;
-                            pageLine.LineNumber = line++;
-                            pageLine.IsReconciled = false;
-                            this.ReconcileExternalPagePM.AddReconcileExternalPageLine(pageLine);
-                            var item = new PageLineModel(pageLine, this);
-                            this.PageLinesList.Insert(item);
-                        });
-                    }
-                    if(this.PageLinesList.Length == 0){
-                        this.UploadButtonIsEnabled=true
-                    }
-                    this.CalculateTotals();
-
-                });
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
             }
         }
     }
 
-    ArrayBufferToBase64(file: any, viewmodel: any) {
+    UploadExcel(file: any) {
+        this.CurrentSession.StartBusyIndicator("Uploading...");
+        this.UploadButtonIsEnabled = false;
+
+        this.fileName = null;
+        this.fileExtension = null;
+
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.fileName = name[0];
+                this.fileExtension = name[1];
+            }
+        }
+        if (file && file.size > 0) {
+            var documentExtendedService = new DocumentsFilingExtendedPMService();
+            documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var myResult = response.Result;
+                    if (myResult) {
+                        this.StartUploadingExcelFile(file);
+                    }
+                }
+            });
+        }
+    }
+
+    StartUploadingExcelFile(file: any) {
+        if (file && file.size > 0) {
+            var filebuffer = file.slice(0, file.size);
+            this.ConvertArrayBufferToBase64(filebuffer, this);
+        }
+    }
+
+    public partnersUploadExcelParameter: PartnersUploadExcelParameter;
+    ConvertArrayBufferToBase64(file: any, viewmodel: any) {
         return new Promise((resolve, reject) => {
             var reader: FileReader = new FileReader();
             var reader = new FileReader();
             reader.onload = function (e) {
                 var binary = '';
-                var bytes = new Uint8Array(resultToUnitArray(e));
+                var bytes = new Uint8Array(ResultAsArray(e));
                 var len = bytes.byteLength;
+
                 for (var i = 0; i < len; i++) {
                     binary += String.fromCharCode(bytes[i]);
                 }
-                viewmodel.filterImageParameter.Base64String = window.btoa(binary);
-                resolve(reader.result);
-            };
 
+                viewmodel.partnersUploadExcelParameter = new PartnersUploadExcelParameter();
+                viewmodel.partnersUploadExcelParameter.FileData = window.btoa(binary);
+                viewmodel.partnersUploadExcelParameter.FileName = viewmodel.FileName;
+                viewmodel.partnersUploadExcelParameter.ComputingPartnerCode = viewmodel.ComputingPartnerCode;
+                viewmodel.SendExcelToServer(viewmodel.partnersUploadExcelParameter);
+            };
             reader.onerror = function (e) {
                 console.log(e);
             };
             reader.readAsArrayBuffer(file);
         });
+    }
+
+    SendExcelToServer(filters: ReconcileExternalPageLineParameters) {
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromExcel(filters).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                filters = response.Result;
+                this.FillReconcileExternalPageLines(filters);
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+            }
+        });
+    }
+
+    FillReconcileExternalPageLines(filters: ReconcileExternalPageLineParameters) {
+        var line = 0;
+        if (this.ReconcileExternalPagePM.ReconcileExternalPageLines.length > 0) {
+            var line = this.ReconcileExternalPagePM.ReconcileExternalPageLines.reduce(function (prev, current) { return (prev.LineNumber > current.LineNumber) ? prev : current }).LineNumber;
+        }
+        line++; // last no.
+        if (filters.ExcelReconcileExternalPageLines.length > 0) {
+            this.ReconcileExternalPagePM.EntryTypeCode = "2";
+            filters.ExcelReconcileExternalPageLines.forEach(element => {
+                var pageLine: ReconcileExternalPageLinePM = new ReconcileExternalPageLinePM(this.ReconcileExternalPagePM);
+                pageLine.Tenant = SessionLocator.Tenant;
+                pageLine.ReconcileExternalPageId = this.isNewEntity ? "new" : this.ReconcileExternalPagePM.Id;
+                var datemomentobject = moment.utc(element.ReferenceDate, "YYYY-DD-MM")
+                pageLine.ReferenceDate = datemomentobject.toDate();
+                pageLine.DebitAmount = element.DebitAmount;
+                pageLine.CreditAmount = element.CreditAmount;
+                pageLine.Reference = element.Reference;
+                pageLine.Notes = element.Notes;
+                pageLine.LineNumber = line++;
+                pageLine.IsReconciled = false;
+                this.ReconcileExternalPagePM.AddReconcileExternalPageLine(pageLine);
+                var item = new PageLineModel(pageLine, this);
+                this.PageLinesList.Insert(item);
+            });
+            if (this.PageLinesList.Length == 0) {
+                this.UploadButtonIsEnabled = true
+            }
+            this.CalculateTotals();
+        }
     }
 
     AddButtonClicked() {
@@ -743,8 +773,8 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         }
 
         this.CalculateTotals();
-        if(this.PageLinesList.Length == 0){
-            this.UploadButtonIsEnabled=true
+        if (this.PageLinesList.Length == 0) {
+            this.UploadButtonIsEnabled = true
         }
     }
 
@@ -911,5 +941,26 @@ export class PageLineModel extends BaseComponent {
         }
 
     }
+
+
 }
+export class ReconcileExternalPageLineParameters {
+    Tenant: number;
+    FileData: string;
+    CarrierAreaId: string;
+    FileName: string;
+    FileExtension: string;
+    TransportMode: string;
+    RowsCount: number;
+    ExcelReconcileExternalPageLines: ExcelReconcileExternalPageLine[];
+}
+export class ExcelReconcileExternalPageLine {
+    ReferenceDate: Date;
+    DebitAmount: number;
+    CreditAmount: number;
+    Reference: string;
+    Notes: string;
+    HasError: boolean;
+}
+
 
