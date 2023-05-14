@@ -19,7 +19,7 @@
             <form class="search-form" [formGroup]="searchForm" (ngSubmit)="LoadScreenData()">
 
                 <div class="search-text" [class.hide-mobile]="!ShipmentSearchInput.SearchText">
-                    <input #input type="text " class="gray " [(ngModel)]="ShipmentSearchInput.SearchText" placeholder="Free search ..."
+                    <input #input type="text"  id="MySearch" class="gray " [(ngModel)]="ShipmentSearchInput.SearchText" placeholder="Free search ..."
                         formControlName="SearchText" name="SearchText "  (input)="onSearchChange()" />
                 </div>
 
