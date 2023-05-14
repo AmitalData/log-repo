@@ -2333,11 +2333,19 @@ After that Remove file  from DCA  .. ");
             //Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("selectedFile =" + selectedFile);
             //string externalId = "";// GetExternalId(selectedFile);
 
+            int? tenantPriority = null;
             CustomsRequestsSheet currCustomsRequestsSheet = null;
             if (requestParams != null)
             {
                 var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(this._Tenant);
                 currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(requestParams.ParentId, this._Tenant);
+                tenantPriority = currCustomsRequestsSheet?.TenantPriority;
+            }
+            if (tenantPriority == null)
+            {
+                InterfaceTenantDefinitionQueryService interfaceTenantDefinitionQuery = new InterfaceTenantDefinitionQueryService(_CustomContext);
+                InterfaceTenantDefinitionPM interfaceTenantDefinitionPM = interfaceTenantDefinitionQuery.GetInterfaceDefWithPriorityFromCacheByTenatCode(this._Tenant, requestParams.InterfaceTypeCode);
+                tenantPriority = interfaceTenantDefinitionPM?.TenantPriority;
             }
             MyCustomsRequestsSheetPM = new CustomsRequestsSheetPM()
             {
@@ -2352,7 +2360,7 @@ After that Remove file  from DCA  .. ");
                 RequestStatusEnum = SheetStatusEnum.Created,
                 RequestComminicationId = _CommunicationLog.Id,
                 //CustomFileNo = GetCustomFileNo(RequestParams)
-                TenantPriority= currCustomsRequestsSheet?.TenantPriority
+                TenantPriority= tenantPriority
             };
 
             MyCustomsRequestsSheetPM.Id = RequestParams.PBId;//GUID 
