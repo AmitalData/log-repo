@@ -409,6 +409,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                 if (requestParams.RequestOrigin == "DeclarationStatusRequestViewModel") // moran 20.1.16 - Task 19428 add RequestOrigin = "DeclarationStatusRequestViewModel" check
                                 {
+                                    bool isUpdate = false;
+                                    double statusDeclaration = double.Parse(declarationPM.VersionId);
+                                    if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion == "1.0" && declarationPM.Direction == "E" && statusDeclaration< 1.0 )
+                                    {
+                                        declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+                                        declarationPM.VersionId= declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion;
+                                        isUpdate = true;
+                                        UpdateDeclaration(declarationUpdateService, declarationPM);
+
+                                    }
                                     if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "1")
                                     {
                                         declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
@@ -448,6 +458,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     }
                                     else
                                     {
+                                        if(!isUpdate)
                                         MyResponseData.WarningMessage = warningMess = "סטטוס ההצהרה לא עודכן , יש לבצע בקשה לשחזור נתוני הצהרה " + " (" + declarationNumber + ")";
                                     }
                                 }
