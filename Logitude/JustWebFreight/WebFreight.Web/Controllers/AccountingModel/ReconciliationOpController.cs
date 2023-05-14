@@ -129,10 +129,11 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                     //    }
                     //}
                     var anotherReconciliationInProgress = CheckIfAnotherReconciliationInProgress(entityPm);
-                    if (anotherReconciliationInProgress) {
+                    if (anotherReconciliationInProgress)
+                    {
                         throw new Exception("There is already another reconciliation in progress");
                     }
-                    
+
                     string communicationLogId = WriteEntityPMOnCommunicationLog(entityPm);
                     // StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = fileName, FolderName = "Others", Tenant = entityPm.Tenant };
                     IQueueService queueservice = new DbQueueService();
@@ -174,7 +175,8 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             ICommonDataContext context = CommonDataContext.GetContext(entityPm.Tenant);
             CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
             CommunicationLog commLog = communicationLogRep.GetCommunicationLogByEntityIdAndSubject(entityPm.AccountId, "Create internal Reconciliation", entityPm.Tenant);
-            if (commLog != null && commLog.CommunicationStatusTypeCode == "W") {
+            if (commLog != null && commLog.CommunicationStatusTypeCode == "W")
+            {
                 return true;
             }
             return false;
