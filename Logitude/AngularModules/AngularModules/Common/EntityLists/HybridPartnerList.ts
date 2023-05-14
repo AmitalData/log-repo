@@ -21,5 +21,5 @@ export class HybridPartnerList {
 		IsExternalPartner: boolean;
 		ReceiveAllStatuses: boolean;
 		AllowSendingDocsToAgent: boolean;
-	
+        InActive: boolean;
 }
