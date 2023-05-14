@@ -284,20 +284,18 @@ export class ReconcileExternalPageExtendedPMService {
         }
     }
 
-    ImportReconcileExternalPageLineFromCsv(fileUploadParamerter: any ){
+    ImportReconcileExternalPageLineFromExcel(fileUpload: any) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-            return this.httpClient.put(this._apiUrl + "/ImportReconcileExternalPageLineFromCsv?"
-                , JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
-                    var _mappedListsArray: Array<ReconcileExternalPageLinePM> = [];
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    if (response != null && response.length > 0 ) {
-                        serviceResponse.Result = response;
-                    }
-                    return serviceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
+        return this.httpClient.post(this._apiUrl + "/ImportReconcileExternalPageLineFromExcel?"
+            , JSON.stringify(fileUpload), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }), catchError(ServiceHelper.HandleServiceError));
     }
 
     public clone(jsonPM: any) {
