@@ -51,6 +51,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             entityPM.SupplierInvoiceItemVehicles = supplierInvoiceItemVehicleQueryService.GetMulti(supplierInvoiceItemKeys, true);
             SupplierInvoiceItemModVehicleQueryService supplierInvoiceItemModVehicleQueryService = new SupplierInvoiceItemModVehicleQueryService(context);
             entityPM.SupplierInvoiceItemModVehicles = supplierInvoiceItemModVehicleQueryService.GetMulti(supplierInvoiceItemKeys, true);
+            SupplierInvoiceItemsPriceQueryService supplierInvoiceItemsPriceQueryService = new SupplierInvoiceItemsPriceQueryService(context);
+            entityPM.SupplierInvoiceItemsPrices = supplierInvoiceItemsPriceQueryService.GetMulti(supplierInvoiceItemKeys, true);
 
 
             if (entityPM.SupplierInvoiceItemTaxes.Count > 0)
