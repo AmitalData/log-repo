@@ -1339,7 +1339,7 @@ namespace WebFreight.Web.InfrastructureModel
 
         private static TenantPM AddHybridPartner(SignUpInfoClass signUpInfo,TenantPM newTenant)
         {
-            if (LogitudeSettings.WorkEnvironment != "cloud")
+            if (LogitudeSettings.WorkEnvironment != "cloud" && LogitudeSettings.DeploymentStage.ToLower() != "test2")
                 return newTenant;
             newTenant.IsHybrid = true;
             HybridPartnerPM entityPM = new HybridPartnerPM();

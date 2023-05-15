@@ -31,7 +31,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         }
         public void UpdateHybridPartnerActivity(bool IsActive)
         {
-            if (LogitudeSettings.WorkEnvironment != "cloud")
+            if (LogitudeSettings.WorkEnvironment != "cloud" && LogitudeSettings.DeploymentStage.ToLower() != "test2")
                 return;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
@@ -50,7 +50,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         }
         public void UpdateTenantHybridization(HybridPartnerPM entityPM)
         {
-            if (LogitudeSettings.WorkEnvironment != "cloud")
+            if (LogitudeSettings.WorkEnvironment != "cloud" && LogitudeSettings.DeploymentStage.ToLower() != "test2")
                 return;
             TenantRepository tenantRepository = new TenantRepository((int)entityPM.PartnerTenant);
             Tenant tenant = tenantRepository.GetSingleTenant((int)entityPM.PartnerTenant);
@@ -62,7 +62,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         }
         public void UpdateTenantActivity(HybridPartnerPM entityPM)
         {
-            if (LogitudeSettings.WorkEnvironment != "cloud")
+            if (LogitudeSettings.WorkEnvironment != "cloud" && LogitudeSettings.DeploymentStage.ToLower() != "test2")
                 return;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
