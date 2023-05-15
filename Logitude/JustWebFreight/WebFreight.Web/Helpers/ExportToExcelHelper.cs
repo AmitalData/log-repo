@@ -45,13 +45,13 @@ namespace WebFreight.Web.Helpers
             Stopwatch _Stopwatch;
             Stopwatch _Stopwatch1;
 
-            int tenant = exportToExcelArgs.Tenant;
 
-            LogTime("start all at : ", tenant);
+            LogTime("start all at : ", exportToExcelArgs.IsXslxFormat,exportToExcelArgs.Tenant);
             _Stopwatch1 = Stopwatch.StartNew();
             string xmlData = "";
             MemoryStream memory = new MemoryStream();
 
+            int tenant = exportToExcelArgs.Tenant;
             byte[] xmlFilters = exportToExcelArgs.XmlFilters;
             string typename = exportToExcelArgs.TypeName;
 
@@ -339,7 +339,7 @@ namespace WebFreight.Web.Helpers
 
                 if (stop == false)
                 {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkflowModel.DomainServices.WorkFlowDomainService", query);
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkFlow.DomainServices.WorkFlowDomainService", query);
                     if (MethodsInfo != null)
                     {
                         getListMethodInfo = MethodsInfo.ListMethodInfo;
@@ -351,67 +351,7 @@ namespace WebFreight.Web.Helpers
 
                 if (stop == false)
                 {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkflowModel.DomainServices.WorkFlowInstanceDomainService", query);
-                    if (MethodsInfo != null)
-                    {
-                        getListMethodInfo = MethodsInfo.ListMethodInfo;
-                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
-                        context = MethodsInfo.context;
-                        stop = true;
-                    }
-                }
-
-                if (stop == false)
-                {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkflowModel.DomainServices.WorkFlowVersionDomainService", query);
-                    if (MethodsInfo != null)
-                    {
-                        getListMethodInfo = MethodsInfo.ListMethodInfo;
-                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
-                        context = MethodsInfo.context;
-                        stop = true;
-                    }
-                }
-
-                if (stop == false)
-                {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkflowModel.DomainServices.TaskDomainService", query);
-                    if (MethodsInfo != null)
-                    {
-                        getListMethodInfo = MethodsInfo.ListMethodInfo;
-                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
-                        context = MethodsInfo.context;
-                        stop = true;
-                    }
-                }
-
-                if (stop == false)
-                {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkflowModel.DomainServices.TaskTypeDomainService", query);
-                    if (MethodsInfo != null)
-                    {
-                        getListMethodInfo = MethodsInfo.ListMethodInfo;
-                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
-                        context = MethodsInfo.context;
-                        stop = true;
-                    }
-                }
-
-                if (stop == false)
-                {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkflowModel.DomainServices.TaskPriorityDomainService", query);
-                    if (MethodsInfo != null)
-                    {
-                        getListMethodInfo = MethodsInfo.ListMethodInfo;
-                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
-                        context = MethodsInfo.context;
-                        stop = true;
-                    }
-                }
-
-                if (stop == false)
-                {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkflowModel.DomainServices.TaskStatusDomainService", query);
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.WorkFlow.DomainServices.WorkFlowInstanceDomainService", query);
                     if (MethodsInfo != null)
                     {
                         getListMethodInfo = MethodsInfo.ListMethodInfo;
@@ -432,6 +372,42 @@ namespace WebFreight.Web.Helpers
                         stop = true;
                     }
                 }
+
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.TaxReportDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.TaxDeductionReportDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.OpenFormatReportDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
             }
 
             IQueryable querableEntities = null;
@@ -444,14 +420,14 @@ namespace WebFreight.Web.Helpers
 
                 object[] parameters = new object[] { xmlFilters, tenant };
                 int count = 0;
-                if (!Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
+                if (!Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) || (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant)) && !exportToExcelArgs.IsXslxFormat)
                      count = (int)getCountMethodInfo.Invoke(context, parameters);
 
                 LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "1 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 if (count > 0 || Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
                 {
                     //Get dataList
-                    if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
+                    if (exportToExcelArgs.IsXslxFormat)
                     {
                         queryOperations.PageSize = count;
                     }
@@ -470,10 +446,10 @@ namespace WebFreight.Web.Helpers
 
                     parameters = new object[] { xmlFilters, tenant };
                     _Stopwatch = Stopwatch.StartNew();
-                    LogTime("start queryResult at : ", tenant);
+                    LogTime("start queryResult at : ", exportToExcelArgs.IsXslxFormat,tenant);
                     var queryResult = getListMethodInfo.Invoke(context, parameters);
                     querableEntities = queryResult as IQueryable;
-                    LogTime("stop queryResult at : ", tenant);
+                    LogTime("stop queryResult at : ", exportToExcelArgs.IsXslxFormat, tenant);
                     LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "2 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
 
                     IEnumerator datalist = null;
@@ -503,7 +479,7 @@ namespace WebFreight.Web.Helpers
                         //IEnumerator datalist = querableEntities.GetEnumerator();
 
 
-                        if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
+                        if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) && exportToExcelArgs.IsXslxFormat)
                         {
                             return this.NpoiExcelGenerator(datalist, query, queryColumns, tenant);
                         }
@@ -577,8 +553,7 @@ namespace WebFreight.Web.Helpers
                             _Stopwatch = Stopwatch.StartNew();
                             foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
                             {
-                            string nodename = TranslateTextsClass.Translate(node.Name, tenant,true,true);
-
+                                string nodename = TranslateTextsClass.Translate(node.Name, tenant);
                                 QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == node.Name || q.ObjectFieldFullNameTextCodeCode == node.Name).FirstOrDefault();
                                 if (column != null)
                                 {
@@ -751,26 +726,23 @@ namespace WebFreight.Web.Helpers
                             if (FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
                             {
                                 int i = 1;
-                            
+
                                 foreach (QueryColumnPM _ in queryColumns)
                                 {
                                     sheet.AutofitColumn(i);
-                                if (_.ObjectFieldName == "CustomerReference" && sheet.GetColumnWidth(i) > 30)
-                                    sheet.SetColumnWidth(i,30);
-                                i++;
-
+                                    i++;
                                 }
                             }
                             _Stopwatch = Stopwatch.StartNew();
-                            //if (exportToExcelArgs.IsXslxFormat)
-                            //{
-                            //    workbook.Version = ExcelVersion.Excel2010;
-                            //    workbook.SaveAs(memory);
-                            //}
-                            //else
-                            //{
+                            if (exportToExcelArgs.IsXslxFormat)
+                            {
+                                workbook.Version = ExcelVersion.Excel2010;
+                                workbook.SaveAs(memory);
+                            }
+                            else
+                            {
                                 workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
-                            //}
+                            }
                             LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "7 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                             //No exception will be thrown if there are unsaved workbooks.
                             excelEngine.ThrowNotSavedOnDestroy = false;
@@ -791,7 +763,7 @@ namespace WebFreight.Web.Helpers
             //    }
             //    ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
             //}
-            LogTime("stop all  at : ", tenant);
+            LogTime("stop all  at : ", exportToExcelArgs.IsXslxFormat, tenant);
 
 
             LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "8 allTheFunction Took:" + _Stopwatch1.Elapsed.ToString()); _Stopwatch1.Restart();
@@ -1274,7 +1246,7 @@ namespace WebFreight.Web.Helpers
 
         private byte[] NpoiExcelGenerator(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant)
         {
-            LogTime("start NpoiExcelGenerator Func at : ", tenant);
+            LogTime("start NpoiExcelGenerator Func at : ",true);
 
             MemoryStream ms = new MemoryStream();
             TextCodeRepository textCodeRepoitory = new TextCodeRepository(tenant);
@@ -1326,7 +1298,7 @@ namespace WebFreight.Web.Helpers
                     DataHeaderCellFontStyle.FillForegroundColor = NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index;
                     DataHeaderCellFontStyle.FillPattern = FillPattern.SolidForeground;
 
-                    DataHeaderCellFontStyle.Alignment = HorizontalAlignment.Left;
+                    DataHeaderCellFontStyle.Alignment = HorizontalAlignment.Center;
 
 
                     var QueryNameHeaderCellFontStyle = workbook.CreateCellStyle();
@@ -1464,7 +1436,7 @@ namespace WebFreight.Web.Helpers
 
             }
 
-            LogTime("Stop NpoiExcelGenerator Func at : ", tenant);
+            LogTime("Stop NpoiExcelGenerator Func at : ",true);
 
             return ms.ToArray();
 
@@ -1502,9 +1474,11 @@ namespace WebFreight.Web.Helpers
                     }
             }
         }
-        private void LogTime(string msg, int tenant)
+        private void LogTime(string msg, bool isXslx,int tenant = 0)
         {
-            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
+
+            
+            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) && isXslx)
             {
                 //DateTime stopLogAt = DateTime.MinValue;
                 string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
