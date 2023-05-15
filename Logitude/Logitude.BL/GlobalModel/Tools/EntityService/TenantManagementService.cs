@@ -100,7 +100,6 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             {
                 CacheManager.CacheWrapper.Invalidate(entityPmName);
             }
-
             this.UpdateParticipants();
             this.UpdateDocumentsArchive();
             this.UpdateGlobalTenants();
@@ -112,7 +111,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.CheckParentTenants();
             this.DeleteOldImages();
             this.CreateContainerSettings();
-
+            this.UpdateHybridTenantActivity(entityPoco, entityPM);
             if (entityPM.Id == 341)
             {
                 this.UpdateCustomer();
@@ -122,6 +121,14 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             TenantManagementMapping.MapEntity(entityPM, entityPoco, isNewEntity);
             entityRepository.Update(entityPoco);
             entityRepository.SubmitChanges();
+        }
+
+        private void UpdateHybridTenantActivity(TenantManagement entityPoco, TenantManagementPM entityPM)
+        {
+            if (entityPoco.GlobalTenant.IsActive == entityPM.IsActive)
+                return;
+            entityPoco.GlobalTenant.IsActive = entityPM.IsActive;
+            new TenantHybridPartnerService(entityPM.Id).UpdateHybridPartnerActivity(entityPM.IsActive);
         }
 
 

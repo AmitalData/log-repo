@@ -196,7 +196,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     IsLogBoxEnvironment() {
         var deploymentStage = ObjectsLocator.GlobalSetting.DeploymentStage ? ObjectsLocator.GlobalSetting.DeploymentStage.toString().toLowerCase() : "";
 
-        return (deploymentStage == "logboxwe1" || deploymentStage == "test2" || deploymentStage == "logboxpre") ? true : false;
+        return (deploymentStage == "logboxwe1" || deploymentStage == "test2" || deploymentStage == "logboxpre" || ObjectsLocator.GlobalSetting.WorkEnvironment == "cloud") ? true : false;
     }
 
 
