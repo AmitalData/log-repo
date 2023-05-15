@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Logitude.AmitalMessaging.Customs.CustomFile.CellFile;
 using System.Xml.Serialization;
 
 // 
@@ -193,6 +194,8 @@ public partial class LogitudeCustomsFile
     private string referentMAWBField;
 
     private string referentHAWBField;
+
+    private ExportInvoice[] invoices;
 
     /// <remarks/>
     public string CustomFileNo
@@ -1125,6 +1128,62 @@ public partial class LogitudeCustomsFile
         set
         {
             this.referentHAWBField = value;
+        }
+    }
+
+    public ExportInvoice[] Invoices
+    {
+        get
+        {
+            return this.invoices;
+        }
+        set
+        {
+            this.invoices = value;
+        }
+    }
+}
+
+
+public class ExportInvoice
+{
+    private  bool isEmpty;
+  
+    private string invoiceNumber;
+
+    private string invoiceDate;
+
+    [XmlIgnore]
+    public bool IsEmpty
+    {
+        get
+        {
+            return InvoiceNumber == null;
+        }
+    }
+
+
+
+    public string InvoiceNumber
+    {
+        get
+        {
+            return this.InvoiceNumber;
+        }
+        set
+        {
+            this.InvoiceNumber = value;
+        }
+    }
+    public string InvoiceDate
+    {
+        get
+        {
+            return this.invoiceDate;
+        }
+        set
+        {
+            this.invoiceDate = value;
         }
     }
 }
