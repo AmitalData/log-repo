@@ -187,7 +187,10 @@ export class ARInvoiceLinePM {
     public get InvoiceCurrencyCode() { return this.invoiceCurrencyCode; }
     public set InvoiceCurrencyCode(newValue: string) { if (this.invoiceCurrencyCode != newValue) { this.invoiceCurrencyCode = newValue; this.MarkAsDirty("InvoiceCurrencyCode"); } }
        
-	 
+    private invoiceCurrencyId: string;
+    public get InvoiceCurrencyId() { return this.invoiceCurrencyId; }
+    public set InvoiceCurrencyId(newValue: string) { if (this.invoiceCurrencyId != newValue) { this.invoiceCurrencyId = newValue; this.MarkAsDirty("InvoiceCurrencyId"); } }
+
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
