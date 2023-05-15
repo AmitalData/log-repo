@@ -131,21 +131,6 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             new TenantHybridPartnerService(entityPM.Id).UpdateHybridPartnerActivity(entityPM.IsActive);
         }
 
-        //private void UpdateHybridPartnerActivity(int id, bool IsActive)
-        //{
-        //    int tenant = entityPM.Id;
-        //    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-        //    {
-        //        HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(tenant);
-        //        var hybridPartner = hybridPartnerQuery.GetSinglePMByPartnerTenant(id);
-        //        ICommonDataContext iCommonDataContext = CommonDataContext.GetContext(0);
-        //        HybridPartnerService hybridPartnerService = new HybridPartnerService(iCommonDataContext);
-
-        //        hybridPartner.InActive = !IsActive;
-        //        hybridPartnerService.Update(hybridPartner);
-        //        scope.Complete();
-        //    }
-        //}
 
         private void DeleteOldImages()
         {

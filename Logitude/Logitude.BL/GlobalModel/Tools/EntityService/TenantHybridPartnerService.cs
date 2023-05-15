@@ -37,6 +37,11 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             {
                 HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository();
                 var hybridPartner = hybridPartnerRepository.GetHybridPartnersByPartnerTenant(tenant).FirstOrDefault();
+                if(hybridPartner == null)
+                {
+                    scope.Complete();
+                    return;
+                }
                 hybridPartner.InActive = !IsActive;
                 hybridPartnerRepository.Update(hybridPartner);
                 hybridPartnerRepository.SubmitChanges();
@@ -49,6 +54,8 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 return;
             TenantRepository tenantRepository = new TenantRepository((int)entityPM.PartnerTenant);
             Tenant tenant = tenantRepository.GetSingleTenant((int)entityPM.PartnerTenant);
+            if (tenant == null)
+                return;
             tenant.IsHybrid = !entityPM.IsExternalPartner;
             tenantRepository.Update(tenant);
             tenantRepository.SubmitChanges();
@@ -61,6 +68,11 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             {
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                 var tenantManagement = tenantManagementRepository.GetSingleTenantManagement((int)entityPM.PartnerTenant);
+                if (tenantManagement == null || tenantManagement.GlobalTenant == null)
+                {
+                    scope.Complete();
+                    return;
+                }
                 tenantManagement.GlobalTenant.IsActive = !entityPM.InActive;
                 tenantManagementRepository.Update(tenantManagement);
                 tenantManagementRepository.SubmitChanges();
