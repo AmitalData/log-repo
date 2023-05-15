@@ -136,11 +136,12 @@ export class LineModel extends BaseComponent {
 
     }
     AutomaticallyFillAmountToReconciledblclick(logCellTemplate: any, AmountToReconcileTextBox: any)
-    {
-        if(this.parent.TotalsDeference!=0){
-            if(this.IsAccountingActivated && this.LedgerTransactionPM.AmountToReconcile==null)
-            if(this.parent.TotalsDeference<this.OpenAmount){
-                this.LedgerTransactionPM.AmountToReconcile = this.parent.TotalsDeference; 
+    {//TotalsDeference//OriginalDifference
+     if(this.IsAccountingActivated && this.LedgerTransactionPM.AmountToReconcile==null)
+        if(this.parent.OriginalDifference!=0 && this.OpenAmount!=0){
+           
+            if( Math.abs(this.parent.OriginalDifference) < Math.abs(this.OpenAmount) ){
+                this.LedgerTransactionPM.AmountToReconcile = this.parent.OriginalDifference; 
             }     
             else 
             {
