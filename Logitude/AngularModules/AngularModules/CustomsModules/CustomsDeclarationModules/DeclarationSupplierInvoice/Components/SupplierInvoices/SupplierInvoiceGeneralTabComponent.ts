@@ -1855,7 +1855,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
      
         this.SumDifference += this.EntityPM.SupplierInvoiceItems.reduce((acc , cur) => acc + cur.ItemPrice, 0);
 
-        this.Parent.Difference = Math.abs(this.InvoiceAmount - this.SumDifference);
+        this.Parent.Difference = Math.round(Math.abs(this.InvoiceAmount - this.SumDifference) *100 ) / 100; 
 
         SumTotalForeignCurrency += this.EntityPM.SupplierInvoiceItems.reduce((acc , cur) => acc + cur.ItemPrice, 0);
 
