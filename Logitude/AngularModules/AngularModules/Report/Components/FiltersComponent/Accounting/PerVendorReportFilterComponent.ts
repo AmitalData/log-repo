@@ -39,14 +39,16 @@ export class PerVendorReportFilterComponent extends BaseComponent {
     public TenantPM: TenantPM = SessionLocator.TenantPM;
     VendorGLAccount: GLAccountPM;
     private CurrentSession = SessionLocator.SelectedSession;
-
+    private vendorFilterSelectedValue: string = "All";
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+    IsAccountingActivated: boolean = false;
     constructor(public entityListService: EntityListService, private CD: ChangeDetectorRef) {
         super();
         this.TenantPM = SessionLocator.TenantPM;
-
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        this.setDefultvendorFilterSelectedValue();
         this.InitComponent();
 
     }
@@ -204,14 +206,22 @@ export class PerVendorReportFilterComponent extends BaseComponent {
             this.vendorId = value;
         }
     }
-
-    private vendorFilterSelectedValue: string = "All";
+   
+    
+   
+    
     public get VendorFilterSelectedValue() { return this.vendorFilterSelectedValue; }
     public set VendorFilterSelectedValue(value: string) {
         if (this.vendorFilterSelectedValue != value) {
             this.vendorFilterSelectedValue = value;
             this.SetGLaccountFilterEnability();
         }
+    }
+
+    setDefultvendorFilterSelectedValue(){
+        if(this.IsAccountingActivated){
+            this.vendorFilterSelectedValue = "Vendor";
+           }
     }
     SetGLaccountFilterEnability() {
         if (this.VendorFilterSelectedValue == "All") {
