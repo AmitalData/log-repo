@@ -491,20 +491,51 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                         row.OriginCountryCode = data[2];
-                        row.SupplierInvoiceItems = new List<InvoiceItemFromFile> {
-                            new InvoiceItemFromFile
+                        var supplierInvoiceItem = new InvoiceItemFromFile
+                        {
+                            rownum = (i + 1).ToString(),
+                            ClassificationCode = data[1],
+                            OriginCountryCode = data[2],
+                            //InvoiceQuentity = string.IsNullOrWhiteSpace(data[3]) ? (int?)null : (Convert.ToInt32(data[3]) > 0 ? Convert.ToInt32(data[3]) : (int?)null),
+                            //ItemPrice = string.IsNullOrWhiteSpace(data[4]) ? (decimal?)null : Convert.ToDecimal(data[4]),
+                            TransactionNatureCode = data[5],
+                            ProcessType = data[6],
+                            TradeAgreement = data[7],
+                            DutyRegimeProtocolCode = data[8],
+                            InvoiceCurrency = data[11],
+                        };
+                        if (decimal.TryParse(data[3], out decimal parsedQuentity))
+                        {
+                            supplierInvoiceItem.InvoiceQuentity = parsedQuentity;
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(data[3]))
                             {
-                                rownum = (i + 1).ToString(),
-                                ClassificationCode = data[1],
-                                OriginCountryCode = data[2],
-                                InvoiceQuentity = string.IsNullOrWhiteSpace(data[3]) ? (int?)null : (Convert.ToInt32(data[3])> 0 ? Convert.ToInt32(data[3]) : (int?)null),
-                                ItemPrice = string.IsNullOrWhiteSpace(data[4]) ? (decimal?)null : Convert.ToDecimal(data[4]),
-                                TransactionNatureCode = data[5],
-                                ProcessType = data[6],
-                                TradeAgreement = data[7],
-                                DutyRegimeProtocolCode = data[8],
-                                InvoiceCurrency = data[11],
+                                supplierInvoiceItem.InvoiceQuentity = null;
                             }
+                            else
+                            {
+                                row.Errors += " InvoiceNumber:" + row.InvoiceNumber + " Line: " + i + " InvoiceQuentity is not valid decimal value:" + data[3] + " ";
+                            }
+                        }
+                        if (decimal.TryParse(data[4], out decimal parsedPrice))
+                        {
+                            supplierInvoiceItem.ItemPrice = parsedPrice;
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(data[4]))
+                            {
+                                supplierInvoiceItem.ItemPrice = null;
+                            }
+                            else
+                            {
+                                row.Errors += " InvoiceNumber:" + row.InvoiceNumber + " Line: " + i + " ItemPrice is not valid decimal value:" + data[4] + " ";
+                            }
+                        }
+                        row.SupplierInvoiceItems = new List<InvoiceItemFromFile> {
+                            supplierInvoiceItem
                         };
                         fromFile.Add(row);
                         currentInvoice = row;
@@ -514,20 +545,55 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         if (string.IsNullOrWhiteSpace(string.Join(" ", data))) continue;
                         //new item
-                        
-                        currentInvoice.SupplierInvoiceItems.Add(new InvoiceItemFromFile
+
+                        var supplierInvoiceItem = new InvoiceItemFromFile
                         {
                             rownum = (i + 1).ToString(),
                             ClassificationCode = data[1],
                             OriginCountryCode = data[2],
-                            InvoiceQuentity = string.IsNullOrWhiteSpace(data[3]) ? (int?)null : Convert.ToInt32(data[3]),
-                            ItemPrice = string.IsNullOrWhiteSpace(data[4]) ? (decimal?)null : Convert.ToDecimal(data[4]),
+                            //InvoiceQuentity = string.IsNullOrWhiteSpace(data[3]) ? (int?)null : Convert.ToInt32(data[3]),
+                            //ItemPrice = string.IsNullOrWhiteSpace(data[4]) ? (decimal?)null : Convert.ToDecimal(data[4]),
                             TransactionNatureCode = data[5],
                             ProcessType = data[6],
                             TradeAgreement = data[7],
                             DutyRegimeProtocolCode = data[8],
                             InvoiceCurrency = data[11],
-                        });
+                        };
+                        if (decimal.TryParse(data[3], out decimal parsedQuentity))
+                        {
+                            supplierInvoiceItem.InvoiceQuentity = parsedQuentity;
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(data[3]))
+                            {
+                                supplierInvoiceItem.InvoiceQuentity = null;
+                            }
+                            else
+                            {
+                                currentInvoice.Errors += " InvoiceNumber:" + currentInvoice.InvoiceNumber + " Line: " + i + " InvoiceQuentity is not valid decimal value:" + data[3] + " ";
+                            }
+                        }
+                        if (decimal.TryParse(data[4], out decimal parsedPrice))
+                        {
+                            supplierInvoiceItem.ItemPrice = parsedPrice;
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(data[4]))
+                            {
+                                supplierInvoiceItem.ItemPrice = null;
+                            }
+                            else
+                            {
+                                currentInvoice.Errors += " InvoiceNumber:" + currentInvoice.InvoiceNumber + " Line: " + i + " ItemPrice is not valid decimal value:" + data[4] + " ";
+                            }
+                        }
+                        if (string.IsNullOrWhiteSpace(currentInvoice.PreferenceDocumentTypeCode))
+                            currentInvoice.PreferenceDocumentTypeCode = data[7];
+                        if (string.IsNullOrWhiteSpace(currentInvoice.TradeAgreementProtocol))
+                            currentInvoice.TradeAgreementProtocol = data[8];
+                        currentInvoice.SupplierInvoiceItems.Add(supplierInvoiceItem);
                     }
                 }
             }
@@ -589,7 +655,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             public string rownum;
             public string TradeAgreement;// - קוד הסכם
-            public int? InvoiceQuentity;//כמות
+            public decimal? InvoiceQuentity;//כמות
             public string TransactionNatureCode;//אופי עסקה
             public string ClassificationCode;
             public decimal? ItemPrice;//ערך במטח
