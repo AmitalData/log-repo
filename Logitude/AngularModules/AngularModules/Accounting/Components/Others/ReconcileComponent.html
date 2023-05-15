@@ -406,7 +406,9 @@
                                 <div *ngIf="logcelltemplate.IsEditMode">
                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"
                                                 [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [DataContext]="item"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                (dblclick)="item.AutomaticallyFillAmountToReconciledblclick(logcelltemplate,AmountToReconcileTextBox)">
+                                            </LogTextBox>
                                 </div>
                             </log-cell-template>
                         </ng-template>

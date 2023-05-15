@@ -43,6 +43,7 @@ export class LineModel extends BaseComponent {
     public DataContext = this;
     public isRTL: boolean = false;
     public Title: string = '';
+    IsAccountingActivated: boolean = false;
     constructor(
         public ledgerTransaction: LedgerTransactionPM,
         public parent: ReconcileComponent,
@@ -56,6 +57,8 @@ export class LineModel extends BaseComponent {
         if (!this.AmountToReconcile)
             this.AmountToReconcile = this.ledgerTransaction.OpenAmount;
         this.RowIndex = myRowIndex;
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+
 
         this.OddEven = this.ColorMe();
 
@@ -131,6 +134,22 @@ export class LineModel extends BaseComponent {
             this.parent.CalculateTotals();
         }
 
+    }
+    AutomaticallyFillAmountToReconciledblclick(logCellTemplate: any, AmountToReconcileTextBox: any)
+    {
+        if(this.parent.TotalsDeference!=0){
+            if(this.IsAccountingActivated && this.LedgerTransactionPM.AmountToReconcile==null)
+            if(this.parent.TotalsDeference<this.OpenAmount){
+                this.LedgerTransactionPM.AmountToReconcile = this.parent.TotalsDeference; 
+            }     
+            else 
+            {
+                this.LedgerTransactionPM.AmountToReconcile = this.OpenAmount; 
+            }
+            AmountToReconcileTextBox.ForceDisabled=true;
+            AmountToReconcileTextBox.IsDisabled=true;
+            this.parent.CalculateTotals();
+        } 
     }
 
     OddEven: boolean;
