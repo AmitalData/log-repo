@@ -172,6 +172,7 @@ namespace WebFreight.Web.InfrastructureModel
         private static ShipmentSubTypeQuery shipmentSubTypeQuery;
         static CustomerGroupRepository customerGroupRepository;
 
+        private static HybridPartnerService hybridPartnerService;
         public static ScreenFieldsRepository ScreenFieldsRepository
         {
             get { return screenFieldsRepository; }
@@ -328,6 +329,8 @@ namespace WebFreight.Web.InfrastructureModel
             bankCodeRepository = new BankCodeRepository(theTenant);
             taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(theTenant);
             customerGroupRepository = new CustomerGroupRepository(theTenant);
+            ICommonDataContext iCommonDataContext = CommonDataContext.GetContext(0);
+            hybridPartnerService = new HybridPartnerService(iCommonDataContext);
             #endregion
         }
         private static Setting setting;
@@ -572,7 +575,7 @@ namespace WebFreight.Web.InfrastructureModel
                 //Task
                 AddTaskPriorities(tenant, taskPriorityRepository, tenantZeroTaskPriorities);
                 AddTaskStatuses(tenant, taskStatusRepository, tenantZeroTaskStatuses);
-
+          
                 new TruckerSignUpService(signUpInfo, tenant).CopyFromTenantZero();
                 #endregion
                 scop.Complete();
@@ -1328,9 +1331,23 @@ namespace WebFreight.Web.InfrastructureModel
             
             ICommonDataContext commonContext = CommonDataContext.GetContext(newTenant.Id);
             TenantService service = new TenantService(commonContext, newTenant.Id);
+            newTenant = AddHybridPartner(signUpInfoClass, newTenant);
             service.Create(newTenant);
 
             return newTenant.Id;
+        }
+
+        private static TenantPM AddHybridPartner(SignUpInfoClass signUpInfo,TenantPM newTenant)
+        {
+            if (LogitudeSettings.WorkEnvironment != "cloud")
+                return newTenant;
+            newTenant.IsHybrid = true;
+            HybridPartnerPM entityPM = new HybridPartnerPM();
+            entityPM.Name = signUpInfo.Company;
+            entityPM.PartnerTenant = signUpInfo.Tenant;
+            entityPM.LocalName = signUpInfo.Company;
+            hybridPartnerService.Create(entityPM);
+            return newTenant;
         }
 
         private static TenantPM GetNewTenantPM(SignUpInfoClass signUpInfoClass, LogitudeLead lead)

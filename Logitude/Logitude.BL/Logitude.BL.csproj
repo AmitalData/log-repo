@@ -597,6 +597,7 @@
     <Compile Include="DataContracts\UpdateContainersServiceArgs.cs" />
     <Compile Include="DataContracts\VisionContainerStatus.cs" />
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
+    <Compile Include="GlobalModel\Tools\EntityService\TenantHybridPartnerService.cs" />
     <Compile Include="Helpers\AddManualTraceEventsHelper.cs" />
     <Compile Include="Helpers\APICaller.cs" />
     <Compile Include="Helpers\ConcurrencyFieldHelper.cs" />

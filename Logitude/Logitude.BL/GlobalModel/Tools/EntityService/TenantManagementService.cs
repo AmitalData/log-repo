@@ -100,7 +100,6 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             {
                 CacheManager.CacheWrapper.Invalidate(entityPmName);
             }
-
             this.UpdateParticipants();
             this.UpdateDocumentsArchive();
             this.UpdateGlobalTenants();
@@ -112,7 +111,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.CheckParentTenants();
             this.DeleteOldImages();
             this.CreateContainerSettings();
-
+            this.UpdateHybridTenantActivity(entityPoco, entityPM);
             if (entityPM.Id == 341)
             {
                 this.UpdateCustomer();
@@ -124,6 +123,29 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             entityRepository.SubmitChanges();
         }
 
+        private void UpdateHybridTenantActivity(TenantManagement entityPoco, TenantManagementPM entityPM)
+        {
+            if (entityPoco.GlobalTenant.IsActive == entityPM.IsActive)
+                return;
+            entityPoco.GlobalTenant.IsActive = entityPM.IsActive;
+            new TenantHybridPartnerService(entityPM.Id).UpdateHybridPartnerActivity(entityPM.IsActive);
+        }
+
+        //private void UpdateHybridPartnerActivity(int id, bool IsActive)
+        //{
+        //    int tenant = entityPM.Id;
+        //    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+        //    {
+        //        HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(tenant);
+        //        var hybridPartner = hybridPartnerQuery.GetSinglePMByPartnerTenant(id);
+        //        ICommonDataContext iCommonDataContext = CommonDataContext.GetContext(0);
+        //        HybridPartnerService hybridPartnerService = new HybridPartnerService(iCommonDataContext);
+
+        //        hybridPartner.InActive = !IsActive;
+        //        hybridPartnerService.Update(hybridPartner);
+        //        scope.Complete();
+        //    }
+        //}
 
         private void DeleteOldImages()
         {
