@@ -308,6 +308,7 @@
     <None Include="DBTables\CustomBanksCard.dxml" />
     <None Include="DBTables\CustomDocumentType.dxml" />
     <None Include="DBTables\CustomDocumentTypeMetaData.dxml" />
+    <None Include="DBTables\CustomDocumentTypeTenant.dxml" />
     <None Include="DBTables\CustomerActivityType.dxml" />
     <None Include="DBTables\CustomerClassificationType.dxml" />
     <None Include="DBTables\CustomerIdentificationType.dxml" />
@@ -327,6 +328,7 @@
     <None Include="DBTables\CustomsCollateralsAnswer.dxml" />
     <None Include="DBTables\CustomsCollateralsCondition.dxml" />
     <None Include="DBTables\CustomsCountry.dxml" />
+    <None Include="DBTables\CustomsCountryTenant.dxml" />
     <None Include="DBTables\CustomsDocument.dxml" />
     <None Include="DBTables\CustomsDocumentMetaDataValue.dxml" />
     <None Include="DBTables\CustomsDocumentPointer.dxml" />
@@ -432,6 +434,7 @@
     <None Include="DBTables\InterfaceTenantDefinition.dxml" />
     <None Include="DBTables\InternalBorderSiteType.dxml" />
     <None Include="DBTables\InternationalSite.dxml" />
+    <None Include="DBTables\InternationalSiteTenant.dxml" />
     <None Include="DBTables\InvoiceType.dxml" />
     <None Include="DBTables\ItemGovernmentProcedureType.dxml" />
     <None Include="DBTables\LastReleaseFromWarehouse.dxml" />
@@ -591,9 +594,14 @@
     <None Include="EntityFiles\CountryCurrency.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
+    <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
+    <None Include="EntityFiles\CustomsCountryTenant.lxml" />
+    <None Include="EntityFiles\CustomsHouseTypeTenant.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\DefaultType.lxml" />
     <None Include="EntityFiles\DefaultValue.lxml" />
+    <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />
+    <None Include="EntityFiles\InternationalSiteTenant.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />
     <None Include="EntityFiles\SignStation.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />
@@ -1019,6 +1027,7 @@
     <None Include="EntityFiles\UIMessageAdditional.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\UIMessageTenant.lxml" />
     <None Include="EntityFiles\UnloadingSiteType.lxml" />
     <None Include="EntityFiles\LogisticActionResponseReqS.lxml" />
     <None Include="EntityFiles\UpdateCode.lxml" />

@@ -437,6 +437,7 @@
     <Compile Include="EntityDataMappings\CustomBanksCardDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomDocumentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomDocumentTypeMetaDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomDocumentTypeTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerActivityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerClassificationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerIdentificationTypeDataMapping.cs" />
@@ -456,6 +457,7 @@
     <Compile Include="EntityDataMappings\CustomsCollateralsAnswerDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsCollateralsConditionDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsCountryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsCountryTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsDocumentDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsDocumentMetaDataValueDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsDocumentPointerDataMapping.cs" />
@@ -468,6 +470,7 @@
     <Compile Include="EntityDataMappings\CustomsExchangeRateDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsHouseTypeAdditionalDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsHouseTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsHouseTypeTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsInsuranceCompanyDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsItemDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsItemDetailsHistoryDataMapping.cs" />
@@ -655,6 +658,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomBanksCardDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomDocumentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomDocumentTypeMetaDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomDocumentTypeTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerActivityTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerClassificationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerIdentificationTypeDataMapping.Generated.cs" />
@@ -674,6 +678,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomsCollateralsAnswerDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsCollateralsConditionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsCountryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsCountryTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentMetaDataValueDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentPointerDataMapping.Generated.cs" />
@@ -686,6 +691,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomsExchangeRateDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsHouseTypeAdditionalDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsHouseTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsHouseTypeTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsInsuranceCompanyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsItemDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsItemDetailsHistoryDataMapping.Generated.cs" />
@@ -764,6 +770,7 @@
     <Compile Include="EntityDataMappings\Generated\GatepassReturnCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GenderDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GovernmentProcedureTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GovernmentProcTypeTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GTBFUSTATUDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GuaranteeCertificateTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GuaranteeConditionDataMapping.Generated.cs" />
@@ -781,6 +788,7 @@
     <Compile Include="EntityDataMappings\Generated\InterfaceTenantDefinitionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InternalBorderSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InternationalSiteDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InternationalSiteTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InvoiceTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ItemGovernmentProcedureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LastReleaseFromWarehouseDataMapping.Generated.cs" />
@@ -925,6 +933,7 @@
     <Compile Include="EntityDataMappings\Generated\TreatmentWayDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UIMessageAdditionalDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UIMessageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UIMessageTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UnloadingSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UpdateCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ValidCustomsItemDataMapping.Generated.cs" />
@@ -947,6 +956,7 @@
     <Compile Include="EntityDataMappings\Generated\VendorTransactionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VendorTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\GovernmentProcedureTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GovernmentProcTypeTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\GTBFUSTATUDataMapping.cs" />
     <Compile Include="EntityDataMappings\GuaranteeCertificateTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\GuaranteeConditionDataMapping.cs" />
@@ -964,6 +974,7 @@
     <Compile Include="EntityDataMappings\InterfaceTenantDefinitionDataMapping.cs" />
     <Compile Include="EntityDataMappings\InternalBorderSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\InternationalSiteDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InternationalSiteTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\InvoiceTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ItemGovernmentProcedureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\LastReleaseFromWarehouseDataMapping.cs" />
@@ -1108,6 +1119,7 @@
     <Compile Include="EntityDataMappings\TreatmentWayDataMapping.cs" />
     <Compile Include="EntityDataMappings\UIMessageAdditionalDataMapping.cs" />
     <Compile Include="EntityDataMappings\UIMessageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UIMessageTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\UnloadingSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\UpdateCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ValidCustomsItemDataMapping.cs" />
@@ -1135,9 +1147,15 @@
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientItemQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomDocumentTypeTenantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsCountryTenantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsHouseTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultValueQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GovernmentProcTypeTenantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InternationalSiteTenantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\UIMessageTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VendorCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StatusCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SchedulerParamQueryService.cs" />
@@ -1666,6 +1684,12 @@
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsItemDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClientItemUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomDocumentTypeTenantUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsCountryTenantUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsHouseTypeTenantUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GovernmentProcTypeTenantUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InternationalSiteTenantUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\UIMessageTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />

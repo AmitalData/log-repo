@@ -125,6 +125,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomBanksCard> CustomBanksCards { get; }
 		 IDbSet<CustomDocumentType> CustomDocumentTypes { get; }
 		 IDbSet<CustomDocumentTypeMetaData> CustomDocumentTypeMetaData { get; }
+		 IDbSet<CustomDocumentTypeTenant> CustomDocumentTypeTenants { get; }
 		 IDbSet<CustomerActivityType> CustomerActivityTypes { get; }
 		 IDbSet<CustomerClassificationType> CustomerClassificationTypes { get; }
 		 IDbSet<CustomerIdentificationType> CustomerIdentificationTypes { get; }
@@ -144,6 +145,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsCollateralsAnswer> CustomsCollateralsAnswers { get; }
 		 IDbSet<CustomsCollateralsCondition> CustomsCollateralsConditions { get; }
 		 IDbSet<CustomsCountry> CustomsCountries { get; }
+		 IDbSet<CustomsCountryTenant> CustomsCountryTenants { get; }
 		 IDbSet<CustomsDocument> CustomsDocuments { get; }
 		 IDbSet<CustomsDocumentMetaDataValue> CustomsDocumentMetaDataValues { get; }
 		 IDbSet<CustomsDocumentPointer> CustomsDocumentPointers { get; }
@@ -157,6 +159,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsGeneral> CustomsGenerals { get; }
 		 IDbSet<CustomsHouseType> CustomsHouseTypes { get; }
 		 IDbSet<CustomsHouseTypeAdditional> CustomsHouseTypeAdditionals { get; }
+		 IDbSet<CustomsHouseTypeTenant> CustomsHouseTypeTenants { get; }
 		 IDbSet<CustomsInsuranceCompany> CustomsInsuranceCompanies { get; }
 		 IDbSet<CustomsItem> CustomsItems { get; }
 		 IDbSet<CustomsItemDetailsHistory> CustomsItemDetailsHistorys { get; }
@@ -235,6 +238,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<GatepassReturnCode> GatepassReturnCodes { get; }
 		 IDbSet<Gender> Genders { get; }
 		 IDbSet<GovernmentProcedureType> GovernmentProcedureTypes { get; }
+		 IDbSet<GovernmentProcTypeTenant> GovernmentProcTypeTenants { get; }
 		 IDbSet<Guarantee> Guarantees { get; }
 		 IDbSet<GuaranteeCertificateType> GuaranteeCertificateTypes { get; }
 		 IDbSet<GuaranteeCondition> GuaranteeConditions { get; }
@@ -251,6 +255,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<InterfaceTenantDefinition> InterfaceTenantDefinitions { get; }
 		 IDbSet<InternalBorderSiteType> InternalBorderSiteTypes { get; }
 		 IDbSet<InternationalSite> InternationalSites { get; }
+		 IDbSet<InternationalSiteTenant> InternationalSiteTenants { get; }
 		 IDbSet<InvoiceType> InvoiceTypes { get; }
 		 IDbSet<ItemGovernmentProcedureType> ItemGovernmentProcedureTypes { get; }
 		 IDbSet<LastReleaseFromWarehouse> LastReleaseFromWarehouses { get; }
@@ -389,6 +394,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<TreatmentWay> TreatmentWays { get; }
 		 IDbSet<UIMessage> UIMessages { get; }
 		 IDbSet<UIMessageAdditional> UIMessageAdditionals { get; }
+		 IDbSet<UIMessageTenant> UIMessageTenants { get; }
 		 IDbSet<UnloadingSiteType> UnloadingSiteType { get; }
 		 IDbSet<UpdateCode> UpdateCodes { get; }
 		 IDbSet<ValidCustomsItem> ValidCustomsItems { get; }

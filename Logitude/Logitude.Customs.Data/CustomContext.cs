@@ -284,6 +284,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomDocumentTypeMetaDataMap());
 	
+            modelBuilder.Configurations.Add(new CustomDocumentTypeTenantMap());
+	
             modelBuilder.Configurations.Add(new CustomerActivityTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomerClassificationTypeMap());
@@ -322,6 +324,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsCountryMap());
 	
+            modelBuilder.Configurations.Add(new CustomsCountryTenantMap());
+	
             modelBuilder.Configurations.Add(new CustomsDocumentMap());
 	
             modelBuilder.Configurations.Add(new CustomsDocumentMetaDataValueMap());
@@ -347,6 +351,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CustomsHouseTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomsHouseTypeAdditionalMap());
+	
+            modelBuilder.Configurations.Add(new CustomsHouseTypeTenantMap());
 	
             modelBuilder.Configurations.Add(new CustomsInsuranceCompanyMap());
 	
@@ -504,6 +510,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new GovernmentProcedureTypeMap());
 	
+            modelBuilder.Configurations.Add(new GovernmentProcTypeTenantMap());
+	
             modelBuilder.Configurations.Add(new GuaranteeMap());
 	
             modelBuilder.Configurations.Add(new GuaranteeCertificateTypeMap());
@@ -535,6 +543,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new InternalBorderSiteTypeMap());
 	
             modelBuilder.Configurations.Add(new InternationalSiteMap());
+	
+            modelBuilder.Configurations.Add(new InternationalSiteTenantMap());
 	
             modelBuilder.Configurations.Add(new InvoiceTypeMap());
 	
@@ -811,6 +821,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new UIMessageMap());
 	
             modelBuilder.Configurations.Add(new UIMessageAdditionalMap());
+	
+            modelBuilder.Configurations.Add(new UIMessageTenantMap());
 	
             modelBuilder.Configurations.Add(new UnloadingSiteTypeMap());
 	
@@ -2011,6 +2023,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CustomDocumentTypeTenant> CustomDocumentTypeTenants 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomerActivityType> CustomerActivityTypes 
 	 {
 	      get; set;
@@ -2125,6 +2143,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CustomsCountryTenant> CustomsCountryTenants 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomsDocument> CustomsDocuments 
 	 {
 	      get; set;
@@ -2198,6 +2222,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsHouseTypeAdditional> CustomsHouseTypeAdditionals 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsHouseTypeTenant> CustomsHouseTypeTenants 
 	 {
 	      get; set;
 	 
@@ -2671,6 +2701,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<GovernmentProcTypeTenant> GovernmentProcTypeTenants 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<Guarantee> Guarantees 
 	 {
 	      get; set;
@@ -2762,6 +2798,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<InternationalSite> InternationalSites 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InternationalSiteTenant> InternationalSiteTenants 
 	 {
 	      get; set;
 	 
@@ -3590,6 +3632,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<UIMessageAdditional> UIMessageAdditionals 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<UIMessageTenant> UIMessageTenants 
 	 {
 	      get; set;
 	 
