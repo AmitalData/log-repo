@@ -47,7 +47,7 @@
   <Column
     Name="CountryTypeCode"
     Type="varchar"
-    Size="2">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

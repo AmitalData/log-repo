@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;אתר בינלאומי&quot;"
   DefaultText="&quot;International Site&quot;"
-  Code="&quot;73c8&quot;"
+  Code="&quot;04da&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -91,6 +91,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -163,6 +164,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -235,6 +237,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdateDate&quot;"
     ListPropertyPath="&quot;UpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -308,6 +311,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdatedByUserId&quot;"
     ListPropertyPath="&quot;UpdatedByUserId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -379,6 +383,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -452,6 +457,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Inactive&quot;"
     ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -510,7 +516,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.CustomsCountryTenant&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -519,7 +525,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="2"
+    SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
@@ -528,6 +534,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CountryTypeCode&quot;"
     ListPropertyPath="&quot;CountryTypeCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -605,6 +612,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CountryTypeName&quot;"
     ListPropertyPath="&quot;CountryTypeName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -652,6 +660,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.InternationalSiteTenantHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.InternationalSiteTenant&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -680,6 +697,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
