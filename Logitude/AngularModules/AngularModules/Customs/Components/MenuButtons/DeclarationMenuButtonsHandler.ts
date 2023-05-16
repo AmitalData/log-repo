@@ -334,7 +334,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.Width = 60;
                     }
                     if (button.EventCode == "PrintDeclarationForm") {
-                        debugger
                         //if (!declaration.HasDocument)
                         //if (AppTool.IsNullOrEmpty(this.EntityPM.DocumentDeclarationId)) {
                         var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
