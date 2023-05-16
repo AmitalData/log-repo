@@ -79,7 +79,7 @@ export class EventRemarksComponent extends BaseComponent {
             this.partnerTypesEvent[index].IsChoose = value;
         }
         this.FullEventRemarksList(this.partnerTypesEvent);
-
+        
         this.EntityPM.EventRemarks = [];
         this.EventRemarksList.forEach( val=> this.EntityPM.EventRemarks.push(val) );
         if(this.CurrentSession.CurrentEditComponent!=null)
@@ -152,17 +152,17 @@ export class EventRemarksComponent extends BaseComponent {
         partnerTypesEvent.EventRemark.IsChoose = value;
     }
 
-    TextChanged(searchEvent) {
+    TextChanged(searchEvent) {      
         if (searchEvent == "" || searchEvent == null) {
-            this.partnerTypesEvent = [];
-            this.tempPartnerTypesEvent.forEach(val => this.partnerTypesEvent.push(val));
+            this.tempPartnerTypesEvent = [];
+            this.partnerTypesEvent.forEach(val => this.tempPartnerTypesEvent.push(val));
         }
         else if (searchEvent != "" || searchEvent != null) {
-            var size = this.tempPartnerTypesEvent.length;
-            this.partnerTypesEvent = [];
+            var size = this.partnerTypesEvent.length;
+            this.tempPartnerTypesEvent = [];
             for (let i = 0; i < size; i++) {
-                if (this.tempPartnerTypesEvent[i].PartnerTypeName.toUpperCase().match(searchEvent.toUpperCase())) {
-                    this.partnerTypesEvent.push(this.tempPartnerTypesEvent[i]);
+                if (this.partnerTypesEvent[i].PartnerTypeName.toUpperCase().match(searchEvent.toUpperCase())) {
+                    this.tempPartnerTypesEvent.push(this.partnerTypesEvent[i]);
                 }
             }
         }
