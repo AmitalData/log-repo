@@ -138,7 +138,9 @@ export class LineModel extends BaseComponent {
     AutomaticallyFillAmountToReconciledblclick(logCellTemplate: any, AmountToReconcileTextBox: any)
     {
      if(this.IsAccountingActivated && this.LedgerTransactionPM.AmountToReconcile==null)
-        if(this.parent.OriginalDifference!=0 && this.OpenAmount!=0){
+     {
+        if(this.parent.OriginalDifference!=0 && this.OpenAmount!=0)
+        {
            
             if( Math.abs(this.parent.OriginalDifference) < Math.abs(this.OpenAmount) ){
                 if( Math.sign(this.parent.OriginalDifference) == Math.sign(this.OpenAmount) ){
@@ -153,11 +155,17 @@ export class LineModel extends BaseComponent {
             else 
             {
                 this.LedgerTransactionPM.AmountToReconcile = this.OpenAmount; 
-            }
-            AmountToReconcileTextBox.ForceDisabled=true;
-            AmountToReconcileTextBox.IsDisabled=true;
-            this.parent.CalculateTotals();
+            }         
         } 
+        else 
+        {
+            this.LedgerTransactionPM.AmountToReconcile=0;  
+        }
+        AmountToReconcileTextBox.ForceDisabled=true;
+        AmountToReconcileTextBox.IsDisabled=true;
+        this.parent.CalculateTotals();
+     }
+        
     }
 
     OddEven: boolean;
