@@ -27168,10 +27168,11 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-          Code="&quot;PrintDeclarationForm&quot;"
+      Code="&quot;DisabledPrintDecForm&quot;"
           FeatureTypeCode="&quot;ACT&quot;"
           FeatureTextCodeCode="&quot;Customs.Declaration.Features.PrintDeclarationForm&quot;"
-          FeatureDefaultText="&quot;Print Declaration Form&quot;"
+<
+      FeatureDefaultText="&quot;Disabled Print Dec Form&quot;"
           IsPackagable="true"
           IsOld="false"
           IsCoreFeature="false"
