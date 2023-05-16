@@ -141,7 +141,14 @@ export class LineModel extends BaseComponent {
         if(this.parent.OriginalDifference!=0 && this.OpenAmount!=0){
            
             if( Math.abs(this.parent.OriginalDifference) < Math.abs(this.OpenAmount) ){
-                this.LedgerTransactionPM.AmountToReconcile = this.parent.OriginalDifference; 
+                if( Math.sign(this.parent.OriginalDifference) == Math.sign(this.OpenAmount) ){
+                    this.LedgerTransactionPM.AmountToReconcile = this.parent.OriginalDifference; 
+                }
+                else
+                {
+                    this.LedgerTransactionPM.AmountToReconcile = -1 * this.parent.OriginalDifference;
+                }
+                 
             }     
             else 
             {
