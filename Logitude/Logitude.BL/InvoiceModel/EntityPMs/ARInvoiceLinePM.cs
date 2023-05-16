@@ -59,6 +59,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? ProfitCurrencyAmount { get; set; }
         public string InvoiceLocalCurrencyCode { get; set; }
         public string InvoiceCurrencyCode { get; set; }
+        public string InvoiceCurrencyId { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

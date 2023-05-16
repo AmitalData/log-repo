@@ -78,9 +78,17 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return contact;
 
         }
+        public bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
+        }
 
         public List<ARInvoiceLinePM> GetInvoiceLinePMsByInvoiceId(string invoiceId, int tenant)
         {
+            var isFullAccountingActivated = IsFullAccountingActivated(tenant);
             Contact loggedContact = GetLogContact(tenant);
             List<ARInvoiceLinePM> list = (from a in repository.context.ARInvoiceLines.Include("ARInvoiceLineAction")
                                           where a.Tenant == tenant && a.ARInvoiceId == invoiceId
@@ -104,6 +112,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               IsExchangeRateFixed = a.IsExchangeRateFixed,
                                               ProfitCurrencyAmount = a.ProfitCurrencyAmount,
                                               InvoiceCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrency == null ? "" : a.ARInvoice.InvoiceCurrency.Code),
+                                              InvoiceCurrencyId =  a.ARInvoice == null ? "" : ( ( a.ARInvoice.InvoiceCurrencyId != null && isFullAccountingActivated ) ? a.ARInvoice.InvoiceCurrency.Id  : "" ),
                                               InvoiceLocalCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.LocalCurrency == null ? "" : a.ARInvoice.LocalCurrency.Code),
                                               MeasurementCode = a.Measurement == null ? "" : a.Measurement.Code,
                                               ExchangeRateDate = a.ExchangeRateDate,
@@ -267,6 +276,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<ARInvoiceLinePM> GetInvoiceLinePMsByInvoiceIds(List<string> invoiceIds, int tenant)
         {
+            var isFullAccountingActivated = IsFullAccountingActivated(tenant);
             Contact loggedContact = GetLogContact(tenant);
             List<ARInvoiceLinePM> list = new List<ARInvoiceLinePM>();
             const int sqlLimit = 5000;
@@ -298,6 +308,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                   IsExchangeRateFixed = a.IsExchangeRateFixed,
                                                   ProfitCurrencyAmount = a.ProfitCurrencyAmount,
                                                   InvoiceCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrency == null ? "" : a.ARInvoice.InvoiceCurrency.Code),
+                                                  InvoiceCurrencyId = a.ARInvoice == null ? "" : ((a.ARInvoice.InvoiceCurrencyId != null && isFullAccountingActivated) ? a.ARInvoice.InvoiceCurrency.Id : ""),
                                                   InvoiceLocalCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.LocalCurrency == null ? "" : a.ARInvoice.LocalCurrency.Code),
                                                   MeasurementCode = a.Measurement == null ? "" : a.Measurement.Code,
                                                   ExchangeRateDate = a.ExchangeRateDate,
@@ -320,6 +331,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 list.AddRange(tempList);
             }
             return list;
-        }
+        }     
     }
 }
