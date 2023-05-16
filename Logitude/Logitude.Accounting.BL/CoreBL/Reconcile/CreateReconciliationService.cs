@@ -132,7 +132,6 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (ReconciliationPM recoPM in paymentReconciliations)
             {
                 service.Update(recoPM, true);
-                Thread.Sleep(120000);
                 //throw new ApplicationException("Manual exc");
             }
         }
