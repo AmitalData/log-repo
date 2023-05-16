@@ -121,7 +121,7 @@
     <None Include="DBScripts\202107041359_SumUpGLAccountCardsDataAmounts.sxml" />
     <None Include="DBScripts\202104211213_UpdateGLAccountCardDataTable.sxml" />
     <None Include="DBScripts\202008241136_EventTypesConverteLocalNameToEnglishName.sxml" />
-    <None Include="DBScripts\202009231117_UpdateActiveForInterestFieldOnGLAccount.sxml" />
+    <None Include="DBScripts\202009231117_UpdateActiveForInterestFieldOnGLAccount.asxml" />
     <None Include="DBScripts\202012251232_UpdateUserDefinedReportLocalName.sxml" />
     <None Include="DBScripts\202012021000_UpdateNullableGLAccountFields.sxml" />
     <None Include="DBScripts\202009041551_UpdateDisplayNumberFieldOnCards.sxml" />
