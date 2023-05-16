@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -44,7 +43,7 @@ namespace Logitude.DBMigrations.Models
         {
             if (!ToolArguments.IsArgumentProvided(Arguments.SERVICE))
             {
-                if (!ToolArguments.IsArgumentProvided(Arguments.DEV))
+                if (!(ToolArguments.IsArgumentProvided(Arguments.DEV) || (RunSettings.DebugMode && RunSettings.DevMode)))
                 {
                     StartNormalMigrations();
                     StartZeroDownTimeMigrations();
@@ -1127,6 +1126,7 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                     }
                     connection.Close();
+                    ExitTool("Error: Cannot Get DXML Hashes");
                 }
 
                 DXMLHashes = dxmlHashes;
@@ -1166,6 +1166,7 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                     }
                     connection.Close();
+                    ExitTool("Error: Cannot Get DXML Hashes");
                 }
 
                 DXMLHashes = dxmlHashes;
@@ -1688,6 +1689,11 @@ namespace Logitude.DBMigrations.Models
 
             foreach (var dbType in dbTypes)
             {
+                if (dbType == "CargoTracking" && !IsModuleIncluded("CargoTracking"))
+                {
+                    continue;
+                }
+
                 string connectionString = ToolConfigurations.GetConnectionString(dbType);
 
                 if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
@@ -1725,16 +1731,17 @@ namespace Logitude.DBMigrations.Models
                             reader.Close();
                         }
                         connection.Close();
+                        ExitTool("Error: Cannot Get Executed SXML Files From Database " + dbType);
                     }
                 }
                 else
                 {
-                    string queryString = "SELECT * FROM [dbo].[DBScriptsHistory]";
+                    string queryString = "SELECT SxmlFileName,ExecutionDate,HashValue,Version FROM [dbo].[DBScriptsHistory]";
 
                     SqlDataReader reader = null;
                     SqlConnection connection = new SqlConnection(connectionString);
                     SqlCommand command = new SqlCommand(queryString, connection);
-                    command.CommandTimeout = 180;
+                    command.CommandTimeout = 600;
                     try
                     {
                         connection.Open();
@@ -1762,6 +1769,7 @@ namespace Logitude.DBMigrations.Models
                             reader.Close();
                         }
                         connection.Close();
+                        ExitTool("Error: Cannot Get Executed SXML Files From Database " + dbType);
                     }
                 }
             }
@@ -1800,8 +1808,8 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                     }
                     connection.Close();
+                    ExitTool("Error: Cannot Get Database Migration Configurations");
                 }
-
             }
             else
             {
@@ -1831,6 +1839,7 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                     }
                     connection.Close();
+                    ExitTool("Error: Cannot Get Database Migration Configurations");
                 }
             }
         }
@@ -1974,6 +1983,7 @@ namespace Logitude.DBMigrations.Models
                             reader.Close();
                         }
                         connection.Close();
+                        ExitTool("Error: Cannot Get Database Migration Settings");
                     }
 
                     IncludedModules = includedModules;
@@ -2014,6 +2024,7 @@ namespace Logitude.DBMigrations.Models
                             reader.Close();
                         }
                         connection.Close();
+                        ExitTool("Error: Cannot Get Database Migration Settings");
                     }
 
                     IncludedModules = includedModules;
