@@ -285,15 +285,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             List<PaymentChequeLinePM> paymentChequeLines = new List<PaymentChequeLinePM>();
             PaymentChequeLinePM paymentChequeLine = new PaymentChequeLinePM();
-            decimal hundredPercent = 100;
             decimal? sum = 0; 
-            var calculate = ((hundredPercent - payment.TaxDeductionPercentage));
-            decimal? calculatePercent = (calculate) / hundredPercent;
             foreach (var item in payment.PaymentInvoices)
             {
                 paymentChequeLine = new PaymentChequeLinePM();
                 paymentChequeLine.Notes = "חשבונית "+item.APInvoiceNumber;
-                paymentChequeLine.Amount = (decimal?)(item.ForeignAmount) * calculatePercent;
+                paymentChequeLine.Amount = (decimal?)(item.ForeignAmount);
                 paymentChequeLine.ChangeSetOp = ChangeSetOperation.Insert;
                 paymentChequeLine.Line = paymentChequeLines.Count() + 1;
                 paymentChequeLine.Tenant = payment.Tenant;
@@ -305,7 +302,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 			{
                 paymentChequeLine = new PaymentChequeLinePM();
                 paymentChequeLine.Notes = payment.PaymentNo;
-                paymentChequeLine.Amount = ((decimal?)(payment?.AmountInLocalCurrency)-sum) * calculatePercent;
+                paymentChequeLine.Amount = ((decimal?)(payment?.AmountInLocalCurrency)-sum);
                 paymentChequeLine.ChangeSetOp = ChangeSetOperation.Insert;
                 paymentChequeLine.Line = paymentChequeLines.Count() + 1;
                 paymentChequeLine.Tenant = payment.Tenant;
