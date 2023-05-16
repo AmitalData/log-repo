@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Logitude.DBMigrations.Models
+﻿namespace Logitude.DBMigrations.Models
 {
     public class RunSettings
     {
         public bool DebugMode { get; set; }
         public bool ExecuteScripts { get; set; }
+        public bool DevMode { get; set; }
         public bool IgnoreHash { get; set; }
         public bool ValidateFiles { get; set; }
         public string Root { get; set; }

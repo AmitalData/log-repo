@@ -10,6 +10,7 @@ namespace Logitude.DBMigrations
             {
                 DebugMode = false,
                 ExecuteScripts = false,
+                DevMode = false,
                 IgnoreHash = false,
                 ValidateFiles = true,
                 Root = null,
