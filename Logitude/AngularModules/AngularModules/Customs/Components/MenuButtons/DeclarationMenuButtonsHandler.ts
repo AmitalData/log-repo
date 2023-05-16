@@ -334,10 +334,13 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.Width = 60;
                     }
                     if (button.EventCode == "PrintDeclarationForm") {
+                        debugger
                         //if (!declaration.HasDocument)
                         //if (AppTool.IsNullOrEmpty(this.EntityPM.DocumentDeclarationId)) {
+                        var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
+                       
                         if (AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber) || 
-                            (FeatureLocator.Features.filter(f=> f.Code =="PrintDeclarationForm") && this.EntityPM.Direction == "E" && !this.EntityPM.IsExportClosed)) {
+                            (FeatureLocator.Features.filter(f => (f.Code == "DisabledPrintDecForm") && f.ObjectTableId == table.Id)[0] && this.EntityPM.Direction == "E" && !this.EntityPM.IsExportClosed)) {
                             button.IsDisabled = true;
                         }
                         else {
