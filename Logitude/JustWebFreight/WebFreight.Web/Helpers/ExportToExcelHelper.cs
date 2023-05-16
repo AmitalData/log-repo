@@ -1477,10 +1477,7 @@ namespace WebFreight.Web.Helpers
         private void LogTime(string msg, bool isXslx,int tenant = 0)
         {
 
-            if(tenant == 0)
-            {
-                tenant = 127;
-            } 
+            
             if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) && isXslx)
             {
                 //DateTime stopLogAt = DateTime.MinValue;
