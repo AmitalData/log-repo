@@ -42,6 +42,10 @@ using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.Utils;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InvoiceModel;
+using Simplog.Data.CommonDataModel;
+using Newtonsoft.Json;
+using Logitude.Accounting.BL.CoreBL.Reports;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -1124,7 +1128,55 @@ namespace Logitude.Accounting.BL.CoreBL
             return isSubmitApprove;
         }
 
-        private static void SetTenantIdle(QueueResponse message)
+        private static void UpdateGLAccountAgingData(string communicationLogId, DbQueueService queueservice, int tenant) {
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+            CommunicationLog commLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
+            if (commLog != null)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        BlobFileInfo fileInfo = new BlobFileInfo()
+                        {
+                            FileName = commLog.Document.Id,
+                            FolderName = commLog.Document.Folder,
+                            Extension = commLog.Document.Extension,
+                            Tenant = commLog.Document.Tenant,
+                            FileSize = commLog.Document.FileSize,
+                        };
+                        Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                        byte[] objectData = storageservice.Read(fileInfo);
+                        var jsonObject = System.Text.Encoding.Default.GetString(objectData);
+                        var reconciliations = JsonConvert.DeserializeObject<List<ReconciliationPM>>(jsonObject);
+
+                        var accountingContext = AccountingContext.GetContext(tenant);
+                        ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
+                        foreach (var item in reconciliations) {
+                            service.UpdateGLaccountAgingData(item);
+                        }
+
+                        commLog.CommunicationStatusTypeCode = "D";
+                        commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
+                        commLog.DoneDateUTC = DateTime.UtcNow;
+                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
+                        commLog.LastStatusDateUTC = DateTime.UtcNow;
+                        communicationLogRep.Update(commLog);
+                        communicationLogRep.SubmitChanges();
+                        scope.Complete();
+                    }
+                    queueservice.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, "F", null + DateTime.Now.ToString(), ex.Message);
+                    queueservice.CompleteAsFailed();
+                }
+            }
+        }
+
+      private static void SetTenantIdle(QueueResponse message)
         {
             string sJournalTenant = message.MessageValues["JournalTenant"];
             ICommonDataContext myContext = CommonDataContext.GetContext(int.Parse(sJournalTenant));
@@ -1423,12 +1475,21 @@ namespace Logitude.Accounting.BL.CoreBL
                         break;
                     }
 
- 
-
-                    SetLastActivate?.Invoke();
-                    if (ProcessMessage_Db(queueservice, response, selectedQueue))
+                    if (response.MessageValues.ContainsKey("communicationLogId"))
                     {
-                        LogDoneItemInMemoryAction?.Invoke(1);
+                        string communicationLogId = response.MessageValues["communicationLogId"].ToString();
+                        int tenant = 0;
+                        int.TryParse(response.MessageValues["tenant"].ToString(), out tenant);
+                        UpdateGLAccountAgingData(communicationLogId, queueservice, tenant);
+                    }
+                    else { 
+
+
+                        SetLastActivate?.Invoke();
+                        if (ProcessMessage_Db(queueservice, response, selectedQueue))
+                        {
+                            LogDoneItemInMemoryAction?.Invoke(1);
+                        }
                     }
 
                     SetTenantIdle(response);

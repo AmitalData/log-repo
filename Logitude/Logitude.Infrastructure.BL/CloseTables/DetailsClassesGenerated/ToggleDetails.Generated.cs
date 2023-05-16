@@ -948,6 +948,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "JAM, Journal Approval MultiThreading", 
                 Description = "Journal Approval MultiThreading 2", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                SearchFields = "UAD, Update GLA Aging Data using WR", 
+                Code = "UAD", 
+                Description = "Update GLA Aging Data using WR", 
+                Name = "Update GLA Aging Data using WR", 
+			});
 			
             return all;
        }
