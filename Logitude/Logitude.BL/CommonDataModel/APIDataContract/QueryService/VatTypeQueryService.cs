@@ -64,6 +64,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
         public void CopyFromTenant0(int tenant, int tenatToCopy)
         {
 
+
            
             VatTypePercentageRepository VatTypePercentageRepository = new VatTypePercentageRepository(tenant);
             VatTypeRepository VatTyperepository = new VatTypeRepository(tenant);
