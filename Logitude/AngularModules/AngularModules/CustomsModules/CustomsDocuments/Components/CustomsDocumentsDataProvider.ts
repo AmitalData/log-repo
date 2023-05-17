@@ -105,7 +105,7 @@ export class CustomsDocumentsDataProvider {
 
                 }
                 else {
-                    return this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.entityPM.Id, null, this.ObjectTableId, 'I', this.entityPM.CustomFileNo, filterValue, this.entityPM.Direction);
+                    return this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.entityPM.Id, null, this.ObjectTableId, 'I', this.entityPM.CustomFileNo, filterValue, this.entityPM.Direction, null, this.entityPM.ForwarderFiles);
 
                 }
                 

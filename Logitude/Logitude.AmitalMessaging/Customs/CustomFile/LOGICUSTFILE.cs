@@ -64,6 +64,8 @@ public partial class LogitudeCustomsFile
 
     private string customerIdField;
 
+    private string forwarderFilesField;
+
     private string transportModeIdField;
 
     private string createdByUserIdField;
@@ -269,6 +271,18 @@ public partial class LogitudeCustomsFile
         set
         {
             this.customerIdField = value;
+        }
+    }
+
+    public string ForwarderFiles
+    {
+        get
+        {
+            return this.forwarderFilesField;
+        }
+        set
+        {
+            this.forwarderFilesField = value;
         }
     }
 
