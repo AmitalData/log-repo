@@ -5941,6 +5941,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string forwarderFiles ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForwarderFiles  
+	   {
+	    
+	     get
+		{
+		   return forwarderFiles;
+		 }
+		 set
+		 {
+		   if(forwarderFiles != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwarderFiles",OldValue=forwarderFiles,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   forwarderFiles=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

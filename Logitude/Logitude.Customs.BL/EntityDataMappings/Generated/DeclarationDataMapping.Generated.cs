@@ -427,7 +427,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportDecWithoutRelease, 
 	         CasualImporterCountry, 
 	         ExportCloseAmendStatusName, 
-	         IsAramex,
+	         IsAramex, 
+	         ForwarderFiles,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

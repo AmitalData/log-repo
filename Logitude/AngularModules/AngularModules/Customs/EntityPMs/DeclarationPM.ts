@@ -1499,6 +1499,11 @@ export class DeclarationPM {
     public set IsAramex(newValue: boolean) { if (this.isAramex != newValue) { this.isAramex = newValue; this.MarkAsDirty("IsAramex"); } }
        
 	 
+    private forwarderFiles: string;
+    public get ForwarderFiles() { return this.forwarderFiles; }
+    public set ForwarderFiles(newValue: string) { if (this.forwarderFiles != newValue) { this.forwarderFiles = newValue; this.MarkAsDirty("ForwarderFiles"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
