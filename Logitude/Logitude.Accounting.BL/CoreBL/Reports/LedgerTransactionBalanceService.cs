@@ -26,13 +26,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         //private IQueryable<string> _ListIdAccounts;
         private string _SearchByFilter;
         private Stopwatch _sw;
+        private bool? IsReconciled;
 
         //private string _ForeignCurrencyId = null;
-        public LedgerTransactionBalanceService(IAccountingContext accountingContext ,LedgerTransactionBalanceFilter param)
+        public LedgerTransactionBalanceService(IAccountingContext accountingContext, LedgerTransactionBalanceFilter param, bool? isReconciled)
         {
             _AccountingContext = accountingContext;
             _Param = param;
-
+            IsReconciled = isReconciled;
             ///Look at  GLAccountReconcileSearchViewModel
             //var view = new VirtualQueryableCollectionView<Customer>() { LoadSize = pageSize, VirtualItemCount = customerProvider.FetchCount() };
             //view.ItemsLoading += (s, args) =>
@@ -600,7 +601,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         {
             var ledgerTransactionListQueryService = new LedgerTransactionListQueryService(_AccountingContext);
             var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
-                _Param, isFromExcelGenerater);
+                _Param, isFromExcelGenerater, IsReconciled);
             return list;
         }
 
