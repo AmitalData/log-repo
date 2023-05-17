@@ -172,7 +172,6 @@ namespace WebFreight.Web.InfrastructureModel
         private static ShipmentSubTypeQuery shipmentSubTypeQuery;
         static CustomerGroupRepository customerGroupRepository;
 
-        private static HybridPartnerService hybridPartnerService;
         public static ScreenFieldsRepository ScreenFieldsRepository
         {
             get { return screenFieldsRepository; }
@@ -329,8 +328,6 @@ namespace WebFreight.Web.InfrastructureModel
             bankCodeRepository = new BankCodeRepository(theTenant);
             taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(theTenant);
             customerGroupRepository = new CustomerGroupRepository(theTenant);
-            ICommonDataContext iCommonDataContext = CommonDataContext.GetContext(0);
-            hybridPartnerService = new HybridPartnerService(iCommonDataContext);
             #endregion
         }
         private static Setting setting;
@@ -1331,9 +1328,10 @@ namespace WebFreight.Web.InfrastructureModel
             
             ICommonDataContext commonContext = CommonDataContext.GetContext(newTenant.Id);
             TenantService service = new TenantService(commonContext, newTenant.Id);
-            newTenant = AddHybridPartner(signUpInfoClass, newTenant);
+            if (LogitudeSettings.WorkEnvironment == "cloud" || LogitudeSettings.DeploymentStage.ToLower() == "test2")
+                newTenant.IsHybrid = true;
             service.Create(newTenant);
-
+            newTenant = AddHybridPartner(signUpInfoClass, newTenant);
             return newTenant.Id;
         }
 
@@ -1344,8 +1342,10 @@ namespace WebFreight.Web.InfrastructureModel
             newTenant.IsHybrid = true;
             HybridPartnerPM entityPM = new HybridPartnerPM();
             entityPM.Name = signUpInfo.Company;
-            entityPM.PartnerTenant = signUpInfo.Tenant;
+            entityPM.PartnerTenant = newTenant.Id;
             entityPM.LocalName = signUpInfo.Company;
+            ICommonDataContext Context = CommonDataContext.GetContext(0);
+            HybridPartnerService hybridPartnerService = new HybridPartnerService(Context, 0);
             hybridPartnerService.Create(entityPM);
             return newTenant;
         }

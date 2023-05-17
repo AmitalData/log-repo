@@ -431,13 +431,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Trucker", Tenant = tenant, Type = "PM", Entities = new List<TruckerPM> { securedPm }.Cast<object>().ToList() }).Set();
             }
 
-            if(securedPm != null)
+            if (securedPm != null && trucker != null)
             {
                 PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(securedPm.Tenant);
-                securedPm.Card = partnerARinvoiceDocumentTypeService.Set(securedPm.Card);
+                if (securedPm.Card != null)
+                    securedPm.Card = partnerARinvoiceDocumentTypeService.Set(securedPm.Card);
             }
 
-            return securedPm;
+            return trucker != null ? securedPm : trucker;
         }
 
         public bool CheckTruckerAddedManually(string id, int tenant)
