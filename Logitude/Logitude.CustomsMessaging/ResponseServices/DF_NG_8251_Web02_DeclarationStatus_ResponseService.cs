@@ -456,7 +456,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion == declarationPM.VersionId)
                                     {
                                         declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
-                                        if (declarationPM.Direction == "E" && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.HasValue && declarationPM.HatraDate == null)
+                                        if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.HasValue && declarationPM.HatraDate == null)
                                         {
                                             var myEventContextTagModel = new EventContextTagModel()
                                             {
