@@ -1072,6 +1072,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ForwarderFiles"
+    Type="varchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"

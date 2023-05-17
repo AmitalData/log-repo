@@ -177,7 +177,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ClosingXml, 
 	         ExportCloseAmendRequestNumber, 
 	         ExportCloseAmendmentStatus, 
-	         CasualImporterCountry,
+	         CasualImporterCountry, 
+	         ForwarderFiles,
 	      }
 
 
@@ -1212,6 +1213,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.CasualImporterCountry = entityPM.CasualImporterCountry;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderFiles))
+            {
+				entityPOCO.ForwarderFiles = entityPM.ForwarderFiles;
+			}
+			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -1998,6 +2004,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CasualImporterCountry = entityPOCO.CasualImporterCountry;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwarderFiles))
+            {
+					entityPM.ForwarderFiles = entityPOCO.ForwarderFiles;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2777,6 +2788,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualImporterCountry))
             {
                 oldEntityPM.CasualImporterCountry = entityPM.CasualImporterCountry;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderFiles))
+            {
+                oldEntityPM.ForwarderFiles = entityPM.ForwarderFiles;
             }
 			
 		}
