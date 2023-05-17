@@ -471,6 +471,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CasualImporterCountry { get; set; }
         [Column("ExcludeManifest")]
 	    public bool ExcludeManifest { get; set; }
+        [Column("ForwarderFiles")]
+	    public string ForwarderFiles { get; set; }
     }
 }
 	 

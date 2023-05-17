@@ -179,6 +179,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportCloseAmendmentStatus, 
 	         CasualImporterCountry, 
 	         ExcludeManifest,
+	         ForwarderFiles,
 	      }
 
 
@@ -1215,6 +1216,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.CasualImporterCountry = entityPM.CasualImporterCountry;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderFiles))
+            {
+				entityPOCO.ForwarderFiles = entityPM.ForwarderFiles;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeManifest))
             {
 				entityPOCO.ExcludeManifest = entityPM.ExcludeManifest;
@@ -2010,6 +2016,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 					entityPM.ExcludeManifest = entityPOCO.ExcludeManifest;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwarderFiles))
+            {
+					entityPM.ForwarderFiles = entityPOCO.ForwarderFiles;
+            }
 
 		}
 
@@ -2795,6 +2805,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeManifest))
             {
                 oldEntityPM.ExcludeManifest = entityPM.ExcludeManifest;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderFiles))
+            {
+                oldEntityPM.ForwarderFiles = entityPM.ForwarderFiles;
             }
 			
 		}
