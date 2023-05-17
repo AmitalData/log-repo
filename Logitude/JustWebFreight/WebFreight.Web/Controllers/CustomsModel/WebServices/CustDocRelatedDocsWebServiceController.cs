@@ -41,7 +41,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class CustDocRelatedDocsWebServiceController : ApiController
     {
-        public HttpResponseMessage GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, string filterVlaue, string declarationType,string ExportFile)
+        public HttpResponseMessage GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, string filterVlaue, string declarationType,string ExportFile,string files)
         {
             try
             {
@@ -66,79 +66,83 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 {
                     queryService = new CFICONNQueryService(AmitalContext.GetContext(authToken.Tenant));
                 }
-                
+
 
                 //externalEntityReferences.Add("1091");
                 //externalEntityReferences.Add("1088");
                 //externalEntityReferences.Add("1057");
-               
-                    if (filterVlaue == "customs" )
-                    {
 
-                        if (referenceNumber != null)
-                        {
-                            documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, null, authToken.Tenant);
-                        }
-                        else
-                        {
-                            documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
-                        }
-                    }
-                    else if (filterVlaue == "forwarding")
-                    {
-                    List<string> externalEntityReferences;
-                    if (declarationType=="E")
-                    {
-                        externalEntityReferences = new List<string> { referenceNumber };
+                if (filterVlaue == "customs" )
+                {
 
-                    }
-                    else
-                    {
-                      externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
-
-                    }
-
-                    documentFilings = documentsFilingQuery.GetDocumentsFilingsByRferenceForRelatedDocuments(authToken.Tenant, externalEntityReferences);
-
-                    }
-
-                    else if (filterVlaue == "all")
-                    {
-                        List<string> externalEntityReferences;
-
-                     
-                         if (declarationType != "E")
-                         {
-                             externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
-                         }
-                         else {
-                              externalEntityReferences = new List<string> { ExportFile };
-                         }
-                  
-                        if (referenceNumber != null)
-                        {
-                            documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, externalEntityReferences, authToken.Tenant, declarationType);
-                        }
-                        else
-                        {
-                            documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, externalEntityReferences);
-                        }
-                    }
-
-                    else
-                    {
                     if (referenceNumber != null)
                     {
                         documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, null, authToken.Tenant);
                     }
                     else
                     {
-                        documentFilings =  documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
+                        documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
                     }
-                   }
-                    
-               
+                }
+                else if (filterVlaue == "forwarding")
+                    {
+                        List<string> externalEntityReferences = null;
+                        if (declarationType=="E")
+                        {
+                            externalEntityReferences = new List<string> { referenceNumber };
 
+                        }
+                        else
+                        {
+                            if (files != null)
+                                externalEntityReferences = files.Split(',').ToList();
+                            //externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
+
+                        }
+
+                        documentFilings = documentsFilingQuery.GetDocumentsFilingsByRferenceForRelatedDocuments(authToken.Tenant, externalEntityReferences);
+
+                    }
+
+                    else if (filterVlaue == "all")
+                        {
+                            List<string> externalEntityReferences = null;
+
+
+                            if (declarationType != "E")
+                            {
+                                //externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
+                                if (files != null)
+                                    externalEntityReferences = files.Split(',').ToList();
+                            }
+                            else {
+                                externalEntityReferences = new List<string> { ExportFile };
+                            }
+
+                            if (referenceNumber != null)
+                            {
+                                documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, externalEntityReferences, authToken.Tenant, declarationType);
+                            }
+                            else
+                            {
+                                documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, externalEntityReferences);
+                            }
+                        }
+
+                        else
+                        {
+                            if (referenceNumber != null)
+                            {
+                                documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, null, authToken.Tenant);
+                            }
+                            else
+                            {
+                                documentFilings =  documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
+                            }
+                        }
+                    
+                  
+               
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, documentFilings);
