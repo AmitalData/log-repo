@@ -1507,6 +1507,11 @@ export class DeclarationPM {
     private excludeManifest: boolean;
     public get ExcludeManifest() { return this.excludeManifest; }
     public set ExcludeManifest(newValue: boolean) { if (this.excludeManifest != newValue) { this.excludeManifest = newValue; this.MarkAsDirty("ExcludeManifest"); } }
+    
+
+    private forwarderFiles: string;
+    public get ForwarderFiles() { return this.forwarderFiles; }
+    public set ForwarderFiles(newValue: string) { if (this.forwarderFiles != newValue) { this.forwarderFiles = newValue; this.MarkAsDirty("ForwarderFiles"); } }
        
 	 
 
@@ -1537,4 +1542,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

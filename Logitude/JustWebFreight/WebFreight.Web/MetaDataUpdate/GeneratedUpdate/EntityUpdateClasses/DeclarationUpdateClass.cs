@@ -86,7 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class DeclarationUpdateClass
    {  		
 
-		public const string HashString = "a844bb6278cf722cf97b4d8efa3bae9c";
+		public const string HashString = "96bc3d4e31429f4ae7675b064bb444b2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17115,6 +17115,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "שדר ללא נתוני מצהר",
 					  						ListFieldLable =  "ExcludeManifestListLable",
 					  						ListLableDefaultText =  "שדר ללא נתוני מצהר",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ForwarderFiles",
+					  						ObjectTableName =  "Customs.Declaration",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ForwarderFiles",
+					  						ListPropertyPath =  "ForwarderFiles",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Declaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ForwarderFiles",
+					  						DefaultText =  "Forwarder Files",
+					  						FullLocalDefaultText =  "תיקים מקושרים",
+					  						ListFieldLable =  "ForwarderFilesListLable",
+					  						ListLableDefaultText =  "Forwarder Files",
+					  						ListLocalDefaultText =  "תיקים מקושרים",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

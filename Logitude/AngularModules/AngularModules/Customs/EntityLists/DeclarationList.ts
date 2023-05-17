@@ -229,6 +229,7 @@ export class DeclarationList {
 	IntegratorName: string;
 	ExportCloseAmendStatusName: string;
 	ExcludeManifest: boolean;
+	ForwarderFiles: string;
 	
 }
  

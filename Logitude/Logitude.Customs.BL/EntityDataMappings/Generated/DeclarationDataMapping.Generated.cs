@@ -431,6 +431,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportCloseAmendStatusName, 
 	         IsAramex, 
 	         ExcludeManifest,
+	         ForwarderFiles,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
