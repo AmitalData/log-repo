@@ -456,6 +456,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion == declarationPM.VersionId)
                                     {
                                         declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+                                        if (declarationPM.Direction == "E" && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.HasValue && declarationPM.HatraDate == null)
+                                        {
+                                            var myEventContextTagModel = new EventContextTagModel()
+                                            {
+                                                CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate,
+                                            };
+
+                                            // released
+                                            LogMessagingUtil.Instance.AppendLine("released");
+                                            myEventContextTagModel.EventCode = "RSG";
+                                            myEventContextTagModel.StatusDateTime = (DateTime)declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime;
+                                            declarationPM.HatraDate = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime;
+                                            LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : ""));
+                                            declarationPM.CurrentContextTag = myEventContextTagModel;
+                                        }
+
+
                                         UpdateDeclaration(declarationUpdateService, declarationPM);
                                         //if (isAutoPayment)
                                         //    SendPayment(declarationPM, dbContext, requestParams);
