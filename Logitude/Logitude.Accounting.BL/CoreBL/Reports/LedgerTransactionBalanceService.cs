@@ -29,7 +29,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         private bool? IsReconciled;
 
         //private string _ForeignCurrencyId = null;
-        public LedgerTransactionBalanceService(IAccountingContext accountingContext, LedgerTransactionBalanceFilter param, bool? isReconciled)
+        public LedgerTransactionBalanceService(IAccountingContext accountingContext, LedgerTransactionBalanceFilter param, bool? isReconciled = null)
         {
             _AccountingContext = accountingContext;
             _Param = param;
