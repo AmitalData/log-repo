@@ -205,8 +205,8 @@ namespace CommunicationWorkerRole
                                         var ForwarderShipment = shipmentQuery.GetSinglePMWithoutComposition(ShipmentId, tenant);
                                         CustomerTenantAccessCardBatchQuery customerTenantAccessCardBatchQuery = new CustomerTenantAccessCardBatchQuery(tenant);
                                         var customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetOldestCustomerTenantAccessCardsBatch(Shipment.CustomerId, tenant, importerTenant);
-                                        var oldCustomerTenantAccessCardsBatch = (Shipment.CustomerId != CustomerId) ? customerTenantAccessCardBatchQuery.GetOldestCustomerTenantAccessCardsBatch(CustomerId, tenant, importerTenant) : null;
-                                        if (CheckCustomerLogicChanges(Shipment, customerTenantAccessCardsBatch, oldCustomerTenantAccessCardsBatch))
+                                        var oldCustomerTenantAccessCardsBatch = (Shipment.CustomerId != CustomerId || CustomerChanged == "true") ? customerTenantAccessCardBatchQuery.GetOldestCustomerTenantAccessCardsBatch(CustomerId, tenant, importerTenant) : null;
+                                        if (SendShipmentUpdates(Shipment, customerTenantAccessCardsBatch, oldCustomerTenantAccessCardsBatch))
                                         {
                                             LogPM.Refrence = Shipment.ShipmentNumber;
                                             if (((Shipment.CustomerId != CustomerId) || CustomerChanged == "true") && !string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
@@ -1219,12 +1219,12 @@ namespace CommunicationWorkerRole
 
         }
 
-        private static bool CheckCustomerLogicChanges(Logitude.BL.ShipmentsModel.EntityPMs.ShipmentPM Shipment, CustomerTenantAccessCardsBatchPM customerTenantAccessCardsBatch, CustomerTenantAccessCardsBatchPM oldCustomerTenantAccessCardsBatch)
+        private static bool SendShipmentUpdates(Logitude.BL.ShipmentsModel.EntityPMs.ShipmentPM Shipment, CustomerTenantAccessCardsBatchPM customerTenantAccessCardsBatch, CustomerTenantAccessCardsBatchPM oldCustomerTenantAccessCardsBatch)
         {
             if (Shipment == null) return false;
             if (customerTenantAccessCardsBatch == null) return true;
             if (Shipment.CreateDateTime >= customerTenantAccessCardsBatch.FromDatetime) return true;
-            if (oldCustomerTenantAccessCardsBatch != null && Shipment.CreateDateTime >= oldCustomerTenantAccessCardsBatch.FromDatetime) return true;
+            if (oldCustomerTenantAccessCardsBatch != null && Shipment.CreateDateTime >= oldCustomerTenantAccessCardsBatch.FromDatetime && !string.IsNullOrEmpty(Shipment.CustomerShipmentNumber)) return true;
 
             return false;
         }
