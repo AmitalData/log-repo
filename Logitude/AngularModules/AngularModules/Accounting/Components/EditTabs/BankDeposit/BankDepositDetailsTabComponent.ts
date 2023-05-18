@@ -753,8 +753,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             localSum += CashbookLine.LocalAmount;
             this.SelectedTotal += CashbookLine.ForeignAmount == null ? 0 : CashbookLine.ForeignAmount;
         }
-        this.EntityPM.LocalDepositAmount = localSum;
-        this.EntityPM.ForeignAmount = this.SelectedTotal;
+        this.EntityPM.LocalDepositAmount = AppTool.Round(localSum, 2);
+        this.EntityPM.ForeignAmount = AppTool.Round(this.SelectedTotal, 2);
     }
 
     Abs(number: number) {
