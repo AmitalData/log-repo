@@ -205,7 +205,8 @@ namespace CommunicationWorkerRole
                                         var ForwarderShipment = shipmentQuery.GetSinglePMWithoutComposition(ShipmentId, tenant);
                                         CustomerTenantAccessCardBatchQuery customerTenantAccessCardBatchQuery = new CustomerTenantAccessCardBatchQuery(tenant);
                                         var customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetOldestCustomerTenantAccessCardsBatch(Shipment.CustomerId, tenant, importerTenant);
-                                        if (Shipment != null && (customerTenantAccessCardsBatch != null ? (Shipment.CreateDateTime >= customerTenantAccessCardsBatch.FromDatetime) : true))
+                                        var oldCustomerTenantAccessCardsBatch = (Shipment.CustomerId != CustomerId) ? customerTenantAccessCardBatchQuery.GetOldestCustomerTenantAccessCardsBatch(CustomerId, tenant, importerTenant) : null;
+                                        if (CheckCustomerLogicChanges(Shipment, customerTenantAccessCardsBatch, oldCustomerTenantAccessCardsBatch))
                                         {
                                             LogPM.Refrence = Shipment.ShipmentNumber;
                                             if (((Shipment.CustomerId != CustomerId) || CustomerChanged == "true") && !string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
@@ -1216,6 +1217,16 @@ namespace CommunicationWorkerRole
                 Thread.Sleep(10000);
             }
 
+        }
+
+        private static bool CheckCustomerLogicChanges(Logitude.BL.ShipmentsModel.EntityPMs.ShipmentPM Shipment, CustomerTenantAccessCardsBatchPM customerTenantAccessCardsBatch, CustomerTenantAccessCardsBatchPM oldCustomerTenantAccessCardsBatch)
+        {
+            if (Shipment == null) return false;
+            if (customerTenantAccessCardsBatch == null) return true;
+            if (Shipment.CreateDateTime >= customerTenantAccessCardsBatch.FromDatetime) return true;
+            if (oldCustomerTenantAccessCardsBatch != null && Shipment.CreateDateTime >= oldCustomerTenantAccessCardsBatch.FromDatetime) return true;
+
+            return false;
         }
 
         private string GetFirstReferenceFromUNFSideOnly(string customerReference)
