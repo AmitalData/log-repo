@@ -243,6 +243,10 @@ export class CustomsRequestsSheetsComponent
     customsRequestsSheetSummary = new Array<CustomsRequestsSheetSummary>();
     IsTherecustomsRequestsSheetSummary = false;
     SumRequests = 0;
+
+    trackByCustomsRequestsSheetSummary(index: number, item: any): any {
+        return item.InterfaceTypeName;
+    }
     
     GetStatistics() {
         this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString()).subscribe((response: ServiceResponse) => {
