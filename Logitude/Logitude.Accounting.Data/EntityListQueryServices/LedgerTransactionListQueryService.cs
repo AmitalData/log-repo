@@ -358,11 +358,19 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
 
         public List<LedgerTransactionList> GetLedgerTransactionListForceOrderByDateTypeCodeAndId(
-            IQueryable<LedgerTransaction> LedgerTransactionQuery, LedgerTransactionBalanceFilter _Param, bool IsFromExcelGenerator = false)
+            IQueryable<LedgerTransaction> LedgerTransactionQuery, LedgerTransactionBalanceFilter _Param, bool IsFromExcelGenerator = false, bool? isReconciled = null)
         {
+            IQueryable<LedgerTransaction> q = LedgerTransactionQuery;
             //var skip = pageSize * curPageZeroBase;
             var skip = _Param.PageStartAtRecordIndex;
-            var q = IsFromExcelGenerator ? LedgerTransactionQuery : LedgerTransactionQuery.Skip(skip).Take(_Param.PageSize);
+            
+            if (isReconciled.HasValue)
+            {
+                bool _isReconciled = isReconciled.GetValueOrDefault();
+                q = q.Where(r => r.IsReconciled == _isReconciled);
+            }
+
+            q = IsFromExcelGenerator ? q : q.Skip(skip).Take(_Param.PageSize);
             IQueryable<LedgerTransactionList> ledgerTransactionListQuery = null;
             if (this.context.ToString().StartsWith("Fake"))
             {
