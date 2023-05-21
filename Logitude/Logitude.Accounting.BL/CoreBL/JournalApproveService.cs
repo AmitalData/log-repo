@@ -40,12 +40,8 @@ using Logitude.BL.InvoiceModel.CoreBL;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.Utils;
-using Simplog.Data.CommonDataModel;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.CommonDataModel;
-using Newtonsoft.Json;
-using Logitude.Accounting.BL.CoreBL.Reports;
-using Microsoft.Practices.Unity;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -88,7 +84,6 @@ namespace Logitude.Accounting.BL.CoreBL
         public ResultApproveJournalM SubmitApprove(MyActions actions)
         {
             var sw = Stopwatch.StartNew();
-
             _ExecAsSP = true;
             try
             {
@@ -394,13 +389,11 @@ namespace Logitude.Accounting.BL.CoreBL
             timeOut = null;//ihab: no need to use timeout  - but have to be fast (statistic) !!!
             StringBuilder stringBuilderWhyTransferCardBadBalance = new StringBuilder();
             LogMessagingUtil.Instance.AppendLine("GetNewSerializableTransaction(timeOut):insec" + timeOut.GetValueOrDefault().TotalSeconds.ToString());
-
             using (var scope = GetTransactionScope(timeOut))
             {
                 IDbContextLogger logger = null;
                 try
                 {
-
                     _AccountingContext = AccountingContext.GetContext(_Tenant);
                     logger = (_AccountingContext as DbContextBase).CreateLogger();
 
@@ -548,7 +541,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     LogMessagingUtil.Instance.AppendLine("AccountingStreamingInNewSerializableTransaction:Took:" + sw.Elapsed.ToString());
                 }
-
             }
         }
 
@@ -556,9 +548,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (FeatureToggleHelper.HasFeatureToggle("JAM", 0))
                 return TransactionFactory.GetNewReadCommittedTransaction(timeout);
-
             return TransactionFactory.GetNewSerializableTransaction(timeout);
-
         }
 
         private void WriteLogWhyTransferCardBadBalance(int tenant, string seedJournalId, IAccountingContext accountingContext, StringBuilder sb)
@@ -1128,85 +1118,24 @@ namespace Logitude.Accounting.BL.CoreBL
             return isSubmitApprove;
         }
 
-        private static void UpdateGLAccountAgingData(string communicationLogId, DbQueueService queueservice, int tenant) {
-            ICommonDataContext context = CommonDataContext.GetContext(tenant);
-            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
-            CommunicationLog commLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
-            if (commLog != null)
-            {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        BlobFileInfo fileInfo = new BlobFileInfo()
-                        {
-                            FileName = commLog.Document.Id,
-                            FolderName = commLog.Document.Folder,
-                            Extension = commLog.Document.Extension,
-                            Tenant = commLog.Document.Tenant,
-                            FileSize = commLog.Document.FileSize,
-                        };
-                        Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-                        byte[] objectData = storageservice.Read(fileInfo);
-                        var jsonObject = System.Text.Encoding.Default.GetString(objectData);
-                        var reconciliations = JsonConvert.DeserializeObject<List<ReconciliationPM>>(jsonObject);
-
-                        var accountingContext = AccountingContext.GetContext(tenant);
-                        ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
-                        foreach (var item in reconciliations) {
-                            service.UpdateGLaccountAgingData(item);
-                        }
-
-                        commLog.CommunicationStatusTypeCode = "D";
-                        commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
-                        commLog.DoneDateUTC = DateTime.UtcNow;
-                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
-                        commLog.LastStatusDateUTC = DateTime.UtcNow;
-                        communicationLogRep.Update(commLog);
-                        communicationLogRep.SubmitChanges();
-                        scope.Complete();
-                    }
-                    queueservice.Complete();
-                }
-                catch (Exception ex)
-                {
-                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, "F", null + DateTime.Now.ToString(), ex.Message);
-                    queueservice.CompleteAsFailed();
-                }
-            }
-        }
-
-      private static void SetTenantIdle(QueueResponse message)
+        private static void SetTenantIdle(int tenant)
         {
-            string sJournalTenant = message.MessageValues["JournalTenant"];
-            ICommonDataContext myContext = CommonDataContext.GetContext(int.Parse(sJournalTenant));
+            ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
             TenantRepository tenantRepository = new TenantRepository(myContext);
-            Tenant tenantObj = tenantRepository.GetSingleTenant(int.Parse(sJournalTenant));
+            Tenant tenantObj = tenantRepository.GetSingleTenant(tenant);
             tenantObj.JouranlApprovalIsIdle = false;
             tenantRepository.Update(tenantObj);
             tenantRepository.SubmitChanges();
-
         }
 
         private static void OnException(DbQueueService myDbQueueService, QueueResponse message, string seedJournalId, int tenant, Exception ex)
         {
 
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
-            SetTenantIdle(message);
+            SetTenantIdle(message.Tenant);
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "AccountingJournalApproveWR", "AccountingJournalApproveWR: ProcessMessage() Method", null);
-            if (message == null || message.RetryNumber >= 9)
-            {
-                var journalFailedService = new JournalFailedService(tenant, seedJournalId);
-                journalFailedService.MarkAsFailed(ex);
-                if (myDbQueueService != null)
-                {
-                    myDbQueueService.Complete();
-                }
-            }
-
-            if (message.RetryNumber >= 2 && message.RetryNumber <= 7)
-            {
-                myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
+            if (message.RetryNumber >= 2 && message.RetryNumber <= 7) {
+                    myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
             }
             if (message == null || message.RetryNumber > 5)
             {
@@ -1232,6 +1161,7 @@ namespace Logitude.Accounting.BL.CoreBL
             bool complete = false;
             try
             {
+
 
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
                 {
@@ -1420,16 +1350,13 @@ namespace Logitude.Accounting.BL.CoreBL
         public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
-
             static JournalApproveWorker()
             {
                 //_NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
                 _NextDueDoneAt = DateTime.UtcNow.Date;//today already done - do next day =tomorrow at 00:00 ///
-
             }
             public Action<int> LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
-
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
@@ -1451,7 +1378,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                     }
                     DbQueueService queueservice = null;
-
                     //ThrowNewException("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
                     try
                     {
@@ -1475,25 +1401,15 @@ namespace Logitude.Accounting.BL.CoreBL
                         break;
                     }
 
-                    if (response.MessageValues.ContainsKey("communicationLogId"))
+
+                    SetLastActivate?.Invoke();
+                    if (ProcessMessage_Db(queueservice, response, selectedQueue))
                     {
-                        string communicationLogId = response.MessageValues["communicationLogId"].ToString();
-                        int tenant = 0;
-                        int.TryParse(response.MessageValues["tenant"].ToString(), out tenant);
-                        UpdateGLAccountAgingData(communicationLogId, queueservice, tenant);
-                    }
-                    else { 
-
-
-                        SetLastActivate?.Invoke();
-                        if (ProcessMessage_Db(queueservice, response, selectedQueue))
-                        {
-                            LogDoneItemInMemoryAction?.Invoke(1);
-                        }
+                        LogDoneItemInMemoryAction?.Invoke(1);
                     }
 
-                    SetTenantIdle(response);
-                    Thread.Sleep(10);
+                    SetTenantIdle(response.Tenant);
+                    Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
                 if (selectedQueue == JournalApproveService.K_AccountingJournalApproveWR)

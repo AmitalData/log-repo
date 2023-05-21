@@ -435,12 +435,14 @@ namespace Logitude.Server.Tools.QueueService
                             SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, messageBodyLength);
                             SqlParameter retryNumberPar = new SqlParameter("@RetryNumber", SqlDbType.Int);
                             SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
+                            SqlParameter tenantPar = new SqlParameter("@Tenant", SqlDbType.Int);
 
                             messageIdPar.Direction = ParameterDirection.Output;
                             messageBodyPar.Direction = ParameterDirection.Output;
                             queueCodePar.Direction = ParameterDirection.Input;
                             retryNumberPar.Direction = ParameterDirection.Output;
                             watingStatusPar.Direction = ParameterDirection.Input;
+                            tenantPar.Direction = ParameterDirection.Output;
 
                             queueCodePar.Value = QueueCode;
                             watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
@@ -450,6 +452,7 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.Parameters.Add(retryNumberPar);
                             cmd.Parameters.Add(queueCodePar);
                             cmd.Parameters.Add(watingStatusPar);
+                            cmd.Parameters.Add(tenantPar);
 
                             cn.Open();
                             var output = cmd.ExecuteNonQuery();
@@ -471,6 +474,8 @@ namespace Logitude.Server.Tools.QueueService
                                     }
                                     this.CurrentMessageId = response.MessageId = messageId.ToString();
                                     response.RetryNumber = (int)cmd.Parameters["@RetryNumber"].Value;
+                                    response.Tenant = (int)cmd.Parameters["@Tenant"].Value;
+
                                     string messageBody = cmd.Parameters["@MessageBody"].Value as string;
                                     if (!string.IsNullOrEmpty(messageBody))
                                     {

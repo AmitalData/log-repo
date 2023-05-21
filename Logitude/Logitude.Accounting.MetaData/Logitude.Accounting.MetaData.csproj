@@ -139,6 +139,7 @@
     <None Include="DBScripts\20230131_UpdateSearchFieldsForBankDepositsWithNoLine.sxml" />
     <None Include="DBScripts\20230504_Queue_Peek_Jouranl_Approval.dxml" />
     <None Include="DBScripts\2023030_CreateIndexInLedgerTransactions_AccountIdMarkTenant.sxml" />
+    <None Include="DBScripts\20230504_Queue_Peek_Jouranl_Approval_Add_Parameter.dxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
