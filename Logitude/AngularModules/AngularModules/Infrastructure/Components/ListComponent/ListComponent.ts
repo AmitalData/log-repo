@@ -650,7 +650,17 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (filters.FieldName == "CompetitorFields")
                     this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, null, null, "Contains", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
                 else {
-                    this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, null, null, filters.Operation.Code, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+                    if (filters.FieldName == "ForeignAmount") {
+                        var decimalValue = parseFloat(filters.TextValue);
+                        var absoluteValue = Math.abs(decimalValue);
+                        filters.TextValue = absoluteValue;
+                        this.AdvanceFilters.addAdditionalFilter(filters.FieldName, absoluteValue, null, null, "Contains", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+
+                    }
+                    else {
+
+                        this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, null, null, filters.Operation.Code, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+                    }
                 }
             }
         }
