@@ -1502,7 +1502,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.height = this.rowCount * this.rowHeight;
             this.numberOfTotalPages = this.rowCount / this.rowsPerPage;
             if (this.MyScrollTop != 0) {
-                elem.scrollTop = this.MyScrollTop;
+                setTimeout(()=> elem.scrollTop = this.MyScrollTop, 1000);
             }
         });
         this.GetRowCount(reload);
