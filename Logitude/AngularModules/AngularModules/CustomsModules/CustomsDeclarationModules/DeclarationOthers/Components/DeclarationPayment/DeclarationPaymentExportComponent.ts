@@ -894,7 +894,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         }
         else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
             this.ShowStorageStatusMessage = true;
-            this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+            this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             this.IsDisplayOnly = false;
 
 
@@ -953,7 +953,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             }
             else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
                 this.ShowStorageStatusMessage = true;
-                this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+                this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
             }
 
@@ -1031,7 +1031,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0); // last of today
 
             if (this.PaymentDate < currentDate) {
-                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לם ניתן להזין תםריך בעבר");
+                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לא ניתן להזין תאריך בעבר");
                 return false;
             } else {
                 this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
@@ -1739,7 +1739,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                 confirmWindow.Show(mess);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לםישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
+                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לאישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
                     {
                         this.RefreshDeclaration();
                         if (SessionLocator.SelectedSession.CurrentWindow != null) {
