@@ -24,6 +24,7 @@ namespace Logitude.Server.Tools.QueueService
         //public string ErrorMessage { get; set; }
         public string MessageId { get; set; }
         public int RetryNumber { get; set; }
+        public int Tenant { get; set; }
         public IDictionary<string, string> MessageValues { get; set; }
     }
 
