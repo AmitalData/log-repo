@@ -1118,23 +1118,21 @@ namespace Logitude.Accounting.BL.CoreBL
             return isSubmitApprove;
         }
 
-        private static void SetTenantIdle(QueueResponse message)
+        private static void SetTenantIdle(int tenant)
         {
-            string sJournalTenant = message.MessageValues["JournalTenant"];
-            ICommonDataContext myContext = CommonDataContext.GetContext(int.Parse(sJournalTenant));
+            ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
             TenantRepository tenantRepository = new TenantRepository(myContext);
-            Tenant tenantObj = tenantRepository.GetSingleTenant(int.Parse(sJournalTenant));
+            Tenant tenantObj = tenantRepository.GetSingleTenant(tenant);
             tenantObj.JouranlApprovalIsIdle = false;
             tenantRepository.Update(tenantObj);
             tenantRepository.SubmitChanges();
-
         }
 
         private static void OnException(DbQueueService myDbQueueService, QueueResponse message, string seedJournalId, int tenant, Exception ex)
         {
 
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
-            SetTenantIdle(message);
+            SetTenantIdle(message.Tenant);
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "AccountingJournalApproveWR", "AccountingJournalApproveWR: ProcessMessage() Method", null);
             if (message.RetryNumber >= 2 && message.RetryNumber <= 7) {
                     myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
@@ -1410,7 +1408,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         LogDoneItemInMemoryAction?.Invoke(1);
                     }
 
-                    SetTenantIdle(response);
+                    SetTenantIdle(response.Tenant);
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
