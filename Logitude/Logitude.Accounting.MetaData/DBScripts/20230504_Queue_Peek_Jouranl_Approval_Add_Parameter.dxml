@@ -6,9 +6,8 @@
   Module="Accounting">
   <SqlScript>
   <![CDATA[
-  
-
-Alter procedure [dbo].[Queue_Peek_Jouranl_Approval]
+ 
+Create procedure [dbo].[Queue_Peek_Jouranl_Approval]
   (
   @MessageId  bigint output,
   @MessageBody  varchar(2000) output,
