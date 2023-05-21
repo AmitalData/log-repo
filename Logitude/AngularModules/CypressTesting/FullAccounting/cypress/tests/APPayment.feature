@@ -5,10 +5,10 @@ Feature: AP Payment
     Scenario: Create new AP Payment
         Given the user logged in and navigates to Full Accounting workspace
         And an AP Payment with the following details
-            | Vendor        | KHTest     |
+            | Vendor        | HadiNewVendor2023     |
             | PaymentMethod | Cash       |
             | PaymentAmount | 100        |
-            | RegisterDate  | 02/09/2021 |
+            | RegisterDate  | 15/05/2023 |
         When save the AP Payment
         Then the AP Payment should save successfully
 
