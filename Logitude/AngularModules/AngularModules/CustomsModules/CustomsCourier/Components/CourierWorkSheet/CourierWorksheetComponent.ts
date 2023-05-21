@@ -2369,7 +2369,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
        currRequestParams.Tenant = SessionLocator.Tenant;
        currRequestParams.CourierMasterId = this.entityPM.Id;
        currRequestParams.MAWB = this.entityPM.MAWB;
-       let text = "הםם לםשר םת כל Pending שלם םושרו בטיסה";
+       let text = "האם לאשר את כל Pending שלא אושרו בטיסה";
        
        var confirmWindow = new ConfirmWindow();
        confirmWindow.Show(text);

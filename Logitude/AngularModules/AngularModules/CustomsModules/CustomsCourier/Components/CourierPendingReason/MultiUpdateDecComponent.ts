@@ -369,7 +369,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
             this.grossMassMeasure,
         ].every(x => x == null)
         ) {
-            errors.push("חובה להזין םחד מהשדות לעדכון");
+            errors.push("חובה להזין אחד מהשדות לעדכון");
         }
        
         this.ValidationErrorsList = errors;

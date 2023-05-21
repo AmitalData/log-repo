@@ -284,7 +284,7 @@
 
                                     </td>
                                     <td>
-                                        <img class="SearchIcon" src="./Images/Search.png" (click)="SearchMethod()" [style.opacity]="opacity" title="שםילתם מורחבת" />
+                                        <img class="SearchIcon" src="./Images/Search.png" (click)="SearchMethod()" [style.opacity]="opacity" title="שאילתא מורחבת" />
                                     </td>
                                     <td>
                                         <div style="width:5px"></div>
@@ -1352,7 +1352,7 @@
 
 
                                             <div style="float: right; height:20px; padding-top:3px;padding-right:12px">
-                                                <div style="width: 20px; float: right; height:20px; padding-top:1px" title="לם לצבירה" tabindex="-1" *ngIf="IsNotForAccumaltionVisibile">
+                                                <div style="width: 20px; float: right; height:20px; padding-top:1px" title="לא לצבירה" tabindex="-1" *ngIf="IsNotForAccumaltionVisibile">
                                                     <LogCheckBox style="float:right" [Checked]="item.NotForAccumaltion" [HideColumns]="true" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [ObjectFieldName]="'NotForAccumaltion'" [DataContext]="item" (ValueChanged)="item.NotForAccumaltionChecked($event,item)"></LogCheckBox>
 
                                                 </div>
