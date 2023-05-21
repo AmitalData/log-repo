@@ -31,6 +31,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Logitude.Accounting.Data.EntityKeys;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -97,6 +98,7 @@ namespace Logitude.Accounting.BL.Utils
                 else
                 {
                     gLAccountPM = gLAccountQueryService.GetSinglePM(myGLAccountId, tenant);
+                    gLAccountQueryService.GetComposition(new GLAccountKeys() { Id = myGLAccountId }, gLAccountPM);
                     if (gLAccountPM == null)
                     {
                         this.AddErrorRow($"GLAccount id={gLAccountPM} is not found in tenant {tenant}");
@@ -303,6 +305,7 @@ namespace Logitude.Accounting.BL.Utils
 
                     GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
                     GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(gLAccountId, _Tenant);
+                    gLAccountQueryService.GetComposition(new GLAccountKeys() { Id = gLAccountId }, gLAccountPM);
                     if (gLAccountPM != null)
                     {
                         if (!String.IsNullOrWhiteSpace(gLAccountPM.ParentAccountId))
