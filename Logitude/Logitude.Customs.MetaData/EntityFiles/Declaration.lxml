@@ -27247,7 +27247,7 @@
       Code="&quot;DisabledPrintDecForm&quot;"
           FeatureTypeCode="&quot;ACT&quot;"
           FeatureTextCodeCode="&quot;Customs.Declaration.Features.PrintDeclarationForm&quot;"
-<
+
       FeatureDefaultText="&quot;Disabled Print Dec Form&quot;"
           IsPackagable="true"
           IsOld="false"
