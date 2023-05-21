@@ -631,10 +631,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 if (!string.IsNullOrWhiteSpace(customerCode))
                 {
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
 
-
-                    var declarationQS = new DeclarationQueryService(tenant);
-                    bank = declarationQS.GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", customerCode, tenant);
+                    bank = defaultValueQueryService.GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", customerCode, tenant);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, bank);

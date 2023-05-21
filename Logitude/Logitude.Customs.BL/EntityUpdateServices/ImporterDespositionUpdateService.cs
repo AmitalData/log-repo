@@ -153,7 +153,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
             if (setting.IsConnectedToUniFreight)
             {
-                string defValue = GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", entityPM.Tenant);
+                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(entityPM.Tenant);
+
+                string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", entityPM.Tenant);
                 if (defValue == "Y")
                 {
                     this.Vendor = entityPOCO.Vendor;
@@ -163,23 +165,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+        
 
 
         protected override void AfterUpdating(ImporterDespositionPM entityPM, EntityPM entityParentPM)

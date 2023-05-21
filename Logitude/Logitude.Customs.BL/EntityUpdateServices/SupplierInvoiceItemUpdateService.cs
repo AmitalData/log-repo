@@ -398,11 +398,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 partnerId = myDeclarationPM.CustomerCode;
             }
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(supplierInvoiceItem.Tenant);
 
-            string partnerDefault = GetDefault(myAmitalContext, "ISRAEL", "CIM_SIVUG_103", "NON", partnerId, supplierInvoiceItem.Tenant); // S=Supplier I=Client
+            string partnerDefault = defaultValueQueryService.GetDefault("ISRAEL", "CIM_SIVUG_103", "NON", partnerId, supplierInvoiceItem.Tenant); // S=Supplier I=Client
             if (partnerDefault == "S") // If Supplier get Unifreight card
             {
-                partnerId = GetDefaultAccountNumber(myAmitalContext, "ISRAEL", "CEX_CUS_SUP", "NON", partnerId, supplierInvoiceItem.Tenant);
+                partnerId = defaultValueQueryService.GetDefaultAccountNumber("ISRAEL", "CEX_CUS_SUP", "NON", partnerId, supplierInvoiceItem.Tenant);
             }
 
             if (string.IsNullOrWhiteSpace(partnerId) || string.IsNullOrWhiteSpace(supplierInvoiceItem.ItemCode))
@@ -452,36 +453,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 
-        private string GetDefault(AmitalContext myAmitalContext, string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            var myGDFDATAQueryService = new GDFDATAQueryService(myAmitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
-
-        private string GetDefaultAccountNumber(AmitalContext myAmitalContext, string DISTRID, string DEFID, string BRANCHID, string SHORTDEFDATA, int tenant)
-        {
-            var myGDFDATAQueryService = new GDFDATAQueryService(myAmitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || SHORTDEFDATA == null)
-            {
-                return ("");
-            }
-
-            string accountNumber = myGDFDATAQueryService.GetCardIdByDefaultValue(DISTRID, DEFID, BRANCHID, SHORTDEFDATA);
-
-            return (accountNumber);
-        }
+       
 
         public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
         {

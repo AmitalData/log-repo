@@ -401,8 +401,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.PayHand
 
         private CustomBankList GetBank()
         {
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(ResolvedTenant());
+
             Boolean BlockAgentBankForMasabDefaultValue = false;
-            string defValue = GetDefault("ISRAEL", "CGG_BLOCK_BANK", "NON", "NON", ResolvedTenant());
+            string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_BLOCK_BANK", "NON", "NON", ResolvedTenant());
             if (defValue == "Y")
             {
                 BlockAgentBankForMasabDefaultValue = true;
@@ -432,7 +434,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.PayHand
                 {
                     if (!string.IsNullOrWhiteSpace(_MyDeclarationPM.CustomerCode))
                     {
-                        string bank = GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", _MyDeclarationPM.CustomerCode, _MyDeclarationPM.Tenant);
+                        string bank = defaultValueQueryService.GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", _MyDeclarationPM.CustomerCode, _MyDeclarationPM.Tenant);
                         if (!String.IsNullOrWhiteSpace(bank))
                         {
                             customBanksList = customBankListQueryService.GetList(_MyDeclarationPM.Tenant).Where(r => r.InternalCode == bank && !r.InActive).ToList();
@@ -490,23 +492,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.PayHand
             }
         }
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+       
 
         void DeserilazeObject(string xmlLOGIPAYHAND)
         {

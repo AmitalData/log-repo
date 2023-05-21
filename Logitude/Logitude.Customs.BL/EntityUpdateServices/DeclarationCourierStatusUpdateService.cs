@@ -150,7 +150,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, entityPM.Tenant);
                         if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
                         {
-                            string defValue = GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, entityPM.Tenant);
+                            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(entityPM.Tenant);
+
+                            string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, entityPM.Tenant);
                             if (defValue == "Y")
                             {
                                 if (entityPM.IsClosedForFollowUp)
@@ -328,23 +330,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             base.OnUpdating(entityPM, entityPOCO);
         }
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+      
 
         protected override void UpdateComposition(DeclarationCourierStatusPM entityPM)
         {
@@ -536,9 +522,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if(setting!= null & setting.IsConnectedToUniFreight)
                 {
 
-              
-                //Set HighLowValue
-                string defValue = GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
+
+                    //Set HighLowValue
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(myDeclarationCourierStatusPM.Tenant);
+
+                    string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON", myDeclarationCourierStatusPM.Tenant);
                 decimal defaultAmount = 0;
                 var boolvar = (decimal.TryParse(defValue, out defaultAmount));
 
@@ -560,22 +548,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return null;
         }
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(Tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+        
     }
 }

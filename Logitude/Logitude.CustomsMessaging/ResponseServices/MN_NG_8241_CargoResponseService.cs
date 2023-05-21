@@ -239,7 +239,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     Boolean _IsChanged = false;
                     if (_MyDeclarationPM.Consignments != null && _MyDeclarationPM.Consignments.Count() > 0)
                     {
-                        string defValue = GetDefault("ISRAEL", "CGG_MAN_RUNOVR", "NON", "NON", _MyDeclarationPM.Tenant);
+                        DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_MyDeclarationPM.Tenant);
+
+                        string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_MAN_RUNOVR", "NON", "NON", _MyDeclarationPM.Tenant);
                         if (defValue == "Y")
                         {
                             _IsRunOver = true;
@@ -379,23 +381,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             MyResponseData.UserMessage = "שליחת מסר מצהר בוצעה בהצלחה. " + MyResponseData.UserMessage; //Yuval Chalup 12.09.2016 CA-271500 (Concat)
         }
 
-         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+         
 
         private void UpdateManualPayment(CargoQueryRequestParams requestParams, ICustomContext customContext, DeclarationPM declarationPM)
         {
@@ -538,8 +524,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private DateTime CheckIfBlockTime(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM)
         {
-            var declarationQS = new DeclarationQueryService(declarationPaymentPM.Tenant);
-            string timesCompany = declarationQS.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", declarationPaymentPM.Tenant);
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(declarationPaymentPM.Tenant);
+
+            string timesCompany = defaultValueQueryService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", declarationPaymentPM.Tenant);
             TimeSpan toTimeCurrent = new TimeSpan();
             TimeSpan toTime2Current = new TimeSpan();
             TimeSpan toTime = new TimeSpan();
@@ -561,7 +548,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
             }
-            string timesCustomer = declarationQS.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", declarationPM.CustomerCode, declarationPaymentPM.Tenant);
+            string timesCustomer = defaultValueQueryService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", declarationPM.CustomerCode, declarationPaymentPM.Tenant);
 
             if (timesCustomer != null && timesCustomer != "")
             {

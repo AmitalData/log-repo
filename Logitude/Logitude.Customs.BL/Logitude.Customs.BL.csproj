@@ -1129,6 +1129,7 @@
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\DefaultValueQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />

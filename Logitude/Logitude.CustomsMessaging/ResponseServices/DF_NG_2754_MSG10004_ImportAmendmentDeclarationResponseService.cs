@@ -73,23 +73,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+      
 
 
         #region Helpers
@@ -262,7 +246,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, tenant);
                             if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
                             {
-                                string defValue = GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, tenant);
+                                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+
+                                string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, tenant);
                                 if (defValue == "Y")
                                 {
                                     DeclarationCasualDetailsQueryService declarationCasualDetailsQueryService = new DeclarationCasualDetailsQueryService(tenant);

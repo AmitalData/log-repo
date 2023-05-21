@@ -244,8 +244,10 @@ namespace Logitude.Customs.BL.BL
             {
 
                     if (myDeclarationCourierStatusPM == null) return;
-                    //Set HighLowValue
-                    string defValue = GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
+                //Set HighLowValue
+                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(myDeclarationCourierStatusPM.Tenant);
+
+                string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON", myDeclarationCourierStatusPM.Tenant);
                     decimal defaultAmount = 0;
                     var boolvar = (decimal.TryParse(defValue, out defaultAmount));
 
@@ -260,23 +262,7 @@ namespace Logitude.Customs.BL.BL
                 }
         }
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(declarationPM.Tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+        
 
         public void CalcIsCourierMissingClassification(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
@@ -591,8 +577,9 @@ namespace Logitude.Customs.BL.BL
         public void CalcDeclarationPendings906(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(myDeclarationCourierStatusPM.Tenant);
 
-            string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON");
+            string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON", myDeclarationCourierStatusPM.Tenant);
             if (!string.IsNullOrEmpty(defValue) && !string.IsNullOrEmpty(declarationPM.CustomerCode) && declarationPM.CustomerCode != defValue)
             {
                 DeclarationPendingPM declarationPendingPM_906 = null;
@@ -752,8 +739,9 @@ namespace Logitude.Customs.BL.BL
                 return;//not courier 
             }
             var declarationPending904PM = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == declarationPM.Id && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
-            
-            string defValue = GetDefault("ISRAEL", "CGO_PENDING_WGT", "NON", "NON");
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(myDeclarationCourierStatusPM.Tenant);
+
+            string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_PENDING_WGT", "NON", "NON", myDeclarationCourierStatusPM.Tenant);
             decimal defaultAmount = 0;
             var boolvar = (decimal.TryParse(defValue, out defaultAmount));
 
@@ -829,22 +817,6 @@ namespace Logitude.Customs.BL.BL
             }
 
         }
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(declarationPM.Tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+        
     }
 }

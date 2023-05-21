@@ -68,8 +68,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
             courierMasterMamanModel.Description = "";
 
-            var declarationQS = new DeclarationQueryService(_Context);
-            string forwarder = declarationQS.GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _CourierMasterPM.Tenant);
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_CourierMasterPM.Tenant);
+
+            string forwarder = defaultValueQueryService.GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _CourierMasterPM.Tenant);
             forwarder = forwarder.Substring(forwarder.Length -3);
 
             courierMasterMamanModel.Agent = forwarder;

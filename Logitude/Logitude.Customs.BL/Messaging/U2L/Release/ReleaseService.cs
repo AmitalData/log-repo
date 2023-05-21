@@ -136,7 +136,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 throw new BusinessErrorException("LOGITUDE FILE is " + this._LogitudeReleaseFile.Id + " but not found");
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-            exemptTypesForEntitlement = GetDefault("ISRAEL", "CGG_ENTI_EXEMPT", "NON", "NON", ResolvedTenant());
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(ResolvedTenant());
+
+            exemptTypesForEntitlement = defaultValueQueryService.GetDefault("ISRAEL", "CGG_ENTI_EXEMPT", "NON", "NON", ResolvedTenant());
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             if (mode == "SecondaryEntry")
@@ -548,23 +550,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
 
         }
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
 
         private string TranslateClient(string importerId)
         {
