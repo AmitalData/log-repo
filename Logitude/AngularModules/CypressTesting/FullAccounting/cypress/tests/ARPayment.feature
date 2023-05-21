@@ -5,8 +5,8 @@ Feature: AR Payment
     Scenario: Create new AR Payment
         Given the user logged in and navigates to Full Accounting workspace
         And an AR Payment with the following details
-            | Partner         | BDDCustomer |
-            | RegisterDate    | 13/09/2021  |
+            | Partner         | HadiNewCustomer2023 |
+            | RegisterDate    | 15/05/2023  |
             | PaymentCurrency | NIS         |
             | PaymentMethod   | Cash        |
             | PaymentAmount   | 1000        |

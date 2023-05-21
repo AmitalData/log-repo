@@ -47,7 +47,7 @@ export function PrintReport() {
     cy.DefineWindowOpen(RequestAliases.PrintReportWindowOpen);
     cy.Click(JournalSelectors.MenuButtons, null);
     cy.Click(JournalSelectors.JournalPrint, null);
-    cy.Click(JournalSelectors.Printbutton, null);
+    cy.Click(JournalSelectors.Printbutton, null,true);
 }
 
 export function AssertPrintReport() {
