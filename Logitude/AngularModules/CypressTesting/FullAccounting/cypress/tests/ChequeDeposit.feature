@@ -5,18 +5,18 @@ Feature: Cheque Deposit
     Scenario: Create new AR Payment
         Given the user logged in and navigates to Full Accounting workspace
         And an AR Payment with the following details
-            | Partner         | BDDCustomer            |
-            | RegisterDate    | 13/09/2021             |
+            | Partner         | HadiNewCustomer2023    |
+            | RegisterDate    | 15/05/2023             |
             | PaymentCurrency | NIS                    |
             | PaymentMethod   | Cheque                 |
-            | PaymentAmount   | 100                    |
+            | PaymentAmount   | 1000                   |
             | PaymentBranch   | ChequeDepositBranchBDD |
         When create AR Payment
         Then the AR Payment should get successfully
 
     Scenario: Approve the AR Payment
         Given a cheque with the following details
-            | ChequeValueDate  | 13/09/2021 |
+            | ChequeValueDate  | 15/05/2023 |
             | ChequeRef        | 1235       |
             | ChequeBank       | 6958       |
             | ChequeBankBranch | 784        |
@@ -27,7 +27,7 @@ Feature: Cheque Deposit
     Scenario: Create new Cheque Deposit
         Given the user navigates to cheque deposit wizerd
         And a cheque deposit with the following details
-            | AccountingDate | 13/09/2021           |
+            | AccountingDate | 15/05/2023           |
             | CashBook       | ChequeDepositBookBDD |
             | BankAccount    | ChequeDepositBankBDD |
         When create cheque deposit
