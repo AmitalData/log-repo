@@ -1612,6 +1612,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
                 if (customer != null && (customer.LogBoxActivated || customer.IsPrivateLabelCustomer))
                     return true;
+                if(!string.IsNullOrEmpty(entityPoco.CustomerShipmentNumber) && !string.IsNullOrEmpty(OldCustomerId) && CustomerChanged == "true")
+                    return true;
             }
 
             return false;
