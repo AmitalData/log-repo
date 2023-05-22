@@ -45,7 +45,7 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
-
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -230,12 +230,16 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
 
             if (_DeclarationPM.IsConnectedToUnifreight)
-            {if(_DeclarationPM.IsCourierDeclaration)
+            {
+                if(_DeclarationPM.IsCourierDeclaration)
                 {
-                    OpenUnifreighTask(_DeclarationPM, "L2U", null, false, "");
-
+                    FeatureQuery featureQuery = new FeatureQuery();
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "SendL2UFromSendDeclaration");
+                    if (feature != null)
+                        OpenUnifreighTask(_DeclarationPM, "L2U", null, false, "");
                 }
-            else
+                else
                 {
                     OpenUnifreighTask(_DeclarationPM, "L2U", "INR", true, "");
 
