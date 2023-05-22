@@ -75,6 +75,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return DeclarationExportStorageList;
         }
 
+        public List<ExportStoragePM> GetDeclarationExportStorages(string declarationId, int tenant)
+        {
+            List<ExportStorage> DeclarationExportStorages = repository.GetExportStorageListByDeclarationId(declarationId, tenant);
+            List<ExportStoragePM> DeclarationExportStorageList = new List<ExportStoragePM>();
+            if (DeclarationExportStorages != null)
+            {
+                var pocos = DeclarationExportStorages.ToList();
+                var pmList = pocos.Select(poco => this.GetEntityPM(poco, true, new ExportStorageKeys() { Id = poco.Id })).ToList();
+                DeclarationExportStorageList = pmList;
+            }
+
+            return DeclarationExportStorageList;
+        }
+
 
         public List<ExportStorage> GetConnectToFileNoNotToDeclaration(string exportfileno, int tenant)
         {
