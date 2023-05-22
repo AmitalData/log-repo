@@ -247,7 +247,7 @@ new JournalLinePM()
     DebitAccountId = creditTheBank ? adjustGLAccountId : bankGLAccountList.Id,
     LocalAmount = creditTheBank ? (LocalAmount ) : -1 * (LocalAmount),
     ForeignAmount = creditTheBank ? (ForeignAmount) : -1 * (ForeignAmount),
-    Notes = screenNotes + Environment.NewLine + listOfpageLineList.First().Notes,
+    Notes = screenNotes,
     Reference1 = listOfpageLineList.First().Reference,
     ChangeSetOp = ChangeSetOperation.Insert
 };
