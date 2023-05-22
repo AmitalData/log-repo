@@ -60,7 +60,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     var totalOpenPagesLines = 0;
                     if (entityPM.IsReconciled)
                     {
-                        Int32.TryParse(bankAccount.TotalOpenExternalTransactions, out totalOpenPagesLines);
+                        Int32.TryParse(bankAccount.TotalOpenPagesLines, out totalOpenPagesLines);
                         if (totalOpenPagesLines > 0)
                         {
                             totalOpenPagesLines--;
