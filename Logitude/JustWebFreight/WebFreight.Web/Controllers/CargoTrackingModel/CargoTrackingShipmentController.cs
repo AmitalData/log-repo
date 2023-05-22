@@ -39,6 +39,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.Helpers;
 using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
+using Logitude.Server.Tools.StorageService;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -144,16 +145,44 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
 
         }
-
+        public HttpResponseMessage GetFilingAttachPdfReport(string documentId,int tenant)
+        {
+            try
+            {
+                byte[] result = null;
+              
+                //int tenant = GetAuthinticatedTenant();
+                DocumentRepository documentRepository = new DocumentRepository(tenant);
+                Document document = documentRepository.GetSingleDocument(tenant, documentId);
+                if (document != null)
+                {
+                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    BlobFileInfo fileInfo = new BlobFileInfo()
+                    {
+                        FileName = document.Id,
+                        FolderName = document.Folder,
+                        Extension = document.Extension,
+                        Tenant = tenant,
+                        FileSize = document.FileSize,
+                    };
+                    result = storageservice.Read(fileInfo);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         private AuthenticationToken GetAuthinticated()
         {
-            string logKey = PerformanceLogger.LogCurrentTime();
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            return authToken;
-        }
-    }
+			string logKey = PerformanceLogger.LogCurrentTime();
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			return authToken;
+		}
+	}
 
 
 

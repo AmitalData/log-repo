@@ -42,6 +42,7 @@ using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.Utils;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel;
 using Newtonsoft.Json;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Microsoft.Practices.Unity;
@@ -392,7 +393,7 @@ namespace Logitude.Accounting.BL.CoreBL
             timeOut = null;//ihab: no need to use timeout  - but have to be fast (statistic) !!!
             StringBuilder stringBuilderWhyTransferCardBadBalance = new StringBuilder();
             LogMessagingUtil.Instance.AppendLine("GetNewSerializableTransaction(timeOut):insec" + timeOut.GetValueOrDefault().TotalSeconds.ToString());
-            using (var scope = TransactionFactory.GetNewSerializableTransaction(timeOut))
+            using (var scope = GetTransactionScope(timeOut))
             {
                 IDbContextLogger logger = null;
                 try
@@ -545,6 +546,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     LogMessagingUtil.Instance.AppendLine("AccountingStreamingInNewSerializableTransaction:Took:" + sw.Elapsed.ToString());
                 }
             }
+        }
+
+        private TransactionScope GetTransactionScope(TimeSpan? timeout)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("JAM", 0))
+                return TransactionFactory.GetNewReadCommittedTransaction(timeout);
+            return TransactionFactory.GetNewSerializableTransaction(timeout);
         }
 
         private void WriteLogWhyTransferCardBadBalance(int tenant, string seedJournalId, IAccountingContext accountingContext, StringBuilder sb)
@@ -789,7 +797,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void FillIdCountersUseNewDBTransaction(List<LedgerTransactionPM> myLedgerTransactionsWithOutCounters)
         {
             var sw = Stopwatch.StartNew();
-            using (var newScope = TransactionFactory.GetNewTransaction()) /// inside IdCounter.GetNumber there is --- GetNewReadCommittedTransaction
+            using (var newScope = GetTransactionScope(null)) /// inside IdCounter.GetNumber there is --- GetNewReadCommittedTransaction
             {
                 foreach (var entityPM in myLedgerTransactionsWithOutCounters)
                 {
@@ -1114,6 +1122,18 @@ namespace Logitude.Accounting.BL.CoreBL
             return isSubmitApprove;
         }
 
+        private static void SetTenantIdle(QueueResponse message)
+        {
+            string sJournalTenant = message.MessageValues["JournalTenant"];
+            ICommonDataContext myContext = CommonDataContext.GetContext(int.Parse(sJournalTenant));
+            TenantRepository tenantRepository = new TenantRepository(myContext);
+            Tenant tenantObj = tenantRepository.GetSingleTenant(int.Parse(sJournalTenant));
+            tenantObj.JouranlApprovalIsIdle = false;
+            tenantRepository.Update(tenantObj);
+            tenantRepository.SubmitChanges();
+
+        }
+
         private static void UpdateGLAccountAgingData(string communicationLogId, DbQueueService queueservice, int tenant) {
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
@@ -1166,6 +1186,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
 
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
+            SetTenantIdle(message);
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "AccountingJournalApproveWR", "AccountingJournalApproveWR: ProcessMessage() Method", null);
             if (message.RetryNumber >= 2 && message.RetryNumber <= 7) {
                     myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
@@ -1414,14 +1435,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     //ThrowNewException("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
                     try
                     {
-
-                        // string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(myClass);
                         queueservice = new DbQueueService(selectedQueue, 0);
 
-                        response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
+                        if (FeatureToggleHelper.HasFeatureToggle("JAM", 0))
+                            response = queueservice.ReceiveJournal(new TimeSpan(0, 0, 0, 5));
+                        else
+                            response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
 
-
-                        // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
                     }
                     catch (Exception)
                     {
@@ -1435,6 +1455,14 @@ namespace Logitude.Accounting.BL.CoreBL
                         break;
                     }
 
+
+                    SetLastActivate?.Invoke();
+                    if (ProcessMessage_Db(queueservice, response, selectedQueue))
+                    {
+                        LogDoneItemInMemoryAction?.Invoke(1);
+                    }
+
+                    SetTenantIdle(response);
                     if (response.MessageValues.ContainsKey("communicationLogId"))
                     {
                         string communicationLogId = response.MessageValues["communicationLogId"].ToString();

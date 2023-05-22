@@ -52,7 +52,7 @@ namespace Logitude.Accounting.BL.Validators
 
             if (myGLAccountPM.IsMultiCurrency != true && String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId))
             {
-                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CurrencyOrMulti", myGLAccountPM.Tenant, showLocals));
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.SettingOfCurrency", myGLAccountPM.Tenant, showLocals) + " " + myGLAccountPM.DisplayNumber + " " + TextCodesTranslator.TranslateText("GLAccounts.O.InCorrectCorrect", myGLAccountPM.Tenant, showLocals));
             }
 
             if (myGLAccountPM.IsMultiCurrency == true && !String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId))

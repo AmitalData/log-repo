@@ -206,23 +206,49 @@
             </div>
 
             <!-- [ Declaration Approval ] -->
-            <panel *ngIf="ShowShipmentAsDeclaration" [ShowWhitePanelOnMobile]="true">
 
-                <div body class="declaration-approval">
+        <div  style="display:flex;align-items: center;justify-content: center; margin-top: 30px;flex-wrap: wrap;">
+       
+        <panel *ngIf="ShowShipmentAsDeclaration&&ShowDocumentMNO" [Width]="'100%'" [ShowWhitePanelOnMobile]="true" class="panel1" >
+            <div body class="declaration-approval" style="min-height: 110px">
+            <div  class="declaration-approval-document" >
+                <div *ngIf="IsPDF" style="height:100%;">
+                    <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe"  width="470px" height="500px" >Loading...</iframe>
+                </div>
+                <div *ngIf="!IsPDF" style="display: flex;justify-content: center;">
+                    <table>
+                        <tr style="height:1px;"> 
+                            <td>
+                                המסמך "הזמנת כסף" לא קיים במשלוח זה
+                            </td>
+                        </tr>
+                      
+                    </table>
+                </div>
+            </div>
+           </div>
+        </panel>
+        <panel *ngIf="ShowShipmentAsDeclaration" [Width]="ShowDocumentMNO?'100%':null"  [ShowWhitePanelOnMobile]="true" [ngClass]="ShowDocumentMNO ? 'panel2' : 'panel3'"  >
 
-                    <div class="declaration-approval-message">{{ approvalMessage }}</div>
+            <div body class="declaration-approval">
+           
 
-                    <div class="declaration-approval-toolbar" *ngIf="!hasApprovalDeclineResponse">
-                        <button class="declaration-approval-toolbar-button__red animate"
-                            (click)="DenyDeclaration()">דחיה</button>
-                        <button class="declaration-approval-toolbar-button__green animate"
-                            (click)="ApproveDeclaration()">אישור</button>
+                <div class="declaration-approval-message">{{ approvalMessage }}</div>
+             
+                <div class="declaration-approval-toolbar" *ngIf="!hasApprovalDeclineResponse">
+           
+                             
+                      <button class="declaration-approval-toolbar-button__red animate"
+                          (click)="DenyDeclaration()">דחיה</button>
+                      <button class="declaration-approval-toolbar-button__green animate"
+                        (click)="ApproveDeclaration()">אישור</button>
                     </div>
                 </div>
 
-            </panel>
+           
 
-
+        </panel>  
+    </div>
             <!-- Milestones Slider -->
             <div *ngIf="!ShowShipmentAsDeclaration" style="order: 2;" #SliderWrapper class="slider-wrapper"
                 [ngClass]="NoMilstonesFound ? 'slider-wrapper no-milestones': 'slider-wrapper'"
@@ -611,7 +637,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf=" !IsOrderShipment && cargoTrackingShipmentPM.DirectionId != 'E'">
+                        <div *ngIf="cargoTrackingShipmentPM?.ImportManifest && !IsOrderShipment && cargoTrackingShipmentPM.DirectionId != 'E'">
                             <div class="title">Import Manifest</div>
                             <div class="description">
                                 {{cargoTrackingShipmentPM?.ImportManifest}}
@@ -1010,16 +1036,15 @@
 
                         <table class="row-hover" style="width: 100%;">
                             <tr class="header">
-                                <th style="width: 450px;">file name</th>
                                 <th style="width: 450px;">type</th>
+                                <th style="width: 450px;">file description</th>
                                 <th style="width: 450px;">create date</th>
                                 <th style="width: 450px;">customs ref</th>
                                 <th style="width: 50px;" class="hide-mobile"></th>
                                 <th style="width: 50px;" class="hide-mobile"></th>
                             </tr>
                             <tr *ngFor="let item of cargoTrackingShipmentPM.DocumentsFilings">
-                                <td style="width: 450px;"><custom-label [width]="300">
-                                    {{item.CalculatedFileName}}</custom-label></td>
+                              
                                 <td style="width: 450px;">
                                     <span [ngSwitch]="item.FileExtension.toLowerCase()">
                                         <img class="file-extension" *ngSwitchCase="'pdf'" src="./assets/images/FileIcons/File-pdf-48.png" />
@@ -1038,6 +1063,9 @@
                                     <!-- <img width="16" src="./assets/images/FileIcons/info.png"
                                         style="top: 2px; position: relative;padding-right: 7px;" alt=""> -->
                                     <custom-label [width]="300">{{item.DocumentTypeName}}</custom-label>
+                                </td>
+                                <td style="width: 450px;"><custom-label [width]="300">
+                                    {{item.Descreption}}</custom-label>
                                 </td>
                                 <td style="width: 450px;">{{item.CreateDate | date:'d-MMM-yyyy, H:mm'}}</td>
                                 <td style="width: 450px;">{{item.CustomReference}}</td>
@@ -1119,7 +1147,7 @@
                                         <custom-label>{{item.DocumentTypeName}}</custom-label>
                                         <br>
                                         <span style="color: gray;font-size: 13px;">
-                                            <custom-label [width]="180">"{{item.CalculatedFileName}}"</custom-label>
+                                            <custom-label [width]="180">"{{item.Descreption}}"</custom-label>
                                         </span>
                                         <br>
                                         <span style="color: gray;font-size: 13px;">
@@ -1148,7 +1176,7 @@
 
 
 
-            <panel *ngIf="!ShowShipmentAsDeclaration" [Title]="'SHO List'"
+            <panel *ngIf="!ShowShipmentAsDeclaration && !IsOrderShipment" [Title]="'SHO List'"
                 style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
 
                 <div body style="padding: 0px 8px 13px 0px;">
@@ -1199,7 +1227,7 @@
                             <div [class.hidden]="partnerCard.Name == null" class="card partner-card"
                                  *ngIf="checkPartnerTypePermissionSharedAccess(partnerCard.Type)">
                                 <div class="header">
-                                    <div class="partners-buttons hide-mobile" *ngIf="checkPartnerTypePermissionContactAccess(partnerCard.Type)">
+                                    <div class="partners-buttons hide-mobile" *ngIf="partnerCard.PhoneNumber && checkPartnerTypePermissionContactAccess(partnerCard.Type)">
                                         <div class="circle-icon">
                                             <a [href]="'tel:'+partnerCard.PhoneNumber">
                                                 <img src="./assets/images/icons/call-white.svg" alt="">

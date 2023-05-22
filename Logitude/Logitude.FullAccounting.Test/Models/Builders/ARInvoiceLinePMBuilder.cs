@@ -95,6 +95,11 @@ namespace Logitude.FullAccounting.Test.Models.Builders
             arInvoiceLine.InvoiceCurrencyCode = invoiceCurrencyCode;
             return this;
         }
+        public ARInvoiceLinePMBuilder InvoiceCurrencyId(string invoiceCurrencyId)
+        {
+            arInvoiceLine.InvoiceCurrencyId = invoiceCurrencyId;
+            return this;
+        }
         public ARInvoiceLinePMBuilder InvoiceLocalCurrencyCode(string invoiceLocalCurrencyCode)
         {
             arInvoiceLine.InvoiceLocalCurrencyCode = invoiceLocalCurrencyCode;

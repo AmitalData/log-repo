@@ -947,6 +947,11 @@
       Code="&quot;UAD&quot;"
       Description="&quot;Update GLA Aging Data using WR&quot;"
       Name="&quot;Update GLA Aging Data using WR&quot;" />
+    <Record
+      Code="&quot;JAM&quot;"
+      Name="&quot;Journal Approval MultiThreading&quot;"
+      SearchFields="&quot;JAM, Journal Approval MultiThreading&quot;"
+      Description="&quot;Journal Approval MultiThreading 2&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

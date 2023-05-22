@@ -176,6 +176,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.DigitalPortalMobTotalLastWeek).HasColumnName("DigitalPortalMobTotalLastWeek");
             this.Property(t => t.DigitalPortalMobTotalLastMonth).HasColumnName("DigitalPortalMobTotalLastMonth");
 
+            this.Property(t => t.ShowMoneyOrder).HasColumnName("ShowMoneyOrder");
 
         string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

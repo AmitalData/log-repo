@@ -369,7 +369,15 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
         }
     }
+    get ShowMoneyOrder() {
+        return this.EntityPM.ShowMoneyOrder;
+    }
+    set ShowMoneyOrder(value: boolean) {
+        if (this.EntityPM.ShowMoneyOrder != value) {
+            this.EntityPM.ShowMoneyOrder = value;
 
+        }
+    }
     get DeclarationMessage() {
         return this.EntityPM.DeclarationMessage;
     }
@@ -490,7 +498,9 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     ActivatedforDeclarationApproveChange(value: any) {
         this.EntityPM.ActivatedforDeclarationApprove = value;
     }
-
+    ShowMoneyOrderChange(value: any) {
+        this.EntityPM.ShowMoneyOrder = value;
+    }
     SetUIPropertiesEnabled(value: boolean) {
 
         this.UIProperties.SetEnabled("MainColor", "TenantManagement", value);

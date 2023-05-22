@@ -66,7 +66,10 @@ namespace Logitude.Server.Tools.QueueService
                 return response;
             }
         }
-
+        public QueueResponse ReceiveJournal(TimeSpan? serverWaitTime = null)
+        {
+            throw new NotImplementedException();
+        }
         public void Complete()
         {
             using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())

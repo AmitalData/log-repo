@@ -54,6 +54,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LogboxShipmentExportExcelService } from 'src/CargoTracking/Services/Others/LogboxShipmentExportExcelService';
 import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
+import { SafePipe } from 'src/Infrastructure/Pipes/SafePipe';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -85,6 +86,7 @@ export function getBaseUrl() {
         MultipleSelectionComponent,
         IconButtonComponent,
         DateTimeFormatPipe,
+        SafePipe,
         CustomLabelComponent,
 
 
@@ -127,6 +129,7 @@ export function getBaseUrl() {
         CargoTrackingShipmentExtendedService,
         DatePipe,
         DateTimeFormatPipe,
+        SafePipe,
         SharedService,
         LogboxShipmentExportExcelService,
         LogitudeGridExportToExcelService,

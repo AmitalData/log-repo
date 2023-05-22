@@ -1316,6 +1316,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
 
         line.InvoiceCurrencyCode = this.InvoiceCurrencyCode;
+        line.InvoiceCurrencyId = this.InvoiceCurrencyId;
         var logWindow = new LogitudeWindow();
         logWindow.Title = TextCodeTranslator.Translate("ARInvoiceLine.O.EditInvoiceLine");
         var addEditViewModel: ARInvoiceLineItem = new ARInvoiceLineItem(line, this, true);
@@ -1534,6 +1535,12 @@ export class ARInvoiceLineItem extends BaseComponent {
     set InvoiceCurrencyCode(newValue: string) {
         if (this.EntityPM.InvoiceCurrencyCode != newValue) {
             this.EntityPM.InvoiceCurrencyCode = newValue;
+        }
+    }
+    get InvoiceCurrencyId() { return this.EntityPM.InvoiceCurrencyId; }
+    set InvoiceCurrencyId(newValue: string) {
+        if (this.EntityPM.InvoiceCurrencyId != newValue) {
+            this.EntityPM.InvoiceCurrencyId = newValue;
         }
     }
 

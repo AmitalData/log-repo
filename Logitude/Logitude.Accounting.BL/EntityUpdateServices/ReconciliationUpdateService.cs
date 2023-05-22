@@ -471,7 +471,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     ledgerTransactionPM.IsReconciled = !reconciliationLine.IsPartial;
                 }
-
+                //ledgerTransactionPM.InReconcileProgress = true;
             }
             var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             ledgerTransactionUpdateService._CancelledAction = this._CancelledAction;

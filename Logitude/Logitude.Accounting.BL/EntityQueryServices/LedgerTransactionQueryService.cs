@@ -539,6 +539,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
             return pms;
         }
+
         public List<LedgerTransactionPM> GetLedgerTransactionDTOByIdList(List<string> idList, int tenant)
         {
             var pocos= repository.GetLedgerTransactionsByIdList(idList, tenant);
@@ -557,6 +558,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 OpenAmountCurrencyId = x.OpenAmountCurrencyId,
             }).ToList();
             return pms;
+        }
+
+
+        public bool CheckAnyLedgerTransactionReconciledByIdList(List<string> idList, int tenant)
+        {
+            return repository.CheckAnyLedgerTransactionReconciledByIdList(idList, tenant);
         }
         public List<LedgerTransactionPM> GetLedgerTransactionsByAccountIdListAndJournalId(List<string> accountIdList,string journalId, int tenant)
         {

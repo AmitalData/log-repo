@@ -56,7 +56,7 @@ namespace Logitude.FullAccounting.Test.Models
         public string InvoiceLocalCurrencyCode { get; set; }
         public string InvoiceCurrencyCode { get; set; }
 
-        
+        public string InvoiceCurrencyId { get; set; }
         public string CreditAccount { get; set; }
         public string Description { get; set; }
         public string LocalDescription { get; set; }

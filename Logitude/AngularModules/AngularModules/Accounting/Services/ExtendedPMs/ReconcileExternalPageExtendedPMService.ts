@@ -12,60 +12,55 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
- 
+
 
 @Injectable()
 
-export class ReconcileExternalPageExtendedPMService
-{
- 
+export class ReconcileExternalPageExtendedPMService {
+
     private _apiUrl: string;
     private httpClient: HttpClient;
-    constructor()
-    {
-        
+    constructor() {
+
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPagesExtended';
     }
 
 
-    GetPageByNumber(pageNumber: string, entityId: string,objectTableName: string)
-    {
+    GetPageByNumber(pageNumber: string, entityId: string, objectTableName: string) {
 
-        return defer(() =>
-        {
+        return defer(() => {
 
-         
 
-            return this.httpClient.get(this._apiUrl + '/GetPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName,  ServiceHelper.GetHttpHeaders()).pipe(
-                map((response:ServiceResponse) => {
+
+            return this.httpClient.get(this._apiUrl + '/GetPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName, ServiceHelper.GetHttpHeaders()).pipe(
+                map((response: ServiceResponse) => {
                     var res = response;
-                        var pm = res.Result;
+                    var pm = res.Result;
 
 
-                        var entity: ReconcileExternalPagePM;
-                        if (pm) {
-                            entity = this.MapJsonToEntityPM(pm);
-                        }
+                    var entity: ReconcileExternalPagePM;
+                    if (pm) {
+                        entity = this.MapJsonToEntityPM(pm);
+                    }
 
-                        var serviceResponse: ServiceResponse;
-                        serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = entity;
 
-                        return serviceResponse;
+                    return serviceResponse;
                 }),
                 catchError(ServiceHelper.HandleServiceError));
-            
+
         });
 
 
     }
 
 
-    GetPreviousPageByNumber(pageNumber: number, entityId: string,objectTableName: string)
-    {
-        return this.httpClient.get(this._apiUrl + '/GetPreviousPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName,  ServiceHelper.GetHttpHeaders()).pipe(
-            map((response:ServiceResponse) => {
+    GetPreviousPageByNumber(pageNumber: number, entityId: string, objectTableName: string) {
+        return this.httpClient.get(this._apiUrl + '/GetPreviousPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName, ServiceHelper.GetHttpHeaders()).pipe(
+            map((response: ServiceResponse) => {
                 var res = response;
                 var pm = res.Result;
 
@@ -82,70 +77,66 @@ export class ReconcileExternalPageExtendedPMService
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        
+
 
     }
 
 
-    LoadBankPages(fileUploadParamerter: ImageParameter)
-    {
-       
-      return this.httpClient.post(this._apiUrl + '/PostLoadBankPages', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(
-        map(response => {
-            var result = response;
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
+    LoadBankPages(fileUploadParamerter: ImageParameter) {
 
-            pmresponse.Result = result;
-            return pmresponse;
-        }),
-        catchError(ServiceHelper.HandleServiceError));
-        
+        return this.httpClient.post(this._apiUrl + '/PostLoadBankPages', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+
+                pmresponse.Result = result;
+                return pmresponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
 
     }
 
 
-    CheckLastApprovedBankPageAndReconciledLine(reconcileExternalPageId: string, objectTableName: string)
-    {
-        return this.httpClient.get(this._apiUrl + '/GetCheckLastApprovedBankPageAndReconciledLine?reconcileExternalPageId=' + reconcileExternalPageId+ '&objectTableName=' + objectTableName, ServiceHelper.GetHttpHeaders()).pipe(
+    CheckLastApprovedBankPageAndReconciledLine(reconcileExternalPageId: string, objectTableName: string) {
+        return this.httpClient.get(this._apiUrl + '/GetCheckLastApprovedBankPageAndReconciledLine?reconcileExternalPageId=' + reconcileExternalPageId + '&objectTableName=' + objectTableName, ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var res = response;
 
                 return res;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        
+
 
 
     }
-    CheckRestorePossibility(reconcileExternalPageId: string)
-    {
+    CheckRestorePossibility(reconcileExternalPageId: string) {
         return this.httpClient.get(this._apiUrl + '/GetCheckRestorePossibility?reconcileExternalPageId=' + reconcileExternalPageId, ServiceHelper.GetHttpHeaders()).pipe(
-            map((response:ServiceResponse) => {
+            map((response: ServiceResponse) => {
                 var res = response;
 
-                        return res;
+                return res;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        
+
+
+
+    }
+    GetDraftPage(entityId: string, objectTableName: string) {
+        return this.httpClient.get(this._apiUrl + '/GetDraftPage?entityId=' + entityId + '&objectTableName=' + objectTableName, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var res = response;
+
+                return res;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
 
 
     }
-    GetDraftPage(entityId: string,objectTableName: string)
-    { return this.httpClient.get(this._apiUrl + '/GetDraftPage?entityId=' + entityId + '&objectTableName=' + objectTableName,ServiceHelper.GetHttpHeaders()).pipe(
-        map(response => {
-            var res = response;
 
-                    return res;
-        }),
-        catchError(ServiceHelper.HandleServiceError));
-
-        
-
-    }
-
-    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReconcileExternalPagePM = null)
-    {
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReconcileExternalPagePM = null) {
 
 
         if (!entityPM) {
@@ -203,8 +194,7 @@ export class ReconcileExternalPageExtendedPMService
         return entityPM;
     }
 
-    MapReconcileExternalPageLines(entityPM: ReconcileExternalPagePM, jsonPM: any, mapParent: boolean = true)
-    {
+    MapReconcileExternalPageLines(entityPM: ReconcileExternalPagePM, jsonPM: any, mapParent: boolean = true) {
 
         var oldReconcileExternalPageLines: ReconcileExternalPageLinePM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
@@ -294,8 +284,21 @@ export class ReconcileExternalPageExtendedPMService
         }
     }
 
-    public clone(jsonPM: any)
-    {
+    ImportReconcileExternalPageLineFromExcel(fileUpload: any) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return this.httpClient.post(this._apiUrl + "/ImportReconcileExternalPageLineFromExcel?"
+            , JSON.stringify(fileUpload), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+    }
+
+    public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
