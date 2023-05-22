@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Accounting" AOT="false" TargetTableName="BankAccounts" Env="local,test,cloud">
-	<Sql Version="2">
+	<Sql Version="3">
 		<![CDATA[
 
   ;with q AS (
