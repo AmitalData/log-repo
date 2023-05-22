@@ -547,7 +547,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private TransactionScope GetTransactionScope(TimeSpan? timeout)
         {
-            if (FeatureToggleHelper.HasFeatureToggle("JAM", 0))
+            if (FeatureToggleHelper.HasFeatureToggle("JAM", _Tenant))
                 return TransactionFactory.GetNewReadCommittedTransaction(timeout);
             return TransactionFactory.GetNewSerializableTransaction(timeout);
         }
@@ -1460,7 +1460,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             public void WorkUntilQEmptyQueueDBMultiThreaded(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
-                selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
+                selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveMutliThreadingWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
                 {
