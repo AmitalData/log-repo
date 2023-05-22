@@ -1511,26 +1511,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             }
                             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
                         }
-                        else if ((customerTenantAccessInfo == null || customerTenantAccessInfo.HasAccess == false) && !string.IsNullOrEmpty(entityPoco.CustomerShipmentNumber) && !string.IsNullOrEmpty(OldCustomerId))
+                        else if (!string.IsNullOrEmpty(entityPoco.CustomerShipmentNumber) && !string.IsNullOrEmpty(OldCustomerId) && CustomerChanged == "true")
                         {
-                            //var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
-                            if (IsImporterTenantHasExportFeatureForExportShipments((int)entityPoco.CustomerTenantNumber, entityPM))
+                            IQueueService queueservice = new DbQueueService();
+                            if (IsShipmentMatchDigitalQueueConditions(entityPM))
                             {
-                                IQueueService queueservice = new DbQueueService();
-                                if (IsShipmentMatchDigitalQueueConditions(entityPM))
-                                {
-                                    queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
-                                }
-                                else
-                                {
-                                    queueservice.InitializeQueue("ImportersShipmentQueue", 0);
-                                }
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", entityPoco.CustomerTenantNumber.ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
-
+                                queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
                             }
+                            else
+                            {
+                                queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                            }
+                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", entityPoco.CustomerTenantNumber.ToString() }, { "CustomerId", OldCustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
                         }
-
-
                     }
                     OpenForwarderShipmentQueue();
 
@@ -1618,6 +1611,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 CustomerRepository customerRepository = new CustomerRepository(tenant);
                 Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
                 if (customer != null && (customer.LogBoxActivated || customer.IsPrivateLabelCustomer))
+                    return true;
+                if(!string.IsNullOrEmpty(entityPoco.CustomerShipmentNumber) && !string.IsNullOrEmpty(OldCustomerId) && CustomerChanged == "true")
                     return true;
             }
 
