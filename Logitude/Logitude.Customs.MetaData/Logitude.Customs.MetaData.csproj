@@ -10,7 +10,6 @@
     <RootNamespace>Logitude.Customs.MetaData</RootNamespace>
     <AssemblyName>Logitude.Customs.MetaData</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -108,6 +107,7 @@
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
     <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
+    <None Include="DBScripts\Post\202303211232_AddCOURIERPENDINGREASONS907.sxml" />
     <None Include="DBScripts\Post\20230125_AddCourierPendingReasons905.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS906.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />

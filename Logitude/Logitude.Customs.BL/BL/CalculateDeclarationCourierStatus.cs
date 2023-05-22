@@ -847,4 +847,100 @@ namespace Logitude.Customs.BL.BL
             return (myGDFDATAPM.DEFDATA);
         }
     }
+    public class UpdateDeclarationPending907ExceedingTheQuantityOfGoodsService
+    {
+        private DeclarationPM declarationPM;
+
+        public UpdateDeclarationPending907ExceedingTheQuantityOfGoodsService(DeclarationPM declarationPM)
+        {
+            this.declarationPM = declarationPM;
+        }
+        public void Calc(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
+            string courierReasonCode = "907";
+            if (myDeclarationCourierStatusPM == null)
+            {
+                return;//not courier 
+            }
+            DeclarationPendingPM declarationPendingPM_907 = null;
+            if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+            {
+                declarationPendingPM_907 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == declarationPM.Id && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
+            }
+
+
+
+            string defValue = GetDefault("ISRAEL", "CGO_PND_QTY_VAL", "NON", "NON");
+            decimal defaultAmount = 0;
+            var boolvar = (decimal.TryParse(defValue, out defaultAmount));
+
+            if (!boolvar)
+            {
+                return;
+            }
+
+           SupplierInvoiceItemRepository supplierInvoiceItemRepository = new SupplierInvoiceItemRepository(declarationPM.Tenant);
+            List<SupplierInvoiceItem> listConPackages = supplierInvoiceItemRepository.GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(declarationPM.Id,declarationPM.Tenant );
+
+            var sumInvoiceQuantity = listConPackages.Sum(c => c.InvoiceQuantity);
+
+            if (sumInvoiceQuantity >= defaultAmount)
+            {
+
+
+
+
+                CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
+                Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("907", myDeclarationCourierStatusPM.Tenant);
+                if (isActive)
+                {
+                    if (declarationPendingPM_907 == null)
+                    {
+
+                        declarationPendingPM_907 = new DeclarationPendingPM();
+                        declarationPendingPM_907.CourierPendingReasonCode = "907";
+                        declarationPendingPM_907.Status = "A";
+                        declarationPendingPM_907.ChangeSetOp = ChangeSetOperation.Insert;
+                        myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_907);
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+
+                    else if (declarationPendingPM_907.Status != "A")
+                    {
+                        declarationPendingPM_907.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationPendingPM_907.Status = "A";
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+                }
+
+            }
+           
+           
+
+        }
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(declarationPM.Tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
+    }
 }

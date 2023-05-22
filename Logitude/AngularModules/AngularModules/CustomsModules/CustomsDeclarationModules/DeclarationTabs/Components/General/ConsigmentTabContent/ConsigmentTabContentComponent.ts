@@ -780,7 +780,7 @@ export class ConsigmentTabContentComponent
                     }
                 case '20':
                     {
-                        this.ManifestNumberPlaceholder = "הזן מזהה עסקה מלם";
+                        this.ManifestNumberPlaceholder = "הזן מזהה עסקה מלא";
                         this.SecondCargoIDPlaceholder = " ";
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
