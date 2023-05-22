@@ -51,7 +51,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         List<InterestReportPM> interestReportPMs = interestReportQueryService.GetInterestReportsForCustomer(entityPM.CustomerId, cardPM.GLAccountId, entityPM.Tenant);
                         if (interestReportPMs == null || interestReportPMs.Count == 0)
                         {
-                            if (gLAccountPM.InterestOpenBalance != null)
+                            if (gLAccountPM.InterestOpenBalance == null)
                             {
                                 bool showLocal = false;
                                 //show local 
