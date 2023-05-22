@@ -1462,7 +1462,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         LogDoneItemInMemoryAction?.Invoke(1);
                     }
 
-                    SetTenantIdle(response);
                     if (response.MessageValues.ContainsKey("communicationLogId"))
                     {
                         string communicationLogId = response.MessageValues["communicationLogId"].ToString();
@@ -1476,6 +1475,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             LogDoneItemInMemoryAction?.Invoke(1);
                         }
+                        SetTenantIdle(response);
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
