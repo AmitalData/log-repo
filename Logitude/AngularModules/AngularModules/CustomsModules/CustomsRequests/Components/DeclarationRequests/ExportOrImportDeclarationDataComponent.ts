@@ -278,6 +278,7 @@ export class ExportOrImportDeclarationDataComponent
             logitudeWindow.IsShowCloseButton = true;
             logitudeWindow.Title = "תהליכים לסחורה";
             logitudeWindow.WindowArgs = item.GovernmentProcedureList
+            logitudeWindow.WindowArgs.IsFromDeclarationData = true
             //logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnCustomFilesScreenWindowClosed($event));
             logitudeWindow.Show('./CustomsModules/CustomsPaymentOrder/Components/EditTabs/General/AccountingCustomFilesComponent');
 
