@@ -33,11 +33,12 @@
                             <tr class="FormFieldRow" *ngFor="let customFileItem of AccountingCustomFilesList">
                                 <td>
                                     <div>
-                                        <span style="cursor: pointer;" (click)="OnSelectedFile(customFileItem.ItemGovernmentProcedureType)">{{customFileItem.ItemGovernmentProcedureType}}</span>
-                                        
+                                        <span *ngIf="!IsFromDeclarationData" style="cursor: pointer;" (click)="OnSelectedFile(customFileItem)">{{customFileItem}}</span>
+                                        <span *ngIf="IsFromDeclarationData" style="cursor: pointer;" (click)="OnSelectedFile(customFileItem.ItemGovernmentProcedureType)">{{customFileItem.ItemGovernmentProcedureType}}</span>
+
                                     </div>
                                 </td>
-                                <td>
+                                <td *ngIf="IsFromDeclarationData">
                                     <div>
                                         <span style="cursor: pointer;" >{{customFileItem.ItemGovernmentProcedureName}}</span>
                                         
