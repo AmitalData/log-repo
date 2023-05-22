@@ -1157,21 +1157,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     SubmitChanges();
                     isSubmitChanges = true;
                 }
-
-                if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                if (!this._DeclarationPM.IsAmendment == true)
                 {
+                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                    {
 
 
-                    CustomsStoredProcedures.UpdateSupplierInvoiceItemsSequenceOracle
-                        (entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
+                        CustomsStoredProcedures.UpdateSupplierInvoiceItemsSequenceOracle
+                            (entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
 
-                    CustomsStoredProcedures.UpdateParentSupplierInvoiceItemsSequenceOracle
-                        (entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
-                }
-                else
-                {
-                    CustomsStoredProcedures.UpdateSupplierInvoiceItemsSequence(entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
-                    CustomsStoredProcedures.UpdateParentSupplierInvoiceItemsSequence(entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
+                        CustomsStoredProcedures.UpdateParentSupplierInvoiceItemsSequenceOracle
+                            (entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
+                    }
+                    else
+                    {
+                        CustomsStoredProcedures.UpdateSupplierInvoiceItemsSequence(entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
+                        CustomsStoredProcedures.UpdateParentSupplierInvoiceItemsSequence(entityPM.DeclarationId, entityPM.InvoiceCounterKey, entityPM.Tenant);
+                    }
                 }
 
 
@@ -1260,24 +1262,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             SubmitChanges();
                             isSubmitChanges = true;
                         }
-
-                        List<SupplierInvioceItemCertificat> supplierInvioceItemCertificats = supplierInvioceItemCertificatRepository.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = invoiceItem.DeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber });
-
-
-                        int index = 0;
-                        foreach (SupplierInvioceItemCertificat item in
-                            //supplierInvioceItemCertificats)  // itzik :why not to sort it ???
-                            supplierInvioceItemCertificats.OrderBy(rec => rec.ItemCertificateCounterKey))
+                        if (!this._DeclarationPM.IsAmendment == true)
                         {
-                            index += 1;
-                            if (item.SequenceNumeric == index) continue;
-                            dirty1 = true;
-                            item.SequenceNumeric = index;
-                            supplierInvioceItemCertificatRepository.Update(item);
-                            SupplierInvioceItemCertificatPM itemPM = (from a in invoiceItem.SupplierInvioceItemCertificats
-                                                                      where a.DeclarationId == item.DeclarationId && a.InvoiceCounterKey == item.InvoiceCounterKey && a.LineNumber == item.LineNumber
-                                                                      select a).FirstOrDefault();
-                            if (itemPM != null) itemPM.SequenceNumeric = item.SequenceNumeric;
+
+                            List<SupplierInvioceItemCertificat> supplierInvioceItemCertificats = supplierInvioceItemCertificatRepository.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = invoiceItem.DeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber });
+
+
+                            int index = 0;
+                            foreach (SupplierInvioceItemCertificat item in
+                                //supplierInvioceItemCertificats)  // itzik :why not to sort it ???
+                                supplierInvioceItemCertificats.OrderBy(rec => rec.ItemCertificateCounterKey))
+                            {
+                                index += 1;
+                                if (item.SequenceNumeric == index) continue;
+                                dirty1 = true;
+                                item.SequenceNumeric = index;
+                                supplierInvioceItemCertificatRepository.Update(item);
+                                SupplierInvioceItemCertificatPM itemPM = (from a in invoiceItem.SupplierInvioceItemCertificats
+                                                                          where a.DeclarationId == item.DeclarationId && a.InvoiceCounterKey == item.InvoiceCounterKey && a.LineNumber == item.LineNumber
+                                                                          select a).FirstOrDefault();
+                                if (itemPM != null) itemPM.SequenceNumeric = item.SequenceNumeric;
+                            }
                         }
                     }
 
