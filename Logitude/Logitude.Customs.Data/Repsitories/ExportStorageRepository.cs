@@ -60,6 +60,18 @@ namespace Logitude.Customs.Data.Repsitories
 
         }
 
+        public List<ExportStorage> GetExportStorageListByDeclarationId(string declarationId, int tenant)
+        {
+            var q = from a in context.ExportStorages.Include("ExportLogisticPermitAction")
+                    where
+                    a.Tenant == tenant && 
+                    a.DeclarationId == declarationId
+                    select a;
+
+            return q.Distinct().ToList();
+
+        }
+
         public List<ExportStorage> GetConnectToFileNoNotToDeclaration(string exportFileNo, int tenant)
         {
             var q = from a in context.ExportStorages
