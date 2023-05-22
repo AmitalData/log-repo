@@ -712,9 +712,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                 }
                 _MyDeclarationPM.Tenant = ResolvedTenant();
-                if(string.IsNullOrWhiteSpace(this._MyDeclarationPM.Direction) || this._MyDeclarationPM.Direction == "I")_MyDeclarationPM.IsConnectedToUnifreight = true; //Yuval Chalup 19.10.2016 TASK-22516
 
-                _MyDeclarationPM.IsConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight;
+                _MyDeclarationPM.IsConnectedToUnifreight = true;
 
                 //_MyDeclarationPM.ProcedureCurrentCode = ResolveProcedureCurrentCode();//remarked by eitan h 24/9/15 16527
                 if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ProcedureCurrentCode)) _MyDeclarationPM.ProcedureCurrentCode = _AmitalCustomsFile.ProcedureCurrentCode;

@@ -125,7 +125,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPM.Tenant);
                 var courierMasterPM = courierMasterQueryService.GetByDeclarationId(entityPM.DeclarationId, entityPM.Tenant);
                 var repository = new CardRepository(entityPM.Tenant);
-                if (setting != null & setting.IsConnectedToUniFreight)
+                if (setting != null & !setting.StandAlone)
                 {
                     if (courierMasterPM != null)
                     {

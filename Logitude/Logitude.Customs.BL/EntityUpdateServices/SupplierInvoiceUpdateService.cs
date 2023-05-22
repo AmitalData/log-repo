@@ -38,6 +38,7 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.BL;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.Security;
+using Unifreight.BL.EntityUpdateServices;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -1517,12 +1518,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             try
             {
-                using (_AmitalContext = AmitalContext.GetContext(entityPM.Tenant))
+                AmitalContext _AmitalContext = null;
+                bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
+                if (isConnectedToUnifreight)
                 {
+                     _AmitalContext = AmitalContext.GetContext(entityPM.Tenant);
                     var myCCUQUELOCKQueryService = new Unifreight.BL.EntityQueryServices.CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new Unifreight.BL.EntityUpdateServices.CCUQUELOCKUpdateService(_AmitalContext);
                     var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
-                    var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
 
                     Unifreight.BL.EntityPMs.UGenerated.CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myDeclarationPM.CustomFileNo, false);
                     if (myCCUQUELOCK == null)
@@ -1540,21 +1543,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     transmission mytransmission = GetTransmission(entityPM.GTBITEMsToUpdate, "AMITAL", "GTBITEMs from logitude");
                     var xmltransmission = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
                     requestData = xmltransmission;
-                    var myYCULTASKPM = new Unifreight.BL.EntityPMs.YCULTASKPM()
-                    {
-                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                        STATUS = "W",
-                        REQUESTDATA = requestData,
-                        ENTNAME = "CFIFILEM",
-                        PRIMARYNUM = myDeclarationPM.CustomFileNo,
-                        PRIORITY = Unifreight.BL.EntityPMs.YCULTASKPM.calcPriority("L2U"),
-                        TYPE = "LI2U",
-                        USRCODE = unifreightUser,
-                        ARCHIVE = "F"
-                    };
 
-                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
                     var myGGGQPM = new Unifreight.BL.EntityPMs.GGGQPM()
                     {
@@ -1576,6 +1565,45 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     myGGGQUpdateService.Update(myGGGQPM, true);
                 }
+
+                var myYCULTASKPM = new Unifreight.BL.EntityPMs.YCULTASKPM()
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    STATUS = "W",
+                    REQUESTDATA = requestData,
+                    ENTNAME = "CFIFILEM",
+                    PRIMARYNUM = myDeclarationPM.CustomFileNo,
+                    PRIORITY = Unifreight.BL.EntityPMs.YCULTASKPM.calcPriority("L2U"),
+                    TYPE = "LI2U",
+                    USRCODE = unifreightUser,
+                    ARCHIVE = "F"
+                };
+                if (isConnectedToUnifreight)
+                {
+                    var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
+                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+                }
+                else {
+
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                    {
+
+                        Tenant = entityPM.Tenant,
+                        objectTableName = "Customs.Declaration",
+                        EventCode = null,
+                        notes = "",
+                        CommunicationLoggingEntityReference = null,
+                        EntityId = entityPM.DeclarationId,
+                        UserId = unifreightUser,
+
+                        CommunicationSubject = "Task",
+
+                    };
+                    var amitalInsertToQueueService = new AmitalInsertToQueueService<Unifreight.BL.EntityPMs.YCULTASKPM>(myYCULTASKPM);
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                }
+
                 if (scope != null)
                 {
                     scope.Complete();

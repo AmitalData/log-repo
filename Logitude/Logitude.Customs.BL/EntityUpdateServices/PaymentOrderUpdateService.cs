@@ -46,7 +46,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ValidatePM(entityPM);
             //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
             var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            if (setting.IsConnectedToUniFreight)
+            if (!setting.StandAlone)
             {
                 UpdateUnifreight(entityPM);
             }

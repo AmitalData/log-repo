@@ -108,6 +108,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             DateTime stopLogAt = DateTime.MinValue;
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20210427HD368109.LogUntilDateyyyyMMdd"];
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
+
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
             {
                 stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
@@ -205,8 +207,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 try
                 {
-                    using (_AmitalContext = AmitalContext.GetContext(_DirtyDeclarationPM.Tenant))
-                    {
+                    if (setting.IsConnectedToUniFreight) {
+                        AmitalContext _AmitalContext = AmitalContext.GetContext(_DirtyDeclarationPM.Tenant);
+
                         //AmitalContext.SetOracleMonitor();
 
                         var myCCUFILEMQueryService = new CCUFILEMQueryService(_AmitalContext);
@@ -226,7 +229,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                             //do not need the composite due we delete all down entities !!!_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, true, false);
                             _CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
-                            if(_CCUFILEMPM == null)
+                            if (_CCUFILEMPM == null)
                             {
                                 LogMessagingUtil.Instance.AppendLine("Update4: _CCUFILEMPM GetSingle failed, file no: " + FILENO.Value);
                             }
@@ -234,7 +237,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             {
                                 LogMessagingUtil.Instance.AppendLine("Update5: _CCUFILEMPM GetSingle, file: " + _CCUFILEMPM.CUSTOMFILENO);
                             }
-                            
+
                             _CCUFILEMPMwithCCUMSHGRP = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
 
                             //CCUFILEMKeys cCUFILEMKeys = new CCUFILEMKeys { FILENO = FILENO.GetValueOrDefault() };
@@ -359,7 +362,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
 
                                     _IsConsignmentChanged = true; //Yuval Chalup 13.02.2016 TASK-20599
-                                    //In HATARA (2470) - Do not delete/update Consignment
+                                                                  //In HATARA (2470) - Do not delete/update Consignment
                                     EventContextTagModel eventContextTagModel = new EventContextTagModel();
                                     eventContextTagModel = _DirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
                                     if (eventContextTagModel != null && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
@@ -399,7 +402,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             //If it is a PILOT FILE FROM PRODUCTION = The Declaration is CONNECTEDTOUNF but the environment is NOT - Set CCUFILEM as Cancelled 
                             if (_DirtyDeclarationPM.IsConnectedToUnifreight)
                             {
-                                var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
                                 if (setting != null)
                                 {
                                     if (!setting.IsConnectedToUniFreight)
@@ -430,13 +432,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 }
 
                             }
-                            if (doTask)//eitan h 12/3/15 task 11788
-                            {
-                                //if(file!=null) file.WriteLine("Start OpenUnifreighTask " + FILENO + ": " + DateTime.Now.ToString());
-                                OpenUnifreighTask(lCUSTOMFILENO, _CCUFILEMPM);
-                            }
+
                             //if(file!=null) file.WriteLine("End Updating " + FILENO + ": " + DateTime.Now.ToString());
                         }
+                    }
+                 
+                    if (doTask && _DirtyDeclarationPM.IsCancelled != true)//eitan h 12/3/15 task 11788
+                    {
+                        //if(file!=null) file.WriteLine("Start OpenUnifreighTask " + FILENO + ": " + DateTime.Now.ToString());
+                        OpenUnifreighTask(lCUSTOMFILENO, _CCUFILEMPM);
                     }
                     if (scope != null)
                     {
@@ -667,27 +671,29 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _CCUFILEMPM.DeletedSupplierInvoices = null;
         }
 
-        private void OpenUnifreighTask(long customFile, CCUFILEMPM _CCUFILEMPM)
+        private void OpenUnifreighTask(long customFile, CCUFILEMPM _CCUFILEMP)
         {
-            var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
-            var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
-            var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-            var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+          
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
+
             var requestData = "";
 
             var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_DirtyDeclarationPM.Tenant);
-
-            CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", customFile.ToString(), false);
-            if (myCCUQUELOCK == null)
-            {
-                var myCCUQUELOCKPM = new CCUQUELOCKPM()
+            if (setting.IsConnectedToUniFreight) {
+                var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
+                CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", customFile.ToString(), false);
+                if (myCCUQUELOCK == null)
                 {
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    ENTNAME = "CFIFILEM",
-                    FILENO = customFile.ToString(),
-                };
-                myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
+                    var myCCUQUELOCKPM = new CCUQUELOCKPM()
+                    {
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ENTNAME = "CFIFILEM",
+                        FILENO = customFile.ToString(),
+                    };
+                    var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
+                    myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
+                }
             }
 
             #region remarkedCode
@@ -739,24 +745,30 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     myCustomFileNo = myCFIPACKS.CFIPACKS_DATA[0].FILE_NO;
                     var xmlCFIPACKS = XmlGenericUtil<CFIPACKS>.SerializeObject(myCFIPACKS, true);
-                    CCUQUELOCKPM myCCUQUELOCK_Packs = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myCFIPACKS.CFIPACKS_DATA[0].FILE_NO, false);
-                    if (myCCUQUELOCK_Packs == null)
-                    {
-                        var myCCUQUELOCKPM = new CCUQUELOCKPM()
+                    if (setting.IsConnectedToUniFreight) {
+                        var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
+                        CCUQUELOCKPM myCCUQUELOCK_Packs = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myCFIPACKS.CFIPACKS_DATA[0].FILE_NO, false);
+                        if (myCCUQUELOCK_Packs == null)
                         {
-                            ChangeSetOp = ChangeSetOperation.Insert,
-                            ENTNAME = "CFIFILEM",
-                            FILENO = myCFIPACKS.CFIPACKS_DATA[0].FILE_NO,
-                        };
-                        myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                        myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
+                            var myCCUQUELOCKPM = new CCUQUELOCKPM()
+                            {
+                                ChangeSetOp = ChangeSetOperation.Insert,
+                                ENTNAME = "CFIFILEM",
+                                FILENO = myCFIPACKS.CFIPACKS_DATA[0].FILE_NO,
+                            };
+                            var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
+                            myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                            myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
+                        }
                     }
+                
 
                     //transmission mytransmission = GetTransmission<CFIPACKS>(myCFIPACKS, "AMITAL", "Customs packs from logitude");
                     transmission mytransmission = GetTransmission(myCFIPACKS, "AMITAL", "Customs packs from logitude");
                     var xmltransmission = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
                     requestData = xmltransmission;
                 }
+                  
                 if (!string.IsNullOrWhiteSpace(myCargoQueryContext.RaiseStatus)) // moran 22.5.17 - Task 27973
                 {
                     var sts = myCargoQueryContext.RaiseStatus;
@@ -827,27 +839,54 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                     };
                     //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
-
-                    var myGGGQPM_Packs = new GGGQPM()
+                    if (setting.IsConnectedToUniFreight) {
+                        var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                        myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                        myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
+                    }
+                    else
                     {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        ORIGINQUE = "LGT", //LugitudeRequest
-                        STATUS = "1",
-                        EXPTASKTIME = 5,
-                        EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
-                        TRY = 9,
-                        PRIORITY = 8,
-                        ENTNAME = "CFIFILEM",
-                        PRIMARYNUM = myCustomFileNo,
-                        FORMID = "LGT_UPDATE_FCI",
-                        DEBUG = "F",
-                        DONEOPERATION = "D",
-                        //GSTRING1 = myYCULTASKPM.TASKID,
-                    };
-                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    myGGGQUpdateService.Update(myGGGQPM_Packs, true);
+                        var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                        {
+
+                            Tenant = setting.Tenant,
+                            objectTableName = "Customs.Declaration",
+                            EventCode = null,
+                            notes = "",
+                            CommunicationLoggingEntityReference = this._DirtyDeclarationPM?.DeclarationNumber,
+                            EntityId = this._DirtyDeclarationPM?.Id,
+                            UserId = unifreightUser,
+
+                            CommunicationSubject = "Task",
+
+                        };
+                        var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM_Packs);
+                        amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                    }
+                    if (setting.IsConnectedToUniFreight)
+                    {
+                        var myGGGQPM_Packs = new GGGQPM()
+                        {
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            ORIGINQUE = "LGT", //LugitudeRequest
+                            STATUS = "1",
+                            EXPTASKTIME = 5,
+                            EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
+                            TRY = 9,
+                            PRIORITY = 8,
+                            ENTNAME = "CFIFILEM",
+                            PRIMARYNUM = myCustomFileNo,
+                            FORMID = "LGT_UPDATE_FCI",
+                            DEBUG = "F",
+                            DONEOPERATION = "D",
+                            //GSTRING1 = myYCULTASKPM.TASKID,
+                        };
+                        var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+
+                        myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                        myGGGQUpdateService.Update(myGGGQPM_Packs, true);
+                    }
+                   
                 }
             }
             else
@@ -938,34 +977,60 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     ARCHIVE = "F", // moran 28.6.16 - AMI-57170
                     //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                 };
-
-                //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-
-                var myGGGQPM = new GGGQPM()
+                if (setting.IsConnectedToUniFreight)
                 {
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    ORIGINQUE = "LGT", //LugitudeRequest
-                    STATUS = "1",
-                    EXPTASKTIME = 5,
-                    EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
-                    TRY = 9,
-                    PRIORITY = 8,
-                    ENTNAME = "CFIFILEM",
-                    PRIMARYNUM = customFile.ToString(),
-                    FORMID = "LGT_UPDATE_FCI",
-                    DEBUG = "F",
-                    DONEOPERATION = "D",
-                    //GSTRING1 = myYCULTASKPM.TASKID,
-                };
-                myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
 
-                //AmitalContext.DisableQuoting(false);
+                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
-                myGGGQUpdateService.Update(myGGGQPM, true);
-                //AmitalContext.DisableQuoting(true);
 
+
+                    var myGGGQPM = new GGGQPM()
+                    {
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ORIGINQUE = "LGT", //LugitudeRequest
+                        STATUS = "1",
+                        EXPTASKTIME = 5,
+                        EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
+                        TRY = 9,
+                        PRIORITY = 8,
+                        ENTNAME = "CFIFILEM",
+                        PRIMARYNUM = customFile.ToString(),
+                        FORMID = "LGT_UPDATE_FCI",
+                        DEBUG = "F",
+                        DONEOPERATION = "D",
+                        //GSTRING1 = myYCULTASKPM.TASKID,
+                    };
+                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+
+                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+
+                    //AmitalContext.DisableQuoting(false);
+
+                    myGGGQUpdateService.Update(myGGGQPM, true);
+                    //AmitalContext.DisableQuoting(true);
+                }
+                else
+                {
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                    {
+
+                        Tenant = setting.Tenant,
+                        objectTableName = "Customs.Declaration",
+                        EventCode = null,
+                        notes = "",
+                        CommunicationLoggingEntityReference = this._DirtyDeclarationPM?.DeclarationNumber,
+                        EntityId = this._DirtyDeclarationPM?.Id,
+                        UserId = unifreightUser,
+
+                        CommunicationSubject = "Task",
+
+                    };
+                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+
+                }
             }
             //Yuval Chalup 23.10.2014 TASK-6711 --->
         }

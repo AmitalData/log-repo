@@ -57,10 +57,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateUnifreight(DeclarationPM dirtyDeclarationPM)
         {
-            if (!CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight)
+            if (CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).StandAlone)
             {
                 return;
             }
+            bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
             DateTime stopLogAt = DateTime.MinValue;
 
             bool fromAmendment = false;
@@ -193,7 +194,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (dirtyDeclarationPM.DepositionStatusCode == "L" && dbOccDeclarationPM.DepositionStatusCode != "L")
+            if (dirtyDeclarationPM.DepositionStatusCode == "L" && dbOccDeclarationPM.DepositionStatusCode != "L" && isConnectedToUnifreight)
             {
                 OpenLogBoxUnifreighTask(dirtyDeclarationPM, "LDR2C", "", false, "");
                 return;
@@ -714,6 +715,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void OpenUnifreighTask(DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlStatus, DateTime statusDateTime)
         {
+            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
+            AmitalContext _AmitalContext = null;
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
             if (statusDateTime == null)
@@ -726,20 +729,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             try
             {
-                using (_AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant))
+                
+                if (isConnectedToUniFreight)
                 {
+                    _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
                     myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var requestData = "";
-                    var addStatus = ""; // moran 17.9.15 - Task 15458
-                    var comment = ""; // moran 20.9.15 - Task 15458
-                    var addComment = ""; // moran 20.9.15 - Task 15458
-
+                   
                     CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
                     if (myCCUQUELOCK == null)
                     {
@@ -751,6 +748,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         };
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
+                }
+               //we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    var requestData = "";
+                    var addStatus = ""; // moran 17.9.15 - Task 15458
+                    var comment = ""; // moran 20.9.15 - Task 15458
+                    var addComment = ""; // moran 20.9.15 - Task 15458
+                    string unifreightUser = null;
+                    if (String.IsNullOrWhiteSpace(unifreightUser))
+                    {
+                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
+                    }
+                  
+                    
+                  
                     if (taskType == "LD2U" && dirtyDeclarationPM.IsSignedVersion) // moran 17.9.15 - Task 15458
                     {
                         if (raiseStatus != true)
@@ -767,7 +778,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
 
                     //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
-                    string unifreightUser = null;
+                   
                     if (RequestSheetContext.Current != null)
                     {
                         var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
@@ -784,10 +795,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                         }
                     }
-                    if (String.IsNullOrWhiteSpace(unifreightUser))
-                    {
-                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
-                    }
+                    
                     
                     if (raiseStatus == true)
                     {
@@ -882,9 +890,36 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         ARCHIVE = "F", // moran 28.6.16 - AMI-57170
                         //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                     };
-                    //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
+                //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
+                if (!isConnectedToUniFreight)
+                {
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                    {
 
+                        Tenant = dirtyDeclarationPM.Tenant,
+                        objectTableName = "Customs.Declaration",
+                        EventCode = null,
+                        notes = "",
+                        CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                        EntityId = dirtyDeclarationPM.Id,
+                        UserId = dirtyDeclarationPM.CreatedByUserId,
+
+                        CommunicationSubject = "Task",
+
+                    };
+                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                }
+                else
+                {
+                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                    myYCULTASKUpdateService.DontAddTransaction = true;
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+                }
+                if (isConnectedToUniFreight) {
+                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
 
                     var myGGGQPM = new GGGQPM()
                     {
@@ -902,14 +937,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         DONEOPERATION = "D",
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
+
                     myGGGQUpdateService.Update(myGGGQPM, true);
+                }
+                   
 
                     if (scope != null)
                     {
                         scope.Complete();
                     }
                 }
-            }
             finally
             {
                 if (scope != null)

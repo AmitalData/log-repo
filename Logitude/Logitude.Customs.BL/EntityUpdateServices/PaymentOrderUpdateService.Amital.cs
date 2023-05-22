@@ -42,6 +42,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateUnifreight(PaymentOrderPM dirtyEntityPM)
         {
+            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyEntityPM.Tenant).IsConnectedToUniFreight;
             this._DirtyEntityPM = dirtyEntityPM;
             this._LoggingUserId = AuthenticationUtil.ResolveUserId(dirtyEntityPM.Tenant);
             string loggingUserId = this._LoggingUserId;
@@ -80,12 +81,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         break;
                 }
 
-                if(eventContextTagModel.UnifreighTaskCode == "LP2UB")
+                if(eventContextTagModel.UnifreighTaskCode == "LP2UB" && isConnectedToUniFreight)
                 {
                     UpdateUnifreightPaymentOrderBLD(dirtyEntityPM, connectedDeclarationPM, loggingUserId);
                 }
                 LogMessagingUtil.Instance.AppendLine("eventContextTagModel.UnifreighTaskCode = " + eventContextTagModel.UnifreighTaskCode ?? "NULL");
-                if (eventContextTagModel.UnifreighTaskCode == "LE2U" && connectedDeclarationPM.CustomFileNo != null)
+                if (eventContextTagModel.UnifreighTaskCode == "LE2U" && connectedDeclarationPM.CustomFileNo != null )
                 {
                     string remarks = "מספר הוראת תשלום " + dirtyEntityPM.PaymentNumber;
                     SendPPT(connectedDeclarationPM.Tenant,connectedDeclarationPM.CustomFileNo, loggingUserId, remarks);
@@ -476,70 +477,100 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         // moran 3.11.14 - Task 8327 <--
 
         // moran 4.6.15 - Task 12424 -->
-        private void OpenUnifreighTask(string accountingCustomFile,DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlReq,int  tenant)
+        private void OpenUnifreighTask(string accountingCustomFile, DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlReq, int tenant)
         {
             var sw = Stopwatch.StartNew();
-
+            var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
             TransactionScope scope = null;
+            AmitalContext _AmitalContext = null;
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
                 scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
             }
             try
             {
-                using (_AmitalContext = AmitalContext.GetContext(tenant))
+                if (isConnectedToUniFreight)
                 {
-                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var requestData = "";
+                    _AmitalContext = AmitalContext.GetContext(tenant);
+                    //we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
 
-                    var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(tenant);
-                    if (raiseStatus == true)
-                    {
-                        //var myDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, null, null);
-                        //requestData = myDeclarationUpdateService.GetMyFUStatusXML(status, status, "", "new", DateTime.Now, true);
-                        // moran 22.7.15 - Task 14521 - all statuses for tasks should have user MEHES -->
-                        ICommonDataContext dbContext = CommonDataContext.GetContext(tenant);
-                        UserRepository userRepository = new UserRepository(dbContext);
-                        var user = userRepository.GetSingleUserByCode("MEHES", tenant, true);
-                        if (user != null)
-                        {
-                            _LoggingUserId = user.Id;
-                        }
-                        // moran 22.7.15 - Task 14521 - all statuses for tasks should have user MEHES <--
-                        requestData = GetMyFUStatusXML(status, status, "", "new", DateTime.Now, tenant, true);
-                    }
-                    if (xmlReq != null)
-                    {
-                        if (requestData != null)
-                        {
-                            requestData = "<requestData>" + Environment.NewLine + xmlReq + Environment.NewLine + requestData + Environment.NewLine + "</requestData>";
-                        }
-                        else
-                        {
-                            requestData = xmlReq;
-                        }
-                    }
+                }
 
-                    var myYCULTASKPM = new YCULTASKPM()
+
+
+                //we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                var requestData = "";
+
+                var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(tenant);
+                if (raiseStatus == true)
+                {
+                    //var myDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, null, null);
+                    //requestData = myDeclarationUpdateService.GetMyFUStatusXML(status, status, "", "new", DateTime.Now, true);
+                    // moran 22.7.15 - Task 14521 - all statuses for tasks should have user MEHES -->
+                    ICommonDataContext dbContext = CommonDataContext.GetContext(tenant);
+                    UserRepository userRepository = new UserRepository(dbContext);
+                    var user = userRepository.GetSingleUserByCode("MEHES", tenant, true);
+                    if (user != null)
                     {
-                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                        STATUS = "W",
-                        REQUESTDATA = requestData,
-                        ENTNAME = !string.IsNullOrWhiteSpace(dirtyDeclarationPM.CustomFileNo) ? "CFIFILEM" : "GNDCARD",
-                        PRIMARYNUM = accountingCustomFile,
-                        PRIORITY = YCULTASKPM.calcPriority(taskType),
-                        //PRIORITY = priority,
-                        TYPE = taskType,
-                        USRCODE = unifreightUser,
-                        ARCHIVE = "F", // moran 28.6.16 - AMI-57170
-                        //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
+                        _LoggingUserId = user.Id;
+                    }
+                    // moran 22.7.15 - Task 14521 - all statuses for tasks should have user MEHES <--
+                    requestData = GetMyFUStatusXML(status, status, "", "new", DateTime.Now, tenant, true);
+                }
+                if (xmlReq != null)
+                {
+                    if (requestData != null)
+                    {
+                        requestData = "<requestData>" + Environment.NewLine + xmlReq + Environment.NewLine + requestData + Environment.NewLine + "</requestData>";
+                    }
+                    else
+                    {
+                        requestData = xmlReq;
+                    }
+                }
+
+                var myYCULTASKPM = new YCULTASKPM()
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    STATUS = "W",
+                    REQUESTDATA = requestData,
+                    ENTNAME = !string.IsNullOrWhiteSpace(dirtyDeclarationPM.CustomFileNo) ? "CFIFILEM" : "GNDCARD",
+                    PRIMARYNUM = accountingCustomFile,
+                    PRIORITY = YCULTASKPM.calcPriority(taskType),
+                    //PRIORITY = priority,
+                    TYPE = taskType,
+                    USRCODE = unifreightUser,
+                    ARCHIVE = "F", // moran 28.6.16 - AMI-57170
+                                   //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
+                };
+                //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
+                if (!isConnectedToUniFreight)
+                {
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                    {
+
+                        Tenant = dirtyDeclarationPM.Tenant,
+                        objectTableName = "Customs.Declaration",
+                        EventCode = null,
+                        notes = "",
+                        CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                        EntityId = dirtyDeclarationPM.Id,
+                        UserId = dirtyDeclarationPM.CreatedByUserId,
+
+                        CommunicationSubject = "Task",
+
                     };
-                    //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
+                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                }
+                else
+                {
+                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                    myYCULTASKUpdateService.DontAddTransaction = true;
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-
+                }
+                if (isConnectedToUniFreight)
+                {
                     var myGGGQPM = new GGGQPM()
                     {
                         ChangeSetOp = ChangeSetOperation.Insert,
@@ -558,12 +589,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         //GSTRING1 = string.IsNullOrWhiteSpace(dirtyDeclarationPM.CustomFileNo) ? "NO_LOCK" : "",
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
+
+                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                    myGGGQUpdateService.DontAddTransaction = true;
                     myGGGQUpdateService.Update(myGGGQPM, true);
-                    if (scope != null)
-                    {
-                        scope.Complete();
-                    }
                 }
+
+                if (scope != null)
+                {
+                    scope.Complete();
+                }
+
             }
             finally
             {

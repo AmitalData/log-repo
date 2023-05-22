@@ -602,7 +602,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!IsUpdateDB)
             {
                 CreateEvent(tenant, declarationId);
-                AmitalInsertToQueueService.insertToQueue(declarationPM);
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+
+                    Tenant = declarationPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = null,
+                    notes = "",
+                    CommunicationLoggingEntityReference = declarationPM.DeclarationNumber,
+                    EntityId = declarationPM.Id,
+                    UserId = declarationPM.CreatedByUserId,
+
+                    CommunicationSubject = "עדכון תיק מכס",
+
+                };
+                Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE logistictFile = AmitalInsertToQueueEzer.setLogistictFile(declarationPM);
+                var amitalInsertToQueueService = new AmitalInsertToQueueService<Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE>(logistictFile);
+                amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "UpdateExportCustomsFile");
             }
 
 

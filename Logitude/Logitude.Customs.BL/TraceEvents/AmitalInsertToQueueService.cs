@@ -1,47 +1,91 @@
-﻿using Logitude.AmitalMessaging.Infrastructure.FuStatus;
+﻿using Logitude.AmitalMessaging.Customs.CustomFile;
+using Logitude.AmitalMessaging.Infrastructure.FuStatus;
+using Logitude.Customs.BL.Messaging.Amital;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.Server.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Logitude.Customs.BL.TraceEvents
 {
-    public   class AmitalInsertToQueueService
+
+    public class AmitalInsertToQueueService<TransmissionBodyType>
+               where TransmissionBodyType : class
+
     {
         public const bool UseHybrid_When_NotIsConnectedToUniFreight = true;
-        public static void insertToQueue(DeclarationPM  declarationPM , string tadpisPrintDate=null)
-        {
-            var mySetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
+        private TransmissionBodyType _TransmissionBodyModel;
 
-            var logistictFile = setLogistictFile(declarationPM, tadpisPrintDate);
-            AmitalEventTracerModel myAmitalEventTracer = createEvent(declarationPM);
+        public AmitalInsertToQueueService(TransmissionBodyType eve)
+        {
+           this._TransmissionBodyModel = eve;
+        }
+
+        public void InsertToQueue(AmitalEventTracerModel myAmitalEventTracer, string action)
+        {
+            var mySetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(myAmitalEventTracer.Tenant);
+
+            //AmitalEventTracerModel myAmitalEventTracer = createEvent(declarationPM, action);
 
             if (!mySetting.IsConnectedToUniFreight && UseHybrid_When_NotIsConnectedToUniFreight)
             {
-               
 
+                System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(this._TransmissionBodyModel.GetType());
+                x.Serialize(Console.Out, this._TransmissionBodyModel);
+                var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, TransmissionBodyType>(myAmitalEventTracer, _TransmissionBodyModel);
+                unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
+                {
+                    Action = action,
+                    ParameterName = "transmission"
 
-                    var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE >(myAmitalEventTracer, logistictFile);
-                    unifreightHybridQueueTaskService.Send(new UnifreightHybridQueueTaskParam()
-                    {
-                        Action = "UpdateExportCustomsFile",
-                        ParameterName = "transmission"
-                       
-                    },false);
-              
+                }, false);
+
             }
         }
 
 
-        public static Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE setLogistictFile(DeclarationPM myDeclaration , string tadpisPrintDate=null)
+
+
+        public static AmitalEventTracerModel createEvent(DeclarationPM declarationPM, string action)
+        {
+
+            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            {
+
+                Tenant = declarationPM.Tenant,
+                objectTableName = "Customs.Declaration",
+                EventCode = null,
+                notes = "",
+                CommunicationLoggingEntityReference = declarationPM.DeclarationNumber,
+                EntityId = declarationPM.Id,
+                UserId = declarationPM.CreatedByUserId,
+
+                CommunicationSubject = action,
+
+            };
+            return myAmitalEventTracerModel;
+
+
+        }
+
+    }
+
+
+    public class AmitalInsertToQueueEzer
+    {
+
+        public static Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE setLogistictFile(DeclarationPM myDeclaration, string tadpisPrintDate = null)
         {
             Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE LogistictFile = new Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE();
 
             bool ifCurrecyEquals = false;
-            if (myDeclaration.SupplierInvoices.Count > 0) {
-                 ifCurrecyEquals = myDeclaration.SupplierInvoices.TrueForAll(s => s.InvoiceCurrencyTypeCode.Equals(myDeclaration.SupplierInvoices[0].InvoiceCurrencyTypeCode));
+            if (myDeclaration.SupplierInvoices.Count > 0)
+            {
+                ifCurrecyEquals = myDeclaration.SupplierInvoices.TrueForAll(s => s.InvoiceCurrencyTypeCode.Equals(myDeclaration.SupplierInvoices[0].InvoiceCurrencyTypeCode));
 
             }
             LogistictFile.logitudeCustomsFile = new LogitudeCustomsFiles()
@@ -57,7 +101,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 totalPackages = myDeclaration?.Consignments.Where(s => s.ConsignmentType == "E").Sum(s => s?.ConsignmentPackages.Sum(c => c.PackageQuantity)).ToString(),
                 loadingDateTime = myDeclaration?.LoadingDateTime.ToString(),
                 direction = myDeclaration?.Direction,
-                exportFile=myDeclaration?.ExportFile,             
+                exportFile = myDeclaration?.ExportFile,
                 TransportModeId = myDeclaration?.TransportModeId,
 
             };
@@ -68,18 +112,18 @@ namespace Logitude.Customs.BL.TraceEvents
                 invoice.invoiceNumber = myDeclaration.SupplierInvoices[i].InvoiceNumber;
                 invoice.invoiceTotal = myDeclaration.SupplierInvoices[i].InvoiceAmount.ToString();
                 invoice.invoiceCurrecy = myDeclaration.SupplierInvoices[i].InvoiceCurrencyTypeCode;
-               
-                string[] pratMeches=new string[myDeclaration.SupplierInvoices[i].SupplierInvoiceItems.Count] ;
-               
+
+                string[] pratMeches = new string[myDeclaration.SupplierInvoices[i].SupplierInvoiceItems.Count];
+
 
                 for (int j = 0; j < myDeclaration.SupplierInvoices[i].SupplierInvoiceItems.Count; j++)
                 {
 
                     pratMeches[j] = myDeclaration.SupplierInvoices[i].SupplierInvoiceItems[j].ClassificationCode;
                 }
-                invoice.pratList=new PratList();
+                invoice.pratList = new PratList();
                 invoice.pratList.pratMeches = pratMeches;
-               
+
                 LogistictFile.logitudeCustomsFile.invoice[i] = invoice;
             }
 
@@ -87,27 +131,9 @@ namespace Logitude.Customs.BL.TraceEvents
         }
 
 
-        public static AmitalEventTracerModel createEvent(DeclarationPM declarationPM)
-        {
-
-            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-            {
-                
-                Tenant = declarationPM.Tenant,
-                objectTableName = "Customs.Declaration",
-                EventCode = null,
-                notes = "",
-                CommunicationLoggingEntityReference = declarationPM.DeclarationNumber,
-                EntityId = declarationPM.Id,
-                UserId = declarationPM.CreatedByUserId,
-
-                CommunicationSubject = "עדכון תיק מכס",
-                
-            };
-            return myAmitalEventTracerModel;
-
-
-        }
 
     }
+
+
+
 }
