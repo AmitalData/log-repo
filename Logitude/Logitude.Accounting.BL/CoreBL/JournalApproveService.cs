@@ -1456,11 +1456,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
 
-                    SetLastActivate?.Invoke();
-                    if (ProcessMessage_Db(queueservice, response, selectedQueue))
-                    {
-                        LogDoneItemInMemoryAction?.Invoke(1);
-                    }
+                    //SetLastActivate?.Invoke();
+                    //if (ProcessMessage_Db(queueservice, response, selectedQueue))
+                    //{
+                    //    LogDoneItemInMemoryAction?.Invoke(1);
+                    //}
 
                     if (response.MessageValues.ContainsKey("communicationLogId"))
                     {
