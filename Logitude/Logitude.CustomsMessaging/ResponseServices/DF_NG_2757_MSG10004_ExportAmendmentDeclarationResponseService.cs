@@ -205,7 +205,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                 {
                     declarationPM = myQueryService.GetSingle(idOrg, true, false);
-                    var declarationId2 = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant, true).Id;
+                    var declarationId2 = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant, true)?.Id;
                     invoicePMs = GetSupplierInvoices(declaration, tenant, context, declarationId2, declarationOrg);
                     DeleteSomeObjects(declarationPM, tenant, context);
                     declarationPM.DeclarationOfficeCode = GetValueIDType(declaration.DeclarationOfficeID);
@@ -382,7 +382,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 string declarationId;
                 if (declarationOrg != null)
-                    declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant, true).Id;
+                    declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant, true)?.Id;
                 else
                     declarationId = declarationPM.Id;
 
