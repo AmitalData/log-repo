@@ -1157,7 +1157,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     SubmitChanges();
                     isSubmitChanges = true;
                 }
-                if (!this._DeclarationPM.IsAmendment == true)
+
+                bool isAmendOrConverted = this._DeclarationPM.IsAmendment == true || this._DeclarationPM.IsConvertedDeclaration == true;
+
+                if (!isAmendOrConverted)
                 {
                     if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                     {
@@ -1262,7 +1265,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             SubmitChanges();
                             isSubmitChanges = true;
                         }
-                        if (!this._DeclarationPM.IsAmendment == true)
+
+                        bool isAmendOrConverted = this._DeclarationPM.IsAmendment == true || this._DeclarationPM.IsConvertedDeclaration == true;
+
+                        if (!isAmendOrConverted)
                         {
 
                             List<SupplierInvioceItemCertificat> supplierInvioceItemCertificats = supplierInvioceItemCertificatRepository.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = invoiceItem.DeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber });
