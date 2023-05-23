@@ -714,6 +714,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_DocumentType_CustomizedResetPasswordEmail  = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentType.CustomizedResetPasswordEmail ", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DocumentType.CustomizedResetPasswordEmail ", NameTextCodeDefaultText = @"Customized Reset Password Email " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_SHLOGANDMOBILE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHLOGANDMOBILE", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SHLOGANDMOBILE", NameTextCodeDefaultText = @"Shared Logistics and Mobile" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+	    
+		   Feature GeneralFeature_General_Features_ReleaseSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.ReleaseSettings", FeatureTypeCode = "MENU", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.ReleaseSettings", NameTextCodeDefaultText = @"Release Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    

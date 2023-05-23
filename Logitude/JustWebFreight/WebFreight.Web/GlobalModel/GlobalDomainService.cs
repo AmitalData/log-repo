@@ -2053,6 +2053,14 @@ namespace WebFreight.Web.GlobalModel
             HelpResourceRepository rep = new HelpResourceRepository();
             return rep.GetAllHelpResources();
         }
+        public IQueryable<HelpResource> GetReleaseHelpResources(int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckContactFeature("HelpResource", "READ", tenant);
+
+            HelpResourceRepository rep = new HelpResourceRepository();
+            return rep.GetReleaseHelpResources();
+        }
         #endregion
 
         #region TenantType

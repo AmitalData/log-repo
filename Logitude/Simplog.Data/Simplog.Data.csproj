@@ -647,6 +647,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\QueryExportExecutionLog.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\EntityStatusType.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ReferenceCustomObject.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\ReleaseArgs.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\TabModification.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ScreenSection.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\WorkerRoleName.cs" />

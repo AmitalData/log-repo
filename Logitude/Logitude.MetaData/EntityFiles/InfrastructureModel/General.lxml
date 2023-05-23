@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;a44b&quot;"
+  Code="&quot;8af0&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -8248,6 +8248,15 @@
       FeatureTextCodeCode="&quot;General.Features.SHLOGANDMOBILE&quot;"
       FeatureDefaultText="&quot;Shared Logistics and Mobile&quot;"
       IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;General.Features.ReleaseSettings&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.General.Features.ReleaseSettings&quot;"
+      FeatureDefaultText="&quot;Release Settings&quot;"
+      IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
