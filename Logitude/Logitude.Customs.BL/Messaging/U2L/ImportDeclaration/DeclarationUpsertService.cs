@@ -1090,8 +1090,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 if (!invocie.IsEmpty)
                 {
-                    supplierInvoice.InvoiceNumber=invocie.InvoiceNumber;
-                    supplierInvoice.IssueDate = invocie?.InvoiceDate!=null? DateTime.Parse(invocie?.InvoiceDate): supplierInvoice.IssueDate;
+                    supplierInvoice.InvoiceNumber=invocie.Number;
+                    supplierInvoice.IssueDate = invocie?.Date!=null? DateTime.Parse(invocie?.Date): supplierInvoice.IssueDate;
 
                 }
             }
