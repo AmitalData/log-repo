@@ -34,6 +34,7 @@ using Simplog.Data.InfrastructureModel;
 using Logitude.Customs.BL.EntityDataMappings;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -726,6 +727,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
             var statusDateTime = DateTime.Now;
+            var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyCourierMasterPM.Tenant).IsConnectedToUniFreight;
 
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
@@ -733,34 +735,36 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             try
             {
-                using (_AmitalContext = AmitalContext.GetContext(dirtyCourierMasterPM.Tenant))
+                AmitalContext _AmitalContext = null;
+                var requestData = "";
+
+                string unifreightUser = null;
+
+                if (String.IsNullOrWhiteSpace(unifreightUser))
                 {
+                    unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyCourierMasterPM.Tenant);
+                }
+                
+                var myYCULTASKPM = new YCULTASKPM()
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    STATUS = "W",
+                    REQUESTDATA = requestData,
+                    ENTNAME = "MASTER",
+                    PRIMARYNUM = dirtyCourierMasterPM.Id,
+                    PRIORITY = YCULTASKPM.calcPriority(taskType),
+                    //PRIORITY = priority,
+                    TYPE = taskType,
+                    USRCODE = unifreightUser,
+                    ARCHIVE = "F",
+                };
+                if (isConnectedToUniFreight)
+                {
+                    _AmitalContext = AmitalContext.GetContext(dirtyCourierMasterPM.Tenant);
                     var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
                     myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                     var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
                     myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var requestData = "";
-
-                    string unifreightUser = null;
-
-                    if (String.IsNullOrWhiteSpace(unifreightUser))
-                    {
-                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyCourierMasterPM.Tenant);
-                    }
-
-                    var myYCULTASKPM = new YCULTASKPM()
-                    {
-                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                        STATUS = "W",
-                        REQUESTDATA = requestData,
-                        ENTNAME = "MASTER",
-                        PRIMARYNUM = dirtyCourierMasterPM.Id,
-                        PRIORITY = YCULTASKPM.calcPriority(taskType),
-                        //PRIORITY = priority,
-                        TYPE = taskType,
-                        USRCODE = unifreightUser,
-                        ARCHIVE = "F",
-                    };
 
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
@@ -781,12 +785,29 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
                     myGGGQUpdateService.Update(myGGGQPM, true);
-
-                    if (scope != null)
-                    {
-                        scope.Complete();
-                    }
                 }
+                else
+                {
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                    {
+                        Tenant = dirtyCourierMasterPM.Tenant,
+                        objectTableName = "Customs.CourierMaster",
+                        EventCode = null,
+                        notes = "",
+                        CommunicationLoggingEntityReference = dirtyCourierMasterPM.MAWB,
+                        EntityId = dirtyCourierMasterPM.Id,
+                        UserId = dirtyCourierMasterPM.CreatedByUserId,
+                        CommunicationSubject = "Task",
+
+                    };
+                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                }
+                if (scope != null)
+                {
+                    scope.Complete();
+                }
+
             }
             finally
             {

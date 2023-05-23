@@ -940,7 +940,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                             {
 
-                                Tenant = .Tenant,
+                                Tenant = _MyDeclarationPM.Tenant,
                                 objectTableName = "Customs.Declaration",
                                 EventCode = null,
                                 notes = "",
