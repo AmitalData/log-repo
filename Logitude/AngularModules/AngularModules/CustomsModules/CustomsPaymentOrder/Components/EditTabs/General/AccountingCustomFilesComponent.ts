@@ -25,7 +25,8 @@ export class AccountingCustomFilesComponent
     public DataContext: any = this;
     public Tab: LogTab;
     public IsDisplayOnly: boolean = false;
-
+    public IsFromDeclarationData: boolean = false;
+    
     AccountingCustomFilesList: any[];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
@@ -37,7 +38,8 @@ export class AccountingCustomFilesComponent
 
     }
 
-    SetWindowArgs(accountingCustomFilesList: any[]) {
+    SetWindowArgs(accountingCustomFilesList) {
+        this.IsFromDeclarationData = accountingCustomFilesList.IsFromDeclarationData;
         accountingCustomFilesList.forEach((item) => {
             this.AccountingCustomFilesList.push(item);
         });
