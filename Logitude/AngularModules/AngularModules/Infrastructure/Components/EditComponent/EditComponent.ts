@@ -2,7 +2,7 @@ import { BankDepositExtendedPMService } from './../../../Accounting/Services/Ext
 import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 declare var window: any;
-import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef,HostListener } from '@angular/core';
+import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef, HostListener } from '@angular/core';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
@@ -55,6 +55,8 @@ export class EditComponent implements OnDestroy {
     public EntityPM: any = null;
     public ClonedEntityPM: any = null;
     public EntityId: string = null;
+    public JournalNumber: string = null;
+   
     public ObjectTable: ObjectTablePM;
     public ObjectTableId: string;
     public ObjectTableName: string;
@@ -110,38 +112,38 @@ export class EditComponent implements OnDestroy {
 
     }
 
-    OnSaveAndCloseHotKey(){
-        if(!this.IsSaveBtnDisable){
-        this.SaveChangesAndClose();
+    OnSaveAndCloseHotKey() {
+        if (!this.IsSaveBtnDisable) {
+            this.SaveChangesAndClose();
         }
     }
 
-    OnSaveHotKeyPressed(){
+    OnSaveHotKeyPressed() {
         console.log("saving the edit component ");
-        if(this.EntityPM && this.EntityPM.IsDirty){
-        this.SaveChanges();
+        if (this.EntityPM && this.EntityPM.IsDirty) {
+            this.SaveChanges();
         }
     }
 
-    OnArrowLeftHotKeyPressed(){
-        if(this.PreviousButtonDisabled==false
-                     && this.NextPreviousVisible==true){
-        console.log("Moving Previous ");
-        this.Previous();
-                     }
+    OnArrowLeftHotKeyPressed() {
+        if (this.PreviousButtonDisabled == false
+            && this.NextPreviousVisible == true) {
+            console.log("Moving Previous ");
+            this.Previous();
+        }
     }
 
-    OnEscHotKeyPressed(){
+    OnEscHotKeyPressed() {
         console.log("Back from edit ");
         this.BackButtonClicked();
     }
 
-    OnArrowRightHotKeyPressed(){
-            if(this.NextButtonDisabled==false
-            && this.NextPreviousVisible==true){
-        console.log("Moving Next ");
-        this.Next();
-            }
+    OnArrowRightHotKeyPressed() {
+        if (this.NextButtonDisabled == false
+            && this.NextPreviousVisible == true) {
+            console.log("Moving Next ");
+            this.Next();
+        }
     }
 
     private QuerySection: string;
@@ -150,12 +152,13 @@ export class EditComponent implements OnDestroy {
     public Run(args: any) {
 
 
+
         this.EntityId = args['EntityId'];
         this.EntityPM = args['EntityPM'];
         this.EntityParentPM = args['EntityParentPM'];
         this.ObjectTableName = args['ObjectTableName'];
         this.PreSelectedTabCode = args['SelectedTabCode'];
-        this.QuerySection = !AppTool.IsNullOrEmpty(args['QuerySection']) ? args['QuerySection']:null ;
+        this.QuerySection = !AppTool.IsNullOrEmpty(args['QuerySection']) ? args['QuerySection'] : null;
         this.SelectedQueryCode = !AppTool.IsNullOrEmpty(args['SelectedQueryCode']) ? args['SelectedQueryCode'] : null;
         this.BackButtonLabel = !AppTool.IsNullOrEmpty(args['BackButtonLabel']) ? args['BackButtonLabel'] : TextCodeTranslator.Translate("General.B.Back");  // "Back";
         this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
@@ -167,7 +170,7 @@ export class EditComponent implements OnDestroy {
         this.NavigationIds = args['NavigationIds'];
         this.EntityFields = args['EntityFields'];
         this.IsFirstOpen = args['IsFirstOpen'];
-
+        this.JournalNumber = args['JournalNumber']
         if (this.NavigationIds) {
             this.NextPreviousVisible = true;
         }
@@ -179,62 +182,61 @@ export class EditComponent implements OnDestroy {
             this.SetNextPreviousButtonsEnablity();
         }
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
-        if (this.EntityPM != null) {
-            this.entityArgs.EntityPM = this.EntityPM;
-            this.entityArgs.ObjectTableName = this.ObjectTableName;
-            this.entityArgs.EditComponent = this;
-            this.BuildComponent();
-        }
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
+            if (this.EntityPM != null) {
+                this.entityArgs.EntityPM = this.EntityPM;
+                this.entityArgs.ObjectTableName = this.ObjectTableName;
+                this.entityArgs.EditComponent = this;
+                this.BuildComponent();
+            }
 
-        else if (this.EntityId != null) {
-            this.LoadEntityPM();
-        }
+            else if (this.EntityId != null) {
+                this.LoadEntityPM();
+            }
 
-        if (this.ObjectTableName != "Country" && this.ObjectTableName != "PackageType") {
-            this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "View " + this.ObjectTableName);
-        }
+            if (this.ObjectTableName != "Country" && this.ObjectTableName != "PackageType") {
+                this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "View " + this.ObjectTableName);
+            }
 
-        if (this.ObjectTableName == "CommunicationLog") {
-            this.IsSaveBtnDisable = true;
-        }
+            if (this.ObjectTableName == "CommunicationLog") {
+                this.IsSaveBtnDisable = true;
+            }
 
 
             this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible || (this.ObjectTable.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId));
 
-        // Split Component
-        var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
-        if (!AppTool.IsNullOrEmpty(feature)) { // granted
+            // Split Component
+            var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
+            if (!AppTool.IsNullOrEmpty(feature)) { // granted
 
-            //if (this.ObjectTable.Name == "Customs.Declaration")
-            //    this.IsSplitBtnVisible = true;
+                //if (this.ObjectTable.Name == "Customs.Declaration")
+                //    this.IsSplitBtnVisible = true;
 
-            if (!AppTool.IsNullOrEmpty(this.ObjectTable.SplitComponentPath)) {
-                this.IsSplitBtnVisible = true;
-                this.ShowWindowsOverEditComponent = true;
+                if (!AppTool.IsNullOrEmpty(this.ObjectTable.SplitComponentPath)) {
+                    this.IsSplitBtnVisible = true;
+                    this.ShowWindowsOverEditComponent = true;
+                }
             }
-        }
 
-        //fullaccounting => hide arpayment save btn for new arp entity
-        var isNewEntity = true;
-        if (this.EntityId || (this.EntityId && this.EntityPM.Id))
-            isNewEntity = false;
+            //fullaccounting => hide arpayment save btn for new arp entity
+            var isNewEntity = true;
+            if (this.EntityId || (this.EntityId && this.EntityPM.Id))
+                isNewEntity = false;
 
-        if ((this.ObjectTableName == "ARPayment" ) && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
-            this.IsSaveBtnVisible = false;
-        }
-        //
-    });
+            if ((this.ObjectTableName == "ARPayment") && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
+                this.IsSaveBtnVisible = false;
+            }
+            //
+        });
 
     }
 
     private LoadEntityPM() {
 
-        if (this.ObjectTableName == "Reconciliation")
-        {
+        if (this.ObjectTableName == "Reconciliation") {
             var service = new ReconciliationExtendedPMService();
-            service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
-            {
+            service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) => {
+                
                 console.log("[ReconciliationExtendedPMService.GetSingleWithoutLines] ", response);
 
                 if (!response.HasError) {
@@ -252,8 +254,7 @@ export class EditComponent implements OnDestroy {
         }
         else if (this.ObjectTableName == "CashBook") {
             let service = new CashBookExtendedPMService();
-            service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
-            {
+            service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) => {
                 console.log("[CashBookExtendedPMService.GetSingleWithoutLines] ", response);
 
                 if (!response.HasError) {
@@ -269,8 +270,7 @@ export class EditComponent implements OnDestroy {
 
 
         }
-        else
-        {
+        else {
             this.entityPMService.getSingle(this.ObjectTableName, this.EntityId).then((response: any) => {
                 response.subscribe((res) => {
                     var pmResponse: ServiceResponse = res;
@@ -291,15 +291,13 @@ export class EditComponent implements OnDestroy {
         }
 
     }
-    private SetEntityPMAfterLoadIt(result)
-    {
+    private SetEntityPMAfterLoadIt(result) {
         this.EntityPM = result;
 
         this.ClonedEntityPM = CloneDeep(this.EntityPM);
 
         if (this.EntityFields) {
-            this.EntityFields.forEach(itemField =>
-            {
+            this.EntityFields.forEach(itemField => {
                 this.EntityPM[itemField["FieldName"]] = itemField["FieldValue"];
             });
             this.EntityPM.IsDirty = false;
@@ -466,7 +464,7 @@ export class EditComponent implements OnDestroy {
 
                 SessionLocator.DynamicLoader.Load(myComponentPath, this.MenuButtonsViewContainerRef)
                     .then(cmpRef => {
-                        cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTable: this.ObjectTable, QuerySection : this.QuerySection});
+                        cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTable: this.ObjectTable, QuerySection: this.QuerySection });
                     });
             }
         }
@@ -507,7 +505,7 @@ export class EditComponent implements OnDestroy {
         var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/MetaDataServices/HeaderScreenServices/" + this.GetObjectTableName() + "HeaderScreenService";
         SessionLocator.DynamicLoader.GetInstance(myComponentPath, true).then((headerScreenService: any) => {
             if (headerScreenService) {
-                let result: HeaderScreenDataResult  = headerScreenService.GetHeaderScreens({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
+                let result: HeaderScreenDataResult = headerScreenService.GetHeaderScreens({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
                 this.GenerateHeaderScreen(result.HeaderScreen, result.ObjectFields);
             }
             else {
@@ -642,7 +640,7 @@ export class EditComponent implements OnDestroy {
         }
     }
 
-    private GenerateAPInvoiceHeader(headerScreen:any, objectFields:any) {
+    private GenerateAPInvoiceHeader(headerScreen: any, objectFields: any) {
 
 
         if (SessionLocator.TenantPM.AccountingActivated) {
@@ -651,7 +649,7 @@ export class EditComponent implements OnDestroy {
 
             headerScreen = window.Screens.filter(d => d.ObjectTableId === objectTableId && d.Code == "APInvoice.FullACCHeaderScreen")[0];
             objectFields = window.ObjectFields.filter(d => d.ObjectTableId === objectTableId);
-            this.GenerateHeaderScreen(headerScreen,objectFields);
+            this.GenerateHeaderScreen(headerScreen, objectFields);
         }
         else {
             this.GenerateHeaderScreen(headerScreen, objectFields);
@@ -670,7 +668,7 @@ export class EditComponent implements OnDestroy {
         if (element) {
 
 
-            this.GenerateHeaderScreen(HeaderScreen,ObjectFields);
+            this.GenerateHeaderScreen(HeaderScreen, ObjectFields);
         }
 
         else {
@@ -679,7 +677,7 @@ export class EditComponent implements OnDestroy {
 
 
             if (this.FindHeaderRetries < 3) {
-                this.FindHeaderTimerToken = setTimeout(() => this.RunFindHeaderTimer(HeaderScreen,ObjectFields), 1);
+                this.FindHeaderTimerToken = setTimeout(() => this.RunFindHeaderTimer(HeaderScreen, ObjectFields), 1);
             }
         }
     }
@@ -688,7 +686,7 @@ export class EditComponent implements OnDestroy {
 
         var element = document.getElementById(this.HeaderId);
         if (element == null) {
-            this.RunFindHeaderTimer(HeaderScreen,ObjectFields);
+            this.RunFindHeaderTimer(HeaderScreen, ObjectFields);
         }
 
         else {
@@ -822,7 +820,7 @@ export class EditComponent implements OnDestroy {
             return isAllowedUser;
         let entityStatusFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EST")[0];
         return (isAllowedUser && entityStatusFeatureToggle);
-      }
+    }
 
     FillTabsItemsSource(allTabs: any[]) {
 
@@ -1072,15 +1070,13 @@ export class EditComponent implements OnDestroy {
 
             case "ARPayment": {
 
-                if (this.EntityPM.IsFullAccounting)
-                {
+                if (this.EntityPM.IsFullAccounting) {
                     let indexOfTab = allTabs.findIndex(t => t.Code == 'ARPD');
                     if (indexOfTab > -1)
                         allTabs.splice(indexOfTab, 1);
 
                 }
-                else
-                {
+                else {
                     let indexOfTab = allTabs.findIndex(t => t.Code == 'PYDF');
                     if (indexOfTab > -1)
                         allTabs.splice(indexOfTab, 1);
@@ -1096,8 +1092,7 @@ export class EditComponent implements OnDestroy {
 
         return allTabs;
     }
-    private RemoveItemByCode(items: any[], code: string)
-    {
+    private RemoveItemByCode(items: any[], code: string) {
         let indexOfTab = items.findIndex(t => t.Code == code);
         if (indexOfTab > -1)
             items.splice(indexOfTab, 1);
@@ -1133,7 +1128,6 @@ export class EditComponent implements OnDestroy {
 
                         this.entityArgs.PreSelectedTabCode = this.PreSelectedTabCode;
                         this.entityArgs.EditComponentArgument = this.EditComponentArgument;
-
                         cmpRef.instance.CurrentlySelected = true;
                         cmpRef.instance.Run(this.SingleDetailsTab.Code, this.SingleDetailsTab.HtmlComponentUrl);
                     });
@@ -1165,7 +1159,7 @@ export class EditComponent implements OnDestroy {
         }
     }
 
-    IsPendingApprovalDocumentQuery():boolean {
+    IsPendingApprovalDocumentQuery(): boolean {
         if (!FeatureLocator.IsFeatureGrantedByUniqeCode("Shipment.DOCSIN"))
             return false;
         if (this.ObjectTableName != "Shipment")
@@ -1176,7 +1170,6 @@ export class EditComponent implements OnDestroy {
     }
 
     SelectionChanged(mySelectedTab: TabItem) {
-
         if (this.SelectedTab != mySelectedTab) {
             this.SelectedTab = mySelectedTab;
 
@@ -1304,6 +1297,7 @@ export class EditComponent implements OnDestroy {
     }
 
     private LoadTabComponent(loadedItem: LoadedTabItem) {
+        
         if (loadedItem != null) {
             if (loadedItem.ComponentPath != null) {
                 if (!loadedItem.IsLoaded) {
@@ -1341,15 +1335,14 @@ export class EditComponent implements OnDestroy {
     //}
 
     // Commands
-    BackButtonClicked()
-    {
+    BackButtonClicked() {
         var IsARInvoiceNeedsConfirmation = this.CheckIfFullAccountingARInvoiceNeedsConfirmation();
         var isNeedingConfirmation = this.NeedCloseConfirmation();
         const showBankTransferConfirmation = (this.EntityPM.IsDirty && this.ObjectTableName == "ARPayment" && this.EntityPM.ForceUsingBankTransferMethod && SessionLocator.TenantPM.AccountingActivated);
 
         const showAPPAymentConfirmation = (this.EntityPM.IsDirty && this.ObjectTableName == "APPayment" && this.EntityPM.ReconcileInternalTransIds && SessionLocator.TenantPM.AccountingActivated);
 
-        if(showBankTransferConfirmation){
+        if (showBankTransferConfirmation) {
             this.ShowBankTransferConfirmationMessage();
         }
 
@@ -1400,7 +1393,7 @@ export class EditComponent implements OnDestroy {
             myResult = false;
         }
 
-        if(this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true){
+        if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true) {
             myResult = true;
         }
 
@@ -1537,7 +1530,7 @@ export class EditComponent implements OnDestroy {
                 this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             }
             if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "APInvoice" || this.ObjectTableName == "ARPayment" || this.ObjectTableName == "APPayment"
-                || this.ObjectTableName == "BankDeposit"|| this.ObjectTableName == "UserDefinedReport"  || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
+                || this.ObjectTableName == "BankDeposit" || this.ObjectTableName == "UserDefinedReport" || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
                 this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {
@@ -1614,8 +1607,8 @@ export class EditComponent implements OnDestroy {
                             this.SaveDraftVersion(isClosing);
 
                             this.SaveAndCloseCompleted.emit(true);
-                            
-                            
+
+
                             this.ClonedEntityPM = CloneDeep(this.EntityPM);
                         }
 
@@ -1679,7 +1672,7 @@ export class EditComponent implements OnDestroy {
                                 }
 
                             }
-                            
+
                             this.ClonedEntityPM = CloneDeep(this.EntityPM);
                         }
 
@@ -1695,7 +1688,7 @@ export class EditComponent implements OnDestroy {
             }
         }
 
-        else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true){
+        else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true) {
             this.SaveDraftVersion(isClosing);
         }
 
@@ -1705,21 +1698,21 @@ export class EditComponent implements OnDestroy {
     }
 
     public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
-    SaveDraftVersion(isClosing:boolean) {
+    SaveDraftVersion(isClosing: boolean) {
         var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId
         var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == CurrentDisplayedVersionId);
 
         this.StartBusyIndicator("Saving ...");
 
-        this.WorkFlowVersionPMService.update(version).subscribe((serviceResponse: ServiceResponse) => { this.handleSaveDraftVersionResponse(serviceResponse,isClosing); });
+        this.WorkFlowVersionPMService.update(version).subscribe((serviceResponse: ServiceResponse) => { this.handleSaveDraftVersionResponse(serviceResponse, isClosing); });
     }
-    handleSaveDraftVersionResponse(serviceResponse: ServiceResponse , isClosing:boolean) {
+    handleSaveDraftVersionResponse(serviceResponse: ServiceResponse, isClosing: boolean) {
         if (!serviceResponse.HasError) {
             this.StopBusyIndicator();
             this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: false }
             this.entityArgs.SendMessage("RefreshWorkflowButtons");
-            if(isClosing){
-              this.Close();   
+            if (isClosing) {
+                this.Close();
             }
         }
     }
@@ -1753,11 +1746,9 @@ export class EditComponent implements OnDestroy {
         if (this.EntityId) {
             this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
 
-            if (this.ObjectTableName == "Reconciliation")
-            {
+            if (this.ObjectTableName == "Reconciliation") {
                 let service = new ReconciliationExtendedPMService();
-                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
-                {
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) => {
                     console.log("[GetSingleWithoutLines] ", response);
 
                     if (!response.HasError) {
@@ -1766,8 +1757,7 @@ export class EditComponent implements OnDestroy {
                         this.EntityPM = reconciliation;
                         this.entityArgs.EntityPM = this.EntityPM;
 
-                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
-                        {
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) => {
                             this.StopBusyIndicator();
                             this.UpdateComponentMembers();
                             this.LoadCompleted.emit(true);
@@ -1783,11 +1773,9 @@ export class EditComponent implements OnDestroy {
 
 
             }
-            else if (this.ObjectTableName == "CashBook")
-            {
+            else if (this.ObjectTableName == "CashBook") {
                 let service = new CashBookExtendedPMService();
-                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
-                {
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) => {
                     console.log("[GetSingleWithoutLines] ", response);
 
                     if (!response.HasError) {
@@ -1796,8 +1784,7 @@ export class EditComponent implements OnDestroy {
                         this.EntityPM = cashbook;
                         this.entityArgs.EntityPM = this.EntityPM;
 
-                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
-                        {
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) => {
                             this.StopBusyIndicator();
                             this.UpdateComponentMembers();
                             this.LoadCompleted.emit(true);
@@ -1813,11 +1800,9 @@ export class EditComponent implements OnDestroy {
 
 
             }
-            else if (this.ObjectTableName == "BankDeposit")
-            {
+            else if (this.ObjectTableName == "BankDeposit") {
                 let service = new BankDepositExtendedPMService();
-                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
-                {
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) => {
                     console.log("[GetSingleWithoutLines] ", response);
 
                     if (!response.HasError) {
@@ -1826,8 +1811,7 @@ export class EditComponent implements OnDestroy {
                         this.EntityPM = bankdeposit;
                         this.entityArgs.EntityPM = this.EntityPM;
 
-                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
-                        {
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) => {
                             this.StopBusyIndicator();
                             this.UpdateComponentMembers();
                             this.LoadCompleted.emit(true);
@@ -1843,8 +1827,7 @@ export class EditComponent implements OnDestroy {
 
 
             }
-            else
-            {
+            else {
                 this.entityPMService.getSingle(this.ObjectTableName, this.EntityId).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {
 
@@ -2055,8 +2038,8 @@ export class EditComponent implements OnDestroy {
         // state: opened / closed
         var defaultFilterCode: string = LastFilterClass.GetFilterValue("DeclarationEditControl", this.EntityPM.Id);
         if (defaultFilterCode == "true") {
-            if(!this.IsSplitComponentOpened)
-            this.SplitButtonClicked(); // open split section
+            if (!this.IsSplitComponentOpened)
+                this.SplitButtonClicked(); // open split section
         }
 
     }
@@ -2107,10 +2090,10 @@ export class EditComponent implements OnDestroy {
     nextPreviousTimerToken: any;
     LoadNextPreviousEntity() {
 
-     var selectedTab=this.PreSelectedTabCode;
-     this.NextButtonDisabled = true;
-     this.PreviousButtonDisabled = true;
-     this.cd.detectChanges();
+        var selectedTab = this.PreSelectedTabCode;
+        this.NextButtonDisabled = true;
+        this.PreviousButtonDisabled = true;
+        this.cd.detectChanges();
 
         this.TabsItemsSource = [];
         this.LoadedTabsList.forEach((tab) => {
@@ -2135,19 +2118,18 @@ export class EditComponent implements OnDestroy {
 
 
 
-     var args: any = {};
-     args.EntityId = this.NavigationIds[this.CurrentNavigatedIndex];
-     args.ObjectTableName = this.ObjectTableName;
-     args.BackButtonLabel = this.BackButtonLabel;
-     args.NavigationIds = this.NavigationIds;
-     args.SelectedTabCode=selectedTab;
-     this.Run(args);
+        var args: any = {};
+        args.EntityId = this.NavigationIds[this.CurrentNavigatedIndex];
+        args.ObjectTableName = this.ObjectTableName;
+        args.BackButtonLabel = this.BackButtonLabel;
+        args.NavigationIds = this.NavigationIds;
+        args.SelectedTabCode = selectedTab;
+        this.Run(args);
 
     }
 
     SetNextPreviousButtonsEnablity() {
-        if(this.NavigationIds)
-        {
+        if (this.NavigationIds) {
             if (this.CurrentNavigatedIndex == 0) {
                 this.PreviousButtonDisabled = true;
             }

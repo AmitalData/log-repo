@@ -1,4 +1,4 @@
-<table>
+﻿<table>
     <tr>
         <td>
             <div class="TableHolder">
@@ -20,11 +20,11 @@
                                             <tr class="FormFieldRow">
                                                 <td style="width: 100px;padding-right: 10px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.Datefrom' | TextCodeTranslationPipe}}</td>
 
+                                               
                                                 <td style="width: 140px;">
                                                     <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
                                                                    [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                                 </td>
-
                                                 <td style="width: 30px;"><div></div></td>
 
                                                 <td style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.To' | TextCodeTranslationPipe}}</td>
@@ -107,7 +107,7 @@
                         <td colspan="3" style="width: 310px;">
 
                             <div style="width: 220px;" [style.float]="isRTL ? 'left' : 'right'" >
-                                <SearchTextBox [ObjectTableName]="'Reconciliation'" (SearchTextChangeEvent)="TextChanged($event)" [PlaceHolder]="'Reconciliation.F.Number' | TextCodeTranslationPipe"></SearchTextBox>
+                                <SearchTextBox [SearchText] = "JournalNumber" [ObjectTableName]="'Reconciliation'" (SearchTextChangeEvent)="TextChanged($event)" [PlaceHolder]="'Reconciliation.F.Number' | TextCodeTranslationPipe"></SearchTextBox>
                             </div>
                             <div style="width: 40px;padding: 0px 10px;" [style.float]="isRTL ? 'left' : 'right'" >
                                 <!--<IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>-->
