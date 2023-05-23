@@ -1149,41 +1149,41 @@ public class ExportInvoice
 {
     private  bool isEmpty;
   
-    private string invoiceNumber;
+    private string number;
 
-    private string invoiceDate;
+    private string date;
 
     [XmlIgnore]
     public bool IsEmpty
     {
         get
         {
-            return InvoiceNumber == null;
+            return number == null;
         }
     }
 
 
 
-    public string InvoiceNumber
+    public string Number
     {
         get
         {
-            return this.InvoiceNumber;
+            return this.number;
         }
         set
         {
-            this.InvoiceNumber = value;
+            this.number = value;
         }
     }
-    public string InvoiceDate
+    public string Date
     {
         get
         {
-            return this.invoiceDate;
+            return this.date;
         }
         set
         {
-            this.invoiceDate = value;
+            this.date = value;
         }
     }
 }
