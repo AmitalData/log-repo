@@ -1,0 +1,29 @@
+﻿<Script DBType="Global" Module="Accounting" AOT="false" TargetTableName="BatchServicesDefinitionMods" Env="local,test,cloud">
+	<Sql Version="1">
+		<![CDATA[
+
+
+
+		   INSERT INTO [dbo].[BatchServicesDefinitions]
+           ([Code]
+           ,[ClassName]
+           ,[Parameter1]
+           ,[Parameter2]
+           ,[QueueDefinitionCode])
+     VALUES
+           ('AccountingJournalApproveMutliThreadingWR' ,
+		   'AccountingJournalApproveMutliThreadingWR',
+		   NULL,
+		   NULL,
+		   'AccountingJournalApproveMutliThreadingWR')
+       
+INSERT INTO [dbo].[BatchServicesDefinitionMods]
+           ([Code]
+           ,[InActive]
+           ,[NumberOfThreads])
+     VALUES
+           ('AccountingJournalApproveMutliThreadingWR',0,5)
+           
+    ]]>       
+  </Sql>
+</Script>

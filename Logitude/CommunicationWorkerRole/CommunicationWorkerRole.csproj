@@ -373,6 +373,7 @@
       <Link>OldEntityDetailsGenerator.cs</Link>
     </Compile>
     <Compile Include="Accounting\AccountingConversionJournalApproveWR.cs" />
+    <Compile Include="Accounting\AccountingJournalApproveMutliThreadingWR.cs" />
     <Compile Include="Accounting\ReconciliationWorkerRole.cs" />
     <Compile Include="Accounting\AccountingJournalApproveWR.cs" />
     <Compile Include="Accounting\ARPaymentChequeRedemptionWorkerRole.cs" />

@@ -543,8 +543,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ReCheckFromDBThrowIfNotValid(entityPM);
 
                     // CreateInterestTransactionTo_RegularJournal(entityPM);
-                    JournalApproveService.EnqueueDB(entityPM);
 
+                    if (FeatureToggleHelper.HasFeatureToggle("JAM", entityPM.Tenant))
+                        JournalApproveService.EnqueueMultiThreadedDB(entityPM);
+                    else
+                        JournalApproveService.EnqueueDB(entityPM);
 
                 }
             }
