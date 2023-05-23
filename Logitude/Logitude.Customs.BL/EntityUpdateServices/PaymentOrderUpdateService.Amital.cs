@@ -557,11 +557,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         EntityId = dirtyDeclarationPM.Id,
                         UserId = dirtyDeclarationPM.CreatedByUserId,
 
-                        CommunicationSubject = "Task",
+                        CommunicationSubject = "IIG_TASK",
 
                     };
                     var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
                 }
                 else
                 {

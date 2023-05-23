@@ -169,11 +169,11 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                         EntityId = null,
                         UserId = unifreightUser,
 
-                        CommunicationSubject = "Task",
+                        CommunicationSubject = "IIG_TASK",
 
                     };
                     var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
                 }
                 if (scope != null)
                 {

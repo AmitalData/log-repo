@@ -797,11 +797,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         CommunicationLoggingEntityReference = dirtyCourierMasterPM.MAWB,
                         EntityId = dirtyCourierMasterPM.Id,
                         UserId = dirtyCourierMasterPM.CreatedByUserId,
-                        CommunicationSubject = "Task",
+                        CommunicationSubject = "IIG_TASK",
 
                     };
                     var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
                 }
                 if (scope != null)
                 {

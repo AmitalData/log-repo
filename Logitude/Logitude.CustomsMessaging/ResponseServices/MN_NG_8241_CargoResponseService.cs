@@ -948,11 +948,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 EntityId = _MyDeclarationPM.Id,
                                 UserId = _MyDeclarationPM.CreatedByUserId,
 
-                                CommunicationSubject = "Task",
+                                CommunicationSubject = "IIG_TASK",
 
                             };
                             var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM_Packs);
-                            amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                            amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
                         }
 
                         if (isConnectedToUniFreight)

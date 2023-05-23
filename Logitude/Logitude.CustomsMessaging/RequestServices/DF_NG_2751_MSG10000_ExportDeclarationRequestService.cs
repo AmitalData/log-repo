@@ -374,11 +374,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                         EntityId = dirtyDeclarationPM.Id,
                         UserId = dirtyDeclarationPM.CreatedByUserId,
 
-                        CommunicationSubject = "Task",
+                        CommunicationSubject = "IIG_TASK",
 
                     };
                     var amitalInsertToQueueService = new AmitalInsertToQueueService< Unifreight.BL.EntityPMs.YCULTASKPM> (myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
                 }
             
                   

@@ -857,11 +857,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             EntityId = this._DirtyDeclarationPM?.Id,
                             UserId = unifreightUser,
 
-                            CommunicationSubject = "Task",
+                            CommunicationSubject = "IIG_TASK",
 
                         };
                         var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM_Packs);
-                        amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                        amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
                     }
                     if (setting.IsConnectedToUniFreight)
                     {
@@ -1024,11 +1024,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         EntityId = this._DirtyDeclarationPM?.Id,
                         UserId = unifreightUser,
 
-                        CommunicationSubject = "Task",
+                        CommunicationSubject = "IIG_TASK",
 
                     };
                     var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
 
                 }
             }

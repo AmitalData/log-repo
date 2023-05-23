@@ -148,11 +148,11 @@ namespace Logitude.Customs.BL.TraceEvents
                     EntityId = null,
                     UserId = unfreightUserId,
 
-                    CommunicationSubject = "Task",
+                    CommunicationSubject = "IIG_TASK",
 
                 };
                 var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM_Packs);
-                amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "Task");
+                amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
 
 
 
