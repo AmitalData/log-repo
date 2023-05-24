@@ -109,6 +109,7 @@
     <None Include="DBOthers\Views\RequestSheetInQueueMesView.dxml" />
     <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
+    <None Include="DBScripts\Post\202305241701_JobDeleteOldLocks.sxml" />
     <None Include="DBScripts\Post\202303211232_AddCOURIERPENDINGREASONS907.sxml" />
     <None Include="DBScripts\Post\20230125_AddCourierPendingReasons905.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS906.sxml" />
