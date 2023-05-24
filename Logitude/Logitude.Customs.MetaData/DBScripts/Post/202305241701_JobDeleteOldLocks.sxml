@@ -7,7 +7,7 @@
     <![CDATA[
     BEGIN
     DBMS_SCHEDULER.CREATE_JOB (
-            job_name => '"AMINETPRD_MAIN"."DELETE_OLD_LOCKS"',
+            job_name => '"DELETE_OLD_LOCKS"',
             job_type => 'PLSQL_BLOCK',
             job_action => 'delete from generalLocks
 where createdat < (sysdate -1); 
@@ -24,17 +24,17 @@ commit;',
      
  
     DBMS_SCHEDULER.SET_ATTRIBUTE( 
-             name => '"AMINETPRD_MAIN"."DELETE_OLD_LOCKS"', 
+             name => '"DELETE_OLD_LOCKS"', 
              attribute => 'store_output', value => TRUE);
     DBMS_SCHEDULER.SET_ATTRIBUTE( 
-             name => '"AMINETPRD_MAIN"."DELETE_OLD_LOCKS"', 
+             name => '"DELETE_OLD_LOCKS"', 
              attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
       
    
   
     
     DBMS_SCHEDULER.enable(
-             name => '"AMINETPRD_MAIN"."DELETE_OLD_LOCKS"');
+             name => '"DELETE_OLD_LOCKS"');
 END;
 
     ]]>
