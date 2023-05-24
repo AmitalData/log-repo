@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.TraceEvents;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
@@ -25,7 +26,9 @@ namespace Logitude.Customs.BL.BL
                 var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, tenant);
                 if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
                 {
-                    string defValue = GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, tenant);
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+
+                    string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, tenant);
                     if (defValue == "Y")
                     {
                         this.SendPRIV(tenant,"", CustomFileNo);
@@ -33,23 +36,7 @@ namespace Logitude.Customs.BL.BL
                 }
             }
         }
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+      
         public void SendPRIV(int Tenant, string remarks, string UnifreightLeadingFile)
         {
             string loggedContactId = null;

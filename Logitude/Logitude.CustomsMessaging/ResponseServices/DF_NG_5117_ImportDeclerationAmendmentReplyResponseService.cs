@@ -521,7 +521,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, _MyDeclarationPM.Tenant);
                             if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
                             {
-                                string defValue = GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, _MyDeclarationPM.Tenant);
+                                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_MyDeclarationPM.Tenant);
+
+                                string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, _MyDeclarationPM.Tenant);
                                 if (defValue == "Y")
                                 {
                                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_MyDeclarationPM.Tenant);
@@ -1074,23 +1076,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return serializer.Deserialize(stringReader) as UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseStatus;
             }
         }
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+      
 
         public UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration CastDeclaration(UnifreightIIG.Common.MessageLib.ID.Declaration declaration)
         {

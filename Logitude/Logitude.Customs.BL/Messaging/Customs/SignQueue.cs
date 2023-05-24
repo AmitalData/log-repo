@@ -627,7 +627,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
             if (CustomsSettingQueryService.GetSettingByTenant(tenant).CompanyType == "B")//Courier)
             {
-                string defValue = GDFDATAQueryService.GetDefault(tenant, "ISRAEL", "CGO_PERSONID", "NON", "NON");
+                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+
+                string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_PERSONID", "NON", "NON", tenant);
                 return defValue;
             }
             return null;

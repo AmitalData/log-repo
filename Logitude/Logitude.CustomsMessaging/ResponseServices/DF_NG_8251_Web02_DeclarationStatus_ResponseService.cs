@@ -919,8 +919,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private DateTime CheckIfBlockTime(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM)
         {
-            var declarationQS = new DeclarationQueryService(declarationPaymentPM.Tenant);
-            string timesCompany = declarationQS.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", declarationPaymentPM.Tenant);
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(declarationPaymentPM.Tenant);
+
+            string timesCompany = defaultValueQueryService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", declarationPaymentPM.Tenant);
             TimeSpan toTimeCurrent = new TimeSpan();
             TimeSpan toTime2Current = new TimeSpan();
             TimeSpan toTime = new TimeSpan();
@@ -942,7 +943,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
             }
-            string timesCustomer = declarationQS.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", declarationPM.CustomerCode, declarationPaymentPM.Tenant);
+            string timesCustomer = defaultValueQueryService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", declarationPM.CustomerCode, declarationPaymentPM.Tenant);
 
             if (timesCustomer != null && timesCustomer != "")
             {

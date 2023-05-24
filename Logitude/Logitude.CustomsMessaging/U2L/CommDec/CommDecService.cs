@@ -98,7 +98,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             MessageOut = "";
             _tenant = ResolvedTenant();
             var user = AuthenticationUtil.ResolveUserId(_tenant);
-            string defValue = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _tenant);
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_tenant);
+
+            string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _tenant);
 
             //   if (!string.IsNullOrEmpty(defValue) && defValue == "B")
             //  {
@@ -173,6 +175,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 MyGenericResponseObj.EnglishDescription = "Update Declaration Integrator";
                 ICustomContext dbContext = CustomContext.GetContext(_tenant);
                 DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), _tenant);
+                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_tenant);
 
                 if (!String.IsNullOrWhiteSpace(MoreParams))
                 {
@@ -529,7 +532,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     if (this._LogitudeCommDecFile.INVOICE.Count() > 0)
                     {
 
-                        string defValue = GetDefault("ISRAEL", "CGG_BUILD_UNIT", "NON", "NON", _tenant);
+                        string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_BUILD_UNIT", "NON", "NON", _tenant);
                         if (defValue == "Y")
                         {
                             _IsBuildItemsUnit = true;
@@ -763,7 +766,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 declarationUpdateService.Update(this._MyDeclarationPM, true);
                 Customs.BL.Messaging.Maman.Send2MasofIfNeededService.IsNewFromU2L = false;
 
-                string defValueB = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _MyDeclarationPM.Tenant);
+                string defValueB = defaultValueQueryService.GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _MyDeclarationPM.Tenant);
 
                 // if (!string.IsNullOrEmpty(defValueB) && defValueB == "B")
                 // {
@@ -1212,7 +1215,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, _tenant);
                     if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
                     {
-                        string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, _tenant);
+                        DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_tenant);
+
+                        string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, _tenant);
                         if (defValue == "Y")
                         {
                             if (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault() != null && (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp == ChangeSetOperation.Insert || (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault() != this._SupplierInvoiceAmount)))
@@ -1561,23 +1566,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             return $"UCUDO:{courierMasterId}";
         }
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
 
         private string TranslateAirline(string airlineId)
         {

@@ -70,9 +70,4 @@
     ReferencedTable="Branches"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CardId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
 </Table>

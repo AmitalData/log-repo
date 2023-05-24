@@ -126,7 +126,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                string insurancePercent = GetDefaultPrivate("ISRAEL", "CIM_INSUR_PERC", "NON", customerCode, tenant);
+                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+                string insurancePercent = defaultValueQueryService.GetDefault("ISRAEL", "CIM_INSUR_PERC", "NON", customerCode, tenant);
                 //return insurancePercent;
                 var resMode = new { insurancePercent = insurancePercent };
 
@@ -140,36 +141,37 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         }
 
 
-        public HttpResponseMessage GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
+        //public HttpResponseMessage GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        //{
             
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //    try
+        //    {
+        //        string token = HttpContext.Current.Request.Headers["Token"];
+        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //        DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
 
-                
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
-                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-                CustomsSettingPM setting = settingService.GetSettingByTenantN(authToken.Tenant);
-                var resMode = new { DefaultValue = "" };
-                if (setting.IsConnectedToUniFreight)
-                {
-                    string DefaultValue = GetDefaultPrivate(DISTRID, DEFID, BRANCHID, CARDID, tenant);
-                      resMode = new { DefaultValue = DefaultValue };
-                }
+        //        SecurityUtility.AuthenticationOnTenant(tenant);
+
+        //        CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+        //        CustomsSettingPM setting = settingService.GetSettingByTenantN(authToken.Tenant);
+        //        var resMode = new { DefaultValue = "" };
+        //        if (setting.IsConnectedToUniFreight)
+        //        {
+        //            string DefaultValue = defaultValueQueryService.GetDefault(DISTRID, DEFID, BRANCHID, CARDID, tenant);
+        //              resMode = new { DefaultValue = DefaultValue };
+        //        }
 
               
 
-                return Request.CreateResponse(HttpStatusCode.OK, resMode);
-            }
+        //        return Request.CreateResponse(HttpStatusCode.OK, resMode);
+        //    }
 
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //    }
+        //}
 
 
         public HttpResponseMessage GetSkipAutoInsurance(string customerCode, int tenant)
@@ -197,6 +199,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         private bool GetSkipAutoInsurancePrivate(string customerCode, int tenant)
         {
             string CARDID = customerCode;
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+
             if (string.IsNullOrWhiteSpace(customerCode))
             {
                 return true;
@@ -207,7 +211,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 return true;
             }
-            string UNFAutoInsurance_DefaultValue = GetDefaultPrivate("ISRAEL", "CGG_AUTO_INSUR", "NON", "NON", tenant);
+            string UNFAutoInsurance_DefaultValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_AUTO_INSUR", "NON", "NON", tenant);
             if (String.IsNullOrWhiteSpace(UNFAutoInsurance_DefaultValue))
             {
                 return true;
@@ -217,7 +221,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return true;
             }
 
-            string UNFCusomer_DefaultValue = GetDefaultPrivate("ISRAEL", "CGG_CARD_INS", "NON", CARDID, tenant);
+            string UNFCusomer_DefaultValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_CARD_INS", "NON", CARDID, tenant);
             if (string.IsNullOrWhiteSpace(UNFCusomer_DefaultValue))
             {
                 return true;
@@ -225,25 +229,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             return false;
         }
 
-        private string GetDefaultPrivate(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            var cntxt = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(cntxt);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null) 
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
 
 
 

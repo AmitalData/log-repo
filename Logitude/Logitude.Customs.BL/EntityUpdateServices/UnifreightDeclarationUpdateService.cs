@@ -1349,8 +1349,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 default:
                     break;
             }
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_DirtyDeclarationPM.Tenant);
 
-            _CCUFILEMPM.CUSTOMAGENT = GetDefault("ISRAEL", "GGG_CUSTOM_AGT", "NON", "NON");
+
+            _CCUFILEMPM.CUSTOMAGENT = defaultValueQueryService.GetDefault("ISRAEL", "GGG_CUSTOM_AGT", "NON", "NON",_DirtyDeclarationPM.Tenant);
             _CCUFILEMPM.CUSTOMSBRANCH = _DirtyDeclarationPM.DeclarationOfficeCode;
 
             _CCUFILEMPM.IMPORTERID = null;
@@ -2578,8 +2580,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 _CCUFILEMPM.SERVICEVALUE = 0;
             }
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(decSupplierInvoice.Tenant);
 
-            string isCancelUpdateExpenses = GetDefault("ISRAEL", "CGO_CUST_EXPENS", "NON", "NON");
+
+            string isCancelUpdateExpenses = defaultValueQueryService.GetDefault("ISRAEL", "CGO_CUST_EXPENS", "NON", "NON", decSupplierInvoice.Tenant);
 
             foreach (var decSupplierInvoiceModifications in decSupplierInvoice.SupplierInvoiceModifications)
             {
@@ -3712,22 +3716,7 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             }
         }
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID)
-        {
-            var myGDFDATAQueryService = new GDFDATAQueryService(_AmitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+       
 
         public bool _MainAccountSet { get; set; }
 

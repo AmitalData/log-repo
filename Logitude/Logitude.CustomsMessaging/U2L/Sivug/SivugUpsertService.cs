@@ -203,8 +203,9 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     // moran 18.3.15 - Task 11540 - commented <-- */
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(ResolvedTenant());
 
-                    string defValue = GetDefault("ISRAEL", "CGG_BUILD_UNIT", "NON", "NON", ResolvedTenant());
+                    string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_BUILD_UNIT", "NON", "NON", ResolvedTenant());
                     if (defValue == "Y")
                     {
                         _IsBuildItemsUnit = true;
@@ -1547,23 +1548,6 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             public int sequenceNumeric { get; set; }
         }
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
     }
 }
 
