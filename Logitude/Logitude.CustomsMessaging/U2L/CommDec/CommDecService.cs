@@ -654,7 +654,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     AppendLogLine("IF " + _MyDeclarationPM.IsCourierDeclaration + "==true    commdec service" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     if (_MyDeclarationPM.IsCourierDeclaration == true)
                     {
-                        UpdateNoIdUnder150();
+                        //UpdateNoIdUnder150();
                         CalcIsAutonomy();
                         CalcProcedureCurrentCode();
                         CalcInternalTransitionSite();
