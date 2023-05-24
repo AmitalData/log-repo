@@ -682,18 +682,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         updateDeclarationPending907ExceedingTheQuantityOfGoodsService.Calc(currentDeclarationCourierStatusPM);
 
 
- 
-
-                    
-                    string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON",_tenant);
-
-                       
-                        if(!string.IsNullOrEmpty(defValue) && _MyDeclarationPM.CustomerCode != defValue)
-                        {
-                            UpdateDeclarationPending("906");
-                        }
-
-
+                     
+                  
 
                         if (this.IsAutonomy)
                         {
