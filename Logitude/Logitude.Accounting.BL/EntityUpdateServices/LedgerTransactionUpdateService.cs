@@ -40,6 +40,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.IsReconciled = false;
             }
+            var journalQueryService = new JournalQueryService((MainContext as IAccountingContext));
+            var journal = journalQueryService.GetSingle(entityPM.JournalId, false, false);
+            if (journal != null)
+            {
+                if (journal.TypeCode == "12")
+                {
+                    entityPM.Reference2 = journal.JournalNumber;
+                }
+            }
+
         }
 
         public bool _CancelledAction;
