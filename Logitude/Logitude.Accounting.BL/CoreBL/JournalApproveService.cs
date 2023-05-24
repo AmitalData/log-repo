@@ -1142,18 +1142,6 @@ namespace Logitude.Accounting.BL.CoreBL
             return isSubmitApprove;
         }
 
-        private static void SetTenantIdle(int tenant)
-        {
-
-            ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
-            TenantRepository tenantRepository = new TenantRepository(myContext);
-            Tenant tenantObj = tenantRepository.GetSingleTenant(tenant);
-            tenantObj.JouranlApprovalIsIdle = false;
-            tenantRepository.Update(tenantObj);
-            tenantRepository.SubmitChanges();
-
-        }
-
         private static void UpdateGLAccountAgingData(string communicationLogId, DbQueueService queueservice, int tenant) {
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
