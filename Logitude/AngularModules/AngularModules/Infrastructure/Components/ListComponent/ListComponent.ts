@@ -638,6 +638,14 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
+            if (filters.FieldName == "ForeignAmount") {
+                if (filters.TextValue.startsWith("-")) {
+                    filters.TextValue1 = filters.TextValue.slice(1);
+                }
+                else {
+                    filters.TextValue1 = "-" + filters.TextValue.toString();
+                }
+            }
             this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, filters.Operation.Code, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
         }
         else {
@@ -652,10 +660,16 @@ export class ListComponent implements OnInit, AfterViewInit {
                     this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, null, null, "Contains", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
                 else {
                     if (filters.FieldName == "ForeignAmount") {
-                        var decimalValue = parseFloat(filters.TextValue);
+                        if (filters.TextValue.startsWith("-")) {
+                            filters.TextValue1 = filters.TextValue.slice(1);
+                        }
+                        else {
+                            filters.TextValue1 = "-" + filters.TextValue.toString();
+                        }
+                        /*var decimalValue = parseFloat(filters.TextValue);
                         var absoluteValue = Math.abs(decimalValue);
-                        filters.TextValue = absoluteValue;
-                        this.AdvanceFilters.addAdditionalFilter(filters.FieldName, absoluteValue, null, null, "Contains", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+                        filters.TextValue1 = absoluteValue;*/
+                        this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, "Contains", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
 
                     }
                     else {
