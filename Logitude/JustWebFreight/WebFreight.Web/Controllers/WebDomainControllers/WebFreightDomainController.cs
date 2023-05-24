@@ -769,18 +769,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (setting == null) return;
 
                 setting.ReleaseDateString = releaseArgs.ReleaseDateString;                
-                setting.ReleaseNotesURL = this.BuildReleaseNoteURL(setting.ReleaseNotesURL, releaseArgs.ReleaseCode);
+                setting.ReleaseNotesURL = releaseArgs.ReleaseCode;
                 settingRepository.Update(setting);
                 settingRepository.SubmitChanges();
                 scope.Complete();
             }
-        }
-        private string BuildReleaseNoteURL(string url, string releaseCode)
-        {
-            if (string.IsNullOrEmpty(releaseCode)) return url;
-
-            string[] urlArray = url.Split('=');
-            return urlArray[0] + "=" + releaseCode;
         }
     }
 }

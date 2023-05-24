@@ -37,12 +37,15 @@ export class ReleaseSettingsComponent extends BaseComponent implements OnDestroy
     
     constructor (){
         super();
-        this.Listen();
+        
         this.ReleaseDateString = ObjectsLocator.GlobalSetting.ReleaseDateString;
+        this.ReleaseCode = ObjectsLocator.GlobalSetting.ReleaseNotesURL;
         let ReleaseDateStrings = this.ReleaseDateString.split(" ");
         this.monthReleaseDate = ReleaseDateStrings[0];
-        this.yearReleaseDate = +ReleaseDateStrings[1];       
-        this.LoadHelpResources();
+        this.yearReleaseDate = +ReleaseDateStrings[1];
+
+        this.Listen();
+        this.LoadHelpResources(); 
     }
 
     private Listen() {
@@ -99,10 +102,8 @@ export class ReleaseSettingsComponent extends BaseComponent implements OnDestroy
     public OkButtonClicked() {
         this.ReleaseDateString = this.monthReleaseDate + " " + this.yearReleaseDate;
         ObjectsLocator.GlobalSetting.ReleaseDateString = this.ReleaseDateString;
+        ObjectsLocator.GlobalSetting.ReleaseNotesURL = this.ReleaseCode;
 
-
-        var releaseNotesUrl = ObjectsLocator.GlobalSetting.ReleaseNotesURL;
-        if (this.ReleaseCode == null) this.ReleaseCode = releaseNotesUrl.substr(releaseNotesUrl.indexOf("=") + 1);
         this.myDomainService = new WebFreightDomainService();
         this.myDomainService.PutReleaseSettings(this.ReleaseDateString, this.IsDeleteReleaseURL, this.ReleaseCode).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {

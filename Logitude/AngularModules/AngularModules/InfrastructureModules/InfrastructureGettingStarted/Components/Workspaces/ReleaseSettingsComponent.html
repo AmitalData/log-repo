@@ -72,18 +72,6 @@
                                     </td>
                                     <td></td>
                                 </tr>
-            
-                                <tr>
-                                    <td>
-                                        <LogLabel [Text]="'Delete Release Notes Url'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td style="height: 42px">
-                                        <LogCheckBox [ObjectFieldName]="'IsDeleteReleaseURL'" [Checked]="IsDeleteReleaseURL" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="IsDeleteChecked($event)"></LogCheckBox>
-            
-                                    </td>
-                                    <td></td>
-                                </tr>
-
                                 <tr>
                                     <td>
                                         <LogLabel [Text]="'Release Notes Url'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
@@ -94,6 +82,16 @@
                                                   [SelectedItem]="GetSelectedHelpResorce()"
                                                   [Binding]="'name'">
                                         </ComboBox>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <LogLabel [Text]="'Delete Release Notes Url'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="height: 42px">
+                                        <LogCheckBox [ObjectFieldName]="'IsDeleteReleaseURL'" [Checked]="IsDeleteReleaseURL" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="IsDeleteChecked($event)"></LogCheckBox>
+            
                                     </td>
                                     <td></td>
                                 </tr>
