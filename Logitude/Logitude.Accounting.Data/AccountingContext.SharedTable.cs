@@ -19,6 +19,8 @@ namespace Logitude.Accounting.Data
         public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         public IDbSet<Contact> Contacts { get; set; }
         public IDbSet<Tenant> Tenants { get; set; }
+        public IDbSet<TotalOpenTransInBankView> TotalOpenTransInBankViews { get; set; }
+
     }
     public partial interface IAccountingContext : IContext
     {
@@ -29,8 +31,10 @@ namespace Logitude.Accounting.Data
         IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         IDbSet<Tenant> Tenants { get; set; }
         IDbSet<Contact> Contacts { get; set; }
+        IDbSet<TotalOpenTransInBankView> TotalOpenTransInBankViews { get; set; }
 
-        
-            
+
+
+
     }
 }
