@@ -820,6 +820,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                                  //     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
                                                                  //}
             }
+            catch (ProcessLockException processLockException)
+            {
+                LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                throw;
+            }
+            finally
+            {
+                if (disposableToken != null)
+                {
+                    disposableToken.Dispose();
+                }
+            }
+        }
         
 
         private void disconnectExportStorages(string status) 
@@ -881,20 +894,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     ExportStorageUpdateService cUpdateservice = new ExportStorageUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     cUpdateservice.Update(item, false);
                 }
-            }
-            }
-            catch (ProcessLockException processLockException)
-            {
-                LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
-                throw;
-            }
-            finally
-            {
-                if (disposableToken != null)
-                {
-                    disposableToken.Dispose();
-                }
-            }
+            }         
         }
 
 
