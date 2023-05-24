@@ -53,7 +53,40 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
            
         }
+        public string GetDefaultByCardId(string Distr, string DefaultTypeCode, string BranchCode, string CardId, int Tenant)
+        {
 
+            if (!CustomsSettingQueryService.GetSettingByTenant(Tenant).IsConnectedToUniFreight)
+            {
+                if (Distr == null || DefaultTypeCode == null || BranchCode == null || CardId == null)
+                {
+                    return ("");
+                }
+
+                string myDefaultValue = repository.GetDefaultByCardId_Cache(Distr, DefaultTypeCode, BranchCode, CardId, Tenant);
+
+                return myDefaultValue == null ? "" : myDefaultValue;
+            }
+            else
+            {
+
+                AmitalContext amitalContext = AmitalContext.GetContext(Tenant);
+                var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+                if (Distr == null || DefaultTypeCode == null || BranchCode == null || CardId == null)
+                {
+                    return ("");
+                }
+
+                GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(Distr, DefaultTypeCode, BranchCode, CardId, false, true);
+                if (myGDFDATAPM == null)
+                {
+                    return ("");
+                }
+                return (myGDFDATAPM.DEFDATA);
+            }
+
+        }
 
         public string GetDefaultAccountNumber(string Distr, string DefaultTypeCode, string BranchCode, string ShortValue, int Tenant)
         {
@@ -63,7 +96,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 return ("");
             }
 
-            string accountNumber = repository.GetCardIdByDefaultValue(Distr, DefaultTypeCode, BranchCode, ShortValue, Tenant);
+            string accountNumber = repository.GetDefaultAccountNumberByDefaultValue(Distr, DefaultTypeCode, BranchCode, ShortValue, Tenant);
 
             return accountNumber;
         }

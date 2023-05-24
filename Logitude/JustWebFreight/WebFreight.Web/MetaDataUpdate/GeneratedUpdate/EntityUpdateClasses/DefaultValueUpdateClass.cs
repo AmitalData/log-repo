@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DefaultValueUpdateClass
    {  		
-		public const string HashString = "37d10a8d0cbec290c5e7a553e04047a5";
+		public const string HashString = "1f344c4596ff130da5f56d3c4c5c568d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Default Value",
-			      				    Code =  "68f4",
+			      				    Code =  "29cf",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -333,8 +333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CardId",
 					  						ObjectTableName =  "Customs.DefaultValue",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Card",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

@@ -35,11 +35,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string BranchId { get; set; }
 	      
         public virtual Branch Branch { get; set; }
-        [ForeignKey("Card")]
         [Column("CardId")]
 	    public string CardId { get; set; }
-	      
-        public virtual Card Card { get; set; }
         [Column("ShortValue")]
 	    public string ShortValue { get; set; }
         [Column("Value")]
