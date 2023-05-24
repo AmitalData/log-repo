@@ -311,6 +311,7 @@
     <None Include="EntityFiles\TaxReportLineStatus.lxml" />
     <None Include="EntityFiles\TaxReportLineTransmitStatus.lxml" />
     <None Include="EntityFiles\TaxReportLineType.lxml" />
+    <None Include="EntityFiles\TenantIdleStatus.lxml" />
     <None Include="EntityFiles\UserDefinedReport.lxml" />
     <None Include="EntityFiles\VatReportStatus.lxml" />
     <None Include="EntityFiles\TaxReportStatus.lxml" />

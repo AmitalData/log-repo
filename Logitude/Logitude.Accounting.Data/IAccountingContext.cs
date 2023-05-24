@@ -109,6 +109,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<TaxReportLineType> TaxReportLineTypes { get; }
 		 IDbSet<TaxReportStatus> TaxReportStatuses { get; }
 		 IDbSet<TaxWithholdingAssessOffice> TaxWithholdingAssessOffices { get; }
+		 IDbSet<TenantIdleStatus> TenantIdleStatuses { get; }
 		 IDbSet<TestEntity> TestEntities { get; }
 		 IDbSet<UserDefinedReport> UserDefinedReports { get; }
 		 IDbSet<VatReportStatus> VatReportStatuses { get; }
