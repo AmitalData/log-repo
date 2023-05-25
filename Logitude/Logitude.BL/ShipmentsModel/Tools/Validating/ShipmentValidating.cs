@@ -419,12 +419,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 entityPM.Transshipment1CarrierPrefix = (entityPM.Transshipment1CarrierPrefix == null) ? null : entityPM.Transshipment1CarrierPrefix.Trim();
                 entityPM.Transshipment2CarrierPrefix = (entityPM.Transshipment2CarrierPrefix == null) ? null : entityPM.Transshipment2CarrierPrefix.Trim();
                 entityPM.Transshipment3CarrierPrefix = (entityPM.Transshipment3CarrierPrefix == null) ? null : entityPM.Transshipment3CarrierPrefix.Trim();
-
+                string flightCodeValidationMessage = entityPM.IsHybrid ? "airline prefix is not exist" : "flight Code is not exists";
                 if (!string.IsNullOrEmpty(entityPM.MainCarriageCarrierPrefix))
                 {
                     if (!cardRepository.IsAirlineExistsInTenant(entityPM.MainCarriageCarrierPrefix, entityPM.Tenant))
                     {
-                        throw new ApplicationException("Main Carriage flight Code is not exists");
+
+                        throw new ApplicationException("Main Carriage "+ flightCodeValidationMessage);
                     }
                 }
 
@@ -432,7 +433,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (!cardRepository.IsAirlineExistsInTenant(entityPM.Transshipment1CarrierPrefix, entityPM.Tenant))
                     {
-                        throw new ApplicationException("Transshipment1 flight Code is not exists");
+                        throw new ApplicationException("Transshipment1 " + flightCodeValidationMessage);
                     }
                 }
 
@@ -440,7 +441,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (!cardRepository.IsAirlineExistsInTenant(entityPM.Transshipment2CarrierPrefix, entityPM.Tenant))
                     {
-                        throw new ApplicationException("Transshipment2 flight Code is not exists");
+                        throw new ApplicationException("Transshipment2 " + flightCodeValidationMessage);
                     }
                 }
 
@@ -448,7 +449,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (!cardRepository.IsAirlineExistsInTenant(entityPM.Transshipment3CarrierPrefix, entityPM.Tenant))
                     {
-                        throw new ApplicationException("Transshipment3 flight Code is not exists");
+                        throw new ApplicationException("Transshipment3 " + flightCodeValidationMessage);
                     }
                 }
             }
