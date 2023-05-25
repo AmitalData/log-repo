@@ -1,4 +1,4 @@
-﻿<View DBType="Main" Name="CardGLAccountDataView" Schema="dbo" Module="Accounting">
+﻿<View DBType="Main" Name="TotalOpenTransInBankViews" Schema="dbo" Module="Accounting">
 	<SqlScript>
 		<![CDATA[
         CREATE OR ALTER VIEW dbo.TotalOpenTransInBankViews AS
