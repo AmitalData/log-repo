@@ -28,10 +28,10 @@ namespace Logitude.Accounting.Data.Repositories
 
 		 
 		
-		public  TenantIdleStatus GetSingle(string id, int tenant)
+		public  TenantIdleStatus GetSingle(int tenant)
         {
             return (from a in context.TenantIdleStatuses
-                    where a.Id == id && a.Tenant == tenant
+                    where a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
