@@ -285,8 +285,6 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.fromDate != value) {
             this.oldFromDate = this.fromDate;
             this.fromDate = value;
-            var today=new Date();
-            today.setHours(today.getHours()+2);
             //if (this.fromDate > this.ToDate) {
 
             //    this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("To date must be Greater or equal than from date"));
@@ -296,11 +294,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             //    //this.GetTransactions();
             //    //this.GetLTB();
             //}
-            if(this.isFullAccounting && this.oldFromDate != null ){
-                if(this.fromDate!=null && today >= this.fromDate){
+            if(this.isFullAccounting && this.oldFromDate != null &&this.fromDate!=null){
                     var  _fromDate =  [this.fromDate.getFullYear().toString(), this.FromDate.getMonth(), this.FromDate.getDate()].join(";");
-                    this.AddFromDateInLocalStorage( this.EntityPM.Id , this.fromDate);
-                }    
+                    this.AddFromDateInLocalStorage( this.EntityPM.Id , this.fromDate);   
             }
             if (!this.isValidate)
                this.validateDates();
