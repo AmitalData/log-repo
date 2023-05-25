@@ -139,7 +139,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             var today=new Date();
             var CreateDate=new Date(element.creatDate);
             var difference = Math.floor((Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) - Date.UTC(CreateDate.getFullYear(), CreateDate.getMonth(), CreateDate.getDate()) ) /(1000 * 60 * 60 * 24));
-            if( difference < 30 )
+            if( difference <= 30 )
                  this.GLAccountsFromDateInLocalStorage.push(element); 
             });
             localStorage.setItem( "GLAccounts-fromDate" , JSON.stringify(this.GLAccountsFromDateInLocalStorage) );
@@ -294,9 +294,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             //    //this.GetTransactions();
             //    //this.GetLTB();
             //}
-            if(this.isFullAccounting && this.oldFromDate != null ){
-                var  _fromDate =  [this.fromDate.getFullYear().toString(), this.FromDate.getMonth(), this.FromDate.getDate()].join(";");
-                this.AddFromDateInLocalStorage( this.EntityPM.Id , this.fromDate);
+            if(this.isFullAccounting && this.oldFromDate != null &&this.fromDate!=null){
+                    var  _fromDate =  [this.fromDate.getFullYear().toString(), this.FromDate.getMonth(), this.FromDate.getDate()].join(";");
+                    this.AddFromDateInLocalStorage( this.EntityPM.Id , this.fromDate);   
             }
             if (!this.isValidate)
                this.validateDates();
