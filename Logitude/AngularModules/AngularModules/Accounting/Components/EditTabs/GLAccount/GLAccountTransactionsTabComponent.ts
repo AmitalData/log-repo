@@ -78,6 +78,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public UseTaxreportFilter: boolean = false;
+    public GLAccountsFromDateInLocalStorage: any = [];
+    isFullAccounting: boolean = SessionLocator.TenantPM.AccountingActivated;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -125,8 +127,26 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
         this.GetTransactionsCurrencies();
         this.GetFullAccountingSettings();
+        if(this.isFullAccounting)
+        this.SetGLAccountsFromDateInLocalStorage();
 
     }
+    SetGLAccountsFromDateInLocalStorage(){
+        var retrievedObject = localStorage.getItem("GLAccounts-fromDate");
+        if(retrievedObject!=null){
+            var gLAccounts_FromDate=JSON.parse(retrievedObject);
+            gLAccounts_FromDate.forEach(element => {
+            var today=new Date();
+            var CreateDate=new Date(element.creatDate);
+            var difference = Math.floor((Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) - Date.UTC(CreateDate.getFullYear(), CreateDate.getMonth(), CreateDate.getDate()) ) /(1000 * 60 * 60 * 24));
+            if( difference < 30 )
+                 this.GLAccountsFromDateInLocalStorage.push(element); 
+            });
+            localStorage.setItem( "GLAccounts-fromDate" , JSON.stringify(this.GLAccountsFromDateInLocalStorage) );
+        }
+    }
+   
+
     public DateFilterWidth: number;
     SetDateFilterWidth() {
         if (this.DisplayTaxReportFilter) {
@@ -194,13 +214,32 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.ToDate = new Date();
         this.oldToDate = new Date();
         var lastmonth = today.setMonth(today.getMonth() - 1);
-        this.FromDate = new Date(lastmonth);
-        this.oldFromDate = new Date(lastmonth);
+        var fromDateInLocalStorage = this.isFullAccounting? this.GetFromDateInLocalStorage() : null; 
+         if( fromDateInLocalStorage!=null )
+        {
+            this.FromDate = new Date(fromDateInLocalStorage.fromDate);
+            this.oldFromDate = new Date(fromDateInLocalStorage.fromDate);
+        }
+        else
+        {
+            this.FromDate = new Date(lastmonth);
+            this.oldFromDate = new Date(lastmonth);
+        }       
         //#endregion
 
-
         this.CD.detectChanges();
+    }
+    GetFromDateInLocalStorage(){
+        var retrievedObject = localStorage.getItem("GLAccounts-fromDate");
+        if(retrievedObject!=null){
+            var gLAccounts_FromDate=JSON.parse(retrievedObject);
 
+           var gLAccountFromDate =gLAccounts_FromDate.find(obj=> {
+            return obj.Id ===  "GLAccount-"+this.EntityPM.Id;
+           });
+            return gLAccountFromDate;
+        }
+            return null
     }
 
     LoadDefaultValues() {
@@ -255,14 +294,29 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             //    //this.GetTransactions();
             //    //this.GetLTB();
             //}
-
+            if(this.isFullAccounting && this.oldFromDate != null ){
+                var  _fromDate =  [this.fromDate.getFullYear().toString(), this.FromDate.getMonth(), this.FromDate.getDate()].join(";");
+                this.AddFromDateInLocalStorage( this.EntityPM.Id , this.fromDate);
+            }
             if (!this.isValidate)
                this.validateDates();
             else {
                 this.isValidate = false;
             }
-
         }
+    }
+
+    AddFromDateInLocalStorage(Id ,fromDate){ 
+        let indexToUpdate = this.GLAccountsFromDateInLocalStorage.findIndex(item => item.Id == "GLAccount-"+Id );
+        if(indexToUpdate != -1)
+          this.GLAccountsFromDateInLocalStorage[indexToUpdate].fromDate= fromDate;
+        else
+        {
+            var today=new Date();
+            var gLAccount_fromDate ={ Id : "GLAccount-"+Id , fromDate : fromDate , creatDate : today };
+            this.GLAccountsFromDateInLocalStorage.push(gLAccount_fromDate);
+        }
+        localStorage.setItem( "GLAccounts-fromDate" , JSON.stringify(this.GLAccountsFromDateInLocalStorage) );
     }
 
     toDate: Date;
@@ -941,7 +995,6 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             var _fromDate =  [this.fromDate.getFullYear().toString(), this.FromDate.getMonth(), this.FromDate.getDate()].join(";");
             var _toDate =  [this.toDate.getFullYear().toString(), this.toDate.getMonth(), this.toDate.getDate()].join(";");
             this.dateFilter = new FilterItem("AccountingDate", _fromDate, _toDate, null, "Between", false, false, false, "Date", false);
-
             if(this.fromDate2 && this.toDate2){
                 let _fromDate2 =  [this.fromDate2.getFullYear().toString(), this.FromDate2.getMonth(), this.FromDate2.getDate()].join(";");
                 let _toDate2 =  [this.toDate2.getFullYear().toString(), this.toDate2.getMonth(), this.toDate2.getDate()].join(";");
@@ -950,11 +1003,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
             console.log(">> Date Filter: ", _fromDate, _toDate);
             this.RefreshButtonClicked();
-
         }
 
-
     }
+    
     //#endregion
 
     //#region Buttons + CheckBox Handlers
