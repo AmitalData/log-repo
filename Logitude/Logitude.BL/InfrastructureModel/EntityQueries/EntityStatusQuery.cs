@@ -126,6 +126,32 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
 
         }
+
+        public EntityStatusPM GetSingleEntityStatusPMByCodeObjectTableName(string code, string objectTableName, int tenant)
+        {
+            if (string.IsNullOrEmpty(code)) return null;
+            EntityStatusPM entityStatusPM = (from a in repository.context.EntityStatus.Include("ObjectTable")
+                                             where a.Tenant == tenant && a.Code == code && a.ObjectTable.Name == objectTableName
+                                             select new EntityStatusPM()
+                                             {
+                                                 Id = a.Id,
+                                                 Name = a.Name,
+                                                 ObjectTableId = a.ObjectTableId,
+                                                 StatusWeight = a.StatusWeight,
+                                                 Tenant = a.Tenant,
+                                                 ObjectTableName = a.ObjectTable.Name,
+                                                 Code = a.Code,
+                                                 SearchFields = a.SearchFields,
+                                                 InActive = a.InActive,
+                                                 DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
+                                                 EntityStatusTypeCode = a.EntityStatusTypeCode,
+                                                 StatusLocalWeight = a.StatusLocalWeight,
+                                                 AllowPartial = a.AllowPartial,
+                                                 IsDigitalPortal = a.IsDigitalPortal,
+                                             }).FirstOrDefault();
+            return entityStatusPM;
+        }
+
         public EntityStatusPM GetSingleEntityStatuPMs(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))
