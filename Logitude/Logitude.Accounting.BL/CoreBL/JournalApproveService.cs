@@ -1202,21 +1202,11 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        private static void SetTenantIdle(int tenant)
-        {
-            ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
-            TenantRepository tenantRepository = new TenantRepository(myContext);
-            Tenant tenantObj = tenantRepository.GetSingleTenant(tenant);
-            tenantObj.JouranlApprovalIsIdle = false;
-            tenantRepository.Update(tenantObj);
-            tenantRepository.SubmitChanges();
-        }
 
         private static void OnException(DbQueueService myDbQueueService, QueueResponse message, string seedJournalId, int tenant, Exception ex)
         {
 
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
-            SetTenantIdle(message.Tenant);
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "AccountingJournalApproveWR", "AccountingJournalApproveWR: ProcessMessage() Method", null);
             if (message.RetryNumber >= 2 && message.RetryNumber <= 7) {
                     myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
