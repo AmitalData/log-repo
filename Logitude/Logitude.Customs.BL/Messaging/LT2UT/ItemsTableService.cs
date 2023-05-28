@@ -164,7 +164,7 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                         Tenant =_Tenant,
                         objectTableName = "Customs.Declaration",
                         EventCode = null,
-                        notes = "",
+                        notes = "missing id",
                         CommunicationLoggingEntityReference = null,
                         EntityId = null,
                         UserId = unifreightUser,

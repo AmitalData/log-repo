@@ -187,7 +187,7 @@ namespace Logitude.Customs.BL.TraceEvents
                     Tenant = tenant,
                     objectTableName = "Customs.Declaration",
                     EventCode = null,
-                    notes = "",
+                    notes = "missing id",
                     CommunicationLoggingEntityReference = null,
                     EntityId =null,
                     UserId = unfreightUserId,

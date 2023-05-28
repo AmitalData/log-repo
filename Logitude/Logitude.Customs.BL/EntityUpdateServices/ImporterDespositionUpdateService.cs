@@ -292,7 +292,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         objectTableName = "Customs.ImporterDesposition",
                         EventCode = null,
                         notes = "",
-                        CommunicationLoggingEntityReference = dirtyImporterDespositionPM.ImporterlId,
+                        CommunicationLoggingEntityReference = null,
                         EntityId = dirtyImporterDespositionPM.Id,
                         UserId = unifreightUser,
 
