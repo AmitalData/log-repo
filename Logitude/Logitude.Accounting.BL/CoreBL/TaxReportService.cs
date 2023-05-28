@@ -333,7 +333,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             // saving report
-            MarkDuplicateLines(taxReport, reportLinesList);
+            MarkCreatedDuplicateLines(taxReport, reportLinesList);
             UpdateTaxReport(taxReport);
             reportLinesList = HandleTaxReportLines(taxReport, reportLinesList);
             return reportLinesList;
@@ -349,11 +349,17 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private static void MarkDuplicateLines(TaxReportPM taxReportPM, List<TaxReportLinePM> taxReportLines)
+        private static void MarkCreatedDuplicateLines(TaxReportPM taxReportPM, List<TaxReportLinePM> taxReportLines)
         {
             //List<TaxReportLinePM> taxReportLines = GetTaxReportLines(taxReportPM.Id, taxReportPM.Tenant);
             if (taxReportLines != null && taxReportLines.Count > 0)
             {
+                int i = 1;
+                taxReportLines.ForEach(l => 
+                {
+                    l.Line = i++;
+                });
+
                 var dup = taxReportLines.GroupBy(ln =>
                 new
                 {
@@ -361,17 +367,30 @@ namespace Logitude.Accounting.BL.CoreBL
                     Reference = ln.Reference
                 }).OrderByDescending(g => g.Key.VatNumber).ThenBy(g => g.Key.Reference);
 
-                var duplicates = dup.Select(g => new
+                List<DupLines> duplicates = null;
+
+                var duplicates_indicative = dup.Select(g => new DupLines
                 {
                     VatNumber = g.Key.VatNumber,
                     Reference = g.Key.Reference,
                     LineNumbers = g.OrderBy(x => x.Line).Skip(1).Select(x => x.Line)
                 })
-                .Where(g => g.LineNumbers.Count() > 1).ToList();
+                .Where(r => r.LineNumbers.Count() >= 1).Select(r => r.VatNumber + "~" + r.Reference).ToList();
 
-                List<TaxReportLinePM> removeDupLines = new List<TaxReportLinePM>();
-               // IAccountingContext accountingContext;
-               // TaxReportLineUpdateService taxReportLineUpdateService;
+                if (duplicates_indicative != null && duplicates_indicative.Count > 0)
+                {
+                    duplicates = dup.Where(g => duplicates_indicative.Contains(g.Key.VatNumber + "~" + g.Key.Reference)).Select(g => new DupLines
+                    {
+                        VatNumber = g.Key.VatNumber,
+                        Reference = g.Key.Reference,
+                        LineNumbers = g.OrderBy(x => x.Line).Select(x => x.Line)
+                    })
+                    .Where(r => r.LineNumbers.Count() >= 1).ToList();
+                }
+
+
+            //    List<TaxReportLinePM> removeDupLines = new List<TaxReportLinePM>();
+
 
                 if (duplicates != null && duplicates.Count > 0)
                 {
@@ -382,7 +401,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         all_dup_line_nos.AddRange(item.LineNumbers);
                     }
 
-                    List<TaxReportLinePM> duplicateLines = new List<TaxReportLinePM>();
+             //       List<TaxReportLinePM> duplicateLines = new List<TaxReportLinePM>();
 
                     foreach (var oneLine in taxReportLines)
                     {
@@ -390,24 +409,24 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                           //  oneLine.ChangeSetOp = ChangeSetOperation.Update;
                             oneLine.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
-                            duplicateLines.Add(oneLine);
+                         //   duplicateLines.Add(oneLine);
                         }
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
                          //   oneLine.ChangeSetOp = ChangeSetOperation.Update;
                             oneLine.StatusCode = "6";
-                            removeDupLines.Add(oneLine);
+                        //    removeDupLines.Add(oneLine);
                         }
 
                     }
 
-                    if (duplicateLines.Count > 0 || removeDupLines.Count > 0)
-                    {
+                 //   if (duplicateLines.Count > 0 || removeDupLines.Count > 0)
+                 //   {
                       //  accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
                       //  taxReportLineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
                       //  if (duplicateLines.Count > 0) taxReportLineUpdateService.UpdateMulti(duplicateLines, new List<TaxReportLinePM>(), taxReportPM, true);
                       //  if (removeDupLines.Count > 0) taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
-                    }
+                 //   }
                 }
                 else
                 {
@@ -415,25 +434,35 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
-                          //  linePM.ChangeSetOp = ChangeSetOperation.Update;
                             linePM.StatusCode = "6";
-                            removeDupLines.Add(linePM);
+                       //     removeDupLines.Add(linePM);
                         }
                     }
-                    if (removeDupLines.Count > 0)
-                    {
+              //      if (removeDupLines.Count > 0)
+              //      {
                        // accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
                        // taxReportLineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
                        // taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
-                    }
+              //      }
 
                 }
+
+                taxReportLines.ForEach(l =>
+                {
+                    l.Line = 0;
+                });
             }
 
         }
 
 
+        private class DupLines
+        {
+            public string VatNumber { get; set; }
+            public string Reference { get; set; }
+            public IEnumerable<int> LineNumbers { get; set; }
 
+        }
         private static string SetTransmitStaus(DateTime invoiceDate, DateTime taxReportMonth, FullAccountingSetting setting)
         {
             DateTime invoiceDateVal = new DateTime(invoiceDate.Year, invoiceDate.Month, 1);

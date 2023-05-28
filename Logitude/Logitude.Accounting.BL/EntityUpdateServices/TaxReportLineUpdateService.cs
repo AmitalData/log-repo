@@ -67,6 +67,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (entityPM.IsManuallyChanged == true)
                     entityPM.IsManuallyChanged = false;
             }
+
+            else if (this.EntityPM.ChangeSetOp == ChangeSetOperation.Update && entityPM.IsManuallyChanged == null)
+            {
+                entityPM.IsManuallyChanged = false;
+            }
+
             else
             {
                 entityPM.IsManuallyChanged = true;
@@ -227,7 +233,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if ((setting.VATreportEveryTwoMonths && referenceDate.Date != taxReportDate.Date && referenceDate.Date != taxReportDatePreviousMonth.Date)
                             || (!setting.VATreportEveryTwoMonths && referenceDate.Date != taxReportDate.Date))
                 {
-                    entityPM.StatusCode = TaxReportLineStatusValues.Invoicenotpreviouslyreported;
+                    if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = TaxReportLineStatusValues.Invoicenotpreviouslyreported;
                 }
 
                 if (entityPM.VatNumber == vatNumber)
@@ -239,20 +245,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (entityPM.VatNumber == null)
                 {
-                    entityPM.StatusCode = "1";
+                    if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "1";
                 }
                 else if (entityPM.VatNumber != null)
                 {
                     zerosVatNumber = trimmedZeros == "" ? true : false;
                     if (entityPM.VatNumber.Length > 9 || (zerosVatNumber && entityPM.VatNumber != "000000000"))
                     {
-                        entityPM.StatusCode = "2";
+                        if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "2";
                     }
                     else
                     {
                         if (entityPM.VatNumber == "000000000")
                         {
-                            entityPM.StatusCode = entityPM.LineTypeCode == LineType_SmallCashbookAPInvoice ? "6" : "2";
+                            if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = entityPM.LineTypeCode == LineType_SmallCashbookAPInvoice ? "6" : "2";
                             return;
                         }
                         else
@@ -263,13 +269,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
                                 if (digit != 0)
                                 {
-                                    entityPM.StatusCode = "2";
+                                    if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "2";
                                 }
 
                             }
                             else
                             {
-                                entityPM.StatusCode = "2";
+                                if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "2";
                             }
 
 
@@ -286,7 +292,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     string[] amount = entityPM.VatableInvoiceAmount.ToString().Split('.');
                     if (amount.Count() > 1 && amount[1] != "00")
                     {
-                        entityPM.StatusCode = "4";
+                        if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "4";
                     }
 
                 }
@@ -297,7 +303,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     var chars = Regex.Matches(entityPM.Reference.Trim(), @"[^\d{9}$]");
                     if (chars.Count != 0)
                     {
-                        entityPM.StatusCode = "3";
+                        if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "3";
                     }
 
                 }
@@ -311,20 +317,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (entityPM.VatNumber == null)
                 {
-                    entityPM.StatusCode = "1";
+                    if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "1";
                 }
                 else if (entityPM.VatNumber != null)
                 {
                     zerosVatNumber = trimmedZeros == "" ? true : false;
                     if (entityPM.VatNumber.Length > 9 || (zerosVatNumber && entityPM.VatNumber != "000000000"))
                     {
-                        entityPM.StatusCode = "2";
+                        if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "2";
                     }
                     else
                     {
                         if(entityPM.VatNumber == "000000000")
                         {
-                            entityPM.StatusCode = entityPM.LineTypeCode == LineType_SmallCashbookAPInvoice ? "6" : "2";
+                            if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = entityPM.LineTypeCode == LineType_SmallCashbookAPInvoice ? "6" : "2";
                             return;
                         }
                        
@@ -336,13 +342,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
                                 if (digit != 0)
                                 {
-                                    entityPM.StatusCode = "2";
+                                    if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "2";
                                 }
 
                             }
                             else
                             {
-                                entityPM.StatusCode = "2";
+                                if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "2";
                             }
 
                         }
@@ -355,7 +361,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     var chars = Regex.Matches(entityPM.Reference.Trim(), @"[^\d{9}$]");
                     if (chars.Count != 0)
                     {
-                        entityPM.StatusCode = "3";
+                        if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "3";
                     }
 
                 }
@@ -366,7 +372,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     string[] amount = entityPM.VatableInvoiceAmount.ToString().Split('.');
                     if (amount.Count() > 1 && amount[1] != "00")
                     {
-                        entityPM.StatusCode = "4";
+                        if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "4";
                     }
 
                 }
