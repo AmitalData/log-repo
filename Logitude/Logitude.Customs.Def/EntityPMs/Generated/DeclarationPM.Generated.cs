@@ -6010,6 +6010,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool shortProcedure ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ShortProcedure  
+	   {
+	    
+	     get
+		{
+		   return shortProcedure;
+		 }
+		 set
+		 {
+		   if(shortProcedure != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShortProcedure",OldValue=shortProcedure,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   shortProcedure=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

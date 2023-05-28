@@ -180,6 +180,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterCountry, 
 	         ExcludeManifest,
 	         ForwarderFiles,
+	         ShortProcedure,
 	      }
 
 
@@ -433,6 +434,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsAramex, 
 	         ExcludeManifest,
 	         ForwarderFiles,
+	         ShortProcedure,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1225,6 +1227,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 				entityPOCO.ExcludeManifest = entityPM.ExcludeManifest;
 			}
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
+            {
+				entityPOCO.ShortProcedure = entityPM.ShortProcedure;
+			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
@@ -2016,6 +2022,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 					entityPM.ExcludeManifest = entityPOCO.ExcludeManifest;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShortProcedure))
+            {
+					entityPM.ShortProcedure = entityPOCO.ShortProcedure;
+            }
+
+		
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwarderFiles))
             {
 					entityPM.ForwarderFiles = entityPOCO.ForwarderFiles;
@@ -2810,6 +2822,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderFiles))
             {
                 oldEntityPM.ForwarderFiles = entityPM.ForwarderFiles;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
+            {
+                oldEntityPM.ShortProcedure = entityPM.ShortProcedure;
             }
 			
 		}

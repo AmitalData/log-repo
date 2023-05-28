@@ -38,6 +38,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IndexOrder).HasColumnName("IndexOrder");
 
             this.Property(t => t.IsExport).HasColumnName("IsExport");
+
+            this.Property(t => t.ShortProcedure).HasColumnName("ShortProcedure");
         }
     }
 }

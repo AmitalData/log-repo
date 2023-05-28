@@ -458,6 +458,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool ExcludeManifest  { get; set; }
        [DataMember]
        public string ForwarderFiles  { get; set; }
+       [DataMember]
+       public bool ShortProcedure  { get; set; }
    }
 
 }

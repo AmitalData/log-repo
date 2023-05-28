@@ -57,4 +57,10 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShortProcedure"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

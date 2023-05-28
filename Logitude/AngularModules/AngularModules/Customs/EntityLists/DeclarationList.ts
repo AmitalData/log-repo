@@ -230,6 +230,7 @@ export class DeclarationList {
 	ExportCloseAmendStatusName: string;
 	ExcludeManifest: boolean;
 	ForwarderFiles: string;
+	ShortProcedure: boolean;
 	
 }
  

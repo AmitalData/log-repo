@@ -1512,6 +1512,9 @@ export class DeclarationPM {
     private forwarderFiles: string;
     public get ForwarderFiles() { return this.forwarderFiles; }
     public set ForwarderFiles(newValue: string) { if (this.forwarderFiles != newValue) { this.forwarderFiles = newValue; this.MarkAsDirty("ForwarderFiles"); } }
+    private shortProcedure: boolean;
+    public get ShortProcedure() { return this.shortProcedure; }
+    public set ShortProcedure(newValue: boolean) { if (this.shortProcedure != newValue) { this.shortProcedure = newValue; this.MarkAsDirty("ShortProcedure"); } }
        
 	 
 
