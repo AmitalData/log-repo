@@ -398,7 +398,7 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return TextCodesTranslator.TranslateText("GLAccounts.O.CustomerAccountNotFound", tenant);
             }
-            else if (acc.AccountTypeCode != "2")
+            else if (acc.AccountTypeCode != "2" && acc.AccountTypeCode != "3")
             {
                 return TextCodesTranslator.TranslateText("GLAccounts.O.WrongCustomerAccountType", tenant);
             }
