@@ -43,6 +43,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.Poco = new BusinessHoursHoliday();
             this.Poco.Id = this.entityPm.Id;
 
+            this.Poco.BusinessHourId= ((int)new DateTime(entityPM.Year, entityPM.Month, entityPM.Day).DayOfWeek).ToString();
             BusinessHoursHolidayMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
@@ -53,7 +54,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleBusinessHoursHolidays(entityPM.Id , entityPm.Tenant);
-
+            this.Poco.BusinessHourId = ((int)new DateTime(entityPM.Year, entityPM.Month, entityPM.Day).DayOfWeek).ToString();
             string entityName = "BusinessHoursHoliday" + entityPM.Id + entityPM.Tenant;
             string entityPmName = "BusinessHoursHolidayPM" + entityPM.Id + entityPM.Tenant;
            
