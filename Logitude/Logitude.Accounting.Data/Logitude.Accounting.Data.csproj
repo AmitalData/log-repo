@@ -125,6 +125,7 @@
     <Compile Include="EntityKeys\TaxReportLineTransmitStatusKeys.cs" />
     <Compile Include="EntityKeys\TaxReportLineTypeKeys.cs" />
     <Compile Include="EntityKeys\TaxReportStatusKeys.cs" />
+    <Compile Include="EntityKeys\TenantIdleStatusKeys.cs" />
     <Compile Include="EntityKeys\UserDefinedReportKeys.cs" />
     <Compile Include="EntityKeys\VatReportStatusKeys.cs" />
     <Compile Include="EntityListQueryServices\AccountingEntityJournalListQueryService.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="EntityListQueryServices\Generated\TaxReportLineTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TaxReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TaxReportStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TenantIdleStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UserDefinedReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\VatReportStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\GLAccountAgingDataListQueryService.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="EntityListQueryServices\TaxReportLineTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TaxReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TaxReportStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TenantIdleStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UserDefinedReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\VatReportStatusListQueryService.cs" />
     <Compile Include="EntityLists\Generated\AccountingEntityJournalList.Generated.cs" />
@@ -254,6 +257,7 @@
     <Compile Include="EntityLists\Generated\TaxReportLineTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TaxReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TaxReportStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TenantIdleStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UserDefinedReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VatReportStatusList.Generated.cs" />
     <Compile Include="EntityMapping\AccountingEntityJournalMap.cs" />
@@ -298,6 +302,7 @@
     <Compile Include="EntityMapping\TaxReportLineTypeMap.cs" />
     <Compile Include="EntityMapping\TaxReportMap.cs" />
     <Compile Include="EntityMapping\TaxReportStatusMap.cs" />
+    <Compile Include="EntityMapping\TenantIdleStatusMap.cs" />
     <Compile Include="EntityMapping\UserDefinedReportMap.cs" />
     <Compile Include="EntityMapping\VatReportStatusMap.cs" />
     <Compile Include="EntityPOCOs\AccountingEntityJournal.cs" />
@@ -342,6 +347,7 @@
     <Compile Include="EntityPOCOs\TaxReportLineTransmitStatus.cs" />
     <Compile Include="EntityPOCOs\TaxReportLineType.cs" />
     <Compile Include="EntityPOCOs\TaxReportStatus.cs" />
+    <Compile Include="EntityPOCOs\TenantIdleStatus.cs" />
     <Compile Include="EntityPOCOs\UserDefinedReport.cs" />
     <Compile Include="EntityPOCOs\VatReportStatus.cs" />
     <Compile Include="Enums\AccountingEntityCodes.cs" />
@@ -372,6 +378,7 @@
     <Compile Include="Repositories\Generated\InterestReportRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestReportsConnectInvoiceRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestReportStatuseRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\TenantIdleStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\UserDefinedReportRepository.Generated.cs" />
     <Compile Include="Repositories\GLAccountFollowUpDataRepository.cs" />
     <Compile Include="Repositories\GLAccountRecocileDataRepository.cs" />
@@ -383,6 +390,7 @@
     <Compile Include="Repositories\InterestReportRepository.cs" />
     <Compile Include="Repositories\InterestReportsConnectInvoiceRepository.cs" />
     <Compile Include="Repositories\InterestReportStatuseRepository.cs" />
+    <Compile Include="Repositories\TenantIdleStatusRepository.cs" />
     <Compile Include="Repositories\UserDefinedReportRepository.cs" />
     <Compile Include="Utilities\InterestTransactionGetParameters.cs" />
     <Compile Include="Utilities\LedgerTransactionHelper.cs" />

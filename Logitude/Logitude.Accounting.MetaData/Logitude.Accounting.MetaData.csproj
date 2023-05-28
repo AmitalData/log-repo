@@ -138,10 +138,10 @@
     <None Include="DBScripts\20230219_UpdateBankAccountTotalOpenPageLines.sxml" />
     <None Include="DBScripts\20230207_JournalsExternalCodeAndExternalSystemConstraint.sxml" />
     <None Include="DBScripts\20230131_UpdateSearchFieldsForBankDepositsWithNoLine.sxml" />
+    <None Include="DBScripts\2023030_FillTenantIdleStatusTable.sxml" />
     <None Include="DBScripts\2023030_JournalApprovalMLInsertGlobalRecords.sxml" />
-    <None Include="DBScripts\20230504_Queue_Peek_Jouranl_Approval.dxml" />
     <None Include="DBScripts\2023030_CreateIndexInLedgerTransactions_AccountIdMarkTenant.sxml" />
-    <None Include="DBScripts\20230504_Queue_Peek_Jouranl_Approval_Add_Parameter.dxml" />
+    <None Include="DBScripts\20230524_Queue_Peek_Jouranl_Approval.dxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
@@ -237,6 +237,7 @@
     <None Include="DBTables\TaxReportLineType.dxml" />
     <None Include="DBTables\TaxReportStatus.dxml" />
     <None Include="DBTables\TaxWithholdingAssessOffice.dxml" />
+    <None Include="DBTables\TenantIdleStatus.dxml" />
     <None Include="DBTables\TestEntity.dxml" />
     <None Include="DBTables\UserDefinedReport.dxml" />
     <None Include="DBTables\VatReportStatus.dxml" />
@@ -318,6 +319,7 @@
     <None Include="EntityFiles\TaxReportLineStatus.lxml" />
     <None Include="EntityFiles\TaxReportLineTransmitStatus.lxml" />
     <None Include="EntityFiles\TaxReportLineType.lxml" />
+    <None Include="EntityFiles\TenantIdleStatus.lxml" />
     <None Include="EntityFiles\UserDefinedReport.lxml" />
     <None Include="EntityFiles\VatReportStatus.lxml" />
     <None Include="EntityFiles\TaxReportStatus.lxml" />

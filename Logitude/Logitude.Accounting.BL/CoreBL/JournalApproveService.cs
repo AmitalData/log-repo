@@ -1140,6 +1140,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 //throw;
             }
             return isSubmitApprove;
+
+        }
+
+        private static void SetTenantIdle(int tenant)
+        {
+            TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
+            TenantIdleStatus tenantObj = tenantRepository.GetSingle(tenant);
+            tenantObj.Idle = false;
+            tenantRepository.Update(tenantObj);
+            tenantRepository.SubmitChanges();
+
         }
 
         private static void UpdateGLAccountAgingData(string communicationLogId, DbQueueService queueservice, int tenant) {
@@ -1587,7 +1598,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     catch (Exception)
                     {
-
+                        SetTenantIdle(response.Tenant);
                         throw;
                     }
                 }
