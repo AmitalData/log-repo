@@ -550,8 +550,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 _MyDeclarationPM.IsSubmitDeclaration = true;
                 if (_MyDeclarationPM.Direction == "E")
                 {
-                    AmitalInsertToQueueService.insertToQueue(_MyDeclarationPM);
-                    if(!string.IsNullOrEmpty(customResponse.Response.Declaration.DMExtensions.ReferenceDateTime))
+
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                    {
+
+                        Tenant = _MyDeclarationPM.Tenant,
+                        objectTableName = "Customs.Declaration",
+                        EventCode = null,
+                        notes = "",
+                        CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                        EntityId = _MyDeclarationPM.Id,
+                        UserId = _MyDeclarationPM.CreatedByUserId,
+
+                        CommunicationSubject = "עדכון תיק מכס",
+
+                    };
+                    Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE logistictFile = AmitalInsertToQueueEzer.setLogistictFile(_MyDeclarationPM);
+                    var amitalInsertToQueueService = new AmitalInsertToQueueService<Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE>(logistictFile);
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "UpdateExportCustomsFile");
+
+                    if (!string.IsNullOrEmpty(customResponse.Response.Declaration.DMExtensions.ReferenceDateTime))
                         _MyDeclarationPM.TaxationDateTime = Convert.ToDateTime(customResponse.Response.Declaration.DMExtensions.ReferenceDateTime);
                 }
                     
@@ -567,8 +585,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (requestParams.ResponseName == "8237" && customResponse.Response.Status[0].NameCode.Value == "36")
             {
 
-                if(_MyDeclarationPM.Direction=="E")
-                    AmitalInsertToQueueService.insertToQueue(_MyDeclarationPM);
+                if (_MyDeclarationPM.Direction == "E")
+                {
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                    {
+
+                        Tenant = _MyDeclarationPM.Tenant,
+                        objectTableName = "Customs.Declaration",
+                        EventCode = null,
+                        notes = "",
+                        CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                        EntityId = _MyDeclarationPM.Id,
+                        UserId = _MyDeclarationPM.CreatedByUserId,
+
+                        CommunicationSubject = "עדכון תיק מכס",
+
+                    };
+                    Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE logistictFile = AmitalInsertToQueueEzer.setLogistictFile(_MyDeclarationPM);
+                    var amitalInsertToQueueService = new AmitalInsertToQueueService<Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE>(logistictFile);
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "UpdateExportCustomsFile");
+
+                }
                 _MyDeclarationPM.IsExportClosed = true;
                 _MyDeclarationPM.IsClose = true;
             }

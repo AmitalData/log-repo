@@ -1,6 +1,7 @@
 ﻿using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Server.Tools.Helpers;
@@ -37,99 +38,103 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
         public void OpenUnifreighTask(string xmlReq)
         {
             CustomsSettingQueryService settingService = new CustomsSettingQueryService(_Tenant);
-            CustomsSettingPM setting = settingService.GetSettingByTenantN(_Tenant);
+            bool isConnectedToUniFreight  = settingService.GetSettingByTenantN(_Tenant).IsConnectedToUniFreight;
 
-            if (setting.IsConnectedToUniFreight)
-            {
+          
+          
                 var sw = Stopwatch.StartNew();
-                AmitalContext MyContext = AmitalContext.GetContext(_Tenant);
 
                 TransactionScope scope = null;
                 if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
                 {
                     scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
                 }
-                try
+            try
+            {
+               
+                var requestData = "";
+
+                //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_Tenant);
+                string unifreightUser = null;
+                if (RequestSheetContext.Current != null)
                 {
+                    var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                    if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
+                    {
+                        UserRepository userRep = new UserRepository(_Tenant);
+                        User user = userRep.GetSingleUser(loggingUserIdFromRS, _Tenant, true);
+                        if (user != null)
+                        {
+                            if (!String.IsNullOrWhiteSpace(user.Code))
+                            {
+                                unifreightUser = user.Code;
+                            }
+                        }
+                    }
+                }
+                if (String.IsNullOrWhiteSpace(unifreightUser))
+                {
+                    unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_Tenant);
+                }
+
+                var myUpdateList = new List<UpdateItemsTable>();
+
+                _ListGITITEMPM.ForEach(pm =>
+                {
+                    var myUpdateItemsTable = new UpdateItemsTable();
+                    var myItemData = new ItemData();
+                    myItemData.itemNo = pm.ITEMNO;
+                    myItemData.customerId = pm.PARTNERID;
+                    myItemData.supplierId = pm.SAPAKID;
+                    myItemData.pratCode = pm.PRATID;
+                    myItemData.itemName = pm.NAMEENG;
+                    myItemData.originCountryCode = pm.ORIGINCOUNTRY;
+                    myItemData.unitId = pm.UNITID;
+                    myUpdateItemsTable.ItemsDataList = new List<ItemData>() { myItemData };
+                });
+
+                //myUpdateList.ItemsDataList =  new List<ItemData> { myItemData };
+                var xml = XmlGenericUtil<List<UpdateItemsTable>>.SerializeObject(myUpdateList, true);
+                requestData = xml;
+                var doc = new XDocument(
+   new XElement("UpdateItemsTable",
+   from c in _ListGITITEMPM
+   select new XElement("ItemsDataList",
+   new XElement("ItemData",
+            new XElement("customerId", c.PARTNERID),
+            new XElement("supplierId", c.SAPAKID),
+        new XElement("itemNo", c.ITEMNO),
+        new XElement("itemName", c.NAMEENG),
+        new XElement("pratCode", c.PRATID),
+        new XElement("originCountryCode", c.ORIGINCOUNTRY),
+        new XElement("unitId", c.UNITID)
+   )
+   )
+));
+                requestData = doc.ToString(SaveOptions.None);
+
+                var myYCULTASKPM = new YCULTASKPM()
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    STATUS = "W",
+                    REQUESTDATA = requestData,
+                    ENTNAME = "GITITEM",
+                    PRIMARYNUM = _ListGITITEMPM.First().COUNTER.ToString(),//EITAN SEE ITS ZERO
+                    PRIORITY = YCULTASKPM.calcPriority("LT2UT"),
+                    TYPE = "LT2UT",
+                    USRCODE = unifreightUser,
+                    ARCHIVE = "F",
+                    //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
+                };
+                //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
+                if (isConnectedToUniFreight)
+                {
+                    AmitalContext MyContext = AmitalContext.GetContext(_Tenant);
+
                     var myGGGQUpdateService = new GGGQUpdateService(MyContext);
                     myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                     var myYCULTASKUpdateService = new YCULTASKUpdateService(MyContext);
                     myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var requestData = "";
-
-                    //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_Tenant);
-                    string unifreightUser = null;
-                    if (RequestSheetContext.Current != null)
-                    {
-                        var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
-                        if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
-                        {
-                            UserRepository userRep = new UserRepository(_Tenant);
-                            User user = userRep.GetSingleUser(loggingUserIdFromRS, _Tenant, true);
-                            if (user != null)
-                            {
-                                if (!String.IsNullOrWhiteSpace(user.Code))
-                                {
-                                    unifreightUser = user.Code;
-                                }
-                            }
-                        }
-                    }
-                    if (String.IsNullOrWhiteSpace(unifreightUser))
-                    {
-                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_Tenant);
-                    }
-
-                    var myUpdateList = new List<UpdateItemsTable>();
-
-                    _ListGITITEMPM.ForEach(pm =>
-                    {
-                        var myUpdateItemsTable = new UpdateItemsTable();
-                        var myItemData = new ItemData();
-                        myItemData.itemNo = pm.ITEMNO;
-                        myItemData.customerId = pm.PARTNERID;
-                        myItemData.supplierId = pm.SAPAKID;
-                        myItemData.pratCode = pm.PRATID;
-                        myItemData.itemName = pm.NAMEENG;
-                        myItemData.originCountryCode = pm.ORIGINCOUNTRY;
-                        myItemData.unitId = pm.UNITID;
-                        myUpdateItemsTable.ItemsDataList = new List<ItemData>() { myItemData };
-                    });
-
-                    //myUpdateList.ItemsDataList =  new List<ItemData> { myItemData };
-                    var xml = XmlGenericUtil<List<UpdateItemsTable>>.SerializeObject(myUpdateList, true);
-                    requestData = xml;
-                    var doc = new XDocument(
-       new XElement("UpdateItemsTable",
-       from c in _ListGITITEMPM
-       select new XElement("ItemsDataList",
-       new XElement("ItemData",
-                new XElement("customerId", c.PARTNERID),
-                new XElement("supplierId", c.SAPAKID),
-            new XElement("itemNo", c.ITEMNO),
-            new XElement("itemName", c.NAMEENG),
-            new XElement("pratCode", c.PRATID),
-            new XElement("originCountryCode", c.ORIGINCOUNTRY),
-            new XElement("unitId", c.UNITID)
-       )
-       )
-    ));
-                    requestData = doc.ToString(SaveOptions.None);
-
-                    var myYCULTASKPM = new YCULTASKPM()
-                    {
-                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                        STATUS = "W",
-                        REQUESTDATA = requestData,
-                        ENTNAME = "GITITEM",
-                        PRIMARYNUM = _ListGITITEMPM.First().COUNTER.ToString(),//EITAN SEE ITS ZERO
-                        PRIORITY = YCULTASKPM.calcPriority("LT2UT"),
-                        TYPE = "LT2UT",
-                        USRCODE = unifreightUser,
-                        ARCHIVE = "F",
-                        //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
-                    };
-                    //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
                     var myGGGQPM = new GGGQPM()
@@ -150,21 +155,41 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
                     myGGGQUpdateService.Update(myGGGQPM, true);
-                    if (scope != null)
-                    {
-                        scope.Complete();
-                    }
                 }
-                finally
+                else
                 {
-                    if (scope != null)
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                     {
-                        scope.Dispose();
-                    }
+
+                        Tenant =_Tenant,
+                        objectTableName = "Customs.Declaration",
+                        EventCode = null,
+                        notes = "missing id",
+                        CommunicationLoggingEntityReference = null,
+                        EntityId = null,
+                        UserId = unifreightUser,
+
+                        CommunicationSubject = "IIG_TASK",
+
+                    };
+                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
                 }
+                if (scope != null)
+                {
+                    scope.Complete();
+                }
+            }
+            finally
+            {
+                if (scope != null)
+                {
+                    scope.Dispose();
+                }
+            }
                 LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
             }
-        }
+      
 
 
     }

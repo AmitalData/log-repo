@@ -802,6 +802,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void OpenUnifreighTask()
         {
+            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant).IsConnectedToUniFreight;
+            AmitalContext _AmitalContext = null;
+
             TransactionScope scope = null;
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
@@ -809,42 +812,41 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             try
             {
-                using (_AmitalContext = AmitalContext.GetContext(_MyDeclarationPM.Tenant))
+                if (isConnectedToUniFreight)
+                    _AmitalContext = AmitalContext.GetContext(_MyDeclarationPM.Tenant);
+              
+                var requestData = "";
+                //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_MyDeclarationPM.Tenant);
+                string unifreightUser = null;
+                if (RequestSheetContext.Current != null)
                 {
-                    var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
-                    var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
-                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                    var requestData = "";
-                    //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_MyDeclarationPM.Tenant);
-                    string unifreightUser = null;
-                    if (RequestSheetContext.Current != null)
+                    var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                    if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
                     {
-                        var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
-                        if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
+                        UserRepository userRep = new UserRepository(_MyDeclarationPM.Tenant);
+                        User user = userRep.GetSingleUser(loggingUserIdFromRS, _MyDeclarationPM.Tenant, true);
+                        if (user != null)
                         {
-                            UserRepository userRep = new UserRepository(_MyDeclarationPM.Tenant);
-                            User user = userRep.GetSingleUser(loggingUserIdFromRS, _MyDeclarationPM.Tenant, true);
-                            if (user != null)
+                            if (!String.IsNullOrWhiteSpace(user.Code))
                             {
-                                if (!String.IsNullOrWhiteSpace(user.Code))
-                                {
-                                    unifreightUser = user.Code;
-                                }
+                                unifreightUser = user.Code;
                             }
                         }
                     }
-                    if (String.IsNullOrWhiteSpace(unifreightUser))
-                    {
-                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_MyDeclarationPM.Tenant);
-                    }
-                    //long customFile;
-                    if (string.IsNullOrWhiteSpace(_MyDeclarationPM.CustomFileNo)
-                        //|| !long.TryParse(_MyDeclarationPM.CustomFileNo, out customFile)
-                        )
-                    {
-                        return;
-                    }
+                }
+                if (String.IsNullOrWhiteSpace(unifreightUser))
+                {
+                    unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_MyDeclarationPM.Tenant);
+                }
+                //long customFile;
+                if (string.IsNullOrWhiteSpace(_MyDeclarationPM.CustomFileNo)
+                    //|| !long.TryParse(_MyDeclarationPM.CustomFileNo, out customFile)
+                    )
+                {
+                    return;
+                }
+                if (isConnectedToUniFreight) {
+                    var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                     CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", _MyDeclarationPM.CustomFileNo, false);
                     if (myCCUQUELOCK == null)
                     {
@@ -854,19 +856,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             ENTNAME = "CFIFILEM",
                             FILENO = _MyDeclarationPM.CustomFileNo,
                         };
+                        var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
+
                         myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
-
-                    if (_MyDeclarationPM.CurrentContextTag is CargoQueryContext)
+                }
+                if (_MyDeclarationPM.CurrentContextTag is CargoQueryContext)
+                {
+                    var myCargoQueryContext = _MyDeclarationPM.CurrentContextTag as CargoQueryContext;
+                    var myCFIPACKS = myCargoQueryContext.ResponseCFIPACKS as CFIPACKS;
+                    string myCustomFileNo = "";
+                    if (myCFIPACKS != null)
                     {
-                        var myCargoQueryContext = _MyDeclarationPM.CurrentContextTag as CargoQueryContext;
-                        var myCFIPACKS = myCargoQueryContext.ResponseCFIPACKS as CFIPACKS;
-                        string myCustomFileNo = "";
-                        if (myCFIPACKS != null)
-                        {
-                            myCustomFileNo = myCFIPACKS.CFIPACKS_DATA[0].FILE_NO;
-                            var xmlCFIPACKS = XmlGenericUtil<CFIPACKS>.SerializeObject(myCFIPACKS, true);
+                        myCustomFileNo = myCFIPACKS.CFIPACKS_DATA[0].FILE_NO;
+                        var xmlCFIPACKS = XmlGenericUtil<CFIPACKS>.SerializeObject(myCFIPACKS, true);
+                        if (isConnectedToUniFreight) {
+                            var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
+
                             CCUQUELOCKPM myCCUQUELOCK_Packs = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myCFIPACKS.CFIPACKS_DATA[0].FILE_NO, false);
                             if (myCCUQUELOCK_Packs == null)
                             {
@@ -876,40 +883,67 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     ENTNAME = "CFIFILEM",
                                     FILENO = myCFIPACKS.CFIPACKS_DATA[0].FILE_NO,
                                 };
+                                var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
+
                                 myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                                 myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                             }
-
-                            transmission mytransmission = GetTransmission(myCFIPACKS, "AMITAL", "Customs packs from logitude");
-                            var xmltransmission = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
-                            requestData = xmltransmission;
                         }
-                        if (myCargoQueryContext.RequestAutoSend)
-                        {
-                            requestData = requestData.Replace("</transmission>", string.Concat("<CARGOQUERYMODE>AUTOSEND</CARGOQUERYMODE>", "</transmission>"));
-                        }
-                        if (string.IsNullOrWhiteSpace(myCustomFileNo)) myCustomFileNo = _MyDeclarationPM.CustomFileNo;
 
-                        if (!string.IsNullOrWhiteSpace(requestData))
+                        transmission mytransmission = GetTransmission(myCFIPACKS, "AMITAL", "Customs packs from logitude");
+                        var xmltransmission = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
+                        requestData = xmltransmission;
+                    }
+                    if (myCargoQueryContext.RequestAutoSend)
+                    {
+                        requestData = requestData.Replace("</transmission>", string.Concat("<CARGOQUERYMODE>AUTOSEND</CARGOQUERYMODE>", "</transmission>"));
+                    }
+                    if (string.IsNullOrWhiteSpace(myCustomFileNo)) myCustomFileNo = _MyDeclarationPM.CustomFileNo;
+
+                    if (!string.IsNullOrWhiteSpace(requestData))
+                    {
+                        var myYCULTASKPM_Packs = new YCULTASKPM()
                         {
-                            var myYCULTASKPM_Packs = new YCULTASKPM()
-                            {
-                                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                                STATUS = "W",
-                                REQUESTDATA = requestData,
-                                ENTNAME = "CFIFILEM",
-                                PRIMARYNUM = myCustomFileNo,
-                                PRIORITY = YCULTASKPM.calcPriority("L2U"),
-                                //PRIORITY = 1,
-                                TYPE = "L2U",
-                                USRCODE = unifreightUser,
-                                ARCHIVE = "F",
-                                //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
-                            };
-                            //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
+                            ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                            STATUS = "W",
+                            REQUESTDATA = requestData,
+                            ENTNAME = "CFIFILEM",
+                            PRIMARYNUM = myCustomFileNo,
+                            PRIORITY = YCULTASKPM.calcPriority("L2U"),
+                            //PRIORITY = 1,
+                            TYPE = "L2U",
+                            USRCODE = unifreightUser,
+                            ARCHIVE = "F",
+                            //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
+                        };
+                        //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
+                        if (isConnectedToUniFreight) {
+                            var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
                             myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                             myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
+                        }
+                        else
+                        {
+                            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                            {
 
+                                Tenant = _MyDeclarationPM.Tenant,
+                                objectTableName = "Customs.Declaration",
+                                EventCode = null,
+                                notes = "",
+                                CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                                EntityId = _MyDeclarationPM.Id,
+                                UserId = _MyDeclarationPM.CreatedByUserId,
+
+                                CommunicationSubject = "IIG_TASK",
+
+                            };
+                            var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM_Packs);
+                            amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
+                        }
+
+                        if (isConnectedToUniFreight)
+                        {
                             var myGGGQPM_Packs = new GGGQPM()
                             {
                                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -926,12 +960,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 DONEOPERATION = "D",
                                 //GSTRING1 = myYCULTASKPM.TASKID,
                             };
+                            var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
                             myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                             myGGGQUpdateService.Update(myGGGQPM_Packs, true);
                         }
                     }
                 }
             }
+
             finally
             {
                 if (scope != null)
