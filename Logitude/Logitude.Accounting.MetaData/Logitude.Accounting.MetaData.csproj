@@ -141,7 +141,6 @@
     <None Include="DBScripts\2023030_FillTenantIdleStatusTable.sxml" />
     <None Include="DBScripts\2023030_JournalApprovalMLInsertGlobalRecords.sxml" />
     <None Include="DBScripts\2023030_CreateIndexInLedgerTransactions_AccountIdMarkTenant.sxml" />
-    <None Include="DBScripts\20230524_Queue_Peek_Jouranl_Approval.dxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
