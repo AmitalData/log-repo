@@ -58,11 +58,8 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
-                {
-                    ExecuteQueue(response);
-                    queueService.Complete();
-                }
+                ExecuteQueue(response);
+                queueService.Complete();
             }
             catch (Exception exception)
             {
