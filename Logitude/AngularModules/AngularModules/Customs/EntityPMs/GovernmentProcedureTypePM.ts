@@ -64,6 +64,11 @@ export class GovernmentProcedureTypePM {
     public set IsExport(newValue: boolean) { if (this.isExport != newValue) { this.isExport = newValue; this.MarkAsDirty("IsExport"); } }
        
 	 
+    private shortProcedure: boolean;
+    public get ShortProcedure() { return this.shortProcedure; }
+    public set ShortProcedure(newValue: boolean) { if (this.shortProcedure != newValue) { this.shortProcedure = newValue; this.MarkAsDirty("ShortProcedure"); } }
+       
+	 
 
     public OldEntityPM: GovernmentProcedureTypePM;
 		

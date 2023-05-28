@@ -29,7 +29,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Inactive, 
 	         IsImport, 
 	         IndexOrder, 
-	         IsExport,
+	         IsExport, 
+	         ShortProcedure,
 	      }
 
 
@@ -43,7 +44,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Inactive, 
 	         IsImport, 
 	         IndexOrder, 
-	         IsExport,
+	         IsExport, 
+	         ShortProcedure,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -85,6 +87,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExport))
             {
 				entityPOCO.IsExport = entityPM.IsExport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
+            {
+				entityPOCO.ShortProcedure = entityPM.ShortProcedure;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -133,6 +140,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsExport = entityPOCO.IsExport;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShortProcedure))
+            {
+					entityPM.ShortProcedure = entityPOCO.ShortProcedure;
+            }
+
 		}
 
 		public void PMToOldPM(GovernmentProcedureTypePM entityPM, GovernmentProcedureTypePM oldEntityPM)
@@ -172,6 +184,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExport))
             {
                 oldEntityPM.IsExport = entityPM.IsExport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
+            {
+                oldEntityPM.ShortProcedure = entityPM.ShortProcedure;
             }
 			
 		}

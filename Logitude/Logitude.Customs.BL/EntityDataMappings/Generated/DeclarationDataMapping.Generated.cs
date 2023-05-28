@@ -177,7 +177,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ClosingXml, 
 	         ExportCloseAmendRequestNumber, 
 	         ExportCloseAmendmentStatus, 
-	         CasualImporterCountry,
+	         CasualImporterCountry, 
+	         ShortProcedure,
 	      }
 
 
@@ -427,7 +428,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportDecWithoutRelease, 
 	         CasualImporterCountry, 
 	         ExportCloseAmendStatusName, 
-	         IsAramex,
+	         IsAramex, 
+	         ShortProcedure,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1209,6 +1211,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualImporterCountry))
             {
 				entityPOCO.CasualImporterCountry = entityPM.CasualImporterCountry;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
+            {
+				entityPOCO.ShortProcedure = entityPM.ShortProcedure;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1997,6 +2004,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CasualImporterCountry = entityPOCO.CasualImporterCountry;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShortProcedure))
+            {
+					entityPM.ShortProcedure = entityPOCO.ShortProcedure;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2776,6 +2788,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualImporterCountry))
             {
                 oldEntityPM.CasualImporterCountry = entityPM.CasualImporterCountry;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
+            {
+                oldEntityPM.ShortProcedure = entityPM.ShortProcedure;
             }
 			
 		}

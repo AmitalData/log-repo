@@ -1499,6 +1499,11 @@ export class DeclarationPM {
     public set IsAramex(newValue: boolean) { if (this.isAramex != newValue) { this.isAramex = newValue; this.MarkAsDirty("IsAramex"); } }
        
 	 
+    private shortProcedure: boolean;
+    public get ShortProcedure() { return this.shortProcedure; }
+    public set ShortProcedure(newValue: boolean) { if (this.shortProcedure != newValue) { this.shortProcedure = newValue; this.MarkAsDirty("ShortProcedure"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
