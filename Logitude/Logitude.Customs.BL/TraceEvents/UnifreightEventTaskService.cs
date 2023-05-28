@@ -145,7 +145,7 @@ namespace Logitude.Customs.BL.TraceEvents
                     EventCode = null,
                     notes = "missing id",
                     CommunicationLoggingEntityReference = null,
-                    EntityId = null,
+                    EntityId = "missing id , UnifreightEventTaskService",
                     UserId = unfreightUserId,
 
                     CommunicationSubject = "IIG_TASK",
