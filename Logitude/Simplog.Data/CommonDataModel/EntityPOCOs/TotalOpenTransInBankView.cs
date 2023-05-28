@@ -13,7 +13,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [Key]
         public string GLAccountId { get; set; }
         public int Tenant { get; set; }
-        public int LedgerTransactionsCount { get; set; }
-        public int ReconcileExternalPageLinesCount { get; set; }
+        public int TotalLedgerTransactionsCount { get; set; }
+        public int TotalReconcileExternalPageLinesCount { get; set; }
     }
 }

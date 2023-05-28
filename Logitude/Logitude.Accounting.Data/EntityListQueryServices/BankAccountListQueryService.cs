@@ -27,7 +27,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<BankAccountList> query = (from a in iQueryable.Include("GLAccount").Include("DeferredGLAccount").Include("TransferGLAcccount")
                                                  .Include("BankCode")
                                                  .Include("Currency")
-                                                 //.DefaultIfEmpty()
+                                                 join qBTotalOpenTransInBankViews in context.TotalOpenTransInBankViews
+                                                 on
+                                                 new { BankID = a.Id, Tenant = a.Tenant } equals
+                                                 new { BankID = qBTotalOpenTransInBankViews.Id, Tenant = qBTotalOpenTransInBankViews.Tenant }
+                                               //  a.Id equals qBTotalOpenTransInBankViews.Id
+                                                  into qBTotalOpenTransInBankViewsJoin
+                                                 from MyJoinpenTransInBankViews in qBTotalOpenTransInBankViewsJoin
+                                                     //.DefaultIfEmpty()
+                                                     //.DefaultIfEmpty()
                                                  select new BankAccountList()
                                                  {
 
@@ -84,8 +92,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      CurrencyCode = a.Currency == null ? null : a.Currency.Code,
                                                      CurrencySign = a.Currency == null ? null : a.Currency.Sign,
                                                      CurrencyId = a.CurrencyId,
-                                                     TotalOpenExternalTransactions=a.TotalOpenExternalTransactions,
-                                                     TotalOpenPagesLines=a.TotalOpenPagesLines,
+                                                     TotalOpenExternalTransactions= MyJoinpenTransInBankViews.TotalLedgerTransactionsCount.ToString(),
+                                                     TotalOpenPagesLines= MyJoinpenTransInBankViews.TotalReconcileExternalPageLinesCount.ToString(),
 
                                                  });
             return query;
