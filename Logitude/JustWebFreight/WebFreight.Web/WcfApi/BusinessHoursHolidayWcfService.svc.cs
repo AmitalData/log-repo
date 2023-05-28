@@ -63,12 +63,7 @@ namespace WebFreight.Web.WcfApi
 
                     BusinessHoursHolidayRepository businessHoursHolidayRepository = new BusinessHoursHolidayRepository(objectContext);
                     BusinessHoursHolidayService service = new BusinessHoursHolidayService(objectContext, entityPM.Tenant);
-                    if (string.IsNullOrEmpty(entityPM.BusinessHourId))
-                    {
-                        response.HasError = true;
-                        response.ErrorMessage = "BusinessHourId field is required";
-                        return response;
-                    }
+                
                   
                     BusinessHoursHoliday BusinessHoursHoliday = businessHoursHolidayRepository.GetSingleBusinessHoursHolidayByDate(entityPM.Day,entityPM.Month,entityPM.Year,entityPM.Tenant);
                     if (BusinessHoursHoliday == null)
