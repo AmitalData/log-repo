@@ -63,11 +63,16 @@ namespace WebFreight.Web.WcfApi
 
                     BusinessHourRepository businessHourRepository = new BusinessHourRepository(objectContext);
                     BusinessHourService service = new BusinessHourService(objectContext, entityPM.Tenant);
-                  
-                   
-                   service.Create(entityPM);
-
                     BusinessHour businessHour = businessHourRepository.GetBusinessHourByCode(entityPM.Code, entityPM.Tenant);
+                    if(businessHour==null)
+                        service.Create(entityPM);
+                    else
+                    {
+                        entityPM.Id = businessHour.Id;
+                        service.Update(entityPM);
+                    }
+                  
+                     businessHour = businessHourRepository.GetBusinessHourByCode(entityPM.Code, entityPM.Tenant);
 
                     response.Result = businessHour?.Id;
                     scope.Complete();
