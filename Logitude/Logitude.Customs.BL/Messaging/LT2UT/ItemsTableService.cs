@@ -161,12 +161,12 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                     var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                     {
 
-                        Tenant =_Tenant,
+                        Tenant = _Tenant,
                         objectTableName = "Customs.Declaration",
                         EventCode = null,
                         notes = "missing id",
                         CommunicationLoggingEntityReference = null,
-                        EntityId = null,
+                        EntityId = "missing id ,ItemsTableService",
                         UserId = unifreightUser,
 
                         CommunicationSubject = "IIG_TASK",
