@@ -13843,6 +13843,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ShowMoneyOrder&quot;"
     ListPropertyPath="&quot;ShowMoneyOrder&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
