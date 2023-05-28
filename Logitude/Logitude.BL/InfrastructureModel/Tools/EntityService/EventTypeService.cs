@@ -17,6 +17,7 @@ using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -63,6 +64,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
             AddEventRemarks(theEntityPm);
+            AddQueueMessages();
         }
 
         public void Update(EventTypePM theEntityPm)
@@ -81,6 +83,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             EventTypeMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            AddQueueMessages();
         }
         public void AddEventRemarks(EventTypePM theEntityPm)
         {
@@ -119,7 +122,32 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         }
 
+        private void AddQueueMessages()
+        {
+            if (entityPM.IsFromWorkerRole) return;
+            AddImporterQueueMessage();
+        }
+        private void AddImporterQueueMessage()
+        {
+            if (tenant != 0) return;
+            if (!IsCloudEnvironment() && !IsTestEnvironment()) return;
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ImporterEventTypesQueue", 0);
+            Dictionary<string, string> importerQueueMessage = new Dictionary<string, string>() {
+                { "EventTypeId", entityPM.Id },
+                { "Tenant", tenant.ToString()}
+            };
+            queueservice.Send(importerQueueMessage, tenant);
+        }
+        private bool IsCloudEnvironment()
+        {
+            return LogitudeSettings.WorkEnvironment?.ToLower() == "cloud";
+        }
 
+        private bool IsTestEnvironment()
+        {
+            return LogitudeSettings.DeploymentStage?.ToLower() == "test2";
+        }
 
     }
 }
