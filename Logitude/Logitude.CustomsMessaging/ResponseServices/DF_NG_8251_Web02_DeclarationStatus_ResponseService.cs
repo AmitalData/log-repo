@@ -48,18 +48,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DF_NG_8251_Web02_DeclarationStatus_Response customResponse,
             DeclarationStatusRequestParams requestParams)
         {
-
-
-
-
             DateTime _DateTime;
             this.MyResponseData = new DeclarationStatusResponseData();
 
-            IDisposable disposableToken = null;
-            try
-            {
-                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(requestParams.DeclarationNumber, requestParams.Tenant);
-                disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber");
+            string key = ProcessLockTableUtil.Instance.GetKey4Declaration(requestParams.DeclarationNumber, requestParams.Tenant);
+            using (IDisposable disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber"))
+            { 
 
                 if (!String.IsNullOrWhiteSpace(requestParams.TesterSendOption))
                 {
@@ -769,19 +763,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
-            }
-            catch (ProcessLockException processLockException)
-            {
-                LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
-                throw;
-            }
-            finally
-            {
-                if (disposableToken != null)
-                {
-                    disposableToken.Dispose();
-                }
-            }
+            }            
         }
 
         //if (customResponse.)
