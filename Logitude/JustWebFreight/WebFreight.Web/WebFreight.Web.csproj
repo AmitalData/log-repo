@@ -5132,6 +5132,7 @@
     <Content Include="WcfApi\AddressWcfService.svc" />
     <Content Include="WcfApi\AirlineWcfService.svc" />
     <Content Include="WcfApi\AutoSignUpWcfService.svc" />
+    <Content Include="WcfApi\BusinessHourWcfService.svc" />
     <Content Include="WcfApi\CardContactWcfService.svc" />
     <Content Include="WcfApi\ChargeTypeWcfService.svc" />
     <Content Include="WcfApi\BusinessHoursHolidayWcfService.svc" />
@@ -6688,6 +6689,9 @@
     <Compile Include="WcfApi\AutoSignUpWcfService.svc.cs">
       <DependentUpon>AutoSignUpWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\BusinessHourWcfService.svc.cs">
+      <DependentUpon>BusinessHourWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\CardContactWcfService.svc.cs">
       <DependentUpon>CardContactWcfService.svc</DependentUpon>
     </Compile>
@@ -6731,6 +6735,7 @@
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
     <Compile Include="WcfApi\ExternalTasksQueueWcfService.ExportSignQ.cs" />
+    <Compile Include="WcfApi\IBusinessHourWcfService.cs" />
     <Compile Include="WcfApi\IBusinessHoursHolidayWcfService.cs" />
     <Compile Include="WcfApi\IDefaultValueWcfService.cs" />
     <Compile Include="WcfApi\IDefaultTypeWcfService.cs" />

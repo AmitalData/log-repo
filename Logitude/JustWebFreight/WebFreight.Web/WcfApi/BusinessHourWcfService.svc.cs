@@ -33,10 +33,10 @@ namespace WebFreight.Web.WcfApi
 {
 
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class BusinessHoursHolidayWcfService : IBusinessHoursHolidayWcfService
+    public class BusinessHourWcfService : IBusinessHourWcfService
     {
 
-        public Response Upsert(BusinessHoursHolidayPM entityPM, bool batch)
+        public Response Upsert(BusinessHourPM entityPM, bool batch)
         {
             if (CacheManager.CacheWrapper == null)
             {
@@ -47,11 +47,11 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                SecurityUtility.CheckContactFeature("BusinessHoursHoliday", "UPDATE", entityPM.Tenant);//UPDATE//READ
+                SecurityUtility.CheckContactFeature("BusinessHour", "UPDATE", entityPM.Tenant);//UPDATE//READ
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
-                    ClassLevelValidator validationClass = new ClassLevelValidator("BusinessHoursHoliday", entityPM.Tenant) { IsHybrid = true };
+                    ClassLevelValidator validationClass = new ClassLevelValidator("BusinessHour", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
                         response.HasError = true;
@@ -61,29 +61,15 @@ namespace WebFreight.Web.WcfApi
 
                     IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
 
-                    BusinessHoursHolidayRepository businessHoursHolidayRepository = new BusinessHoursHolidayRepository(objectContext);
-                    BusinessHoursHolidayService service = new BusinessHoursHolidayService(objectContext, entityPM.Tenant);
-                    if (string.IsNullOrEmpty(entityPM.BusinessHourId))
-                    {
-                        response.HasError = true;
-                        response.ErrorMessage = "BusinessHourId field is required";
-                        return response;
-                    }
+                    BusinessHourRepository businessHourRepository = new BusinessHourRepository(objectContext);
+                    BusinessHourService service = new BusinessHourService(objectContext, entityPM.Tenant);
                   
-                    BusinessHoursHoliday BusinessHoursHoliday = businessHoursHolidayRepository.GetSingleBusinessHoursHolidayByDate(entityPM.Day,entityPM.Month,entityPM.Year,entityPM.Tenant);
-                    if (BusinessHoursHoliday == null)
-                    {
-                        service.Create(entityPM);
-                    }
-                    else
-                    {
-                        entityPM.Id = BusinessHoursHoliday.Id;
-                        service.Update(entityPM);
-                    }
+                   
+                   service.Create(entityPM);
 
-                    BusinessHoursHoliday = businessHoursHolidayRepository.GetSingleBusinessHoursHolidayByDate(entityPM.Day, entityPM.Month, entityPM.Year, entityPM.Tenant);
+                    BusinessHour businessHour = businessHourRepository.GetBusinessHourByCode(entityPM.Code, entityPM.Tenant);
 
-                    response.Result = BusinessHoursHoliday?.Id;
+                    response.Result = businessHour?.Id;
                     scope.Complete();
                     return response;
                 }
