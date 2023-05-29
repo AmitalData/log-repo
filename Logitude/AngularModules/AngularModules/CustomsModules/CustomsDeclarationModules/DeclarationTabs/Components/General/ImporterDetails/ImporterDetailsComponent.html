@@ -544,7 +544,7 @@
 
 
     </tr>
-    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
         <td>
             <LogLabel [ObjectFieldName]="'CasualImporterAddress1'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
@@ -555,12 +555,12 @@
         </td>
 
     </tr>
-    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
         <td>
             <LogLabel [ObjectFieldName]="'CasualImporterAddress2'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
             <LogTextBox [ObjectFieldName]="'CasualImporterAddress2'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterAddress2"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
@@ -568,63 +568,63 @@
 
 
 
-    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
         <td>
             <LogLabel [ObjectFieldName]="'CasualImporterCity'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
             <LogTextBox [ObjectFieldName]="'CasualImporterCity'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterCity"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
     </tr>
 
-    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
         <td>
             <LogLabel [ObjectFieldName]="'CasualImporterZipCode'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
             <LogTextBox [ObjectFieldName]="'CasualImporterZipCode'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterZipCode"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
     </tr>
-    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
         <td>
             <LogLabel [ObjectFieldName]="'CasualImporterFax'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
             <LogTextBox [ObjectFieldName]="'CasualImporterFax'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterFax"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
     </tr>
-    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
         <td>
             <LogLabel [ObjectFieldName]="'CasualImporterEmail'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
             <LogTextBox [ObjectFieldName]="'CasualImporterEmail'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterEmail"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
     </tr>
-    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
         <td>
             <LogLabel [ObjectFieldName]="'CasualImporterTel'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext" [Text]="'טלפון'"></LogLabel>
         </td>
-        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
             <LogTextBox [ObjectFieldName]="'CasualImporterTel'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterTel"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
     </tr>
-    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
         <td>
             <LogLabel [ObjectFieldName]="'CasualImporterContact'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)">
             <LogTextBox [ObjectFieldName]="'CasualImporterContact'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterContact"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
@@ -641,7 +641,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="DeleteImporterDetailsButtonClicked()" *ngIf="ImporterVisibility  && isCourierDeclaration" [disabled]="IsDisplayOnly">נקה נתונים</button>
+                        <button class="Button" (click)="DeleteImporterDetailsButtonClicked()" *ngIf="ImporterVisibility  && (isCourierDeclaration || EntityPM.ShortProcedure)" [disabled]="IsDisplayOnly">נקה נתונים</button>
                     </td>
                     <td style="width: 5px;">
                         <div></div>

@@ -1067,8 +1067,26 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
     Type: string = null;
     EditImporter() {
+
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
+
+        if(this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty)
+        {
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+            const unsub = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.OpenImporterDetailsComponent();
+            unsub.unsubscribe();
+
+            }); 
+        }
+
+        else
+            this.OpenImporterDetailsComponent();
+       
+    }
+
+    OpenImporterDetailsComponent(){
+
         this.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
@@ -1085,12 +1103,13 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         windowArgs.Type = "Importer";
         this.Type = "Importer";
         logWindow.Width = 550;
-        logWindow.Height = this.EntityPM.IsCourierDeclaration ? 550 : 350;
+        logWindow.Height = (this.EntityPM.IsCourierDeclaration ||  this.EntityPM.ShortProcedure) ? 550 : 350;
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
+
     }
 
     public FeatureLocatorEXPORTDECLARATIONPSCREEN = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN")
