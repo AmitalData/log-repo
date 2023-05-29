@@ -178,8 +178,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportCloseAmendRequestNumber, 
 	         ExportCloseAmendmentStatus, 
 	         CasualImporterCountry, 
-	         ExcludeManifest,
-	         ForwarderFiles,
+	         ExcludeManifest, 
+	         ForwarderFiles, 
 	         ShortProcedure,
 	      }
 
@@ -432,8 +432,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterCountry, 
 	         ExportCloseAmendStatusName, 
 	         IsAramex, 
-	         ExcludeManifest,
-	         ForwarderFiles,
+	         ExcludeManifest, 
+	         ForwarderFiles, 
 	         ShortProcedure,
 	      }
 
@@ -1218,15 +1218,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.CasualImporterCountry = entityPM.CasualImporterCountry;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeManifest))
+            {
+				entityPOCO.ExcludeManifest = entityPM.ExcludeManifest;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderFiles))
             {
 				entityPOCO.ForwarderFiles = entityPM.ForwarderFiles;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeManifest))
-            {
-				entityPOCO.ExcludeManifest = entityPM.ExcludeManifest;
-			}
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
             {
 				entityPOCO.ShortProcedure = entityPM.ShortProcedure;
@@ -2022,15 +2023,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 					entityPM.ExcludeManifest = entityPOCO.ExcludeManifest;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShortProcedure))
-            {
-					entityPM.ShortProcedure = entityPOCO.ShortProcedure;
-            }
 
-		
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwarderFiles))
             {
 					entityPM.ForwarderFiles = entityPOCO.ForwarderFiles;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShortProcedure))
+            {
+					entityPM.ShortProcedure = entityPOCO.ShortProcedure;
             }
 
 		}

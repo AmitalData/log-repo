@@ -460,6 +460,14 @@ namespace Logitude.Customs.Data.EntityLists
        public string ForwarderFiles  { get; set; }
        [DataMember]
        public bool ShortProcedure  { get; set; }
+       [DataMember]
+       public int MehesFee  { get; set; }
+       [DataMember]
+       public int VATReshimonFee  { get; set; }
+       [DataMember]
+       public int SecurityFee  { get; set; }
+       [DataMember]
+       public int ComputerFee  { get; set; }
    }
 
 }
