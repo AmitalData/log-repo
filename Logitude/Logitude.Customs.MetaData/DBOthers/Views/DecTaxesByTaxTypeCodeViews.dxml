@@ -1,10 +1,10 @@
 <View DBType="Main" Name="DecTaxesByTaxTypeCodeViews" Schema="dbo" Module="Customs">
   <SqlScript>
     <![CDATA[
-   IF OBJECT_ID('DecTaxesByTaxTypeCodeViews', 'V') IS NOT NULL
+IF OBJECT_ID('DecTaxesByTaxTypeCodeViews', 'V') IS NOT NULL
     DROP VIEW DecTaxesByTaxTypeCodeViews;
-GO
 
+EXECUTE('
 CREATE VIEW DecTaxesByTaxTypeCodeViews
 AS
 SELECT DeclarationId, Tenant, SUM(MehesFee) AS MehesFee, SUM(VATReshimonFee) AS VATReshimonFee, SUM(SecurityFee) AS SecurityFee, SUM(ComputerFee) AS ComputerFee
@@ -12,15 +12,15 @@ FROM (
     SELECT 
         declarationTaxes.declarationid AS DeclarationId,
         declarationTaxes.tenant AS Tenant,
-        CASE WHEN TaxTypeCode = '1' THEN declarationTaxes.TotalAmount ELSE 0 END AS MehesFee,
-        CASE WHEN TaxTypeCode = '15' THEN declarationTaxes.TotalAmount ELSE 0 END AS VATReshimonFee,
-        CASE WHEN TaxTypeCode = '50' THEN declarationTaxes.TotalAmount ELSE 0 END AS SecurityFee,
-        CASE WHEN TaxTypeCode = '36' THEN declarationTaxes.TotalAmount ELSE 0 END AS ComputerFee
-    FROM customs.DeclarationTaxes declarationTaxes
+        CASE WHEN TaxTypeCode = ''1'' THEN declarationTaxes.TotalAmount ELSE 0 END AS MehesFee,
+        CASE WHEN TaxTypeCode = ''15'' THEN declarationTaxes.TotalAmount ELSE 0 END AS VATReshimonFee,
+        CASE WHEN TaxTypeCode = ''50'' THEN declarationTaxes.TotalAmount ELSE 0 END AS SecurityFee,
+        CASE WHEN TaxTypeCode = ''36'' THEN declarationTaxes.TotalAmount ELSE 0 END AS ComputerFee
+    FROM Customs.DeclarationTaxes declarationTaxes
     GROUP BY declarationid, tenant, TaxTypeCode, TotalAmount
 ) subquery
 GROUP BY DeclarationId, Tenant;
-GO
+');
     ]]>
   </SqlScript>
   <OracleScript>
