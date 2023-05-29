@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
-    public class DeclarationTaxesByTaxTypeCodeView
+    public class DecTaxesByTaxTypeCodeView
     {
         [Key]
         public string DeclarationId { get; set; }
