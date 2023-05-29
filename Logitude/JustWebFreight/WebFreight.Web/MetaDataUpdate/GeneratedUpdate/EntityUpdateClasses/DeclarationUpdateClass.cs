@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "7fbe9060b8dd36f06e2d8e12797bbc53";
+
+		public const string HashString = "900c3c9147b84babfe558a67cfdfd9a3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17111,9 +17112,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExcludeManifest",
 					  						DefaultText =  "Exclude Manifest",
-					  						FullLocalDefaultText =  "שדר ללא נתוני מצהר",
+					  						FullLocalDefaultText =  "שדר ללא נ.מצהר",
 					  						ListFieldLable =  "ExcludeManifestListLable",
-					  						ListLableDefaultText =  "שדר ללא נתוני מצהר",
+					  						ListLableDefaultText =  "שדר ללא נ.מצהר",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
