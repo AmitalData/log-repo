@@ -461,13 +461,13 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool ShortProcedure  { get; set; }
        [DataMember]
-       public int MehesFee  { get; set; }
+       public decimal MehesFee  { get; set; }
        [DataMember]
-       public int VATReshimonFee  { get; set; }
+       public decimal VATReshimonFee  { get; set; }
        [DataMember]
-       public int SecurityFee  { get; set; }
+       public decimal SecurityFee  { get; set; }
        [DataMember]
-       public int ComputerFee  { get; set; }
+       public decimal ComputerFee  { get; set; }
    }
 
 }
