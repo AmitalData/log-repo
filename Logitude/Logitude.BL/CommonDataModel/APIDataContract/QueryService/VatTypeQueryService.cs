@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -66,51 +67,61 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 
            
-            VatTypePercentageRepository VatTypePercentageRepository = new VatTypePercentageRepository(tenant);
-            VatTypeRepository VatTyperepository = new VatTypeRepository(tenant);
+            VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(tenant);
+            VatTypeRepository vatTyperepository = new VatTypeRepository(tenant);
             VatTypeService service = new VatTypeService(context,  tenatToCopy);
-            VatTypePercentageService VatTypePercentageService = new VatTypePercentageService(context, tenatToCopy);
-            List<VatTypePercentage> pocos = VatTypePercentageRepository.GetVatTypePercentagesByTenant(tenant).Where(t=>t.VatType.InActive==false).ToList();
+            VatTypePercentageService vatTypePercentageService = new VatTypePercentageService(context, tenatToCopy);
+            VatTypeRepository vatTypeRepository = new VatTypeRepository(tenatToCopy);
+            List<Simplog.Data.CommonDataModel.EntityPOCOs.VatType> pocos = vatTypeRepository.All().Where(t => t.InActive == false && t.Tenant== tenant).ToList();
+
+
 
             foreach (var item in pocos)
             {
-                VatTypePM vatType = new VatTypePM()
+                string vatTypeId=null;
+                vatTypeId = vatTypeRepository.GetSingleVatTypeByCode(item.Code, tenatToCopy).Id;
+                if (vatTypeId == null)
                 {
-                    Code = item.VatType.Code   ,
-                    LocalName = item.VatType.LocalName,
-                    Tenant = tenatToCopy,
-                    EnglishName = item.VatType.EnglishName,
-                    AddedManually = item.VatType.AddedManually,
-                    InActive = item.VatType.InActive,
-                    Description = item.VatType.Description,
-                    LocalDescription = item.VatType.LocalDescription,
-                    SearchFields = item.VatType.SearchFields,
-                    ExternalVATCard = item.VatType.ExternalVATCard,
-                    ExternalTAXItemId = item.VatType.ExternalTAXItemId,
-                    IsMultiPercentage = item.VatType.IsMultiPercentage,
-                    RecognizedPercentage = item.VatType.RecognizedPercentage,
-                    PayablesExternalId = item.VatType.PayablesExternalId,
-                    ReceivablesExternalId = item.VatType.ReceivablesExternalId,
-                    IsRegionalTax = item.VatType.IsRegionalTax,
+                    VatTypePM vatType = new VatTypePM()
+                    {
+                        Code = item.Code,
+                        LocalName = item.LocalName,
+                        Tenant = tenatToCopy,
+                        EnglishName = item.EnglishName,
+                        AddedManually = item.AddedManually,
+                        InActive = item.InActive,
+                        Description = item.Description,
+                        LocalDescription = item.LocalDescription,
+                        SearchFields = item.SearchFields,
+                        ExternalVATCard = item.ExternalVATCard,
+                        ExternalTAXItemId = item.ExternalTAXItemId,
+                        IsMultiPercentage = item.IsMultiPercentage,
+                        RecognizedPercentage = item.RecognizedPercentage,
+                        PayablesExternalId = item.PayablesExternalId,
+                        ReceivablesExternalId = item.ReceivablesExternalId,
+                        IsRegionalTax = item.IsRegionalTax,
 
 
 
 
-                };
-                service.Create(vatType);
-                string vatTypeId = VatTyperepository.GetSingleVatTypeByCode(vatType.Code, tenatToCopy).Id;
-                VatTypePercentagePM vatTypePercentagePM = new VatTypePercentagePM()
-                {
-                    Tenant = tenatToCopy,
-                    FromDate = item.FromDate,
-                    Percentage = item.Percentage,
-                    VatTypeId= vatTypeId
-                };
+                    };
+                    service.Create(vatType);
+                    vatTypeId = vatTyperepository.GetSingleVatTypeByCode(vatType.Code, tenatToCopy).Id;
+                    VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetSingleVatTypePercentage(item.Id);
+                    if (vatTypePercentage != null)
+                    {
+                        VatTypePercentagePM vatTypePercentagePM = new VatTypePercentagePM()
+                        {
+                            Tenant = tenatToCopy,
+                            FromDate = vatTypePercentage.FromDate,
+                            Percentage = vatTypePercentage.Percentage,
+                            VatTypeId = vatTypeId
+                        };
 
 
-
-                VatTypePercentageService.Create(vatTypePercentagePM, vatType);
-
+                        vatTypePercentageService.Create(vatTypePercentagePM, vatType);
+                    }
+                }
             }
             this.context.SaveChanges();
 
