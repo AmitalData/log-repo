@@ -779,6 +779,7 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\ContainerSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CounterDefinitionExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExtendedController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\ImporterEntityStatusesController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ImporterEventTypesController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\RatesTablesController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExecutionLogExtendedController.cs" />
@@ -809,6 +810,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DataCustomObjectController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ReferenceCustomObjectController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ScreenController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Services\ImporterEntityStatusesExtendedService.cs" />
     <Compile Include="Controllers\InfrastructureModel\Services\ImporterEventTypesExtendedService.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ContainersController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBAdditionalHandlingInfoViewsController.Generated.cs" />
