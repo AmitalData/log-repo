@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GovernmentProcedureTypeUpdateClass
    {  		
-		public const string HashString = "807d590cdf30303c22e64d4d3b0a81e2";
+		public const string HashString = "41fcd5b8b684131bda1ea76489156122";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -679,6 +679,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShortProcedure",
 					  						ListPropertyPath =  "ShortProcedure",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -752,13 +753,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn GovernmentProcedureTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.GovernmentProcedureType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GovernmentProcedureTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.GovernmentProcedureType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn GovernmentProcedureTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.GovernmentProcedureType.ShortProcedure" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GovernmentProcedureTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.GovernmentProcedureType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn GovernmentProcedureTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.GovernmentProcedureType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GovernmentProcedureTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.GovernmentProcedureType.IsImport" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn GovernmentProcedureTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.GovernmentProcedureType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GovernmentProcedureTypeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.GovernmentProcedureType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn GovernmentProcedureTypeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.GovernmentProcedureType.IsImport" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn GovernmentProcedureTypeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.GovernmentProcedureType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -775,7 +778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen GovernmentProcedureTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GovernmentProcedureType.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen GovernmentProcedureTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GovernmentProcedureType.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = true }, screensRepository, tenantScreens);
       
              ScreenField CustomsGovernmentProcedureTypeGovernmentProcedureTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -784,6 +787,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              ScreenField CustomsGovernmentProcedureTypeGovernmentProcedureTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.IsImport", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField CustomsGovernmentProcedureTypeGovernmentProcedureTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.IndexOrder", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsGovernmentProcedureTypeGovernmentProcedureTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.ShortProcedure", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 	      
 

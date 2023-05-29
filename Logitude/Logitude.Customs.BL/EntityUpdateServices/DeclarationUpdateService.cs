@@ -404,6 +404,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if (entityPM.Direction == "E")
                 {
+                    if (!string.IsNullOrEmpty(entityPM.ProcedureCurrentCode))
+                    {
+                        GovernmentProcedureTypeQueryService governmentProcedureTypeQueryService = new GovernmentProcedureTypeQueryService(entityPM.Tenant);
+                        GovernmentProcedureTypePM governmentProcedureType = governmentProcedureTypeQueryService.GetSingle(entityPM.ProcedureCurrentCode, false, true);
+                        if (governmentProcedureType != null)
+                        {
+                            entityPM.ShortProcedure = governmentProcedureType.ShortProcedure;
+                        }
+                    }
+                  
+
                     foreach(var con in entityPM.Consignments)
                     {
                         if(con.ConsignmentType == "E")

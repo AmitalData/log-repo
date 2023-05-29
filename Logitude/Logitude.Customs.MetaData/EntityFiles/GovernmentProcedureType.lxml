@@ -703,6 +703,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ShortProcedure&quot;"
     ListPropertyPath="&quot;ShortProcedure&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -776,21 +777,26 @@
       <QueryColumn
         QueryCode="&quot;GovernmentProcedureType&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;EnglishName&quot;"
+        ObjectFieldName="&quot;ShortProcedure&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;GovernmentProcedureType&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;LocalName&quot;"
+        ObjectFieldName="&quot;EnglishName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;GovernmentProcedureType&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;IsImport&quot;"
+        ObjectFieldName="&quot;LocalName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;GovernmentProcedureType&quot;"
         IndexOrder="4"
+        ObjectFieldName="&quot;IsImport&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;GovernmentProcedureType&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;Inactive&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -803,7 +809,7 @@
     IsHeaderScreen="false"
     Code="&quot;GovernmentProcedureType.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="4">
+    NumberOfRows="5">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -824,6 +830,11 @@
         Column="0"
         Row="3"
         ObjectFieldName="&quot;IndexOrder&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="4"
+        ObjectFieldName="&quot;ShortProcedure&quot;"
         ScreenName="GeneralTabScreen" />
     </ScreenFields>
   </Screen>

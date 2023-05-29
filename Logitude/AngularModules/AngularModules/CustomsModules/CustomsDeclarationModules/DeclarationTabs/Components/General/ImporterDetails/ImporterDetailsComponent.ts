@@ -501,9 +501,9 @@ export class ImporterDetailsComponent extends BaseComponent {
      }
 
     private SetFieldsEditibilityCourier() {
-        if (!this.isCourierDeclaration) {
-            return;
-        }
+        if (this.isCourierDeclaration || this.EntityPM.ShortProcedure) {
+           
+        
         //if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)) {
         
         this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, true);
@@ -544,6 +544,10 @@ export class ImporterDetailsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("CasualImporterTel", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CasualImporterContact", this.ObjectTableName, false);
 
+            }
+        }
+        else{
+            return;
         }
     }
 
@@ -719,7 +723,7 @@ export class ImporterDetailsComponent extends BaseComponent {
         }
     }
     OkButtonClicked() {
-        if (this.type == "Importer" && this.isCourierDeclaration) {
+        if (this.type == "Importer" && (this.isCourierDeclaration || this.EntityPM.ShortProcedure)) {
             //if (!FormatTool.IsEmail(this.CasualImporterEmail)) {
             //errors.push("Invalid email format!");
             //}
