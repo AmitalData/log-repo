@@ -1471,12 +1471,22 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
 
-                    SetLastActivate?.Invoke();
-                    if (ProcessMessage_Db(queueservice, response, selectedQueue))
+                    if (response.MessageValues.ContainsKey("communicationLogId"))
                     {
-                        LogDoneItemInMemoryAction?.Invoke(1);
+                        string communicationLogId = response.MessageValues["communicationLogId"].ToString();
+                        int tenant = 0;
+                        int.TryParse(response.MessageValues["tenant"].ToString(), out tenant);
+                        UpdateGLAccountAgingData(communicationLogId, queueservice, tenant);
                     }
-                    
+                    else
+                    {
+                        SetLastActivate?.Invoke();
+                        if (ProcessMessage_Db(queueservice, response, selectedQueue))
+                        {
+                            LogDoneItemInMemoryAction?.Invoke(1);
+                        }
+                        
+                    }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
@@ -1546,6 +1556,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         break;
                     }
+
 
                     if (response.MessageValues.ContainsKey("communicationLogId"))
                     {
