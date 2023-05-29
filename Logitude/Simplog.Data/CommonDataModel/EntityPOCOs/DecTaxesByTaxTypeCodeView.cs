@@ -12,10 +12,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [Key]
         public string DeclarationId { get; set; }
         public int Tenant { get; set; }   
-        public int MehesFee { get; set; }
-        public int VATReshimonFee { get; set; }
-        public int SecurityFee { get; set; }
-        public int ComputerFee { get; set; }
+        public decimal MehesFee { get; set; }
+        public decimal VATReshimonFee { get; set; }
+        public decimal SecurityFee { get; set; }
+        public decimal ComputerFee { get; set; }
 
     }
 }
