@@ -107,6 +107,7 @@
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePrio2.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
     <None Include="DBOthers\Views\RequestSheetInQueueMesView.dxml" />
+    <None Include="DBOthers\Views\DeclarationTaxesByTaxTypeCodeViews.dxml" />
     <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
     <None Include="DBScripts\Post\202305241701_JobDeleteOldLocks.sxml" />

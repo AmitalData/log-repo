@@ -1,0 +1,28 @@
+<View DBType="Main" Name="DeclarationTaxesByTaxTypeCodeViews" Schema="dbo" Module="Customs">
+  <SqlScript>
+    <![CDATA[
+   
+    ]]>
+  </SqlScript>
+  <OracleScript>
+	  
+	  <![CDATA[
+CREATE OR REPLACE VIEW DeclarationTaxesByTaxTypeCodeViews
+    AS
+select DeclarationId,Tenant,sum(MehesFee)as MehesFee,sum(VATReshimonFee)as VATReshimonFee,sum(SecurityFee) as SecurityFee,sum(ComputerFee) as ComputerFee
+from (
+select 
+declarationTaxes.declarationid as  DeclarationId,
+declarationTaxes.tenant as tenant ,
+CASE WHEN TaxTypeCode= '1' THEN declarationTaxes.TotalAmount ELSE 0 END as MehesFee,
+CASE WHEN TaxTypeCode= '15' THEN declarationTaxes.TotalAmount ELSE 0 END as VATReshimonFee,
+CASE WHEN TaxTypeCode= '50' THEN declarationTaxes.TotalAmount ELSE 0 END as SecurityFee,
+CASE WHEN TaxTypeCode= '36' THEN declarationTaxes.TotalAmount ELSE 0 END as ComputerFee
+from DeclarationTaxes   declarationTaxes
+group by declarationid,tenant,TaxTypeCode,TotalAmount)
+group by declarationid,tenant;
+ 
+
+]]>
+  </OracleScript>
+</View>
