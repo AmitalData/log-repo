@@ -14,6 +14,10 @@ using System.Diagnostics;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Web;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Def.EntityPMs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.BL.TraceEvents
 {
@@ -99,7 +103,9 @@ namespace Logitude.Customs.BL.TraceEvents
         }
         public void Send(UnifreightHybridQueueTaskParam unifreightHybridQueueTasParam ,bool  withTransmission=true)
         {
-
+            CustomsSettingPM setting = CustomsSettingQueryService.GetSettingByTenant(_CommunicationModel.Tenant);
+            if (setting != null && setting.StandAlone)
+                return;
             //if (string.IsNullOrWhiteSpace(unifreightHybridQueueTasParam.QueueName))
             //{
             //    throw new ArgumentNullException(nameof(unifreightHybridQueueTasParam.QueueName));
