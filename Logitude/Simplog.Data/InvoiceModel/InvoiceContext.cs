@@ -322,6 +322,8 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new ARPaymentChequeReplicaMap());
             modelBuilder.Configurations.Add(new ARPaymentChequeStatusReplicaMap());
             modelBuilder.Configurations.Add(new DigitalInvoicesCounterDataViewMap());
+            modelBuilder.Configurations.Add(new ControlForInvoiceLinesDataViewMap());
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -469,6 +471,8 @@ namespace Simplog.Data.InvoiceModel
 
         public IDbSet<APInvoiceAnalytic> APInvoiceAnalytics { get; set; }
         public IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView { get; set; }
+        public IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView { get; set; }
+
         public void DetectChanges()
         {
             ChangeTracker.DetectChanges();
