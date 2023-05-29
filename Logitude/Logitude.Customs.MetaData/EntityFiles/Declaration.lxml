@@ -20819,7 +20819,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;3b5f80f3-3327-4ed4-b299-8cc8d9a60939&quot;"
     FieldName="&quot;ExcludeManifest&quot;"
@@ -20998,6 +20997,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ShortProcedure&quot;"
     ListPropertyPath="&quot;ShortProcedure&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -24700,7 +24700,6 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-
   <Records />
   <MenuButtons
     MenuButtonGroupType="&quot;Customs.DeclarationEdit&quot;"
@@ -27327,8 +27326,6 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
-
- 
   <AdditionalFeatures>
     <Feature
       Code="&quot;PAYMENTS&quot;"
@@ -27592,14 +27589,14 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-          Code="&quot;AUTOMATION&quot;"
-          FeatureTypeCode="&quot;AREA&quot;"
-          FeatureTextCodeCode="&quot;Customs.Declaration.Features.AUTOMATION&quot;"
-          FeatureDefaultText="&quot;Automation&quot;"
-          IsPackagable="true"
-          IsOld="false"
-          IsCoreFeature="false"
-          IsBusinessUnitEnabled="false" />
+      Code="&quot;AUTOMATION&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.AUTOMATION&quot;"
+      FeatureDefaultText="&quot;Automation&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;OCR&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
@@ -27620,14 +27617,13 @@
       IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;DisabledPrintDecForm&quot;"
-          FeatureTypeCode="&quot;ACT&quot;"
-          FeatureTextCodeCode="&quot;Customs.Declaration.Features.PrintDeclarationForm&quot;"
-
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.PrintDeclarationForm&quot;"
       FeatureDefaultText="&quot;Disabled Print Dec Form&quot;"
-          IsPackagable="true"
-          IsOld="false"
-          IsCoreFeature="false"
-          IsBusinessUnitEnabled="false" />
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;SendL2UFromSendDeclaration&quot;"
       FeatureTypeCode="&quot;ACT&quot;"

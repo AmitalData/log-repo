@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "55a379e1ba9799cb04ddda4b70a12069";
+		public const string HashString = "e597e3f9ec8f857757144475a7bb344d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17217,6 +17217,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShortProcedure",
 					  						ListPropertyPath =  "ShortProcedure",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -17278,6 +17279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "MehesFee",
 					  						ListPropertyPath =  "MehesFee",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -17296,6 +17298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MehesFee",
 					  						DefaultText =  "MehesFee",
+					  						FullLocalDefaultText =  "מכס ",
 					  						ListFieldLable =  "MehesFeeListLable",
 					  						ListLableDefaultText =  "MehesFee",
 					  						ListLocalDefaultText =  "מכס ",
@@ -17338,6 +17341,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VATReshimonFee",
 					  						ListPropertyPath =  "VATReshimonFee",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -17356,6 +17360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VATReshimonFee",
 					  						DefaultText =  "VATReshimonFee",
+					  						FullLocalDefaultText =  "מעמ רשימון",
 					  						ListFieldLable =  "VATReshimonFeeListLable",
 					  						ListLableDefaultText =  "VATReshimonFee",
 					  						ListLocalDefaultText =  "מעמ רשימון",
@@ -17398,6 +17403,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SecurityFee",
 					  						ListPropertyPath =  "SecurityFee",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -17416,6 +17422,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SecurityFee",
 					  						DefaultText =  "SecurityFee",
+					  						FullLocalDefaultText =  "אגרת בטחון",
 					  						ListFieldLable =  "SecurityFeeListLable",
 					  						ListLableDefaultText =  "SecurityFee",
 					  						ListLocalDefaultText =  "אגרת בטחון",
@@ -17458,6 +17465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ComputerFee",
 					  						ListPropertyPath =  "ComputerFee",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -17476,6 +17484,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ComputerFee",
 					  						DefaultText =  "ComputerFee",
+					  						FullLocalDefaultText =  "אגרת מחשב",
 					  						ListFieldLable =  "ComputerFeeListLable",
 					  						ListLableDefaultText =  "ComputerFee",
 					  						ListLocalDefaultText =  "אגרת מחשב",
