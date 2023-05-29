@@ -287,12 +287,9 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.RemoveAgingDefinitionTab();
     }
 
-    private ToggleCopyingDataFromTenant0Tab(value: boolean) {
-        if (value)
-            this.disabledCopyFromTenant0 = false
-        else
-            this.disabledCopyFromTenant0 = true
-    }
+
+
+   
 
     private ToggleCopyingDataFromTenant0Tab(value: boolean) {
         if (value)
@@ -301,6 +298,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.disabledCopyFromTenant0 = true
     }
 
+    
     get IsPaymentChequesActivated() { return this.EntityPM.IsPaymentChequesActivated; }
     set IsPaymentChequesActivated(value: boolean) {
         if (this.EntityPM.IsPaymentChequesActivated != value) {
