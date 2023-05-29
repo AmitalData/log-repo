@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "cd135811c9df1192273c7bd05777207c";
+		public const string HashString = "b0c169b5cb7c493e882b4bc1264cf84a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15777,9 +15777,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOInternalInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.InternalInvoice", DefaultText = "Internal invoice",LocalDefaultText = @"חשבונית פנימית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceOreportsToVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.reportsToVAT", DefaultText = "reports to VAT",LocalDefaultText = "מדווח למע''מ", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOreportsToVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.reportsToVAT", DefaultText = "reports to VAT",LocalDefaultText = @"מדווח למעמ", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceONotreportsToVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.NotreportsToVAT", DefaultText = "Not reported to VAT",LocalDefaultText = "לא מדווח למע''מ", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARInvoiceTextCode_ARInvoiceONotreportsToVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.NotreportsToVAT", DefaultText = "Not reported to VAT",LocalDefaultText = @"לא מדווח למעמ", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
