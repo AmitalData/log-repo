@@ -11,8 +11,10 @@
   HasCustomFields="true"
   AvailableInCustomization="true"
   SupportSubEntity="false"
+
   ApplyGenericCustomFields="false"
   AvailableInDocumentTypes="true"
+
   HasHelper="true"
   HasShortTitle="true"
   HasFiltersMenu="false"
@@ -5372,15 +5374,16 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     ConverterName="&quot;Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter&quot;"
     IsCustomFilter="false"
     IsListFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -10273,56 +10276,61 @@
       <QueryColumn
         QueryCode="&quot;All General APInvoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;VendorName&quot;"
+        ObjectFieldName="&quot;AccountingDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General APInvoices&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;InvoiceDate&quot;"
+        ObjectFieldName="&quot;VendorName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General APInvoices&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
+        ObjectFieldName="&quot;InvoiceDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General APInvoices&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;CreateDate&quot;"
+        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General APInvoices&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General APInvoices&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;StatusName&quot;"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General APInvoices&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;UpdateDate&quot;"
+        ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General APInvoices&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;UpdatedByUserName&quot;"
+        ObjectFieldName="&quot;UpdateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General APInvoices&quot;"
         IndexOrder="9"
-        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
+        ObjectFieldName="&quot;UpdatedByUserName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General APInvoices&quot;"
         IndexOrder="10"
-        ObjectFieldName="&quot;AmountDue&quot;"
+        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General APInvoices&quot;"
         IndexOrder="11"
+        ObjectFieldName="&quot;AmountDue&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All General APInvoices&quot;"
+        IndexOrder="12"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
     </QueryColumns>

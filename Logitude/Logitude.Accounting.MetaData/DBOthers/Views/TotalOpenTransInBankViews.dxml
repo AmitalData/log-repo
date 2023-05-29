@@ -1,7 +1,7 @@
 ﻿<View DBType="Main" Name="TotalOpenTransInBankViews" Schema="dbo" Module="Accounting">
 	<SqlScript>
 		<![CDATA[
-        CREATE OR ALTER VIEW dbo.TotalOpenTransInBankViews AS
+       CREATE OR ALTER VIEW dbo.TotalOpenTransInBankViews AS
 SELECT mergedData.Id, mergedData.Tenant,
        SUM(mergedData.ledgertransactionscount) AS TotalLedgerTransactionsCount,
        SUM(mergedData.ReconcileExternalPageLinesCount) AS TotalReconcileExternalPageLinesCount

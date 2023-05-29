@@ -174,7 +174,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //entityPM.ChangeSetOp = ChangeSetOperation.Update;
                 //taxReportUpdateService.Update(entityPM, true);
             }
-            MarkDuplicateLines(entityPM);
             UpdateReportStatus(entityPM);
 
         }
@@ -203,14 +202,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     Reference = ln.Reference
                 }).OrderByDescending(g => g.Key.VatNumber).ThenBy(g => g.Key.Reference);
 
-                var duplicates = dup.Select(g => new
+                List<DupLines> duplicates = null;
+
+                var duplicates_indicative = dup.Select(g => new DupLines
                 {
                     VatNumber = g.Key.VatNumber,
                     Reference = g.Key.Reference,
                     LineNumbers = g.OrderBy(x => x.Line).Skip(1).Select(x => x.Line)
                 })
-                .Where(g => g.LineNumbers.Count() > 1).ToList();
-                
+                .Where(r => r.LineNumbers.Count() >= 1).Select(r => r.VatNumber + "~" + r.Reference).ToList();
+
+                if (duplicates_indicative != null && duplicates_indicative.Count > 0) 
+                {
+                    duplicates = dup.Where(g => duplicates_indicative.Contains(g.Key.VatNumber + "~" + g.Key.Reference)).Select(g => new DupLines
+                    {
+                        VatNumber = g.Key.VatNumber,
+                        Reference = g.Key.Reference,
+                        LineNumbers = g.OrderBy(x => x.Line).Select(x => x.Line)
+                    })
+                    .Where(r => r.LineNumbers.Count() >= 1).ToList();
+                }
+
                 List<TaxReportLinePM> removeDupLines = new List<TaxReportLinePM>();
                 IAccountingContext accountingContext; 
                 TaxReportLineUpdateService taxReportLineUpdateService; 
@@ -232,12 +244,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         {
                             oneLine.ChangeSetOp = ChangeSetOperation.Update;
                             oneLine.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
+                            if (oneLine.IsManuallyChanged == false) oneLine.IsManuallyChanged = null;
                             duplicateLines.Add(oneLine);
                         }
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
                             oneLine.ChangeSetOp = ChangeSetOperation.Update;
                             oneLine.StatusCode = "6";
+                            if (oneLine.IsManuallyChanged == false) oneLine.IsManuallyChanged = null;
                             removeDupLines.Add(oneLine);
                         }
                     }
@@ -258,6 +272,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         {
                             linePM.ChangeSetOp = ChangeSetOperation.Update;
                             linePM.StatusCode = "6";
+                            if (linePM.IsManuallyChanged == false) linePM.IsManuallyChanged = null;
                             removeDupLines.Add(linePM);
                         }
                     }
@@ -272,7 +287,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
         }
+        private class DupLines
+        {
+            public string VatNumber { get; set; }
+            public string Reference { get; set; }
+            public IEnumerable<int> LineNumbers { get; set; }
 
+        }
         private void UpdateReportStatus(TaxReportPM taxReportPM)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
@@ -326,7 +347,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
             TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
             TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
-
+            ///***
             if (entityPOCO.IsCancelled == false && entityPM.IsCancelled == true)
             {
                 // canceled!!C:\source\log-repo\Logitude\JustWebFreight\WebFreight.Web\obj\
@@ -335,10 +356,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-
                 //updates
                 if (!entityPM.IsNew)
                 {
+                    MarkDuplicateLines(entityPM); 
                     entityPM.LastUpdateDate = DateTime.Now;
 
                     // update totals

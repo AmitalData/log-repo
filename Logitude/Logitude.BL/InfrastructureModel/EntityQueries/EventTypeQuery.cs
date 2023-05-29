@@ -76,7 +76,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   CustomField = a.CustomField,
                                                   IsStatusNotModified = a.IsStatusNotModified,
                                                   EventTrigger = a.EventTrigger,
-                                                  RemarksView = a.RemarksView
+                                                  RemarksView = a.RemarksView,
+                                                  EntityStatusCode = a.EntityStatus != null ? a.EntityStatus.Code : null
 
                                               });
                         if (IsFullAccountingActivated(tenant))
@@ -191,8 +192,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   CustomField = a.CustomField,
                                   IsStatusNotModified = a.IsStatusNotModified,
                                   EventTrigger = a.EventTrigger,
+                                  RemarksView = a.RemarksView,
+                                  EntityStatusCode = a.EntityStatus != null ? a.EntityStatus.Code : null
 
-                                  RemarksView = a.RemarksView
                               }).FirstOrDefault();
 
                     if (IsFullAccountingActivated(tenant))
@@ -526,7 +528,89 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
             return null;
         }
-        
+
+        public EventTypePM GetSingleEventTypePMByCodeObjectTableName(string code, string objectTableName, int tenant)
+        {
+            if (string.IsNullOrEmpty(code)) return null;
+            EventTypePM eventTypePM = (from a in repository.context.EventType.Include("ObjectTable").Include("EntityStatus").Include("EventTypeCategory")
+                                       where a.Tenant == tenant && a.Code == code && a.ObjectTable.Name == objectTableName
+                                       select new EventTypePM()
+                                       {
+                                           AddedManually = a.AddedManually,
+                                           Code = a.Code,
+                                           EnglishName = a.EnglishName,
+                                           EntityStatusId = a.EntityStatusId,
+                                           Id = a.Id,
+                                           IsManualEntry = a.IsManualEntry,
+                                           LocalName = a.LocalName,
+                                           ObjectTableId = a.ObjectTableId,
+                                           Tenant = a.Tenant,
+                                           EntityStatusName = a.EntityStatus != null ? a.EntityStatus.Name : null,
+                                           ShortView = a.ShortView,
+                                           ManualActivatedFollowUp = a.ManualActivatedFollowUp,
+                                           FollowUpEnglishName = a.FollowUpEnglishName,
+                                           FollowUpLocalName = a.FollowUpLocalName,
+                                           IsFollowUp = a.IsFollowUp,
+                                           InActive = a.InActive,
+                                           ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                           SearchFields = a.SearchFields,
+                                           AgentRoleId = a.AgentRoleId,
+                                           CustomerRoleId = a.CustomerRoleId,
+                                           EventTypeCategoryCode = a.EventTypeCategory != null ? a.EventTypeCategory.Code : null,
+                                           IsAgentView = a.IsAgentView,
+                                           IsCustomerView = a.IsCustomerView,
+                                           IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
+                                           AllowedInAutomation = a.AllowedInAutomation,
+                                           CustomField = a.CustomField,
+                                           IsStatusNotModified = a.IsStatusNotModified,
+                                           EventTrigger = a.EventTrigger,
+                                           RemarksView = a.RemarksView,
+                                           ObjectTableName = a.ObjectTable.Name
+                                       }).FirstOrDefault();
+            return eventTypePM;
+        }
+
+        public EventTypePM GetSingleEventTypePMIncludeObjectTable(string id, int tenant)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            EventTypePM eventTypePM = (from a in repository.context.EventType.Include("ObjectTable").Include("EntityStatus").Include("EventTypeCategory")
+                                       where a.Tenant == tenant && a.Id == id
+                                       select new EventTypePM()
+                                       {
+                                           AddedManually = a.AddedManually,
+                                           Code = a.Code,
+                                           EnglishName = a.EnglishName,
+                                           EntityStatusId = a.EntityStatusId,
+                                           Id = a.Id,
+                                           IsManualEntry = a.IsManualEntry,
+                                           LocalName = a.LocalName,
+                                           ObjectTableId = a.ObjectTableId,
+                                           Tenant = a.Tenant,
+                                           EntityStatusName = a.EntityStatus != null ? a.EntityStatus.Name : null,
+                                           ShortView = a.ShortView,
+                                           ManualActivatedFollowUp = a.ManualActivatedFollowUp,
+                                           FollowUpEnglishName = a.FollowUpEnglishName,
+                                           FollowUpLocalName = a.FollowUpLocalName,
+                                           IsFollowUp = a.IsFollowUp,
+                                           InActive = a.InActive,
+                                           ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                           SearchFields = a.SearchFields,
+                                           AgentRoleId = a.AgentRoleId,
+                                           CustomerRoleId = a.CustomerRoleId,
+                                           EventTypeCategoryCode = a.EventTypeCategory != null ? a.EventTypeCategory.Code : null,
+                                           IsAgentView = a.IsAgentView,
+                                           IsCustomerView = a.IsCustomerView,
+                                           IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
+                                           AllowedInAutomation = a.AllowedInAutomation,
+                                           CustomField = a.CustomField,
+                                           IsStatusNotModified = a.IsStatusNotModified,
+                                           EventTrigger = a.EventTrigger,
+                                           RemarksView = a.RemarksView,
+                                           ObjectTableName = a.ObjectTable.Name
+                                       }).FirstOrDefault();
+            return eventTypePM;
+        }
+
         public List<EventTypeList> GetEventTypeIdsByListEventCode(List<string> codeEventList, int tenant , string objectTableId)
         {
             List<EventTypeList> result = (from a in repository.context.EventType

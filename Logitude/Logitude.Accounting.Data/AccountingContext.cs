@@ -254,6 +254,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new TaxWithholdingAssessOfficeMap());
 	
+            modelBuilder.Configurations.Add(new TenantIdleStatusMap());
+	
             modelBuilder.Configurations.Add(new TestEntityMap());
 	
             modelBuilder.Configurations.Add(new UserDefinedReportMap());
@@ -1278,6 +1280,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<TaxWithholdingAssessOffice> TaxWithholdingAssessOffices 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TenantIdleStatus> TenantIdleStatuses 
 	 {
 	      get; set;
 	 

@@ -145,6 +145,8 @@
     <None Include="DBScripts\GlobalModel\2023010151536_AddWorkflowsEnginWR.sxml" />
     <None Include="DBScripts\GlobalModel\2022090261326_AddDigitalPortalExportWR.sxml" />
     <None Include="DBScripts\GlobalModel\202209271124_AddQboBaseUrl.sxml" />
+    <None Include="DBScripts\GlobalModel\202305281050_AddImporterEntityStatusesWorkerRole.sxml" />
+    <None Include="DBScripts\GlobalModel\202305251050_AddImporterEventTypesWorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\202304151630_AddReportsLogsExecutionV2WorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\202315031845_AddDocumentsExecutionV2WorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\202303141233_AddImporterPortsWorkerRole.sxml" />

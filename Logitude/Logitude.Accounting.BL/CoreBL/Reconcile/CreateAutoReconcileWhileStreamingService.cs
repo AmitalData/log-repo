@@ -16,6 +16,7 @@ using Logitude.BL.Resolvers;
 using Logitude.BL.Interfaces;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -51,7 +52,14 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (!_JournalPM.IsVoided.GetValueOrDefault())//while voiding -old transaction IsReconciled change after !!
                 {
-                    throw new ApplicationException("Please call Helpdesk support,JournalReconciles already Is Reconciled ");
+                    string errorMessage = "";
+                    foreach (var myOldTransToReconcileError in myOldTransToReconcile.Where(r => r.IsReconciled))
+                    {
+                       errorMessage += "The Error in JournalLineNumber: "+ myOldTransToReconcileError.JournalLineNumber + ",OpenAmount: " + myOldTransToReconcileError.OpenAmount +"\n";
+                        
+                    }
+
+                    throw new ApplicationException(errorMessage);
                 }
 
             }

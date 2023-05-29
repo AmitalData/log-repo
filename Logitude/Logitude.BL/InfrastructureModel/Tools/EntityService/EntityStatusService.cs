@@ -56,7 +56,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             EntityStatusMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-            AddPortKafkaQueueMessage();
+            AddQueueMessages();
         }
 
         public void Update(EntityStatusPM theEntityPm)
@@ -85,7 +85,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             EntityStatusMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            AddPortKafkaQueueMessage();
+            AddQueueMessages();
         }
         private void AddPortKafkaQueueMessage()
         {
@@ -105,6 +105,34 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 { "EntityId", entityPM.Id },
                 { "Tenant", tenant.ToString()}};
             queueservice.Send(queueMessage, tenant);
+        }
+
+        private void AddQueueMessages()
+        {
+            AddPortKafkaQueueMessage();
+            AddImporterQueueMessage();
+        }
+        private void AddImporterQueueMessage()
+        {
+            if (entityPM.IsFromWorkerRole) return;
+            if (tenant != 0) return;
+            if (!IsCloudEnvironment() && !IsTestEnvironment()) return;
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ImporterEntityStatusesQueue", 0);
+            Dictionary<string, string> importerQueueMessage = new Dictionary<string, string>() {
+                { "EntityStatusId", entityPM.Id },
+                { "Tenant", tenant.ToString()}
+            };
+            queueservice.Send(importerQueueMessage, tenant);
+        }
+        private bool IsCloudEnvironment()
+        {
+            return LogitudeSettings.WorkEnvironment?.ToLower() == "cloud";
+        }
+
+        private bool IsTestEnvironment()
+        {
+            return LogitudeSettings.DeploymentStage?.ToLower() == "test2";
         }
     }
 }

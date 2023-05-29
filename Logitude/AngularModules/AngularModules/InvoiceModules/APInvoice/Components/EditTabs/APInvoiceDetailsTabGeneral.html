@@ -164,11 +164,17 @@
                                                     <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
+                                            <!-- AccountingDate -->
                                             <tr *ngIf="accountingActivated" class="FormFieldRow">
                                                 <td>
-                                                    <div></div>
+                                                    <LogLabel [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="AccountingDate" [InputType]="'date'" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
+                                            
                                         </table>
                                     </td>
 
