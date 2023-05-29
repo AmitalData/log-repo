@@ -20,7 +20,6 @@ namespace Logitude.Customs.Data
 
         public IDbSet<DecTaxesByTaxTypeCodeView> DecTaxesByTaxTypeCodeViews { get; set; }
 
-        public IDbSet<DeclarationTaxesByTaxTypeCodeView> DeclarationTaxesByTaxTypeCodeViews { get; set; }
          
 
     }
