@@ -61,6 +61,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     constructor(private entityArgs: EntityArgs) {
         super();
+        
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.EntityPM = entityArgs.EntityPM;
@@ -175,6 +176,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
@@ -189,6 +191,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, true);
@@ -983,9 +986,21 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set InvoiceDate(newValue: Date) {
         if (this.EntityPM.InvoiceDate != newValue) {
             this.EntityPM.InvoiceDate = newValue;
-
             InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
             this.OnInvoiceDateChangedLoad();
+        }
+    }
+
+    get AccountingDate() { return this.EntityPM.AccountingDate; }
+    set AccountingDate(value: Date) {
+        if (this.EntityPM.AccountingDate != value) {
+            this.EntityPM.AccountingDate = value;
+            if (value == null) {
+                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
+            }
+            else {
+                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, false);
+            }
         }
     }
 

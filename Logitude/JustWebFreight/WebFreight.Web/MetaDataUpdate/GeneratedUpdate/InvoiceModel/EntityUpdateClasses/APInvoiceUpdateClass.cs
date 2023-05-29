@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "84d7deb91c2a86b034c8c2539a92e144";
+		public const string HashString = "9a89d84579b7620953f501477a534b8f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -4714,14 +4715,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8299,27 +8301,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	
 			 QueryColumn AllGeneralAPInvoicesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "APInvoice.InvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllGeneralAPInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "APInvoice.VendorName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "APInvoice.AccountingDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllGeneralAPInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "APInvoice.InvoiceDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "APInvoice.VendorName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllGeneralAPInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "APInvoice.InvoiceCurrencyCode" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "APInvoice.InvoiceDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllGeneralAPInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "APInvoice.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "APInvoice.InvoiceCurrencyCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllGeneralAPInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "APInvoice.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "APInvoice.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllGeneralAPInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APInvoice.StatusName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APInvoice.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllGeneralAPInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "APInvoice.UpdateDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "APInvoice.StatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllGeneralAPInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "APInvoice.UpdatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "APInvoice.UpdateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllGeneralAPInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "APInvoice.AmountInInvoiceCurrency" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "APInvoice.UpdatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllGeneralAPInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "APInvoice.AmountDue" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "APInvoice.AmountInInvoiceCurrency" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllGeneralAPInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "APInvoice.DueDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "APInvoice.AmountDue" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllGeneralAPInvoicesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "APInvoice.DueDate" , ColumnWidth = 130 }, addedQueryColumns);
 
              AdvancedQueryFilter AllGeneralAPInvoicesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APInvoice.IsGeneralInvoice", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllGeneralAPInvoicesQuery.Id,QueryCode = AllGeneralAPInvoicesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
