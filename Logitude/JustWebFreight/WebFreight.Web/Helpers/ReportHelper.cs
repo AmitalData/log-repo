@@ -1301,6 +1301,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = spotRateQuoteReportDataProviderService.Load();
                         break;
                     }
+                case "RCIL":
+                    {
+                        ControlForInvoiceLinesLoader controlForInvoiceLinesLoader = new ControlForInvoiceLinesLoader(filters, reportFliter.tenant);
+                        dataProvider = controlForInvoiceLinesLoader.GetData();
+                        break;
+                    }
                     #endregion
             }
             return dataProvider;
@@ -1367,6 +1373,17 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(ARinvoiceSequencesReportData));
                         ARinvoiceSequencesReportData reportDataProvider = (ARinvoiceSequencesReportData)serializer.Deserialize(memorystream);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ARIS", Name = "ARinvoiceSequencesReportData", BusinessObjectValue = reportDataProvider };
+
+                        break;
+                    }
+                case "RCIL":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ControlForInvoiceLinesDataProvider));
+                        ControlForInvoiceLinesDataProvider reportDataProvider = (ControlForInvoiceLinesDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "RCIL", Name = "ControlForInvoiceLinesDataProvider", BusinessObjectValue = reportDataProvider };
 
                         break;
                     }
@@ -2062,17 +2079,17 @@ namespace WebFreight.Web.Helpers
 
             report.AutoLocalizeReportOnRun = true;
 
-            if (LogitudeSettings.LogitudeURL != "http://localhost:9996"
-                && LogitudeSettings.LogitudeURL != "http://127.0.0.1:81")
-            {
-                report.ReportCacheMode = StiReportCacheMode.On;
-                report.RenderedPages.CacheMode = true;
-                report.RenderedPages.CanUseCacheMode = true;
-            }
+            //if (LogitudeSettings.LogitudeURL != "http://localhost:9996"
+            //    && LogitudeSettings.LogitudeURL != "http://127.0.0.1:81")
+            //{
+            //    report.ReportCacheMode = StiReportCacheMode.On;
+            //    report.RenderedPages.CacheMode = true;
+            //    report.RenderedPages.CanUseCacheMode = true;
+            //}
             //report.Culture = "he-IL"; // we can use report globalization to translate lables, google "Glabalization manager stimulsoft" for more
             report.Render(false);
             return report;
-        }
+          }
 
         private string WriteReportToStorage(ReportFliter reportFliter, StiReport report)
         {

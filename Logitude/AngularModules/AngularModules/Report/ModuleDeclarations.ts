@@ -59,6 +59,8 @@ import { AutomationTestReportFilterComponent } from './Components/FilterReportCo
 import { ExternalReconciliationLinesReportFilterControl } from './Components/FilterReportComponent/ExternalReconciliationLinesReportFilterControl';
 import { PerVendorReportFilterComponent } from './Components/FiltersComponent/Accounting/PerVendorReportFilterComponent';
 import { ARinvoiceSequencesReportFilterComponent } from './Components/FiltersComponent/Accounting/ARinvoiceSequencesReportFilterComponent';
+import { ControlInvoiceLinesReportFilterComponent } from './Components/FiltersComponent/Accounting/ControlInvoiceLinesReportFilterComponent';
+
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
 import {RacingQuotesComponent} from './Components/FiltersComponent/CRM/RacingQuotesComponent';
@@ -179,7 +181,8 @@ export const Components =
         DataProviderFieldsNestedList,
         PerVendorReportFilterComponent,
         ARinvoiceSequencesReportFilterComponent,
-        SpotRateQuoteReportFilterComponent
+        SpotRateQuoteReportFilterComponent,
+        ControlInvoiceLinesReportFilterComponent
 
     ];
 
@@ -269,6 +272,7 @@ export class ModuleDeclarations {
             case "PerVendorReportFilterComponent": { myResult = PerVendorReportFilterComponent; break; }
             case "ARinvoiceSequencesReportFilterComponent": { myResult = ARinvoiceSequencesReportFilterComponent; break; }
             case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
+            case "ControlInvoiceLinesReportFilterComponent": { myResult = ControlInvoiceLinesReportFilterComponent; break; }
 
         }
 

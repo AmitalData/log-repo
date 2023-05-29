@@ -1,0 +1,26 @@
+<View DBType="Main" Name="ControlForInvoiceLinesDataView" Schema="dbo" Module="Invoice">
+  <SqlScript>
+    <![CDATA[
+        CREATE VIEW [dbo].[ControlForInvoiceLinesDataView]
+        AS
+        select ar.Tenant, ar.InvoiceDate,  ar.InvoiceNumber,arl.Description,arl.LineActionCode,arl.VatPercentage,arl.LocalCurrencyAmount,gl.AccountTypeCode,gl.DisplayNumber,gl.LocalName as LocalName1 ,CH.LocalName as LocalName2,CH.Code,CH.TypeCode,CHT.LocalName as LocalName3, tax.TaxReportMonth
+
+       from ARInvoiceLines ARL inner join ARInvoices AR on AR.id=ARL.ARInvoiceId 
+       
+       inner join GLAccounts GL on GL.id=ARL.GLAccountId
+       
+       inner join ChartOfAccounts CH on CH.id=GL.ChartOfAccountsId
+       
+       inner join ChartOfAccountsTypes CHT on CHT.Code=CH.TypeCode
+       
+       inner join Journals JR on JR.AccountingEntityId=AR.Id
+       
+       inner join JournalAdditionalDatas JAD on JAD.JournalId=JR.id
+       
+       inner join TaxReports TAX on TAX.Id=JAD.TaxReportId
+
+]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>
