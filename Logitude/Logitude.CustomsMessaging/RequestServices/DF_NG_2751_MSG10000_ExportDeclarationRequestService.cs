@@ -1341,28 +1341,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             //var customsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_context);
             //var customsDocumentsTicketPMList = customsDocumentsTicketQueryService.GetCustomsDocumentsTickets(new GetTicketsParams() { ParentEntityId = supplierInvoiceItemPM.DeclarationId, ParentEntityCode = "Declaration", Child1EntityCode = "SupplierInvoice", Child1EntityId = supplierInvoiceItemPM.CounterKey.ToString(), Child2EntityCode = "SupplierInvoiceItem", Child2EntityId = supplierInvoiceItemPM.LineNumber.ToString() }, supplierInvoiceItemPM.Tenant);
 
-            var customsDocumentQueryService = new CustomsDocumentQueryService(_context);
-            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = supplierInvoiceItemPM.DeclarationId, ParentEntityCode = "Declaration", Child1EntityCode = "SupplierInvoice", Child1EntityId = supplierInvoiceItemPM.CounterKey.ToString(), Child2EntityCode = "SupplierInvoiceItem", Child2EntityId = supplierInvoiceItemPM.LineNumber.ToString() }, supplierInvoiceItemPM.Tenant);
-            foreach (var customsDocumentPM in customsDocumentPMList)
-            {
-                //if (documentTicketItem.Child1EntityCode == "SupplierInvoice" && documentTicketItem.Child1EntityId == supplierInvoiceItemPM.CounterKey.ToString() && documentTicketItem.Child2EntityCode == "SupplierInvoiceItem" && documentTicketItem.Child2EntityId == supplierInvoiceItemPM.LineNumber.ToString())
-                //{
-                //if (documentTicketItem.Child3EntityId == null && documentTicketItem.Child3EntityCode == null && documentTicketItem.CustomDocumentId != null)
-                //{
-                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId)) // Mirit 22/12/15 19136
-                {
-                    var declarationGoodsShipmentAdditionalDocument = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocument();
-                    declarationGoodsShipmentAdditionalDocument.TypeCode = new AdditionalDocumentTypeCodeType();
-                    declarationGoodsShipmentAdditionalDocument.TypeCode.Value = "3";
-                    declarationGoodsShipmentAdditionalDocument.DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocumentDMExtensions();
-                    declarationGoodsShipmentAdditionalDocument.DMExtensions.ExternalAttachmentID = new ExternalAttachmentIDType();
-                    declarationGoodsShipmentAdditionalDocument.DMExtensions.ExternalAttachmentID.Value = customsDocumentPM.ExternalAttachmentId; //customsDocumentPM.DocumentsFilingId; // From CustomsDocumentPointers (Logitude Filling)
-
-                    goodsItemAdditionalDocumentList.Add(declarationGoodsShipmentAdditionalDocument);
-                }
-                //}
-            }
-
             //Get supplier Item Certificate - From SupplierInvioceItemsCertificates Table
             foreach (var CertificateItem in supplierInvoiceItemPM.SupplierInvioceItemCertificats)
             {
