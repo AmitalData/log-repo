@@ -235,7 +235,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          from mypr in leftjoinCourierPendingReasonLocalName.DefaultIfEmpty()
                                                          */
 
-                                                     join qBDeclarationTaxesByTaxTypeCodeViews in context.DeclarationTaxesByTaxTypeCodeViews on
+                                                     join qBDeclarationTaxesByTaxTypeCodeViews in context.DecTaxesByTaxTypeCodeViews on
                                                     new { DeclarationId = a.Id, Tenant = a.Tenant } equals
                                                     new { DeclarationId = qBDeclarationTaxesByTaxTypeCodeViews.DeclarationId, Tenant = qBDeclarationTaxesByTaxTypeCodeViews.Tenant }
                                                     into qBDeclarationTaxesByTaxTypeCodeViewsJoin

@@ -1,4 +1,4 @@
-<View DBType="Main" Name="DeclarationTaxesByTaxTypeCodeViews" Schema="dbo" Module="Customs">
+<View DBType="Main" Name="DecTaxesByTaxTypeCodeViews" Schema="dbo" Module="Customs">
   <SqlScript>
     <![CDATA[
    
@@ -7,7 +7,7 @@
   <OracleScript>
 	  
 	  <![CDATA[
-CREATE OR REPLACE VIEW DeclarationTaxesByTaxTypeCodeViews
+CREATE OR REPLACE VIEW DecTaxesByTaxTypeCodeViews
     AS
 select DeclarationId,Tenant,sum(MehesFee)as MehesFee,sum(VATReshimonFee)as VATReshimonFee,sum(SecurityFee) as SecurityFee,sum(ComputerFee) as ComputerFee
 from (
