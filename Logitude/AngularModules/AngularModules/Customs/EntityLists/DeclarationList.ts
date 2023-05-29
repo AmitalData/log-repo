@@ -227,6 +227,10 @@ export class DeclarationList {
 	CasualImporterCountry: string;
 	IntegratorName: string;
 	ExportCloseAmendStatusName: string;
+	MehesFee: number;
+	VATReshimonFee: number;
+	SecurityFee: number;
+	ComputerFee: number;
 	
 }
  

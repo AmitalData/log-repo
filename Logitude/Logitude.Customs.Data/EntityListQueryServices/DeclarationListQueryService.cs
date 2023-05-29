@@ -235,6 +235,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          from mypr in leftjoinCourierPendingReasonLocalName.DefaultIfEmpty()
                                                          */
 
+                                                     join qBDeclarationTaxesByTaxTypeCodeViews in context.DeclarationTaxesByTaxTypeCodeViews on
+                                                    new { DeclarationId = a.Id, Tenant = a.Tenant } equals
+                                                    new { DeclarationId = qBDeclarationTaxesByTaxTypeCodeViews.DeclarationId, Tenant = qBDeclarationTaxesByTaxTypeCodeViews.Tenant }
+                                                    into qBDeclarationTaxesByTaxTypeCodeViewsJoin
+                                                     from MyDeclarationTaxesByTaxTypeCodeViews in qBDeclarationTaxesByTaxTypeCodeViewsJoin
+
                                                      select new DeclarationList()
                                                      {
                                                          Id = a.Id,
@@ -426,6 +432,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ExportLoadingPortCode = a.ExportLoadingPortCode,
                                                          LoadingPortName = a.ExportLoadingPort.LocalName,
 
+                                                         MehesFee = MyDeclarationTaxesByTaxTypeCodeViews.MehesFee,
+                                                         VATReshimonFee = MyDeclarationTaxesByTaxTypeCodeViews.VATReshimonFee,
+                                                         SecurityFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
+                                                         ComputerFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
+
                                                      });
 
                 return query;
@@ -496,13 +507,19 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 into qStatusAmendJoin
                                                      from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
 
-                                                         /*
-                                                         join pr in qCourierPendingReasonLocalName
-                                                         on a.Id equals pr.DeclarationID into leftjoinCourierPendingReasonLocalName
-                                                         from mypr in leftjoinCourierPendingReasonLocalName.DefaultIfEmpty()
-                                                         */
+                                                      join qBDeclarationTaxesByTaxTypeCodeViews in context.DeclarationTaxesByTaxTypeCodeViews on
+                                                      new { DeclarationId = a.Id, Tenant = a.Tenant } equals
+                                                      new { DeclarationId = qBDeclarationTaxesByTaxTypeCodeViews.DeclarationId, Tenant = qBDeclarationTaxesByTaxTypeCodeViews.Tenant }
+                                                      into qBDeclarationTaxesByTaxTypeCodeViewsJoin
+                                                      from MyDeclarationTaxesByTaxTypeCodeViews in qBDeclarationTaxesByTaxTypeCodeViewsJoin
 
-                                                     select new DeclarationList()
+                                                          /*
+                                                          join pr in qCourierPendingReasonLocalName
+                                                          on a.Id equals pr.DeclarationID into leftjoinCourierPendingReasonLocalName
+                                                          from mypr in leftjoinCourierPendingReasonLocalName.DefaultIfEmpty()
+                                                          */
+
+                                                      select new DeclarationList()
                                                      {
                                                          Id = a.Id,
                                                          // AgentId = a.AgentId,
@@ -684,8 +701,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                          AmendmentStatusName = myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName : null,
                                                          ExportLoadingPortCode = a.ExportLoadingPortCode,
- 
-                                                     });
+
+                                                         MehesFee= MyDeclarationTaxesByTaxTypeCodeViews.MehesFee,
+                                                         VATReshimonFee=MyDeclarationTaxesByTaxTypeCodeViews.VATReshimonFee,
+                                                         SecurityFee=MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
+                                                         ComputerFee=MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
+
+                                                      });
 
                 return query2;
 

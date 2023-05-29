@@ -452,6 +452,14 @@ namespace Logitude.Customs.Data.EntityLists
        public string IntegratorName  { get; set; }
        [DataMember]
        public string ExportCloseAmendStatusName  { get; set; }
+       [DataMember]
+       public int MehesFee  { get; set; }
+       [DataMember]
+       public int VATReshimonFee  { get; set; }
+       [DataMember]
+       public int SecurityFee  { get; set; }
+       [DataMember]
+       public int ComputerFee  { get; set; }
    }
 
 }

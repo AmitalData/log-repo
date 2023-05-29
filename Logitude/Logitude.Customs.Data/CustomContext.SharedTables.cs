@@ -15,6 +15,8 @@ namespace Logitude.Customs.Data
         public IDbSet<Card> Cards { get; set; }
 
         public IDbSet<DecCourierStatusesView> DecCourierStatusesViews { get; set; }
+        public IDbSet<DeclarationTaxesByTaxTypeCodeView> DeclarationTaxesByTaxTypeCodeViews { get; set; }
+
 
     }
     public partial interface ICustomContext : IContext
@@ -22,6 +24,8 @@ namespace Logitude.Customs.Data
         
         IDbSet<Card> Cards { get; set; }
         IDbSet<DecCourierStatusesView> DecCourierStatusesViews { get; set; }
+        IDbSet<DeclarationTaxesByTaxTypeCodeView> DeclarationTaxesByTaxTypeCodeViews { get; set; }
+
 
 
     }
