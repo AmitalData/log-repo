@@ -34,14 +34,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 entityPM.Id = IdCounter.GetNumber("ReconcileExternalPageLine", entityPM.Tenant);
 
             entityPM.ReconcileExternalPageId = entityParentPM.Id;
-            this.UpdateBankAccount(entityPM);
+            //this.UpdateBankAccount(entityPM);
             base.OnCreating(entityPM, entityParentPM);
         }
         protected override void OnUpdating(ReconcileExternalPageLinePM entityPM, ReconcileExternalPageLine entityPOCO)
         {
             if(entityPM.IsReconciled != entityPOCO.IsReconciled)
             {
-                this.UpdateBankAccount(entityPM);
+                //this.UpdateBankAccount(entityPM);
             }
             base.OnUpdating(entityPM, entityPOCO);
         }

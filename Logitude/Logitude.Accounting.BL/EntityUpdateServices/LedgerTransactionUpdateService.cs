@@ -30,7 +30,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.IsReconciled = false;
             }
-           this.UpdateBankAccount(entityPM);
+           //this.UpdateBankAccount(entityPM);
 
         }
 
@@ -111,7 +111,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (entityPM.IsExternalReconcile != entityPOCO.IsExternalReconcile)
             {
-                this.UpdateBankAccount(entityPM);
+                //this.UpdateBankAccount(entityPM);
             }
  
             base.OnUpdating(entityPM, entityPOCO);
