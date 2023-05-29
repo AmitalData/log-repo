@@ -20533,6 +20533,78 @@
       DefaultText="&quot;Reference no&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.CreationDate&quot;"
+      DefaultText="&quot;Creation Date&quot;"
+      LocalDefaultText="&quot;תאריך יצירה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.AmountInvoice&quot;"
+      DefaultText="&quot;Invoice amount in NIS&quot;"
+      LocalDefaultText="&quot;סכום חשבונית בש&quot;ח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.AmountExampt&quot;"
+      DefaultText="&quot;Exempt amount on the invoice&quot;"
+      LocalDefaultText="&quot;סכום פטור בחשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.CaseNumber&quot;"
+      DefaultText="&quot;Case Number&quot;"
+      LocalDefaultText="&quot;מספר תיק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.AmountVatable&quot;"
+      DefaultText="&quot;amount owed on the invoice&quot;"
+      LocalDefaultText="&quot;סכום חייב בחשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.AmountReport&quot;"
+      DefaultText="&quot;Amount to be reported on the invoice&quot;"
+      LocalDefaultText="&quot;סכום לדיווח בחשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.Descreption&quot;"
+      DefaultText="&quot;Section description&quot;"
+      LocalDefaultText="&quot;תאור סעיף&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.All&quot;"
+      DefaultText="&quot;All&quot;"
+      LocalDefaultText="&quot;הכל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.ExternalInvoice&quot;"
+      DefaultText="&quot;External invoice&quot;"
+      LocalDefaultText="&quot;חשבונית חיצונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.InternalInvoice&quot;"
+      DefaultText="&quot;Internal invoice&quot;"
+      LocalDefaultText="&quot;חשבונית פנימית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.reportsToVAT&quot;"
+      DefaultText="&quot;reports to VAT&quot;"
+      LocalDefaultText="&quot;מדווח למעמ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.NotreportsToVAT&quot;"
+      DefaultText="&quot;Not reported to VAT&quot;"
+      LocalDefaultText="&quot;לא מדווח למעמ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "677367ac4835651c646c174faf4eece3";
+
+		public const string HashString = "b0c169b5cb7c493e882b4bc1264cf84a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -103,6 +104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  true,
+
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -15876,6 +15878,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARInvoiceTextCode_ARInvoiceGNoInvoiceMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.NoInvoiceMSG", DefaultText = "You don't have invoices yetInformation about invoices will be displayed here, when they will be added by the forwarder.",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_GeneralGReferenceNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.ReferenceNo", DefaultText = "Reference no",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOCreationDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.CreationDate", DefaultText = "Creation Date",LocalDefaultText = @"תאריך יצירה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOAmountInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.AmountInvoice", DefaultText = "Invoice amount in NIS",LocalDefaultText = "סכום חשבונית בש''ח", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOAmountExampt = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.AmountExampt", DefaultText = "Exempt amount on the invoice",LocalDefaultText = @"סכום פטור בחשבונית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOCaseNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.CaseNumber", DefaultText = "Case Number",LocalDefaultText = @"מספר תיק", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOAmountVatable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.AmountVatable", DefaultText = "amount owed on the invoice",LocalDefaultText = @"סכום חייב בחשבונית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOAmountReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.AmountReport", DefaultText = "Amount to be reported on the invoice",LocalDefaultText = @"סכום לדיווח בחשבונית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceODescreption = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.Descreption", DefaultText = "Section description",LocalDefaultText = @"תאור סעיף", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.All", DefaultText = "All",LocalDefaultText = @"הכל", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOExternalInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.ExternalInvoice", DefaultText = "External invoice",LocalDefaultText = @"חשבונית חיצונית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOInternalInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.InternalInvoice", DefaultText = "Internal invoice",LocalDefaultText = @"חשבונית פנימית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOreportsToVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.reportsToVAT", DefaultText = "reports to VAT",LocalDefaultText = @"מדווח למעמ", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceONotreportsToVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.NotreportsToVAT", DefaultText = "Not reported to VAT",LocalDefaultText = @"לא מדווח למעמ", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
