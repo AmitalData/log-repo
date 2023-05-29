@@ -1,4 +1,4 @@
-﻿<Script DBType="Main"  Module="Common" Env="local,test,logbox" AOT="true" TargetTableName="DocumentsFilings">
+﻿<Script DBType="Main"  Module="Common" Env="local" AOT="true" TargetTableName="DocumentsFilings">
   <Sql Version="2">
     <![CDATA[
 
