@@ -1677,6 +1677,41 @@ namespace HypredTest
             return Token;
         }
 
+        private string LoginByUserEmailAndPassword()
+        {
+            string userEmail = UserEmailTextBox.Text;
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                MessageBox.Show("Please fill user email");
+                return "";
+            }
+
+            string userPassword = UserPasswordTextBox.Text;
+            if (string.IsNullOrEmpty(userPassword))
+            {
+                MessageBox.Show("Please fill user password");
+                return "";
+            }
+
+            LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
+            Response loginResponse = loginService.Login(userEmail, userPassword);
+            if (!loginResponse.HasError)
+            {
+                Token = loginResponse.Result;
+            }
+
+            if (string.IsNullOrEmpty(Token))
+            {
+                MessageBox.Show("Login Failed!!!");
+            }
+            else
+            {
+                LoginButton.ForeColor = Color.Green;
+            }
+
+            return Token;
+        }
+
         private string LoginToTest()
         {
             LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
@@ -3227,14 +3262,15 @@ namespace HypredTest
 
         private string LoginToCloud()
         {
-            LogingProxyCloud.LoginWcfServiceClient loginService = new LogingProxyCloud.LoginWcfServiceClient();
-            LogingProxyCloud.Response loginResponse = loginService.Login("yaronc@amital.co.il", "!Y123456");//("zaki@amital.co.il", "!Zz123456");
-            if (!loginResponse.HasError)
-            {
-                Token = loginResponse.Result;
-            }
+            //LogingProxyCloud.LoginWcfServiceClient loginService = new LogingProxyCloud.LoginWcfServiceClient();
+            //LogingProxyCloud.Response loginResponse = loginService.Login("yaronc@amital.co.il", "!Y123456");//("zaki@amital.co.il", "!Zz123456");
+            //if (!loginResponse.HasError)
+            //{
+            //    Token = loginResponse.Result;
+            //}
 
-            return Token;
+            //return Token;
+            return "";
         }
 
         private void Button5_Click(object sender, EventArgs e)
@@ -3270,7 +3306,11 @@ namespace HypredTest
 
         private void btnRunTest_Click(object sender, EventArgs e)
         {
-            Login();
+            if (string.IsNullOrEmpty(Token))
+            {
+                MessageBox.Show("Please login first");
+                return;
+            }
             var response = new Response();
             var partnersTester = new PartnersTester();
              
@@ -3329,6 +3369,9 @@ namespace HypredTest
                     break;
                 case "Address":
                     response =  TestAddressService();
+                    break;
+                case "EntityStatus":
+                    response = TestEntityStatusesService();
                     break;
                 default:
                     MessageBox.Show("select a service to test");
@@ -3415,6 +3458,34 @@ namespace HypredTest
             }
 
  
+        }
+
+        private Response TestEntityStatusesService()
+        {
+            EntityStatusProxy.EntityStatusWcfServiceClient entityStatusService = new EntityStatusProxy.EntityStatusWcfServiceClient();
+            EntityStatusProxy.EntityStatusPM entityStatusPM = new EntityStatusProxy.EntityStatusPM()
+            {
+                Code = "Test",
+                Name = "Test",
+                Tenant = 0,
+                StatusWeight = 10,
+                StatusLocalWeight = 10,
+                ObjectTableId = "1-4", //
+                IsHybrid = true,
+                EntityStatusTypeCode = null,
+                AllowPartial = false,
+                IsDigitalPortal = false,
+                InActive = false,
+            };
+
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)entityStatusService.InnerChannel))
+            {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+                Response response = entityStatusService.Upsert(entityStatusPM, false);
+
+                return response;
+            }
+
         }
 
         private Response TestAddressService()
@@ -4060,6 +4131,11 @@ namespace HypredTest
         private void ActionNames_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void LoginButton_Click(object sender, EventArgs e)
+        {
+            LoginByUserEmailAndPassword();
         }
 
 
