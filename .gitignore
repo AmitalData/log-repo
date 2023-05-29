@@ -458,7 +458,6 @@ __pycache__/
 /Logitude/Logitude.CargoTrackingTests/Configurations/Configurations.xml
 /Logitude/Logitude.Accounting.MetaData/EntityFiles/InterestTransactionNote.lxml
 /Logitude/Logitude.Accounting.MetaData/DBTables/InterestTransactionNote.dxml
-/Logitude/Logitude.Accounting.MetaData/DBTables
 /Logitude/Logitude.Accounting.Def/EntityPMs/Generated/InterestTransactionNotePM.Generated.cs
 /Logitude/Logitude.Accounting.Data/Repositories/InterestTransactionNoteRepository.cs
 /Logitude/Logitude.Accounting.Data/Repositories/Generated/InterestTransactionNoteRepository.Generated.cs
