@@ -26,7 +26,7 @@ export class APInvoiceValidator {
         this.Errors = [];
         this.message = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         this.accountingActivated = SessionLocator.TenantPM.AccountingActivated;
-        console.log(this.accountingActivated);
+        
     }
 
     public Validate(entityPM: APInvoicePM) {
