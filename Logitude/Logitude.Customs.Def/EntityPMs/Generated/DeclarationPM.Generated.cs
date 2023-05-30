@@ -5941,6 +5941,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? exportFlightDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? ExportFlightDate  
+	   {
+	    
+	     get
+		{
+		   return exportFlightDate;
+		 }
+		 set
+		 {
+		   if(exportFlightDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportFlightDate",OldValue=exportFlightDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   exportFlightDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

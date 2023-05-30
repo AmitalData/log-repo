@@ -1499,6 +1499,11 @@ export class DeclarationPM {
     public set IsAramex(newValue: boolean) { if (this.isAramex != newValue) { this.isAramex = newValue; this.MarkAsDirty("IsAramex"); } }
        
 	 
+    private exportFlightDate: Date;
+    public get ExportFlightDate() { return this.exportFlightDate; }
+    public set ExportFlightDate(newValue: Date) { if (this.exportFlightDate != newValue) { this.exportFlightDate = newValue; this.MarkAsDirty("ExportFlightDate"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

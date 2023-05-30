@@ -64,6 +64,8 @@ public partial class LogitudeCustomsFile
 
     private string customerIdField;
 
+    private string flightDateField;
+
     private string transportModeIdField;
 
     private string createdByUserIdField;
@@ -272,6 +274,17 @@ public partial class LogitudeCustomsFile
         }
     }
 
+    public string FlightDate
+    {
+        get
+        {
+            return this.flightDateField;
+        }
+        set
+        {
+            this.flightDateField = value;
+        }
+    }
     /// <remarks/>
     public string TransportModeId
     {
