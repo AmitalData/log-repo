@@ -42,8 +42,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPm.Id = IdCounter.GetNumber("BusinessHoursHoliday", tenant).ToString();
             this.Poco = new BusinessHoursHoliday();
             this.Poco.Id = this.entityPm.Id;
-
-            this.Poco.BusinessHourId = ObjectContext.BusinessHours.Where(b => b.Tenant == entityPM.Tenant && b.Code == "BUS").FirstOrDefault()?.Id;
+            if (this.Poco.BusinessHourId!=null) 
+                 this.Poco.BusinessHourId = ObjectContext.BusinessHours.Where(b => b.Tenant == entityPM.Tenant && b.Code == "BUS").FirstOrDefault()?.Id;
             BusinessHoursHolidayMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
@@ -54,7 +54,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleBusinessHoursHolidays(entityPM.Id , entityPm.Tenant);
-            this.Poco.BusinessHourId = ObjectContext.BusinessHours.Where(b => b.Tenant == entityPM.Tenant && b.Code == "BUS").FirstOrDefault()?.Id;
+            if (this.Poco.BusinessHourId != null)
+                this.Poco.BusinessHourId = ObjectContext.BusinessHours.Where(b => b.Tenant == entityPM.Tenant && b.Code == "BUS").FirstOrDefault()?.Id;
             string entityName = "BusinessHoursHoliday" + entityPM.Id + entityPM.Tenant;
             string entityPmName = "BusinessHoursHolidayPM" + entityPM.Id + entityPM.Tenant;
            
