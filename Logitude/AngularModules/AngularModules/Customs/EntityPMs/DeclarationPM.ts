@@ -1499,6 +1499,11 @@ export class DeclarationPM {
     public set IsAramex(newValue: boolean) { if (this.isAramex != newValue) { this.isAramex = newValue; this.MarkAsDirty("IsAramex"); } }
        
 	 
+    private uNFCourier: boolean;
+    public get UNFCourier() { return this.uNFCourier; }
+    public set UNFCourier(newValue: boolean) { if (this.uNFCourier != newValue) { this.uNFCourier = newValue; this.MarkAsDirty("UNFCourier"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

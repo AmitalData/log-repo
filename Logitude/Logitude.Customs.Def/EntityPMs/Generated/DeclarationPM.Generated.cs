@@ -5941,6 +5941,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool uNFCourier ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool UNFCourier  
+	   {
+	    
+	     get
+		{
+		   return uNFCourier;
+		 }
+		 set
+		 {
+		   if(uNFCourier != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UNFCourier",OldValue=uNFCourier,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   uNFCourier=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
