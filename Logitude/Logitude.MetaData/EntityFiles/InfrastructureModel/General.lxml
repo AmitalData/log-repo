@@ -2254,6 +2254,12 @@
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;Accounting.General.O.DefaultVATTypeMissing&quot;"
+      DefaultText="&quot;Default VAT Type is missing in the Full Accounting Settings&quot;"
+      LocalDefaultText="&quot;אין הגדרת סוג מעמ דיפולטיבי בטבלת Full Accounting Settings&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;Accounting.General.O.OldValue&quot;"
       DefaultText="&quot;Old value: &quot;"
       LocalDefaultText="&quot;, ערך קודם: &quot;"
