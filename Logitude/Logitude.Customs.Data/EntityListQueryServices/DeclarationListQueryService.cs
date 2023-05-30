@@ -239,7 +239,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                     new { DeclarationId = a.Id, Tenant = a.Tenant } equals
                                                     new { DeclarationId = qBDeclarationTaxesByTaxTypeCodeViews.DeclarationId, Tenant = qBDeclarationTaxesByTaxTypeCodeViews.Tenant }
                                                     into qBDeclarationTaxesByTaxTypeCodeViewsJoin
-                                                     from MyDeclarationTaxesByTaxTypeCodeViews in qBDeclarationTaxesByTaxTypeCodeViewsJoin
+                                                     from MyDeclarationTaxesByTaxTypeCodeViews in qBDeclarationTaxesByTaxTypeCodeViewsJoin.DefaultIfEmpty()
 
                                                      select new DeclarationList()
                                                      {
@@ -511,7 +511,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                       new { DeclarationId = a.Id, Tenant = a.Tenant } equals
                                                       new { DeclarationId = qBDeclarationTaxesByTaxTypeCodeViews.DeclarationId, Tenant = qBDeclarationTaxesByTaxTypeCodeViews.Tenant }
                                                       into qBDeclarationTaxesByTaxTypeCodeViewsJoin
-                                                      from MyDeclarationTaxesByTaxTypeCodeViews in qBDeclarationTaxesByTaxTypeCodeViewsJoin
+                                                      from MyDeclarationTaxesByTaxTypeCodeViews in qBDeclarationTaxesByTaxTypeCodeViewsJoin.DefaultIfEmpty()
 
                                                           /*
                                                           join pr in qCourierPendingReasonLocalName
