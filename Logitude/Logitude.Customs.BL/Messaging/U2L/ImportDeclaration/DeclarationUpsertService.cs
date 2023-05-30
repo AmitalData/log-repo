@@ -260,6 +260,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.MarkAsChanged = true; // moran 2.6.15 - Task 13803
 
                 MyGenericResponseObj.Stage = "Mapping";
+                if (_AmitalCustomsFile.Direction == "E" && _AmitalCustomsFile.Mode != "NEW")
+                {
+                    ExportDeclarationUpdate();
+                    MyGenericResponseObj.Message = "עודכנה הצהרת יצוא";
+                    MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+                    MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+                    scope.Complete();
+                    return;
+                }
+
                 if (this._MyDeclarationPM.Consignments == null)
                 {
                     this._MyDeclarationPM.Consignments = new List<Def.EntityPMs.ConsignmentPM>();
@@ -975,10 +986,46 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 ForiegnKeyCheck.Check<DeclarationExportRecipient>(x, tenant);
             });
         }
+        private void ExportDeclarationUpdate()
+        {
+            if (_AmitalCustomsFile.Direction == "E" && _AmitalCustomsFile.Mode != "NEW")
+            {
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.FlightDate))
+                {
+                    this._MyDeclarationPM.ExportFlightDate = DateTime.Parse(_AmitalCustomsFile.FlightDate);
+                    _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                }
+                else
+                {
+                    if(this._MyDeclarationPM.ExportFlightDate != null)
+                    {
+                        this._MyDeclarationPM.ExportFlightDate = null;
+                        _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                AppendLogLine("try to update FlightDate " + _AmitalCustomsFile.FlightDate + " to DeclarationPM.Id: " + _MyDeclarationPM.Id);
+                try
+                {
+                    declarationUpdateService.Update(_MyDeclarationPM, true);
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                    AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+                catch (Exception e)
+                {
+                    AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+            }
+        }
 
         private void ExportDeclarationInsert()
         {
-            if (_AmitalCustomsFile.Direction == "E")
+            if (_AmitalCustomsFile.Direction == "E" && _AmitalCustomsFile.Mode == "NEW")
             {
 
                 ///DeclarationPM

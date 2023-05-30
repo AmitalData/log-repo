@@ -181,6 +181,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExcludeManifest, 
 	         ForwarderFiles, 
 	         ShortProcedure,
+	         ExportFlightDate,
 	      }
 
 
@@ -435,6 +436,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExcludeManifest, 
 	         ForwarderFiles, 
 	         ShortProcedure,
+	         ExportFlightDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1221,6 +1223,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeManifest))
             {
 				entityPOCO.ExcludeManifest = entityPM.ExcludeManifest;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFlightDate))
+            {
+				entityPOCO.ExportFlightDate = entityPM.ExportFlightDate;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderFiles))
@@ -2022,6 +2029,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExcludeManifest))
             {
 					entityPM.ExcludeManifest = entityPOCO.ExcludeManifest;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportFlightDate))
+            {
+					entityPM.ExportFlightDate = entityPOCO.ExportFlightDate;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwarderFiles))
@@ -2828,6 +2839,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
             {
                 oldEntityPM.ShortProcedure = entityPM.ShortProcedure;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFlightDate))
+            {
+                oldEntityPM.ExportFlightDate = entityPM.ExportFlightDate;
             }
 			
 		}

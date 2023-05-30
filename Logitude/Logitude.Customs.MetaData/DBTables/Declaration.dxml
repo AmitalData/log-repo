@@ -1091,6 +1091,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ExportFlightDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"

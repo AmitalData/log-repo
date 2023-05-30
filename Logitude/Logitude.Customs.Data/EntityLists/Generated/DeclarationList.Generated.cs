@@ -468,6 +468,8 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? SecurityFee  { get; set; }
        [DataMember]
        public decimal? ComputerFee  { get; set; }
+       [DataMember]
+       public DateTime? ExportFlightDate  { get; set; }
    }
 
 }

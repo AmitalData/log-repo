@@ -235,6 +235,7 @@ export class DeclarationList {
 	VATReshimonFee: number;
 	SecurityFee: number;
 	ComputerFee: number;
+	ExportFlightDate: Date;
 	
 }
  
