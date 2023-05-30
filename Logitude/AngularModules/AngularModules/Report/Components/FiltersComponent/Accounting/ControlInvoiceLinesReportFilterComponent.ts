@@ -50,8 +50,9 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
             this.entityResourceService.getEntityResourceByTableName("TaxReport").subscribe((response: any) => {
                 this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
                     this.entityResourceService.getEntityResourceByTableName("ARInvoiceLine").subscribe((response: any) => {
+                        this.entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => {
                         this.isReady = true;
-
+                    });
                     });
                 });
             });
