@@ -28,6 +28,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.Core.Objects;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -50,8 +51,14 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("BusinessHoursHoliday", "UPDATE", entityPM.Tenant);//UPDATE//READ
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
+                    IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
 
                     ClassLevelValidator validationClass = new ClassLevelValidator("BusinessHoursHoliday", entityPM.Tenant) { IsHybrid = true };
+                    if (entityPM != null)
+                    {
+                        entityPM.BusinessHourId = objectContext.BusinessHours.Where(b => b.Tenant == entityPM.Tenant && b.Code == "BUS").FirstOrDefault()?.Id;
+
+                    }
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
                         response.HasError = true;
@@ -59,7 +66,7 @@ namespace WebFreight.Web.WcfApi
                         return response;
                     }
 
-                    IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
+                   
 
                     BusinessHoursHolidayRepository businessHoursHolidayRepository = new BusinessHoursHolidayRepository(objectContext);
                     BusinessHoursHolidayService service = new BusinessHoursHolidayService(objectContext, entityPM.Tenant);
