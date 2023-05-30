@@ -378,7 +378,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             return currentDeclarationCourierStatusPM;
         }
-        public DeclarationCourierStatusPM CalculateDeclarationCourierStatus(DeclarationPM declarationPM, bool isRequiredFieldHasChanged = false)
+        public DeclarationCourierStatusPM CalculateDeclarationCourierStatus(DeclarationPM declarationPM,bool isRequiredFieldHasChanged = false)
         {
             LogMessagingUtil.Instance.AppendLine("CalculateDeclarationCourierStatus()");
             CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(declarationPM);
@@ -409,7 +409,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 //Set CourierManifestStatusCode according to Manifest Message Required fields
                 CustomsRequiredFieldErrors errorsForCourierDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForCourierDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
-                if (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields != null && errorsForCourierDeclaration.RequiredFields.Count() > 0)
+                if (!calculateDeclarationCourierStatus.GetRequiredFieldErrorsForCourierDeclarationIsValid(myDeclarationCourierStatusPM.DeclarationId, myDeclarationCourierStatusPM.Tenant)
+                    || (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields != null && errorsForCourierDeclaration.RequiredFields.Count() > 0))
                 {
                     myDeclarationCourierStatusPM.CourierManifestStatusCode = "M";
                 }
