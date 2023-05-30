@@ -229,6 +229,8 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public bool EnableExportToExcel { get; set; }
         public bool ActivatedforDeclarationApprove { get; set; }
         public bool ShowMoneyOrder { get; set; }
+        public bool CargoTrackingPublicShowEvents { get; set; }
+        public bool CargoTrackingPrivateShowEvents { get; set; }
         public string DeclarationMessage { get; set; }
         public string CustomerURL { get; set; }
         public bool HideSharedlogistics { get; set; }

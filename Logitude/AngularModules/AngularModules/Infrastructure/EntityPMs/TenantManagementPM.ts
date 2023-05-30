@@ -619,6 +619,16 @@ export class TenantManagementPM {
     public set ShowMoneyOrder(newValue: boolean) { if (this.showMoneyOrder != newValue) { this.showMoneyOrder = newValue; this.MarkAsDirty("ShowMoneyOrder"); } }
        
 	 
+    private cargoTrackingPublicShowEvents: boolean;
+    public get CargoTrackingPublicShowEvents() { return this.cargoTrackingPublicShowEvents; }
+    public set CargoTrackingPublicShowEvents(newValue: boolean) { if (this.cargoTrackingPublicShowEvents != newValue) { this.cargoTrackingPublicShowEvents = newValue; this.MarkAsDirty("CargoTrackingPublicShowEvents"); } }
+       
+	 
+    private cargoTrackingPrivateShowEvents: boolean;
+    public get CargoTrackingPrivateShowEvents() { return this.cargoTrackingPrivateShowEvents; }
+    public set CargoTrackingPrivateShowEvents(newValue: boolean) { if (this.cargoTrackingPrivateShowEvents != newValue) { this.cargoTrackingPrivateShowEvents = newValue; this.MarkAsDirty("CargoTrackingPrivateShowEvents"); } }
+       
+	 
     private declarationMessage: string;
     public get DeclarationMessage() { return this.declarationMessage; }
     public set DeclarationMessage(newValue: string) { if (this.declarationMessage != newValue) { this.declarationMessage = newValue; this.MarkAsDirty("DeclarationMessage"); } }
