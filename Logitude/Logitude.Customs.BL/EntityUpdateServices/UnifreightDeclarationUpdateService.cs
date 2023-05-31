@@ -208,7 +208,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 try
                 {
                     if (setting.IsConnectedToUniFreight) {
-                        AmitalContext _AmitalContext = AmitalContext.GetContext(_DirtyDeclarationPM.Tenant);
+                         _AmitalContext = AmitalContext.GetContext(_DirtyDeclarationPM.Tenant);
 
                         //AmitalContext.SetOracleMonitor();
 
