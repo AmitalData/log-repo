@@ -637,5 +637,12 @@ namespace Simplog.Data.InvoiceModel.Repositories
                    .Select(a => a);
         }
 
+        public IQueryable<ControlForInvoiceLinesDataView> GetControlForInvoiceLinesDataView(int tenant)
+        {
+            return context.ControlForInvoiceLinesDataView
+                   .Where(a => a.Tenant == tenant)
+                   .Select(a => a);
+        }
+
     }
 }

@@ -8092,14 +8092,15 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -8128,6 +8129,9 @@
     FullFieldLable="&quot;IsExternalEntity&quot;"
     DefaultText="&quot;Is external entity&quot;"
     FullLocalDefaultText="&quot;ישות חיצונית&quot;"
+    ListFieldLable="&quot;IsExternalEntityListLable&quot;"
+    ListLableDefaultText="&quot;IsExternalEntity&quot;"
+    ListLocalDefaultText="&quot;IsExternalEntity&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -17118,6 +17122,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsAutoCredited&quot;"
     ListPropertyPath="&quot;IsAutoCredited&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -17188,81 +17193,86 @@
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;TotalAmountNotForTaxReport&quot;"
+        ObjectFieldName="&quot;IsExternalEntity&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;TotalVAT&quot;"
+        ObjectFieldName="&quot;TotalAmountNotForTaxReport&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;TotalAmountForTaxReport&quot;"
+        ObjectFieldName="&quot;TotalVAT&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;TotaVatableAmountForTaxReport&quot;"
+        ObjectFieldName="&quot;TotalAmountForTaxReport&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;TotalExamptFortaxReport&quot;"
+        ObjectFieldName="&quot;TotaVatableAmountForTaxReport&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="6"
+        ObjectFieldName="&quot;TotalExamptFortaxReport&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="7"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -20532,6 +20542,78 @@
       Code="&quot;General.G.ReferenceNo&quot;"
       DefaultText="&quot;Reference no&quot;"
       TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.CreationDate&quot;"
+      DefaultText="&quot;Creation Date&quot;"
+      LocalDefaultText="&quot;תאריך יצירה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.AmountInvoice&quot;"
+      DefaultText="&quot;Invoice amount in NIS&quot;"
+      LocalDefaultText="&quot;סכום חשבונית בש&quot;ח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.AmountExampt&quot;"
+      DefaultText="&quot;Exempt amount on the invoice&quot;"
+      LocalDefaultText="&quot;סכום פטור בחשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.CaseNumber&quot;"
+      DefaultText="&quot;Case Number&quot;"
+      LocalDefaultText="&quot;מספר תיק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.AmountVatable&quot;"
+      DefaultText="&quot;amount owed on the invoice&quot;"
+      LocalDefaultText="&quot;סכום חייב בחשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.AmountReport&quot;"
+      DefaultText="&quot;Amount to be reported on the invoice&quot;"
+      LocalDefaultText="&quot;סכום לדיווח בחשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.Descreption&quot;"
+      DefaultText="&quot;Section description&quot;"
+      LocalDefaultText="&quot;תאור סעיף&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.All&quot;"
+      DefaultText="&quot;All&quot;"
+      LocalDefaultText="&quot;הכל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.ExternalInvoice&quot;"
+      DefaultText="&quot;External invoice&quot;"
+      LocalDefaultText="&quot;חשבונית חיצונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.InternalInvoice&quot;"
+      DefaultText="&quot;Internal invoice&quot;"
+      LocalDefaultText="&quot;חשבונית פנימית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.reportsToVAT&quot;"
+      DefaultText="&quot;reports to VAT&quot;"
+      LocalDefaultText="&quot;מדווח למעמ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.NotreportsToVAT&quot;"
+      DefaultText="&quot;Not reported to VAT&quot;"
+      LocalDefaultText="&quot;לא מדווח למעמ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

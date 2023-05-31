@@ -287,6 +287,10 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.RemoveAgingDefinitionTab();
     }
 
+
+
+   
+
     private ToggleCopyingDataFromTenant0Tab(value: boolean) {
         if (value)
             this.disabledCopyFromTenant0 = false
@@ -294,6 +298,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.disabledCopyFromTenant0 = true
     }
 
+    
     get IsPaymentChequesActivated() { return this.EntityPM.IsPaymentChequesActivated; }
     set IsPaymentChequesActivated(value: boolean) {
         if (this.EntityPM.IsPaymentChequesActivated != value) {
@@ -879,6 +884,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
         this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
+
         this.TabsSource.push({ Name: "Signed", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Signeds") });
         if(this.AccountingActivated){
             this.AddAgingDefinitionTab();
@@ -901,7 +907,6 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
     }
 
- 
 
     SelectionChanged(tab: any) {
 

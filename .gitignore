@@ -481,3 +481,4 @@ __pycache__/
 /Logitude/AngularModules/AngularModules/Accounting/EntityLists/InterestTransactionNoteList.ts
 /Logitude/AngularModules/AngularModules/Accounting/Components/Others/InterestTransactionNoteComponent.ts
 /Logitude/AngularModules/AngularModules/Accounting/Components/Others/InterestTransactionNoteComponent.html
+/Logitude/AngularModules/AngularModules/Infrastructure/Services/StandardLists/CustomFieldsMainObjectsListService.ts

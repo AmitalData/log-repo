@@ -822,5 +822,12 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 throw new NotImplementedException();
             }
         }
+        public IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
