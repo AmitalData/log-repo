@@ -121,7 +121,7 @@
     Size="100"
     InitialValueScript="update [WorkFlows] set [WorkFlowNumber] = [Id]">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
