@@ -106,7 +106,8 @@
                    </span>
                    <span  [style.float]="isRTL ? 'left' : 'right'"
                         [style.text-align]="isRTL ? 'right' : 'left'"
-                        [style]="isRTL ? {'padding-left': '4px'}: {'padding-right': '4px'}"
+                        [style.padding-left]="isRTL ? '4px' : '0'"
+                        [style.padding-right]="isRTL ? '0' : '4px'"                      
                         style="width: 0px;  padding-left: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
                        {{'GLAccount.O.NotIncludedInTax' | TextCodeTranslationPipe   }}
                    </span>
@@ -157,7 +158,7 @@
         </td>
         <td style="width: 380px;">
           <div>
-            <td style="width: 30px;" [style]="isRTL ? {'padding-left': '10px'}: {'padding-right': '10px'}" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.AmountInvoice' | TextCodeTranslationPipe}}:</td>
+            <td style="width: 30px;" [style.padding-left]="isRTL ? '10px' : '0'" [style.padding-right]="isRTL ? '0' : '10px'" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.AmountInvoice' | TextCodeTranslationPipe}}:</td>
 
             <td style="width: 150px;">
                 
@@ -197,7 +198,7 @@
         </td>
         <td style="width:380px"> 
             <div >
-                <td style="width: 100px;" [style]="isRTL ? {'padding-left': '10px'}: {'padding-right': '10px'}" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.AmountExampt' | TextCodeTranslationPipe}}:</td>        
+                <td style="width: 100px;" [style.padding-left]="isRTL ? '10px' : '0'" [style.padding-right]="isRTL ? '0' : '10px'" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.AmountExampt' | TextCodeTranslationPipe}}:</td>        
                     <td style="width: 150px;">
                         
                             <ComboBox [ItemsSource]="operatorsList" [Binding]="'LocalName'"
@@ -267,7 +268,7 @@
         </td>
         <td style="width:380px">
             <div>
-                <td style="width: 60px;" [style]="isRTL ? {'padding-left': '10px'}: {'padding-right': '10px'}" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.CaseNumber' | TextCodeTranslationPipe}}:</td>   
+                <td style="width: 60px;" [style.padding-left]="isRTL ? '10px' : '0'" [style.padding-right]="isRTL ? '0' : '10px'" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.CaseNumber' | TextCodeTranslationPipe}}:</td>   
 
         
                     <td style="width: 150px;">
@@ -295,7 +296,7 @@
         </td>
         <td style="width: 380px;">
           <div>
-            <td style="width: 100px;" [style]="isRTL ? {'padding-left': '10px'}: {'padding-right': '10px'}" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.AmountVatable' | TextCodeTranslationPipe}}:</td>   
+            <td style="width: 100px;" [style.padding-left]="isRTL ? '10px' : '0'" [style.padding-right]="isRTL ? '0' : '10px'" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.AmountVatable' | TextCodeTranslationPipe}}:</td>   
     
                 <td style="width: 150px;">
                     
@@ -335,7 +336,7 @@
         </td>
         <td style="width:380px"> 
              <div>
-                <td style="width: 100px;" [style]="isRTL ? {'padding-left': '6px'}: {'padding-right': '6px'}" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.AmountReport' | TextCodeTranslationPipe}}:</td>
+                <td style="width: 100px;" [style.padding-left]="isRTL ? '6px' : '0'" [style.padding-right]="isRTL ? '0' : '6px'" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.AmountReport' | TextCodeTranslationPipe}}:</td>
                
         
                     <td style="width: 150px;">
@@ -410,7 +411,7 @@
      <div>
         <td  style="width: 230px; " >
             <div>
-                <td style="width: 60px;" [style]="isRTL ? {'padding-left': '10px'}: {'padding-right': '10px'}" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.Descreption' | TextCodeTranslationPipe}}:</td>   
+                <td style="width: 60px;" [style.padding-left]="isRTL ? '10px' : '0'" [style.padding-right]="isRTL ? '0' : '10px'" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.Descreption' | TextCodeTranslationPipe}}:</td>   
 
                     <td  style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
                         <LogTextBox [InputType]="'ntext'" [NoObjectField]="true"
@@ -450,7 +451,7 @@
 
        </td>
         <td colspan="7"> 
-             <button (click)="RunReport()" class="greenButton" [style]="isRTL ? {'right': '300px'}: {'left': '288px'}" style="width:90px;height:22px;border:1px solid green;border-radius:3px;:300px;">
+             <button (click)="RunReport()" class="greenButton" [style.right.px]="isRTL ? 300 : null" [style.left.px]="isRTL ? null : 288" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
                             <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{'Accounting.General.O.Run' | TextCodeTranslationPipe}}</div>
             </button>
         </td>
