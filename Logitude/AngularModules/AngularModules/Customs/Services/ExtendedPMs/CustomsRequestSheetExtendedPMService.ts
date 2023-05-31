@@ -10,6 +10,9 @@ import { CustomsRequestsSheetPM } from '../../EntityPMs/CustomsRequestsSheetPM';
 
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { DeclarationPM } from '../../EntityPMs/DeclarationPM';
+
+declare const window: any;
+
 @Injectable()
 
 export class CustomsRequestSheetExtendedPMService {
@@ -125,6 +128,28 @@ export class CustomsRequestSheetExtendedPMService {
                     return serviceResponse;
                 }), catchError(ServiceHelper.HandleServiceError));
         });
+    }
+
+    async getRequestsInProgress(interfaceTypeCode: string , tenant: number, displayOnlyMode: boolean, tableName: string = '', entityId: string = '', tableName2: string = '', entityId2: string = '', customFileNo: string = ''): Promise<CustomsRequestsSheetPM[]> {
+        const tableId: string = tableName ? window.ObjectTables.filter(d => d.Name === tableName)[0].Id : '';
+        const tableId2: string = tableName2 ? window.ObjectTables.filter(d => d.Name === tableName2)[0].Id : '';
+        const url: string = this._apiUrl + '/GetRequestInProgress';
+
+        const response: any = await this._http.get(url, {
+            params: {
+                tenant: '' + tenant,
+                interfaceTypeCode: interfaceTypeCode,
+                objectTableId1: tableId,
+                entityId1: entityId,
+                objectTableId2: tableId2,
+                entityId2: entityId2,
+                customFileNo: customFileNo,
+                displayOnlyMode: ''+ displayOnlyMode
+            },
+            headers: ServiceHelper.GetHttpHeaders().headers
+        }).toPromise()
+
+        return response;
     }
 
     MapJsonToEntityPM(jsonPM: any) {
