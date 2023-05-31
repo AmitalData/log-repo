@@ -254,7 +254,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          DealValue = a.DealValue,
                                                          //  DeclarationDocumentId = a.DeclarationDocumentId,
                                                          DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : (!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
-
+                                                         ExportFlightDate = a.ExportFlightDate,
                                                          EntitleImporterCountryName = a.EntitleImporterCountry.LocalName,
                                                          //  EntitleImporterId = a.EntitleImporterId,
                                                          ExternalDeclarationNumber = a.ExternalDeclarationNumber,
