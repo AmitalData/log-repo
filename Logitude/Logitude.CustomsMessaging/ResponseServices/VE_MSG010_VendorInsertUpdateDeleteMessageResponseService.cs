@@ -138,7 +138,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this._CustomsVendorPM.StatusCode = requestParams.StatusCode;
             this._CustomsVendorPM.VATNumber = requestParams.VATNumber;
             this._CustomsVendorPM.TransactionTypeID = requestParams.TransactionTypeID;
-            this._CustomsVendorPM.InActive = requestParams.InActive;
             this._CustomsVendorPM.IsPalestinian = requestParams.IsPalestinian;
             this._CustomsVendorPM.ExternalId = requestParams.ExternalId;
             this._CustomsVendorPM.ConcurrencyGUID = requestParams.ConcurrencyGUID;
