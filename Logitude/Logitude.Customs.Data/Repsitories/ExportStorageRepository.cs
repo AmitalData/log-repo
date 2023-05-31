@@ -37,7 +37,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             var q = from a in context.ExportStorages
                     where
-                    a.Tenant == tenant &&
+                    (tenant == -1 || a.Tenant == tenant) &&
                     a.FirstCargoID == firstCargoID &&
                     (a.SecondCargoID == secondCargoID || secondCargoID == null) &&
                     (a.ThirdCargoID == thirdCargoID || thirdCargoID == null) &&

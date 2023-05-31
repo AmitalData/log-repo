@@ -60,8 +60,8 @@ export class TestCase {
 }
 
 export class CustomSendOptionsArgs {
-    public Option: string;
+    public Option: 'WI' | 'WB' | 'D' | '';
     public ForcePersonalSign: boolean;
     public RequestVIA: SendRequestVIA;
-    public TestCase: boolean= false;
+    public TestCase: boolean = false;
 } 

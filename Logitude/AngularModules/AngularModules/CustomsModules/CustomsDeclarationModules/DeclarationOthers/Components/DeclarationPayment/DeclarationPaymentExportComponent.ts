@@ -64,6 +64,8 @@ import { Observable } from 'rxjs';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 import { formatDate } from '@angular/common';
+import { RequestConflictService, interfaceTypeCodes } from './RequestConflict.service';
+
 @Component({
 
     templateUrl: './DeclarationPaymentExportComponent.html',
@@ -1255,13 +1257,15 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         this.SendButtonClickedStart(event);
     }
 
-    SendButtonClickedStart(event) {
+    async SendButtonClickedStart(event) {
         if (this._CourierWorksheet != null && this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
             var myMessageWindow = new MessageWindow
             myMessageWindow.Show(/*"לם ניתן לבצע הגשת תשלום כםשר יש השהייה מסוג עצירת תשלום. "*/
                 TextCodeTranslator.Translate("Customs.CourierMaster.M.PaymentPendingHold"));
             return;
         }
+
+        event = await RequestConflictService.runInBackground(event, this.DeclarationPM.Tenant , this.DeclarationPM.CustomFileNo, interfaceTypeCodes.declarationStatus, interfaceTypeCodes.exportStorage);
         this.customSendOptions = event;
         this.Option = event.Option;
 

@@ -22,6 +22,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return this.GetSingle(id, true, false);
         }
 
+        public ExportStoragePM GetByCargoKeys(string firstCargoID, string secondCargoID, string thirdCargoID, int cargoIdentifierType) =>
+            GetByCargoKeys(firstCargoID, secondCargoID, thirdCargoID, cargoIdentifierType, -1);
+
         public ExportStoragePM GetByCargoKeys(string firstCargoID, string secondCargoID, string thirdCargoID, int cargoIdentifierType, int tenant)
         {
             var exportStorage = this.repository.GetIDByCargoKeys(firstCargoID, secondCargoID, thirdCargoID, cargoIdentifierType, tenant);
