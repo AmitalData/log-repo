@@ -37,7 +37,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public int? EntityStatusWeight { get; set; }
         public string EventTrigger { get; set; }
         public virtual List<EventRemark> EventRemarks { get; set; }
-        public bool RemarksView { get; set; }
 
     }
 }

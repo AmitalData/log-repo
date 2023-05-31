@@ -182,12 +182,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="RemarksView"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
   <Relation
     ForeignKeyColumn="CustomerRoleId"
     ReferencedTable="Roles"
