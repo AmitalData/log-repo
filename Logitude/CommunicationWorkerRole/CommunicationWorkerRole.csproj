@@ -407,6 +407,7 @@
     <Compile Include="CargoTrackingImporterApprovalReceivedWR.cs" />
     <Compile Include="ImporterEntityStatusesWorkerRole.cs" />
     <Compile Include="ImporterEventTypesWorkerRole.cs" />
+    <Compile Include="ImporterPortsWorkerRole.cs" />
     <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
     <Compile Include="OpportunityStageChangingWorkerRole.cs" />
     <Compile Include="ReportExecutionLogV2WorkerRole.cs" />
