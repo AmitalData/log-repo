@@ -174,5 +174,7 @@ export class TenantManagementList {
 		DPArchiveShipmentArrivalFilter: number;
 		DPArchiveShipmentDepartFilter: number;
 		ShowMoneyOrder: boolean;
+		CargoTrackingPublicShowEvents: boolean;
+		CargoTrackingPrivateShowEvents: boolean;
 	
 }
