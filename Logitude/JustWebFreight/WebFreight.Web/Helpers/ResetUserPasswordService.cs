@@ -170,16 +170,18 @@ namespace WebFreight.Web.Helpers
                 {
                     result = new ResetUserPasswordDocumentService(int.Parse(resetPasswordParameters.BrandingTenant)).GetMessageArgsByTemplateName(resetPasswordParameters, emailBodyArgs);
                 }
-                else if (!string.IsNullOrEmpty(emailBodyArgs.BrandingTenant))
+                else if (!string.IsNullOrEmpty(emailBodyArgs.BrandingTenant) || IsCargoTrackingDomain())
                 {
-                    var documenttype = GetDocumentTypeForResetPassword(Int32.Parse(emailBodyArgs.BrandingTenant));
+                    string documentTypeCode = IsCargoTrackingDomain() ? "PCT" : "SLCRP";
+                    int tenant = (IsCargoTrackingDomain() && tenantManagementPM != null) ? tenantManagementPM.Id : Int32.Parse(emailBodyArgs.BrandingTenant);
+                    var documenttype = GetDocumentTypeForResetPassword(tenant, documentTypeCode);
                     if (documenttype != null)
                     {
                         result = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
                         if (!string.IsNullOrEmpty(result.HtmlTemplate))
                         {
                             string url = GetFogotPasswordPagePath(resetPasswordParameters, "", emailBodyArgs.ReqestNumber);
-                            url = AddBrandingTenantForPagePath(url, emailBodyArgs.BrandingTenant);
+                            url = AddTenantForPagePath(url, tenant);
                             result.HtmlTemplate = result.HtmlTemplate.Replace("[ResetPasswordURL]", url);
                         }
                     }
@@ -240,10 +242,10 @@ namespace WebFreight.Web.Helpers
             return path;
         }
 
-        private string AddBrandingTenantForPagePath(string pagePath, string brandingTenant)
+        private string AddTenantForPagePath(string pagePath, int tenant)
         {
             string path = pagePath;
-            path += "&tenant=" + Int32.Parse(brandingTenant);
+            path += "&tenant=" + tenant;
 
             return path;
         }
@@ -365,13 +367,13 @@ namespace WebFreight.Web.Helpers
 
         }
 
-        private DocumentType GetDocumentTypeForResetPassword(int tenant)
+        private DocumentType GetDocumentTypeForResetPassword(int tenant, string documentTypeCode)
         {
             DocumentType documentType = null;
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
-                documentType = documentTypeRepository.GetDocumentTypeByCode("SLCRP", tenant);
+                documentType = documentTypeRepository.GetDocumentTypeByCode(documentTypeCode, tenant);
                 scope.Complete();
 
             }
