@@ -184,11 +184,8 @@ export class EventTypePM {
 	 
     private eventTrigger: string;
     public get EventTrigger() { return this.eventTrigger; }
-    public set EventTrigger(newValue: string) { if (this.eventTrigger != newValue) { this.eventTrigger = newValue; this.MarkAsDirty("EventTrigger"); } }     
-    private remarksView: boolean;
-    public get RemarksView() { return this.remarksView; }
-    public set RemarksView(newValue: boolean) { if (this.remarksView != newValue) { this.remarksView = newValue; this.MarkAsDirty("RemarksView"); } }
-   
+    public set EventTrigger(newValue: string) { if (this.eventTrigger != newValue) { this.eventTrigger = newValue; this.MarkAsDirty("EventTrigger"); } }
+       
 	 
      
 	private eventRemarks: EventRemarkPM[];
@@ -227,7 +224,7 @@ export class EventTypePM {
         }
     }
 	    //public EventRemarks: Array<EventRemarkPMPM>= [];
- 
+
     public OldEntityPM: EventTypePM;
 		
     public IsDirty: boolean;
@@ -254,4 +251,4 @@ export class EventTypePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

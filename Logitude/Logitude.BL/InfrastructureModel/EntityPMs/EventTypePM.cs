@@ -138,8 +138,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
             set { eventRemarks = value; }
         }
 
-        [DataMember]
-        public bool RemarksView { get; set; }
         public bool IsFromWorkerRole { get; set; }
         public string EntityStatusCode { get; set; }
     }
