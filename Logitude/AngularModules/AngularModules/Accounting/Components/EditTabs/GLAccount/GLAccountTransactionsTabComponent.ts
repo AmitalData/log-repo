@@ -316,7 +316,15 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             var gLAccount_fromDate ={ Id : "GLAccount-"+Id , fromDate : fromDate , creatDate : today };
             this.GLAccountsFromDateInLocalStorage.push(gLAccount_fromDate);
         }
-        localStorage.setItem( "GLAccounts-fromDate" , JSON.stringify(this.GLAccountsFromDateInLocalStorage) );
+        try
+        {
+            localStorage.setItem( "GLAccounts-fromDate" , JSON.stringify(this.GLAccountsFromDateInLocalStorage) );
+        }
+        catch(e)
+        {
+            console.log(e.toString());
+            
+        }
     }
 
     toDate: Date;
