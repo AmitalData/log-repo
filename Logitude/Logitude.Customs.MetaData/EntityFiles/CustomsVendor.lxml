@@ -2059,6 +2059,11 @@
         IndexOrder="6"
         ObjectFieldName="&quot;DunsNumber&quot;"
         ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;AllVendors&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;InActive&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -2502,6 +2507,24 @@
       Code="&quot;Customs.Vendor.O.NewClientE&quot;"
       DefaultText="&quot;New Client&quot;"
       LocalDefaultText="&quot;שליפת לקוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Vendor.O.InActiveVendor&quot;"
+      DefaultText="&quot;InActive Vendor&quot;"
+      LocalDefaultText="&quot;חסימת ספק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Vendor.O.ConfirmInActiveVendor&quot;"
+      DefaultText="&quot;Confirm InActive Vendor&quot;"
+      LocalDefaultText="&quot;נא אשר חסימת ספק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Vendor.O.CancelInActiveVendor&quot;"
+      DefaultText="&quot;Cancel InActive Vendor&quot;"
+      LocalDefaultText="&quot;נא אשר ביטול חסימת ספק&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

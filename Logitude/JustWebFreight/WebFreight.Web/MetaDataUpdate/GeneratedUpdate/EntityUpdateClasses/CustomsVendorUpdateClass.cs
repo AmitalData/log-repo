@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsVendorUpdateClass
    {  		
-		public const string HashString = "08d1f5bbdf61c96e6e6a99ee9bda601d";
+		public const string HashString = "11b09a02c1a3a4a6f57a22a81cbe3007";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1674,6 +1674,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn AllVendorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CustomsVendor.VATNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
 			 QueryColumn AllVendorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CustomsVendor.DunsNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllVendorsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CustomsVendor.InActive" , ColumnWidth = 100 }, addedQueryColumns);
   
 	      
 
@@ -1950,6 +1952,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsVendorTextCode_CustomsCustomsVendorOmustEnterAtLeast2Chars = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsVendor.O.mustEnterAtLeast2Chars", DefaultText = "Must enter at least two chars in supplier name",LocalDefaultText = @"יש להזין לפחות 2 תווים בשם הספק", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsVendorTextCode_CustomsVendorONewClientE = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vendor.O.NewClientE", DefaultText = "New Client",LocalDefaultText = @"שליפת לקוח", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsVendorTextCode_CustomsVendorOInActiveVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vendor.O.InActiveVendor", DefaultText = "InActive Vendor",LocalDefaultText = @"חסימת ספק", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsVendorTextCode_CustomsVendorOConfirmInActiveVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vendor.O.ConfirmInActiveVendor", DefaultText = "Confirm InActive Vendor",LocalDefaultText = @"נא אשר חסימת ספק", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsVendorTextCode_CustomsVendorOCancelInActiveVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vendor.O.CancelInActiveVendor", DefaultText = "Cancel InActive Vendor",LocalDefaultText = @"נא אשר ביטול חסימת ספק", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
