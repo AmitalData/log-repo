@@ -49,20 +49,14 @@ namespace Logitude.Accounting.Data.Repositories
 
         public void UpdateWhileStreaming(int tenant, string journalId,Action<Journal> updatePoco)
         {
-            var myList = LockByJournal_forUpdateNOWAIT(journalId, tenant);// lock it !!!!
-            if (!myList.Any())
+            var poco = GetSingle(journalId, tenant);
+            if (poco == null)
             {
                 var mess = ("JournalApproveService:Failed ... LockByJournal_forUpdateNOWAIT");
                 throw new Exception(mess);
             }
-            var poco = myList.First();
-            //if (poco.QueueId != null)
-            //{
-            //    throw new Exception("JournalApproveService:Failed(poco.QueueId != null) already Streamed !!!");
-            //}
-            updatePoco(poco);
-            //poco.QueueId = QueueId;
 
+            updatePoco(poco);
             this.Update(poco);
         }
         public List<Journal> GetMulti(EntityKeyFields entityKeys)
