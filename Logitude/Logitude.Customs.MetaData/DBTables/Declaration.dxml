@@ -1097,6 +1097,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="UNFCourier"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"

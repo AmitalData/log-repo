@@ -397,11 +397,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 else
                 {
-                declarationPM = decQS.GetSingleByCustomFileNo(this._DocumentsFilingPM.ExternalEntityReference, _DocumentsFilingPM.Tenant);
+                    declarationPM = decQS.GetSingleByCustomFileNo(this._DocumentsFilingPM.ExternalEntityReference, _DocumentsFilingPM.Tenant);
 
                 }
 
-                if (declarationPM ==null )
+                if (declarationPM == null)
                 {
                     LogitudeSettings.HandleLogMe("declarationPM ==null" + logData, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("declarationPM ==null");
@@ -416,8 +416,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     Debug.WriteLine("Declaration has already been payed");
                     return;
                 }
-                
-                if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
+
+                if (/*CourierENV() */ declarationPM.IsCourierDeclaration || declarationPM.UNFCourier)
                 {
                     Debug.WriteLine("CourierENV");
 

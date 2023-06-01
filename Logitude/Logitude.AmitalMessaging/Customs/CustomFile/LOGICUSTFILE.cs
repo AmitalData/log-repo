@@ -200,6 +200,9 @@ public partial class LogitudeCustomsFile
 
     private ExportInvoice[] invoices;
 
+    private string UNFCourierField;
+
+
     /// <remarks/>
     public string CustomFileNo
     {
@@ -1169,6 +1172,17 @@ public partial class LogitudeCustomsFile
             this.invoices = value;
         }
     }
+    public string UNFCourier
+    {
+        get
+        {
+            return this.UNFCourierField;
+        }
+        set
+        {
+            this.UNFCourierField = value;
+        }
+    }
 }
 
 
@@ -1213,4 +1227,5 @@ public class ExportInvoice
             this.date = value;
         }
     }
+  
 }
