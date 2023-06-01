@@ -477,6 +477,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool ShortProcedure { get; set; }
         [Column("ExportFlightDate")]
 	    public DateTime? ExportFlightDate { get; set; }
+        [Column("UNFCourier")]
+	    public bool UNFCourier { get; set; }
     }
 }
 	 

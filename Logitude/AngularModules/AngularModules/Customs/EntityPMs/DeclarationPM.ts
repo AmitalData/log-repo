@@ -1517,9 +1517,16 @@ export class DeclarationPM {
     private shortProcedure: boolean;
     public get ShortProcedure() { return this.shortProcedure; }
     public set ShortProcedure(newValue: boolean) { if (this.shortProcedure != newValue) { this.shortProcedure = newValue; this.MarkAsDirty("ShortProcedure"); } }
+       
+	 
     private exportFlightDate: Date;
     public get ExportFlightDate() { return this.exportFlightDate; }
     public set ExportFlightDate(newValue: Date) { if (this.exportFlightDate != newValue) { this.exportFlightDate = newValue; this.MarkAsDirty("ExportFlightDate"); } }
+       
+	 
+    private uNFCourier: boolean;
+    public get UNFCourier() { return this.uNFCourier; }
+    public set UNFCourier(newValue: boolean) { if (this.uNFCourier != newValue) { this.uNFCourier = newValue; this.MarkAsDirty("UNFCourier"); } }
        
 	 
 
@@ -1550,4 +1557,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

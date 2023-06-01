@@ -470,6 +470,8 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? ComputerFee  { get; set; }
        [DataMember]
        public DateTime? ExportFlightDate  { get; set; }
+       [DataMember]
+       public bool UNFCourier  { get; set; }
    }
 
 }
