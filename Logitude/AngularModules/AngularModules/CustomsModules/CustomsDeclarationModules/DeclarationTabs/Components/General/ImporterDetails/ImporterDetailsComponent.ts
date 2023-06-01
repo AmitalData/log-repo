@@ -409,7 +409,7 @@ export class ImporterDetailsComponent extends BaseComponent {
                   //   
                      this.UIProperties.SetEnabled("ImporterPassportNumber", this.ObjectTableName, false);
                      this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, false);
-                     if(this.EntityPM.Direction =='E' && this.EntityPM.ShortProcedure && AppTool.IsNullOrEmpty(this.EntityPM.ImporterId)){
+                     if(this.EntityPM.Direction =='E' && this.EntityPM.ShortProcedure && AppTool.IsNullOrEmpty(this.EntityPM.ExporterImporterCode)){
                         this.UIProperties.SetWarning("ImporterName", this.ObjectTableName, true);
                         this.UIProperties.SetWarning("ImporterAddress", this.ObjectTableName, true);
                     }
