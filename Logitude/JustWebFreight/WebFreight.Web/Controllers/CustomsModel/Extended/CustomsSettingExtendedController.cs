@@ -141,37 +141,35 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         }
 
 
-        //public HttpResponseMessage GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        //{
-            
-        //    try
-        //    {
-        //        string token = HttpContext.Current.Request.Headers["Token"];
-        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-        //        DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+        public HttpResponseMessage GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
 
 
-        //        SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
-        //        CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-        //        CustomsSettingPM setting = settingService.GetSettingByTenantN(authToken.Tenant);
-        //        var resMode = new { DefaultValue = "" };
-        //        if (setting.IsConnectedToUniFreight)
-        //        {
-        //            string DefaultValue = defaultValueQueryService.GetDefault(DISTRID, DEFID, BRANCHID, CARDID, tenant);
-        //              resMode = new { DefaultValue = DefaultValue };
-        //        }
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+                var resMode = new { DefaultValue = "" };
+                
+                string DefaultValue = defaultValueQueryService.GetDefault(DISTRID, DEFID, BRANCHID, CARDID, tenant);
+                resMode = new { DefaultValue = DefaultValue };
+                
 
-              
 
-        //        return Request.CreateResponse(HttpStatusCode.OK, resMode);
-        //    }
 
-        //    catch (Exception ex)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-        //    }
-        //}
+                return Request.CreateResponse(HttpStatusCode.OK, resMode);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
 
         public HttpResponseMessage GetSkipAutoInsurance(string customerCode, int tenant)
