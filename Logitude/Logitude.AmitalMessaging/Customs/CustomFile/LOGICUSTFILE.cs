@@ -194,6 +194,9 @@ public partial class LogitudeCustomsFile
 
     private string referentHAWBField;
 
+    private string UNFCourierField;
+
+
     /// <remarks/>
     public string CustomFileNo
     {
@@ -1125,6 +1128,17 @@ public partial class LogitudeCustomsFile
         set
         {
             this.referentHAWBField = value;
+        }
+    }
+    public string UNFCourier
+    {
+        get
+        {
+            return this.UNFCourierField;
+        }
+        set
+        {
+            this.UNFCourierField = value;
         }
     }
 }
