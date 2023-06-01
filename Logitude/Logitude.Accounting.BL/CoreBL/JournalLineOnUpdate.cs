@@ -28,7 +28,8 @@ namespace Logitude.Accounting.BL.CoreBL
             this._MainContext = mainContext;
         }
 
-        const string RevaluationAccountingEntityCode = "8";//	שערוך Revaluation
+        const string RevaluationAccountingEntityCode = "8";//	שערוך Revaluation   
+        const string AdjustmentAccountingEntityCode = "10";//	התאמה Adjustment
 
         public virtual void OnUpdate(JournalLinePM journalLinePM, JournalPM journalPM)
         {
@@ -58,14 +59,14 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 bool haveChange = false;
                 haveChange = FixCredit(journalLinePM, haveChange, 
-                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode,
+                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode || journalPM.AccountingEntityCode == AdjustmentAccountingEntityCode,
                     suppressInactiveCheck
                     );
 
                 FullAccountingSettingPM accountingSettings = getFullAccountingSettings(journalPM.Tenant);
 
                 haveChange = FixDebit(journalLinePM, haveChange, accountingSettings,
-                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode,
+                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode || journalPM.AccountingEntityCode == AdjustmentAccountingEntityCode,
                     suppressInactiveCheck
                     );
 
@@ -119,10 +120,11 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        private bool FixCredit(JournalLinePM journalLinePM, bool haveChange, bool conversionlOrRevaluation_Journal, bool suppressInactive)
+        private bool FixCredit(JournalLinePM journalLinePM, bool haveChange, bool conversionAdjustmentOrRevaluation_Journal, bool suppressInactive)
         {
             var creditIVerifyGLAccountManager = GetIVerifyGLAccountManager();
-            creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId, conversionlOrRevaluation_Journal, suppressInactive);
+            creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, 
+                journalLinePM.CurrencyId, conversionAdjustmentOrRevaluation_Journal, suppressInactive);
 
             if (IsFromMumps(journalLinePM) ||
                 journalLinePM.ActionTypeCodeEnum == JournalActionTypeEnum.Credit ||
@@ -144,7 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return haveChange;
         }
 
-        private bool FixDebit(JournalLinePM journalLinePM, bool haveChange, FullAccountingSettingPM accountingSettings, bool conversionlOrRevaluation_Journal,bool suppressInactiveCheck)
+        private bool FixDebit(JournalLinePM journalLinePM, bool haveChange, FullAccountingSettingPM accountingSettings, bool conversionAdjustmentOrRevaluation_Journal,bool suppressInactiveCheck)
         {
             var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
             debitIVerifyGLAccountManager.Verify(
@@ -153,7 +155,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 journalLinePM.DebitAccountId,
                 journalLinePM.DebitAccountNumber,
                 journalLinePM.CurrencyId,
-                conversionlOrRevaluation_Journal,
+                conversionAdjustmentOrRevaluation_Journal,
                 suppressInactiveCheck
                 );
 
@@ -279,7 +281,7 @@ namespace Logitude.Accounting.BL.CoreBL
     }
     public interface IVerifyGLAccountManager
     {
-        void Verify(IAccountingContext mainContext, int tenant, string accountId, string accountNumber, string CurrencyId, bool conversionlOrRevaluation_Journal, bool suppressInactiveCheck);
+        void Verify(IAccountingContext mainContext, int tenant, string accountId, string accountNumber, string CurrencyId, bool conversionAdjustmentOrRevaluation_Journal, bool suppressInactiveCheck);
 
         string AccountId { get; }
         string ControlAccountId { get; }
@@ -294,7 +296,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         public void Verify(IAccountingContext mainContext, int tenant, string accountId, string accountNumber, string CurrencyId,
-            bool conversionlOrRevaluation_Journal, bool suppressInactiveCheck)
+            bool conversionAdjustmentOrRevaluation_Journal, bool suppressInactiveCheck)
         {
             this._MainContext = mainContext;
             this._tenant = tenant;
@@ -316,7 +318,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (myGLAccountPM != null)
                 {
-                    if (!conversionlOrRevaluation_Journal && myGLAccountPM.IsMultiCurrency.GetValueOrDefault())//Task 40640: טיפול בסרביס לפקודת יומן -במקרה של כרטיס מפוצל לרשום על הפיצול
+                    if (!conversionAdjustmentOrRevaluation_Journal && myGLAccountPM.IsMultiCurrency.GetValueOrDefault())//Task 40640: טיפול בסרביס לפקודת יומן -במקרה של כרטיס מפוצל לרשום על הפיצול
                     {
                         //SuppressCheckGLAccountIsMultiCurrencyWI40640
 
