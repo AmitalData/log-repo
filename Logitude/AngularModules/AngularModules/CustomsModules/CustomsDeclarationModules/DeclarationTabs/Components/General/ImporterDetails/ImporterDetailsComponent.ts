@@ -296,7 +296,7 @@ export class ImporterDetailsComponent extends BaseComponent {
              var service = new DeclarationWebService();
              service.SendPRIVEventPrivacyProtection(this.EntityPM.Id, this.EntityPM.Tenant, this.EntityPM.CustomFileNo).subscribe((res: ServiceResponse) => {
              });
-             
+
              switch (this.type) {
                  case "Importer": {
                      this.ImporterVisibility = true;
@@ -307,7 +307,7 @@ export class ImporterDetailsComponent extends BaseComponent {
                          if (this.EntityPM.ImporterCode != null || this.EntityPM.ImporterId != null) {
                              this.UIProperties.SetEnabled("ImporterTypeCode", this.ObjectTableName, false);
                          }
-                     }
+                     }                    
                      break;
                  }
 
@@ -409,7 +409,10 @@ export class ImporterDetailsComponent extends BaseComponent {
                   //   
                      this.UIProperties.SetEnabled("ImporterPassportNumber", this.ObjectTableName, false);
                      this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, false);
-                     
+                     if(this.EntityPM.Direction =='E' && this.EntityPM.ShortProcedure && AppTool.IsNullOrEmpty(this.EntityPM.ImporterId)){
+                        this.UIProperties.SetWarning("ImporterName", this.ObjectTableName, true);
+                        this.UIProperties.SetWarning("ImporterAddress", this.ObjectTableName, true);
+                    }
                  }
                  else if (xxxTypeCode == "2" || xxxTypeCode == "3") {
                      this.IsImporterEnabled = true;
@@ -501,7 +504,7 @@ export class ImporterDetailsComponent extends BaseComponent {
      }
 
     private SetFieldsEditibilityCourier() {
-        if (this.isCourierDeclaration || this.EntityPM.ShortProcedure) {
+        if (this.isCourierDeclaration) {
            
         
         //if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)) {
@@ -723,7 +726,7 @@ export class ImporterDetailsComponent extends BaseComponent {
         }
     }
     OkButtonClicked() {
-        if (this.type == "Importer" && (this.isCourierDeclaration || this.EntityPM.ShortProcedure)) {
+        if (this.type == "Importer" && this.isCourierDeclaration) {
             //if (!FormatTool.IsEmail(this.CasualImporterEmail)) {
             //errors.push("Invalid email format!");
             //}

@@ -2410,11 +2410,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             declarationImporter.DMExtensions = new DeclarationExporterDMExtensions()
             {
-                //                Address = declarationPM.ImporterAddress,
-                //Name = declarationPM.ImporterName,
-
-                //Address = importerAddress,//task 45505
-                //Name = importerName,
                 //EntitlementTypeCode = new EntitlementTypeCodeType()
                 //{
                 //    Value = declarationPM.MainImporterEntitlemntTypeCode
@@ -2424,6 +2419,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                     Value = "7"
                 }
             };
+            if (declarationPM.ShortProcedure)
+            {
+                declarationImporter.DMExtensions.Address = importerAddress;
+                declarationImporter.DMExtensions.Name = importerName;
+            }
             if (declarationPM.ImporterTypeCode == "2" || declarationPM.ImporterTypeCode == "3")
             {
                 declarationImporter.DMExtensions.IssueLocation = new DeclarationExporterDMExtensionsIssueLocation() { Value = declarationPM.ImporterPassCountryCode };
