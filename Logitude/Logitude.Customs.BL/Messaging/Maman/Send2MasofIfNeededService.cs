@@ -24,7 +24,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         [ThreadStatic]
         public static bool IsNewFromU2L=false;
          public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM,bool forceSend=false, CourierMasterPM courierMasterPM=null)
-        {
+         {
             var sb=new StringBuilder();
             try
             {
@@ -200,8 +200,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     if (drityEntityPM.CourierCustomStatusCode != dbPM.CourierCustomStatusCode || IsNewFromU2L)
                     {
                         var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
-                        drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, courierMasterPM);
                         if (IsNewFromU2L) dataHaveChangeSendIt = true;
+                        drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, courierMasterPM);
+
                         if (!dataHaveChangeSendIt && dbPM != null)
                         {
 

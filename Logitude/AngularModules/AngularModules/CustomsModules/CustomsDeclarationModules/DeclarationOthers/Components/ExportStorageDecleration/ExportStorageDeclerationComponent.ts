@@ -139,7 +139,6 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
 
     DataSource = {
-        pageSize: 2000,
         rowCount: null,
         sortingCol: "OpenDate",
         sortingDir: "Decending",
@@ -166,9 +165,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
             filters.AdditionalFilters.push(this.SearchFieldsFilter);
         }
 
-        filters.PageSize = 2000;
         filters.PageIndex = 0; // decremented 1 in the service
-        filters.GetAll = getAll;
+        filters.GetAll = true;
         filters.GetCount = true;
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
@@ -179,7 +177,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null, getAll: boolean = false) {
         //filters.addAdditionalFilter("DeclarationId", "123", null, null, "IsNull", false, false, false, "string");
 
-        var filters = this.getFilters(getAll, sortingCol, sortingDir);
+        var filters = this.getFilters(true, sortingCol, sortingDir);
         var myout = this.entityListService
             .getExtendedByFilters("Customs.ExportStorage", filters);
         myout.then(res => {
