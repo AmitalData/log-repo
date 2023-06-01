@@ -296,8 +296,12 @@ export class DeclarationValidator {
                         }
                         else {
                             //Check if ImporterName & ImporterAddrress has value
-                            if (AppTool.IsNullOrEmpty(importerName) && AppTool.IsNullOrEmpty(importerAddress)) {
-                                errorMessage = "יש להזין נתוני יבואן " + importerField + " לפני שליחה";
+                            if (!this._DeclarationPM.ShortProcedure && AppTool.IsNullOrEmpty(importerName) && AppTool.IsNullOrEmpty(importerAddress)) {
+                                 errorMessage = "יש להזין נתוני יבואן " + importerField + " לפני שליחה";
+                            }
+                            else if(this._DeclarationPM.ShortProcedure && (AppTool.IsNullOrEmpty(importerName) || AppTool.IsNullOrEmpty(importerAddress))){
+                                errorMessage = "יש להזין נתוני יצואן " + importerField + " לפני שליחה";
+
                             }
                         }
                     }

@@ -1103,7 +1103,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         windowArgs.Type = "Importer";
         this.Type = "Importer";
         logWindow.Width = 550;
-        logWindow.Height = (this.EntityPM.IsCourierDeclaration ||  this.EntityPM.ShortProcedure) ? 550 : 350;
+        logWindow.Height = this.EntityPM.IsCourierDeclaration ? 550 : 350;
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;
@@ -1679,10 +1679,14 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
-                if (objectField)
+                var isExporterInShortProc = objectField && objectField.Code == "ExporterImporterCode" && this.EntityPM.ShortProcedure;
+                
+                if (objectField && !isExporterInShortProc){
                     this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Declaration', true);
+                }
+                    
             });
-        });
+        }); 
 
 
 

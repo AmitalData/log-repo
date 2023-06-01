@@ -691,7 +691,7 @@
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
-    DisplayOnly="false"
+    DisplayOnly="true"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
