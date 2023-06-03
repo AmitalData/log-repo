@@ -35,6 +35,7 @@ import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { APPaymentPM } from 'Invoice/EntityPMs/APPaymentPM';
 import { delay, expand, takeLast } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
+import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 
 export class LineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;
@@ -286,13 +287,17 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     showInternalReconcileAPPaymentAlert = false;
     createdPaymentNumber;
     Title:string = '';
+    public NumberOfselectedlines = 0;
+    public NumberOfFilteredlines = 0;
+    _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
+    isFullAccounting: boolean = SessionLocator.TenantPM.AccountingActivated;
 
     constructor(public CD: ChangeDetectorRef) {
         super();
-
-        this.InitComponent();
+   
+        this.InitComponent();      
     }
-
+    
     ngOnDestroy() {
         AppTool.KillEventEmitter(ReconcileEventManager.CheckBoxChecked);
         ReconcileEventManager.CheckBoxChecked = new EventEmitter();
@@ -316,7 +321,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
         if (args != null) {
             this.windowArgs = args;
-
+            
             this.GLAccountPM = args.GLAccountPM;
             ReconcileEventManager.GLAccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
 
@@ -338,7 +343,22 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         }
 
         this.SetTitle();
+        if(this.isFullAccounting)
+            this.SetNumberOfFilteredlines(args.GLAccountPM.id);
 
+    }
+    SetNumberOfFilteredlines(id)
+    {
+        this._GLAccountExtendedListService = new GLAccountExtendedListService();
+        this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(id).subscribe((myResult:any) => {
+        console.log("GetAccountOpenTransactionsCount", myResult);
+        var result: ServiceResponse = myResult;
+        if (!result.HasError)
+        {
+            this.NumberOfFilteredlines = result.Result;
+        }
+        else {}
+    });
     }
     OpenLedgerTransactionInternalNote(line: any) {
 
@@ -556,7 +576,15 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         if (v) {
             //this.GetFirst5000LedgerForReconciliation();
             this.GetFirstXLedgerForReconciliationByParam();
+            if(this.isFullAccounting)
+            {
+                this.NumberOfselectedlines=this.DataSource.rowCount;
+                this.NumberOfFilteredlines=this.DataSource.rowCount;
+            }
+
         } else {
+            if(this.isFullAccounting)
+                this.NumberOfselectedlines=0;
             this.ReloadScreen();
             this.SelectedLines.Clear();
             this.CalculateTotals();
@@ -894,6 +922,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         this.ShowEmptyAutoReco();
                     }
                     this.CalculateTotals();
+                    if(this.isFullAccounting)
+                    {
+                        this.NumberOfselectedlines = this.SelectedLines.Length;
+                        this.NumberOfFilteredlines = this.DataSource.rowCount;
+                    }
                 }
             }
             else {
@@ -1017,6 +1050,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             } else {
                 this.PopLine(rowId);
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: false , RowIndex: RowIndex,ById : true });
+            }
+            if(this.isFullAccounting)
+            {
+                this.NumberOfselectedlines = this.SelectedLines.Length;
+                this.NumberOfFilteredlines = this.DataSource.rowCount;
             }
         }
     }
@@ -1248,7 +1286,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 }
                 this.MustIgnoreItems.push({ Id: rowId, IsChecked: isChecked });
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
-
+                //this.NumberOfselectedlines=this.SelectedLines.Length;
 
             }
         });
@@ -1307,7 +1345,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
         //filters.addAdditionalFilter("AccountingDate", true, null, null, "Between", false, false, false, "datetime");
 
-        return this._entityListService.getOpenReconciliationsByFilter("LedgerTransaction", this.GLAccountPM.Id, this.filterAgrs);//this.ledgerTransactionListExtendedService.getByFilters(filters);
+        return this._entityListService.getOpenReconciliationsByFilter("LedgerTransaction", this.GLAccountPM.Id, this.filterAgrs);//this.ledgerTransactionListExtendedService.getByFilters(filters);      
     }
 
     OnSortInvoked(event){
@@ -1326,6 +1364,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             // update select all checkbox
             if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 500)
                 this._isAllSelected = true;
+            if(this.isFullAccounting)
+            {
+                this.NumberOfFilteredlines=this.DataSource.rowCount;
+                this.NumberOfselectedlines=this.SelectedLines.Length;  
+            }      
         }
     }
 
@@ -1336,6 +1379,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         //ReconcileEventManager.RowUnselected.emit({ id: id });
         this.CalculateTotals();
         this._isAllSelected = false;
+        if(this.isFullAccounting)
+        {
+            this.NumberOfFilteredlines=this.DataSource.rowCount;
+            this.NumberOfselectedlines=this.SelectedLines.Length;
+        }
     }
 
     CheckBoxValueChanged(Row) {
@@ -1478,6 +1526,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         filters.GetCount = true;
         filters.SortBy = this.DataSource.sortingCol;
         filters.SortDirection = this.DataSource.sortingDir;
+        //this.NumberOfFilteredlines=this.DataSource.rowCount;
         return filters;
     }
 
@@ -1764,6 +1813,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
             this.ChangeDate();
             this.FiltersChanged();
+            if(this.isFullAccounting)
+            {
+                this.NumberOfFilteredlines=this.DataSource.rowCount;
+                this.NumberOfselectedlines=this.SelectedLines.Length;
+            }
         }
     }
     ChangeDate() {
@@ -1888,6 +1942,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             (!AppTool.IsNullOrEmpty(this.OpenAmount)
                 || !AppTool.IsNullOrEmpty(this.ForeignAmount)
                 || (!AppTool.IsNullOrEmpty(this.FromDate) && !AppTool.IsNullOrEmpty(this.ToDate)));
+        if(this.isFullAccounting)
+        {
+            this.NumberOfFilteredlines=this.DataSource.rowCount;
+            this.NumberOfselectedlines=this.SelectedLines.Length;
+        }
         return selected;
     }
 
