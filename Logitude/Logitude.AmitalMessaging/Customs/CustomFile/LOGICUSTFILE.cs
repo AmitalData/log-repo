@@ -198,7 +198,7 @@ public partial class LogitudeCustomsFile
 
     private string referentHAWBField;
 
-    private ExportInvoice[] invoices;
+    private ExportInvoice[] invoicesField;
 
     private string UNFCourierField;
 
@@ -1161,15 +1161,18 @@ public partial class LogitudeCustomsFile
         }
     }
 
+
+    [System.Xml.Serialization.XmlElementAttribute("Invoice")]
+
     public ExportInvoice[] Invoices
     {
         get
         {
-            return this.invoices;
+            return this.invoicesField;
         }
         set
         {
-            this.invoices = value;
+            this.invoicesField = value;
         }
     }
     public string UNFCourier
@@ -1190,16 +1193,16 @@ public class ExportInvoice
 {
     private  bool isEmpty;
   
-    private string number;
+    private string numberField;
 
-    private string date;
+    private string dateField;
 
     [XmlIgnore]
     public bool IsEmpty
     {
         get
         {
-            return number == null;
+            return numberField == null;
         }
     }
 
@@ -1209,22 +1212,22 @@ public class ExportInvoice
     {
         get
         {
-            return this.number;
+            return this.numberField;
         }
         set
         {
-            this.number = value;
+            this.numberField = value;
         }
     }
     public string Date
     {
         get
         {
-            return this.date;
+            return this.dateField;
         }
         set
         {
-            this.date = value;
+            this.dateField = value;
         }
     }
   
