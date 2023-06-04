@@ -21,7 +21,13 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public StatusCode GetSingleByCode(object code, int tenant)
+        {
+            return (from a in context.StatusCodes
+                    where a.Status_Code == code && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+    }
 
 }
    

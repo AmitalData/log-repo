@@ -45,7 +45,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StatusDate, 
 	         StatusUser, 
 	         StatusRemarks, 
-	         UnfSequenceNumeric,
+	         UnfSequenceNumeric, 
+	         ToBuild, 
+	         IsExist,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -39,8 +39,7 @@
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -5156,6 +5155,7 @@
     <Content Include="WcfApi\CardContactWcfService.svc" />
     <Content Include="WcfApi\ChargeTypeWcfService.svc" />
     <Content Include="WcfApi\BusinessHoursHolidayWcfService.svc" />
+    <Content Include="WcfApi\DeclarationStatusWcfService.svc" />
     <Content Include="WcfApi\DefaultValueWcfService.svc" />
     <Content Include="WcfApi\DefaultTypeWcfService.svc" />
     <Content Include="WcfApi\CityWcfService.svc" />
@@ -5168,6 +5168,7 @@
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
     <Content Include="WcfApi\OceanInsightsTestWcfService.svc" />
+    <Content Include="WcfApi\StatusCodeWcfService.svc" />
     <Content Include="WcfApi\PaymentTermWcfService.svc" />
     <Content Include="WcfApi\UserIDNumberRequestWcfService.svc" />
     <Content Include="WcfApi\DeclarationApprovalRequestWcfService.svc" />
@@ -6721,6 +6722,9 @@
     <Compile Include="WcfApi\BusinessHoursHolidayWcfService.svc.cs">
       <DependentUpon>BusinessHoursHolidayWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\DeclarationStatusWcfService.svc.cs">
+      <DependentUpon>DeclarationStatusWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\DefaultValueWcfService.svc.cs">
       <DependentUpon>DefaultValueWcfService.svc</DependentUpon>
     </Compile>
@@ -6757,13 +6761,18 @@
     <Compile Include="WcfApi\ExternalTasksQueueWcfService.ExportSignQ.cs" />
     <Compile Include="WcfApi\IBusinessHourWcfService.cs" />
     <Compile Include="WcfApi\IBusinessHoursHolidayWcfService.cs" />
+    <Compile Include="WcfApi\IDeclarationStatusWcfService.cs" />
     <Compile Include="WcfApi\IDefaultValueWcfService.cs" />
     <Compile Include="WcfApi\IDefaultTypeWcfService.cs" />
     <Compile Include="WcfApi\IExternalTasksQueueExportSignWcfService.cs" />
     <Compile Include="WcfApi\IPaymentTermWcfService.cs" />
+    <Compile Include="WcfApi\IStatusCodeWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
     <Compile Include="WcfApi\OceanInsightsTestWcfService.svc.cs">
       <DependentUpon>OceanInsightsTestWcfService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WcfApi\StatusCodeWcfService.svc.cs">
+      <DependentUpon>StatusCodeWcfService.svc</DependentUpon>
     </Compile>
     <Compile Include="WcfApi\PaymentTermWcfService.svc.cs">
       <DependentUpon>PaymentTermWcfService.svc</DependentUpon>
