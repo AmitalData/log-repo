@@ -211,7 +211,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
 
                 Description = Description,
                 ImporterName = myDeclarationPM.ImporterName ?? "",
-                ImporterAddress = myDeclarationPM.ImporterAddress ?? "",
+                ImporterAddress = myDeclarationPM.ImporterAddress.Substring(0, Math.Min(myDeclarationPM.ImporterAddress.Length, 60)) ?? "",
                 DistributionLine = string.IsNullOrEmpty(declarationCourierStatusPM.DistributionArea) ? "כללי" : declarationCourierStatusPM.DistributionArea,
 
 
