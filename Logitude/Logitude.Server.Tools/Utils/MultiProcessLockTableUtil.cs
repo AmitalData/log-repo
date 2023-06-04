@@ -39,11 +39,10 @@ namespace Logitude.Server.Tools.Utils
                     });
                     LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: LockItAndGetReleaseToken:ADD<<<" + key2Upsert.ToString());
                     repo.SubmitChanges();
+                    lockPoco = new GeneralLockRepository(tenant).GetSingleGeneralLockNOWAIT(key2Upsert, tenant);
                     scope.Complete();
                 }
                 LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: trylock<<<" + key2Upsert.ToString());
-                lockPoco = repo.GetSingleGeneralLockNOWAIT(key2Upsert, tenant);
-
             }
 
             if (lockPoco == null)
