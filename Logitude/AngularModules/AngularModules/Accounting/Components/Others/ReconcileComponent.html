@@ -48,7 +48,7 @@
             <div style="padding: 0 3px;" float-start *ngIf="paymentTermName"> - </div>
             <div float-start *ngIf="paymentTermName">{{paymentTermName}}</div>
             <div style="padding: 0 3px;width :50px"float-start></div>
-            <div *ngIf="isFullAccounting" style="padding: 0 80%;font-size: 15px;color:#740218;;display: flex;position: absolute;"float-start>{{NumberOfselectedlines}}/{{NumberOfFilteredlines}}</div>
+            <div *ngIf="isFullAccounting" style="padding: 0 80%;font-size: 15px;display: flex;position: absolute;"float-start>{{NumberOfselectedlines}}/{{NumberOfFilteredlines}}</div>
         </td>
         <td>
             <div style="width: 150px" [style.float]="isRTL ? 'left' : 'right'">
