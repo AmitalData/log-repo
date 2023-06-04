@@ -27,6 +27,7 @@ import {VendorMessagesService} from '../../../../../Customs/Services/WebServices
 import {CustomsVendorPMService} from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
 
 
+
 @Component({
     
     templateUrl: './VendorGeneralTabComponent.html',
@@ -47,6 +48,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
     ResponseData: INF_MSG_GenericResponseData;
     vendorMessagesService: VendorMessagesService = new VendorMessagesService();
     customsVendorPMService: CustomsVendorPMService = new CustomsVendorPMService();
+    inActiveVendor: string = TextCodeTranslator.Translate("Customs.Vendor.O.InActiveVendor");
 
     RequestVIA: SendRequestVIA;
 
@@ -134,8 +136,38 @@ export class VendorGeneralTabComponent extends BaseComponent {
     public set TransactionTypeID(newValue: string) {
         this.EntityPM.TransactionTypeID = newValue;
     }
+    public get InActive() { return this.EntityPM.InActive; }
+    public set InActive(newValue: boolean) {
+        this.EntityPM.InActive = newValue;
+    }
 
     //#endregion
+
+    InActiveVendor(isChecked){
+       
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+
+            !this.EntityPM.InActive ? confirmWindow.Show(TextCodeTranslator.Translate("Customs.Vendor.O.ConfirmInActiveVendor")) 
+                : confirmWindow.Show(TextCodeTranslator.Translate("Customs.Vendor.O.CancelInActiveVendor"));
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+
+                     if (confirmWindow.Yes) {
+                        this.EntityPM.InActive = !this.EntityPM.InActive;
+                    
+                          this.customsVendorPMService.update(this.EntityPM).subscribe(myResult => {
+                          if (myResult.HasError) {
+                                this.ValdationErrorList = [];
+                                this.ValdationErrorList.push(myResult.ErrorsArray[0]);
+                                return;
+                            } });
+                        }
+                       
+                        isChecked.target.checked = this.EntityPM.InActive; 
+                    });
+          
+
+    }
 
     line = 0;
     AddButonClicked() {
@@ -383,6 +415,8 @@ export class VendorGeneralTabComponent extends BaseComponent {
         addParams.ExternalId = this.EntityPM.ExternalId;
         addParams.ConcurrencyGUID = this.EntityPM.ConcurrencyGUID;
         addParams.RequestVIA = this.RequestVIA;
+        addParams.InActive = this.EntityPM.InActive;
+
         //addParams.TestCase = SelectedTest; // this is should be in RequestParamsBase but it does not
         addParams.IsAfterWarning = isAfterWarning;
 
@@ -542,6 +576,9 @@ export class VendorGeneralTabComponent extends BaseComponent {
         //TenantContext.Current.RefreshTableData("Customs.Vendor", DateTime.UtcNow, true);
         //this.Dispose();
     }
+
+
+   
     //#endregion
 }
 
