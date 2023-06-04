@@ -1286,7 +1286,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 }
                 this.MustIgnoreItems.push({ Id: rowId, IsChecked: isChecked });
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
-                //this.NumberOfselectedlines=this.SelectedLines.Length;
 
             }
         });
@@ -1526,7 +1525,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         filters.GetCount = true;
         filters.SortBy = this.DataSource.sortingCol;
         filters.SortDirection = this.DataSource.sortingDir;
-        //this.NumberOfFilteredlines=this.DataSource.rowCount;
         return filters;
     }
 
