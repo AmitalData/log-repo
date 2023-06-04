@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 using Logitude.AmitalMessaging.Customs.CustomFile.CellFile;
+using Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile;
 using System.Xml.Serialization;
 
 // 
@@ -195,7 +196,7 @@ public partial class LogitudeCustomsFile
 
     private string referentHAWBField;
 
-    private ExportInvoice[] invoicesField;
+    private Invoices invoicesField;
 
     /// <remarks/>
     public string CustomFileNo
@@ -1132,9 +1133,9 @@ public partial class LogitudeCustomsFile
     }
 
 
-    [System.Xml.Serialization.XmlElementAttribute("Invoice")]
+    [System.Xml.Serialization.XmlElementAttribute("Invoices")]
 
-    public ExportInvoice[] Invoices
+    public Invoices Invoices
     {
         get
         {
@@ -1148,6 +1149,13 @@ public partial class LogitudeCustomsFile
 }
 
 
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
 public class ExportInvoice
 {
     private  bool isEmpty;
@@ -1164,7 +1172,6 @@ public class ExportInvoice
             return numberField == null;
         }
     }
-
 
 
     public string Number
@@ -1189,4 +1196,34 @@ public class ExportInvoice
             this.dateField = value;
         }
     }
+
+    
 }
+
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class Invoices
+{
+    private ExportInvoice[] InvoiceField;
+
+    [System.Xml.Serialization.XmlElementAttribute("Invoice")]
+
+    public ExportInvoice[] Invoice
+    {
+        get
+        {
+            return this.InvoiceField;
+        }
+        set
+        {
+            this.InvoiceField = value;
+        }
+    }
+}
+
+
