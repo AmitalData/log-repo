@@ -199,7 +199,7 @@ public partial class LogitudeCustomsFile
 
     private string referentHAWBField;
 
-    private Invoices invoicesField;
+    private ExportInvoices invoicesField;
 
     private string UNFCourierField;
 
@@ -1165,7 +1165,7 @@ public partial class LogitudeCustomsFile
 
     [System.Xml.Serialization.XmlElementAttribute("Invoices")]
 
-    public Invoices Invoices
+    public ExportInvoices Invoices
     {
         get
         {
@@ -1248,7 +1248,7 @@ public class ExportInvoice
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
 [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
-public class Invoices
+public class ExportInvoices
 {
     private ExportInvoice[] InvoiceField;
 
