@@ -747,8 +747,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
 
                 //  UpdateTrucker();
-
-                ExportDeclarationInsert();
+                AppendLogLine("ExportDeclarationInsert");
+              ExportDeclarationInsert();
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                 {
                     if (_MyDeclarationPM.Direction == "E")
@@ -1025,6 +1025,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
         private void ExportDeclarationInsert()
         {
+            AppendLogLine("in ExportDeclarationInsert");
             if (_AmitalCustomsFile.Direction == "E" && _AmitalCustomsFile.Mode == "NEW")
             {
 
@@ -1112,21 +1113,31 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
         private void CreateSupplierInvoices()
         {
-            var firstExits = this._MyDeclarationPM.SupplierInvoices.Count() > 0;
+            AppendLogLine("CreateSupplierInvoices");
+          var firstExits = this._MyDeclarationPM.SupplierInvoices.Count() > 0;
             var invoicesArrayToAdd = _AmitalCustomsFile.Invoices?.Count() > 0 ? _AmitalCustomsFile.Invoices : new ExportInvoice[] { new ExportInvoice() };
+            AppendLogLine("CreateSupplierInvoices" + firstExits);
 
             Array.ForEach(invoicesArrayToAdd, (invoice) =>
             {
+                AppendLogLine("CreateSupplierInvoices" + invoice.ToString());
                 if (firstExits)
+                {
+                    AppendLogLine("CreateSupplierInvoices firstExits");
                     InitSupplierInvoice(invoice, this._MyDeclarationPM.SupplierInvoices[0]);
+
+                }
                 else
                 {
+                    AppendLogLine("CreateSupplierInvoices firstExits else");
                     var suppplierInvoice = new SupplierInvoicePM()
                     {
                         ChangeSetOp = ChangeSetOperation.Insert,
                         Tenant = ResolvedTenant()
                     };
                     InitSupplierInvoice(invoice, suppplierInvoice);
+                    AppendLogLine(" this._MyDeclarationPM.SupplierInvoices.Add(suppplierInvoice);");
+
                     this._MyDeclarationPM.SupplierInvoices.Add(suppplierInvoice);
                 }
              });
@@ -1135,16 +1146,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
         private void InitSupplierInvoice(ExportInvoice invocie,SupplierInvoicePM supplierInvoice)
         {
+            AppendLogLine("InitSupplierInvoice" + supplierInvoice.DeclarationId);
+            AppendLogLine("InitSupplierInvoice" + invocie?.Number);
+            AppendLogLine("InitSupplierInvoice" + invocie?.Date);
+            AppendLogLine("InitSupplierInvoice" + invocie?.IsEmpty);
 
             supplierInvoice.VendorId = _AmitalCustomsFile.VendorId;
             if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.InvoiceNumber))
             {
+                AppendLogLine("!String.IsNullOrWhiteSpace(_AmitalCustomsFile.InvoiceNumber");
+
                 supplierInvoice.InvoiceNumber = _AmitalCustomsFile.InvoiceNumber;
             }
             else
             {
+                AppendLogLine("else !String.IsNullOrWhiteSpace(_AmitalCustomsFile.InvoiceNumber");
                 if (!invocie.IsEmpty)
                 {
+                    AppendLogLine("!invocie.IsEmpty");
                     supplierInvoice.InvoiceNumber=invocie.Number;
                     supplierInvoice.IssueDate = invocie?.Date!=null? DateTime.Parse(invocie?.Date): supplierInvoice.IssueDate;
 
