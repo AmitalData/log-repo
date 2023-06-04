@@ -23,36 +23,46 @@ namespace Logitude.Server.Tools.Utils
             {
                 throw new Exception("MultiProcessLockTableUtil:4 use must be under Transaction");
             }
-                ProcessLockReleaseToken processLockToken = null;
+
+            ProcessLockReleaseToken processLockToken = null;
             var repo = new GeneralLockRepository(tenant);
             LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: trylock<<<" + key2Upsert.ToString());
-            var lockPoco = repo.GetSingleGeneralLockNOWAIT(key2Upsert, tenant);
-            if (lockPoco == null)
+            //var lockPoco = repo.GetSingleGeneralLockNOWAIT(key2Upsert, tenant);
+            //if (lockPoco == null)
+            //{
+            //    using (var scope = TransactionFactory.GetNewTransaction())
+            //    {
+            //        repo.Add(new GeneralLock()
+            //        {
+            //            Tenant = tenant,
+            //            GeneralKey = key2Upsert,
+            //            CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
+            //        });
+            //        LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: LockItAndGetReleaseToken:ADD<<<" + key2Upsert.ToString());
+            //        repo.SubmitChanges();
+            //        lockPoco = new GeneralLockRepository(tenant).GetSingleGeneralLockNOWAIT(key2Upsert, tenant);
+            //        scope.Complete();
+            //    }
+            //    LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: trylock<<<" + key2Upsert.ToString());
+            //}
+
+            //if (lockPoco == null)
+            //{
+            //    throw new Exception("MultiProcessLockTableUtil:lockPoco ==null");
+            //}
+
+            using (var scope = TransactionFactory.GetNewTransaction())
             {
-                using (var scope = TransactionFactory.GetNewTransaction())
+                repo.Add(new GeneralLock()
                 {
-                    repo.Add(new GeneralLock()
-                    {
-                        Tenant = tenant,
-                        GeneralKey = key2Upsert,
-                        CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
-                    });
-                    LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: LockItAndGetReleaseToken:ADD<<<" + key2Upsert.ToString());
-                    repo.SubmitChanges();
-                    lockPoco = new GeneralLockRepository(tenant).GetSingleGeneralLockNOWAIT(key2Upsert, tenant);
-                    scope.Complete();
-                }
-                LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: trylock<<<" + key2Upsert.ToString());
+                    Tenant = tenant,
+                    GeneralKey = key2Upsert,
+                    CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
+                });
+                LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: LockItAndGetReleaseToken:ADD<<<" + key2Upsert.ToString());
+                repo.SubmitChanges();                
+                scope.Complete();
             }
-
-            if (lockPoco == null)
-            {
-                throw new Exception("MultiProcessLockTableUtil:lockPoco ==null");
-            }
-
-
-
-
 
             var newLock = new ProccesLockData()
             {
