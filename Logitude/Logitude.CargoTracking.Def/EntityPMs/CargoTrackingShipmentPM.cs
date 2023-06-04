@@ -71,6 +71,8 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 
         [DataMember]
         public SharedLogisticsSettingPM SharedLogisticsSetting { get; set; }
+        [DataMember]
+        public List<Event> Events { get; set; }
     }
 
     public class CargoDocumentsFiling
@@ -204,5 +206,13 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public DateTime? PickupActualDateTime { get; set; }
         public string BookingConfirmationNumber { get; set; }
         public string SupplierName { get; set; }
+    }
+    public class Event
+    {
+        public string LocalName { get; set; }      
+        public DateTime? EventDatetime { get; set; }    
+        public string Notes { get; set; }
+        public bool? IsChoose { get; set; }
+        public string PartnerTypeId { get; set; }
     }
 }

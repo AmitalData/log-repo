@@ -3263,7 +3263,53 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private bool cargoTrackingPrivateShowEvents ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool CargoTrackingPrivateShowEvents  
+	   {
+	    
+	     get
+		{
+		   return cargoTrackingPrivateShowEvents;
+		 }
+		 set
+		 {
+		   if(cargoTrackingPrivateShowEvents != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoTrackingPrivateShowEvents",OldValue=cargoTrackingPrivateShowEvents,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   cargoTrackingPrivateShowEvents=value;
+		   }
+			
+		 }
+	   }
+	  private bool cargoTrackingPublicShowEvents ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool CargoTrackingPublicShowEvents  
+	   {
+	    
+	     get
+		{
+		   return cargoTrackingPublicShowEvents;
+		 }
+		 set
+		 {
+		   if(cargoTrackingPublicShowEvents != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoTrackingPublicShowEvents",OldValue=cargoTrackingPublicShowEvents,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   cargoTrackingPublicShowEvents=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 
