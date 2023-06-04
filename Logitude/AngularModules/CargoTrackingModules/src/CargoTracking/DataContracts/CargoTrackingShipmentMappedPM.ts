@@ -1,4 +1,4 @@
-import { Milestone } from "../Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent";
+import { Events, Milestone } from "../Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent";
 import { CargoDocumentsFiling } from "./CargoDocumentsFiling";
 import { CargoShipmentPackage } from "./CargoShipmentPackage";
 import { ConnectedOrder } from "./ConnectedOrder";
@@ -707,4 +707,8 @@ export class CargoTrackingShipmentMappedPM {
     public SHOCarrierName: string;
     public SHOPODate: Date;
     public SharedLogisticsSetting: SharedLogisticsSettingPM;
+
+    public Events: Events[] = [];
+    public CargoTrackingPrivateShowEvents: boolean;
+
 }

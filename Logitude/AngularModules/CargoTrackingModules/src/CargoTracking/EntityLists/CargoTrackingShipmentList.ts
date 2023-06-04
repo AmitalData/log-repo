@@ -160,6 +160,8 @@ export class CargoTrackingShipmentList {
 	ChargeableWeightUnitCode: string;
 	IncotermName: string;
 	ShowMoneyOrder: boolean;
+	CargoTrackingPrivateShowEvents: boolean;
+	CargoTrackingPublicShowEvents: boolean;
 	
 }
  

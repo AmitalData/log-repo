@@ -391,7 +391,36 @@ ul.line-list li.tick {
     font-size: 12px;
     line-height: 17px;
 }
+.buttonShowMore{
+    float: right;
+}
 
+    .buttonShowMore{
+        padding: 10px 20px;
+        border-radius: 25px;
+        box-shadow: 0px 0px 8px 0px #00000025;
+        color: rgb(66, 66, 66);
+        background: var(--MainColor);
+        color: white;
+        border: none;
+        cursor: pointer;
+
+    }
+        .buttonShowMore:hover{
+            box-shadow: 0px 0px 8px 0px #00000040;
+        }
+        .buttonShowMore:active{
+            border: none;
+            outline: none;
+            transform: scale(0.96);
+        }
+        .buttonShowMore:focus{
+            border: none;
+            outline: none;
+        }
+        .buttonShowMoreDiv{
+            width:15%!important;
+        }
 
 @media screen and (min-width: 479px) and (orientation: portrait),
 (min-height: 479px) and (orientation: landscape) {
@@ -520,6 +549,14 @@ ul.line-list li.tick {
     .steps-list li.highlighted {
         margin: 0px -35px;
     }
+    .buttonShowMore {
+        padding: 0px!important;
+        width:90px;
+        height: 20px;
+    }
+    .buttonShowMoreDiv{
+        width: 53%!important;
+    }
 }
 
 
@@ -552,6 +589,18 @@ ul.line-list li.tick {
     }
     .shipment-details {
         padding-top: 0;
+    }
+    .buttonShowMore{
+        width:100px;
+        height: 20px;
+    }
+    .buttonShowMoreDiv{
+        width: 50% !important;
+    }
+    .buttonShowMore {
+        padding: 0px!important;
+        width:90px;
+        height: 20px;
     }
 }
 

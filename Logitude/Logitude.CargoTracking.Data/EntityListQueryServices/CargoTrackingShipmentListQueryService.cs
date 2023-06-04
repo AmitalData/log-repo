@@ -802,6 +802,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
     {
         public List<Milestone> Milestones { get; set; }
         public CargoTrackingShipmentList ShipmentList { get; set; }
+        public List<Event> Events { get; set; }
+
 
     }
 
