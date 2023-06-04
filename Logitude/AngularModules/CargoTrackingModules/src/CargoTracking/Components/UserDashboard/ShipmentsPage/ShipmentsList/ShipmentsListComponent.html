@@ -15,6 +15,14 @@
        padding-right: 10px;
        background-origin: content-box;
     }
+    #MySearchAdvancedFilters{
+
+    background:url(./assets/search.png) 6px 2px  no-repeat scroll;
+    background-color:white;
+    background-position: right center ; 
+    background-position-x: 465px;
+    width: 120%
+    }
 </style>
 
 <div class="dashboard-container">
@@ -535,6 +543,13 @@
             </div>
         </div>
         <ul>
+            <li>
+                <div class="search-text">
+
+                    <input #input type="text"  id="MySearchAdvancedFilters" class="gray" [(ngModel)]="ShipmentSearchInput.SearchText" placeholder="Search advanced Filters..."
+                        formControlName="SearchText" name="SearchText "  (input)="onSearchAdvancedFiltersChange($event.target.value)"  value="{{SearchText}}"/>          
+                </div>
+            </li>
             <li [class.expanded]="isFilter2Expanded">
                 <div class="filter-title" (click)="isFilter2Expanded = !isFilter2Expanded">Customers</div>
                 <div class="expand-icon" (click)="isFilter2Expanded = !isFilter2Expanded">
@@ -547,6 +562,9 @@
                             (ValueChanged)="OnCustomerValueChanged($event, customer)" [Text]="customer.Name"
                             [DataContext]="customer"></CheckBox>
                     </div>
+                    <div class="" *ngIf="InvitedCustomersNoResult">
+                        <p style=" font-weight: 15; color: #5a5a5a; width:300px;">No results found</p>
+                    </div> 
 
                 </div>
             </li>
@@ -565,6 +583,9 @@
                         <CheckBox [Value]="state.IsSelected" [Text]="state.EnglishName"
                             (ValueChanged)="OnMilestonesStatusFilterChanged($event, state)"></CheckBox>
                     </div>
+                    <div class="" *ngIf="MilestonesStatusNoResult">
+                        <p style=" font-weight: 15; color: #5a5a5a; width:300px;">No results found</p>
+                    </div> 
 
                 </div>
             </li>
@@ -585,6 +606,9 @@
                         <CheckBox [Value]="item.IsSelected"  [Text]="item.Name"
                             (ValueChanged)="OnShipmentTypeFilterChanged($event, item)"></CheckBox>
                     </div>
+                    <div class="" *ngIf="ShipmentTypeFiltersNoResult">
+                        <p style=" font-weight: 15; color: #5a5a5a; width:300px;">No results found</p>
+                    </div> 
 
                 </div>
             </li>
@@ -605,6 +629,9 @@
                         <CheckBox [Value]="item.IsSelected" [Text]="item.Name"
                             (ValueChanged)="OnShipmentDirectionFilterChanged($event, item)"></CheckBox>
                     </div>
+                    <div class="" *ngIf="ShipmentDirectionFiltersNoResult">
+                        <p style=" font-weight: 15; color: #5a5a5a; width:300px;">No results found</p>
+                    </div> 
 
                 </div>
             </li>
