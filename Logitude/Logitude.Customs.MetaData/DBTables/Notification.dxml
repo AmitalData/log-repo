@@ -241,4 +241,6 @@
 	  Columns="Tenant,BadjCount" />
 	<Index
 	  Columns="Tenant,IsClosedByAssignee" />
+  <Index
+	  Columns="Tenant,EntityId,Reference1Number" />
 </Table>
