@@ -69,16 +69,6 @@ export class DeclarationStatusPM {
     public set UnfSequenceNumeric(newValue: number) { if (this.unfSequenceNumeric != newValue) { this.unfSequenceNumeric = newValue; this.MarkAsDirty("UnfSequenceNumeric"); } }
        
 	 
-    private toBuild: boolean;
-    public get ToBuild() { return this.toBuild; }
-    public set ToBuild(newValue: boolean) { if (this.toBuild != newValue) { this.toBuild = newValue; this.MarkAsDirty("ToBuild"); } }
-       
-	 
-    private isExist: boolean;
-    public get IsExist() { return this.isExist; }
-    public set IsExist(newValue: boolean) { if (this.isExist != newValue) { this.isExist = newValue; this.MarkAsDirty("IsExist"); } }
-       
-	 
 
     public OldEntityPM: DeclarationStatusPM;
 		

@@ -229,52 +229,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool toBuild ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool ToBuild  
-	   {
-	    
-	     get
-		{
-		   return toBuild;
-		 }
-		 set
-		 {
-		   if(toBuild != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToBuild",OldValue=toBuild,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   toBuild=value;
-		   }
-			
-		 }
-	   }
-	  private bool isExist ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsExist  
-	   {
-	    
-	     get
-		{
-		   return isExist;
-		 }
-		 set
-		 {
-		   if(isExist != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExist",OldValue=isExist,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isExist=value;
-		   }
-			
-		 }
-	   }
    }
    
 }
