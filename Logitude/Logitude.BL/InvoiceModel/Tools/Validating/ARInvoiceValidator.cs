@@ -1117,6 +1117,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             ARInvoice lastApprovedInvoice = (from a in myContext.ARInvoices
                                                              where a.Tenant == entityPM.Tenant
                                                              && a.IsInvoiceNumberManuallySet == false
+                                                             && a.IsExternalEntity == false
                                                              && a.StatusCode != "DR"
                                                              && a.StatusCode != "VD"
                                                              && a.InvoiceNumber != a.Id
