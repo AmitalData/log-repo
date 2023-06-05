@@ -53,6 +53,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Services
         public void MapEntityAMToEntityPM(PortAM portAM)
         {
             importerPort.Tenant = portAM.Tenant;
+            importerPort.Code = portAM.Code;
             importerPort.EnglishName = portAM.EnglishName;
             importerPort.LocalName = portAM.LocalName;
             importerPort.Notes = portAM.Notes;
