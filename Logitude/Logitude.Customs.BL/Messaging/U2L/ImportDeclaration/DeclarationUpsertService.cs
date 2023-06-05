@@ -1050,7 +1050,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         private void CreateSupplierInvoices()
         {
             var firstExits = this._MyDeclarationPM.SupplierInvoices.Count() > 0;
-            var invoicesArrayToAdd = _AmitalCustomsFile.Invoices.Invoice.Length > 0 ? _AmitalCustomsFile.Invoices.Invoice : new ExportInvoice[] { new ExportInvoice() };
+            var invoicesArrayToAdd = _AmitalCustomsFile.Invoices?.Invoice?.Length > 0 ? _AmitalCustomsFile.Invoices?.Invoice : new ExportInvoice[] { new ExportInvoice() };
 
             Array.ForEach(invoicesArrayToAdd, (invoice) =>
             {
