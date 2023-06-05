@@ -121,7 +121,7 @@
 
                                                                             <tr class="FormFieldRow">
                                                                                 <td style="width: 140px;">
-                                                                                    <LogLabel [ObjectFieldName]="'ClaimReasonCode'" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
+                                                                                    <LogLabel [ObjectFieldName]="'ClaimReasonCode'" [ObjectTableName]="ObjectTableName"
                                                                                               [DataContext]="DataContext"></LogLabel>
                                                                                 </td>
                                                                                 <td style="width: 135px;">
@@ -138,7 +138,7 @@
 
                                                                             <tr  class="FormFieldRow">
                                                                                 <td>
-                                                                                    <LogLabel [ObjectFieldName]="'TransactionNatureCode'" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
+                                                                                    <LogLabel [ObjectFieldName]="'TransactionNatureCode'" [ObjectTableName]="ObjectTableName"
                                                                                               [DataContext]="DataContext"></LogLabel>
                                                                                 </td>
                                         
@@ -156,7 +156,7 @@
 
                                                                                 <td>
                                                                                     <LogLabel [ObjectFieldName]="'ProcessTypeCode'" [ObjectTableName]="ObjectTableName"
-                                                                                    [DataContext]="DataContext" [Text]="'Customs.SupplierInvoiceItemProcesType.F.ProcessTypeCode' | TextCodeTranslationPipe"></LogLabel>
+                                                                                    [DataContext]="DataContext" ></LogLabel>
                                                                                 </td>
                                         
                                                                                 <td>

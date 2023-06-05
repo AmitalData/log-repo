@@ -3835,7 +3835,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             .then((res) => {
                 if (res) {
                     ResponseData = res;
-                    debugger
+                    
                     if (!ResponseData.HasError)
                         this.GetQuantityType(true, true)
                 }

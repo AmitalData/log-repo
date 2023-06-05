@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvioceExportDefaultUpdateClass
    {  		
-		public const string HashString = "821eb9e173750e6db66a9a33cf8e3a03";
+		public const string HashString = "067bd384d2ebf63b7fa5154e5c1c54a8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "ברירות מחדל חשבונות ספק",
 			      				    DefaultText =  "Supplier Invioce Export Default",
-			      				    Code =  "068a",
+			      				    Code =  "d055",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -173,6 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AccountTypeCode",
 					  						ListPropertyPath =  "AccountTypeCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -236,6 +237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PartyRelationshipCode",
 					  						ListPropertyPath =  "PartyRelationshipCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -299,6 +301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "BuyerRoleCode",
 					  						ListPropertyPath =  "BuyerRoleCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -362,6 +365,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ProcessTypeCode",
 					  						ListPropertyPath =  "ProcessTypeCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -425,6 +429,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TransactionNatureCode",
 					  						ListPropertyPath =  "TransactionNatureCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -488,6 +493,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ClaimReasonCode",
 					  						ListPropertyPath =  "ClaimReasonCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -532,7 +538,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable SupplierInvioceExportDefaultObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvioceExportDefault" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> SupplierInvioceExportDefaultObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SupplierInvioceExportDefault").ToList();
+		       
+	      
+
+	         Screen SupplierInvioceExportDefaultCustomsSupplierInvioceExportDefaultHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SupplierInvioceExportDefault.HeaderScreen", Name = "Customs.SupplierInvioceExportDefaultHeaderScreen", ObjectTableId = SupplierInvioceExportDefaultObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    SupplierInvioceExportDefaultObjectTable.HeaderScreenId = SupplierInvioceExportDefaultCustomsSupplierInvioceExportDefaultHeaderScreenScreen0.Id;
+		    SupplierInvioceExportDefaultObjectTable.HeaderScreenCode = SupplierInvioceExportDefaultCustomsSupplierInvioceExportDefaultHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -597,7 +615,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable SupplierInvioceExportDefaultObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvioceExportDefault" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode SupplierInvioceExportDefaultTextCode_CustomsSupplierInvioceExportDefaultOOCRDefaults = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvioceExportDefault.O.OCRDefaults", DefaultText = "OCR Defaults",LocalDefaultText = @"ברירות מחדל OCR", ObjectTableId = SupplierInvioceExportDefaultObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

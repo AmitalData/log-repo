@@ -19,7 +19,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(SupplierInvioceExportDefaultPM entityPM, SupplierInvioceExportDefault entityPOCO)
         {
-            //throw new NotImplementedException();
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+               entityPOCO.Id = entityPM.Id;
+             }
         }
 
         public void CustomPOCOToPM(SupplierInvioceExportDefaultPM entityPM, SupplierInvioceExportDefault entityPOCO)

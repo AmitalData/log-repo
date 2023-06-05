@@ -1153,6 +1153,7 @@
     <Compile Include="EntityQueryServices\Generated\CustomsCountryTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsHouseTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\DefaultValueQueryService.cs" />
+    <Compile Include="EntityQueryServices\SupplierInvioceExportDefaultQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />
@@ -1704,6 +1705,7 @@
     <Compile Include="EntityUpdateServices\Generated\CountryCurrencyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DefaultTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DefaultValueUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\SupplierInvioceExportDefaultUpdateService.cs" />
     <Compile Include="EntityUpdateServices\VendorCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationFollowUpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\VendorCurrencyUpdateService.Generated.cs" />
