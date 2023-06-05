@@ -160,7 +160,7 @@ export class MaintenanceComponent {
         this.PageChanged(this.PagesMenu[0]);
     }
     private BuildSystemSettings() {
-
+debugger
         if (FeatureLocator.HasFeaturePermession("General", "TERMOFUSERFEATUE")) {
             var item2 = new MenusTablePM();
             item2.CategoryTypeCode = "CMS";
@@ -484,7 +484,7 @@ export class MaintenanceComponent {
     }
 
     private BuildCustomsMenus() {
-
+debugger
         if (window.ObjectTables.filter(d => d.Name == "Customs.Client")[0] != null) {
 
             if (FeatureLocator.HasFeaturePermession("Customs.Client", "AUTHORIZAT")) {
@@ -510,6 +510,17 @@ export class MaintenanceComponent {
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             });
         }
+debugger
+        this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "CSM";
+            item.Icon = "Table"
+            item.Code = "DOCR";
+            item.TranslatedName = "ברירות מחדל OCR"
+            item.ObjectTableName = "Customs.Client";
+            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        });
         if (window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0] != null) {
             this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequiredField", 0).subscribe((response: any) => {
                 if (FeatureLocator.HasFeaturePermession("Customs.CustomsRequiredField", "CSTMREQFIELDMTC")) {
@@ -780,6 +791,7 @@ export class MaintenanceComponent {
     }
 
     ItemClicked(item: MaintenanceMenuItem) {
+        debugger
         if (item) {
             switch (item.Code) {
                 case "DFES": {
@@ -1591,6 +1603,21 @@ export class MaintenanceComponent {
                                     service.SendRecallMessageToServer(true);
                                 });
                             }
+                        });
+                        break;
+                    }
+
+
+                case "DOCR":
+                    {
+                        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
+                            var windowTitle = "ברירות מחדל OCR";
+                            var logWindow = new LogitudeWindow();
+                            logWindow.Width = 800;
+                            logWindow.Height = 500;
+                            logWindow.Title = windowTitle;
+                            logWindow.IsShowCloseButton = true;
+                            logWindow.Show('./Common/Components/Maintenance/OcrDefaultsSettingsComponent');
                         });
                         break;
                     }
