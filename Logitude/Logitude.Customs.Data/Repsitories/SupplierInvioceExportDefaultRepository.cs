@@ -20,8 +20,13 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
-
-   }
+        public SupplierInvioceExportDefault GetSupplierInvoiceExportDefaultByTenant( int tenant)
+        {
+            return (from a in context.SupplierInvioceExportDefaults
+                    where a.Tenant==tenant
+                    select a).FirstOrDefault();
+        }
+    }
 
 }
    

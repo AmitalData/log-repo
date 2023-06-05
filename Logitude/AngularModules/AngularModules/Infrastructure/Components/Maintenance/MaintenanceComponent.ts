@@ -160,7 +160,7 @@ export class MaintenanceComponent {
         this.PageChanged(this.PagesMenu[0]);
     }
     private BuildSystemSettings() {
-debugger
+
         if (FeatureLocator.HasFeaturePermession("General", "TERMOFUSERFEATUE")) {
             var item2 = new MenusTablePM();
             item2.CategoryTypeCode = "CMS";
@@ -484,7 +484,7 @@ debugger
     }
 
     private BuildCustomsMenus() {
-debugger
+
         if (window.ObjectTables.filter(d => d.Name == "Customs.Client")[0] != null) {
 
             if (FeatureLocator.HasFeaturePermession("Customs.Client", "AUTHORIZAT")) {
@@ -510,7 +510,7 @@ debugger
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             });
         }
-debugger
+
         this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "CSM";
@@ -791,7 +791,7 @@ debugger
     }
 
     ItemClicked(item: MaintenanceMenuItem) {
-        debugger
+        
         if (item) {
             switch (item.Code) {
                 case "DFES": {
@@ -1286,7 +1286,6 @@ debugger
                 }
                 case "EXPR": {
                     var logitudeWindow = new LogitudeWindow();
-                    debugger;
                     logitudeWindow.Title = TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ExportRequiredFields");
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 525;
@@ -1610,8 +1609,8 @@ debugger
 
                 case "DOCR":
                     {
-                        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
-                            var windowTitle = "ברירות מחדל OCR";
+                        this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceExportDefault", 0).subscribe((response: any) => {
+                            var windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvioceExportDefault.O.OCRDefaults");;
                             var logWindow = new LogitudeWindow();
                             logWindow.Width = 800;
                             logWindow.Height = 500;

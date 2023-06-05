@@ -1,119 +1,114 @@
-import {Component} from '@angular/core';
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {TenantPMService} from '../../../Common/Services/StandardPMs/TenantPMService';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {QuestionnaireList} from '../../../CRM/EntityLists/QuestionnaireList'; 
-import {QuestionnaireListService} from '../../../CRM/Services/StandardLists/QuestionnaireListService'; 
-import {VatFormatTypeListService} from '../../../Common/Services/StandardLists/VatFormatTypeListService'; 
-import {Validator} from '../../../Infrastructure/Validators/Validator';
-import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
-import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { Component } from '@angular/core';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
+import { TenantPMService } from '../../../Common/Services/StandardPMs/TenantPMService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { QuestionnaireList } from '../../../CRM/EntityLists/QuestionnaireList';
+import { QuestionnaireListService } from '../../../CRM/Services/StandardLists/QuestionnaireListService';
+import { VatFormatTypeListService } from '../../../Common/Services/StandardLists/VatFormatTypeListService';
+import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { SupplierInvioceExportDefaultPMService } from 'Customs/Services/StandardPMs/SupplierInvioceExportDefaultPMService';
+import { SupplierInvioceExportDefaultListService } from 'Customs/Services/StandardLists/SupplierInvioceExportDefaultListService';
+import { SupplierInvioceExportDefaultPM } from 'Customs/EntityPMs/SupplierInvioceExportDefaultPM';
+import { SupplierInvioceExportDefaultExtendedPMService } from 'Customs/Services/ExtendedPMs/SupplierInvioceExportDefaultExtendedPMService';
 
 @Component({
     selector: 'OcrDefaultsSettingsComponent',
-    
+
     templateUrl: './OcrDefaultsSettingsComponent.html',
 })
 
 export class OcrDefaultsSettingsComponent extends BaseComponent {
     public DataContext: any = this;
-   
-    public ObjectTableName: string = "Customs.SupplierInvoice";
-    private tenantPM: TenantPM;
+    public ObjectTableName: string = "Customs.SupplierInvioceExportDefault";
+    private SupplierInvioceExportDefaultPM: SupplierInvioceExportDefaultPM;
     public ValidationErrorsList: string[];
-    public QuestionnaireList: QuestionnaireList []= [];
     public IsVisibile = false;
-    IsShowAreaDefaultQuestionnaire: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         super();
-        this.CurrentSession.StartBusyIndicator("Loading...");
+        this.LoadDefaults();
 
-        this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice", 0).subscribe((response: any) => {
-            this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem", 0).subscribe((response: any) => {
-                this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemProcesType", 0).subscribe((response: any) => {
-                    this.LoadDefaults();
-                })
-            })
-        })
-        this.tenantPM = new TenantPM();
-       
-       
-     
     }
 
     private LoadDefaults() {
-              
-        this.AccountTypeCode="380";
-        this.PartyRelationshipCode="3";
-        this.BuyerRoleCode="9";
+
+        this.SupplierInvioceExportDefaultPM = new SupplierInvioceExportDefaultPM();
+        var myService: SupplierInvioceExportDefaultExtendedPMService = new SupplierInvioceExportDefaultExtendedPMService();
         
+        myService.getByTenat(SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+            this.SupplierInvioceExportDefaultPM = response.Result;
+            
+            if (this.SupplierInvioceExportDefaultPM == null)
+                this.SupplierInvioceExportDefaultPM = new SupplierInvioceExportDefaultPM();
+            this.IsVisibile = true;
+
+        });
+
     }
-    
-    //SetUIProperties
-   
-    
-    
 
-   
-    
 
-    
-
-   
-
-    get AccountTypeCode() { return "380"; }
+    get AccountTypeCode() { return this.SupplierInvioceExportDefaultPM?.AccountTypeCode ?? "380"; }
     set AccountTypeCode(value: string) {
-       
+        if (this.SupplierInvioceExportDefaultPM.AccountTypeCode != value) {
+            this.SupplierInvioceExportDefaultPM.AccountTypeCode = value;
+
+        }
     }
 
-    get PartyRelationshipCode() { return  "3"}
+    get PartyRelationshipCode() { return this.SupplierInvioceExportDefaultPM?.PartyRelationshipCode ?? "3" }
     set PartyRelationshipCode(value: string) {
-       
+        if (this.SupplierInvioceExportDefaultPM.PartyRelationshipCode != value) {
+            this.SupplierInvioceExportDefaultPM.PartyRelationshipCode = value;
+
+        }
     }
 
-    get ClaimReasonCode() { return  "6"}
+    get ClaimReasonCode() { return this.SupplierInvioceExportDefaultPM?.ClaimReasonCode ?? "6" }
     set ClaimReasonCode(value: string) {
-       
+        if (this.SupplierInvioceExportDefaultPM.ClaimReasonCode != value) {
+            this.SupplierInvioceExportDefaultPM.ClaimReasonCode = value;
+
+        }
     }
 
-    get TransactionNatureCode() { return  "2"}
+    get TransactionNatureCode() { return this.SupplierInvioceExportDefaultPM?.TransactionNatureCode ?? "2" }
     set TransactionNatureCode(value: string) {
-       
+        if (this.SupplierInvioceExportDefaultPM.TransactionNatureCode != value) {
+            this.SupplierInvioceExportDefaultPM.TransactionNatureCode = value;
+
+        }
     }
-    get ProcessTypeCode() { return  "1100105"}
+    get ProcessTypeCode() { return this.SupplierInvioceExportDefaultPM?.ProcessTypeCode ?? "1100105" }
     set ProcessTypeCode(value: string) {
-       
+        if (this.SupplierInvioceExportDefaultPM.ProcessTypeCode != value) {
+            this.SupplierInvioceExportDefaultPM.ProcessTypeCode = value;
+
+        }
     }
 
-   
-
-    
-
-   
-    get BuyerRoleCode() { return  "9" }
+    get BuyerRoleCode() { return this.SupplierInvioceExportDefaultPM?.BuyerRoleCode ?? "9" }
     set BuyerRoleCode(value: string) {
-       
+        if (this.SupplierInvioceExportDefaultPM.BuyerRoleCode != value) {
+            this.SupplierInvioceExportDefaultPM.BuyerRoleCode = value;
+
+        }
     }
 
-   
 
-    
-    
-    // Commands 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
-        Validator.TryValidateObject(this.tenantPM, this.DataContext.ObjectTableName, errors);
+        Validator.TryValidateObject(this.SupplierInvioceExportDefaultPM, this.DataContext.ObjectTableName, errors);
 
         this.ValidationErrorsList = errors;
 
@@ -126,18 +121,38 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     SubmitTenantChanges() {
         this.CurrentSession.StartBusyIndicator("Saving...");
 
-        var myService: TenantPMService = new TenantPMService();
-        myService.update(this.tenantPM).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    InfraSettings.TenantPM = this.tenantPM;
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+        var myService: SupplierInvioceExportDefaultPMService = new SupplierInvioceExportDefaultPMService();
+        this.SupplierInvioceExportDefaultPM.Tenant = SessionLocator.Tenant;
+        if (this.SupplierInvioceExportDefaultPM?.Id == null) {
+            myService.insert(this.SupplierInvioceExportDefaultPM).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                       
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    }
+                    else {
+
+                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                        this.CurrentSession.StopBusyIndicator();
+                    }
                 }
-                else {
-                    this.ValidationErrorsList = myResponse.ErrorsArray;
-                    this.CurrentSession.StopBusyIndicator();
+            });
+        }
+        else{
+            myService.update(this.SupplierInvioceExportDefaultPM).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                       
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    }
+                    else {
+
+                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                        this.CurrentSession.StopBusyIndicator();
+                    }
                 }
-            }
-        });
+            }); 
+        }
+
     }
 }

@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;ברירות מחדל חשבונות ספק&quot;"
   DefaultText="&quot;Supplier Invioce Export Default&quot;"
-  Code="&quot;068a&quot;"
+  Code="&quot;d055&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -92,6 +92,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -165,6 +166,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -239,6 +241,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AccountTypeCode&quot;"
     ListPropertyPath="&quot;AccountTypeCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -317,6 +320,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;PartyRelationshipCode&quot;"
     ListPropertyPath="&quot;PartyRelationshipCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -395,6 +399,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;BuyerRoleCode&quot;"
     ListPropertyPath="&quot;BuyerRoleCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -473,6 +478,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ProcessTypeCode&quot;"
     ListPropertyPath="&quot;ProcessTypeCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -551,6 +557,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TransactionNatureCode&quot;"
     ListPropertyPath="&quot;TransactionNatureCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -629,6 +636,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ClaimReasonCode&quot;"
     ListPropertyPath="&quot;ClaimReasonCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -678,6 +686,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.SupplierInvioceExportDefaultHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.SupplierInvioceExportDefault&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -706,7 +723,15 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.SupplierInvioceExportDefault.O.OCRDefaults&quot;"
+      DefaultText="&quot;OCR Defaults&quot;"
+      LocalDefaultText="&quot;ברירות מחדל OCR&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
