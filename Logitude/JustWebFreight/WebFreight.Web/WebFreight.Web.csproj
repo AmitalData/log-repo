@@ -39,7 +39,8 @@
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -1044,6 +1045,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DefaultValueViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GovernmentProcTypeTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\InternationalSiteTenantViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SupplierInvioceExportDefaultViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\UIMessageTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\VendorCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ClientItemController.Generated.cs" />
@@ -1054,6 +1056,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DefaultValueController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GovernmentProcTypeTenantController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\InternationalSiteTenantController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SupplierInvioceExportDefaultController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\UIMessageTenantController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\VendorCurrencyController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StatusCodeViewsController.Generated.cs" />
@@ -3391,6 +3394,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\StatusFieldTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\StorageStatusTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\StuffingSiteTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SupplierInvioceExportDefaultUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SupplierPartyTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SupportMailboxUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffLinesContainersPriceUpdateClass.cs" />
