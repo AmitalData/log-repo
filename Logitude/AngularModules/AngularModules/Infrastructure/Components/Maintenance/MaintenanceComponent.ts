@@ -516,7 +516,7 @@ export class MaintenanceComponent {
             item.CategoryTypeCode = "CSM";
             item.Icon = "Table"
             item.Code = "DOCR";
-            item.TranslatedName = "ברירות מחדל OCR"
+            item.TranslatedName ="ברירות מחדל OCR"
             item.ObjectTableName = "Customs.Client";
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
@@ -1610,7 +1610,7 @@ export class MaintenanceComponent {
                 case "DOCR":
                     {
                         this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceExportDefault", 0).subscribe((response: any) => {
-                            var windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvioceExportDefault.O.OCRDefaults");;
+                            var windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvioceExportDefault.O.OCRDefaults");
                             var logWindow = new LogitudeWindow();
                             logWindow.Width = 800;
                             logWindow.Height = 500;

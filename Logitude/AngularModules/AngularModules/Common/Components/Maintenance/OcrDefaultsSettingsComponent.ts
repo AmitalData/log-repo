@@ -34,6 +34,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
+        this.CurrentSession.StartBusyIndicator('Loading...');
         this.LoadDefaults();
 
     }
@@ -49,6 +50,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
             if (this.SupplierInvioceExportDefaultPM == null)
                 this.SupplierInvioceExportDefaultPM = new SupplierInvioceExportDefaultPM();
             this.IsVisibile = true;
+            this.CurrentSession.StopBusyIndicator();
 
         });
 
