@@ -655,7 +655,7 @@
                         <div id="description-of-goods" *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
                             <div class="title">Description Of Goods </div>
                             <div class="description">
-                                {{cargoTrackingShipmentPM?.DescriptionOfGoods}}
+                               <custom-label [width]="149">{{cargoTrackingShipmentPM?.DescriptionOfGoods}}</custom-label> 
                             </div>
                         </div>
                         <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
