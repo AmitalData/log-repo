@@ -344,11 +344,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //LogMessagingUtil.Instance.AppendLine("invoiceNumber cannot be null");
                         throw new Exception("invoiceNumber cannot be null");
                     }
-                    if (string.IsNullOrWhiteSpace(data[5]))
-                    {
-                        //LogMessagingUtil.Instance.AppendLine("RichbitFileNumber cannot be null");
-                        throw new Exception("RichbitFileNumber cannot be null");
-                    }
+                    //if (string.IsNullOrWhiteSpace(data[5]))
+                    //{
+                    //    LogMessagingUtil.Instance.AppendLine("RichbitFileNumber cannot be null");
+                    //    throw new Exception("RichbitFileNumber cannot be null");
+                    //}
                     if (string.IsNullOrWhiteSpace(data[7]))
                     {
                         //LogMessagingUtil.Instance.AppendLine("ClassificationCode cannot be null");
