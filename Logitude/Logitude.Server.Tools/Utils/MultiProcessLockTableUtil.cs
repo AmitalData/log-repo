@@ -5,6 +5,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +15,6 @@ namespace Logitude.Server.Tools.Utils
 {
     public class MultiProcessLockTableUtil
     {
-       
-
-
         public IDisposable LockItAndGetReleaseToken(int tenant, string key2Upsert, string requestLog)
         {
             if (Transaction.Current == null)
@@ -27,41 +25,31 @@ namespace Logitude.Server.Tools.Utils
             ProcessLockReleaseToken processLockToken = null;
             var repo = new GeneralLockRepository(tenant);
             LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: trylock<<<" + key2Upsert.ToString());
-            //var lockPoco = repo.GetSingleGeneralLockNOWAIT(key2Upsert, tenant);
-            //if (lockPoco == null)
-            //{
-            //    using (var scope = TransactionFactory.GetNewTransaction())
-            //    {
-            //        repo.Add(new GeneralLock()
-            //        {
-            //            Tenant = tenant,
-            //            GeneralKey = key2Upsert,
-            //            CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
-            //        });
-            //        LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: LockItAndGetReleaseToken:ADD<<<" + key2Upsert.ToString());
-            //        repo.SubmitChanges();
-            //        lockPoco = new GeneralLockRepository(tenant).GetSingleGeneralLockNOWAIT(key2Upsert, tenant);
-            //        scope.Complete();
-            //    }
-            //    LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: trylock<<<" + key2Upsert.ToString());
-            //}
 
-            //if (lockPoco == null)
-            //{
-            //    throw new Exception("MultiProcessLockTableUtil:lockPoco ==null");
-            //}
-
-            using (var scope = TransactionFactory.GetNewTransaction())
+            try
             {
-                repo.Add(new GeneralLock()
+                using (var scope = TransactionFactory.GetNewTransaction())
                 {
-                    Tenant = tenant,
-                    GeneralKey = key2Upsert,
-                    CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
-                });
-                LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: LockItAndGetReleaseToken:ADD<<<" + key2Upsert.ToString());
-                repo.SubmitChanges();                
-                scope.Complete();
+                    repo.Add(new GeneralLock()
+                    {
+                        Tenant = tenant,
+                        GeneralKey = key2Upsert,
+                        CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
+                    });
+                    LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: LockItAndGetReleaseToken:ADD<<<" + key2Upsert.ToString());
+                    repo.SubmitChanges();                
+                    scope.Complete();
+                }
+            }
+            catch (UpdateException)
+            {
+                var mess = "ProcessLockUtil:LockItAndGetReleaseToken:fAILED:Already EXIST:" + key2Upsert.ToString();
+                LogMessagingUtil.Instance.AppendLine(mess);
+                throw new ProcessLockException(mess);
+            }
+            catch 
+            {
+                throw;
             }
 
             var newLock = new ProccesLockData()
@@ -72,28 +60,22 @@ namespace Logitude.Server.Tools.Utils
                 InsertTime = DateTime.Now
 
             };
+
             processLockToken = new ProcessLockReleaseToken()
             {
-
                 ProccesLockData = newLock
             };
-
-
 
             return processLockToken as IDisposable;
         }
         private void RealseKey(ProcessLockReleaseToken disposeProcessLockToken)
         {
-            
+            var repo = new GeneralLockRepository(disposeProcessLockToken.ProccesLockData.Tenant);
 
-                var repo = new GeneralLockRepository(disposeProcessLockToken.ProccesLockData.Tenant);
+            //var repo = new GeneralLockRepository(_Tenant);
+            repo.FastDelete(disposeProcessLockToken.ProccesLockData.MyKey, disposeProcessLockToken.ProccesLockData.Tenant);
 
-                //var repo = new GeneralLockRepository(_Tenant);
-                repo.FastDelete(disposeProcessLockToken.ProccesLockData.MyKey, disposeProcessLockToken.ProccesLockData.Tenant);
-
-                LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil:RealseKey:Removed>>>:" + disposeProcessLockToken.ToString());
-
-            
+            LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil:RealseKey:Removed>>>:" + disposeProcessLockToken.ToString());
         }
     
         public class ProcessLockReleaseToken : IDisposable
