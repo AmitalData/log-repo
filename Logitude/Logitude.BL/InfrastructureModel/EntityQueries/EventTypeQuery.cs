@@ -723,6 +723,32 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  };
             return eventTypes;
         }
-         
+        public List<Event> GetEventByShipment(string ShipmentId, int tenant)
+        {
+            var query = (from te in repository.context.TraceEvent
+                         join et in repository.context.EventType on te.EventTypeId equals et.Id
+                         join er in repository.context.EventRemarks on et.Id equals er.EventTypeId into erGroup
+                         from er in erGroup.Where(e => e.PartnerTypeId == "CS").DefaultIfEmpty()
+                         where te.Deleted == false && et.InActive == false && et.IsCustomerView == true && et.Tenant == tenant && te.EntityId == ShipmentId
+                         orderby te.EventDateTime
+                         select new Event()
+                         {
+                             LocalName = et.LocalName,
+                             EventDatetime = te.EventDateTime,
+                             Notes = te.Notes,
+                             IsChoose = er.IsChoose,
+                             PartnerTypeId = er.PartnerTypeId
+                         }).ToList();
+
+            return query;
+        }
+        public class Event
+        {
+            public string LocalName { get; set; }
+            public DateTime? EventDatetime { get; set; }
+            public string Notes { get; set; }
+            public bool? IsChoose { get; set; }
+            public string PartnerTypeId { get; set; }
+        }
     }
 }
