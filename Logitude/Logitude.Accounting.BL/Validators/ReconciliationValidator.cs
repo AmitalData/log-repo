@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Transactions;
 using Simplog.Server.Infrastructure;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Def.EntityPMs;
@@ -16,6 +17,7 @@ using Logitude.Server.Tools;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Accounting.BL.CloseTables;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Accounting.BL.Validators
 {
@@ -181,11 +183,24 @@ namespace Logitude.Accounting.BL.Validators
 
         private static List<LedgerTransactionPM> GetReconciliationTransactions(ReconciliationPM myReconciliationPM, ValidationContext context)
         {
-            IReconciliationValidatorContextDataProvider myDataProvider = context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as IReconciliationValidatorContextDataProvider;
-            var transactionsId = reconciliation.ReconciliationLines.Where(d => d.TransactionId != null).Select(a => a.TransactionId).ToList();
-            
-            List<LedgerTransactionPM> transactionsPMs = myDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
-            return transactionsPMs;
+            using (var newScope = GetTransactionScope()) /// inside IdCounter.GetNumber there is --- GetNewReadCommittedTransaction
+            {
+                IReconciliationValidatorContextDataProvider myDataProvider =
+                    context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as
+                        IReconciliationValidatorContextDataProvider;
+                var transactionsId = reconciliation.ReconciliationLines.Where(d => d.TransactionId != null)
+                    .Select(a => a.TransactionId).ToList();
+
+                List<LedgerTransactionPM> transactionsPMs =
+                    myDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
+                return transactionsPMs;
+            }
+        }
+
+
+        private static TransactionScope GetTransactionScope()
+        {
+            return TransactionFactory.GetNewReadUncommittedTransaction();
         }
 
         private static void BlockDifferentAccountsReconciliation(List<string> errorsList, List<LedgerTransactionPM> transactionsPMList)
