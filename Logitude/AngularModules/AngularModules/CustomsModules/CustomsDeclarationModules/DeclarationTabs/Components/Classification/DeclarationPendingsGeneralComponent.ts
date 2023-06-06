@@ -74,8 +74,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
         this.subscription = DeclarationEventManager.SavePendingAfterDeclarationSaved.subscribe(data => {
             this._DeclarationCourierStatusPMService.get(this.decPM.Id).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
-                    this.DeclarationCourierStatus = response.Result
-
+                    this.DeclarationCourierStatus.IsCourierMissingClassification = (response.Result as DeclarationCourierStatusPM).IsCourierMissingClassification;
                     this.OkButtonClicked();
                 }
             });

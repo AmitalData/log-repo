@@ -617,7 +617,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             foreach (var item in listReasonCode)
             {
-                if (StorageSiteCode == "ILSWS" && courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant).SwissportSuspendedCode != null)
+                if (StorageSiteCode == "ILSWS" && courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant)?.SwissportSuspendedCode != null)
                 {
                     var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
                     string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM, true);
@@ -628,7 +628,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     break;
                 }
-                if (StorageSiteCode == "ILMMN" && courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant).MamanSuspendedCode != null)
+                if (StorageSiteCode == "ILMMN" && courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant)?.MamanSuspendedCode != null)
                 {
                     var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
                     string drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM,true);
