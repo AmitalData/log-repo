@@ -59,6 +59,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                         ClearOldDataForInterestReport();
                     }
                     CalculateDataForInterestReport();
+                    if(interestReportPM.OpenBalance != GetInterestReportOpenBalance())
+                        throw new ApplicationException("The open balance in the newly created report should be equal to the close balance for the last invoiced report");
                     scope.Complete();
                 }
             }
