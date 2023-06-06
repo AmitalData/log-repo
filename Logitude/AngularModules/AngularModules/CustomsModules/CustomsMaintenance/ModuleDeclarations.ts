@@ -45,7 +45,6 @@ export const Components =
         CustomsPartnerFtpListComponent,
         //CustomsPartnerFtpEditComponent,
         DeclarationRemarksComponent,
-        OcrDefaultsSettingsComponent
         
     ];
 
@@ -78,7 +77,7 @@ export class ModuleDeclarations {
             case "DeclarationRemarksComponent": { myResult = DeclarationRemarksComponent; break; }
             //case "CustomsPartnerFtpEditComponent": { myResult = CustomsPartnerFtpEditComponent; break; }
             case "DeclarationRemarksComponent": { myResult = DeclarationRemarksComponent; break; }
-            case "OcrDefaultsSettingsComponent": { myResult = OcrDefaultsSettingsComponent; break; }
+          
 
 
         }
