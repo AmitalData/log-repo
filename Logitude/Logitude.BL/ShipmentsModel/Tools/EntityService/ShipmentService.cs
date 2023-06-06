@@ -18,6 +18,7 @@ using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data.Repositories;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.EntityChanges;
@@ -349,7 +350,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void AddVIRExternalTaskQueue()
         {
-            if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR")
+            if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR" && CustomsSettingQueryService.GetSettingByTenant(tenant).StandAlone)
             {
                 ExternalTasksQueueService externalTasksQueueService = new ExternalTasksQueueService(entityPM.Tenant, "User ID Link Received");
                 externalTasksQueueService.AddVIRExternalTaskQueue(entityPM);
@@ -2901,7 +2902,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void AddPaymentReceivedToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && !CustomsSettingQueryService.GetSettingByTenant(tenant).StandAlone)
             {
                 //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 //{

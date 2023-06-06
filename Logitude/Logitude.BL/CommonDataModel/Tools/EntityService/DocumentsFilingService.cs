@@ -1183,7 +1183,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 (
                 (!extDocPM.IsHybrid   && LogitudeSettings.IsCostomsDeploy) ||
                 (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
-                && LogitudeSettings.DeploymentStage != "Simplog" && !extDocPM.NoAddToTasksQueue)
+                && LogitudeSettings.DeploymentStage != "Simplog" && !extDocPM.NoAddToTasksQueue) &&
+                !CustomsSettingQueryService.GetSettingByTenant(extDocPM.Tenant).StandAlone
                 )
             {
                 ObjectTable docTable = ObjectTableRepository.GetObjectTableById(extDocPM.ObjectTableId, extDocPM.Tenant);

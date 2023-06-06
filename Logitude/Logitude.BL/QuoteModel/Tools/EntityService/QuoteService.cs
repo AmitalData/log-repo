@@ -44,6 +44,7 @@ using Logitude.BL.QuoteModel.Tools.Behaviours;
 using Simplog.Data.InfrastructureModel;
 using System.Reflection;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.BL.QuoteModel.Tools.EntityService
 {
@@ -439,7 +440,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                             });
 
                         tasklogParams.ByteData = LogitudeXmlSerializer.SerializeObject(queueTasks);
-                        Communications.AddCommunicationLog(tasklogParams);
+                        if (!CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).StandAlone)
+                            Communications.AddCommunicationLog(tasklogParams);
                     }
                     #endregion
                 }
@@ -472,7 +474,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 });
 
                 tasklogParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
-                Communications.AddCommunicationLog(tasklogParams);
+                if (!CustomsSettingQueryService.GetSettingByTenant(tasklogParams.Tenant).StandAlone)
+                    Communications.AddCommunicationLog(tasklogParams);
             }
         }
 

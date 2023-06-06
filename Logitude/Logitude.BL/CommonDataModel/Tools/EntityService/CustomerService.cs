@@ -37,6 +37,7 @@ using Logitude.BL.DataContracts;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools.QueueService;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -526,6 +527,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddCustomerToQueue()
         {
+            Customs.BL.EntityPMs.CustomsSettingPM a = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(tenant);
+            Logitude.Customs.Def.EntityPMs.CustomsSettingPM b = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(tenant);
+            //a
             if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -563,7 +567,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddLogboxCustomerToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && !CustomsSettingQueryService.GetSettingByTenant(tenant).StandAlone)
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {

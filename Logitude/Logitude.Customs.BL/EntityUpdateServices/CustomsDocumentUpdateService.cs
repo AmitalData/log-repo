@@ -176,6 +176,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('HCD', 'Hybrid Courier document-Prevent feedback', 'Hybrid document-Prevent feedback')
             //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE) VALUES('HCD', '1', TO_TIMESTAMP('2022-03-06 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2022-03-06 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'HCD', '1', '0', 'HCD')
+            if(CustomsSettingQueryService.GetSettingByTenant(documentsFilingPM.Tenant).StandAlone) return;
 
             var tenant = documentsFilingPM.Tenant;
             var customsSettingQueryService = new CustomsSettingQueryService(tenant);
