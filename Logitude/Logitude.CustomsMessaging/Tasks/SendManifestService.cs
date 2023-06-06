@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
@@ -45,7 +46,9 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
                 foreach (var courierMaster in courierMasters)
                 {
+                   if( GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMaster.Id, courierMaster.Tenant))
 
+                    { 
                     var messagingService = new DCAInUCB1170_MsgMessagingService();
                     var sts = messagingService.CreateCRS(t.Tenant, null,
                         new SendALLCorrectRequestParams()
@@ -55,7 +58,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                             // CourierDeclarationStatusCode = courierMaster.
                         }
 
-                        );
+                        );}
                 }
             } else
             {
@@ -90,6 +93,26 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
             //    LogMessagingUtil.Instance.AppendLine($"לא נמצאו טיסות פתוחות לסגירה");
             //}
         }
+
+        public bool GetRequiredFieldErrorsForCourierDeclarationIsValid
+        (string courierMasterId, int tenant){
+                {
+                    var courierMasterRequiredErrors = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(courierMasterId, tenant);
+                    if (courierMasterRequiredErrors != null)
+                    {
+                        return courierMasterRequiredErrors.RequiredFields.Count == 0;
+
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
     }
+
+
+
+
+
 
 }
