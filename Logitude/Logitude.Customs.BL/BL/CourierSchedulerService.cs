@@ -158,9 +158,9 @@ namespace Logitude.Customs.BL.BL
                 return false;
 
             }
-            if (dateTimeStart < dateTimeEnd)// 0700-1700
+            if (dateTimeStart <= dateTimeEnd)// 0700-1700
             {
-                if (dateTimeStart < @now && @now < dateTimeEnd)
+                if (dateTimeStart <= @now && @now <= dateTimeEnd)
                 {
                     _stringBuilder.Append("|").Append($" שליחה מידית בטווח שעות    {dateTimeStart} < now:{@now} < {dateTimeEnd} ");
                     return true;
@@ -175,7 +175,7 @@ namespace Logitude.Customs.BL.BL
             else //if (dateTimeStart > dateTimeEnd)// 1700-0700
             {
 
-                if (dateTimeEnd /*0700*/  < @now && @now < dateTimeStart  /*1700*/)
+                if (dateTimeEnd /*0700*/  <= @now && @now <= dateTimeStart  /*1700*/)
                 {
                     _stringBuilder.Append("|").Append($"00:00----{dateTimeEnd}| now={@now} |{dateTimeStart}------00:00 ")
                         .Append("  NOT-IsTimeRange  !!! ");
