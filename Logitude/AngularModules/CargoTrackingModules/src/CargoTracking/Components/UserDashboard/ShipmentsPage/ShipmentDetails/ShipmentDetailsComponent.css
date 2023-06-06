@@ -549,6 +549,7 @@ h1 {
     font-weight: 700;
     color: var(--MainColor);
     text-transform: uppercase;
+    text-align: center;
 }
 .routing-step.active .route-label{
     color: white !important;
