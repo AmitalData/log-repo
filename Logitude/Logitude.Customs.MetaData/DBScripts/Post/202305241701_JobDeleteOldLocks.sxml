@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
     USE main
     GO
+
+	DECLARE @jobId binary(16)
+	SELECT @jobId = job_id FROM msdb.dbo.sysjobs WHERE (name = N'DELETE_OLD_LOCKS')
+	IF (@jobId IS NOT NULL)
+	BEGIN
+		EXEC msdb.dbo.sp_delete_job @jobId
+	END
+	Go
+
     DECLARE @jobId BINARY(16)
     EXEC  msdb.dbo.sp_add_job @job_name=N'DELETE_OLD_LOCKS',
     @enabled=1,
@@ -16,7 +25,7 @@
     @job_id = @jobId OUTPUT
     select @jobId
     GO
-    EXEC msdb.dbo.sp_add_jobserver @job_name=N'DELETE_OLD_LOCKS', @server_name = N'UNIV511'
+    EXEC msdb.dbo.sp_add_jobserver @job_name=N'DELETE_OLD_LOCKS'
     GO
     USE main
     GO
