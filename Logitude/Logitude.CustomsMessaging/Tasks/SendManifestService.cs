@@ -94,8 +94,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
             //}
         }
 
-        public bool GetRequiredFieldErrorsForCourierDeclarationIsValid
-        (string courierMasterId, int tenant){
+        public bool GetRequiredFieldErrorsForCourierDeclarationIsValid(string courierMasterId, int tenant)  
                 {
                     var courierMasterRequiredErrors = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(courierMasterId, tenant);
                     if (courierMasterRequiredErrors != null)
