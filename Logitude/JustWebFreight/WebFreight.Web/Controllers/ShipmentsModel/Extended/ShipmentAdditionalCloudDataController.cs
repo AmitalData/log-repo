@@ -7,6 +7,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -651,7 +652,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
             };
 
-            communicationLogRepository.Add(commLog);
+            if (!CustomsSettingQueryService.GetSettingByTenant(entity.Tenant).StandAlone)
+                communicationLogRepository.Add(commLog);
             communicationLogRepository.SubmitChanges();
             string filename = document.Id + "." + document.Extension;
             string filePath = "tenant" + commLog.Tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);

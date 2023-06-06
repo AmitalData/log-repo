@@ -11,7 +11,9 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
@@ -130,8 +132,10 @@ namespace WebFreight.Web
                     Priority = 1,
 
                 };
+                Logitude.Customs.Def.EntityPMs.CustomsSettingPM a = CustomsSettingQueryService.GetSettingByTenant(Tenant);
 
-                communicationLogRepository.Add(commLog);
+                if (!CustomsSettingQueryService.GetSettingByTenant(Tenant).StandAlone)
+                    communicationLogRepository.Add(commLog);
                 communicationLogRepository.SubmitChanges();
                 SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, Tenant);
             }
