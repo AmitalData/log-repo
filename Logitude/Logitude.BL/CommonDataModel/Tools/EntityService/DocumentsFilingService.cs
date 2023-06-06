@@ -45,6 +45,7 @@ using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
 using System.Xml.Linq;
+using Logitude.BL.CommonDataModel.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -1184,7 +1185,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 (!extDocPM.IsHybrid   && LogitudeSettings.IsCostomsDeploy) ||
                 (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
                 && LogitudeSettings.DeploymentStage != "Simplog" && !extDocPM.NoAddToTasksQueue) &&
-                !CustomsSettingQueryService.GetSettingByTenant(extDocPM.Tenant).StandAlone
+                !CustomsSettingsHelper.GetCache(tenant).StandAlone
                 )
             {
                 ObjectTable docTable = ObjectTableRepository.GetObjectTableById(extDocPM.ObjectTableId, extDocPM.Tenant);
