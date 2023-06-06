@@ -110,7 +110,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsPAYTab = a.CourierPaymentStatusCode == "R",
                                                                   IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
                                                                   IsACCTab = (a.StorageSiteStatusCode == "2" || a.SpecialActionStatus == "X"),
-                                                                  CourierManifestStatusCode =   a.CourierManifestStatusCode,
+                                                                  CourierManifestStatusCode = !RequiredFieldErrorsForCourierDeclarationIsValid ? "M" : a.CourierManifestStatusCode,
                                                                   CourierDeclarationStatusCode = a.CourierDeclarationStatusCode,
                                                                   CourierPaymentStatusCode = a.CourierPaymentStatusCode,
                                                                   IsCourierMissingClassification = a.IsCourierMissingClassification,
@@ -238,12 +238,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<DeclarationCourierStatus> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationCourierStatus> iQueryable, int tenant)
         {
             //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
-            //var courierMasterIdF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault();
-            //if (courierMasterIdF != null)
-            //{
-            //    string courierMasterId = (string)courierMasterIdF.FieldValue;
-            //    RequiredFieldErrorsForCourierDeclarationIsValid = InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMasterId, tenant);
-            //}
+            var courierMasterIdF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault();
+            if (courierMasterIdF != null)
+            {
+                string courierMasterId = (string)courierMasterIdF.FieldValue;
+                RequiredFieldErrorsForCourierDeclarationIsValid = InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMasterId, tenant);
+            }
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "NotApprovedPendingList");
             if (filter != null)
             {

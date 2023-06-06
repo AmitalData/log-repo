@@ -466,33 +466,13 @@ namespace Logitude.Customs.BL.BL
             }
         }
 
-        public bool  GetRequiredFieldErrorsForCourierDeclarationIsValid(string declarationId, int tenant)
-        {
-             var customContext = CustomContext.GetContext(tenant);
-
-
-            var myCourierMasterQueryService = new CourierMasterQueryService(customContext);
-            CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
-
-             var courierMasterRequiredErrors = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(_CourierMasterPM?.Id, tenant);
-                    if (courierMasterRequiredErrors != null)
-                    {
-                        return courierMasterRequiredErrors.RequiredFields.Count == 0;
-
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-
         public void CalcCourierManifestStatusCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
             LogMessagingUtil.Instance.AppendLine("CalcCourierManifestStatusCode()");
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
             //Set CourierManifestStatusCode according to Manifest Message Required fields
             CustomsRequiredFieldErrors errorsForCourierDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForCourierDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
-            if (!GetRequiredFieldErrorsForCourierDeclarationIsValid(myDeclarationCourierStatusPM.DeclarationId, myDeclarationCourierStatusPM.Tenant) || (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields != null && errorsForCourierDeclaration.RequiredFields.Count() > 0))
+            if (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields != null && errorsForCourierDeclaration.RequiredFields.Count() > 0)
             {
                 myDeclarationCourierStatusPM.CourierManifestStatusCode = "M";
             }
