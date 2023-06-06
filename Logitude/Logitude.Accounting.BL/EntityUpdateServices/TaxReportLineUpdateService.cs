@@ -227,15 +227,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.OutputOrInput == "O")
             {
                 DateTime referenceDate = new DateTime(entityPM.ReferenceDate.Value.Year, entityPM.ReferenceDate.Value.Month, 1);
-                if (entityPM.TaxReportDate != null) {
-                    DateTime taxReportDate = new DateTime(entityPM.TaxReportDate.Value.Year, entityPM.TaxReportDate.Value.Month, 1);
-                    DateTime taxReportDatePreviousMonth = taxReportDate.AddMonths(-1);
+                DateTime taxReportDate = new DateTime(entityPM.TaxReportDate.Value.Year, entityPM.TaxReportDate.Value.Month, 1);
+                DateTime taxReportDatePreviousMonth = taxReportDate.AddMonths(-1);
 
-                    if ((setting.VATreportEveryTwoMonths && referenceDate.Date != taxReportDate.Date && referenceDate.Date != taxReportDatePreviousMonth.Date)
-                                || (!setting.VATreportEveryTwoMonths && referenceDate.Date != taxReportDate.Date))
-                    {
-                        if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = TaxReportLineStatusValues.Invoicenotpreviouslyreported;
-                    }
+                if ((setting.VATreportEveryTwoMonths && referenceDate.Date != taxReportDate.Date && referenceDate.Date != taxReportDatePreviousMonth.Date)
+                            || (!setting.VATreportEveryTwoMonths && referenceDate.Date != taxReportDate.Date))
+                {
+                    if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = TaxReportLineStatusValues.Invoicenotpreviouslyreported;
                 }
 
                 if (entityPM.VatNumber == vatNumber)
