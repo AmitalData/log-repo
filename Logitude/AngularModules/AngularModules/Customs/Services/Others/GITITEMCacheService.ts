@@ -41,9 +41,15 @@ export class GITITEMCacheService {
   //}
 
     FirstItemCodeComponent(itemCode) {
-        var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == itemCode)[0];
+        var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == itemCode )[0];
         return itemCodeDetails;
     }
+    FirstItemCodeComponentByDirection(itemCode,direction) {
+      
+      var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == itemCode && vm.Direction==direction)[0];
+      return itemCodeDetails;
+  }
+
     AddItemCodeComponent(ItemCodeComponent) {
         GITITEMCacheService.Instance.ItemCode_LocalCache.push(ItemCodeComponent);
     }
