@@ -4115,7 +4115,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
 
                 //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponentByDirection(this.ItemCode, this.Parent.declarationPM.Direction);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
                 if (itemCodeDetails == null) {
 
 
@@ -4202,7 +4202,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         tariffID = this.TradeAgreementCode
         //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType));
         GITITEMCacheService.Instance. /*ItemCode_LocalCache.push*/AddItemCodeComponent(
-            new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode, tariffID, this.GITITEMCRs));
+            new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode, tariffID, this.GITITEMCRs,this.Parent.declarationPM.Direction));
     }
 
     OnOriginCountryCodeLostFocus(logCellTemplate: any, originCountryCodeLov: any) {
@@ -4229,13 +4229,12 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.ItemCode)) {
             return;
         }
-
         //if (this.Parent.Parent.ItemCode_LocalCache != null && this.Parent.Parent.ItemCode_LocalCache.length > 0) {
         //if (GITITEMCacheService.Instance.ItemCode_LocalCache != null && GITITEMCacheService.Instance.ItemCode_LocalCache.length > 0)
         {
-            if(this.Parent.declarationPM.Direction != "E"){
+            if(this.Parent.declarationPM.Direction != "E" ){
                  //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-            var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+            var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponentByDirection(this.ItemCode,this.Parent.declarationPM.Direction);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
             if (itemCodeDetails != null) {
                 let b = true;
                 if (b) {
@@ -4256,7 +4255,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                                 this.InvoiceQuantityType,
                                                 this.Parent.declarationPM.CustomerCode,
                                                 this.TariffID,
-                                                this.GITITEMCRs
+                                                this.GITITEMCRs,
+                                                this.Parent.declarationPM.Direction
                                             )
                                         );
                                     }
@@ -4312,7 +4312,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             }
            
         }
-
+        
         this.declarationWebService.GetGITITEMPartnersItemListByItemCode(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, false)
             .subscribe((response: ServiceResponse) => {
                 var res = response.Result;
@@ -4427,6 +4427,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
     PartnerItemsSelectionCompleted(item, partnersItem) {
+        
         if (!AppTool.IsNullOrEmpty(partnersItem)) {
             console.log("Response returned: ", partnersItem);
             if (!AppTool.IsNullOrEmpty(partnersItem.ItemCode) || !AppTool.IsNullOrEmpty(partnersItem.ClassificationCode)) {
@@ -4449,7 +4450,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                                 item.InvoiceQuantityType,
                                                 this.Parent.declarationPM.CustomerCode,
                                                 item.TariffID,
-                                                item.GITITEMCRs
+                                                item.GITITEMCRs,
+                                                this.Parent.declarationPM.Direction
+
                                             )
                                         );
                                         this.GetQuantityType();
@@ -4496,7 +4499,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                         item.GITITEMCRs = partnersItem.GITITEMCRs;
                                         this.SetCertificateStatusVisibility();
                                         //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType));
-                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode, item.TariffID, item.GITITEMCRs));
+                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode, item.TariffID, item.GITITEMCRs,this.Parent.declarationPM.Direction));
                                         this.GetQuantityType();
 
                                         //item.IsNew = true;
@@ -5141,8 +5144,9 @@ export class ItemCodeComponent extends BaseComponent {
     private _InvoiceQuantityType: string;
     private _IsNew: boolean;
     private _GITITEMCRs: GITITEMCR[] = [];
+    private _Direction: string;
 
-    constructor(itemCode: string, classificationCode: string, itemDescription: string, vendorNumber: string, originCountryCode: string, originCountryName: string, isNew: boolean, invoiceQuantityType: string, private _CustomerCode: string, tariffID: string, public gITITEMCRs: GITITEMCR[]) {
+    constructor( itemCode: string, classificationCode: string, itemDescription: string, vendorNumber: string, originCountryCode: string, originCountryName: string, isNew: boolean, invoiceQuantityType: string, private _CustomerCode: string, tariffID: string, public gITITEMCRs: GITITEMCR[],  direction:string) {
         super();
 
         this.ItemCode = itemCode;
@@ -5155,7 +5159,7 @@ export class ItemCodeComponent extends BaseComponent {
         this.IsNew = isNew;
         this.GITITEMCRs = gITITEMCRs;
         this.TariffID = tariffID;
-
+        this._Direction=direction;
     }
     public get GITITEMCRs() { return this._GITITEMCRs; }
     public set GITITEMCRs(newValue: GITITEMCR[]) { this._GITITEMCRs = newValue; }
@@ -5189,6 +5193,9 @@ export class ItemCodeComponent extends BaseComponent {
 
     public get IsNew() { return this._IsNew; }
     public set IsNew(newValue: boolean) { this._IsNew = newValue; }
+
+    public get Direction() { return this._Direction; }
+    public set Direction(newValue: string) { this._Direction = newValue; }
 }
 
 export class ItemCertificateComponent extends BaseComponent {

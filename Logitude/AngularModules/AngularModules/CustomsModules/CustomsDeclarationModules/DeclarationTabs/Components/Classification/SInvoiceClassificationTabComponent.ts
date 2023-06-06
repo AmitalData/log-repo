@@ -891,7 +891,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
                   GITITEMCacheService.Instance.AddItemCodeComponent(/*ItemCode_LocalCache.push(*/
                     new ItemCodeComponent(
                       this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, null,
-                        this.Parent.declarationPM.CustomerCode, this.TariffID, this.GITITEMCRPMs));
+                        this.Parent.declarationPM.CustomerCode, this.TariffID, this.GITITEMCRPMs,this.Parent.declarationPM.Direction));
                   
                 }
                 else {
