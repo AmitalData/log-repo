@@ -1603,7 +1603,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         }
 
                         else {
-
                             if (this.SelectedTab.Code == "DCCF" ) {
                                 DeclarationEventManager.SavePendingAfterDeclarationSaved.emit(null);;
                             }

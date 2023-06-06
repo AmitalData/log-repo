@@ -27483,6 +27483,18 @@
       LocalDefaultText="&quot;נתוני מצהר לא ישלחו במסר הצהרה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.IsSendManifest&quot;"
+      DefaultText="&quot;This field is intended for situations where it is required to field the statement without declaration data&quot;"
+      LocalDefaultText="&quot;שדה זה מיועד למצבים בהם נדרש לשדה את ההצהרה ללא נתוני מצהר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Manifestwillnotsent&quot;"
+      DefaultText="&quot;Manifest data will not be sent to customs&quot;"
+      LocalDefaultText="&quot;נתוני מצהר לא ישלחו במסר הצהרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -27787,6 +27799,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.SendL2UFromSendDeclaration&quot;"
       FeatureDefaultText="&quot;Send L2U From Send Declaration&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ISEXCLUDEMANIFEST&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.ISEXCLUDEMANIFEST&quot;"
+      FeatureDefaultText="&quot;Is Exclude Manifest&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
