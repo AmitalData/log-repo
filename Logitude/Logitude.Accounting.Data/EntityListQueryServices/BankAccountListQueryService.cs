@@ -33,8 +33,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                  new { BankID = qBTotalOpenTransInBankViews.Id, Tenant = qBTotalOpenTransInBankViews.Tenant }
                                                //  a.Id equals qBTotalOpenTransInBankViews.Id
                                                   into qBTotalOpenTransInBankViewsJoin
-                                                 from MyJoinpenTransInBankViews in qBTotalOpenTransInBankViewsJoin
-                                                     //.DefaultIfEmpty()
+                                                 from MyJoinpenTransInBankViews in qBTotalOpenTransInBankViewsJoin.DefaultIfEmpty()
                                                      //.DefaultIfEmpty()
                                                  select new BankAccountList()
                                                  {
