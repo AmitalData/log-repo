@@ -730,6 +730,8 @@ namespace WebFreight.Web.Helpers
                                 foreach (QueryColumnPM _ in queryColumns)
                                 {
                                     sheet.AutofitColumn(i);
+                                    if (_.ObjectFieldName == "CustomerReference" && sheet.GetColumnWidth(i) > 30)
+                                        sheet.SetColumnWidth(i, 30);
                                     i++;
                                 }
                             }
