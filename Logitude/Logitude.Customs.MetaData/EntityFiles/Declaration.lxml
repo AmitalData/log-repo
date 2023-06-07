@@ -21458,6 +21458,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UNFCourier&quot;"
     ListPropertyPath="&quot;UNFCourier&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -23421,6 +23422,19 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
+    TabName="&quot;WorkSheetFromExcel&quot;"
+    TabLocalName="&quot;מסך עבודה מאקסל&quot;"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    Code="&quot;DEUT&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.Tabs.CourierWorksheetFromExcelComponent&quot;"
+    TextCode="&quot;Customs.Declaration.TH.WorkSpaceFromExcel&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetFromExcelComponent&quot;"
+    HtmlComponentName="&quot;CourierWorksheetFromExcelComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
     TabName="&quot;Supplier Invoices&quot;"
     TabLocalName="&quot;חשבונות ספק&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
@@ -23775,19 +23789,6 @@
     FeatureCode="&quot;CORRECTIONS&quot;"
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Correction&quot;"
     FeatureDefaultText="&quot;Correction&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
-    TabName="&quot;WorkSheetFromExcel&quot;"
-    TabLocalName="&quot;מסך עבודה מאקסל&quot;"
-    ObjectTableName="&quot;Customs.Declaration&quot;"
-    Code="&quot;DEUT&quot;"
-    ControlPath="&quot;Logitude.Customs.Views.Tabs.CourierWorksheetFromExcelComponent&quot;"
-    TextCode="&quot;Customs.Declaration.TH.WorkSpaceFromExcel&quot;"
-    IsPackagable="true"
-    IndexOrder="0"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetFromExcelComponent&quot;"
-    HtmlComponentName="&quot;CourierWorksheetFromExcelComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>
@@ -27496,18 +27497,6 @@
       LocalDefaultText="&quot;נתוני מצהר לא ישלחו במסר הצהרה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.Declaration.O.IsSendManifest&quot;"
-      DefaultText="&quot;This field is intended for situations where it is required to field the statement without declaration data&quot;"
-      LocalDefaultText="&quot;שדה זה מיועד למצבים בהם נדרש לשדה את ההצהרה ללא נתוני מצהר&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.Declaration.O.Manifestwillnotsent&quot;"
-      DefaultText="&quot;Manifest data will not be sent to customs&quot;"
-      LocalDefaultText="&quot;נתוני מצהר לא ישלחו במסר הצהרה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -27800,8 +27789,8 @@
       IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;DisabledPrintDecForm&quot;"
-          FeatureTypeCode="&quot;ACT&quot;"
-          FeatureTextCodeCode="&quot;Customs.Declaration.Features.PrintDeclarationForm&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.PrintDeclarationForm&quot;"
       FeatureDefaultText="&quot;Disabled Print Dec Form&quot;"
       IsPackagable="true"
       IsOld="false"
@@ -27812,15 +27801,6 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.SendL2UFromSendDeclaration&quot;"
       FeatureDefaultText="&quot;Send L2U From Send Declaration&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;ISEXCLUDEMANIFEST&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Customs.Declaration.Features.ISEXCLUDEMANIFEST&quot;"
-      FeatureDefaultText="&quot;Is Exclude Manifest&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
