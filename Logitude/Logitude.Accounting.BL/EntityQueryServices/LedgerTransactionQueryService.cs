@@ -550,6 +550,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 InReconcileProgress = x.InReconcileProgress,
                 IsReconciled = x.IsReconciled,
                 JournalId = x.JournalId,
+                JournalLineNumber = x.JournalLineNumber,
                 OpenAmount = x.OpenAmount,
                 ForeignAmountCredit = x.ForeignAmountCredit,
                 LocalAmountCredit = x.LocalAmountCredit,
