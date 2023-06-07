@@ -216,15 +216,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             rec.IconCode = ledgerTransactionHelper.getEntityIcon(rec.SourceTypeCode);
             rec.Source = rec.IconCode + " " + rec.SourceNumber;
             rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
-            rec.CalculatedLocalAmount = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
             //rec.LocalAmountCredit = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
             if (isFromExcelGenerator)
             {
+                rec.CalculatedLocalAmount = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit*-1 : rec.LocalAmountDebit;
                 rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount != 0;
                 rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount != 0;
             }
             else
             {
+                rec.CalculatedLocalAmount = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
                 rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
                 rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
             }
