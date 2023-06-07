@@ -516,7 +516,7 @@ export class MaintenanceComponent {
             item.CategoryTypeCode = "CSM";
             item.Icon = "Table"
             item.Code = "DOCR";
-            item.TranslatedName ="ברירות מחדל OCR"
+            item.TranslatedName ="ברירות מחדל OCR-יצוא"
             item.ObjectTableName = "Customs.Client";
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
