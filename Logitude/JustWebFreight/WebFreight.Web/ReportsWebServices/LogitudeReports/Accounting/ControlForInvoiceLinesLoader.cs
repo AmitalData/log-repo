@@ -163,7 +163,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 			QueryFilterItem NotIncludedInAnyTaxReportFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "NotIncludedInAnyTaxReport").FirstOrDefault();
 			if (NotIncludedInAnyTaxReportFilter != null)
 			{
-				iQueryable = iQueryable.Where(x => x.TaxReportId == null);
+				iQueryable = iQueryable.Where(x => x.TaxReportId == null|| (x.StatusCode!="T" && x.StatusCode != "J"));
 
 			}
 

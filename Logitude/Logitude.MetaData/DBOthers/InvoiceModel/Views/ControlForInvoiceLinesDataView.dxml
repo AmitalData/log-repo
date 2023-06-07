@@ -24,7 +24,8 @@
 	      ar.TotalExamptFortaxReport,
 	      ar.TotalVAT,
 	      ar.TotalAmountForTaxReport,
-	      ar.MainEntityReference 
+	      ar.MainEntityReference ,
+          tax.StatusCode
         from ARInvoiceLines ARL inner join ARInvoices AR on AR.id=ARL.ARInvoiceId 
         
         inner join GLAccounts GL on GL.id=ARL.GLAccountId
@@ -37,7 +38,7 @@
         
         inner join JournalAdditionalDatas JAD on JAD.JournalId=JR.id
         
-        inner join TaxReports TAX on TAX.Id=JAD.TaxReportId
+        left join TaxReports TAX on TAX.Id=JAD.TaxReportId
 
 ]]>
   </SqlScript>

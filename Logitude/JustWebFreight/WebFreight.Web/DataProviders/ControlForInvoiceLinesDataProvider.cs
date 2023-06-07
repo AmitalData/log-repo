@@ -56,7 +56,7 @@ namespace WebFreight.Web.DataProviders
         public string Code { get; set; }
         public string TypeCode { get; set; }
         public string LocalName3 { get; set; }
-        public DateTime TaxReportMonth { get; set; }
+        public DateTime? TaxReportMonth { get; set; }
     }
 
 
