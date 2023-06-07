@@ -35,6 +35,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public Decimal TotalVAT { get; set; }
         public Decimal? TotalAmountForTaxReport { get; set; }
         public string MainEntityReference { get; set; }
+        public string StatusCode { get; set; }
         //public string Description { get; set; }
     }
 }
