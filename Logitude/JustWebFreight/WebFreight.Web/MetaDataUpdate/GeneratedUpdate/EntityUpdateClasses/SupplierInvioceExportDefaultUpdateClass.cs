@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvioceExportDefaultUpdateClass
    {  		
-		public const string HashString = "067bd384d2ebf63b7fa5154e5c1c54a8";
+		public const string HashString = "0b5ed55bf609a91354c65faa55956f6c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "ברירות מחדל חשבונות ספק",
 			      				    DefaultText =  "Supplier Invioce Export Default",
-			      				    Code =  "d055",
+			      				    Code =  "97ee",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -621,7 +621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable SupplierInvioceExportDefaultObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvioceExportDefault" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode SupplierInvioceExportDefaultTextCode_CustomsSupplierInvioceExportDefaultOOCRDefaults = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvioceExportDefault.O.OCRDefaults", DefaultText = "OCR Defaults",LocalDefaultText = @"ברירות מחדל OCR", ObjectTableId = SupplierInvioceExportDefaultObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode SupplierInvioceExportDefaultTextCode_CustomsSupplierInvioceExportDefaultOOCRDefaults = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvioceExportDefault.O.OCRDefaults", DefaultText = "OCR Defaults",LocalDefaultText = @"ברירות מחדל OCR-יצוא", ObjectTableId = SupplierInvioceExportDefaultObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
