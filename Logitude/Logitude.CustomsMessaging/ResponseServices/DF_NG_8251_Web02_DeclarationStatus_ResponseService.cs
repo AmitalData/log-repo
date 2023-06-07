@@ -50,11 +50,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             DateTime _DateTime;
             this.MyResponseData = new DeclarationStatusResponseData();
+            IDisposable disposableToken = null;
 
-            string key = ProcessLockTableUtil.Instance.GetKey4Declaration(requestParams.DeclarationNumber, requestParams.Tenant);
-            using (IDisposable disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber"))
-            { 
+            try
+            {
+                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(requestParams.DeclarationNumber, requestParams.Tenant);
+                disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber");
 
+                //throw new System.Exception("test 2");
                 if (!String.IsNullOrWhiteSpace(requestParams.TesterSendOption))
                 {
                     TesterSendOption(requestParams);
@@ -763,7 +766,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
-            }            
+                }
+            catch (ProcessLockException processLockException)
+            {
+                LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                throw;
+            }
+            finally
+            {
+                if (disposableToken != null)
+                {
+                    disposableToken.Dispose();
+                }
+            }
+
         }
 
         //if (customResponse.)
