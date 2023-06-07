@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;ברירות מחדל חשבונות ספק&quot;"
   DefaultText="&quot;Supplier Invioce Export Default&quot;"
-  Code="&quot;97ee&quot;"
+  Code="&quot;df2e&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -729,7 +729,7 @@
     <TextCode
       Code="&quot;Customs.SupplierInvioceExportDefault.O.OCRDefaults&quot;"
       DefaultText="&quot;OCR Defaults&quot;"
-      LocalDefaultText="&quot;ברירות מחדל OCR-יצוא&quot;"
+      LocalDefaultText="&quot;ברירות מחדל OCR - יצוא&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
