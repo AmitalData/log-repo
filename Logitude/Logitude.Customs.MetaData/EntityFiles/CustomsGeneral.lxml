@@ -5591,8 +5591,6 @@
       LocalDefaultText="&quot;לא סומנו שורות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-=======
->>>>>>> c1ec92d70f (#173177)
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
