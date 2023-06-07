@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "00b987f0f0154681c12ff5caf2fb0052";
+		public const string HashString = "1412ff62882a73a0f5d05d4dd5c492cb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18563,6 +18563,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                  
 			   TextCode DeclarationCloseExportDeclarationTextCode_TH23 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CloseExportDeclaration", DefaultText = "Close Export Declaration",LocalDefaultText = "סגירת הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCloseExportDeclarationFeature_TH23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.CloseExportDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.CloD", NameTextCodeDefaultText = "Close Export Declaration", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+ 
+                 
+			   TextCode DeclarationWorkSheetFromExcelTextCode_TH25 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.WorkSpaceFromExcel", DefaultText = "WorkSheetFromExcel",LocalDefaultText = "מסך עבודה מאקסל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DeclarationWorkSheetFromExcelFeature_TH25 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.WorkSheetFromExcel", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DEUT", NameTextCodeDefaultText = "WorkSheetFromExcel", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -18617,6 +18621,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CloD",HtmlComponentName = "ExportDeclarationClosureComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Closure/ExportDeclarationClosureComponent", FeatureId = DeclarationCloseExportDeclarationFeature_TH23.Id,FeatureUniqeCode = DeclarationCloseExportDeclarationFeature_TH23.FeatureUniqeCode, ControlPath = "", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCloseExportDeclarationTextCode_TH23.Id, TabNameTextCodeCode = DeclarationCloseExportDeclarationTextCode_TH23.Code, Tenant = 0, IndexOrder = 22 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCO",HtmlComponentName = "DeclarationCorrectionsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Corrections/DeclarationCorrectionsComponent", FeatureId = DeclarationCorrectionsFeature_TH0.Id,FeatureUniqeCode = DeclarationCorrectionsFeature_TH0.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCorrectionsTextCode_TH0.Id, TabNameTextCodeCode = DeclarationCorrectionsTextCode_TH0.Code, Tenant = 0, IndexOrder = 23 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEUT",HtmlComponentName = "CourierWorksheetFromExcelComponent",HtmlComponentUrl = "./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetFromExcelComponent", FeatureId = DeclarationWorkSheetFromExcelFeature_TH25.Id,FeatureUniqeCode = DeclarationWorkSheetFromExcelFeature_TH25.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.CourierWorksheetFromExcelComponent", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationWorkSheetFromExcelTextCode_TH25.Id, TabNameTextCodeCode = DeclarationWorkSheetFromExcelTextCode_TH25.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -18699,6 +18705,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_SendL2UFromSendDeclaration = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendL2UFromSendDeclaration", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.SendL2UFromSendDeclaration", NameTextCodeDefaultText = @"Send L2U From Send Declaration" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
+		   Feature DeclarationFeature_ISEXCLUDEMANIFEST = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ISEXCLUDEMANIFEST", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISEXCLUDEMANIFEST", NameTextCodeDefaultText = @"Is Exclude Manifest" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
@@ -21630,7 +21637,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOManifestwillnotsent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Manifestwillnotsent", DefaultText = "Manifest data will not be sent to customs",LocalDefaultText = @"נתוני מצהר לא ישלחו במסר הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		 
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIsSendManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsSendManifest", DefaultText = "This field is intended for situations where it is required to field the statement without declaration data",LocalDefaultText = @"שדה זה מיועד למצבים בהם נדרש לשדה את ההצהרה ללא נתוני מצהר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOManifestwillnotsent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Manifestwillnotsent", DefaultText = "Manifest data will not be sent to customs",LocalDefaultText = @"נתוני מצהר לא ישלחו במסר הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
