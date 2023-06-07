@@ -32,12 +32,12 @@ export class CourierPendingReasonPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/courierpendingreasons';      
     }
 
-	get(code: string) {       
+	get(id: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class CourierPendingReasonPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CourierPendingReason", "GetSinglePM", 'code=' + code);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CourierPendingReason", "GetSinglePM", 'id=' + id);
 				 
 						return serviceResponse;
 
