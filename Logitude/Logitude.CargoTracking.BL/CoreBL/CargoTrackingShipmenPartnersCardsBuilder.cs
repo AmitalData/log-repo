@@ -223,8 +223,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 var name = GetProperty(shipmentPM, partnerCardMetaData.NameFieldName);
                 var address = GetPartnerAddress(id);
                 if (partnerCardMetaData.SkipIfEmpty && 
-                    (string.IsNullOrEmpty(name) || name.Equals("---")) &&
-                    (string.IsNullOrEmpty(address) || address.Equals(",")))
+                    (string.IsNullOrEmpty(name) || name.Trim().Equals("---")) &&
+                    (string.IsNullOrEmpty(address) || address.Trim().Equals(",")))
                     return;
 
                 partnerCards.Add(new PartnerCard()
@@ -247,8 +247,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             {
                 var name = GetProperty(shipmentOrderPM, partnerCardMetaData.NameFieldName);
                 var address = GetPartnerAddress(id);
-                if ( (string.IsNullOrEmpty(name) || name.Equals("---")) &&
-                    (string.IsNullOrEmpty(address) || address.Equals(",")) )
+                if ( (string.IsNullOrEmpty(name) || name.Trim().Equals("---")) &&
+                    (string.IsNullOrEmpty(address) || address.Trim().Equals(",")) )
                     return;
                 partnerCards.Add(new PartnerCard()
                 {
