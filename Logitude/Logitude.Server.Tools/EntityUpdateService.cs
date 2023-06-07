@@ -143,7 +143,7 @@ namespace Logitude.Server.Tools
                             OldEntityPM = new TEntityPM();
                             ChangeTrackingEntityPM = new TEntityPM();
                             Mapping.POCOToPM(OldEntityPM, EntityPOCO);
-                            Mapping.CustomPOCOToPM(OldEntityPM, EntityPOCO);
+                            //Mapping.CustomPOCOToPM(OldEntityPM, EntityPOCO);
 
                             Mapping.POCOToPM(ChangeTrackingEntityPM, EntityPOCO);
                             Mapping.PMToOldPM(entityPM, ChangeTrackingEntityPM);
