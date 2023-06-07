@@ -23096,19 +23096,6 @@
     FeatureDefaultText="&quot;Correction&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
-  <Tab
-    TabName="&quot;WorkSheetFromExcel&quot;"
-    TabLocalName="&quot;מסך עבודה מאקסל&quot;"
-    ObjectTableName="&quot;Customs.Declaration&quot;"
-    Code="&quot;DEUT&quot;"
-    ControlPath="&quot;Logitude.Customs.Views.Tabs.CourierWorksheetFromExcelComponent&quot;"
-    TextCode="&quot;Customs.Declaration.TH.WorkSpaceFromExcel&quot;"
-    IsPackagable="true"
-    IndexOrder="0"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetFromExcelComponent&quot;"
-    HtmlComponentName="&quot;CourierWorksheetFromExcelComponent&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;UPDT&quot;"
@@ -26681,6 +26668,12 @@
       Code="&quot;Customs.Declaration.O.Manifestwillnotsent&quot;"
       DefaultText="&quot;Manifest data will not be sent to customs&quot;"
       LocalDefaultText="&quot;נתוני מצהר לא ישלחו במסר הצהרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.WorkSheetFromExcel&quot;"
+      DefaultText="&quot;Worksheet From Excel&quot;"
+      LocalDefaultText="&quot;מסך עבודה מאקסל&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
