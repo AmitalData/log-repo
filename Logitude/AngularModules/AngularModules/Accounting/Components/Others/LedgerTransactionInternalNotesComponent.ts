@@ -45,7 +45,7 @@ export class LedgerTransactionInternalNotesComponent extends BaseComponent {
             this.InternalNote=this.EntityPM.InternalNote;
             this.EntityPM.UpdateDateTime = (this.EntityPM.UpdateDateTime && (this.InternalNote!=null))?this.EntityPM.UpdateDateTime:new Date();
             this.EntityPM.UpdatedByUserName = this.EntityPM.UpdatedByUserName?this.EntityPM.UpdatedByUserName:(loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName));
-            this.IsResourcesReady = true;
+            this.IsResourcesReady = true;           
         });
 
     }
@@ -55,34 +55,19 @@ export class LedgerTransactionInternalNotesComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        this.SetLedgerTransactionInternalNotes();
         var loggedContact = SessionLocator.LoggedUserPM;
         this.CurrentSession.StartBusyIndicatorLoading();
+        this.EntityPM.InternalNote = this.InternalNote;
+        this.EntityPM.UpdateDateTime = new Date();
+        this.EntityPM.UpdatedByUserName = loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName);          
         this.ledgerTransactionPMService.update(this.EntityPM).subscribe((myResult: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.EntityPM = mm.Result;
-                this.EntityPM.InternalNote = this.CurrentSession.CurrentEditComponent.EntityPM.InternalNote;
-                this.EntityPM.UpdateDateTime = new Date();
-                this.EntityPM.UpdatedByUserName = loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName);
-                
-                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
             }
             this.CD.detectChanges();
-            this.CurrentSession.CloseCurrentWindow();
-            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
-            
+            this.CurrentSession.CloseCurrentWindow();           
         });
     }
-
-    private SetLedgerTransactionInternalNotes() {
-        this.EntityPM.InternalNote = this.InternalNote;
-        this.CurrentSession.CurrentEditComponent.EntityPM = this.EntityPM;
-        this.CurrentSession.CurrentEditComponent.EntityId = this.EntityPM.Id;
-        this.CurrentSession.CurrentEditComponent.ObjectTableName = this.ObjectTableName;
-        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
-    }
-
-
 }
