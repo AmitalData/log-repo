@@ -3,7 +3,7 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="4">
+  <Oracle Version="5">
     <![CDATA[
  declare
  n int := 0;
@@ -13,9 +13,11 @@ begin
  where code='904';
  if n = 0 then
  
-Insert into 
-COURIERPENDINGREASONS (CODE,LOCALNAME,SEARCHFIELDS,ENGLISHNAME,INACTIVE,ERRORPLACE,TENANT,UNIFREIGHTSTATUSCODE,ID) 
-values ('904', 'משקל' ,'משקל,Weight,904','Weight',0,null,1,null,'904');
+
+
+INSERT INTO COURIERPENDINGREASONS (CODE, LOCALNAME, SEARCHFIELDS, ENGLISHNAME, INACTIVE, ERRORPLACE, TENANT, UNIFREIGHTSTATUSCODE, ID)
+SELECT '904', 'Weight', 'Weight,904', 'Weight', 0, NULL, T.ID, NULL, '904'
+FROM (SELECT ID FROM TENANTS) T;
 
 
 commit;
