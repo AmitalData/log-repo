@@ -49,7 +49,7 @@ import { IconButtonComponent } from '../Infrastructure/Components/IconButton/Ico
 import { DateTimeFormatPipe } from '../Infrastructure/Pipes/DateTimeFormatPipe';
 import { CargoTrackingShipmentExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingShipmentExtendedService';
 import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
-import { CustomLabelComponent } from 'src/Infrastructure/Components/CustomLabel/CustomLabel.component';
+import { CustomLabelComponent, LabelUtilContentDirective, LabelUtilElementDirective} from 'src/Infrastructure/Components/CustomLabel/CustomLabel.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LogboxShipmentExportExcelService } from 'src/CargoTracking/Services/Others/LogboxShipmentExportExcelService';
@@ -88,7 +88,8 @@ export function getBaseUrl() {
         DateTimeFormatPipe,
         SafePipe,
         CustomLabelComponent,
-
+        LabelUtilContentDirective,
+        LabelUtilElementDirective,
 
         //Erros
         Error401Component
