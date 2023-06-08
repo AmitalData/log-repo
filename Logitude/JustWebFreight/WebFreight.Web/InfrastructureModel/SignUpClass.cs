@@ -125,6 +125,7 @@ namespace WebFreight.Web.InfrastructureModel
         static TicketSeverityRepository ticketSeverityRepository;
         static TicketClassificationRepository ticketClassificationRepository;
 
+      
         //SLA 
         static BusinessHourRepository businessHourRepository;
         static SLAHeaderRepository slaHeaderRepository;
@@ -160,6 +161,7 @@ namespace WebFreight.Web.InfrastructureModel
         private static QuoteClosingReasonQuery quoteClosingReasonQuery;
         private static ShipmentSubTypeQuery shipmentSubTypeQuery;
 
+       
         public static ScreenFieldsRepository ScreenFieldsRepository
         {
             get { return screenFieldsRepository; }
@@ -449,7 +451,11 @@ namespace WebFreight.Web.InfrastructureModel
                 InitializeRepositories(tenant);
                 AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
                 if (setting.WorkEnvironment != "customs") AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
-                if (setting.WorkEnvironment != "customs") AddDefaultTariffProducts(tenant);
+                if (setting.WorkEnvironment != "customs") 
+                    AddDefaultTariffProducts(tenant);
+                   
+                
+              
                 AddDefaultAccountingSettings(tenant, accountingSettingsRepository, zeroAccountingSettings);
                 AddDefaultCustomsInterfaceSettings(tenant, customsInterfaceSettingRepository, zeroCustomsInterfaceSetting);
                 AddDefaultSharedLogisticsSettings(tenant, sharedLogisticsSettingRepository, zeroSharedLogisticsSetting);
@@ -524,6 +530,7 @@ namespace WebFreight.Web.InfrastructureModel
                     AddCustomsRequiredFields(tenant, customsRequiredFieldRepository, tenantZeroCustomsRequiredFields);
                     AddDocumentType(tenant, documentTypeRepository, tenantZeroDocumentTypes);
                     AddDocumentTypeCustomsData(tenant, documentTypeCustomsDataRepository, tenantZeroDocumentTypeCustomsDatas);
+                    AddPendingsOver900(tenant);
                 }
                 else
                 {
@@ -1211,6 +1218,8 @@ namespace WebFreight.Web.InfrastructureModel
             tariffProductRepository.Add(DNGTariffProduct);
             tariffProductRepository.SubmitChanges();
         }
+
+
 
         private static void AddDefaultAccountingSettings(int theTenant, AccountingSettingRepository theAccountingSettingsRepository, AccountingSetting tenantZeroAccoutingSettings)
         {
@@ -3181,6 +3190,37 @@ namespace WebFreight.Web.InfrastructureModel
             }
             withholdingTaxDeductionTypeRepository.SubmitChanges();
         }
+
+        public static  void AddPendingsOver900(int tenant)
+        {
+            CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(tenant);
+            List<CourierPendingReason> typesList = courierPendingReasonRepository.GetAll(0).ToList();
+            foreach (CourierPendingReason type in typesList)
+            {
+                CourierPendingReason newtype = new CourierPendingReason()
+                {
+                    Id = IdCounter.GetNumber("Customs.CourierPendingReason", tenant).ToString(),
+                    Tenant = tenant,
+                    EnglishName = type.EnglishName,
+                    Code = type.Code,
+                    LocalName = type.LocalName,
+                    SearchFields = type.SearchFields,
+                    Inactive = type.Inactive,
+                    RequiresPayment=type.RequiresPayment,
+                    RequiresApproval=type.RequiresApproval,
+                    SwissportSuspendedCode=type.SwissportSuspendedCode,
+                    MamanSuspendedCode=type.MamanSuspendedCode,
+                    UnifreightStatusCode=type.UnifreightStatusCode,
+                    ErrorPlace=type.ErrorPlace,
+
+
+                };
+                courierPendingReasonRepository.Add(newtype);
+            }
+            courierPendingReasonRepository.SubmitChanges();
+        }
+
+
     }
 
     public class UserShortDetails
