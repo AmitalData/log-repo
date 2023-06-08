@@ -14,7 +14,7 @@ WHERE NOT EXISTS (
   FROM customs.COURIERPENDINGREASONS
   WHERE CODE = '905' AND TENANT = T.ID
 );
-commit;
+
 
      ]]>
   </Sql>
