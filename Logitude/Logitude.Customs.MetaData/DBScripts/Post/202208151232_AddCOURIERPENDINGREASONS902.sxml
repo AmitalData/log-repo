@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs" Pre="true">
-  <Sql Version="1">
-   
+  <Sql Version="2">
+
     <![CDATA[
        INSERT INTO customs.COURIERPENDINGREASONS (CODE, LOCALNAME, SEARCHFIELDS, ENGLISHNAME, INACTIVE, ERRORPLACE, TENANT, UNIFREIGHTSTATUSCODE, ID) 
-SELECT  '901', 'אוטונומיה', 'Autonomy,אוטונומיה,901','Autonomy', 0, 1, T.ID, NULL, '901'+convert(varchar,T.ID)
+SELECT  '904', 'משקל' ,'משקל,Weight,904', 'Weight', 0, NULL, T.ID, NULL, '904'+convert(varchar,T.ID)
 FROM (
   SELECT ID
   FROM TENANTS
@@ -12,17 +12,21 @@ FROM (
 WHERE NOT EXISTS (
   SELECT *
   FROM customs.COURIERPENDINGREASONS
-  WHERE CODE = '901' AND TENANT = T.ID
+  WHERE CODE = '904' AND TENANT = T.ID
 );
 commit;
      ]]>
   </Sql>
 
-  <Oracle Version="1">
+  <Oracle Version="6">
     <![CDATA[
 
+ 
+
+
+
 INSERT INTO COURIERPENDINGREASONS (CODE, LOCALNAME, SEARCHFIELDS, ENGLISHNAME, INACTIVE, ERRORPLACE, TENANT, UNIFREIGHTSTATUSCODE, ID)
-SELECT  '901', 'אוטונומיה', 'Autonomy,אוטונומיה,901','Autonomy', 0, 1, T.ID, NULL,   '901'||TO_CHAR(T.ID)
+SELECT '904', 'משקל' ,'משקל,Weight,904', 'Weight', 0, NULL, T.ID, NULL, '904'||TO_CHAR(T.ID)
 FROM (
   SELECT ID
   FROM TENANTS
@@ -30,10 +34,11 @@ FROM (
 WHERE NOT EXISTS (
   SELECT *
   FROM COURIERPENDINGREASONS
-  WHERE CODE = '901' AND TENANT = T.ID
+  WHERE CODE = '904' AND TENANT = T.ID
 );
 
 commit;
+
 
     ]]>
   </Oracle>
