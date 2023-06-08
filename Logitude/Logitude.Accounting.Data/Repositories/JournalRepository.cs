@@ -57,6 +57,7 @@ namespace Logitude.Accounting.Data.Repositories
             }
 
             updatePoco(poco);
+
             this.Update(poco);
         }
         public List<Journal> GetMulti(EntityKeyFields entityKeys)
