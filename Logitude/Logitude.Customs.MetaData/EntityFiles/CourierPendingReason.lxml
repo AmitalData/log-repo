@@ -22,7 +22,7 @@
   IsClosed="false"
   CacheOnClient="true"
   EditableFromAutoCompleteWindow="false"
-  HasCounter="false"
+  HasCounter="true"
   EnableAddFromLOV="true"
   IsRestrictable="false"
   IsMain="true"
