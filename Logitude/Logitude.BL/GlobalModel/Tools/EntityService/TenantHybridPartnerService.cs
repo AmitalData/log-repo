@@ -48,6 +48,27 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 scope.Complete();
             }
         }
+
+        public void UpdateHybridPartnerHybridization(bool IsHybrid)
+        {
+            if (LogitudeSettings.WorkEnvironment != "cloud" && LogitudeSettings.DeploymentStage.ToLower() != "test2")
+                return;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository();
+                var hybridPartner = hybridPartnerRepository.GetHybridPartnersByPartnerTenant(tenant).FirstOrDefault();
+                if (hybridPartner == null)
+                {
+                    scope.Complete();
+                    return;
+                }
+                hybridPartner.IsExternalPartner = !IsHybrid;
+                hybridPartnerRepository.Update(hybridPartner);
+                hybridPartnerRepository.SubmitChanges();
+                scope.Complete();
+            }
+        }
+
         public void UpdateTenantHybridization(HybridPartnerPM entityPM)
         {
             if (LogitudeSettings.WorkEnvironment != "cloud" && LogitudeSettings.DeploymentStage.ToLower() != "test2")
