@@ -1304,7 +1304,8 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.AmountDueInLocalCurrency = 0;
         AutoCreditInvoice.AmountDueInProfitCurrency = 0;
         AutoCreditInvoice.CreditedByARInvoiceId = this.EntityPM.Id;
-        AutoCreditInvoice.AutoCreditByARInvoiceNumber = this.EntityPM.InvoiceNumber
+        AutoCreditInvoice.AutoCreditByARInvoiceNumber = this.EntityPM.InvoiceNumber;
+        AutoCreditInvoice.AutoCreditByARInvoiceId = this.EntityPM.Id;
         AutoCreditInvoice.IsGeneralInvoice = this.EntityPM.IsGeneralInvoice;
         AutoCreditInvoice.SalesmanUserId = this.EntityPM.SalesmanUserId;
         AutoCreditInvoice.SATPaymentMethodCode = this.EntityPM.SATPaymentMethodCode;
