@@ -112,6 +112,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.DeleteOldImages();
             this.CreateContainerSettings();
             this.UpdateHybridTenantActivity(entityPoco, entityPM);
+            this.UpdateHybridTenantHybridization(entityPM);
             if (entityPM.Id == 341)
             {
                 this.UpdateCustomer();
@@ -130,7 +131,27 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             entityPoco.GlobalTenant.IsActive = entityPM.IsActive;
             new TenantHybridPartnerService(entityPM.Id).UpdateHybridPartnerActivity(entityPM.IsActive);
         }
+        private void UpdateHybridTenantHybridization(TenantManagementPM entityPM)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                var tenantRepository = new TenantRepository(0);
+                Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Id);
+                if (currentTenant == null)
+                {
+                    scope.Complete();
+                    return;
+                }
+                if (currentTenant.IsHybrid == entityPM.IsHybrid)
+                {
+                    scope.Complete();
+                    return;
+                }
+                new TenantHybridPartnerService(entityPM.Id).UpdateHybridPartnerHybridization(entityPM.IsHybrid);
 
+                scope.Complete();
+            }
+        }
 
         private void DeleteOldImages()
         {
