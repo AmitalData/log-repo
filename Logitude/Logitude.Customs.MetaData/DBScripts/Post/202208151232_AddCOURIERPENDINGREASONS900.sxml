@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs" Pre="true">
-  <Sql Version="2">
+  <Sql Version="1">
 
     <![CDATA[
        INSERT INTO customs.COURIERPENDINGREASONS (CODE, LOCALNAME, SEARCHFIELDS, ENGLISHNAME, INACTIVE, ERRORPLACE, TENANT, UNIFREIGHTSTATUSCODE, ID,MAMANSUSPENDEDCODE,REQUIRESAPPROVAL,SWISSPORTSUSPENDEDCODE,REQUIRESPAYMENT) 
@@ -18,7 +18,7 @@ commit;
      ]]>
   </Sql>
 
-  <Oracle Version="6">
+  <Oracle Version="1">
     <![CDATA[
 
  
