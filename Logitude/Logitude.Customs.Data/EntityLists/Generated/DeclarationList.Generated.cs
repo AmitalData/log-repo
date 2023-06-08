@@ -461,6 +461,10 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool ShortProcedure  { get; set; }
        [DataMember]
+       public DateTime? ExportFlightDate  { get; set; }
+       [DataMember]
+       public bool UNFCourier  { get; set; }
+       [DataMember]
        public decimal? MehesFee  { get; set; }
        [DataMember]
        public decimal? VATReshimonFee  { get; set; }
@@ -468,11 +472,6 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? SecurityFee  { get; set; }
        [DataMember]
        public decimal? ComputerFee  { get; set; }
-       [DataMember]
-       public DateTime? ExportFlightDate  { get; set; }
-       [DataMember]
-       public bool UNFCourier  { get; set; }
-
    }
 
 }
