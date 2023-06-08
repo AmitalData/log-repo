@@ -96,8 +96,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                             && ledgerGroupedByYears.First().Key != pageLinesGroupedByYears.First().Key;
 
 
-            return  ledgerHasDifferentYears 
-                || (pageLinesHasDifferentYears && bothLinesSelected) 
+            //return ledgerHasDifferentYears
+            //    || (pageLinesHasDifferentYears && bothLinesSelected)
+            //    || (hasSingleDifferentYears);
+
+            return ledgerHasDifferentYears
+                || pageLinesHasDifferentYears 
                 || (hasSingleDifferentYears);
         }
 
