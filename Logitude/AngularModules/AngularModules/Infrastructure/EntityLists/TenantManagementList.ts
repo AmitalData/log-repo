@@ -176,5 +176,8 @@ export class TenantManagementList {
 		ShowMoneyOrder: boolean;
 		CargoTrackingPublicShowEvents: boolean;
 		CargoTrackingPrivateShowEvents: boolean;
+		LogoURL: string;
+		ServiceAgreementURL: string;
+		EcommerceSupportEmail: string;
 	
-}
+}

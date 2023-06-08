@@ -186,5 +186,9 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public bool CargoTrackingPublicShowEvents { get; set; }
         public bool CargoTrackingPrivateShowEvents { get; set; }
 
+        public string LogoURL { get; set; }
+        public string ServiceAgreementURL { get; set; }
+        public string EcommerceSupportEmail { get; set; }
+
     }
 }

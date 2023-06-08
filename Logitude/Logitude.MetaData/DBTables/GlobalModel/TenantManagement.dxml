@@ -1093,6 +1093,20 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="LogoURL"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ServiceAgreementURL"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

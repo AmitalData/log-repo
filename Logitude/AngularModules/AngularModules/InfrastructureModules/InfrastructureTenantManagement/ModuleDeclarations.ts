@@ -11,6 +11,7 @@ import { CargoTrackingBrandingComponent } from './Components/TenantManagement/Ca
 import { CargoLoginPolicyComponent } from './Components/TenantManagement/CargoLoginPolicy/CargoLoginPolicy.component';
 import { SubDomainGenerateComponent } from './Components/TenantManagement/SubDomainGenerateComponent';
 import { AddEditTTYComponent } from './Components/TenantManagement/AddEditTTYComponent';
+import { ECommerceBrandingTabComponent } from './Components/TenantManagement/ECommerceBrandingTabComponent'; 
 
 export const Components =
     [
@@ -27,6 +28,7 @@ export const Components =
         CargoLoginPolicyComponent,
         SubDomainGenerateComponent,
         AddEditTTYComponent,
+        ECommerceBrandingTabComponent
  
     ];
 
@@ -49,6 +51,7 @@ export class ModuleDeclarations {
             case "CargoLoginPolicyComponent": { myResult = CargoLoginPolicyComponent; break; }
             case "SubDomainGenerateComponent": { myResult = SubDomainGenerateComponent; break; }
             case "AddEditTTYComponent": { myResult = AddEditTTYComponent; break; }
+            case "ECommerceBrandingTabComponent": { myResult = ECommerceBrandingTabComponent; break; }
 
         }
 
