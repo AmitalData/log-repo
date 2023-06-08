@@ -1,34 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs" Pre="true">
   <Sql Version="1">
+   
+    <![CDATA[
+       INSERT INTO customs.COURIERPENDINGREASONS (CODE, LOCALNAME, SEARCHFIELDS, ENGLISHNAME, INACTIVE, ERRORPLACE, TENANT, UNIFREIGHTSTATUSCODE, ID) 
+SELECT  '901', 'אוטונומיה', 'Autonomy,אוטונומיה,901','Autonomy', 0, 1, T.ID, NULL, '901'+convert(varchar,T.ID)
+FROM (
+  SELECT ID
+  FROM TENANTS
+) AS T
+WHERE NOT EXISTS (
+  SELECT *
+  FROM customs.COURIERPENDINGREASONS
+  WHERE CODE = '901' AND TENANT = T.ID
+);
+commit;
+     ]]>
   </Sql>
 
-  <Oracle Version="5">
+  <Oracle Version="1">
     <![CDATA[
- declare
- n int := 0;
-begin
-  select count(*) into n
-  from COURIERPENDINGREASONS
- where code='904';
- if n = 0 then
- 
-
 
 INSERT INTO COURIERPENDINGREASONS (CODE, LOCALNAME, SEARCHFIELDS, ENGLISHNAME, INACTIVE, ERRORPLACE, TENANT, UNIFREIGHTSTATUSCODE, ID)
-SELECT '904', 'Weight', 'Weight,904', 'Weight', 0, NULL, T.ID, NULL, '904'
-FROM (SELECT ID FROM TENANTS) T
+SELECT  '901', 'אוטונומיה', 'Autonomy,אוטונומיה,901','Autonomy', 0, 1, T.ID, NULL,   '901'||TO_CHAR(T.ID)
+FROM (
+  SELECT ID
+  FROM TENANTS
+) T
 WHERE NOT EXISTS (
   SELECT *
   FROM COURIERPENDINGREASONS
-  WHERE CODE = '904' AND TENANT = T.ID
+  WHERE CODE = '901' AND TENANT = T.ID
 );
 
-
-
 commit;
-  end if;
-end;
 
     ]]>
   </Oracle>
