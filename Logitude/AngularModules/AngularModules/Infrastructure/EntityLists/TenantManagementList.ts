@@ -174,5 +174,8 @@ export class TenantManagementList {
 		DPArchiveShipmentArrivalFilter: number;
 		DPArchiveShipmentDepartFilter: number;
 		ShowMoneyOrder: boolean;
+		LogoURL: string;
+		ServiceAgreementURL: string;
+		EcommerceSupportEmail: string;
 	
-}
+}

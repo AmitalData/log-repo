@@ -406,5 +406,8 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public int? DPArchiveShipmentCreateFilter { get; set; }
         public int? DPArchiveShipmentArrivalFilter { get; set; }
         public int? DPArchiveShipmentDepartFilter { get; set; }
+        public string LogoURL { get; set; }
+        public string ServiceAgreementURL { get; set; }
+        public string EcommerceSupportEmail { get; set; }
     }
 }

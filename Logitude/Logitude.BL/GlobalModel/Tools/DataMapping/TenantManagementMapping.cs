@@ -180,6 +180,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.DPArchiveShipmentCreateFilter  = entityPM.DPArchiveShipmentCreateFilter;
             entityPOCO.DPArchiveShipmentArrivalFilter = entityPM.DPArchiveShipmentArrivalFilter;
             entityPOCO.DPArchiveShipmentDepartFilter =  entityPM.DPArchiveShipmentDepartFilter;
+            entityPOCO.LogoURL = entityPM.LogoURL;
+            entityPOCO.ServiceAgreementURL = entityPM.ServiceAgreementURL;
 
 
             string packageName = null;
@@ -212,6 +214,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
 
                     tenant.IsTestTenant = entityPM.IsTestTenant;
                     tenant.IsHybrid = entityPM.IsHybrid;
+                    tenant.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
+
 
                     tenantRepository.Update(tenant);
                     tenantRepository.SubmitChanges();

@@ -183,5 +183,9 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int? DPArchiveShipmentArrivalFilter { get; set; }
         public int? DPArchiveShipmentDepartFilter { get; set; }
         public bool ShowMoneyOrder { get; set; }
+        public string LogoURL { get; set; }
+        public string ServiceAgreementURL { get; set; }
+        public string EcommerceSupportEmail { get; set; }
+
     }
 }

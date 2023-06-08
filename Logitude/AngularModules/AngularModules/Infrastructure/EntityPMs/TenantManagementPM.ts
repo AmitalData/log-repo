@@ -1025,6 +1025,20 @@ export class TenantManagementPM {
     public set DPArchiveShipmentDepartFilter(newValue: number) { if (this.dPArchiveShipmentDepartFilter != newValue) { this.dPArchiveShipmentDepartFilter = newValue; this.MarkAsDirty("DPArchiveShipmentDepartFilter"); } }
        
 	 
+    private logoURL: string;
+    public get LogoURL() { return this.logoURL; }
+    public set LogoURL(newValue: string) { if (this.logoURL != newValue) { this.logoURL = newValue; this.MarkAsDirty("LogoURL"); } }
+       
+	 
+    private serviceAgreementURL: string;
+    public get ServiceAgreementURL() { return this.serviceAgreementURL; }
+    public set ServiceAgreementURL(newValue: string) { if (this.serviceAgreementURL != newValue) { this.serviceAgreementURL = newValue; this.MarkAsDirty("ServiceAgreementURL"); } }
+       
+    private ecommerceSupportEmail: string;
+    public get EcommerceSupportEmail() { return this.ecommerceSupportEmail; }
+    public set EcommerceSupportEmail(newValue: string) { if (this.ecommerceSupportEmail != newValue) { this.ecommerceSupportEmail = newValue; this.MarkAsDirty("EcommerceSupportEmail"); } }
+       
+	  
 
     public OldEntityPM: TenantManagementPM;
 		
@@ -1052,4 +1066,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
