@@ -39,4 +39,11 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="EntityType"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

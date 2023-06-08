@@ -237,6 +237,7 @@ export class DeclarationList {
 	ComputerFee: number;
 	ExportFlightDate: Date;
 	UNFCourier: boolean;
+
 	
 }
  

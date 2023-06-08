@@ -49,6 +49,11 @@ export class EntityTypeLookupPM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private entityType: string;
+    public get EntityType() { return this.entityType; }
+    public set EntityType(newValue: string) { if (this.entityType != newValue) { this.entityType = newValue; this.MarkAsDirty("EntityType"); } }
+       
+	 
 
     public OldEntityPM: EntityTypeLookupPM;
 		

@@ -5706,6 +5706,7 @@
       LocalDefaultText="&quot;בתביעה זו לא ניתן לבצע שליחה, כיוון שכל תיקי התביעה עודכנו וקיבלו תיק תביעה במכס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

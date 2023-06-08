@@ -472,6 +472,7 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? ExportFlightDate  { get; set; }
        [DataMember]
        public bool UNFCourier  { get; set; }
+
    }
 
 }
