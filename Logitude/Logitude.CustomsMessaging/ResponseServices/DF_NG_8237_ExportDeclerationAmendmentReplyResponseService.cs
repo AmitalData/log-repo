@@ -801,8 +801,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 }
 
-            }
-            this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = false;
 
@@ -833,9 +832,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 requestParams.AppicationId = _MyDeclarationPM.Id;// myDeclarationQueryService.GetIdByDeclarationNumber(_MyDeclarationPM.Id, requestParams.Tenant);
                                                                  //if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
-                                                                 //{
-                                                                 //     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
-                                                                 //}
             }
             catch (ProcessLockException processLockException)
             {
@@ -846,7 +842,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 if (disposableToken != null)
                     disposableToken.Dispose();
-            }
+            }                                             //{
+                                                          //     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
+                                                          //}
         }
 
 
@@ -866,7 +864,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         ConsignmentUpdateService cUpdateservice = new ConsignmentUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                         cUpdateservice.Update(item, false);
                     }
-            }
+            
                 }
                 var myExportStorageQueryService = new ExportStorageQueryService(context);
                 var exportStorages = myExportStorageQueryService.GetDeclarationExportStorages(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
