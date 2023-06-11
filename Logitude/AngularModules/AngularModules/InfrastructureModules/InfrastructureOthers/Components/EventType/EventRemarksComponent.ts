@@ -149,8 +149,6 @@ export class EventRemarksComponent extends BaseComponent {
             {
                 this.partnerTypesEvent[i].IsVisible=true;
                 this.tempPartnerTypesEvent.push(this.partnerTypesEvent[i]);
-                if(this.partnerTypesEvent[i].IsChoose)
-                console.log(i+"----->"+this.partnerTypesEvent[i].PartnerTypeName);
             }
         }
         else if (searchEvent != "" || searchEvent != null) {
@@ -166,8 +164,6 @@ export class EventRemarksComponent extends BaseComponent {
                 {
                     this.partnerTypesEvent[i].IsVisible=false; 
                 }
-                if(this.partnerTypesEvent[i].IsChoose)
-                console.log(i+"---=====>"+this.partnerTypesEvent[i].PartnerTypeName);
             }
         }
     }
