@@ -1226,10 +1226,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         private void UpdateNoIdUnder150()
         {
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_tenant);
+
             Card myCard = null;
             var repository = new CardRepository(_tenant);
             myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, _tenant);
-            string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, _tenant);
+            string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, _tenant);
          
             if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
             {
