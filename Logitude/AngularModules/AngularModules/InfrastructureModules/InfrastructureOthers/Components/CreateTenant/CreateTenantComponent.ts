@@ -166,6 +166,10 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
             this.ValidationErrorsList.push("Package Code field is required");
         }
 
+        if (AppTool.IsNullOrEmpty(this.CountryCode)) {
+            this.ValidationErrorsList.push("Country field is required");
+        }
+
         this.ValidateCreateLogboxTenantFromCloud();
     }
 
@@ -177,10 +181,6 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
         }
         else {
             this.ValidateVatNumberValue();
-        }
-
-        if (AppTool.IsNullOrEmpty(this.CountryCode)) {
-            this.ValidationErrorsList.push("Country field is required");
         }
     }
 
