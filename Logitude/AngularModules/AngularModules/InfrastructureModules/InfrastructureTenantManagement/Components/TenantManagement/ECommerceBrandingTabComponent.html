@@ -224,7 +224,16 @@
                             </div>
                             <a (click)="RemoveImage('company')">remove</a>
 
+                        </td>  
+                        <td style="width:30px">
+                            <div></div>
                         </td>
+                        <td style="width:110px;">
+                            <LogLabel [ObjectFieldName]="'LogoURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'LogoURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                        </td> 
                         <td>
                             <div></div>
                         </td>
@@ -245,41 +254,23 @@
                             <div></div>
                         </td>
                     </tr>
-                    <!-- Logo URL -->
+                  
+                    <!-- WhatsApp Messaging Phone Number -->
+                  
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px">
                             <div></div>
                         </td>
                         <td style="width:200px;">
-                            <LogLabel [ObjectFieldName]="'LogoURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
                         </td>
                         <td style="width:160px">
-                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'LogoURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
                         </td>
                         <td>
                             <div></div>
                         </td>
                     </tr>
-                  
-                    <!-- WhatsApp Messaging Phone Number -->
-                    <tr class="FormFieldRow">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td>
-                            <LogTextBox [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [Text]="WhatsAppMessagingPhoneNumber" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
                     <!-- Service Agreement URL -->
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px">

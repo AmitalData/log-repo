@@ -64,7 +64,7 @@ export class ECommerceBrandingTabComponent extends BaseComponent implements Afte
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    //this.UpdateTenant();
+                   
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
@@ -78,25 +78,7 @@ export class ECommerceBrandingTabComponent extends BaseComponent implements Afte
             });
         }
     }
-    UpdateTenant(){
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.TenantPM, this.DataContext.ObjectTableName, errors);   
-
-        if (errors.length == 0) {
-          
-            var tenantService = new TenantPMService();
-            tenantService.update(this.TenantPM).subscribe((myResult:ServiceResponse) => {
-                if (!myResult.HasError) { // Success
-                    
-                }
-               
-            });
-        }
-        else{
-            SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = true;
-            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = errors;
-        }
-    }
+ 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
@@ -130,11 +112,11 @@ export class ECommerceBrandingTabComponent extends BaseComponent implements Afte
         });
     }
     get EcommerceSupportEmail() {
-        return this.TenantPM.EcommerceSupportEmail;
+        return this.EntityPM.EcommerceSupportEmail;
     }
     set EcommerceSupportEmail(value: string) {
-        if (this.TenantPM.EcommerceSupportEmail != value) {
-            this.TenantPM.EcommerceSupportEmail = value;
+        if (this.EntityPM.EcommerceSupportEmail != value) {
+            this.EntityPM.EcommerceSupportEmail = value;
 
         }
     }
@@ -167,25 +149,13 @@ export class ECommerceBrandingTabComponent extends BaseComponent implements Afte
 
     ngOnInit() {
         this.entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) => {
-           // this.entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => { 
-           // this.GetTenant();
+         
             this.EntityPM = this.entityArgs.EntityPM;
             this.IsVisibile = true;
-            
-           
           
         });
-        //});
     }
-    GetTenant() {
-        var tenantService = new TenantPMService();
-        tenantService.get(SessionLocator.Tenant).subscribe((myResult: ServiceResponse) => {
-            if (!myResult.HasError) {
-                this.TenantPM = myResult.Result;
-              
-            }
-        });
-    }
+    
    
     ComapnylogoUploadedCompleted(code) {
         this.ComapnylogoId = code;
