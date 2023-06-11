@@ -452,16 +452,16 @@ namespace Logitude.Accounting.BL.CoreBL
                                 InterestTransactionPM itPM = itQueryService.GetTransactionByUniqueConstraintFields(uniqueConstraintFields);
                                 if (itPM != null)
                                 {
-                                    //text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.Line", 0, useLocal);
-                                    //if (String.IsNullOrEmpty(text)) text = "Line";
+                                    text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.Line", 0, useLocal);
+                                    if (String.IsNullOrEmpty(text)) text = "Line";
 
-                                    //text_44 = TranslateTextsClassTranslate("InterestTransactionsCSV.O.AlreadyFound", 0, useLocal);
-                                    //if (String.IsNullOrEmpty(text_44)) text_44 = "already found";
+                                    text_44 = TranslateTextsClassTranslate("InterestTransactionsCSV.O.AlreadyFound", 0, useLocal);
+                                    if (String.IsNullOrEmpty(text_44)) text_44 = "already found";
 
-                                    //text_2 = TranslateTextsClassTranslate("InterestTransactionsCSV.O.TransactionLine", 0, useLocal);
-                                    //if (String.IsNullOrEmpty(text_2)) text_2 = "Journal Line";
+                                    text_2 = TranslateTextsClassTranslate("InterestTransactionsCSV.O.TransactionLine", 0, useLocal);
+                                    if (String.IsNullOrEmpty(text_2)) text_2 = "Journal Line";
 
-                                    //this.AddErrorRow($"{text}{count} {text_2} {itLine.ExternalNumber} {text_44} ({itPM.LocalAmount} ID={itPM.Id})");
+                                    this.AddErrorRow($"      === {text}{count} {text_2} {itLine.ExternalNumber} {text_44} ({itPM.LocalAmount} ID={itPM.Id})");
                                     itLine.ErrorInLine = true;
 
                                 }
