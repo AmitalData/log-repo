@@ -610,6 +610,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 _MyDeclarationPM.IsClose = true;
             }
 
+            if (requestParams.ResponseName == "9079" && customResponse.Response.Status[0].NameCode.Value == "36")
+            {
+               _MyDeclarationPM.IsExportClosed = true;
+                _MyDeclarationPM.IsClose = true;
+            }
+
             if (customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactorDetails != null)
                 _MyDeclarationPM.LoadingFactor = customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactorDetails.FirstOrDefault()?.ExpenseLoadingFactor.Value;
 
