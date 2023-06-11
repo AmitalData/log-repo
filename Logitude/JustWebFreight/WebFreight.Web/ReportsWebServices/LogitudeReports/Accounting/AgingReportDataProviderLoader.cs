@@ -971,7 +971,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             if (filterItem != null && filterItem.FieldValue != null)
             {
-                if (filterItem.FieldDataType == "decimal")
+                if (filterItem.FieldDataType == "decimal" || (filterItem.FieldValue2 != null && filterItem.FieldValue2.ToString() == "decimal"))
                 {
                     decimal value = Convert.ToDecimal(filterItem.FieldValue);
                     object x = value;
