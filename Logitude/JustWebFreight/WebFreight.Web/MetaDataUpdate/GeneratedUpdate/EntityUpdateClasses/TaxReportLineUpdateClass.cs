@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportLineUpdateClass
    {  		
-		public const string HashString = "897a39f7048f5ed385480fffdfb6c9b9";
+		public const string HashString = "3fcc04256bfbae977679d35f9542c8e1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -127,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tax Report Line",
-			      				    Code =  "fbda",
+			      				    Code =  "ed18",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -2218,7 +2220,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable TaxReportLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReportLine" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode TaxReportLineTextCode_TaxReportLineOExternalTooltip = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.ExternalTooltip", DefaultText = "This is an outside row from a related company, so this row cannot be edited. \n Loading another TXT file into this report will delete the this line and create new lines according to the new file.",LocalDefaultText = @"זוהי שורה חיצונית מחברה קשורה , לא ניתן לבצע עריכה לשורה זאת. \n טעינת קובץ חיצוני נוסף לדוח זה ימחק את השורה וייצור שורות חדשות בהתאם לקובץ החדש.", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TaxReportLineTextCode_TaxReportLineOExternalTooltip = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.ExternalTooltip", DefaultText = "This is an outside row from a related company, so this row cannot be edited. \n Loading another TXT file into this report will delete the this line and create new lines according to the new file.",LocalDefaultText = @"זוהי שורה חיצונית מחברה קשורה , טעינת קובץ חיצוני נוסף לדוח זה ימחק את השורה וייצור שורות חדשות בהתאם לקובץ החדש.", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportLineTextCode_TaxReportLineOLastUpdatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.LastUpdatedBy", DefaultText = "Last updated by",LocalDefaultText = "עודכן לאחרונה ע''י ", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

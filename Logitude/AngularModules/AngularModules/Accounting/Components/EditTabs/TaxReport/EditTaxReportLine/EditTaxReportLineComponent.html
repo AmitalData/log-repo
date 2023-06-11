@@ -131,7 +131,7 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <CheckBox [IsChecked]="TaxReportLinePM.IsEquipment" (Checked)="TaxReportLinePM.IsEquipment = $event" [IsEnabled]="TaxReportLinePM.OutputOrInput=='I'"></CheckBox>
+                                    <CheckBox [IsChecked]="TaxReportLinePM.IsEquipment" (Checked)="TaxReportLinePM.IsEquipment = $event" [IsEnabled]="TaxReportLinePM.OutputOrInput=='I' ||TaxReportLinePM.IsExternalLine "></CheckBox>
                                 </td>
                                 <td><div></div></td>
                             </tr>
