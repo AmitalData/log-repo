@@ -524,17 +524,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true
         });
 
-        // this
-        this.columns.push({
-          FieldName: 'TotalInvoiceAmount',
-            DataTypeCode: 'Number',
-          Display: TextCodeTranslator.Translate("TaxReportLine.F.TotalInvoiceAmount"),
-            Styles: { width: '100px' },
-            HtmlListComponentName: 'TaxReportListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-        });
+      
 
         //ameerah
         this.columns.push({
@@ -547,7 +537,17 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
               IsCustomTemplate: true,
               ServerSideSortable: true
           });
-
+         // this
+         this.columns.push({
+           FieldName: 'TotalInvoiceAmount',
+             DataTypeCode: 'Number',
+           Display: TextCodeTranslator.Translate("TaxReportLine.F.TotalInvoiceAmount"),
+             Styles: { width: '100px' },
+             HtmlListComponentName: 'TaxReportListTemplate',
+             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
+             IsCustomTemplate: true,
+             ServerSideSortable: true
+         });
         this.columns.push({
             FieldName: 'VatAmount',
             DataTypeCode: 'Number',

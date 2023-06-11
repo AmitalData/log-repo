@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportLineUpdateClass
    {  		
-		public const string HashString = "897a39f7048f5ed385480fffdfb6c9b9";
+		public const string HashString = "2783059d3dfe94d38947b6d45aa2ec8c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -127,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tax Report Line",
-			      				    Code =  "fbda",
+			      				    Code =  "7bc0",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1683,10 +1685,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalInvoiceAmount",
 					  						DefaultText =  "Total Invoice Amount Before Tax",
-					  						FullLocalDefaultText =  "סכום חשבונית לפני מעמ",
+					  						FullLocalDefaultText =  "סכום חשבונית לפני מעמ לדיווח",
 					  						ListFieldLable =  "TotalInvoiceAmountListLable",
 					  						ListLableDefaultText =  "Total Invoice Amount Before Tax",
-					  						ListLocalDefaultText =  "סכום חשבונית לפני מעמ",
+					  						ListLocalDefaultText =  "סכום חשבונית לפני מעמ לדיווח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2109,7 +2111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SubTotalInLocalCurrency",
 					  						DefaultText =  "Sub Total (Local Currency)",
-					  						FullLocalDefaultText =  "סיכום ביניים בש'ח",
+					  						FullLocalDefaultText =  "סכום החשבונית לפני מעמ",
 					  						ListFieldLable =  "SubTotalInLocalCurrencyListLable",
 					  						ListLableDefaultText =  "Subtotal Local",
 					  						IsForeignKey =  false,
