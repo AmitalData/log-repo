@@ -266,7 +266,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
                 DoUpdateNotification(entityPM, connectedDeclarationPM, loggingUserId, notificationDefinitionCode, eventContextTagModel.FUStatusRemarks);
-                if(connectedDeclarationPM!= null && connectedDeclarationPM.Direction=="E")
+                if(connectedDeclarationPM!= null)
                 {
                     if(eventContextTagModel.CallProccessID== EventContextTagModel.ProccessEnum.VAL_NG_8228_RequiredDocumentVerificationDecisionVerifiedWithClient)
                     {
