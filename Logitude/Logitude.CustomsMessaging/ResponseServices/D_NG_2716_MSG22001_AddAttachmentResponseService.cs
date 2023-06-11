@@ -78,9 +78,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             }
 
-            using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:2715/UDLT"))
+            IDisposable disposableToken = null;
+
+            try
             {
+                disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:2715/UDLT");
+            
                 RealUpdate(customResponse, requestParams);
+            }
+             catch (ProcessLockException processLockException)
+            {
+                LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                throw;
+            }
+            finally
+            {
+                if (disposableToken != null)
+                    disposableToken.Dispose();
             }
         }
 

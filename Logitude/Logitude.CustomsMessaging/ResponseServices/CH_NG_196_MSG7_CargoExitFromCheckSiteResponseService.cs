@@ -185,13 +185,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (physicalchecksclosed)
                     {
+                        IDisposable disposableToken = null;
 
-
-                        string key = ProcessLockTableUtil.Instance.GetKey4Declaration(phsicalCheckPM.DeclarationId, requestParams.Tenant);
-                        using (var disposableToken =
-                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "physicalchecksclosed")
-                            )
-                        {
+                        try
+                        {                            
+                            string key = ProcessLockTableUtil.Instance.GetKey4Declaration(phsicalCheckPM.DeclarationId, requestParams.Tenant);
+                            disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "physicalchecksclosed");                        
 
                             var decPM = declarationQueryService.GetSingleDeclarationById(phsicalCheckPM.DeclarationId, phsicalCheckPM.Tenant);
                             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
@@ -216,13 +215,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
 
                         }
+                        catch (ProcessLockException processLockException)
+                        {
+                            LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                            throw;
+                        }
+                        finally
+                        {
+                            if (disposableToken != null)
+                                disposableToken.Dispose();
+                        }
                     }
-
-                    
-
-
                 }
-
             }
             catch (System.Exception ee)
             {
