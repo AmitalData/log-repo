@@ -59,10 +59,10 @@ export class EventRemarksComponent extends BaseComponent {
                     this.PartnerTypes[i] = this.EntityPM[i];
                     var x = this.EventRemarksList.find(x => x.PartnerTypeId === this.PartnerTypes[i].Id);
                     if (x != null) {
-                        this.partnerTypesEvent.push(new PartnerTypesEvent(new EventRemarkPM(), true, this.PartnerTypes[i].Name, this.PartnerTypes[i].Id, this.PartnerTypes[i].SearchFields));
+                        this.partnerTypesEvent.push(new PartnerTypesEvent(new EventRemarkPM(), true, true,this.PartnerTypes[i].Name, this.PartnerTypes[i].Id, this.PartnerTypes[i].SearchFields));
 
                     } else {
-                        this.partnerTypesEvent.push(new PartnerTypesEvent(new EventRemarkPM(), false, this.PartnerTypes[i].Name, this.PartnerTypes[i].Id, this.PartnerTypes[i].SearchFields));
+                        this.partnerTypesEvent.push(new PartnerTypesEvent(new EventRemarkPM(), false, true,this.PartnerTypes[i].Name, this.PartnerTypes[i].Id, this.PartnerTypes[i].SearchFields));
 
                     }
                 }
@@ -79,65 +79,54 @@ export class EventRemarksComponent extends BaseComponent {
             this.partnerTypesEvent[index].IsChoose = value;
         }
         this.FullEventRemarksList(this.partnerTypesEvent);
-        
-        this.EntityPM.EventRemarks = [];
-        this.EventRemarksList.forEach( val=> this.EntityPM.EventRemarks.push(val) );
-        if(this.CurrentSession.CurrentEditComponent!=null)
-        {
-            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
-            this.CurrentSession.CurrentEditComponent.EntityPM.OldEntityPM=null;
-        }
     }
 
     ClearAllClicked() {
         this.EntityPM = this.entityArgs.EntityPM;
         for (let i = 0; i < this.partnerTypesEvent.length; i++) {
-            this.partnerTypesEvent[i].IsChoose = false;
+            if(this.partnerTypesEvent[i].IsVisible == true)
+                this.partnerTypesEvent[i].IsChoose = false;
         }
         this.FullEventRemarksList(this.partnerTypesEvent);
-
-        this.EntityPM.EventRemarks = [];
-        this.EventRemarksList.forEach( val=> this.EntityPM.EventRemarks.push(val) );
-        if(this.CurrentSession.CurrentEditComponent!=null)
-        {
-            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
-            this.CurrentSession.CurrentEditComponent.EntityPM.OldEntityPM=null;
-        }  
     }
 
     SelectAllClicked() {
         this.EntityPM = this.entityArgs.EntityPM;
         var size = this.partnerTypesEvent.length;
         for (let i = 0; i < size; i++) {
-            this.partnerTypesEvent[i].IsChoose = true;
+            if(this.partnerTypesEvent[i].IsVisible == true)
+                this.partnerTypesEvent[i].IsChoose = true;
         }
         this.FullEventRemarksList(this.partnerTypesEvent);
+    }
 
+    FullEventRemarksList(partnerTypesEvent) {
+        //this.EventRemarksList = [];
+
+        for (let i = 0; i < partnerTypesEvent.length; i++) 
+        {
+            if(this.partnerTypesEvent[i].IsVisible == true)
+            {
+                partnerTypesEvent[i].EventRemark.Tenant = this.EntityPM.Tenant;
+                partnerTypesEvent[i].EventRemark.CreateDate = new Date(Date.now());
+                partnerTypesEvent[i].EventRemark.CreatedByUserId = SessionLocator.LoggedUserId;;
+                partnerTypesEvent[i].EventRemark.SearchFields = partnerTypesEvent[i].PartnerTypeSearchFields;
+                partnerTypesEvent[i].EventRemark.EventTypeId = this.EntityPM.Id;
+                partnerTypesEvent[i].EventRemark.PartnerTypeId = partnerTypesEvent[i].PartnerTypeId;
+                if (partnerTypesEvent[i].IsChoose == true) {
+                    this.FindInEventRemarksList(partnerTypesEvent[i], true);
+                }
+                else {
+                    this.FindInEventRemarksList(partnerTypesEvent[i], false);
+                }
+            }  
+        }     
         this.EntityPM.EventRemarks = [];
         this.EventRemarksList.forEach( val=> this.EntityPM.EventRemarks.push(val) );
         if(this.CurrentSession.CurrentEditComponent!=null)
         {
             this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
             this.CurrentSession.CurrentEditComponent.EntityPM.OldEntityPM=null;
-        }
-    }
-
-    FullEventRemarksList(partnerTypesEvent) {
-        this.EventRemarksList = [];
-
-        for (let i = 0; i < partnerTypesEvent.length; i++) {
-            partnerTypesEvent[i].EventRemark.Tenant = this.EntityPM.Tenant;
-            partnerTypesEvent[i].EventRemark.CreateDate = new Date(Date.now());
-            partnerTypesEvent[i].EventRemark.CreatedByUserId = SessionLocator.LoggedUserId;;
-            partnerTypesEvent[i].EventRemark.SearchFields = partnerTypesEvent[i].PartnerTypeSearchFields;
-            partnerTypesEvent[i].EventRemark.EventTypeId = this.EntityPM.Id;
-            partnerTypesEvent[i].EventRemark.PartnerTypeId = partnerTypesEvent[i].PartnerTypeId;
-            if (partnerTypesEvent[i].IsChoose == true) {
-                this.FindInEventRemarksList(partnerTypesEvent[i], true);
-            }
-            else {
-                this.FindInEventRemarksList(partnerTypesEvent[i], false);
-            }
         }
     }
 
@@ -154,15 +143,26 @@ export class EventRemarksComponent extends BaseComponent {
 
     TextChanged(searchEvent) {      
         if (searchEvent == "" || searchEvent == null) {
+            var size = this.partnerTypesEvent.length;
             this.tempPartnerTypesEvent = [];
-            this.partnerTypesEvent.forEach(val => this.tempPartnerTypesEvent.push(val));
+            for (let i = 0; i < size; i++)
+            {
+                this.partnerTypesEvent[i].IsVisible=true;
+                this.tempPartnerTypesEvent.push(this.partnerTypesEvent[i]);
+            }
         }
         else if (searchEvent != "" || searchEvent != null) {
             var size = this.partnerTypesEvent.length;
             this.tempPartnerTypesEvent = [];
-            for (let i = 0; i < size; i++) {
+            for (let i = 0; i < size; i++)
+                {
                 if (this.partnerTypesEvent[i].PartnerTypeName.toUpperCase().match(searchEvent.toUpperCase())) {
+                    this.partnerTypesEvent[i].IsVisible=true;
                     this.tempPartnerTypesEvent.push(this.partnerTypesEvent[i]);
+                }
+                else
+                {
+                    this.partnerTypesEvent[i].IsVisible=false; 
                 }
             }
         }
@@ -172,12 +172,14 @@ export class EventRemarksComponent extends BaseComponent {
 class PartnerTypesEvent {
     public EventRemark: EventRemarkPM;
     public IsChoose: boolean
+    public IsVisible: boolean
     public PartnerTypeName: string
     public PartnerTypeId: string
     public PartnerTypeSearchFields: string
-    constructor(EventRemark: EventRemarkPM, IsChoose: boolean, PartnerTypeName: string, PartnerTypeId: string, PartnerTypeSearchFields: string) {
+    constructor(EventRemark: EventRemarkPM, IsChoose: boolean, IsVisible: boolean,PartnerTypeName: string, PartnerTypeId: string, PartnerTypeSearchFields: string) {
         this.EventRemark = EventRemark;
         this.IsChoose = IsChoose;
+        this.IsVisible = IsVisible;
         this.PartnerTypeName = PartnerTypeName;
         this.PartnerTypeId = PartnerTypeId;
         this.PartnerTypeSearchFields = PartnerTypeSearchFields;
