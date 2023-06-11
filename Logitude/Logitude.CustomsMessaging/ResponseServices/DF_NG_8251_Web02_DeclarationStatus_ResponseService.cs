@@ -53,11 +53,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             IDisposable disposableToken = null;
 
             try
-            {
-                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(requestParams.DeclarationNumber, requestParams.Tenant);
+            {                
+                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(requestParams.DeclarationNumber, requestParams.Tenant);            
                 disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber");
 
-                //throw new System.Exception("test 2");
                 if (!String.IsNullOrWhiteSpace(requestParams.TesterSendOption))
                 {
                     TesterSendOption(requestParams);
@@ -775,9 +774,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             finally
             {
                 if (disposableToken != null)
-                {
                     disposableToken.Dispose();
-                }
             }
 
         }

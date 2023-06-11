@@ -8,6 +8,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
@@ -44,7 +45,7 @@ namespace Logitude.Server.Tools.Utils
                     scope.Complete();
                 }
             }
-            catch (UpdateException)
+            catch (DbUpdateException)
             {
                 var mess = "MultiProcessLockTableUtil:LockItAndGetReleaseToken:fAILED:Already EXIST:" + key2Upsert.ToString();
                 LogMessagingUtil.Instance.AppendLine(mess);
@@ -75,7 +76,14 @@ namespace Logitude.Server.Tools.Utils
         private void RealseKey(ProcessLockReleaseToken disposeProcessLockToken)
         {
             var repo = new GeneralLockRepository(disposeProcessLockToken.ProccesLockData.Tenant);
-            repo.FastDelete(disposeProcessLockToken.ProccesLockData.MyKey, disposeProcessLockToken.ProccesLockData.Tenant);
+
+            using (var scope = TransactionFactory.GetNewTransaction())
+            {
+                repo.FastDelete(disposeProcessLockToken.ProccesLockData.MyKey, disposeProcessLockToken.ProccesLockData.Tenant);
+                repo.SubmitChanges();
+                scope.Complete();
+            }
+          
             LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil:RealseKey:Removed>>>:" + disposeProcessLockToken.ToString());
         }
     
