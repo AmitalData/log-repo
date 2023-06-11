@@ -43,6 +43,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         new ReconciliationStageBArg()
                         {
                             Tenant = tenant,
+                            GLAccountId = "",
                         }, tenant, subj, false);
 
 
@@ -55,6 +56,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
                     {
                         Tenant = tenant,
+                        GLAccountId = "",
                     };
                     reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg);
                     string responseText = reconciliationStageBBatch.ResponseText();
@@ -91,6 +93,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         new ReconciliationStageBArg()
                         {
                             Tenant = tenant,
+                            GLAccountId = "",
                         }, tenant, subj, false);
 
 
@@ -103,6 +106,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
                     {
                         Tenant = tenant,
+                        GLAccountId = "",
                     };
                     reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg);
                     string responseText = reconciliationStageBBatch.ResponseText();
