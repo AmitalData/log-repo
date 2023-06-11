@@ -58,9 +58,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationNumber = customResponse?.Response?.FunctionalReferenceID?.Value;
             }
 
-            string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
-            using (var disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber"))
-            {
+            IDisposable disposableToken = null;
+
+            try
+            {                
+                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
+                disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber");            
 
                     var context = CustomContext.GetContext(requestParams.Tenant);
                     var myDeclarationQueryService = new DeclarationQueryService(context);
@@ -791,7 +794,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                                      //{
                                                                      //     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
                                                                      //}
-                }
+            }
+            catch (ProcessLockException processLockException)
+            {
+                LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                throw;
+            }
+            finally
+            {
+                if (disposableToken != null)
+                    disposableToken.Dispose();
+            }
         }
 
         public void SendManifest(DeclarationPM declarationPM, GenericRequestParams requestParams)  

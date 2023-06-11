@@ -765,7 +765,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
-                }
+            }
             catch (ProcessLockException processLockException)
             {
                 LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
