@@ -375,6 +375,7 @@
     <None Include="DBTables\DeclarationCasualDetails.dxml" />
     <None Include="DBTables\DeclarationConsAcceptance.dxml" />
     <None Include="DBTables\DeclarationConstraint.dxml" />
+    <None Include="DBTables\DeclarationCounter.dxml" />
     <None Include="DBTables\DeclarationCourierStatus.dxml" />
     <None Include="DBTables\DeclarationErrorMapping.dxml" />
     <None Include="DBTables\DeclarationExportRecipient.dxml" />
@@ -603,6 +604,7 @@
     <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
     <None Include="EntityFiles\CustomsCountryTenant.lxml" />
     <None Include="EntityFiles\CustomsHouseTypeTenant.lxml" />
+    <None Include="EntityFiles\DeclarationCounter.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\DefaultType.lxml" />
     <None Include="EntityFiles\DefaultValue.lxml" />

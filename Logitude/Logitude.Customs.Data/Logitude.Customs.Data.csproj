@@ -175,6 +175,7 @@
     <Compile Include="EntityKeys\DeclarationCargoSplitKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCasualDetailsKeys.cs" />
     <Compile Include="EntityKeys\DeclarationConsAcceptanceKeys.cs" />
+    <Compile Include="EntityKeys\DeclarationCounterKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCourierStatusKeys.cs" />
     <Compile Include="EntityKeys\DeclarationExportRecipientKeys.cs" />
     <Compile Include="EntityKeys\DeclarationFollowUpKeys.cs" />
@@ -338,6 +339,7 @@
     <Compile Include="EntityListQueryServices\DeclarationCargoSplitListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCasualDetailsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationConsAcceptanceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DeclarationCounterListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCourierStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationExportRecipientListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationFollowUpListQueryService.cs" />
@@ -436,6 +438,7 @@
     <Compile Include="EntityListQueryServices\Generated\DeclarationCargoSplitListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCasualDetailsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationConsAcceptanceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DeclarationCounterListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCourierStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationExportRecipientListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationFollowUpListQueryService.Generated.cs" />
@@ -594,6 +597,7 @@
     <Compile Include="EntityLists\Generated\CustomDocumentTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsCountryTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsHouseTypeTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DeclarationCounterList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
@@ -828,6 +832,7 @@
     <Compile Include="EntityMapping\DeclarationCargoSplitMap.cs" />
     <Compile Include="EntityMapping\DeclarationCasualDetailsMap.cs" />
     <Compile Include="EntityMapping\DeclarationConsAcceptanceMap.cs" />
+    <Compile Include="EntityMapping\DeclarationCounterMap.cs" />
     <Compile Include="EntityMapping\DeclarationCourierStatusMap.cs" />
     <Compile Include="EntityMapping\DeclarationExportRecipientMap.cs" />
     <Compile Include="EntityMapping\DeclarationFollowUpMap.cs" />
@@ -991,6 +996,7 @@
     <Compile Include="EntityPOCOs\DeclarationCargoSplit.cs" />
     <Compile Include="EntityPOCOs\DeclarationCasualDetails.cs" />
     <Compile Include="EntityPOCOs\DeclarationConsAcceptance.cs" />
+    <Compile Include="EntityPOCOs\DeclarationCounter.cs" />
     <Compile Include="EntityPOCOs\DeclarationCourierStatus.cs" />
     <Compile Include="EntityPOCOs\DeclarationExportRecipient.cs" />
     <Compile Include="EntityPOCOs\DeclarationFollowUp.cs" />
@@ -1155,6 +1161,7 @@
     <Compile Include="Repsitories\DeclarationCargoSplitRepository.cs" />
     <Compile Include="Repsitories\DeclarationCasualDetailsRepository.cs" />
     <Compile Include="Repsitories\DeclarationConsAcceptanceRepository.cs" />
+    <Compile Include="Repsitories\DeclarationCounterRepository.cs" />
     <Compile Include="Repsitories\DeclarationCourierStatusRepository.cs" />
     <Compile Include="Repsitories\DeclarationExportRecipientRepository.cs" />
     <Compile Include="Repsitories\DeclarationFollowUpRepository.cs" />
@@ -1253,6 +1260,7 @@
     <Compile Include="Repsitories\Generated\DeclarationCargoSplitRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCasualDetailsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationConsAcceptanceRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DeclarationCounterRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCourierStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationExportRecipientRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationFollowUpRepository.Generated.cs" />
