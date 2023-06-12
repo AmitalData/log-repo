@@ -990,38 +990,22 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     this._MyDeclarationPM.DeclarationExportRecipients.Add(new DeclarationExportRecipientPM() { ChangeSetOp = ChangeSetOperation.Insert, Tenant = ResolvedTenant() });
                 }
-
-                //SupplierInvoices
-                if (this._MyDeclarationPM.SupplierInvoices.Count == 0)
-                {
-                    this._MyDeclarationPM.SupplierInvoices.Add(new SupplierInvoicePM() { ChangeSetOp = ChangeSetOperation.Insert, Tenant = ResolvedTenant() });
-                }
-                this._MyDeclarationPM.SupplierInvoices[0].VendorId = _AmitalCustomsFile.VendorId;
-                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.InvoiceNumber))
-                {
-                    this._MyDeclarationPM.SupplierInvoices[0].InvoiceNumber = _AmitalCustomsFile.InvoiceNumber;
-                }
-                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.IncotermCode))
-                {
-                    this._MyDeclarationPM.SupplierInvoices[0].IncotermCode = _AmitalCustomsFile.IncotermCode;
-                }
-
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerName))
                 {
-                    this._MyDeclarationPM.SupplierInvoices[0].BuyerName = _AmitalCustomsFile.BuyerName;
                     this._MyDeclarationPM.DeclarationExportRecipients[0].RecipientName = _AmitalCustomsFile.BuyerName;
                 }
 
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerAddress))
                 {
-                    this._MyDeclarationPM.SupplierInvoices[0].BuyerAddress = _AmitalCustomsFile.BuyerAddress;
-                    this._MyDeclarationPM.DeclarationExportRecipients[0].RecipientAddress= _AmitalCustomsFile.BuyerAddress;
+                    this._MyDeclarationPM.DeclarationExportRecipients[0].RecipientAddress = _AmitalCustomsFile.BuyerAddress;
                 }
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerCountryCode))
                 {
-                    this._MyDeclarationPM.SupplierInvoices[0].BuyerCountryCode = _AmitalCustomsFile.BuyerCountryCode;
                     this._MyDeclarationPM.DeclarationExportRecipients[0].RecipientIssueCountryCode = _AmitalCustomsFile.BuyerCountryCode;
                 }
+                //SupplierInvoices
+                this.CreateSupplierInvoices();
+               
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerRoleCode))
                 {
                     this._MyDeclarationPM.SupplierInvoices[0].BuyerRoleCode = _AmitalCustomsFile.BuyerRoleCode;
@@ -1063,7 +1047,69 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             }
         }
 
-        
+        private void CreateSupplierInvoices()
+        {
+            var firstExits = this._MyDeclarationPM.SupplierInvoices.Count() > 0;
+            var invoicesArrayToAdd = _AmitalCustomsFile.Invoices?.Invoice?.Length > 0 ? _AmitalCustomsFile.Invoices?.Invoice : new ExportInvoice[] { new ExportInvoice() };
+
+            Array.ForEach(invoicesArrayToAdd, (invoice) =>
+            {
+                if (firstExits)
+                    InitSupplierInvoice(invoice, this._MyDeclarationPM.SupplierInvoices[0]);
+                else
+                {
+                    var suppplierInvoice = new SupplierInvoicePM()
+                    {
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        Tenant = ResolvedTenant()
+                    };
+                    InitSupplierInvoice(invoice, suppplierInvoice);
+                    this._MyDeclarationPM.SupplierInvoices.Add(suppplierInvoice);
+                }
+             });
+
+        }
+
+        private void InitSupplierInvoice(ExportInvoice invocie,SupplierInvoicePM supplierInvoice)
+        {
+
+            supplierInvoice.VendorId = _AmitalCustomsFile.VendorId;
+            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.InvoiceNumber))
+            {
+                supplierInvoice.InvoiceNumber = _AmitalCustomsFile.InvoiceNumber;
+            }
+            else
+            {
+                if (!invocie.IsEmpty)
+                {
+                    supplierInvoice.InvoiceNumber=invocie.Number;
+                    supplierInvoice.IssueDate = !String.IsNullOrWhiteSpace( invocie?.Date)? DateTime.Parse(invocie?.Date): supplierInvoice.IssueDate;
+
+                }
+            }
+            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.IncotermCode))
+            {
+                supplierInvoice.IncotermCode = _AmitalCustomsFile.IncotermCode;
+            }
+
+            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerName))
+            {
+                supplierInvoice.BuyerName = _AmitalCustomsFile.BuyerName;
+            }
+
+            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerAddress))
+            {
+                supplierInvoice.BuyerAddress = _AmitalCustomsFile.BuyerAddress;
+            }
+            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerCountryCode))
+            {
+                supplierInvoice.BuyerCountryCode = _AmitalCustomsFile.BuyerCountryCode;
+            }
+
+
+          
+
+        }
 
         private void DeclarationReferantDataUpdate()
         {

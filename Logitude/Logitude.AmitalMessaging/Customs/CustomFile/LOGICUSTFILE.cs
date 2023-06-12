@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Logitude.AmitalMessaging.Customs.CustomFile.CellFile;
+using Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile;
 using System.Xml.Serialization;
 
 // 
@@ -193,6 +195,8 @@ public partial class LogitudeCustomsFile
     private string referentMAWBField;
 
     private string referentHAWBField;
+
+    private ExportInvoices invoicesField;
 
     /// <remarks/>
     public string CustomFileNo
@@ -1127,4 +1131,99 @@ public partial class LogitudeCustomsFile
             this.referentHAWBField = value;
         }
     }
+
+
+    [System.Xml.Serialization.XmlElementAttribute("Invoices")]
+
+    public ExportInvoices Invoices
+    {
+        get
+        {
+            return this.invoicesField;
+        }
+        set
+        {
+            this.invoicesField = value;
+        }
+    }
 }
+
+
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ExportInvoice
+{
+    private  bool isEmpty;
+  
+    private string numberField;
+
+    private string dateField;
+
+    [XmlIgnore]
+    public bool IsEmpty
+    {
+        get
+        {
+            return numberField == null;
+        }
+    }
+
+
+    public string Number
+    {
+        get
+        {
+            return this.numberField;
+        }
+        set
+        {
+            this.numberField = value;
+        }
+    }
+    public string Date
+    {
+        get
+        {
+            return this.dateField;
+        }
+        set
+        {
+            this.dateField = value;
+        }
+    }
+
+    
+}
+
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ExportInvoices
+{
+    private ExportInvoice[] InvoiceField;
+
+    [System.Xml.Serialization.XmlElementAttribute("Invoice")]
+
+    public ExportInvoice[] Invoice
+    {
+        get
+        {
+            return this.InvoiceField;
+        }
+        set
+        {
+            this.InvoiceField = value;
+        }
+    }
+}
+
+
