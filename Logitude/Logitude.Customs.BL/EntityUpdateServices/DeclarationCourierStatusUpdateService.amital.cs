@@ -262,7 +262,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
                 }
 
-                var myGGGQPM = new GGGQPM()
+                
+                if (isConnectedToUniFreight)
+                {
+                    AmitalContext _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
+
+                    var myGGGQPM = new GGGQPM()
                     {
                         ChangeSetOp = ChangeSetOperation.Insert,
                         ORIGINQUE = "LGT",
@@ -277,10 +282,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         DEBUG = "F",
                         DONEOPERATION = "D",
                     };
-                if (isConnectedToUniFreight)
-                {
-                    AmitalContext _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
-
                     var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
                     myGGGQUpdateService.DontAddTransaction = true;
                     myGGGQUpdateService.Update(myGGGQPM, true);
