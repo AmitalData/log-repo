@@ -371,12 +371,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 else
                 {
-                    string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
-                    using (var disposableToken =
-                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key,
-                        "UCBNDCD.CRS", true)
-                        )
-                    {
+                    IDisposable disposableToken = null;
+
+                    try
+                    {                        
+                        string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
+                        disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key, "UCBNDCD.CRS", true);
+                        
+                    
                         var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCSBondedDocument_MessagingService();
                         string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(
                             _DocumentsFilingPM.Tenant, 
@@ -387,8 +389,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         LogitudeSettings.HandleLogMe(crs + " " + logData + _DocumentsFilingPM.Code, false, "CreateUCBNDCDService.OK" , stopLogAt);
 
                     }
+                    catch (ProcessLockException processLockException)
+                    {
+                        LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                        throw;
+                    }
+                    finally
+                    {
+                        if (disposableToken != null)
+                            disposableToken.Dispose();
+                    }
                 }
-
             }
             catch (Exception E)
             {

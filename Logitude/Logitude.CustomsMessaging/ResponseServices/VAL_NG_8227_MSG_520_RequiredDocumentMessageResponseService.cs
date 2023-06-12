@@ -36,8 +36,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declarationNumber != null)
                 {
                     string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
-                    ///ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "2470ResponseService.Update");
-                    disposableToken= ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "2470ResponseService.Update");
+                    ///ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "DeclarationNumber");
+                    disposableToken= ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber");
                 }
 
                 //Analyze message 8227 - Required Document (DCA)
