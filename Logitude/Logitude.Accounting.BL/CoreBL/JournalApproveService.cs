@@ -1153,7 +1153,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-        private static void UpdateGLAccountAgingData(string communicationLogId, DbQueueService queueservice, int tenant) {
+        private static void UpdateGLAccountAgingData(string communicationLogId, DbQueueService queueservice, int tenant)
+        {
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
             CommunicationLog commLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
@@ -1208,8 +1209,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "AccountingJournalApproveWR", "AccountingJournalApproveWR: ProcessMessage() Method", null);
-            if (message.RetryNumber >= 2 && message.RetryNumber <= 7) {
-                    myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
+            if (message.RetryNumber >= 2 && message.RetryNumber <= 7)
+            {
+                myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
             }
             if (message == null || message.RetryNumber > 5)
             {
@@ -1470,7 +1472,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         break;
                     }
 
-
                     if (response.MessageValues.ContainsKey("communicationLogId"))
                     {
                         string communicationLogId = response.MessageValues["communicationLogId"].ToString();
@@ -1484,6 +1485,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (ProcessMessage_Db(queueservice, response, selectedQueue))
                         {
                             LogDoneItemInMemoryAction?.Invoke(1);
+
                         }
                         
                     }
@@ -1542,7 +1544,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     DbQueueService queueservice = null;
                     try
                     {
-                        queueservice = new DbQueueService(selectedQueue, 0); 
+                        queueservice = new DbQueueService(selectedQueue, 0);
                         response = queueservice.ReceiveJournal(new TimeSpan(0, 0, 0, 5));
                     }
                     catch (Exception)
@@ -1574,7 +1576,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         SetTenantIdle(response.Tenant);
                     }
-                    
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
