@@ -433,10 +433,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          LoadingPortName = a.ExportLoadingPort.LocalName,
                                                          ExcludeManifest=a.ExcludeManifest,
 
-                                                         MehesFee = MyDeclarationTaxesByTaxTypeCodeViews.MehesFee,
+                                                         /*MehesFee = MyDeclarationTaxesByTaxTypeCodeViews.MehesFee,
                                                          VATReshimonFee = MyDeclarationTaxesByTaxTypeCodeViews.VATReshimonFee,
                                                          SecurityFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
-                                                         ComputerFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
+                                                         ComputerFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,*/
 
                                                      });
 
