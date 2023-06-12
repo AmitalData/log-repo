@@ -158,13 +158,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             StartwithoutSpeicalCharCustomers=StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);  
             this.InvitedCustomers=StartwithSpeicalCharCustomers.concat(StartwithoutSpeicalCharCustomers);
             this.FillInvitedCustomersDictionary(this.InvitedCustomers);
-            this.InvitedCustomers.forEach(val => this.tempInvitedCustomers.push(val));
     }
 
     FillInvitedCustomersDictionary(InvitedCustomers: any[]) {
         InvitedCustomers.forEach(element => {
             this.InvitedCustomersDictionary[element.CardId] = element;
         });
+        this.InvitedCustomers.forEach(val => this.tempInvitedCustomers.push(val));
     }
     private CheckSpeicalChar(s : string){  
         var format = /^[A-Za-z0-9]/;
@@ -465,7 +465,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
          var size =  this.InvitedCustomers.length;
          this.InvitedCustomers = [];
          for (let i = 0; i < size; i++) {
-             if (this.tempInvitedCustomers[i].Name.toUpperCase().match(searchInput.toUpperCase())) {
+             if (this.tempInvitedCustomers[i].Name.toUpperCase().includes(searchInput.toUpperCase())) {
                  this.InvitedCustomers.push(this.tempInvitedCustomers[i]);
              }
          }
@@ -487,7 +487,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
          var size =  this.tempMilestonesStatus.length;
          this.MilestonesStatus = [];
          for (let i = 0; i < size; i++) {
-             if (this.tempMilestonesStatus[i].EnglishName.toUpperCase().match(searchInput.toUpperCase())) {
+             if (this.tempMilestonesStatus[i].EnglishName.toUpperCase().includes(searchInput.toUpperCase())) {
                  this.MilestonesStatus.push(this.tempMilestonesStatus[i]);
              }
          }
@@ -509,7 +509,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
          var size =  this.tempShipmentDirectionFilters.length;
          this.ShipmentDirectionFilters = [];
          for (let i = 0; i < size; i++) {
-             if (this.tempShipmentDirectionFilters[i].name.toUpperCase().match(searchInput.toUpperCase())) {
+             if (this.tempShipmentDirectionFilters[i].name.toUpperCase().includes(searchInput.toUpperCase())) {
                  this.ShipmentDirectionFilters.push(this.tempShipmentDirectionFilters[i]);
              }
          }
@@ -531,7 +531,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
          var size =  this.tempShipmentTypeFilters.length;
          this.ShipmentTypeFilters = [];
          for (let i = 0; i < size; i++) {
-             if (this.tempShipmentTypeFilters[i].name.toUpperCase().match(searchInput.toUpperCase())) {
+             if (this.tempShipmentTypeFilters[i].name.toUpperCase().includes(searchInput.toUpperCase())) {
                  this.ShipmentTypeFilters.push(this.tempShipmentTypeFilters[i]);
              }
          }
