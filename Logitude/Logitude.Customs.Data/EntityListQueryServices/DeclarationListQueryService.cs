@@ -235,11 +235,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          from mypr in leftjoinCourierPendingReasonLocalName.DefaultIfEmpty()
                                                          */
 
-                                                     join qBDeclarationTaxesByTaxTypeCodeViews in context.DecTaxesByTaxTypeCodeViews on
+                                                  /*   join qBDeclarationTaxesByTaxTypeCodeViews in context.DecTaxesByTaxTypeCodeViews on
                                                     new { DeclarationId = a.Id, Tenant = a.Tenant } equals
                                                     new { DeclarationId = qBDeclarationTaxesByTaxTypeCodeViews.DeclarationId, Tenant = qBDeclarationTaxesByTaxTypeCodeViews.Tenant }
                                                     into qBDeclarationTaxesByTaxTypeCodeViewsJoin
-                                                     from MyDeclarationTaxesByTaxTypeCodeViews in qBDeclarationTaxesByTaxTypeCodeViewsJoin.DefaultIfEmpty()
+                                                     from MyDeclarationTaxesByTaxTypeCodeViews in qBDeclarationTaxesByTaxTypeCodeViewsJoin.DefaultIfEmpty()*/
 
                                                      select new DeclarationList()
                                                      {
@@ -433,10 +433,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          LoadingPortName = a.ExportLoadingPort.LocalName,
                                                          ExcludeManifest=a.ExcludeManifest,
 
-                                                         MehesFee = MyDeclarationTaxesByTaxTypeCodeViews.MehesFee,
+                                                         /*MehesFee = MyDeclarationTaxesByTaxTypeCodeViews.MehesFee,
                                                          VATReshimonFee = MyDeclarationTaxesByTaxTypeCodeViews.VATReshimonFee,
                                                          SecurityFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
-                                                         ComputerFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
+                                                         ComputerFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,*/
 
                                                      });
 
