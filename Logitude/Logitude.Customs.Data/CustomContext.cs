@@ -412,6 +412,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationConstraintMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationCounterMap());
+	
             modelBuilder.Configurations.Add(new DeclarationCourierStatusMap());
 	
             modelBuilder.Configurations.Add(new DeclarationErrorMappingMap());
@@ -2404,6 +2406,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationConstraint> DeclarationConstraints 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationCounter> DeclarationCounters 
 	 {
 	      get; set;
 	 
