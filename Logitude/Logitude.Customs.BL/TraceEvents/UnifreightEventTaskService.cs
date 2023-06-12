@@ -52,9 +52,10 @@ namespace Logitude.Customs.BL.TraceEvents
             string unifreightUserId = GetUnifreightUserId(tenant, UserId);
             try
             {
-
-                using (_AmitalContext = AmitalContext.GetContext(tenant))
+                if (mySetting.IsConnectedToUniFreight)
                 {
+                    _AmitalContext = AmitalContext.GetContext(tenant);
+
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
                     var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
@@ -63,11 +64,14 @@ namespace Logitude.Customs.BL.TraceEvents
 
 
                     EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightEventParam);
-                    string requestData = GetEventRequestDATA(myUnifreightEventParam, unifreightUserId, true);
-                    InsertEventTask4Entity(myUnifreightEventParam, unifreightUserId, myYCULTASKUpdateService, requestData);
-
                     InsertGGGQ4Entity(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, myGGGQUpdateService);
                 }
+
+                string requestData = GetEventRequestDATA(myUnifreightEventParam, unifreightUserId, true);
+                InsertEventTask4Entity(myUnifreightEventParam, unifreightUserId, tenant, requestData);
+
+
+
 
 
             }
@@ -102,8 +106,11 @@ namespace Logitude.Customs.BL.TraceEvents
             myGGGQUpdateService.Update(myGGGQPM_Packs, true);
         }
 
-        private static void InsertEventTask4Entity(UnifreightEventParam myUnifreightEventParam, string unfreightUserId, YCULTASKUpdateService myYCULTASKUpdateService, string requestData)
+        private static void InsertEventTask4Entity(UnifreightEventParam myUnifreightEventParam, string unfreightUserId, int tenant, string requestData)
         {
+
+            var mySetting = EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(tenant);
+           
 
 
             var myYCULTASKPM_Packs = new YCULTASKPM()
@@ -121,8 +128,36 @@ namespace Logitude.Customs.BL.TraceEvents
 
             };
 
-            myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-            myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
+            if (mySetting.IsConnectedToUniFreight) {
+                AmitalContext _AmitalContext = AmitalContext.GetContext(tenant);
+                var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+
+                myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
+            }
+            else
+            {
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+
+                    Tenant = tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = null,
+                    notes = "missing id",
+                    CommunicationLoggingEntityReference = null,
+                    EntityId = "missing id , UnifreightEventTaskService",
+                    UserId = unfreightUserId,
+
+                    CommunicationSubject = "IIG_TASK",
+
+                };
+                var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM_Packs);
+                amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
+
+
+
+            }
+            
         }
 
         public static string GetEventRequestDATA(

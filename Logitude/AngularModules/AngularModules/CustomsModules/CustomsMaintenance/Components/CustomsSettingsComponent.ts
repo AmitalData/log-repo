@@ -332,7 +332,7 @@ export class CustomsSettingsComponent
         logitudeWindow.Width = 1000;
         logitudeWindow.Height = 500;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "םתחול סרוויסים";//TextCodeTranslator.Translate("CommunicationLogSteps.O.Log");
+        logitudeWindow.Title = "אתחול סרוויסים";//TextCodeTranslator.Translate("CommunicationLogSteps.O.Log");
         logitudeWindow.WindowArgs = { Log: script , UseTextarea:true };
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCommunications/Components/Communications/LogFieldComponent');
     }
@@ -355,10 +355,10 @@ export class CustomsSettingsComponent
             
 
             if (new Date(this.SuppressIIGMessageFromDate) >= new Date(this.SuppressIIGMessageToDate)) {
-                this.ValidationErrorsList.push("המסרים למכס מושבתים -מתםריך חייב להיות גדול מעד תםריך");
+                this.ValidationErrorsList.push("המסרים למכס מושבתים -מתאריך חייב להיות גדול מעד תאריך");
             }
         } else if ((this.SuppressIIGMessageFromDate || this.SuppressIIGMessageToDate)) {///קיים םחד לפחות
-            this.ValidationErrorsList.push("המסרים למכס מושבתים -מתםריך חייב להיות גדול מעד תםריך");
+            this.ValidationErrorsList.push("המסרים למכס מושבתים -מתאריך חייב להיות גדול מעד תאריך");
         }
         if (this.ValidationErrorsList.length > 0) {
             return

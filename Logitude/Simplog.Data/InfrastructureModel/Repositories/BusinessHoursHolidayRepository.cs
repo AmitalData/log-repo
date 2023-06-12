@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Globalization;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -39,7 +40,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return entity;
         }
 
-        
+        public BusinessHoursHoliday GetSingleBusinessHoursHolidayByDate(int day, int month, int year, int tenant)
+        {
+            BusinessHoursHoliday entity = this.webFreightContext.BusinessHoursHolidays.Where(d => d.Day==day && d.Month==month && d.Year==year && d.Tenant == tenant).FirstOrDefault();
+            return entity;
+        }
 
         public IQueryable<BusinessHoursHoliday> GetBusinessHoursHolidaysByTenant(int tenant)
         {

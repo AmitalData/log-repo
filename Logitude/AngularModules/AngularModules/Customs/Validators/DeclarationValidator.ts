@@ -150,7 +150,7 @@ export class DeclarationValidator {
         // Levies
         for (let item of supplierInvoiceItemPM.SupplierInvoiceItemLevies) {
             if (AppTool.IsNullOrEmpty(item.TradeLevyExamptCode) && AppTool.IsNullOrEmpty(item.TradeLevyNumber)) {
-                errors.push("יש למלם קוד פטור םו זיהוי");
+                errors.push("יש למלא קוד פטור או זיהוי");
                 break;
             }
             //else if (!AppTool.IsNullOrEmpty(item.TradeLevyExamptCode) && !AppTool.IsNullOrEmpty(item.TradeLevyNumber)) {//task 36728 --mohammad
@@ -296,8 +296,12 @@ export class DeclarationValidator {
                         }
                         else {
                             //Check if ImporterName & ImporterAddrress has value
-                            if (AppTool.IsNullOrEmpty(importerName) && AppTool.IsNullOrEmpty(importerAddress)) {
-                                errorMessage = "יש להזין נתוני יבואן " + importerField + " לפני שליחה";
+                            if (!this._DeclarationPM.ShortProcedure && AppTool.IsNullOrEmpty(importerName) && AppTool.IsNullOrEmpty(importerAddress)) {
+                                 errorMessage = "יש להזין נתוני יבואן " + importerField + " לפני שליחה";
+                            }
+                            else if(this._DeclarationPM.ShortProcedure && (AppTool.IsNullOrEmpty(importerName) || AppTool.IsNullOrEmpty(importerAddress))){
+                                errorMessage = "יש להזין נתוני יצואן " + importerField + " לפני שליחה";
+
                             }
                         }
                     }
@@ -321,7 +325,7 @@ export class DeclarationValidator {
                             }
                             else {
                                 //errorMessage = "Customs.General.O.NoImporterId";
-                                errorMessage = "מספר יבואן " + importerField + " הום שדה חובה";
+                                errorMessage = "מספר יבואן " + importerField + " הוא שדה חובה";
                             }
                         }
                         break;

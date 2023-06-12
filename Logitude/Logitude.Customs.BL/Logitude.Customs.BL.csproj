@@ -894,6 +894,7 @@
     <Compile Include="EntityDataMappings\Generated\StuffingSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SubCountryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SuppInvoiceItemsAbachStatementDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SupplierInvioceExportDefaultDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvioceItemCertificatDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceDataMapping.Generated.cs">
       <SubType>Code</SubType>
@@ -1080,6 +1081,7 @@
     <Compile Include="EntityDataMappings\StuffingSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SubCountryDataMapping.cs" />
     <Compile Include="EntityDataMappings\SuppInvoiceItemsAbachStatementDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SupplierInvioceExportDefaultDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvioceItemCertificatDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceDataMapping.cs">
       <SubType>Code</SubType>
@@ -1145,16 +1147,20 @@
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\DeclarationStatusQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientItemQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomDocumentTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsCountryTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsHouseTypeTenantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\DefaultValueQueryService.cs" />
+    <Compile Include="EntityQueryServices\SupplierInvioceExportDefaultQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultValueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GovernmentProcTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InternationalSiteTenantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierInvioceExportDefaultQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\UIMessageTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VendorCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StatusCodeQueryService.Generated.cs" />
@@ -1689,6 +1695,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsHouseTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GovernmentProcTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InternationalSiteTenantUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SupplierInvioceExportDefaultUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\UIMessageTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
@@ -1698,6 +1705,7 @@
     <Compile Include="EntityUpdateServices\Generated\CountryCurrencyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DefaultTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DefaultValueUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\SupplierInvioceExportDefaultUpdateService.cs" />
     <Compile Include="EntityUpdateServices\VendorCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationFollowUpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\VendorCurrencyUpdateService.Generated.cs" />

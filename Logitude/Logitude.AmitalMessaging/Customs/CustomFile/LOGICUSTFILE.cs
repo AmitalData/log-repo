@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 using Logitude.AmitalMessaging.Customs.CustomFile.CellFile;
+using Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile;
 using System.Xml.Serialization;
 
 // 
@@ -64,6 +65,9 @@ public partial class LogitudeCustomsFile
     private string agentIdField;
 
     private string customerIdField;
+
+    private string forwarderFilesField;
+    private string flightDateField;
 
     private string transportModeIdField;
 
@@ -195,7 +199,10 @@ public partial class LogitudeCustomsFile
 
     private string referentHAWBField;
 
-    private ExportInvoice[] invoices;
+    private ExportInvoices invoicesField;
+
+    private string UNFCourierField;
+
 
     /// <remarks/>
     public string CustomFileNo
@@ -275,6 +282,30 @@ public partial class LogitudeCustomsFile
         }
     }
 
+    public string ForwarderFiles
+    {
+        get
+        {
+            return this.forwarderFilesField;
+        }
+        set
+        {
+            this.forwarderFilesField = value;
+        }
+    }
+
+
+    public string FlightDate
+    {
+        get
+        {
+            return this.flightDateField;
+        }
+        set
+        {
+            this.flightDateField = value;
+        }
+    }
     /// <remarks/>
     public string TransportModeId
     {
@@ -1131,59 +1162,109 @@ public partial class LogitudeCustomsFile
         }
     }
 
-    public ExportInvoice[] Invoices
+
+    [System.Xml.Serialization.XmlElementAttribute("Invoices")]
+
+    public ExportInvoices Invoices
     {
         get
         {
-            return this.invoices;
+            return this.invoicesField;
         }
         set
         {
-            this.invoices = value;
+            this.invoicesField = value;
+        }
+    }
+    public string UNFCourier
+    {
+        get
+        {
+            return this.UNFCourierField;
+        }
+        set
+        {
+            this.UNFCourierField = value;
         }
     }
 }
 
 
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
 public class ExportInvoice
 {
     private  bool isEmpty;
   
-    private string invoiceNumber;
+    private string numberField;
 
-    private string invoiceDate;
+    private string dateField;
 
     [XmlIgnore]
     public bool IsEmpty
     {
         get
         {
-            return InvoiceNumber == null;
+            return numberField == null;
         }
     }
 
 
-
-    public string InvoiceNumber
+    public string Number
     {
         get
         {
-            return this.InvoiceNumber;
+            return this.numberField;
         }
         set
         {
-            this.InvoiceNumber = value;
+            this.numberField = value;
         }
     }
-    public string InvoiceDate
+    public string Date
     {
         get
         {
-            return this.invoiceDate;
+            return this.dateField;
         }
         set
         {
-            this.invoiceDate = value;
+            this.dateField = value;
+        }
+    }
+
+    
+}
+
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ExportInvoices
+{
+    private ExportInvoice[] InvoiceField;
+
+    [System.Xml.Serialization.XmlElementAttribute("Invoice")]
+
+    public ExportInvoice[] Invoice
+    {
+        get
+        {
+            return this.InvoiceField;
+        }
+        set
+        {
+            this.InvoiceField = value;
         }
     }
 }
+
+

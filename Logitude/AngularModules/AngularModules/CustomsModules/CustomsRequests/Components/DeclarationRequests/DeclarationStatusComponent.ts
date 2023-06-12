@@ -19,6 +19,7 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { CargoIdentifireTypeListService } from '../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { CargoIdentifireTypePM } from '../../../../Customs/EntityPMs/CargoIdentifireTypePM';
+import { RequestConflictService, interfaceTypeCodes } from 'CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/RequestConflict.service';
 
 @Component({
     selector: 'DeclarationStatusComponent',
@@ -464,7 +465,7 @@ export class DeclarationStatusComponent
         }
     }
 
-    OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
+    async OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
         this.FillErrors();
 
         if (this.ValidationErrorsList.length > 0) {
@@ -472,6 +473,8 @@ export class DeclarationStatusComponent
         }
 
         this.CurrentSession.StartBusyIndicator("");
+
+        customSendOptionsArgs = await RequestConflictService.runInBackground(customSendOptionsArgs, SessionLocator.Tenant, this.RequestParams.CustomFileNo, interfaceTypeCodes.exportSubmit, interfaceTypeCodes.exportStorage);
 
         var currRequestParams = new DeclarationStatusRequestParams();
         currRequestParams.LoggingEnabled = true;

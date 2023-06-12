@@ -755,10 +755,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     var cardRepo = new GNDCARDRepository(GetAmitalContext(tenant));
                     var itemRepo = new GTBITEMRepository(GetAmitalContext(tenant));
 
-                    string partner = GetDefault("ISRAEL", "CIM_SIVUG_103", "NON", customerCode, tenant); // S=Supplier I=Client
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+                    string partner = defaultValueQueryService.GetDefault("ISRAEL", "CIM_SIVUG_103", "NON", customerCode, tenant); // S=Supplier I=Client
                     if (partner == "S") // If Supplier get Unifreight card
                     {
-                        customerCode = GetDefaultAccountNumber("ISRAEL", "CEX_CUS_SUP", "NON", customerCode, tenant);
+                        customerCode = defaultValueQueryService.GetDefaultAccountNumber("ISRAEL", "CEX_CUS_SUP", "NON", customerCode, tenant);
                     }
 
                     if (string.IsNullOrWhiteSpace(customerCode))
@@ -809,35 +810,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            var myGDFDATAQueryService = new GDFDATAQueryService(GetAmitalContext(tenant));
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
-        private string GetDefaultAccountNumber(string DISTRID, string DEFID, string BRANCHID, string SHORTDEFDATA, int tenant)
-        {
-            var myGDFDATAQueryService = new GDFDATAQueryService(GetAmitalContext(tenant));
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || SHORTDEFDATA == null)
-            {
-                return ("");
-            }
-
-            string accountNumber = myGDFDATAQueryService.GetCardIdByDefaultValue(DISTRID, DEFID, BRANCHID, SHORTDEFDATA);
-
-            return (accountNumber);
         }
         private CustomsPartnersItemList GetCustomsPartnersItemList(CustomsPartnersItemList item, GNDCARD card, int tenant)
         {
@@ -1570,7 +1542,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 if (setting.IsConnectedToUniFreight)
                 {
-                    string isNoIncotermCheck = GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", tenant);
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+                    string isNoIncotermCheck = defaultValueQueryService.GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", tenant);
                     if (isNoIncotermCheck == "Y")
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, false);
@@ -1625,18 +1598,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 int tenant = authToken.Tenant;
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 //CIM_GOLD_PAY CGG_MAX_AGT_PAY
-                var declarationQS = new DeclarationQueryService(customContext);
+                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
                 if (!string.IsNullOrWhiteSpace(CustomerCode))
                 {
                     ///דיפולט באינדקס לקוח "תשלום בניצול העברת זהב לקוח "
-                    CustomerDefaultGoldPay_CIM_GOLD_PAY = declarationQS.GetDefault("ISRAEL", "CIM_GOLD_PAY", "NON", CustomerCode, tenant);
+                    CustomerDefaultGoldPay_CIM_GOLD_PAY = defaultValueQueryService.GetDefault("ISRAEL", "CIM_GOLD_PAY", "NON", CustomerCode, tenant);
 
                 }
                 ///דיפולט ברמת חברה "סכום מיסים מקסימלי לתשלום במס"ב סוכן
-                CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY = declarationQS.GetDefault("ISRAEL", "CGG_MAX_AGT_PAY", "NON", "NON", tenant);
+                CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY = defaultValueQueryService.GetDefault("ISRAEL", "CGG_MAX_AGT_PAY", "NON", "NON", tenant);
 
                 //סכום שמעל יבוצע תשלום בקופה סוכן"
-                CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C = declarationQS.GetDefault("ISRAEL", "CGG_ABOVE_AGT_C", "NON", "NON", tenant);
+                CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C = defaultValueQueryService.GetDefault("ISRAEL", "CGG_ABOVE_AGT_C", "NON", "NON", tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, new {
                     CustomerDefaultGoldPay_CIM_GOLD_PAY = CustomerDefaultGoldPay_CIM_GOLD_PAY,
@@ -1666,9 +1639,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 {
                     if (declarationPaymentPM == null || declarationPaymentPM.DeclarationPaymentProtests == null || declarationPaymentPM.DeclarationPaymentProtests.Count == 0 || string.IsNullOrWhiteSpace(declarationPaymentPM.DeclarationPaymentProtests.FirstOrDefault().CustomsAgentExplanation))
                     {
-                        var declarationQS = new DeclarationQueryService(customContext);
-
-                        string customsAgentExplanationDefault = declarationQS.GetDefault("ISRAEL", "CIM_PROTEST_PAY", "NON", CustomerCode, tenant);
+                        DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+                        string customsAgentExplanationDefault = defaultValueQueryService.GetDefault("ISRAEL", "CIM_PROTEST_PAY", "NON", CustomerCode, tenant);
 
                         if (!string.IsNullOrWhiteSpace(customsAgentExplanationDefault))
                         {

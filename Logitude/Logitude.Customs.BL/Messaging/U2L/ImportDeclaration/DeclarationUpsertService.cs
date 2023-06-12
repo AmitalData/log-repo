@@ -260,6 +260,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.MarkAsChanged = true; // moran 2.6.15 - Task 13803
 
                 MyGenericResponseObj.Stage = "Mapping";
+                if (_AmitalCustomsFile.Direction == "E" && _AmitalCustomsFile.Mode != "NEW")
+                {
+                    ExportDeclarationUpdate();
+                    MyGenericResponseObj.Message = "עודכנה הצהרת יצוא";
+                    MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+                    MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+                    scope.Complete();
+                    return;
+                }
+
                 if (this._MyDeclarationPM.Consignments == null)
                 {
                     this._MyDeclarationPM.Consignments = new List<Def.EntityPMs.ConsignmentPM>();
@@ -321,6 +332,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.AgentId = _AmitalCustomsFile.AgentId;//translate?
                 string DBcustomer = this._MyDeclarationPM.CustomerId; // moran 12.7.15 - Task 14510
                 this._MyDeclarationPM.CustomerId = TranslateCustomer(_AmitalCustomsFile.CustomerId);//check translate
+                this._MyDeclarationPM.ForwarderFiles = _AmitalCustomsFile.ForwarderFiles;
                 if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId) && _AmitalCustomsFile.Direction != "E")
                 {
                         MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
@@ -712,9 +724,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                 }
                 _MyDeclarationPM.Tenant = ResolvedTenant();
-                if(string.IsNullOrWhiteSpace(this._MyDeclarationPM.Direction) || this._MyDeclarationPM.Direction == "I")_MyDeclarationPM.IsConnectedToUnifreight = true; //Yuval Chalup 19.10.2016 TASK-22516
 
-                _MyDeclarationPM.IsConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight;
+                _MyDeclarationPM.IsConnectedToUnifreight = true;
 
                 //_MyDeclarationPM.ProcedureCurrentCode = ResolveProcedureCurrentCode();//remarked by eitan h 24/9/15 16527
                 if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ProcedureCurrentCode)) _MyDeclarationPM.ProcedureCurrentCode = _AmitalCustomsFile.ProcedureCurrentCode;
@@ -736,8 +747,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
 
                 //  UpdateTrucker();
-
-                ExportDeclarationInsert();
+                AppendLogLine("ExportDeclarationInsert");
+              ExportDeclarationInsert();
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                 {
                     if (_MyDeclarationPM.Direction == "E")
@@ -975,10 +986,47 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 ForiegnKeyCheck.Check<DeclarationExportRecipient>(x, tenant);
             });
         }
+        private void ExportDeclarationUpdate()
+        {
+            if (_AmitalCustomsFile.Direction == "E" && _AmitalCustomsFile.Mode != "NEW")
+            {
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.FlightDate))
+                {
+                    this._MyDeclarationPM.ExportFlightDate = DateTime.Parse(_AmitalCustomsFile.FlightDate);
+                    _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                }
+                else
+                {
+                    if(this._MyDeclarationPM.ExportFlightDate != null)
+                    {
+                        this._MyDeclarationPM.ExportFlightDate = null;
+                        _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                AppendLogLine("try to update FlightDate " + _AmitalCustomsFile.FlightDate + " to DeclarationPM.Id: " + _MyDeclarationPM.Id);
+                try
+                {
+                    declarationUpdateService.Update(_MyDeclarationPM, true);
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                    AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+                catch (Exception e)
+                {
+                    AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+            }
+        }
 
         private void ExportDeclarationInsert()
         {
-            if (_AmitalCustomsFile.Direction == "E")
+            AppendLogLine("in ExportDeclarationInsert");
+            if (_AmitalCustomsFile.Direction == "E" && _AmitalCustomsFile.Mode == "NEW")
             {
 
                 ///DeclarationPM
@@ -991,6 +1039,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     this._MyDeclarationPM.ExportFile = _AmitalCustomsFile.ImporterFile;
                 }
 
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.UNFCourier) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.UNFCourier) && _AmitalCustomsFile.UNFCourier.ToLower() != "true"))
+                {
+                    _MyDeclarationPM.UNFCourier = false;
+                }
+                else
+                {
+                    _MyDeclarationPM.UNFCourier = true;
+
+                }
 
                 //DeclarationExportRecipients
                 if (this._MyDeclarationPM.DeclarationExportRecipients.Count == 0)
@@ -1056,21 +1113,31 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
         private void CreateSupplierInvoices()
         {
-            var firstExits = this._MyDeclarationPM.SupplierInvoices.Count() > 0;
-            var invoicesArrayToAdd = _AmitalCustomsFile.Invoices?.Count() > 0 ? _AmitalCustomsFile.Invoices : new ExportInvoice[] { new ExportInvoice() };
+            AppendLogLine("CreateSupplierInvoices");
+          var firstExits = this._MyDeclarationPM.SupplierInvoices.Count() > 0;
+            AppendLogLine("CreateSupplierInvoices" + firstExits);
+            var invoicesArrayToAdd = _AmitalCustomsFile.Invoices?.Invoice?.Length > 0 ? _AmitalCustomsFile.Invoices?.Invoice : new ExportInvoice[] { new ExportInvoice() };
 
             Array.ForEach(invoicesArrayToAdd, (invoice) =>
             {
+                AppendLogLine("CreateSupplierInvoices" + invoice.ToString());
                 if (firstExits)
+                {
+                    AppendLogLine("CreateSupplierInvoices firstExits");
                     InitSupplierInvoice(invoice, this._MyDeclarationPM.SupplierInvoices[0]);
+
+                }
                 else
                 {
+                    AppendLogLine("CreateSupplierInvoices firstExits else");
                     var suppplierInvoice = new SupplierInvoicePM()
                     {
                         ChangeSetOp = ChangeSetOperation.Insert,
                         Tenant = ResolvedTenant()
                     };
                     InitSupplierInvoice(invoice, suppplierInvoice);
+                    AppendLogLine(" this._MyDeclarationPM.SupplierInvoices.Add(suppplierInvoice);");
+
                     this._MyDeclarationPM.SupplierInvoices.Add(suppplierInvoice);
                 }
              });
@@ -1079,17 +1146,26 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
         private void InitSupplierInvoice(ExportInvoice invocie,SupplierInvoicePM supplierInvoice)
         {
+            AppendLogLine("InitSupplierInvoice" + supplierInvoice.DeclarationId);
+            AppendLogLine("InitSupplierInvoice" + invocie?.Number);
+            AppendLogLine("InitSupplierInvoice" + invocie?.Date);
+            AppendLogLine("InitSupplierInvoice" + invocie?.IsEmpty);
 
             supplierInvoice.VendorId = _AmitalCustomsFile.VendorId;
             if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.InvoiceNumber))
             {
+                AppendLogLine("!String.IsNullOrWhiteSpace(_AmitalCustomsFile.InvoiceNumber");
+
                 supplierInvoice.InvoiceNumber = _AmitalCustomsFile.InvoiceNumber;
             }
             else
             {
+                AppendLogLine("else !String.IsNullOrWhiteSpace(_AmitalCustomsFile.InvoiceNumber");
                 if (!invocie.IsEmpty)
                 {
-                    supplierInvoice.InvoiceNumber=invocie.InvoiceNumber;
+                    AppendLogLine("!invocie.IsEmpty");
+                    supplierInvoice.InvoiceNumber=invocie.Number;
+                    supplierInvoice.IssueDate = !String.IsNullOrWhiteSpace( invocie?.Date)? DateTime.Parse(invocie?.Date): supplierInvoice.IssueDate;
 
                 }
             }

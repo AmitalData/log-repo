@@ -84,6 +84,8 @@ namespace WebFreight.Web.WcfApi
                             entityPM.ChangeSetOp = ChangeSetOperation.Update;
                             entityPM.Id = defaultValue.Id;
                         }
+                        entityPM.BranchId = entityPM.BranchId == "NON" ? null : entityPM.BranchId;
+                        entityPM.CardId = entityPM.CardId == "NON" ? null : entityPM.CardId;
 
                         defaultValueUpdateService.Update(entityPM, true);
                         if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)

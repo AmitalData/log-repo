@@ -224,12 +224,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
                 EventContextTagModel myUpdateEventContextTagModel = null;
+                IDisposable disposableToken = null;
 
-                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.Id, requestParams.Tenant);
-                using (var disposableToken =
-                ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update")
-                    )
-                {
+                try
+                {                    
+                    string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.Id, requestParams.Tenant);
+                    disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update");                                    
 
                     foreach (var additionalInformation in customResponse.Response.AdditionalInformation)
                     {
@@ -521,7 +521,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, _MyDeclarationPM.Tenant);
                             if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
                             {
-                                string defValue = GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, _MyDeclarationPM.Tenant);
+                                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_MyDeclarationPM.Tenant);
+
+                                string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, _MyDeclarationPM.Tenant);
                                 if (defValue == "Y")
                                 {
                                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_MyDeclarationPM.Tenant);
@@ -805,6 +807,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                 }
+                catch (ProcessLockException processLockException)
+                {
+                    LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                    throw;
+                }
+                finally
+                {
+                    if (disposableToken != null)
+                        disposableToken.Dispose();
+                }
 
 
                 if (_MyDeclarationPM.IsCourierDeclaration && (_MyDeclarationPM.AmendmentStatus == "6" || _MyDeclarationPM.AmendmentStatus == "3") && _MyDeclarationPM.HatraDate == null)
@@ -873,12 +885,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
                 declarationNumber = customResponse.Response.Declaration.ID.Value;
+                IDisposable disposableToken = null;
 
-                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
-                using (var disposableToken =
-                     ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update")
-                    )
-                {
+                try
+                {                    
+                    string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
+                    disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update");                    
+                
                     if (!(customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99"))
                     {
                         this._MyDeclarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
@@ -995,7 +1008,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
 
                 }
-
+                catch (ProcessLockException processLockException)
+                {
+                    LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                    throw;
+                }
+                finally
+                {
+                    if (disposableToken != null)
+                        disposableToken.Dispose();
+                }
             }
         }
 
@@ -1074,23 +1096,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return serializer.Deserialize(stringReader) as UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseStatus;
             }
         }
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+      
 
         public UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration CastDeclaration(UnifreightIIG.Common.MessageLib.ID.Declaration declaration)
         {

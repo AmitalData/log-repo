@@ -154,10 +154,12 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {
                 DolarValue = myDeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD.GetValueOrDefault());
             }
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(myDeclarationPM.Tenant);
+
 
             string defBaldarCodeValue =
                 //GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _DeclarationPM.Tenant);
-                GetDefault("ISRAEL", "CGO_MMN_FORW", "NON", "NON", myDeclarationPM.Tenant);
+                defaultValueQueryService.GetDefault("ISRAEL", "CGO_MMN_FORW", "NON", "NON", myDeclarationPM.Tenant);
             var rep = new CustomsAirlineRepository(myCourierMasterPM.Tenant);
             var customsAirline = rep.GetSingle(myCourierMasterPM.AirlineId, myCourierMasterPM.Tenant);
 
@@ -258,22 +260,6 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 courierHawbMamanModel.FltDate = myCourierMasterPM.DepartureDate.GetValueOrDefault().Date;// fltdate is not nullable ??
             }
             return courierHawbMamanModel;
-        }
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(tenant));
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            var myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
         }
 
         public static DateTime GetOpenBaldarAwbDate(DeclarationPM _DeclarationPM)

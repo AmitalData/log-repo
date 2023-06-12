@@ -31,7 +31,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var clientsPoaUpdateService = new ClientsPoaUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
             string authorizedId = setting?.CustomsAgentId;
-            string authorizerId = customResponse.GeneralDetails.externalID.Value.ToString();
+            string authorizerId = null;
+            if (customResponse.GeneralDetails?.externalID != null) {
+                authorizerId = customResponse.GeneralDetails.externalID.Value.ToString();
+            }
 
             this.MyResponseData = new ClientSearchByIDResponseData();
             this.MyResponseData.Succeeded = true;

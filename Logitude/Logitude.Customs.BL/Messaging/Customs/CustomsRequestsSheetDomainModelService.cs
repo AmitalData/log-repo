@@ -409,7 +409,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 }
                 if (CustomsSettingQueryService.GetLogitudeCustomsSettingsM(requestParams.Tenant).IsConnectedToUniFreight &&   !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
                 {
-                    string defValue = GDFDATAQueryService.GetDefault(_Tenant, "ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_Tenant);
+
+                    string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON", _Tenant);
                     decimal defaultAmount = 0;
                     var boolvar = (decimal.TryParse(defValue, out defaultAmount));
                     if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))

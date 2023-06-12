@@ -55,7 +55,7 @@ namespace Unifreight.BL.EntityUpdateServices
         {
             int i = Convert.ToInt32(dirtyDeclarationPMId.Replace("-", ""));
             i = 50000000 + i;
-            int fileNoLen = Convert.ToInt32(GetFileNoLen_Cache(tenant));
+            int fileNoLen = 15;// Convert.ToInt32(GetFileNoLen_Cache(tenant));
             if (i.ToString().Length > fileNoLen)
             {
                 return i - 110_009_120;

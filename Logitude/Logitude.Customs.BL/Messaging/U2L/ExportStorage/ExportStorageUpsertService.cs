@@ -156,6 +156,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                         Tenant = ResolvedTenant(),
                         StorageNo = _UnifreigntExportStorage.StorageNo,
                         OpenDate = AmitalConvertUtil.GetUnifreightFormatedDate(_UnifreigntExportStorage.OpenDate, "UnifreigntExportStorage.OpenDate") ?? DateTime.Now,
+                        ExportFileNo = _UnifreigntExportStorage.ExportFileNo,
                     };
                 }
                 else
@@ -175,9 +176,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 }
 
 
-                // _DBExportStoragePM.DeclarationId = _UnifreigntExportStorage.DeclarationId;
+               // _DBExportStoragePM.DeclarationId = _UnifreigntExportStorage.DeclarationId;
 
-                _DBExportStoragePM.ExportFileNo = _UnifreigntExportStorage.ExportFileNo;
                 _DBExportStoragePM.ExportDealIdentification = _UnifreigntExportStorage.General.ExportDealIdentification;
                 
                 _DBExportStoragePM.ExporterID = TranslateClient(_DBExportStoragePM.Tenant, _UnifreigntExportStorage.General.ExporterNumber);

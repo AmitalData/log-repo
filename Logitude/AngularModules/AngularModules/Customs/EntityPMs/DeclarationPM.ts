@@ -1509,6 +1509,26 @@ export class DeclarationPM {
     public set ExcludeManifest(newValue: boolean) { if (this.excludeManifest != newValue) { this.excludeManifest = newValue; this.MarkAsDirty("ExcludeManifest"); } }
        
 	 
+    private forwarderFiles: string;
+    public get ForwarderFiles() { return this.forwarderFiles; }
+    public set ForwarderFiles(newValue: string) { if (this.forwarderFiles != newValue) { this.forwarderFiles = newValue; this.MarkAsDirty("ForwarderFiles"); } }
+       
+	 
+    private shortProcedure: boolean;
+    public get ShortProcedure() { return this.shortProcedure; }
+    public set ShortProcedure(newValue: boolean) { if (this.shortProcedure != newValue) { this.shortProcedure = newValue; this.MarkAsDirty("ShortProcedure"); } }
+       
+	 
+    private exportFlightDate: Date;
+    public get ExportFlightDate() { return this.exportFlightDate; }
+    public set ExportFlightDate(newValue: Date) { if (this.exportFlightDate != newValue) { this.exportFlightDate = newValue; this.MarkAsDirty("ExportFlightDate"); } }
+       
+	 
+    private uNFCourier: boolean;
+    public get UNFCourier() { return this.uNFCourier; }
+    public set UNFCourier(newValue: boolean) { if (this.uNFCourier != newValue) { this.uNFCourier = newValue; this.MarkAsDirty("UNFCourier"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

@@ -38,6 +38,7 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.BL;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.Security;
+using Unifreight.BL.EntityUpdateServices;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -711,6 +712,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         if (isInvoiceItemInsertNullClassification || IsProcedureCurrentCodeChanged)
                         {
                             string IntegratorCode = null;
+                            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(entityPM.Tenant);
+
+
                             if (_CourierMasterPM == null)
                             {
                                 var myCourierMasterQueryService = new CourierMasterQueryService(context);
@@ -728,21 +732,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                             if (entityPM.InvoiceAmountInUSD <= 75)
                             {
-                                if (!String.IsNullOrWhiteSpace(shopId)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITM", "NON", shopId, entityPM.Tenant);
-                                if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITM", "NON", IntegratorCode, entityPM.Tenant);
-                                if (String.IsNullOrWhiteSpace(defaultClassificationCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITEM", "NON", "NON", entityPM.Tenant);
+                                if (!String.IsNullOrWhiteSpace(shopId)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_LOWVAL_ITM", "NON", shopId, entityPM.Tenant);
+                                if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_LOWVAL_ITM", "NON", IntegratorCode, entityPM.Tenant);
+                                if (String.IsNullOrWhiteSpace(defaultClassificationCode)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_LOWVAL_ITEM", "NON", "NON", entityPM.Tenant);
                             }
                             else if (entityPM.InvoiceAmountInUSD > 75 && entityPM.InvoiceAmountInUSD <= 500)
                             {
-                                if (!String.IsNullOrWhiteSpace(shopId)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL2_ITM", "NON", shopId, entityPM.Tenant);
-                                if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL2_ITM", "NON", IntegratorCode, entityPM.Tenant);
-                                if (String.IsNullOrWhiteSpace(defaultClassificationCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL2_ITEM", "NON", "NON", entityPM.Tenant);
+                                if (!String.IsNullOrWhiteSpace(shopId)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_VAL2_ITM", "NON", shopId, entityPM.Tenant);
+                                if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_VAL2_ITM", "NON", IntegratorCode, entityPM.Tenant);
+                                if (String.IsNullOrWhiteSpace(defaultClassificationCode)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_VAL2_ITEM", "NON", "NON", entityPM.Tenant);
                             }
                             else if (entityPM.InvoiceAmountInUSD > 500 && entityPM.InvoiceAmountInUSD <= 1000)
                             {
-                                if (!String.IsNullOrWhiteSpace(shopId)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL3_ITM", "NON", shopId, entityPM.Tenant);
-                                if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL3_ITM", "NON", IntegratorCode, entityPM.Tenant);
-                                if (String.IsNullOrWhiteSpace(defaultClassificationCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL3_ITEM", "NON", "NON", entityPM.Tenant);
+                                if (!String.IsNullOrWhiteSpace(shopId)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_VAL3_ITM", "NON", shopId, entityPM.Tenant);
+                                if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_VAL3_ITM", "NON", IntegratorCode, entityPM.Tenant);
+                                if (String.IsNullOrWhiteSpace(defaultClassificationCode)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_VAL3_ITEM", "NON", "NON", entityPM.Tenant);
                             }
                             if (!string.IsNullOrWhiteSpace(defaultClassificationCode))
                             {
@@ -1162,7 +1166,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     SubmitChanges();
                     isSubmitChanges = true;
                 }
-                if (!this._DeclarationPM.IsAmendment == true)
+
+                bool isAmendOrConverted = this._DeclarationPM.IsAmendment == true || this._DeclarationPM.IsConvertedDeclaration == true;
+
+                if (!isAmendOrConverted)
                 {
                     if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                     {
@@ -1268,23 +1275,29 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             isSubmitChanges = true;
                         }
 
-                        List<SupplierInvioceItemCertificat> supplierInvioceItemCertificats = supplierInvioceItemCertificatRepository.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = invoiceItem.DeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber });
+                        bool isAmendOrConverted = this._DeclarationPM.IsAmendment == true || this._DeclarationPM.IsConvertedDeclaration == true;
 
-
-                        int index = 0;
-                        foreach (SupplierInvioceItemCertificat item in
-                            //supplierInvioceItemCertificats)  // itzik :why not to sort it ???
-                            supplierInvioceItemCertificats.OrderBy(rec => rec.ItemCertificateCounterKey))
+                        if (!isAmendOrConverted)
                         {
-                            index += 1;
-                            if (item.SequenceNumeric == index) continue;
-                            dirty1 = true;
-                            item.SequenceNumeric = index;
-                            supplierInvioceItemCertificatRepository.Update(item);
-                            SupplierInvioceItemCertificatPM itemPM = (from a in invoiceItem.SupplierInvioceItemCertificats
-                                                                      where a.DeclarationId == item.DeclarationId && a.InvoiceCounterKey == item.InvoiceCounterKey && a.LineNumber == item.LineNumber
-                                                                      select a).FirstOrDefault();
-                            if (itemPM != null) itemPM.SequenceNumeric = item.SequenceNumeric;
+
+                            List<SupplierInvioceItemCertificat> supplierInvioceItemCertificats = supplierInvioceItemCertificatRepository.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = invoiceItem.DeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber });
+
+
+                            int index = 0;
+                            foreach (SupplierInvioceItemCertificat item in
+                                //supplierInvioceItemCertificats)  // itzik :why not to sort it ???
+                                supplierInvioceItemCertificats.OrderBy(rec => rec.ItemCertificateCounterKey))
+                            {
+                                index += 1;
+                                if (item.SequenceNumeric == index) continue;
+                                dirty1 = true;
+                                item.SequenceNumeric = index;
+                                supplierInvioceItemCertificatRepository.Update(item);
+                                SupplierInvioceItemCertificatPM itemPM = (from a in invoiceItem.SupplierInvioceItemCertificats
+                                                                          where a.DeclarationId == item.DeclarationId && a.InvoiceCounterKey == item.InvoiceCounterKey && a.LineNumber == item.LineNumber
+                                                                          select a).FirstOrDefault();
+                                if (itemPM != null) itemPM.SequenceNumeric = item.SequenceNumeric;
+                            }
                         }
                     }
 
@@ -1519,12 +1532,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             try
             {
-                using (_AmitalContext = AmitalContext.GetContext(entityPM.Tenant))
+                AmitalContext _AmitalContext = null;
+                bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
+                if (isConnectedToUnifreight)
                 {
+                     _AmitalContext = AmitalContext.GetContext(entityPM.Tenant);
                     var myCCUQUELOCKQueryService = new Unifreight.BL.EntityQueryServices.CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new Unifreight.BL.EntityUpdateServices.CCUQUELOCKUpdateService(_AmitalContext);
                     var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
-                    var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
 
                     Unifreight.BL.EntityPMs.UGenerated.CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myDeclarationPM.CustomFileNo, false);
                     if (myCCUQUELOCK == null)
@@ -1542,21 +1557,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     transmission mytransmission = GetTransmission(entityPM.GTBITEMsToUpdate, "AMITAL", "GTBITEMs from logitude");
                     var xmltransmission = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
                     requestData = xmltransmission;
-                    var myYCULTASKPM = new Unifreight.BL.EntityPMs.YCULTASKPM()
-                    {
-                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                        STATUS = "W",
-                        REQUESTDATA = requestData,
-                        ENTNAME = "CFIFILEM",
-                        PRIMARYNUM = myDeclarationPM.CustomFileNo,
-                        PRIORITY = Unifreight.BL.EntityPMs.YCULTASKPM.calcPriority("L2U"),
-                        TYPE = "LI2U",
-                        USRCODE = unifreightUser,
-                        ARCHIVE = "F"
-                    };
 
-                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
                     var myGGGQPM = new Unifreight.BL.EntityPMs.GGGQPM()
                     {
@@ -1578,6 +1579,45 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     myGGGQUpdateService.Update(myGGGQPM, true);
                 }
+
+                var myYCULTASKPM = new Unifreight.BL.EntityPMs.YCULTASKPM()
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    STATUS = "W",
+                    REQUESTDATA = requestData,
+                    ENTNAME = "CFIFILEM",
+                    PRIMARYNUM = myDeclarationPM.CustomFileNo,
+                    PRIORITY = Unifreight.BL.EntityPMs.YCULTASKPM.calcPriority("L2U"),
+                    TYPE = "LI2U",
+                    USRCODE = unifreightUser,
+                    ARCHIVE = "F"
+                };
+                if (isConnectedToUnifreight)
+                {
+                    var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
+                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+                }
+                else {
+
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                    {
+
+                        Tenant = entityPM.Tenant,
+                        objectTableName = "Customs.Declaration",
+                        EventCode = null,
+                        notes = "",
+                        CommunicationLoggingEntityReference = null,
+                        EntityId = entityPM.DeclarationId,
+                        UserId = unifreightUser,
+
+                        CommunicationSubject = "IIG_TASK",
+
+                    };
+                    var amitalInsertToQueueService = new AmitalInsertToQueueService<Unifreight.BL.EntityPMs.YCULTASKPM>(myYCULTASKPM);
+                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
+                }
+
                 if (scope != null)
                 {
                     scope.Complete();
@@ -1751,22 +1791,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-        private string GetAmitalDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            var myGDFDATAQueryService = new Unifreight.BL.EntityQueryServices.GDFDATAQueryService(_AmitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+      
 
 
       

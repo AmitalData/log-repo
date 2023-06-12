@@ -43,9 +43,9 @@ namespace WebFreight.Web.CustomModel.DomainServices
                 {
                     customContext = CustomContext.GetContext(tenant);
                 }
+                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
 
-                var declarationQS = new DeclarationQueryService(customContext);
-                bank = declarationQS.GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", CustomerCode, tenant);
+                bank = defaultValueQueryService.GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", CustomerCode, tenant);
             }
             return bank;
         }
@@ -57,9 +57,10 @@ namespace WebFreight.Web.CustomModel.DomainServices
             {
                 if (declarationPaymentPM == null || declarationPaymentPM.DeclarationPaymentProtests == null || declarationPaymentPM.DeclarationPaymentProtests.Count == 0 || string.IsNullOrWhiteSpace(declarationPaymentPM.DeclarationPaymentProtests.FirstOrDefault().CustomsAgentExplanation))
                 {
-                    var declarationQS = new DeclarationQueryService(customContext);
 
-                    string customsAgentExplanationDefault = declarationQS.GetDefault("ISRAEL", "CIM_PROTEST_PAY", "NON", CustomerCode, tenant);
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+
+                    string customsAgentExplanationDefault = defaultValueQueryService.GetDefault("ISRAEL", "CIM_PROTEST_PAY", "NON", CustomerCode, tenant);
 
                     if (!string.IsNullOrWhiteSpace(customsAgentExplanationDefault))
                     {

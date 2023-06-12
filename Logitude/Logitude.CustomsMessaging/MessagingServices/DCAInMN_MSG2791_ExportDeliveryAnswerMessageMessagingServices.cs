@@ -1,9 +1,13 @@
-﻿using Logitude.CustomsMessaging.Common.RequestParams;
+﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,16 +35,20 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(MN_MSG2791_ExportDeliveryAnswerMessage customsResponse)
         {
-            var tableName = "Customs.Declaration";
-            //ResolveTenant() ==CustomsAgentToTenant(_CustomResponse.NoticeToClient.customsAgent);
+            ExportStoragePM entity = new ExportStorageQueryService(CustomContext.GetContext(0)).GetByCargoKeys(
+                customsResponse.CargoIdentifier.cargoIdentifierKey1,
+                customsResponse.CargoIdentifier.cargoIdentifierKey2,
+                customsResponse.CargoIdentifier.cargoIdentifierKey3,
+                customsResponse.CargoIdentifier.cargoIdentifierType);
 
             var myGenericRequestParams = new GenericRequestParams()
             {
-                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName(tableName),
-                //LoggingEntityId = customsResponse.ResponseContentHeader.ApplicationID.ToString(),
-                //RequestName = "Acceptance of IMport dec # " + customsResponse.ResponseContentHeader.ApplicationID.ToString(),
-
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingEntityId = entity.DeclarationId,
+                LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage"),
+                LoggingEntityId2 = entity.Id,                
             };
+            
             return myGenericRequestParams;
         }
 

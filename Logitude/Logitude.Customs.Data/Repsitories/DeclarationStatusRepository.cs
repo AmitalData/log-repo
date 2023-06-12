@@ -14,8 +14,25 @@ namespace Logitude.Customs.Data.Repsitories
 {
    public partial class DeclarationStatusRepository:IRepository<DeclarationStatus>
    {
-        
-		public List<DeclarationStatus> GetMulti(EntityKeyFields entityKeys)
+        public List<DeclarationStatus> GetByDeclarationIdAndTenant(int tenant, string declarationId)
+        {
+            return (from a in context.DeclarationStatuses
+                    where a.DeclarationId == declarationId && a.Tenant == tenant
+                    select a).ToList();
+        }
+        public List<string> GetIdsByDeclarationIdAndTenant(int tenant, string declarationId)
+        {
+            return (from a in context.DeclarationStatuses
+                    where a.DeclarationId == declarationId && a.Tenant == tenant
+                    select a.DeclarationId).ToList();
+        }
+        public void DeleteByIdAndTenant(string decId,int tenant)
+        {
+            (context as DbContextBase)
+                .DeleteWhere<DeclarationStatus>(rec => rec.DeclarationId == decId && rec.Tenant == tenant);
+        }
+
+        public List<DeclarationStatus> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();

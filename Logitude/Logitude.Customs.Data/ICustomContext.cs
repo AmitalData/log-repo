@@ -189,6 +189,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DeclarationCasualDetails> DeclarationCasualDetailses { get; }
 		 IDbSet<DeclarationConsAcceptance> DeclarationConsAcceptances { get; }
 		 IDbSet<DeclarationConstraint> DeclarationConstraints { get; }
+		 IDbSet<DeclarationCounter> DeclarationCounters { get; }
 		 IDbSet<DeclarationCourierStatus> DeclarationCourierStatuses { get; }
 		 IDbSet<DeclarationErrorMapping> DeclarationErrorMappings { get; }
 		 IDbSet<DeclarationExportRecipient> DeclarationExportRecipients { get; }
@@ -359,6 +360,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<StuffingSiteType> StuffingSiteTypes { get; }
 		 IDbSet<SubCountry> SubCountries { get; }
 		 IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatement { get; }
+		 IDbSet<SupplierInvioceExportDefault> SupplierInvioceExportDefaults { get; }
 		 IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats { get; }
 		 IDbSet<SupplierInvoice> SupplierInvoices { get; }
 		 IDbSet<SupplierInvoiceFreightAmount> SupplierInvoiceFreightAmounts { get; }

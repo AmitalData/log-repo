@@ -456,6 +456,22 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExportCloseAmendStatusName  { get; set; }
        [DataMember]
        public bool ExcludeManifest  { get; set; }
+       [DataMember]
+       public string ForwarderFiles  { get; set; }
+       [DataMember]
+       public bool ShortProcedure  { get; set; }
+       [DataMember]
+       public DateTime? ExportFlightDate  { get; set; }
+       [DataMember]
+       public bool UNFCourier  { get; set; }
+       [DataMember]
+       public decimal? MehesFee  { get; set; }
+       [DataMember]
+       public decimal? VATReshimonFee  { get; set; }
+       [DataMember]
+       public decimal? SecurityFee  { get; set; }
+       [DataMember]
+       public decimal? ComputerFee  { get; set; }
    }
 
 }

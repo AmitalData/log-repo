@@ -1067,8 +1067,26 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
     Type: string = null;
     EditImporter() {
+
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
+
+        if(this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty)
+        {
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+            const unsub = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.OpenImporterDetailsComponent();
+            unsub.unsubscribe();
+
+            }); 
+        }
+
+        else
+            this.OpenImporterDetailsComponent();
+       
+    }
+
+    OpenImporterDetailsComponent(){
+
         this.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
@@ -1091,6 +1109,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
+
     }
 
     public FeatureLocatorEXPORTDECLARATIONPSCREEN = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN")
@@ -1660,10 +1679,14 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
-                if (objectField)
+                var isExporterInShortProc = objectField && objectField.Code == "ExporterImporterCode" && this.EntityPM.ShortProcedure;
+                
+                if (objectField && !isExporterInShortProc){
                     this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Declaration', true);
+                }
+                    
             });
-        });
+        }); 
 
 
 

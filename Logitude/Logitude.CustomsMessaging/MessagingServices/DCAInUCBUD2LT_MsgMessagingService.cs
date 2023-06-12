@@ -397,11 +397,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 else
                 {
-                declarationPM = decQS.GetSingleByCustomFileNo(this._DocumentsFilingPM.ExternalEntityReference, _DocumentsFilingPM.Tenant);
+                    declarationPM = decQS.GetSingleByCustomFileNo(this._DocumentsFilingPM.ExternalEntityReference, _DocumentsFilingPM.Tenant);
 
                 }
 
-                if (declarationPM ==null )
+                if (declarationPM == null)
                 {
                     LogitudeSettings.HandleLogMe("declarationPM ==null" + logData, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("declarationPM ==null");
@@ -416,8 +416,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     Debug.WriteLine("Declaration has already been payed");
                     return;
                 }
-                
-                if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
+
+                if (/*CourierENV() */ declarationPM.IsCourierDeclaration || declarationPM.UNFCourier)
                 {
                     Debug.WriteLine("CourierENV");
 
@@ -509,29 +509,34 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }
                 }
 
-
-
                 Debug.WriteLine("CreateCRS");
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
+                IDisposable disposableToken = null;
 
-
-                string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
-                using (var disposableToken =
-                    //ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5117ResponseService.Update")
-                    ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key, "UCBUD2LT.CRS", true)
-                    )
+                try
                 {
+                    string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
+                    disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key, "UCBUD2LT.CRS", true);                    
+                
                     var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
                     string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId, _DocumentsFilingPM, declarationPM.Id);
                     LogitudeSettings.HandleLogMe(crs + " " + logData, false, "CreateUD2LTService.OK", stopLogAt);
 
                 }
-
+                 catch (ProcessLockException processLockException)
+                {
+                    LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                    throw;
+                }
+                finally
+                {
+                    if (disposableToken != null)
+                       disposableToken.Dispose();
+                }
             }
             catch (Exception E)
             {
-
                 LogitudeSettings.HandleLogMe(E.ToString() + E.StackTrace+ logData, true, "CreateUD2LTService", stopLogAt);
                 throw;
             }
@@ -539,10 +544,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
 
             }
-
         }
-
-       
 
     
         private bool CheckIsSendByDocType(string logData)

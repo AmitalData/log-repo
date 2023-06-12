@@ -3129,7 +3129,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
                 case "Customs.CourierPendingReason": {
                     logWindow.Width = 500;
-                    logWindow.Height = 450;
+                    logWindow.Height = 520;
                     break;
                 }
                 case "BankAccount": {

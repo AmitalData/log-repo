@@ -5987,6 +5987,98 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string forwarderFiles ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForwarderFiles  
+	   {
+	    
+	     get
+		{
+		   return forwarderFiles;
+		 }
+		 set
+		 {
+		   if(forwarderFiles != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwarderFiles",OldValue=forwarderFiles,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   forwarderFiles=value;
+		   }
+			
+		 }
+	   }
+	  private bool shortProcedure ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ShortProcedure  
+	   {
+	    
+	     get
+		{
+		   return shortProcedure;
+		 }
+		 set
+		 {
+		   if(shortProcedure != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShortProcedure",OldValue=shortProcedure,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   shortProcedure=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? exportFlightDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? ExportFlightDate  
+	   {
+	    
+	     get
+		{
+		   return exportFlightDate;
+		 }
+		 set
+		 {
+		   if(exportFlightDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportFlightDate",OldValue=exportFlightDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   exportFlightDate=value;
+		   }
+			
+		 }
+	   }
+	  private bool uNFCourier ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool UNFCourier  
+	   {
+	    
+	     get
+		{
+		   return uNFCourier;
+		 }
+		 set
+		 {
+		   if(uNFCourier != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UNFCourier",OldValue=uNFCourier,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   uNFCourier=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

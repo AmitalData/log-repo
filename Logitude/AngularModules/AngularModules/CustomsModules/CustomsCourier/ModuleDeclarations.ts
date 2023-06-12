@@ -21,6 +21,7 @@ import { AutonomyKeywordComponent } from './Components/AutonomyKeyword/AutonomyK
 //import { VirtualScrollNGScroll } from './Components/CourierWorkspaces/VirtualScrollNGScroll';
 //import { CourierWorksheetNGTComponent } from './Components/CourierWorkspaces/CourierWorksheetNGTComponent';
 import { CourierWorksheetNGComponent } from './Components/CourierWorkSheet/CourierWorksheetNGComponent';
+import { CourierWorksheetFromExcelComponent } from './Components/CourierWorkSheet/CourierWorksheetFromExcelComponent';
 import { CourierWorksheetNGListTemplate } from '../CustomsListTemplates/Components/CourierWorksheetNGListTemplate';
 import { BulkFeedPendingComponent } from './Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent';
 import { DeclarationPendingsBulkFeedingComponent } from './Components/CourierPendingReason/DeclarationPendingsBulkFeedingComponent';
@@ -60,6 +61,7 @@ export const Components =
         //VirtualScrollNGScroll,
         //CourierWorksheetNGTComponent,
         CourierWorksheetNGComponent,
+        CourierWorksheetFromExcelComponent,
         CourierWorksheetNGListTemplate,
         CourierDeclarationFiltersMenuComponent,
         SharedManifestComponent,
@@ -105,6 +107,7 @@ export class ModuleDeclarations {
             case "CourierWorksheetNGComponent": { myResult = CourierWorksheetNGComponent; break; }
             case "CourierWorksheetNGListTemplate": { myResult = CourierWorksheetNGListTemplate; break; }
             case "CourierDeclarationFiltersMenuComponent": { myResult = CourierDeclarationFiltersMenuComponent; break; }
+            case "CourierWorksheetFromExcelComponent": { myResult = CourierWorksheetFromExcelComponent; break; }
 
             case "SharedManifestComponent": { myResult = SharedManifestComponent; break; }
             case "PrioritizeFlightRequestsComponent": { myResult = PrioritizeFlightRequestsComponent; break; }

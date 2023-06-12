@@ -510,6 +510,17 @@ export class MaintenanceComponent {
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             });
         }
+
+        this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "CSM";
+            item.Icon = "Table"
+            item.Code = "DOCR";
+            item.TranslatedName ="ברירות מחדל OCR - יצוא"
+            item.ObjectTableName = "Customs.Client";
+            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        });
         if (window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0] != null) {
             this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequiredField", 0).subscribe((response: any) => {
                 if (FeatureLocator.HasFeaturePermession("Customs.CustomsRequiredField", "CSTMREQFIELDMTC")) {
@@ -780,6 +791,7 @@ export class MaintenanceComponent {
     }
 
     ItemClicked(item: MaintenanceMenuItem) {
+        
         if (item) {
             switch (item.Code) {
                 case "DFES": {
@@ -1274,7 +1286,6 @@ export class MaintenanceComponent {
                 }
                 case "EXPR": {
                     var logitudeWindow = new LogitudeWindow();
-                    debugger;
                     logitudeWindow.Title = TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ExportRequiredFields");
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 525;
@@ -1591,6 +1602,21 @@ export class MaintenanceComponent {
                                     service.SendRecallMessageToServer(true);
                                 });
                             }
+                        });
+                        break;
+                    }
+
+
+                case "DOCR":
+                    {
+                        this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceExportDefault", 0).subscribe((response: any) => {
+                            var windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvioceExportDefault.O.OCRDefaults");
+                            var logWindow = new LogitudeWindow();
+                            logWindow.Width = 800;
+                            logWindow.Height = 500;
+                            logWindow.Title = windowTitle;
+                            logWindow.IsShowCloseButton = true;
+                            logWindow.Show('./Common/Components/Maintenance/OcrDefaultsSettingsComponent');
                         });
                         break;
                     }

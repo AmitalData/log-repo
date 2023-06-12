@@ -875,7 +875,7 @@ export class CustomsDocumentsComponent
     confirmCheckOrginalDocWindow() {
         var myConfirmWindow = new ConfirmWindow();
         myConfirmWindow.Width = 400;
-        myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CheckOrginalDoc") || 'הםם לסמן מסמך מקורי');
+        myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CheckOrginalDoc") || 'האם לסמן מסמך מקורי');
 
         return new Promise<boolean>((resolve, reject) =>
             myConfirmWindow.WindowClosed.subscribe(event =>
@@ -889,7 +889,7 @@ export class CustomsDocumentsComponent
         if (documnetUpload.length === 0) {
 
             const msg: MessageWindow = new MessageWindow();
-            msg.Show('םין מסמכים לשליחה למכס');
+            msg.Show('אין מסמכים לשליחה למכס');
             await new Promise<void>(resolve => msg.WindowClosed.subscribe(() => resolve()));
             return;
         }
@@ -901,7 +901,7 @@ export class CustomsDocumentsComponent
 
         if (documnetUpload.length !== this.CustomsDocumentsTicketViewModels.filter(x => !AppTool.IsNullOrEmpty(x.DocumentsFilingId) && AppTool.IsNullOrEmpty(x.CustomsDocId)).length) {
             const msg: MessageWindow = new MessageWindow();
-            msg.Show(TextCodeTranslator.Translate("Customs.Declaration.O.HaveMandatory") || 'יש מסמכים עם חוסר בנתוני Metadata ולכן מסמכים םילו לם יעלו למכס');
+            msg.Show(TextCodeTranslator.Translate("Customs.Declaration.O.HaveMandatory") || 'יש מסמכים עם חוסר בנתוני Metadata ולכן מסמכים אילו לא יעלו למכס');
             await new Promise<void>(resolve => msg.WindowClosed.subscribe(() => resolve()));
         }
 

@@ -316,6 +316,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\CargoSeal\DeclarationCargoSealTabComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Certificate\NewCertificateGoodsItemsSelectionComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
+    <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationPendingsGeneralComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
     <Content Include="CustomsModules\CustomsExportStorage\components\edit\ExportStorageGeneralTabComponent\ExportStorageGeneralTabComponent.html" />
@@ -500,6 +501,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleProviders.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Certificate\NewCertificateGoodsItemsSelectionComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationPendingsGeneralComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.ts" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ExportDeclarationComponent.html" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\SupplierInvoiceItem\ExporterInvoiceItemComponent.ts" />
@@ -1710,6 +1712,7 @@
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAutonomyKeywordExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\DecCargoSplitConExtendedPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedPMs\SupplierInvioceExportDefaultExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\DeclarationExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\PendingByKeywordWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\ReferantExceptionExtendedPMService.ts" />
@@ -3774,6 +3777,8 @@
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\LocalSettings\LocalSettingsComponent.html" />
     <Content Include="Common\Components\Maintenance\Measurement\MeasurementGeneralComponent.html" />
     <Content Include="Common\Components\Maintenance\RatesHistoryComponent.html" />
+
+    <Content Include="Common\Components\Maintenance\OcrDefaultsSettingsComponent.html" />
     <Content Include="Common\Components\Maintenance\RatesMainTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\SystemCurrenciesComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemDefaults\SystemDefaultsComponent.html" />
@@ -6882,6 +6887,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\LocalSettings\LocalSettingsComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\Measurement\MeasurementGeneralComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\RatesHistoryComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\Maintenance\OcrDefaultsSettingsComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\RatesMainTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\SystemCurrenciesComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemDefaults\SystemDefaultsComponent.ts" />

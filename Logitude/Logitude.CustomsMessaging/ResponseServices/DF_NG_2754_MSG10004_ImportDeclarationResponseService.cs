@@ -305,7 +305,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (requestParams.InterfaceTypeCode == "2755")
             {
-                AmitalInsertToQueueService.insertToQueue(this._MyDeclarationPM);
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+
+                    Tenant = _MyDeclarationPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = null,
+                    notes = "",
+                    CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                    EntityId = _MyDeclarationPM.Id,
+                    UserId = _MyDeclarationPM.CreatedByUserId,
+
+                    CommunicationSubject = "עדכון תיק מכס",
+
+                };
+                Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE logistictFile = AmitalInsertToQueueEzer.setLogistictFile(_MyDeclarationPM);
+                var amitalInsertToQueueService = new AmitalInsertToQueueService<Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE>(logistictFile);
+                amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "UpdateExportCustomsFile");
 
 
                 this._IsSubmitDeclarationResponse = true;
@@ -919,11 +935,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (courierMaster != null)
                     {
-                        var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                        var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
-                        string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON", _MyDeclarationPM.Tenant);
+                        DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_MyDeclarationPM.Tenant);
 
-                        bool isCollectActive = def.DEFDATA == "Y";
+
+                        var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
+                        var def = defaultValueQueryService.GetDefault("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, _MyDeclarationPM.Tenant);
+                        string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON", _MyDeclarationPM.Tenant);
+
+                        bool isCollectActive = def == "Y";
 
                         
                         if (declarationPendingPM_900 == null)
@@ -1365,8 +1384,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private DateTime CheckIfBlockTime(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM)
         {
-            var declarationQS = new DeclarationQueryService(declarationPaymentPM.Tenant);
-            string timesCompany = declarationQS.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", declarationPaymentPM.Tenant);
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(declarationPaymentPM.Tenant);
+
+            string timesCompany = defaultValueQueryService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", declarationPaymentPM.Tenant);
             TimeSpan toTimeCurrent = new TimeSpan();
             TimeSpan toTime2Current = new TimeSpan();
             TimeSpan toTime = new TimeSpan();
@@ -1386,7 +1406,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
             }
-            string timesCustomer = declarationQS.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", declarationPM.CustomerCode, declarationPaymentPM.Tenant);
+            string timesCustomer = defaultValueQueryService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", declarationPM.CustomerCode, declarationPaymentPM.Tenant);
 
             if (timesCustomer != null && timesCustomer != "")
             {
@@ -2623,23 +2643,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
 
 
 

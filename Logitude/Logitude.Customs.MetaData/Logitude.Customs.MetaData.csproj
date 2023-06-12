@@ -107,8 +107,15 @@
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePrio2.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
     <None Include="DBOthers\Views\RequestSheetInQueueMesView.dxml" />
+    <None Include="DBOthers\Views\DecTaxesByTaxTypeCodeViews.dxml" />
     <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
+    <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
+    <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS900.sxml" />
+    <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS904.sxml" />
+    <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS902.sxml" />
+    <None Include="DBScripts\Post\202305241701_JobDeleteOldLocks.sxml" />
+    <None Include="DBScripts\Post\202304060845_SetDeclarationToShortProcedure.sxml" />
     <None Include="DBScripts\Post\202303211232_AddCOURIERPENDINGREASONS907.sxml" />
     <None Include="DBScripts\Post\20230125_AddCourierPendingReasons905.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS906.sxml" />
@@ -126,7 +133,7 @@
     <None Include="DBScripts\Post\202211101140_UpdateInterfaceTenantDefSendTime.sxml" />
     <None Include="DBScripts\Post\20221207_UpdateCustomBookTypeId.sxml" />
     <None Include="DBScripts\Post\20221124_AddAmendmentRequestNumberToLastCounter.sxml" />
-    <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS904 .sxml" />
+    <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS901 .sxml" />
     <None Include="DBScripts\Post\202108011330_AddPhysicalCheckSearchResultTypes.sxml" />
     <None Include="DBScripts\Post\202111101021_SetCargoDescription.sxml" />
     <None Include="DBScripts\Post\202107071341_SetDeclarationDeclarationTypeCode.sxml" />
@@ -368,6 +375,7 @@
     <None Include="DBTables\DeclarationCasualDetails.dxml" />
     <None Include="DBTables\DeclarationConsAcceptance.dxml" />
     <None Include="DBTables\DeclarationConstraint.dxml" />
+    <None Include="DBTables\DeclarationCounter.dxml" />
     <None Include="DBTables\DeclarationCourierStatus.dxml" />
     <None Include="DBTables\DeclarationErrorMapping.dxml" />
     <None Include="DBTables\DeclarationExportRecipient.dxml" />
@@ -596,6 +604,7 @@
     <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
     <None Include="EntityFiles\CustomsCountryTenant.lxml" />
     <None Include="EntityFiles\CustomsHouseTypeTenant.lxml" />
+    <None Include="EntityFiles\DeclarationCounter.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\DefaultType.lxml" />
     <None Include="EntityFiles\DefaultValue.lxml" />
@@ -647,6 +656,7 @@
     <None Include="EntityFiles\CustomerIdentificationType.lxml" />
     <None Include="EntityFiles\CargoType.lxml" />
     <None Include="EntityFiles\DeliveryType.lxml" />
+    <None Include="EntityFiles\SupplierInvioceExportDefault.lxml" />
     <None Include="EntityFiles\SupplierPartyType.lxml" />
     <None Include="EntityFiles\ExportDeliveryDocumentMessage.lxml" />
     <None Include="EntityFiles\SecurityClearenceTypeCode.lxml" />

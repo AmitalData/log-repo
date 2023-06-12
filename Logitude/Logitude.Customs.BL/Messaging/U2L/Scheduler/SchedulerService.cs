@@ -726,7 +726,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
         private void SendDeclarationPrintRequest()
         {
             string user = this.MyCommunicationsParams.LoggingUserId;
-            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+            int tennat = ResolvedTenant();
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(tennat);
+            ICustomContext dbContext = CustomContext.GetContext(tennat);
+            DeclarationRepository declarationRepository = new DeclarationRepository(dbContext);
 
             DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams = new DF_NG_8302_Web03_DeclarationPrintRequestParams()
             {
@@ -746,6 +749,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 var declarationNumber = _LogitudeScheduler.Param1;
                 requestParams.DeclarationNumber = new List<string>();
                 requestParams.DeclarationNumber.Add(declarationNumber);
+                var id = declarationRepository.GetIdByDeclarationNumber(declarationNumber, tennat);
+                requestParams.LoggingEntityId=id;
             }
 
             MyGenericResponseObj.ApplicationId =

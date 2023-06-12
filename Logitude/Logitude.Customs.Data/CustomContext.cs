@@ -412,6 +412,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationConstraintMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationCounterMap());
+	
             modelBuilder.Configurations.Add(new DeclarationCourierStatusMap());
 	
             modelBuilder.Configurations.Add(new DeclarationErrorMappingMap());
@@ -751,6 +753,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new SubCountryMap());
 	
             modelBuilder.Configurations.Add(new SuppInvoiceItemsAbachStatementMap());
+	
+            modelBuilder.Configurations.Add(new SupplierInvioceExportDefaultMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvioceItemCertificatMap());
 	
@@ -2407,6 +2411,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<DeclarationCounter> DeclarationCounters 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<DeclarationCourierStatus> DeclarationCourierStatuses 
 	 {
 	      get; set;
@@ -3422,6 +3432,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatement 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupplierInvioceExportDefault> SupplierInvioceExportDefaults 
 	 {
 	      get; set;
 	 

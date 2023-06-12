@@ -15,7 +15,11 @@ namespace Logitude.Customs.Data
         public IDbSet<Card> Cards { get; set; }
 
         public IDbSet<DecCourierStatusesView> DecCourierStatusesViews { get; set; }
+
         public IDbSet<RequestSheetInQueueMesView> RequestSheetInQueueMesViews { get; set; }
+
+        public IDbSet<DecTaxesByTaxTypeCodeView> DecTaxesByTaxTypeCodeViews { get; set; }
+
          
 
     }
@@ -24,7 +28,10 @@ namespace Logitude.Customs.Data
         
         IDbSet<Card> Cards { get; set; }
         IDbSet<DecCourierStatusesView> DecCourierStatusesViews { get; set; }
+
         IDbSet<RequestSheetInQueueMesView> RequestSheetInQueueMesViews { get; set; }
+
+        IDbSet<DecTaxesByTaxTypeCodeView> DecTaxesByTaxTypeCodeViews { get; set; }
 
 
 

@@ -407,6 +407,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if (entityPM.Direction == "E")
                 {
+                    if (!string.IsNullOrEmpty(entityPM.ProcedureCurrentCode))
+                    {
+                        GovernmentProcedureTypeQueryService governmentProcedureTypeQueryService = new GovernmentProcedureTypeQueryService(entityPM.Tenant);
+                        GovernmentProcedureTypePM governmentProcedureType = governmentProcedureTypeQueryService.GetSingle(entityPM.ProcedureCurrentCode, false, true);
+                        if (governmentProcedureType != null)
+                        {
+                            entityPM.ShortProcedure = governmentProcedureType.ShortProcedure;
+                        }
+                    }
+                  
+
                     foreach(var con in entityPM.Consignments)
                     {
                         if(con.ConsignmentType == "E")
@@ -445,7 +456,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (entityPM.MarkAsChanged && entityPM.ChangeSetOp == ChangeSetOperation.Update && !string.IsNullOrEmpty(this.EntityChangeFieldXml))
                 {
                     DateTime stopLogAt = new DateTime(2025, 06, 01);
-                    LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating: " + " CustomFileno : " + this.EntityPM.CustomFileNo + " = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
+                    LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(this.EntityChangeFieldXml);
                     foreach (XmlNode xmlnode in doc?.DocumentElement)
@@ -468,7 +479,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 var nFromDoubleQuote = nSubStrined.IndexOf("\"");
                                 NewValue = nSubStrined.Substring(0, nFromDoubleQuote);
                             }
-                            if (OldValue != NewValue && !change.Contains("CreatedByUserId"))
+                            if (OldValue != NewValue && !change.Contains("CreatedByUserId") && !change.Contains("IsChanged"))
                             {
                                 entityPM.IsChanged = true;
                                 break;

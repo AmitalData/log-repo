@@ -175,6 +175,7 @@
     <Compile Include="EntityKeys\DeclarationCargoSplitKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCasualDetailsKeys.cs" />
     <Compile Include="EntityKeys\DeclarationConsAcceptanceKeys.cs" />
+    <Compile Include="EntityKeys\DeclarationCounterKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCourierStatusKeys.cs" />
     <Compile Include="EntityKeys\DeclarationExportRecipientKeys.cs" />
     <Compile Include="EntityKeys\DeclarationFollowUpKeys.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="EntityKeys\StorageStatusTableKeys.cs" />
     <Compile Include="EntityKeys\StuffingSiteTypeKeys.cs" />
     <Compile Include="EntityKeys\SuppInvoiceItemsAbachStatementKeys.cs" />
+    <Compile Include="EntityKeys\SupplierInvioceExportDefaultKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceItemsPriceKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoicePaymentKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceUCRKeys.cs" />
@@ -337,6 +339,7 @@
     <Compile Include="EntityListQueryServices\DeclarationCargoSplitListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCasualDetailsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationConsAcceptanceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DeclarationCounterListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCourierStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationExportRecipientListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationFollowUpListQueryService.cs" />
@@ -435,6 +438,7 @@
     <Compile Include="EntityListQueryServices\Generated\DeclarationCargoSplitListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCasualDetailsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationConsAcceptanceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DeclarationCounterListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCourierStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationExportRecipientListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationFollowUpListQueryService.Generated.cs" />
@@ -508,6 +512,7 @@
     <Compile Include="EntityListQueryServices\Generated\StorageStatusTableListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StuffingSiteTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SuppInvoiceItemsAbachStatementListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SupplierInvioceExportDefaultListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsPriceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoicePaymentListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceUCRListQueryService.Generated.cs" />
@@ -571,6 +576,7 @@
     <Compile Include="EntityListQueryServices\StorageStatusTableListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StuffingSiteTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SuppInvoiceItemsAbachStatementListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SupplierInvioceExportDefaultListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceItemsPriceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoicePaymentListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceUCRListQueryService.cs" />
@@ -591,10 +597,12 @@
     <Compile Include="EntityLists\Generated\CustomDocumentTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsCountryTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsHouseTypeTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DeclarationCounterList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VendorCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\DeclarationReferantDataList.cs" />
@@ -824,6 +832,7 @@
     <Compile Include="EntityMapping\DeclarationCargoSplitMap.cs" />
     <Compile Include="EntityMapping\DeclarationCasualDetailsMap.cs" />
     <Compile Include="EntityMapping\DeclarationConsAcceptanceMap.cs" />
+    <Compile Include="EntityMapping\DeclarationCounterMap.cs" />
     <Compile Include="EntityMapping\DeclarationCourierStatusMap.cs" />
     <Compile Include="EntityMapping\DeclarationExportRecipientMap.cs" />
     <Compile Include="EntityMapping\DeclarationFollowUpMap.cs" />
@@ -899,6 +908,7 @@
     <Compile Include="EntityMapping\StorageStatusTableMap.cs" />
     <Compile Include="EntityMapping\StuffingSiteTypeMap.cs" />
     <Compile Include="EntityMapping\SuppInvoiceItemsAbachStatementMap.cs" />
+    <Compile Include="EntityMapping\SupplierInvioceExportDefaultMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceItemsPriceMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoicePaymentMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceUCRMap.cs" />
@@ -986,6 +996,7 @@
     <Compile Include="EntityPOCOs\DeclarationCargoSplit.cs" />
     <Compile Include="EntityPOCOs\DeclarationCasualDetails.cs" />
     <Compile Include="EntityPOCOs\DeclarationConsAcceptance.cs" />
+    <Compile Include="EntityPOCOs\DeclarationCounter.cs" />
     <Compile Include="EntityPOCOs\DeclarationCourierStatus.cs" />
     <Compile Include="EntityPOCOs\DeclarationExportRecipient.cs" />
     <Compile Include="EntityPOCOs\DeclarationFollowUp.cs" />
@@ -1062,6 +1073,7 @@
     <Compile Include="EntityPOCOs\StorageStatusTable.cs" />
     <Compile Include="EntityPOCOs\StuffingSiteType.cs" />
     <Compile Include="EntityPOCOs\SuppInvoiceItemsAbachStatement.cs" />
+    <Compile Include="EntityPOCOs\SupplierInvioceExportDefault.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoiceItemsPrice.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoicePayment.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoiceUCR.cs" />
@@ -1149,6 +1161,7 @@
     <Compile Include="Repsitories\DeclarationCargoSplitRepository.cs" />
     <Compile Include="Repsitories\DeclarationCasualDetailsRepository.cs" />
     <Compile Include="Repsitories\DeclarationConsAcceptanceRepository.cs" />
+    <Compile Include="Repsitories\DeclarationCounterRepository.cs" />
     <Compile Include="Repsitories\DeclarationCourierStatusRepository.cs" />
     <Compile Include="Repsitories\DeclarationExportRecipientRepository.cs" />
     <Compile Include="Repsitories\DeclarationFollowUpRepository.cs" />
@@ -1247,6 +1260,7 @@
     <Compile Include="Repsitories\Generated\DeclarationCargoSplitRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCasualDetailsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationConsAcceptanceRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DeclarationCounterRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCourierStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationExportRecipientRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationFollowUpRepository.Generated.cs" />
@@ -1321,6 +1335,7 @@
     <Compile Include="Repsitories\Generated\StorageStatusTableRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StuffingSiteTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SuppInvoiceItemsAbachStatementRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SupplierInvioceExportDefaultRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoiceItemsPriceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoicePaymentRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoiceUCRRepository.Generated.cs" />
@@ -1384,6 +1399,7 @@
     <Compile Include="Repsitories\StorageStatusTableRepository.cs" />
     <Compile Include="Repsitories\StuffingSiteTypeRepository.cs" />
     <Compile Include="Repsitories\SuppInvoiceItemsAbachStatementRepository.cs" />
+    <Compile Include="Repsitories\SupplierInvioceExportDefaultRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceItemsPriceRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoicePaymentRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceUCRRepository.cs" />

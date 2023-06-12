@@ -63,10 +63,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
 
                     string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
-                    //using (disposableToken = ProcessLockUtil.Instance.InsertKey(key, "2470ResponseService.Update"))
+                    //using (disposableToken = ProcessLockUtil.Instance.InsertKey(key, "DeclarationNumber"))
                     disposableToken =
-                        ///ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "2470ResponseService.Update");
-                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "2470ResponseService.Update");
+                        ///ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "DeclarationNumber");
+                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber");
                 }
                 {
 
@@ -166,7 +166,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, requestParams.Tenant);
                                     if (!String.IsNullOrWhiteSpace(myCard.Code))
                                     {
-                                        defValue = GetDefault("ISRAEL", "CGO_COURAWB_CLS", "NON", myCard.Code, requestParams.Tenant);
+                                        DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(requestParams.Tenant);
+
+                                        defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_COURAWB_CLS", "NON", myCard.Code, requestParams.Tenant);
                                     }
                                 }
                                 if (defValue == "R" || String.IsNullOrWhiteSpace(defValue))
@@ -280,23 +282,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+    
 
         private void Send2470ToMaman(DeclarationPM declarationPM, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
         {

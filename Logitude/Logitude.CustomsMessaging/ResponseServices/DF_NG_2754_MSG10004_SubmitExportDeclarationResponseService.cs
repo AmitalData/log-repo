@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.TraceEvents;
 using UnifreightIIG.Common.SubmitExportDeclarationRequestServiceReference;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -111,46 +112,51 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var myQueryService = new DeclarationQueryService(context);
                     var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                     DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
-
-                    this._MyDefaultResponseData = new INF_MSG_GenericResponseData();
-                    this._MyDefaultResponseData.ApplicationID = requestParams.AppicationId;
-                    this._MyDefaultResponseData.Succeeded = true;
-                    this._MyDefaultResponseData.UserMessage = customResponse.ResponseContentHeader.Remark;
-                    this._MyDefaultResponseData.HasException = false;
-
                     this._MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
-                    //Create “DFP” Event + UNF Status
-                    EventContextTagModel myInsertEventContextTagModel = new EventContextTagModel()
-                    {
-                        CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_2754_MSG10004_SubmitDeclarationFuturePayment,
-                        EventCode = "DFP",
-                        EventRemarks = "Declaration Future Payment ",
-                    };
-                    this._MyDeclarationPM.CurrentContextTag = myInsertEventContextTagModel;
 
-                    //Update ErrosXml field
-                    var declarationException = new UnifreightIIG.Common.ExportDeclarationServiceReference.Exception();
-                    declarationException.ExeptionDescription = customResponse.ResponseContentHeader.Remark;
-                    this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AddDeclarationExceptionExport(this._MyDeclarationPM.ErrosXml, "Warning", declarationException);
-                    
-                    //Update Status- Future Payment(In case of sending DeclarationStatus message will fail)
-                    this._MyDeclarationPM.DeclarationStatusTypeCode = "10";
-                    this._MyDeclarationPM.IsSubmitDeclaration = true;
-                    
-                    if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
+                    string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.DeclarationNumber, requestParams.Tenant);
+                    using (IDisposable disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber"))
                     {
-                        _MyDeclarationPM.UserNotes = "LoadTest";
-                    }
-                    this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                        this._MyDefaultResponseData = new INF_MSG_GenericResponseData();
+                        this._MyDefaultResponseData.ApplicationID = requestParams.AppicationId;
+                        this._MyDefaultResponseData.Succeeded = true;
+                        this._MyDefaultResponseData.UserMessage = customResponse.ResponseContentHeader.Remark;
+                        this._MyDefaultResponseData.HasException = false;
+
+                        //Create “DFP” Event + UNF Status
+                        EventContextTagModel myInsertEventContextTagModel = new EventContextTagModel()
+                        {
+                            CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_2754_MSG10004_SubmitDeclarationFuturePayment,
+                            EventCode = "DFP",
+                            EventRemarks = "Declaration Future Payment ",
+                        };
+                        this._MyDeclarationPM.CurrentContextTag = myInsertEventContextTagModel;
+
+                        //Update ErrosXml field
+                        var declarationException = new UnifreightIIG.Common.ExportDeclarationServiceReference.Exception();
+                        declarationException.ExeptionDescription = customResponse.ResponseContentHeader.Remark;
+                        this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AddDeclarationExceptionExport(this._MyDeclarationPM.ErrosXml, "Warning", declarationException);
+                    
+                        //Update Status- Future Payment(In case of sending DeclarationStatus message will fail)
+                        this._MyDeclarationPM.DeclarationStatusTypeCode = "10";
+                        this._MyDeclarationPM.IsSubmitDeclaration = true;
+                    
+                        if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
+                        {
+                            _MyDeclarationPM.UserNotes = "LoadTest";
+                        }
+                        this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
                 
 
-                    myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
+                        myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
-                    //Send interactive declaration Status request - will send from GetResponse
-                    //SendDeclarationStatus();
+                        //Send interactive declaration Status request - will send from GetResponse
+                        //SendDeclarationStatus();
 
-                    return;
+                        return;
+                    }
                 }
             }
 

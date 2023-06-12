@@ -1090,7 +1090,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         });
 
         this.columnsPending.push({
-            FieldName: 'StorageSiteStatusCode',
+            FieldName: 'StorageSiteStatusCodeText',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.StorageSiteStatusCode"),
             Styles: { width: '98px' },
@@ -1098,7 +1098,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
-            SortByName: 'StorageSiteStatusCode'
+            SortByName: 'StorageSiteStatusCodeText'
         });
 
         this.columnsPending.push({
@@ -2371,7 +2371,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
        currRequestParams.Tenant = SessionLocator.Tenant;
        currRequestParams.CourierMasterId = this.entityPM.Id;
        currRequestParams.MAWB = this.entityPM.MAWB;
-       let text = "הםם לםשר םת כל Pending שלם םושרו בטיסה";
+       let text = "האם לאשר את כל Pending שלא אושרו בטיסה";
        
        var confirmWindow = new ConfirmWindow();
        confirmWindow.Show(text);

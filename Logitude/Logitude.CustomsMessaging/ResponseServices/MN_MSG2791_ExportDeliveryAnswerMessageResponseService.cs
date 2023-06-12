@@ -74,40 +74,44 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (entity != null)
             {
-               
-                LogMessagingUtil.Instance.AppendLine("entity found, id: " + entity.Id);
-                if (customResponse.Exception != null)
+                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(entity.DeclarationNumber, requestParams.Tenant);
+                using (IDisposable disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber"))
                 {
-                    LogMessagingUtil.Instance.AppendLine("customResponse.Exception");
-                    string xml = "";
-                    foreach (var item in customResponse.Exception)
+                    LogMessagingUtil.Instance.AppendLine("entity found, id: " + entity.Id);
+
+                    if (customResponse.Exception != null)
                     {
-                        xml += XmlGenericUtil<UnifreightIIG.Common.MessageLib.ExportStorage.MN2791.Exception>.MySerializeObject(item);
-                        if(item.ExceptionLevel == 1)
+                        LogMessagingUtil.Instance.AppendLine("customResponse.Exception");
+                        string xml = "";
+                        foreach (var item in customResponse.Exception)
                         {
-                            RaiseExportStorageStatus("ER1", "ER1", entity, item.ExeptionDescription);
+                            xml += XmlGenericUtil<UnifreightIIG.Common.MessageLib.ExportStorage.MN2791.Exception>.MySerializeObject(item);
+                            if(item.ExceptionLevel == 1)
+                            {
+                                RaiseExportStorageStatus("ER1", "ER1", entity, item.ExeptionDescription);
+                            }
+                            if (item.ExceptionLevel == 2)
+                            {
+                                RaiseExportStorageStatus("ALT", "ALT", entity, item.ExeptionDescription);
+                            }
                         }
-                        if (item.ExceptionLevel == 2)
-                        {
-                            RaiseExportStorageStatus("ALT", "ALT", entity, item.ExeptionDescription);
-                        }
+                        entity.StorErrorXML = xml;
                     }
-                    entity.StorErrorXML = xml;
-                }
-                else
-                {
-                    entity.StorErrorXML = null;
-                }
+                    else
+                    {
+                        entity.StorErrorXML = null;
+                    }
 
-                entity.CustomsStatus = customResponse.CargoDetails?.CargoStatusID?.ToString();
-                entity.ChangeSetOp = ChangeSetOperation.Update;
-                var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
-                updateService.Update(entity, true);
-                MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                MyRequestSheetParam.EntityId1 = entity.DeclarationId;
-                MyRequestSheetParam.EntityId2 = entity.Id;
-                MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
+                    entity.CustomsStatus = customResponse.CargoDetails?.CargoStatusID?.ToString();
+                    entity.ChangeSetOp = ChangeSetOperation.Update;
+                    var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
+                    updateService.Update(entity, true);
+                    MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                    MyRequestSheetParam.EntityId1 = entity.DeclarationId;
+                    MyRequestSheetParam.EntityId2 = entity.Id;
+                    MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
+                }
             }
 
 
