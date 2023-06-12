@@ -18,11 +18,11 @@ export class RequestConflictService {
 
     private static async checkRequestsInProgress(tenant: number, customFileNo: string, interfaceTypeCodes: string[]): Promise<boolean> {
         const processRuns: boolean[] = await Promise.all(interfaceTypeCodes.map(async interfaceTypeCode => await this.checkRequestInProgress(interfaceTypeCode, tenant, customFileNo)))
-        return processRuns.every(x=> x);
+        return processRuns.some(x=> x);
     }
 
     public static async checkRequestInProgress(interfaceTypeCode: string, tenant: number, customFileNo: string): Promise<boolean> {
-        const response: CustomsRequestsSheetPM[] = await new CustomsRequestSheetExtendedPMService().getRequestsInProgress(interfaceTypeCode, tenant, true, '', '','','',customFileNo);
+        const response: CustomsRequestsSheetPM[] = await new CustomsRequestSheetExtendedPMService().getRequestsInProgress(interfaceTypeCode, tenant, false, '', '','','',customFileNo);
         return !!response?.length;
     }
 }
