@@ -228,6 +228,10 @@ export class DeclarationList {
 	IntegratorName: string;
 	ExportCloseAmendStatusName: string;
 	ExcludeManifest: boolean;
+	MehesFee: number;
+	VATReshimonFee: number;
+	SecurityFee: number;
+	ComputerFee: number;
 	
 }
  
