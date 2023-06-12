@@ -2247,7 +2247,9 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
 
     }
 
+    OpenCourierMaster(text:string){
 
+    }
     UpdateIsReadyForInvoice() {
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
         this.entityPM.IsReadyForInvoice = !this.entityPM.IsReadyForInvoice;
