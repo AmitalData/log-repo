@@ -24,11 +24,8 @@ namespace Logitude.Customs.Data.Repsitories
         {
             DeclarationCourierStatusKeys keys = entityKeys as DeclarationCourierStatusKeys;
             List<DeclarationPending> pendings;
-
-            //string token = HttpContext.Current.Request.Headers["Token"];
-            //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            //int tenant = authToken.Tenant;
-            int tenant = int.Parse(HttpContext.Current.Request.QueryString["tenant"]);
+            DeclarationRepository DeclarationRepository = new DeclarationRepository(context);
+            int tenant = DeclarationRepository.GetTenantByDeclarationId(keys.DeclarationId);
 
             pendings = (from a in context.DeclarationPendings
                         join cpr in context.CourierPendingReasons
