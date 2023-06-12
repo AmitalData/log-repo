@@ -19,6 +19,7 @@ using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.TraceEvents;
 using UnifreightIIG.Common.SubmitExportDeclarationRequestServiceReference;
 using Logitude.Server.Tools.Utils;
+using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -114,9 +115,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
                     this._MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
 
-                    string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.DeclarationNumber, requestParams.Tenant);
-                    using (IDisposable disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber"))
-                    {
+                    IDisposable disposableToken = null;
+                    try
+                    {                        
+                        string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.DeclarationNumber, requestParams.Tenant);
+                        disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber");
 
                         this._MyDefaultResponseData = new INF_MSG_GenericResponseData();
                         this._MyDefaultResponseData.ApplicationID = requestParams.AppicationId;
@@ -156,6 +159,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //SendDeclarationStatus();
 
                         return;
+                    }
+                    catch (ProcessLockException processLockException)
+                    {
+                        LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                        throw;
+                    }
+                    finally
+                    {
+                        if (disposableToken != null)
+                        {
+                            disposableToken.Dispose();
+                        }
                     }
                 }
             }

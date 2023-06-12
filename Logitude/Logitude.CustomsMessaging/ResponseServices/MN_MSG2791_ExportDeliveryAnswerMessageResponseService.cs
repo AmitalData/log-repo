@@ -73,10 +73,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 MyRequestSheetParam = new RequestSheetParam();
 
             if (entity != null)
-            {
-                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(entity.DeclarationNumber, requestParams.Tenant);
-                using (IDisposable disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber"))
+            {                
+                IDisposable disposableToken = null;
+                try
                 {
+                    string key = ProcessLockTableUtil.Instance.GetKey4Declaration(entity.DeclarationNumber, requestParams.Tenant);
+                    if(entity.DeclarationNumber != null)
+                        disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber");
+                    
                     LogMessagingUtil.Instance.AppendLine("entity found, id: " + entity.Id);
 
                     if (customResponse.Exception != null)
@@ -111,6 +115,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     MyRequestSheetParam.EntityId2 = entity.Id;
                     MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
+                }
+                catch (ProcessLockException processLockException)
+                {
+                    LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                    throw;
+                }
+                finally
+                {
+                    if (disposableToken != null)
+                    {
+                        disposableToken.Dispose();
+                    }
                 }
             }
 
