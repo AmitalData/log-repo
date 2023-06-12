@@ -290,10 +290,26 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+                    zeroObjectTables = GetTenantZeroObjectTables();
+                }
+            }
 
-                    zeroObjectTables = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
-                                        where a.Tenant == 0
+            return currentObjectTables.Concat(zeroObjectTables).AsQueryable<ObjectTablePM>();
+        }
+
+        private List<ObjectTablePM> GetTenantZeroObjectTables()
+        {
+            string tenantZeroObjectTablesCacheKeyName = "tenantZeroObjectTables";
+
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(tenantZeroObjectTablesCacheKeyName) != null)
+            {
+                return (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(tenantZeroObjectTablesCacheKeyName);
+            }
+
+
+            List<ObjectTablePM> zeroObjectTables = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
+                                                    where a.Tenant == 0
                                         select new ObjectTablePM()
                                         {
                                             NewButtonTextCodeCode = a.NewButtonTextCodeCode,
@@ -368,10 +384,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                             AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                         }).ToList();
-                }
-            }
 
-            return currentObjectTables.Concat(zeroObjectTables).AsQueryable<ObjectTablePM>();
+            CacheManager.CacheWrapper.Insert(tenantZeroObjectTablesCacheKeyName, zeroObjectTables, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+
+
+            return zeroObjectTables;
         }
         public static List<ObjectTablePM> GetObjectTablesWithTenantZero(int tenant)
         {
