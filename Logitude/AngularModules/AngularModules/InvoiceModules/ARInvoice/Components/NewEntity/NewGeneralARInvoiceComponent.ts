@@ -133,6 +133,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.EntityPM.BillToPartnerTypeId = null;
         this.EntityPM.StatusCode = "DR";
         this.EntityPM.StatusName = "Draft";
+        this.EntityPM.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.IssuedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -177,6 +178,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.SetUIProperties_BillToAddress();
         this.SetUIProperties_VatNumber();
         this.SetUIProperties_ExchangeRate();
+        this.SetUIProperties_PrintNotes();
         //this.SetUIProperties_General(false);
         this.SetUIProperties_DueDate();
         this.SetUIProperties_Payment();
@@ -201,6 +203,17 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, isFieldRequired);
         }
     }
+
+
+    SetUIProperties_PrintNotes() {
+        var isFieldRequired = false;
+
+
+
+        this.UIProperties.SetRequired("PrintNotes", this.ObjectTableName, isFieldRequired);
+
+    }
+
     SetUIProperties_ExchangeRate() {
         var isFieldtEnabled = false;
 
@@ -494,6 +507,13 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         if (this.EntityPM.VatNumber != newValue) {
             this.EntityPM.VatNumber = newValue;
             this.SetUIProperties_VatNumber();
+        }
+    }
+    get PrintNotes() { return this.EntityPM.PrintNotes; }
+    set PrintNotes(newValue: string) {
+        if (this.EntityPM.PrintNotes != newValue) {
+            this.EntityPM.PrintNotes = newValue;
+            this.SetUIProperties_PrintNotes();
         }
     }
 

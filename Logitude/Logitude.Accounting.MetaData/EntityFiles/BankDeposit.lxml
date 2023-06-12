@@ -2986,6 +2986,18 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;BankDeposit.O.CashDeposit&quot;"
+      DefaultText="&quot;Cash Deposit&quot;"
+      LocalDefaultText="&quot;הפקדת מזומן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.O.ChequeDeposit&quot;"
+      DefaultText="&quot;Cheque Deposit&quot;"
+      LocalDefaultText="&quot;הפקדת המחאות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;BankDeposit.O.DepositCancelChequeMSG&quot;"
       DefaultText="&quot;The deposit can’t be cancelled, at least one one cheques have been redeemed, you should cancel the external reconciliation in order to return the cheque to the cashbook&quot;"
       LocalDefaultText="&quot;לא ניתן לבטל את ההפקדה, משום שהיא מכילה לפחות המחאה אחת שנפרעה, יש לבטל את ההתאמה החיצונית ע”מ להחזיר את ההמחאה לקופה&quot;"
