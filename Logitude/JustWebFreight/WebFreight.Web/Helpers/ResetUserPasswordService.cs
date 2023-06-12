@@ -180,7 +180,7 @@ namespace WebFreight.Web.Helpers
                         result = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
                         if (!string.IsNullOrEmpty(result.HtmlTemplate))
                         {
-                            string url = GetFogotPasswordPagePath(resetPasswordParameters, "", emailBodyArgs.ReqestNumber);
+                            string url = GetFogotPasswordPagePath(resetPasswordParameters,emailBodyArgs.ReqestNumber);
                             url = AddTenantForPagePath(url, tenant);
                             result.HtmlTemplate = result.HtmlTemplate.Replace("[ResetPasswordURL]", url);
                         }
@@ -241,7 +241,16 @@ namespace WebFreight.Web.Helpers
 
             return path;
         }
+        private string GetFogotPasswordPagePath(ResetPasswordParameters resetPasswordParameters,string reqNumber)
+        {
+            string pageName = string.IsNullOrEmpty(resetPasswordParameters.PageName) ? "PasswordChangePage.aspx" : resetPasswordParameters.PageName;
+            string path = @"/" + pageName + "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
 
+            if (!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
+                path += "&tenant=" + Int32.Parse(resetPasswordParameters.BrandingTenant);
+
+            return path;
+        }
         private string AddTenantForPagePath(string pagePath, int tenant)
         {
             string path = pagePath;
