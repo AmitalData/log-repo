@@ -2333,7 +2333,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return this.repository.GetContainerizationUniqueConsignment(declarationList);
         }
-        public string GetDeclarationByDeclarationNum(string decNumber, int tenant)
+        public Declaration GetDeclarationByDeclarationNum(string decNumber, int tenant)
         {
             return repository.GetDeclarationByDeclarationNum(decNumber, tenant);
         }
