@@ -107,7 +107,7 @@
 
 
                                 </log-column>
-                                <log-column [header]="'ARPayment.F.Bank' | TextCodeTranslationPipe" [binding]="'Bank'" [width]="'80'" [Editable]="true"  [Alignment]="isLTR?'left':'right'"   >
+                                <log-column [header]="'ARPayment.F.Bank' | TextCodeTranslationPipe" [binding]="'BankId'" [width]="'80'" [Editable]="true"  [Alignment]="isLTR?'left':'right'"   >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode" text-start>
