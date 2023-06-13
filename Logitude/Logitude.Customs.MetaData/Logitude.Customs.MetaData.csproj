@@ -291,6 +291,7 @@
     <None Include="DBTables\CourierCustomStatus.dxml" />
     <None Include="DBTables\CourierDeclaration.dxml" />
     <None Include="DBTables\CourierDeclarationStatus.dxml" />
+    <None Include="DBTables\CourierHawbFromExcel.dxml" />
     <None Include="DBTables\CourierManifestStatus.dxml" />
     <None Include="DBTables\CourierMaster.dxml" />
     <None Include="DBTables\CourierPaymentStatus.dxml" />
@@ -581,6 +582,7 @@
     <None Include="EntityFiles\CountryCurrency.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
+    <None Include="EntityFiles\CourierHawbFromExcel.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />
     <None Include="EntityFiles\SignStation.lxml" />

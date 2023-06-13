@@ -39,8 +39,7 @@
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -625,15 +624,12 @@
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\UnifreightIIG.3.1803.64\lib\Net40\UnifreightIIG.Common.dll</HintPath>
-
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\UnifreightIIG.3.1803.64\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
-
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\UnifreightIIG.3.1803.64\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
-
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -1039,9 +1035,11 @@
     <Compile Include="Controllers\CustomsModel\Extended\DecCargoSplitConExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CountryCurrencyViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CourierHawbFromExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationFollowUpViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\VendorCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CountryCurrencyController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CourierHawbFromExcelController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\VendorCurrencyController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ServersNamesController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ExportDeclarationClosingDatasController.cs" />
@@ -3186,6 +3184,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierCustomStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierHawbFromExcelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierManifestStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierMasterUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierPaymentStatusUpdateClass.cs" />

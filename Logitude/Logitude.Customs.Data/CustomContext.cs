@@ -256,6 +256,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CourierDeclarationStatusMap());
 	
+            modelBuilder.Configurations.Add(new CourierHawbFromExcelMap());
+	
             modelBuilder.Configurations.Add(new CourierManifestStatusMap());
 	
             modelBuilder.Configurations.Add(new CourierMasterMap());
@@ -1914,6 +1916,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CourierDeclarationStatus> CourierDeclarationStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CourierHawbFromExcel> CourierHawbFromExcels 
 	 {
 	      get; set;
 	 
