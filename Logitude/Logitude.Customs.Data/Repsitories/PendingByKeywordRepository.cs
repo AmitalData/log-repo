@@ -30,14 +30,10 @@ namespace Logitude.Customs.Data.Repsitories
                 return new List<string>();
             }
             // split the input "keyword"
-            var splittedkeyWord = keyWord.ToLower().Replace(" ", ",");
+            var splittedkeyWord = keyWord.ToLower();
             char[] BAD_CHARS = new char[] { '!', '@', '#', '$', '%', '_', ')', '(', '-', '*', '&', '^', '~', '.', '"', ';', '\'', '\\', '/', '<', '>', '{', '}', '[', ']', '\n' };
             splittedkeyWord = string.Concat(splittedkeyWord.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
-            while (splittedkeyWord.Contains(",,"))
-            {
-                splittedkeyWord = splittedkeyWord.Replace(",,", ",");
-            }
-            List<string> keyWordSplittedIntoList = splittedkeyWord.Split(',').ToList();
+            List<string> keyWordSplittedIntoList = splittedkeyWord.Split(' ').ToList();
 
             List<string> pendingReasonCodeList = new List<string>();
             var PendingByKeywords = (from a in context.PendingByKeywords
