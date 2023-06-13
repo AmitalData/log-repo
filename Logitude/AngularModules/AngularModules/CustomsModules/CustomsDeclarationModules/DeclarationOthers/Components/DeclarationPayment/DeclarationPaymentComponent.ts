@@ -2841,6 +2841,13 @@ export class PaymentMethodModel extends BaseComponent {
 
     }
 
+    setBankis_ABOVE_MSVLK_agent(bank: CustomBankList) {
+        if (this.is_ABOVE_MSVLK_agent && !AppTool.IsNullOrEmpty(bank)) {
+            this.InternalBankId = bank.Id;
+            this.selectedBank = bank;
+        }
+    }
+
     LoadBanks() {
         this.parent.declarationWebService.GetCustomBanksForCard(this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
             let BlockAgentBankForMasabDefaultValue = "";
@@ -2888,6 +2895,9 @@ export class PaymentMethodModel extends BaseComponent {
                                                             //   GetCustomBankDefaultForCard();
                                                         }
                                                     }
+                                                    if (this.BanksList.length>0)
+                                                    this.setBankis_ABOVE_MSVLK_agent(this.BanksList.filter(x => !x.InActive && x.PayerTypeCode == "3")[0])
+                                                    
                                                 }
                                             }
                                         });
@@ -2935,6 +2945,10 @@ export class PaymentMethodModel extends BaseComponent {
                                                                 var bank: CustomBankList = agentBanks.filter(d => d.Id == this.InternalBankId)[0];
                                                                 this.SelectedBank = bank;
                                                             }
+
+                                                            if (agentBanks.length > 0)
+                                                                this.setBankis_ABOVE_MSVLK_agent(agentBanks.filter(x => !x.InActive && x.PayerTypeCode == "3")[0])
+                                                           
                                                         }
                                                     }
                                                 });
@@ -2961,6 +2975,10 @@ export class PaymentMethodModel extends BaseComponent {
                                                                             this.SelectedBank = bank;
                                                                         }
                                                                     }
+
+                                                                    if (this.BanksList.length > 0)
+                                                                        this.setBankis_ABOVE_MSVLK_agent(this.BanksList.filter(x => !x.InActive && x.PayerTypeCode == "3")[0])
+                                                                   
                                                                 }
                                                             }
                                                         }
@@ -2981,6 +2999,9 @@ export class PaymentMethodModel extends BaseComponent {
                                                                     var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
                                                                     this.SelectedBank = bank;
                                                                 }
+
+                                                                if (this.BanksList.length > 0)
+                                                                    this.setBankis_ABOVE_MSVLK_agent(this.BanksList.filter(x => !x.InActive && x.PayerTypeCode == "3")[0])
                                                             }
                                                         }
                                                     });
@@ -3005,6 +3026,9 @@ export class PaymentMethodModel extends BaseComponent {
                                                                     var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
                                                                     this.SelectedBank = bank;
                                                                 }
+
+                                                                if (this.BanksList.length > 0)
+                                                                    this.setBankis_ABOVE_MSVLK_agent(this.BanksList.filter(x => !x.InActive && x.PayerTypeCode == "3")[0])
                                                             }
                                                         }
                                                     });
@@ -3015,14 +3039,20 @@ export class PaymentMethodModel extends BaseComponent {
                                         }
                                     }
                                 }
+
+                               
+                              
                             });
                         });
             }
+       
 
         });
 
     }
 
+
+    
 
     private SendCreditToGetBank() {
         if (!AppTool.IsNullOrEmpty(this.InternalBankId)) return;
@@ -3379,9 +3409,11 @@ export class PaymentMethodModel extends BaseComponent {
                             }
                             
                             if (!this._ComboBoxSelectedBankChanged //!this.parent.IsLoadedGoldPaymentMethodes
-                                && !usingCustomBank_ImporterMasav /*&& !this._UsingDsvPayKupa*/) {
+                                //&& !usingCustomBank_ImporterMasav /*&& !this._UsingDsvPayKupa*/
+                            )
+                            {
                                 //this.parent.IsLoadedGoldPaymentMethodes = true;
-                                this.maximumAgentPaymentMethod();
+                                this.maximumAgentPaymentMethod(usingCustomBank_ImporterMasav);
                             }
 
                         }
@@ -3395,7 +3427,11 @@ export class PaymentMethodModel extends BaseComponent {
 
 
     }
-    maximumAgentPaymentMethod() {
+
+    public is_ABOVE_MSVLK_agent: boolean
+
+    //maxTaxAgentPayDefault==סכום מיסים מקסימלי לתשלום במס"ב סוכן
+    maximumAgentPaymentMethod(usingCustomBank_ImporterMasav: boolean) {
         ///old:///Feature 170339: ניצול העברת זהב - מסך הגשת תשלום
         //new://Feature 175382: ניצול העברת זהב - מסך הגשת תשלום
 
@@ -3415,6 +3451,43 @@ export class PaymentMethodModel extends BaseComponent {
             ";CustomerDefaultGoldPay_CIM_GOLD_PAY=" + this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY +
             ";CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C=" + this.parent.MyGoldPaymentDefaults.CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C
         );
+        if (usingCustomBank_ImporterMasav) {//Task 179470: תשלום במסב לקוח מעל סכום חסימה
+            if ("ABOVE_MSVLK" == this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY) {
+                if (this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {
+                    console.log('a.');
+                    console.log(`ודיפולט "תשלום בניצול העברת זהב לקוח/קופה" = "סכום מעל סכום החסימה מס"ב לקוח" וגם סכום המיסים גדול מסכום שהוזן בדיפולט "סכום מיסים מקסימלי לתשלום במס"ב סוכן") יבוצע תשלום באמצעות מס"ב לקוח`)
+
+                    this.updateDefaultPaymentMethod(
+                        "1",//מס"ב הכנסה
+                        "0" //יבואן / יצואן
+                    );
+                    this.is_ABOVE_MSVLK_agent = false;
+
+                } else {
+                    console.log('b.');
+                    console.log(`דיפולט "תשלום בניצול העברת זהב לקוח/קופה" = "סכום מעל סכום החסימה מס"ב לקוח" וגם סכום המיסים קטן שווה לסכום שהוזן בדיפולט "סכום מיסים מקסימלי לתשלום במס"ב סוכן") יבוצע תשלום באמצעות מס"ב סוכן`)
+                    this.updateDefaultPaymentMethod(
+                        "1",//מס"ב הכנסה
+                        "3" //סוכן מכס
+                    );
+
+                    this.is_ABOVE_MSVLK_agent = true;
+                    this.LoadBanks();
+
+                }
+
+
+            } else {
+                this.is_ABOVE_MSVLK_agent = false;
+                console.log('C.');
+                console.log(`דיפולט "תשלום ניצול העברת זהב לקוח/קופה" =! (שונה) "מסכום מעל סכום החסימה מס"ב לקוח" יבוצע Cתשלום באמצעות מס"ב לקוח`);
+                return;
+            }
+            return;
+        }
+        else {
+            this.is_ABOVE_MSVLK_agent = false;
+        }
         //3.1
         if (this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ALL") {
             ///console.log("אם ללקוח מוגדר הדיפולט החדש 'תשלום בניצול העברת זהב לקוח' כל סכום3.1");
