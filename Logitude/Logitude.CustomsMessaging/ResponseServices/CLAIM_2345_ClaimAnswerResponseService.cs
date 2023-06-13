@@ -110,7 +110,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (claimsRelatedEntitiy.claimEntity == 1055) 
                 {
                    var declarationQueryService = new DeclarationQueryService(context);
-                    declarationID = declarationQueryService.GetDeclarationByDeclarationNum(decOrPaymentNumber, requestParams.Tenant);
+                    declarationID = declarationQueryService.GetIdByDeclarationNumber(decOrPaymentNumber, requestParams.Tenant);
                 }
                 else if(claimsRelatedEntitiy.claimEntity == 1039)
                 {
