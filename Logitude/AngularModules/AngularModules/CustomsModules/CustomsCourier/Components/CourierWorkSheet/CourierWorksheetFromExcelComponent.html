@@ -192,7 +192,7 @@
                                                             | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ImportCourierMasterFromExcel()"
-                                                            [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.WorkSheetFromExcel'
+                                                            [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.ImporterCourierFromExcel'
                                                             | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right"
                                                             *ngIf="entityPM?.IsCancelled==true"
@@ -417,11 +417,6 @@
                                                     </div>
                                                 </td>
                                                 <td></td>
-                                                <td style="width: 120px;">
-                                                    <button class="DetailsButton"
-                                                        (click)="OpenCourierMaster('General')">{{'Customs.CourierMaster.O.CompleteDetails'
-                                                        | TextCodeTranslationPipe }}</button>
-                                                </td>
                                                 <td style="width: 50px;"></td>
                                             </tr>
                                         </table>
