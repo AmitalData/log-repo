@@ -59,7 +59,7 @@ namespace Logitude.Customs.Data.Repsitories
                         }
                         else
                         {
-                            if (r.KeywordsList.ToLower().Contains(word))
+                            if (r.KeywordsList.ToLower().Equals(word))
                             {
                                 if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords.ToLower()))
                                 {
