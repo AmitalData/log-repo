@@ -55,7 +55,7 @@ namespace Logitude.Customs.Data.Repsitories
                         {
                             if (word.Contains(r.KeywordsList.ToLower()))
                             {
-                                if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords))
+                                if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords.ToLower()))
                                 {
                                     pendingByKeyword.Add(r);
                                 }
@@ -65,7 +65,7 @@ namespace Logitude.Customs.Data.Repsitories
                         {
                             if (r.KeywordsList.ToLower().Contains(word))
                             {
-                                if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords))
+                                if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords.ToLower()))
                                 {
                                     pendingByKeyword.Add(r);
                                 }
