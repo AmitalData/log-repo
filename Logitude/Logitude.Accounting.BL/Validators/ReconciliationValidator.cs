@@ -183,24 +183,11 @@ namespace Logitude.Accounting.BL.Validators
 
         private static List<LedgerTransactionPM> GetReconciliationTransactions(ReconciliationPM myReconciliationPM, ValidationContext context)
         {
-            using (var newScope = GetTransactionScope()) /// inside IdCounter.GetNumber there is --- GetNewReadCommittedTransaction
-            {
-                IReconciliationValidatorContextDataProvider myDataProvider =
-                    context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as
-                        IReconciliationValidatorContextDataProvider;
-                var transactionsId = reconciliation.ReconciliationLines.Where(d => d.TransactionId != null)
-                    .Select(a => a.TransactionId).ToList();
+            IReconciliationValidatorContextDataProvider myDataProvider = context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as IReconciliationValidatorContextDataProvider;
+            var transactionsId = reconciliation.ReconciliationLines.Where(d => d.TransactionId != null).Select(a => a.TransactionId).ToList();
 
-                List<LedgerTransactionPM> transactionsPMs =
-                    myDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
-                return transactionsPMs;
-            }
-        }
-
-
-        private static TransactionScope GetTransactionScope()
-        {
-            return TransactionFactory.GetNewReadUncommittedTransaction();
+            List<LedgerTransactionPM> transactionsPMs = myDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
+            return transactionsPMs;
         }
 
         private static void BlockDifferentAccountsReconciliation(List<string> errorsList, List<LedgerTransactionPM> transactionsPMList)
