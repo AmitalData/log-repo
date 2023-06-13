@@ -10,9 +10,6 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using System.Web;
 //using System.Data.Entity;
 
 namespace Logitude.Customs.Data.Repsitories
@@ -24,17 +21,10 @@ namespace Logitude.Customs.Data.Repsitories
         {
             DeclarationCourierStatusKeys keys = entityKeys as DeclarationCourierStatusKeys;
             List<DeclarationPending> pendings;
+            pendings = (from a in context.DeclarationPendings.Include("CourierPendingReason")
+                           where a.DeclarationID == keys.DeclarationId
+                           select a).ToList();
 
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            int tenant = authToken.Tenant;
-
-
-            pendings = (from a in context.DeclarationPendings
-                        join cpr in context.CourierPendingReasons
-                        on a.CourierPendingReasonCode equals cpr.Code
-                        where a.DeclarationID == keys.DeclarationId && cpr.Tenant == tenant
-                        select a).ToList();
 
             return pendings;
         }
@@ -43,14 +33,10 @@ namespace Logitude.Customs.Data.Repsitories
         {
 
             List<DeclarationPending> pendings;
-            //pendings = (from a in context.DeclarationPendings.Include("CourierPendingReason")
-            //               where a.DeclarationID == declarationId
-            //               select a).ToList();
-            pendings = (from a in context.DeclarationPendings
-                        join cpr in context.CourierPendingReasons
-                        on a.CourierPendingReasonCode equals cpr.Code
-                        where a.DeclarationID == declarationId && cpr.Tenant == tenant
-                        select a).ToList();
+            pendings = (from a in context.DeclarationPendings.Include("CourierPendingReason")
+                           where a.DeclarationID == declarationId
+                           select a).ToList();
+
 
             return pendings;
         }
