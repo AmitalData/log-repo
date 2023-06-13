@@ -1237,12 +1237,12 @@ namespace Logitude.Customs.Data.Repsitories
 
 
         }
-        public string GetDeclarationByDeclarationNum(string decNumber, int tenant)
+        public Declaration GetDeclarationByDeclarationNum(string decNumber, int tenant)
         {
             var query = (from a
                         in context.Declarations
                          where a.DeclarationNumber == decNumber && a.Tenant == tenant
-                         select a.Id).FirstOrDefault();
+                         select a).FirstOrDefault();
             return query;
         }
 

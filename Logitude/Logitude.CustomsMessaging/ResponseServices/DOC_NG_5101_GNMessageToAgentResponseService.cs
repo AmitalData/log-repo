@@ -59,7 +59,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
         public void UpdateIt(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
-        { 
+        {
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myQueryService = new DeclarationQueryService(context);
 
@@ -73,6 +73,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 return;
             }
+
+            var dec = myQueryService.GetDeclarationByDeclarationNum(customResponse.MessageToAgent.RelatedEntity.entityIdKey1, requestParams.Tenant);
+            bool IsExportDeclaration = dec?.Direction == "E";
 
             LogMessagingUtil.Instance.AppendLine("Analyze Message To Agent response" + requestParams.AppicationId);
 
@@ -91,7 +94,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     notificationDefinitionCode = "5101N";
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "הודעה לסוכן";
-                    if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 11188)
+                    if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || IsExportDeclaration)
                     {
                         notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                         notificationDescription = notificationDescription + " בגין הצהרה מספר " + notificationDeclaration; //eitan h 4/3/15 task 11572
@@ -283,7 +286,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         case 29:
                             notificationDefinitionCode = "5101R";
                             assigneToNotificationTypeCode = "I";
-                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 11188)
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || IsExportDeclaration)
                             {
                                 notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                                 notificationDescription = "התכתבות בגין מסמך נדרש הצהרה מספר " + notificationDeclaration; 
@@ -296,7 +299,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         case 30:
                             notificationDefinitionCode = "5101A";
                             assigneToNotificationTypeCode = "I";
-                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 11188)
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || IsExportDeclaration)
                             {
                                 notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                                 notificationDescription = "התכתבות בגין דחיית פיצול מטען הצהרה מספר " + notificationDeclaration;
@@ -309,7 +312,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         case 31:
                             notificationDefinitionCode = "5101E";
                             assigneToNotificationTypeCode = "I";
-                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 11188)
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || IsExportDeclaration)
                             {
                                 notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                                 notificationDescription = "התכתבות בגין כופר חוקיות הצהרה מספר " + notificationDeclaration;
@@ -338,7 +341,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 notificationDescription = notificationDescription + "\n" + customResponse.MessageToAgent.msgString.Replace("00:00:00", "");
             }
 
-            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 11188 || customResponse.MessageToAgent.RelatedEntity.entityType == 1015)
+            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || IsExportDeclaration || customResponse.MessageToAgent.RelatedEntity.entityType == 1015)
             {
                 notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                 LogMessagingUtil.Instance.AppendLine("NotificationDeclaration = " + notificationDeclaration);

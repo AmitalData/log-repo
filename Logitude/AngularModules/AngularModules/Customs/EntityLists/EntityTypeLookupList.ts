@@ -13,7 +13,6 @@ export class EntityTypeLookupList {
 	LocalName: string;
 	SearchFields: string;
 	Inactive: boolean;
-	EntityType: string;
 	
 }
  
