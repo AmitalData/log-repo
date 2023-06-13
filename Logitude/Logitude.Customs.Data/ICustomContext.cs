@@ -112,6 +112,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CourierCustomStatus> CourierCustomStatuses { get; }
 		 IDbSet<CourierDeclaration> CourierDeclarations { get; }
 		 IDbSet<CourierDeclarationStatus> CourierDeclarationStatuses { get; }
+		 IDbSet<CourierHawbFromExcel> CourierHawbFromExcels { get; }
 		 IDbSet<CourierManifestStatus> CourierManifestStatuses { get; }
 		 IDbSet<CourierMaster> CourierMasters { get; }
 		 IDbSet<CourierPaymentStatus> CourierPaymentStatuses { get; }
