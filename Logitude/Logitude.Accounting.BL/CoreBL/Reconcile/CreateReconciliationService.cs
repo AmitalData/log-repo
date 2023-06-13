@@ -198,7 +198,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 ByteData = xmlFile
             });
             var queueService = new DbQueueService();
-            queueService.InitializeQueue("AccountingJournalApproveWR", tenant);
+            queueService.InitializeQueue("AccountingJournalApproveMutliThreadingWR", tenant);
             queueService.Send(new Dictionary<string, string>() { { "tenant", tenant.ToString() }, { "communicationLogId", communicationLogId } }, tenant, null, null);
         }
 
