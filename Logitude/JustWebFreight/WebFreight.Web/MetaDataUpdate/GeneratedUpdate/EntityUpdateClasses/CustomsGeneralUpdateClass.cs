@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "669b5abdbe17090fbe818939e91050c6";
+		public const string HashString = "ed122913e8fcdf4af231dbe9826ae909";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "3dbe",
+			      				    Code =  "3225",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2187,6 +2187,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOSelectOneEntityAtLeast = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.SelectOneEntityAtLeast", DefaultText = "You must select at least one claim entity to send",LocalDefaultText = @"חובה לבחור לפחות ישות תביעה אחת לשליחה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOCanotSendReceivedClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CanotSendReceivedClaim", DefaultText = "In this claim it is not possible to send, because all the claim files have been updated and received a claim file in customs",LocalDefaultText = @"בתביעה זו לא ניתן לבצע שליחה, כיוון שכל תיקי התביעה עודכנו וקיבלו תיק תביעה במכס", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOWorkSheetFromExcel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.WorkSheetFromExcel", DefaultText = "Worksheet From Excel",LocalDefaultText = @"מסך עבודה מאקסל", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
