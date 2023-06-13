@@ -462,7 +462,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     {
         if(searchInput) 
         {
-         var size =  this.InvitedCustomers.length;
+         var size =  this.tempInvitedCustomers.length;
          this.InvitedCustomers = [];
          for (let i = 0; i < size; i++) {
              if (this.tempInvitedCustomers[i].Name.toUpperCase().match(searchInput.toUpperCase())) {
