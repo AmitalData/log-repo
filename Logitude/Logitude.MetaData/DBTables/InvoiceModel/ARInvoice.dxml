@@ -850,9 +850,10 @@
   </Column>
   <Column
     Name="IsSigned"
+    OldNames="is_signed"
     Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
