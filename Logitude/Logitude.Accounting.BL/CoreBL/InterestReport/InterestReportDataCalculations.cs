@@ -165,9 +165,24 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             SetGLAccountCreditAllotmentPercentageByGLAccountId(interestReportPM);
             interestReportPM.CalCreditAllotmentCommission = (interestReportPM.GLAccountInterestCreditLimit == null ? 0 : interestReportPM.GLAccountInterestCreditLimit) * interestReportPM.CreditAllotmentPercentage * (decimal?)0.01;
             interestReportPM.CalculatedPostponedChequesCommision = GetInterestReportCalculatedPostponedChequesCommision();
+            validateInterestReportClosingBalance();
             SetInterestReportStatusDraft();
             SubmitInterestReportLinesByDate(interestReportLinesByDatePMs);
             SubmitChangesToInterestReport();
+        }
+
+        private void validateInterestReportClosingBalance() {
+            var totalInterestTransactionsLocalAmount = interestTransactionPMs.Sum(x => x.LocalAmount);
+            var totalInterestTransactionsLocalAmountWithOpenBalance = interestReportPM.OpenBalance + totalInterestTransactionsLocalAmount;
+            if (interestReportPM.CloseBalance == null) {
+                return;
+            }
+
+            if (totalInterestTransactionsLocalAmountWithOpenBalance != interestReportPM.CloseBalance) {
+                SetInterestReportStatusFailed();
+                throw new ApplicationException("Interest report open balance and total transaction details in all lines of the report doesn't match the closing " +
+                    "balance ("+ interestReportPM.OpenBalance + " "+ totalInterestTransactionsLocalAmount + ") != " + interestReportPM.CloseBalance);
+            }
         }
 
         private void SetGLAccountCreditAllotmentPercentageByGLAccountId(InterestReportPM interestReportPM)
