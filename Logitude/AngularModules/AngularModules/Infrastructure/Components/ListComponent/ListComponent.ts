@@ -1,3 +1,4 @@
+
 declare var System: any;
 declare var window: any;
 import { Component, OnInit, Type, Output, EventEmitter, ComponentRef, ViewChild, QueryList, ViewChildren, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
@@ -1205,7 +1206,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
     }
     GetQueryColumns(queryCode, userId) {
-        
         //var queryId = window.Queries.filter(x => x.Code === queryCode)[0].Id;
         this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + queryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId)
             .subscribe((response: any) => {
@@ -1779,7 +1779,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case "Customs.CustomsHouseType":
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
-                    
+                    case "Customs.CourierPendingReason":
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
                     case "Customs.ExceptionReason":
@@ -3631,7 +3631,6 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     SaveColNewChanges(Param: any) {
         var QColumns = null;
-        
         this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + Param.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId)
             .subscribe((response: any) => {
                 QColumns = response;
