@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "f5f608b3bda9f0c2c8ae0d1cd0cf6d34";
+		public const string HashString = "4a778d2353e1347bd3b02fb6d3dde26a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -103,7 +103,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  true,
-
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -3538,10 +3537,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SubTotalInLocalCurrency",
 					  						DefaultText =  "Sub Total (Local Currency)",
-					  						FullLocalDefaultText =  "סיכום ביניים בש'ח",
+					  						FullLocalDefaultText =  "סכום החשבונית לפני מעמ",
 					  						ListFieldLable =  "SubTotalInLocalCurrencyListLable",
 					  						ListLableDefaultText =  "Subtotal Local",
-					  						ListLocalDefaultText =  "סיכום ביניים בש'ח",
+					  						ListLocalDefaultText =  "סכום החשבונית לפני מעמ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
