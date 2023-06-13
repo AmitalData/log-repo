@@ -1075,7 +1075,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             if (currentDeclarationCourierStatusPM != null)
             {
                 CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
-                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(declarationPendingCode, _MyDeclarationPM.Tenant);
+                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(declarationPendingCode, false, false);
                 if (courierPendingReasonPM == null || courierPendingReasonPM.Inactive == true)
                 {
                     LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");

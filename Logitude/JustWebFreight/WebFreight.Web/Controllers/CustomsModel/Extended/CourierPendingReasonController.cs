@@ -38,7 +38,6 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.Data.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -84,7 +83,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(customContext);
-                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReasonCode, tenant);
+                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingle(courierPendingReasonCode, false, false);
 
                 //CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReasonCode, tenant);
                 courierPendingReasonPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -101,33 +100,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-        public HttpResponseMessage GetCourierPendingReasonByCodeAndTenant(string code)
-        {
-            try
-            {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.CourierPendingReason", "READ", authToken.Tenant);
-
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(MyContext);
-
-                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(code, authToken.Tenant);
-
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                return Request.CreateResponse(HttpStatusCode.OK, courierPendingReasonPM);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
     }
 }

@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string code)
         {
 		  try
             {
@@ -62,7 +62,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("Customs.CourierPendingReason", "READ", authToken.Tenant);
 	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CourierPendingReasonListQueryService courierPendingReasonQuery = new CourierPendingReasonListQueryService(MyContext);
-                CourierPendingReasonList courierPendingReasonList = courierPendingReasonQuery.GetSingle(id);
+                CourierPendingReasonList courierPendingReasonList = courierPendingReasonQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  courierPendingReasonList);

@@ -9,7 +9,6 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { CacheCourierPendingReasonService } from "../../../Customs/Services/Others/CacheCourierPendingReasonService";
 import { CourierPendingReasonListService } from '../../../Customs/Services/StandardLists/CourierPendingReasonListService';
 import { CourierPendingReasonList } from '../../../Customs/EntityLists/CourierPendingReasonList';
-import { CourierPendingReasonExtendedListService } from 'Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
 
 
 
@@ -87,8 +86,8 @@ export class DeclarationListTemplate {
                 toolTip = this._DeclarationList.CourierPendingReasonName;
             }
             else {
-                var myCourierPendingReasonListService = new CourierPendingReasonExtendedListService();
-                myCourierPendingReasonListService.getSingleFromCacheByCode(toolTip)
+                var myCourierPendingReasonListService = new CourierPendingReasonListService();
+                myCourierPendingReasonListService.getSingleFromCache(toolTip)
                     .subscribe(serviceResponse => {
                         var CourierPendingReason = serviceResponse.Result as CourierPendingReasonList;
                         toolTip = CourierPendingReason.LocalName;

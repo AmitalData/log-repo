@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public CourierPendingReasonList GetSingle(string id)
+        public CourierPendingReasonList GetSingle(string code)
         {
             IQueryable<CourierPendingReason> CourierPendingReasonQuery = (from a in context.CourierPendingReasons
-                                                       where a.Id == id
+                                                       where a.Code == code
                                                        select a);
 
              

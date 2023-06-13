@@ -37,7 +37,6 @@ import { CourierMasterService } from 'Customs/Services/Others/CourierMasterServi
 
 import { SendALLDelayFormParams } from '../../../../Customs/DataContract/RequestParams/SendALLDelayFormParams';
 import { InterfaceTenantDefinitionsWebService } from 'Customs/Services/WebServices/InterfaceTenantDefinitionsWebService';
-import { CourierPendingReasonExtendedListService } from 'Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
 
 
 @Component({
@@ -1834,12 +1833,11 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
     getCourierPendingReasonName(courierPendingReason: string) {
-        
         var toolTip = courierPendingReason;
         if (!AppTool.IsNullOrEmpty(toolTip) && toolTip.indexOf(',') < 0) {
 
-            var myCourierPendingReasonListService = new CourierPendingReasonExtendedListService();
-            myCourierPendingReasonListService.getSingleFromCacheByCode(toolTip)
+            var myCourierPendingReasonListService = new CourierPendingReasonListService();
+            myCourierPendingReasonListService.getSingleFromCache(toolTip)
                 .subscribe(serviceResponse => {
                     var CourierPendingReason = serviceResponse.Result as CourierPendingReasonList;
                     toolTip = CourierPendingReason.LocalName;

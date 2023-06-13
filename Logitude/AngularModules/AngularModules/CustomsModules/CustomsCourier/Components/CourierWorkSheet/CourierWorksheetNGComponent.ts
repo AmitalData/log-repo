@@ -42,7 +42,6 @@ import { DeclarationMamanSpecialActionListService } from '../../../../Customs/Se
 import { DeclarationMamanSpecialActionPM } from '../../../../Customs/EntityPMs/DeclarationMamanSpecialActionPM';
 import { DeclarationCourierStatusPMService } from '../../../../Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
 import { CourierWorksheetNGListTemplate } from '../../../CustomsListTemplates/Components/CourierWorksheetNGListTemplate';
-import { CourierPendingReasonExtendedListService } from 'Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
 
 
 @Component({
@@ -1523,12 +1522,11 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
 
     getCourierPendingReasonName(courierPendingReason: string) {
-        
         var toolTip = courierPendingReason;
         if (!AppTool.IsNullOrEmpty(toolTip) && toolTip.indexOf(',') < 0) {
 
-            var myCourierPendingReasonListService = new CourierPendingReasonExtendedListService();
-            myCourierPendingReasonListService.getSingleFromCacheByCode(toolTip)
+            var myCourierPendingReasonListService = new CourierPendingReasonListService();
+            myCourierPendingReasonListService.getSingleFromCache(toolTip)
                 .subscribe(serviceResponse => {
                     var CourierPendingReason = serviceResponse.Result as CourierPendingReasonList;
                     toolTip = CourierPendingReason.LocalName;
