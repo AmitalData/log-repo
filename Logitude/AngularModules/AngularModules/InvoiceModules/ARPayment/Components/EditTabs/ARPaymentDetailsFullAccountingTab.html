@@ -151,6 +151,25 @@
                                 <tr>
                                     <td style="width:360px;">
                                         <table>
+                                             <!-- PartnerTypes Filter -->
+                                            <tr  class="FormFieldRow">
+                                                <td style="width:120px; ">
+                                                    {{ 'ARInvoice.F.PartnerType' | TextCodeTranslationPipe }}
+                                                </td>
+
+                                                <td style="width:230px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                    <ComboBox [ItemsSource]="PartnerTypes"
+                                                                [Binding]="'Name'"
+                                                                [SelectedItem]="SelectedPartnerType"
+                                                                (SelectedItemChanged)="SelectedPartnerType = $event"></ComboBox>
+
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                            </tr>
                                             <!-- BillToId -->
                                             <tr class="customtrclass">
                                                 <td style="width:120px; height:25px; ">

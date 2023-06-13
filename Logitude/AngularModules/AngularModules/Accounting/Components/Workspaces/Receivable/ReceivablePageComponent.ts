@@ -28,6 +28,7 @@ import { PeriodM } from '../../../DataContracts/PeriodM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ModulesService } from '../../../Services/ModulesService';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import { ARPaymentPM } from 'Invoice/EntityPMs/ARPaymentPM';
 
 
 @Component({
@@ -208,10 +209,20 @@ export class ReceivablePageComponent {
     //#region ARPayments
     NewARPaymentMethod() {
          var FinalText = TextCodeTranslator.Translate("ARPayment.O.New");
+        if (SessionLocator.TenantPM.AccountingActivated)
+         {
+            var entity = new ARPaymentPM();
+            entity.IsFullAccounting = true;
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: "", EntityPM: entity, ObjectTableName: 'ARPayment' });
+            });
+         }
+         else
+         {
 
         // var FinalText = this.getAutoNewName();
-
-
         var logWindow = new LogitudeWindow();
         logWindow.Title = FinalText;
         logWindow.Width = 900;
@@ -223,7 +234,7 @@ export class ReceivablePageComponent {
         //        cmpRef.instance.ComponentRef = cmpRef;
         //        cmpRef.instance.Run({ EntityId: "", EntityPM: new ARPaymentPM(), ObjectTableName: 'ARPayment' });
         //    });
-
+         }
     }
     filterAgrs: ApiQueryFilters;
     private getAutoNewName() {

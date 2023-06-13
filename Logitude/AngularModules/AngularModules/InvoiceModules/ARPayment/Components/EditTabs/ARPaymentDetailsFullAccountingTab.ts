@@ -40,7 +40,9 @@ import { JournalExtendedPMService } from './../../../../Accounting/Services/Exte
 import { ReconciliationExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { AccountingEntityHelper } from './../../../../Accounting/Utilities/AccountingEntityHelper';
-
+import { PartnerTypeList } from 'Common/EntityLists/PartnerTypeList';
+import { PartnerTypeListService } from 'Common/Services/StandardLists/PartnerTypeListService';
+declare var window: any;
 
 @Component({
 
@@ -66,6 +68,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	public TransferStatusVisibilityColumn: boolean = false;
 	public EnableNegativeOffsetARPayments: boolean = false;
 	public IsEditExchangeRateVisible: boolean = false;
+	_PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
 	get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetARPayments == true && this.AccountingPaymentMethodCode == "FS" ? true : false; }
 	public isRTL: boolean = false;
 	public showLocal: boolean = false;
@@ -80,6 +83,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	public bankTransferAmount: number;
 	public InvoiceAmountCurrency: string = TextCodeTranslator.Translate("Accounting.O.ARP.InvoiceAmount") + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
 	public PaymenyAmount: number;
+	_AccountingPaymentMethodListService = new AccountingPaymentMethodListService();
 	get TextStore()
 	{
 		return TextStore;
@@ -107,6 +111,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
 		this.EntityPM = entityArgs.EntityPM;
+		this.CreateARPayment();
 		this.SetAmountCurrencyCode();
 		this.ComputeLocalAmount();
         this.SetPaymentAmount();
@@ -167,6 +172,47 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		// this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
 		this.InitializeBillToLov();
 	}
+
+	CreateARPayment() {
+        //this.EntityPM = new ARPaymentPM();
+        this.EntityPM.Tenant =  SessionLocator.TenantPM.Id;
+        this.EntityPM.StatusCode = "DR";
+        this.EntityPM.StatusName = "Draft";
+        this.EntityPM.SATTransferStatusCode = "NT";
+        this.EntityPM.SATTransferStatusName = "Not Transfered";
+        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.CreateDate = DateTool.GetCurrentDateAsUtc();
+        this.EntityPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
+        this.EntityPM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
+        this.EntityPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
+		this.EntityPM.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+		this.loadPartnerTypesFilter();
+		this.SetDefalutPaymentMethod();
+    }
+	private loadPartnerTypesFilter()
+    {
+        this.checkPartnerTypesFilterFeature();
+       // if(this.isPartnerTypesFilterEnabled)
+            this.getPartnerTypes();
+    }
+	checkPartnerTypesFilterFeature(){
+        var arpaymentOT = window.ObjectTables.filter(d => d.Name === "ARPayment")[0];
+          this.isPartnerTypesFilterEnabled =  FeatureLocator.Features.filter(f => (f.Code == "NewScreenPartnerTypes") && f.ObjectTableId == arpaymentOT.Id)[0]? true : false;
+    }
+	SetDefalutPaymentMethod() {
+		var DefaultSelectedPaymentMethodCode = "BT";
+        var filter = new ApiQueryFilters(true);
+        filter.addAdditionalFilter("Code", DefaultSelectedPaymentMethodCode, null, null, "Equal", false, false, false, "string");
+        this._AccountingPaymentMethodListService.getByFilters(filter).subscribe(e=>{
+            if(e && !e.HasError && e.Result.length > 0){
+                    this.AccountingPaymentMethodId = e.Result[0].Id;
+                    this.AccountingPaymentMethodCode = DefaultSelectedPaymentMethodCode;
+            }
+        });
+    }
+
+
     private SetChequeAmount() {
         if (this.EntityPM.ARPaymentChequeReplicas.length == 0) {
             this.chequeAmount = this.EntityPM.AmountInPaymentCurrency;
@@ -1113,6 +1159,30 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		// this.UpdateSummary();
 		// this.IsDataLoaded = true;
 	}
+	AllowedPartnerTypesCodes: string[] = ['CS','AG','AC','AL','CG','SG','SL','TR','VD','WH'];
+    PartnerTypes: PartnerTypeList[] = [];
+    filterByPartnerTypeCode: string;
+    isPartnerTypesFilterEnabled: boolean = false;
+    getPartnerTypes(){
+        this._PartnerTypeListService.getAll().subscribe((res:ServiceResponse)=>
+        {
+            console.log('[PartnerTypeListService]');
+            var partnerTypes: PartnerTypeList[] = res.Result || [];
+            this.PartnerTypes = partnerTypes.filter(d => this.AllowedPartnerTypesCodes.indexOf(d.Id) > -1); // filter
+            this.SelectedPartnerType = partnerTypes.filter(d => d.Id == 'CS')[0]; // default
+        });
+    }
+
+	private _SelectedPartnerType : PartnerTypeList;
+    public get SelectedPartnerType() : PartnerTypeList {
+        return this._SelectedPartnerType;
+    }
+    public set SelectedPartnerType(type : PartnerTypeList) {
+        this._SelectedPartnerType = type;
+        this.filterByPartnerTypeCode = type.Id;
+        this.AccountingPaymentMethodId = null;
+
+    }
 
 	// BillTo
 	get BillToId()
