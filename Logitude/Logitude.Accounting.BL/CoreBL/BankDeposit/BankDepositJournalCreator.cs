@@ -283,6 +283,10 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
 
             newCreditJournalLine.Reference1 = DepositPM.DepositNumber.ToString();
             newCreditJournalLine.Reference2 = cheque.ChequeNumber;
+            bool showLocal = true;
+            newCreditJournalLine.Notes = TextCodesTranslator.TranslateText("BankDeposit.O.ChequeDeposit", 0, showLocal);
+            if (String.IsNullOrEmpty(newCreditJournalLine.Notes))
+                newCreditJournalLine.Notes = "Cheque Deposit";
             return newCreditJournalLine;
         }
 
@@ -311,6 +315,10 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             newCreditJournalLine.DebitAccountId = BankGLAccount.Id;
 
             newCreditJournalLine.Reference1 = DepositPM.DepositNumber.ToString();
+            bool showLocal = true;
+            newCreditJournalLine.Notes = TextCodesTranslator.TranslateText("BankDeposit.O.CashDeposit", 0, showLocal);
+            if (String.IsNullOrEmpty(newCreditJournalLine.Notes))
+                newCreditJournalLine.Notes = "Cash Deposit";
             return newCreditJournalLine;
         }
 
