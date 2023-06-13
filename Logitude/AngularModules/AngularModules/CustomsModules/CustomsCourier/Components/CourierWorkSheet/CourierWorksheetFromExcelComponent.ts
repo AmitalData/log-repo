@@ -133,24 +133,26 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
         }
         this.EntityResourceService.getEntityResourceByTableName("Customs.CourierPendingReason").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
-                    this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
-                    this._TabFilterList.push(new TabFilter("DOC", "בעיות במסמכים ", null, null));
-                    this._TabFilterList.push(new TabFilter("SVG", "בעיות בסיווג", null, null));
-                    this._TabFilterList.push(new TabFilter("MNF", "בעיות במצהר ", null, null));
-                    this._TabFilterList.push(new TabFilter("DEC", "בעיות בהצהרה", null, null));
-                    this._TabFilterList.push(new TabFilter("PAY", "תשלום", null, null));
-                    this._TabFilterList.push(new TabFilter("HOLD", "Pending", null, null));
-                    this._TabFilterList.push(new TabFilter("ACC", "מסוף", null, null));
-                    this._SelectedTabFilter = this._TabFilterList[0];
-                    this.GetMamanPUR();
-                    this.GetIsSendDocumentsFromQueueButton();
-                    this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
-                    this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
-                    this.DelayFormVisibility = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowDelayForm");
-                    this.BuildColumns();
-                    this.BuildColumnsPending();
-                    this.EntityResourceImported = true;
+                this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
+                        this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
+                        this._TabFilterList.push(new TabFilter("DOC", "בעיות במסמכים ", null, null));
+                        this._TabFilterList.push(new TabFilter("SVG", "בעיות בסיווג", null, null));
+                        this._TabFilterList.push(new TabFilter("MNF", "בעיות במצהר ", null, null));
+                        this._TabFilterList.push(new TabFilter("DEC", "בעיות בהצהרה", null, null));
+                        this._TabFilterList.push(new TabFilter("PAY", "תשלום", null, null));
+                        this._TabFilterList.push(new TabFilter("HOLD", "Pending", null, null));
+                        this._TabFilterList.push(new TabFilter("ACC", "מסוף", null, null));
+                        this._SelectedTabFilter = this._TabFilterList[0];
+                        this.GetMamanPUR();
+                        this.GetIsSendDocumentsFromQueueButton();
+                        this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
+                        this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
+                        this.DelayFormVisibility = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowDelayForm");
+                        this.BuildColumns();
+                        this.BuildColumnsPending();
+                        this.EntityResourceImported = true;
+                    });
                 });
             });
         });
@@ -2031,8 +2033,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
             });
     }
 
-    ImportCourierMasterFromExcel(){
-        
+    ImportCourierMasterFromExcel() {
+
     }
 
 
