@@ -1653,7 +1653,7 @@ namespace Logitude.Customs.BL.Validators
             {
                 if (string.IsNullOrEmpty(claimPM.ImporterAffidavit))
                 {
-                    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "ImporterAffidavit", TableName = "Customs.Claim" });
+                    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = "Customs.Claim.O.ImporterAffidavitRequired" });
                 }
             }
             else
