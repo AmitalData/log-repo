@@ -64,6 +64,22 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //}
             return query;
         }
+        public List<TaxReportLinePM> GetSpecificReportLines(string taxReportId, int tenant)
+        {
+            IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
+                                               where a.TaxReportId == taxReportId && a.Tenant == tenant
+                                               select a);
+
+            var listQuery = query.Select(d => new TaxReportLinePM()
+            {
+                Tenant = d.Tenant,
+                TaxReportId = d.TaxReportId,
+                Line = d.Line,
+                VatNumber = d.VatNumber,
+                Reference = d.Reference,
+            }).ToList();
+            return listQuery;
+        }
         public List<TaxReportLinePM> GetReportLinesPMs(string taxReportId, int tenant)
         {
             IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
@@ -91,6 +107,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 JournalId = d.JournalId,
                 IsManuallyChanged = d.IsManuallyChanged,
                 IsEquipment = d.IsEquipment,
+                TaxReportDate=d.TaxReportDate,
                 TotalInvoiceAmount = d.TotalInvoiceAmount,
                 SubTotalInLocalCurrency=d.SubTotalInLocalCurrency
             }).ToList();

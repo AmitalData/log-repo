@@ -33,6 +33,7 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -103,6 +104,40 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
             catch (Exception ex)
             {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+        public HttpResponseMessage CancelTaxReportByTester(string taxReportId)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
+                TaxReportPM taxReportPM = taxReportQueryService.GetSingle(taxReportId, false, false);
+                taxReportPM.IsCancelled = true;
+                taxReportPM.StatusCode = VatReportStatusValues.Cancelled;
+                IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+                TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
+                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                try
+                {
+                    taxReportUpdateService.Update(taxReportPM, true);
+                }
+                catch(Exception ex)
+                {
+                    taxReportPM.IsCancelled = false;
+                    taxReportPM.StatusCode = VatReportStatusValues.CancelationFailed;
+                    taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                    taxReportUpdateService.Update(taxReportPM, true);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, taxReportPM);
+            }
+
+            catch (Exception ex)
+            {
+
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
