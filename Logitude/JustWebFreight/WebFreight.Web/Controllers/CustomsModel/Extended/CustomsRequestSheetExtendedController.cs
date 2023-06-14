@@ -685,8 +685,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     ///throw new Exception("Unable to cancel request. It has already been sent (Batch proccess)");
                 }
 
+               
                 var currStep = stepList.OrderBy(r => r.StepNumber).FirstOrDefault(r => r.Status != CommStatusEnum.D.ToString());
-                if (currStep != null)
+                var beforeFiveHours= DateTime.Now.AddHours(-5);
+                if (currStep != null  && entityPM.AnswerCreateDate > beforeFiveHours)
                 {
                     if (currStep.StepNumber == (int)CustomsStepEnum.ReceivedCustomResponseCorrelation)
                     {
