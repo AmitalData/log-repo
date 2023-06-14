@@ -180,8 +180,8 @@ namespace WebFreight.Web.Helpers
                 else if (IsCargoTrackingDomain())
                 {
                     resetPasswordParameters.DocumentTypeCode = "PCT";
-                    result = new ResetUserPasswordDocumentService(int.Parse(resetPasswordParameters.BrandingTenant)).GetMessageArgsByTemplateName(resetPasswordParameters, emailBodyArgs);
-
+                    int tenant = tenantManagementPM != null ? tenantManagementPM.Id : Int32.Parse(emailBodyArgs.BrandingTenant);
+                    result = new ResetUserPasswordDocumentService(tenant).GetMessageArgsByTemplateName(resetPasswordParameters, emailBodyArgs);
                 }
                 else if (!string.IsNullOrEmpty(emailBodyArgs.BrandingTenant))
                 {
