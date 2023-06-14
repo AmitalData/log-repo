@@ -471,6 +471,7 @@ namespace WebFreight.Web.MetaDataUpdate
             #region EventTypeRules
             ObjectTable EventTypeTable = ObjectContext.ObjectTables.Where(f => f.Name == "EventType" && f.Tenant == 0).FirstOrDefault();
             ObjectField eventTypeCode = ObjectContext.ObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == EventTypeTable.Id).FirstOrDefault();
+            ObjectField eventTypeObjectTableId = ObjectContext.ObjectFields.Where(d => d.FieldName == "ObjectTableId" && d.ObjectTableId == EventTypeTable.Id).FirstOrDefault();
 
             ObjectField eventIsCustomerView = ObjectContext.ObjectFields.Where(d => d.FieldName == "IsCustomerView" && d.ObjectTableId == EventTypeTable.Id).FirstOrDefault();
             ObjectField eventIsAgentView = ObjectContext.ObjectFields.Where(d => d.FieldName == "IsAgentView" && d.ObjectTableId == EventTypeTable.Id).FirstOrDefault();
@@ -511,7 +512,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
-            ObjectTableRuleField eventTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = eventTypeCode.Id, ObjectFieldCode = eventTypeCode.FieldCode, ObjectTableRuleId = EventTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+			ObjectTableRuleField eventTypeCodeField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = eventTypeCode.Id, ObjectFieldCode = eventTypeCode.FieldCode, ObjectTableRuleId = EventTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            ObjectTableRuleField objectTableIdField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = eventTypeObjectTableId.Id, ObjectFieldCode = eventTypeObjectTableId.FieldCode, ObjectTableRuleId = EventTypeDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+
             #endregion
 
             #region PackageTypeRules
