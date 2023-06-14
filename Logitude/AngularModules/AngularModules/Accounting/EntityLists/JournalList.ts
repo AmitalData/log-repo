@@ -40,6 +40,7 @@ export class JournalList {
 	DocumentDate: Date;
 	DueDate: Date;
 	CurrencyId: string;
+	SecurityLevel: number;
 	
 }
  

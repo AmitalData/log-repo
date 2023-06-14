@@ -37,6 +37,7 @@ using Logitude.Accounting.BL.CloseTables;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.Accounting.BL.CoreBL.InterestTrans;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit;
+using Logitude.BL.Security;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -316,6 +317,30 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     });
                 }
+
+                if (entityPM.SecurityLevel.HasValue && !entityPOCO.SecurityLevel.HasValue)
+                {
+
+                    int newSecurityLevel = entityPM.SecurityLevel.HasValue ? entityPM.SecurityLevel.Value : 0;
+                        ContactRepository contactRepOnCre = new ContactRepository(entityPM.Tenant);
+                        string resolveLoggingUserIdOnCre = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                        Contact contactOnCre = contactRepOnCre.GetSingleContactByEmail(resolveLoggingUserIdOnCre, entityPM.Tenant);
+                        String notesOnCre = "Security level set to: " + newSecurityLevel;
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contactOnCre.Id,
+                        ObjectTableName = "Journal",
+                        IsAddedManually = false,
+                        EventTypeCode = "JSUP", // Journal Security Level Updated
+                        Notes = notesOnCre,
+                    });
+
+
+                }
+
+
                 if (entityPM.Copied)
                     CreateCopyJournalEvent(entityPM, contact);
             }
@@ -438,6 +463,32 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
 
+                if ((entityPM.SecurityLevel.HasValue && !entityPOCO.SecurityLevel.HasValue) ||
+                    (!entityPM.SecurityLevel.HasValue && entityPOCO.SecurityLevel.HasValue) ||
+                    (entityPM.SecurityLevel.HasValue && entityPOCO.SecurityLevel.HasValue && entityPM.SecurityLevel.Value != entityPOCO.SecurityLevel.Value))
+                {
+                    FullAccountingSettingPM setting = GetFullAccountingSetting(entityPOCO.Tenant);
+                    if (setting.IsSecurityLevelActivated && SecurityUtility.CheckFeature("Journal", "Journal.Feature.ManageSecurity", entityPOCO.Tenant))
+                    {
+                        int previousSecurityLevel = entityPOCO.SecurityLevel.HasValue ? entityPOCO.SecurityLevel.Value : 0;
+                        int newSecurityLevel = entityPM.SecurityLevel.HasValue ? entityPM.SecurityLevel.Value : 0;
+                        ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                        string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                        Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                        String notes = "Previous security level: " + previousSecurityLevel + ", changed to: " + newSecurityLevel;
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            EntityId = entityPM.Id,
+                            Tenant = entityPM.Tenant,
+                            UserId = contact.Id,
+                            ObjectTableName = "Journal",
+                            IsAddedManually = false,
+                            EventTypeCode = "JSUP", // Journal Security Level Updated
+                            Notes = notes,
+                        });
+
+                    }
+                }
             }
             base.Trace(entityPM, entityPOCO, changesXml);
         }
