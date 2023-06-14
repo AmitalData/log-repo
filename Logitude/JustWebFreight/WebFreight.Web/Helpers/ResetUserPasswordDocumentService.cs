@@ -19,25 +19,12 @@ namespace WebFreight.Web.Helpers
             this.tenant = tenant;
         }
 
-        private DocumentType GetDocumentTypeForResetPassword(int tenant, string documentTypeCode)
-        {
-            DocumentType documentType = null;
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
-            {
-                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
-                documentType = documentTypeRepository.GetDocumentTypeByCode(documentTypeCode, tenant);
-                scope.Complete();
-
-            }
-            if (documentType != null && !string.IsNullOrEmpty(documentType.DocumentTypeDefaultHTMLTemplateId)) return documentType;
-
-            else return null;
-        }
 
         public MessageArgs GetMessageArgsByTemplateName(ResetPasswordParameters resetPasswordParameters, EmailBodyArgs emailBodyArgs)
         {
             MessageArgs result = new MessageArgs();
-            var documenttype =string.IsNullOrEmpty(resetPasswordParameters.DocumentTypeCode) ? GetDocumentTypeByName(resetPasswordParameters.TemplateName, tenant): GetDocumentTypeForResetPassword(tenant , resetPasswordParameters.DocumentTypeCode);
+
+            var documenttype =!string.IsNullOrEmpty(resetPasswordParameters.DocumentTypeCode) ? GetDocumentTypeByCode(resetPasswordParameters.DocumentTypeCode, tenant) :  GetDocumentTypeByName(resetPasswordParameters.TemplateName, tenant);
             if (documenttype == null)
                 return result;
 
@@ -60,6 +47,24 @@ namespace WebFreight.Web.Helpers
                     where c.Email == resetPasswordParameters.Email && c.Tenant == tenant
                     select c).FirstOrDefault();
         }
+
+
+        private DocumentType GetDocumentTypeByCode(string documentTypeCode, int tenant)
+        {
+            DocumentType documentType = null;
+
+
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+            {
+                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
+                documentType = documentTypeRepository.GetDocumentTypeByCode((!string.IsNullOrEmpty(documentTypeCode) ? documentTypeCode : "SLCRP"), tenant);
+                scope.Complete();
+            }
+
+            return documentType;
+        }
+
+
 
         private DocumentType GetDocumentTypeByName(string templateName, int tenant)
         {
