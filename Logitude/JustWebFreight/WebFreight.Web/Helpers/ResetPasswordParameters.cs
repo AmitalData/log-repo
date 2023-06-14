@@ -24,5 +24,6 @@ namespace WebFreight.Web.Helpers
         public string BrandingTenant { get; set; }
         public string Domain { get; set; }
         public string TemplateName { get; set; }
+        public string DocumentTypeCode { get; set; }
     }
 }

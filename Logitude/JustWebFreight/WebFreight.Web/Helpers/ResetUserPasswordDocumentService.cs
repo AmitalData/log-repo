@@ -19,10 +19,25 @@ namespace WebFreight.Web.Helpers
             this.tenant = tenant;
         }
 
+        private DocumentType GetDocumentTypeForResetPassword(int tenant, string documentTypeCode)
+        {
+            DocumentType documentType = null;
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+            {
+                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
+                documentType = documentTypeRepository.GetDocumentTypeByCode(documentTypeCode, tenant);
+                scope.Complete();
+
+            }
+            if (documentType != null && !string.IsNullOrEmpty(documentType.DocumentTypeDefaultHTMLTemplateId)) return documentType;
+
+            else return null;
+        }
+
         public MessageArgs GetMessageArgsByTemplateName(ResetPasswordParameters resetPasswordParameters, EmailBodyArgs emailBodyArgs)
         {
             MessageArgs result = new MessageArgs();
-            var documenttype = GetDocumentTypeByName(resetPasswordParameters.TemplateName, tenant);
+            var documenttype =string.IsNullOrEmpty(resetPasswordParameters.DocumentTypeCode) ? GetDocumentTypeByName(resetPasswordParameters.TemplateName, tenant): GetDocumentTypeForResetPassword(tenant , resetPasswordParameters.DocumentTypeCode);
             if (documenttype == null)
                 return result;
 

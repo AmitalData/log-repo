@@ -147,6 +147,13 @@ namespace WebFreight.Web.Helpers
 
 
         }
+        private string AddBrandingTenantForPagePath(string pagePath, string brandingTenant)
+        {
+            string path = pagePath;
+            path += "&tenant=" + Int32.Parse(brandingTenant);
+
+            return path;
+        }
 
         private EmailBodyResults BuildEmailBody(ResetPasswordParameters resetPasswordParameters, EmailMessageParams emailMessageParams, EmailBodyArgs emailBodyArgs)
         {
@@ -170,18 +177,24 @@ namespace WebFreight.Web.Helpers
                 {
                     result = new ResetUserPasswordDocumentService(int.Parse(resetPasswordParameters.BrandingTenant)).GetMessageArgsByTemplateName(resetPasswordParameters, emailBodyArgs);
                 }
-                else if (!string.IsNullOrEmpty(emailBodyArgs.BrandingTenant) || IsCargoTrackingDomain())
+                else if (IsCargoTrackingDomain())
                 {
-                    string documentTypeCode = IsCargoTrackingDomain() ? "PCT" : "SLCRP";
-                    int tenant = (IsCargoTrackingDomain() && tenantManagementPM != null) ? tenantManagementPM.Id : Int32.Parse(emailBodyArgs.BrandingTenant);
+                    resetPasswordParameters.DocumentTypeCode = "PCT";
+                    result = new ResetUserPasswordDocumentService(int.Parse(resetPasswordParameters.BrandingTenant)).GetMessageArgsByTemplateName(resetPasswordParameters, emailBodyArgs);
+
+                }
+                else if (!string.IsNullOrEmpty(emailBodyArgs.BrandingTenant))
+                {
+                    string documentTypeCode = "SLCRP";
+                    int tenant = Int32.Parse(emailBodyArgs.BrandingTenant);
                     var documenttype = GetDocumentTypeForResetPassword(tenant, documentTypeCode);
                     if (documenttype != null)
                     {
                         result = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
                         if (!string.IsNullOrEmpty(result.HtmlTemplate))
                         {
-                            string url = GetFogotPasswordPagePath(resetPasswordParameters,emailBodyArgs.ReqestNumber);
-                            url = AddTenantForPagePath(url, tenant);
+                            string url = GetFogotPasswordPagePath(resetPasswordParameters, "", emailBodyArgs.ReqestNumber);
+                            url = AddBrandingTenantForPagePath(url, emailBodyArgs.BrandingTenant);
                             result.HtmlTemplate = result.HtmlTemplate.Replace("[ResetPasswordURL]", url);
                         }
                     }
