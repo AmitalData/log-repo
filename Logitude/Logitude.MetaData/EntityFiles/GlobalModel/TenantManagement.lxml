@@ -15403,6 +15403,12 @@
       LocalDefaultText="&quot;Digital Portal Branding&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TenantManagement.TH.PermissionBuildMonthsLimit&quot;"
+      DefaultText="&quot;The value can be number from 0 to 84 only&quot;"
+      LocalDefaultText="&quot;ניתן להכניס ערך מ0 עד 84 בלבד&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class TenantManagementUpdateClass
    {  		
-		public const string HashString = "2e88f08c0721fbb50e175d8017e37299";
+		public const string HashString = "a5f6fec5838f73280b78b1a24509c0c1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -11923,6 +11923,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShowMoneyOrder",
 					  						ListPropertyPath =  "ShowMoneyOrder",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -13223,6 +13224,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
  		   ObjectTable TenantManagementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode TenantManagementTextCode_TenantManagementTHLogitudeDigitalBranding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.LogitudeDigitalBranding", DefaultText = "Digital Portal Branding",LocalDefaultText = @"Digital Portal Branding", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantManagementTextCode_TenantManagementTHPermissionBuildMonthsLimit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.PermissionBuildMonthsLimit", DefaultText = "The value can be number from 0 to 84 only",LocalDefaultText = @"ניתן להכניס ערך מ0 עד 84 בלבד", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
