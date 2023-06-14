@@ -30,7 +30,8 @@ namespace Logitude.Customs.Data.Repsitories
                 return new List<string>();
             }
             // split the input "keyword"
-            var splittedkeyWord = keyWord.ToLower();
+            keyWord= keyWord.ToLower();
+            var splittedkeyWord = keyWord;
             char[] BAD_CHARS = new char[] { '!', '@', '#', '$', '%', '_', ')', '(', '-', '*', '&', '^', '~', '.', '"', ';', '\'', '\\', '/', '<', '>', '{', '}', '[', ']', '\n' };
             splittedkeyWord = string.Concat(splittedkeyWord.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
             List<string> keyWordSplittedIntoList = splittedkeyWord.Split(' ').ToList();
