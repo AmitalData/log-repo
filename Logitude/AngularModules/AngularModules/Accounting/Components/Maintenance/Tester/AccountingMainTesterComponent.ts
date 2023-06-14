@@ -12,6 +12,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { JournalExtendedPMService } from '../../../Services/ExtendedPMs/JournalExtendedPMService';
+import { TaxReportExtendedPMService } from 'Accounting/Services/ExtendedPMs/TaxReportExtendedPMService';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -32,6 +33,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
 
     JournalId2Void: string = "1-5599183";
     OverrideStornoString: string = '{"AccountingEntityCode":"7","AccountingEntityReference":"Cash Deposit 7","AccountingEntityId":"1-22222"}';
+    OverrideTaxReportString: string = '{"taxReportId":"1-22222"}';
 
     _MenuList: string[] = [];
     public ValidationErrorsList: string[];
@@ -151,6 +153,18 @@ export class AccountingMainTesterComponent extends BaseComponent {
     }
     YYY_Click() {
 
+    }
+    CancelReport(){
+        let taxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
+        let OverrideTaxReportString1 = JSON.parse(this.OverrideTaxReportString);
+
+        taxReportExtendedPMService
+        .CancelTaxReportByTester(OverrideTaxReportString1.taxReportId,).subscribe(
+            r => { this._LabelLog = JSON.stringify(r); },
+            e => { this._LabelLog = JSON.stringify(e); },
+            () => { this.CurrentSession.StopBusyIndicator(); }
+
+        );
     }
     Aging_Click() {
         let aging_params = {

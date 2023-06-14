@@ -192,7 +192,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void MarkDuplicateLines(TaxReportPM taxReportPM)
         {
-            List<TaxReportLinePM> taxReportLines = GetTaxReportLines(taxReportPM.Id, taxReportPM.Tenant);
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+            TaxReportQueryService taxReportQuery = new TaxReportQueryService(accountingContext);
+            TaxReportLineQueryService taxReportLineQuery = new TaxReportLineQueryService(accountingContext);
+            var taxReportLines = taxReportQuery.GetSpecificReportLines(taxReportPM.Id, taxReportPM.Tenant);
             if (taxReportLines != null && taxReportLines.Count > 0)
             {
                 var dup = taxReportLines.GroupBy(ln =>
@@ -224,7 +227,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
                 List<TaxReportLinePM> removeDupLines = new List<TaxReportLinePM>();
-                IAccountingContext accountingContext; 
                 TaxReportLineUpdateService taxReportLineUpdateService; 
 
                 if (duplicates != null && duplicates.Count > 0)
@@ -242,17 +244,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         if (all_dup_line_nos.Contains(oneLine.Line))
                         {
-                            oneLine.ChangeSetOp = ChangeSetOperation.Update;
-                            oneLine.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
-                            if (oneLine.IsManuallyChanged == false) oneLine.IsManuallyChanged = null;
-                            duplicateLines.Add(oneLine);
+                            var entity = taxReportLineQuery.GetSingle(oneLine.TaxReportId, oneLine.Line, false, false);
+                            if (entity != null)
+                            {
+                                entity.ChangeSetOp = ChangeSetOperation.Update;
+                                entity.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
+                                if (entity.IsManuallyChanged == false) entity.IsManuallyChanged = null;
+                                duplicateLines.Add(entity);
+                            }
                         }
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
-                            oneLine.ChangeSetOp = ChangeSetOperation.Update;
-                            oneLine.StatusCode = "6";
-                            if (oneLine.IsManuallyChanged == false) oneLine.IsManuallyChanged = null;
-                            removeDupLines.Add(oneLine);
+                            var entity = taxReportLineQuery.GetSingle(oneLine.TaxReportId, oneLine.Line, false, false);
+                            if (entity != null)
+                            {
+                                entity.ChangeSetOp = ChangeSetOperation.Update;
+                                entity.StatusCode = "6";
+                                if (entity.IsManuallyChanged == false) entity.IsManuallyChanged = null;
+                                removeDupLines.Add(entity);
+                            }
                         }
                     }
 
@@ -270,10 +280,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
-                            linePM.ChangeSetOp = ChangeSetOperation.Update;
-                            linePM.StatusCode = "6";
-                            if (linePM.IsManuallyChanged == false) linePM.IsManuallyChanged = null;
-                            removeDupLines.Add(linePM);
+                            var entity = taxReportLineQuery.GetSingle(linePM.TaxReportId, linePM.Line, false, false);
+                            if (entity != null)
+                            {
+                                entity.ChangeSetOp = ChangeSetOperation.Update;
+                                entity.StatusCode = "6";
+                                if (entity.IsManuallyChanged == false) entity.IsManuallyChanged = null;
+                                removeDupLines.Add(entity);
+                            }
+
                         }
                     }
                     if (removeDupLines.Count > 0)
