@@ -39,25 +39,16 @@ namespace Logitude.Customs.Data.Repsitories
             var PendingByKeywords = (from a in context.PendingByKeywords
                                      where a.Tenant == tenant && a.SearchByFieldCode == SearchByFieldCode
                                      select a).ToList();
+            var pendingByKeyword = new List<PendingByKeyword>();
 
             foreach (string word in keyWordSplittedIntoList)
             {
-                var pendingByKeyword = new List<PendingByKeyword>();
+                pendingByKeyword = new List<PendingByKeyword>();
                 PendingByKeywords.ForEach(r =>
                 {
                     if (!string.IsNullOrWhiteSpace(r.KeywordsList))
                     {
-                        if (r.SearchType == "2")
-                        {
-                            if (word.Contains(r.KeywordsList.ToLower()))
-                            {
-                                if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords.ToLower()))
-                                {
-                                    pendingByKeyword.Add(r);
-                                }
-                            }
-                        }
-                        else
+                        if (r.SearchType != "2")
                         {
                             if (r.KeywordsList.ToLower().Equals(word))
                             {
@@ -71,13 +62,41 @@ namespace Logitude.Customs.Data.Repsitories
                     }
                 });
 
-                //if (pendingByKeyword != null && !String.IsNullOrWhiteSpace(pendingByKeyword.CourierPendingReasonCode)) pendingReasonCodeList.Add(pendingByKeyword.CourierPendingReasonCode);
                 var courierPendingReasonCodes = pendingByKeyword.Where(r => !String.IsNullOrWhiteSpace(r.CourierPendingReasonCode)).Select(r => r.CourierPendingReasonCode).ToHashSet();
                 if (courierPendingReasonCodes.Count > 0)
                 {
                     pendingReasonCodeList.AddRange(courierPendingReasonCodes);
                 }
             }
+
+
+             
+                pendingByKeyword = new List<PendingByKeyword>();
+                PendingByKeywords.ForEach(r =>
+                {
+                    if (!string.IsNullOrWhiteSpace(r.KeywordsList))
+                    {
+                        if (r.SearchType == "2")
+                        {
+                            if (splittedkeyWord.Contains(r.KeywordsList.ToLower()))
+                            {
+                                if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords.ToLower()))
+                                {
+                                    pendingByKeyword.Add(r);
+                                }
+                            }
+                        }
+                       
+
+                    }
+                });
+
+                 var courierPendingReasonCodes2 = pendingByKeyword.Where(r => !String.IsNullOrWhiteSpace(r.CourierPendingReasonCode)).Select(r => r.CourierPendingReasonCode).ToHashSet();
+                if (courierPendingReasonCodes2.Count > 0)
+                {
+                    pendingReasonCodeList.AddRange(courierPendingReasonCodes2);
+                }
+            
 
             return pendingReasonCodeList;
 
