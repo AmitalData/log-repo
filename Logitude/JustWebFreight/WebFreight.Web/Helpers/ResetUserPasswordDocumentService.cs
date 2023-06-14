@@ -34,12 +34,21 @@ namespace WebFreight.Web.Helpers
 
             Contact contact = GetContact(resetPasswordParameters);
 
+
             string path = "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + emailBodyArgs.ReqestNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
+            if (resetPasswordParameters.IsCargoTracking)
+            {
+                path = @"/" + "cargo-tracking" + @"/" + "changepassword?email=" + resetPasswordParameters.Email + "&reset_request_number=" + emailBodyArgs.ReqestNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin + "&tenant=" + Int32.Parse(resetPasswordParameters.BrandingTenant);
+            }
+
             result.HtmlTemplate = result.HtmlTemplate.Replace("[ResetPasswordURL]", path);
             result.HtmlTemplate = result.HtmlTemplate.Replace("[InvitationEmail]", resetPasswordParameters.Email);
             result.HtmlTemplate = result.HtmlTemplate.Replace("[InviteeName]", contact?.EnglishName ?? "");
             return result;
         }
+
+
+
 
         private Contact GetContact(ResetPasswordParameters resetPasswordParameters)
         {
