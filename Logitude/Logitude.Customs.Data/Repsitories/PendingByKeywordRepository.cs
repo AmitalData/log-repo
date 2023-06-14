@@ -31,6 +31,7 @@ namespace Logitude.Customs.Data.Repsitories
             }
             // split the input "keyword"
             keyWord= keyWord.ToLower();
+            keyWord = keyWord.Replace('\n', ' ');
             var splittedkeyWord = keyWord;
             char[] BAD_CHARS = new char[] { '!', '@', '#', '$', '%', '_', ')', '(', '-', '*', '&', '^', '~', '.', '"', ';', '\'', '\\', '/', '<', '>', '{', '}', '[', ']', '\n' };
             splittedkeyWord = string.Concat(splittedkeyWord.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
