@@ -100,6 +100,7 @@
     <Compile Include="EntityPMs\Generated\CustomsHouseTypeTenantPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsShipPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationCasualDetailsPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationCounterPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationFollowUpPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationStatusPM.Generated.cs" />

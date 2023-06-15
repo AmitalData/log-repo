@@ -499,6 +499,7 @@
     <Compile Include="EntityDataMappings\DeclarationCasualDetailsDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationConsAcceptanceDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationConstraintDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeclarationCounterDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationCourierStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationErrorMappingDataMapping.cs" />
@@ -720,6 +721,7 @@
     <Compile Include="EntityDataMappings\Generated\DeclarationCasualDetailsDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationConsAcceptanceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationConstraintDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeclarationCounterDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationCourierStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationErrorMappingDataMapping.Generated.cs" />
@@ -1153,6 +1155,7 @@
     <Compile Include="EntityQueryServices\Generated\CustomsCountryTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsHouseTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\DefaultValueQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeclarationCounterQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SupplierInvioceExportDefaultQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
@@ -1483,6 +1486,7 @@
     <Compile Include="EntityQueryServices\SupplierInvoiceItemVehicleQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceModificationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeficitDecisionQueryService.cs" />
+    <Compile Include="EntityQueryServices\DeclarationCounterQueryService.cs" />
     <Compile Include="EntityQueryServices\UIMessageQueryService.cs" />
     <Compile Include="EntityQueryServices\ValidCustomsItemQueryService.cs" />
     <Compile Include="EntityQueryServices\GuaranteeConditionQueryService.cs" />
@@ -1693,6 +1697,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomDocumentTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsCountryTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsHouseTypeTenantUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DeclarationCounterUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GovernmentProcTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InternationalSiteTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierInvioceExportDefaultUpdateService.Generated.cs" />

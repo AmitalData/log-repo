@@ -21,7 +21,14 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public DeclarationCounter GetSingleByCustomFileNo(string customFileNo, int tenant)
+        {
+            return (from a in context.DeclarationCounters
+                    where a.CustomFileNo == customFileNo && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+    }
 
 }
    
