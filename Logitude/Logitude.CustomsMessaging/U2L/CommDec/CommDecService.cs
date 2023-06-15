@@ -42,6 +42,8 @@ using Simplog.Server.Infrastructure.DataContracts;
 using System.Web.Caching;
 using UnifreightIIG.Common.MessageLib.Unifreight.Customs;
 using System.Text;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools;
 
 namespace Logitude.CustomsMessaging.U2L.CommDec
 {
@@ -119,7 +121,34 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             AppendLogLine("message : " + message);
 
             if (message == "SUCCESS")
+            {
+                var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
+                if (setting != null && !setting.IsConnectedToUniFreight)
+                {
+                    DeserilazeObject(xmlLOGICOMMDEC);
+                    DeclarationCounterQueryService declarationCounterQueryService = new DeclarationCounterQueryService(_tenant);
+                    var declarationCounter =  declarationCounterQueryService.GetSingleByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
+                    if(declarationCounter == null)
+                    {
+                        DeclarationCounterPM newDeclarationCounter = new DeclarationCounterPM
+                        {
+                            Tenant = _tenant,
+                            CustomFileNo = _LogitudeCommDecFile.CustomFileNo,
+                            DeclarationId = IdCounter.GetNumber("Customs.Declaration", _tenant),
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                        };
+                        MyGenericResponseObj.ApplicationId = newDeclarationCounter.DeclarationId;
+                        MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+
+                        DeclarationCounterUpdateService decCounter = new DeclarationCounterUpdateService(_tenant);
+                        decCounter.Update(newDeclarationCounter, true);
+                    }
+                  
+                }
+
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+            }
+                
             else
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.TecinicalFailure;
 
@@ -760,11 +789,16 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                 // if (!string.IsNullOrEmpty(defValueB) && defValueB == "B")
                 // {
-                AppendLogLine("update UpdateLOGITUDE_FILE");
+                var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
 
-                var repo = new CFIFILEMRepository(_MyDeclarationPM.Tenant);
-                var res = repo.UpdateLOGITUDE_FILE(_MyDeclarationPM.Tenant, Convert.ToInt64(_MyDeclarationPM.CustomFileNo), _MyDeclarationPM.Id);
-                repo.SubmitChanges();
+                if (setting.IsConnectedToUniFreight)
+                {
+                    AppendLogLine("update UpdateLOGITUDE_FILE");
+                    var repo = new CFIFILEMRepository(_MyDeclarationPM.Tenant);
+                    var res = repo.UpdateLOGITUDE_FILE(_MyDeclarationPM.Tenant, Convert.ToInt64(_MyDeclarationPM.CustomFileNo), _MyDeclarationPM.Id);
+                    repo.SubmitChanges();
+                }
+               
                 //  }
 
                 customFileNo = _MyDeclarationPM.CustomFileNo;

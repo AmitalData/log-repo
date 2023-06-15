@@ -72,7 +72,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnCreating(DeclarationPM entityPM, EntityPM entityParentPM)
         {
-            entityPM.Id = IdCounter.GetNumber("Customs.Declaration", entityPM.Tenant);
+            if (entityPM.IsDiamondDeclaration || entityPM.IsCourierDeclaration)
+            {
+                DeclarationCounterQueryService declarationCounterQueryService = new DeclarationCounterQueryService(entityPM.Tenant);
+                var declarationCounter = declarationCounterQueryService.GetSingleByCustomFileNo(entityPM.CustomFileNo, entityPM.Tenant);
+                if (declarationCounter != null)
+                    entityPM.Id = declarationCounter.DeclarationId;
+            }
+            if (string.IsNullOrEmpty(entityPM.Id))
+                entityPM.Id = IdCounter.GetNumber("Customs.Declaration", entityPM.Tenant);
             if (entityPM.CreateDateTime == null)
             {
                 entityPM.CreateDateTime = DateTime.Now;

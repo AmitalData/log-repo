@@ -1041,6 +1041,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomDocumentTypeTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsCountryTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsHouseTypeTenantViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationCounterViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationFollowUpViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DefaultTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DefaultValueViewsController.Generated.cs" />
@@ -1054,6 +1055,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CourierHawbFromExcelController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomDocumentTypeTenantController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsHouseTypeTenantController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationCounterController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DefaultTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DefaultValueController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GovernmentProcTypeTenantController.Generated.cs" />
