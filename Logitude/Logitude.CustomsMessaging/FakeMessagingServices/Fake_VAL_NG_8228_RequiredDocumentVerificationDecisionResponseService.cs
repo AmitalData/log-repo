@@ -68,7 +68,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
             response.GeneralDetails = new VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessageGeneralDetails()
             {
-                documentId = data.documentId,
+                documentId = int.Parse(data.documentId.Value),
                 remarks ="FAKE"
             };
 
