@@ -85,8 +85,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PendingByKeywordUpdateClass
    {  		
-		public const string HashString = "ca260be214076b56315cadeccaf9525d";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+ 
+		public const string HashString = "9497f5c03be389411b7c06a7be0a905a";
+ 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -731,7 +732,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2000,
 					  						DisplayInList =  true,
-					  						DataTemplateName =  "צירוף מילים להחרגה",
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -757,6 +757,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExceptKeywords",
 					  						DefaultText =  "Except Key words",
+					  						FullLocalDefaultText =  "צירוף מילים להחרגה",
 					  						ListFieldLable =  "ExceptKeywordsListLable",
 					  						ListLableDefaultText =  "ExceptKeywords",
 					  						ListLocalDefaultText =  "צירוף מילים להחרגה",
@@ -854,7 +855,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature PendingByKeywordGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PendingByKeyword.Tab.General", ObjectTableId = PendingByKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "PendingByKeyword.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PendingByKeywordObjectTable);
  
                  
-			   TextCode PendingByKeywordEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PendingByKeyword.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = PendingByKeywordObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode PendingByKeywordEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PendingByKeyword.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = PendingByKeywordObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature PendingByKeywordEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PendingByKeyword.Tab.Events", ObjectTableId = PendingByKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "PendingByKeyword.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PendingByKeywordObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();

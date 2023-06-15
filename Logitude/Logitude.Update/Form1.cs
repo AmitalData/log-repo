@@ -4756,7 +4756,7 @@ User/Pass",
             ICustomContext context = CustomContext.GetContext(1);
             var PendingByKeywordRepository = new PendingByKeywordRepository(context);
             var PendingByKeywordQueryService = new PendingByKeywordQueryService(context);
-            var PendingByKeywordUpdateService = new PendingByKeywordUpdateService(context, new Dictionary<string, IContext>(), 3);
+            var PendingByKeywordUpdateService = new PendingByKeywordUpdateService(context, new Dictionary<string, IContext>(), 1);
 
             var list = PendingByKeywordRepository.GetAll(1).ToList();
             foreach(var item in list)
