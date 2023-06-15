@@ -20,6 +20,7 @@ using WebFreight.Web.DataProviders;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.Security;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Data.Repositories;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -119,7 +120,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
 
         private void FillGLAccountBalance(List<LedgerTransactionBalanceResponse> cardIndexs)
-        {
+        {           
             LedgerTransactionBalanceFilterCallBack LTBFilterCallBack = BuildLTBFilterCallback(cardIndexs);
 
             //GLAccountPM glaccountPM = GetGLAccountById(GetFilterValue<string>("GLAccountId"));
@@ -155,7 +156,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     BalanceLocal = 0,
                     CurrencyId = "",
                     LocalCurrencySign = "",
-                    ForeignCurrencySign = ""
+                    ForeignCurrencySign = "",
+                    LocalBalanceInDue = 0,
+                    BalanceInForeignCurrency=0,
+                    ForeignBalanceInDue = 0
+
                 });
             }
 
@@ -165,13 +170,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CurrencyRepository currencyRepo = new CurrencyRepository(tenant);
                 Currency currency = currencyRepo.GetSingleCurrency(item.CurrencyId, tenant);
 
+                GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
+                var gLAccountMoreData = gLAccountMoreDataRepository.GetSingle(LTBFilterCallBack.GLAccountId, tenant);
+
                 transactionsDataProvider.LocalClosedBalanceList.Add(new GLAccountBalanceList()
                 {
                     BalanceForeign = item.BalanceForeign,
                     BalanceLocal = item.BalanceLocal,
                     CurrencyId = item.CurrencyId,
                     LocalCurrencySign = GetTenantPM().CurrencySign,
-                    ForeignCurrencySign = currency.Sign
+                    ForeignCurrencySign = currency.Sign,
+                    LocalBalanceInDue = gLAccountMoreData.LocalBalanceInDue,
+                    BalanceInForeignCurrency = gLAccountMoreData.BalanceInForeignCurrency,
+                    ForeignBalanceInDue = gLAccountMoreData.ForeignBalanceInDue
+
+
+
                 });
             }
 
@@ -426,9 +440,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 StartBalanceLocal = cardIndexs.First().StartBalanceLocal,
                 TotalRowCount = cardIndexs.First().TotalRowCount,
                 YearTransferLedgerTransactionIds = cardIndexs.First().YearTransferLedgerTransactionIds,
-                SuppressCumulativeDueMultiCurrencyInPeriod = cardIndexs.First().SuppressCumulativeDueMultiCurrencyInPeriod
-
-            };
+                SuppressCumulativeDueMultiCurrencyInPeriod = cardIndexs.First().SuppressCumulativeDueMultiCurrencyInPeriod,
+                GLAccountId = cardIndexs.First().GLAccountId
+        };
             return LTBFilterCallBack;
         }
 
