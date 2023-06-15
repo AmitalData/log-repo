@@ -54,7 +54,7 @@ namespace Logitude.Customs.Data.Repsitories
             return
                   (
                   from rec in context.Clients
-                  where (rec.PassportNumber == passportNumber || rec.PassportCountryCode == passportCountryCode) && rec.Tenant == tenant
+                  where (rec.PassportNumber == passportNumber && rec.PassportCountryCode == passportCountryCode) && rec.Tenant == tenant
                   select rec.Id
                   )
                   .FirstOrDefault();
