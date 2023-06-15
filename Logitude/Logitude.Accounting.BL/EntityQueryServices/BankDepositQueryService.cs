@@ -169,8 +169,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             cashbookLinePM.IsDeposited = false;
             cashbookLinePM.ChangeSetOp = ChangeSetOperation.Update;
 
-            // 7- update totals
-            cashBookPM.TotalAmount += chequePM.ForeignAmount;
+			// 7- update totals
+			if (cashBookPM.CashBookTypeCode != "1") { 
+              cashBookPM.TotalAmount += chequePM.ForeignAmount;
+            }
             //// depositPM.ForeignAmount -= chequePM.ForeignAmount;
             //// depositPM.LocalDepositAmount -= chequePM.LocalAmount;
 
@@ -495,7 +497,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             cashbookLinePM.ChangeSetOp = ChangeSetOperation.Update;
 
             // 7- update totals
-            cashBookPM.TotalAmount += chequePM.ForeignAmount;
+            if (cashBookPM.CashBookTypeCode != "1")
+            {
+                cashBookPM.TotalAmount += chequePM.ForeignAmount;
+            }
             //// depositPM.ForeignAmount -= chequePM.ForeignAmount;
             //// depositPM.LocalDepositAmount -= chequePM.LocalAmount;
 
