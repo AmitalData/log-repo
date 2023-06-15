@@ -304,6 +304,11 @@ export class JournalPM {
     public set CopiedFrom(newValue: string) { if (this.copiedFrom != newValue) { this.copiedFrom = newValue; this.MarkAsDirty("CopiedFrom"); } }
        
 	 
+    private securityLevel: number;
+    public get SecurityLevel() { return this.securityLevel; }
+    public set SecurityLevel(newValue: number) { if (this.securityLevel != newValue) { this.securityLevel = newValue; this.MarkAsDirty("SecurityLevel"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		

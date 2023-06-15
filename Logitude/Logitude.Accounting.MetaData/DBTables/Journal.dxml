@@ -191,6 +191,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SecurityLevel"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="TypeCode"
     ReferencedTable="JournalTypes"

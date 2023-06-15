@@ -49,7 +49,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsLedgerCreated, 
 	         DocumentDate, 
 	         DueDate, 
-	         CurrencyId,
+	         CurrencyId, 
+	         SecurityLevel,
 	      }
 
 
@@ -98,7 +99,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CurrencyId, 
 	         IsNew, 
 	         Copied, 
-	         CopiedFrom,
+	         CopiedFrom, 
+	         SecurityLevel,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -240,6 +242,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
             {
 				entityPOCO.CurrencyId = entityPM.CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecurityLevel))
+            {
+				entityPOCO.SecurityLevel = entityPM.SecurityLevel;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -388,6 +395,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CurrencyId = entityPOCO.CurrencyId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SecurityLevel))
+            {
+					entityPM.SecurityLevel = entityPOCO.SecurityLevel;
+            }
+
 		}
 
 		public void PMToOldPM(JournalPM entityPM, JournalPM oldEntityPM)
@@ -527,6 +539,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
             {
                 oldEntityPM.CurrencyId = entityPM.CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecurityLevel))
+            {
+                oldEntityPM.SecurityLevel = entityPM.SecurityLevel;
             }
 			
 		}
