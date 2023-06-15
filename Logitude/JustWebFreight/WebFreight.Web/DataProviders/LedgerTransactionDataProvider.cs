@@ -195,5 +195,20 @@ namespace WebFreight.Web.DataProviders
         {
             get { return string.Format("{0:N2} {1}", BalanceForeign, ForeignCurrencySign); }
         }
+        public decimal? LocalBalanceInDue { get; set; }
+        public decimal? BalanceInForeignCurrency { get; set; }
+        public decimal? ForeignBalanceInDue { get; set; }
+        public string LocalBalanceInDueWithSign
+        {
+            get { return string.Format("{0:N2} {1}", LocalBalanceInDue, LocalCurrencySign); }
+        }
+        public string BalanceInForeignCurrencyWithSign
+        {
+            get { return string.Format("{0:N2} {1}", BalanceInForeignCurrency, ForeignCurrencySign); }
+        }
+        public string ForeignBalanceInDueWithSign
+        {
+            get { return string.Format("{0:N2} {1}", ForeignBalanceInDue, ForeignCurrencySign); }
+        }
     }
 }
