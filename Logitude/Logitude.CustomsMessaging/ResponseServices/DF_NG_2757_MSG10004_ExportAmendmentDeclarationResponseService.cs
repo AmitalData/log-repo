@@ -656,11 +656,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private List<ConsignmentPM> GetConsignments(Declaration declaration, int tenant, DeclarationPM declarationPM, ICustomContext context, List<ConsignmentPM> consignments)
         {
-            if (declaration.GoodsShipment == null || declaration.GoodsShipment.Count() == 0) return null;
-            if ((declaration.GoodsShipment[0].ExportConsignment == null && declaration.GoodsShipment[0].ImportConsignment == null) ||
-                (declaration.GoodsShipment[0].ExportConsignment?.Count() == 0 && declaration.GoodsShipment[0].ImportConsignment?.Count() == 0)) return null;
 
             List<ConsignmentPM> consignmentPMs = new List<ConsignmentPM>();
+
+            if (declaration.GoodsShipment == null || declaration.GoodsShipment.Count() == 0)
+            {
+                ConsignmentPM consignmentPM = new ConsignmentPM();
+                consignmentPM.ChangeSetOp = ChangeSetOperation.Insert;
+                consignmentPMs.Add(consignmentPM);
+                return consignmentPMs;
+            }
+            if ((declaration.GoodsShipment[0].ExportConsignment == null && declaration.GoodsShipment[0].ImportConsignment == null) ||
+                (declaration.GoodsShipment[0].ExportConsignment?.Count() == 0 && declaration.GoodsShipment[0].ImportConsignment?.Count() == 0))
+            {
+                ConsignmentPM consignmentPM = new ConsignmentPM();
+                consignmentPM.ChangeSetOp = ChangeSetOperation.Insert;
+                consignmentPMs.Add(consignmentPM);
+                return consignmentPMs;
+            }
+
             if (declaration.GoodsShipment[0].ExportConsignment != null) { 
                 foreach (var consignment in declaration.GoodsShipment[0].ExportConsignment)
             {
