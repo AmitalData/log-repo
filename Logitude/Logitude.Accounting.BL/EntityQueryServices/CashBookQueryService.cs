@@ -118,6 +118,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return entityPM;
         }
+
+        public CashBookPM GetCashbookByAccountId(string accountId, int tenant)
+        {
+            CashBook cashBook = repository.GetCashbookByAccountId(accountId, tenant);
+            CashBookPM entityPM = new CashBookPM();
+
+            if (cashBook != null)
+            {
+                mapping.POCOToPM(entityPM, cashBook);
+            }
+
+            return entityPM;
+        }
     }
 
 }

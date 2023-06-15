@@ -188,8 +188,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //update cashbook
             if (cashbookPM != null)
             {
-                cashbookPM.TotalAmount += Math.Round(bankDeposit.ForeignAmount, 2);
-
+                if (cashbookPM.CashBookTypeCode != "1")
+                {
+                    cashbookPM.TotalAmount += Math.Round(bankDeposit.ForeignAmount, 2);
+                }
                 // update cashbook rows if cashbook is cheques
                 if (!bankDeposit.IsCashDeposit)
                 {

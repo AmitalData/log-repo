@@ -485,8 +485,10 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         {
             if (PaymentCashbook.TotalAmount == null)
                 PaymentCashbook.TotalAmount = 0;
-
-            PaymentCashbook.TotalAmount += amount;
+            if (PaymentCashbook.CashBookTypeCode != "1")
+            {
+                PaymentCashbook.TotalAmount += amount;
+            }
             PaymentCashbook.ChangeSetOp = ChangeSetOperation.Update;
 
             SubmitCashbook(PaymentCashbook);

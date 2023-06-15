@@ -231,6 +231,12 @@ namespace Logitude.Accounting.Data.Repositories
             DateTime todayDateEndDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 23, 59, 59);
             return todayDateEndDate;
         }
+        public CashBook GetCashbookByAccountId(string accountId, int tenant)
+        {
+            return (from a in context.CashBooks
+                    where a.AccountId == accountId && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
     }
 
 }
