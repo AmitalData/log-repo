@@ -377,6 +377,7 @@ async FullDeclarationRestore(){
         currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
         currRequestParams.IsUpdateDB = IsUpdateDB;
+        currRequestParams.ResponseName = "9079"
         
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
