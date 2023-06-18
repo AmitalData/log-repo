@@ -28,6 +28,8 @@ import { SupplierInvoiceService } from '../../../../../Customs/Services/Others/S
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { ImageParameter } from '../../../../../Infrastructure/DataContracts/ImageParameter';
 import { Guid } from '../../../../../Infrastructure/Utilities/Guid';
+import { List } from 'Infrastructure/DataContracts/Dashboard/List';
+import { forEach } from 'cypress/types/lodash';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -260,7 +262,6 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     }
 
     getSupplierInvoices() {
-
         //this.ItemsSource.Clear();
         this.Invoices = this.EntityPM.SupplierInvoices;
         this.ItemsSource.InsertCollection(this.Invoices, true);
@@ -368,6 +369,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     filterAgrs: ApiQueryFilters; 
 
     private timerToken: any;
+
+     
     IsPrimarySupplierInvoiceChecked(checked: boolean, item: SupplierInvoicePM) {
    
         if (!checked) {
@@ -402,6 +405,46 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         }
         
     }
+
+    private  SupplierInvoiceComprehensiveUpdate:SupplierInvoicePM[]=[];
+    IsComprehensiveUpdateChecked(checked: boolean, item: SupplierInvoicePM){
+        
+        if(checked){
+            this.SupplierInvoiceComprehensiveUpdate.push(item);
+        }
+        else{
+            this.SupplierInvoiceComprehensiveUpdate= this.SupplierInvoiceComprehensiveUpdate.filter(i=>i.InvoiceNumber!==item.InvoiceNumber);
+        }
+    }
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+    OpenOcrDefult(){
+        this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceExportDefault", 0).subscribe((response: any) => {
+            var windowTitle = TextCodeTranslator.Translate("Customs.Consignment.O.ComprehensiveUpdate");
+            var logWindow = new LogitudeWindow();
+            var windowArgs: any = {};
+            windowArgs.IsFromSupplierInvoice = true;
+            windowArgs.Declaration=this.EntityPM;
+            windowArgs.SupplierInvoiceComprehensiveUpdate=this.SupplierInvoiceComprehensiveUpdate;
+            logWindow.Width = 800;
+            logWindow.Height = 500;
+            logWindow.Title = windowTitle;
+            logWindow.IsShowCloseButton = true;
+            logWindow.WindowArgs=windowArgs;
+            logWindow.Show('./Common/Components/Maintenance/OcrDefaultsSettingsComponent');
+            logWindow.WindowClosed.subscribe((event: any) => {
+                if(event=="update"){
+                    this.EntityPM.SupplierInvoices.forEach(element => {
+                        this.supplierInvoicePMService.update(element)
+                    });
+                }
+              
+               
+                
+               
+            });
+        });
+    }
+
 
     EditButtonClicked(item: SupplierInvoicePM) {
 
@@ -438,6 +481,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                     var declaration = response.Result;
                     this.CurrentSession.StopBusyIndicator();
                     if (!AppTool.IsNullOrEmpty(declaration)) {
+
                         if (!AppTool.IsNullOrEmpty(item)) {
                             this.EditInvoice(item);
 
