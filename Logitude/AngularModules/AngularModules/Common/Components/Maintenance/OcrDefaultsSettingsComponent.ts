@@ -164,8 +164,6 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     UpdateSupplierInvoice(SupplierInvocie: SupplierInvoicePM) {
         SupplierInvocie.AccountTypeCode = this.SupplierInvioceExportDefaultPM.AccountTypeCode;
         SupplierInvocie.PartyRelationshipCode = this.SupplierInvioceExportDefaultPM.PartyRelationshipCode;
-        SupplierInvocie.PartyRelationshipName = "שותפים עסקיים ";
-
         SupplierInvocie.BuyerRoleCode = this.SupplierInvioceExportDefaultPM.BuyerRoleCode;
         SupplierInvocie.SupplierInvoiceItems.forEach(element => {
             element.SupplierInvoiceItemProcesTypes.forEach(ProcesTypes => {
