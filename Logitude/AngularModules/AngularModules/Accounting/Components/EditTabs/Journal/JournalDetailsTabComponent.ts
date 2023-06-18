@@ -481,6 +481,16 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.HeaderCurrency = null;
         }
     }
+
+
+    public get SecurityLevel() { return this.EntityPM.SecurityLevel; }
+    public set SecurityLevel(value: number) {
+        if (this.EntityPM.SecurityLevel != value) {
+            this.EntityPM.SecurityLevel = value;
+        }
+    }
+
+
     get DocumentDate() { return this.EntityPM.DocumentDate; }
     set DocumentDate(value: Date) {
         if (this.EntityPM.DocumentDate != value) {
@@ -1348,12 +1358,6 @@ class JournalLineModel extends BaseComponent {
         }
     }
 
-    public get SecurityLevel() { return this.EntityPM.SecurityLevel; }
-    public set SecurityLevel(value: number) {
-        if (this.EntityPM.SecurityLevel != value) {
-            this.EntityPM.SecurityLevel = value;
-        }
-    }
 
     get CurrencyCode() { return this.JournalLinePM.CurrencyCode; }
     set CurrencyCode(value: string) {
