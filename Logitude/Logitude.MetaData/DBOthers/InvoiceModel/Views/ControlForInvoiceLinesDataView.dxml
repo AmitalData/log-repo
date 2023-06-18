@@ -34,7 +34,7 @@
         
         inner join ChartOfAccountsTypes CHT on CHT.Code=CH.TypeCode
         
-        inner join Journals JR on JR.AccountingEntityId=AR.Id
+        inner join Journals JR on JR.AccountingEntityId=AR.Id and ar.Tenant=jr.Tenant
         
         inner join JournalAdditionalDatas JAD on JAD.JournalId=JR.id
         
