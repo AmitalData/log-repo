@@ -39,23 +39,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData = new INF_MSG_GenericResponseData();
             bool lockit = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Singleton.CRS:2715/UDLT"));
             string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(customResponse.DocumentsFilingId, requestParams.Tenant);
-            IDisposable disposableToken = null;
 
-            try
+            using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:2715/UDLT"))
             {
-                disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:2715/UDLT");
-            
                 RealUpdate(customResponse, requestParams);
-            }
-            catch (ProcessLockException processLockException)
-            {
-                LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
-                throw;
-            }
-            finally
-            {
-                if (disposableToken != null)
-                    disposableToken.Dispose();
             }
         }
 
