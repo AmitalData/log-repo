@@ -63,19 +63,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public List<PriorityRequestsSheetSummary> GetStatisticsByCourierDeclarations(int tenant,string courierMasterId)
         {
 
-            string key = "ObjectTable" + "Customs.Declaration" + "," + tenant.ToString();
-           var val = CacheManager.GetOrInsertNewObject<string>(key, () =>
-           {
-              var result= string.Empty; 
-              IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
-              ObjectTable DeclarationObjectTable = webFreightContext.ObjectTables.Where(d => d.Name == "Customs.Declaration" && d.Tenant == 0).FirstOrDefault();
-              ObjectTable CourierMasterObjectTable = webFreightContext.ObjectTables.Where(d => d.Name == "Customs.CourierMaster" && d.Tenant == 0).FirstOrDefault();
-
-                result = DeclarationObjectTable.Id + "," + CourierMasterObjectTable.Id;
-                return result;
-           });
-           var objectIdDec = val.Split(',')[0];
-           var objectIdCour = val.Split(',')[1];
 
             //var lastweek = DateTime.Now.Date.AddDays(-7);
             /*var query1 = (from b in context.CourierDeclarations
@@ -92,6 +79,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                               EntityId1 = a.EntityId1,
                               InterfaceTypeCode = a.InterfaceTypeCode,
                               InterfaceTypeName = a.InterfaceTypeName,
+                              TenantPriority = a.TenantPriority
                           });
             var query2 = (from a in context.RequestSheetInQueueMesViews
                          join c in context.CourierDeclarations on
@@ -103,6 +91,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                              EntityId1 = a.EntityId1,
                              InterfaceTypeCode = a.InterfaceTypeCode,
                              InterfaceTypeName = a.InterfaceTypeName,
+                             TenantPriority = a.TenantPriority
                          }).Distinct();
             var resultQuery = query.Concat(query2);
 
@@ -119,13 +108,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                               });*/
 
 
-            var qGroupIt = resultQuery.GroupBy(q =>new { q.InterfaceTypeName, q.InterfaceTypeCode }).Select(g => new PriorityRequestsSheetSummary
+            var qGroupIt = resultQuery.GroupBy(q =>new { q.InterfaceTypeName, q.InterfaceTypeCode, q.TenantPriority }).Select(g => new PriorityRequestsSheetSummary
             {
                 Id = new Guid(),
                 count = g.Select(x => x.InterfaceTypeCode).Count(),
                 totalCount=g.Select(x => x.InterfaceTypeCode).Count(),
                 InterfaceTypeName = g.Key.InterfaceTypeName,
-                InterfaceTypeCode = g.Key.InterfaceTypeCode
+                InterfaceTypeCode = g.Key.InterfaceTypeCode,
+                TenantPriority = g.Key.TenantPriority
             });
             return qGroupIt.Where(r => r.count > 0).ToList();
         }

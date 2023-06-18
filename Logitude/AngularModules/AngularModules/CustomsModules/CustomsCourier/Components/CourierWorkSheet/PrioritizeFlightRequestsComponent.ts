@@ -138,7 +138,7 @@ export class PrioritizeFlightRequestsComponent
     }
 
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
-    customsRequestsSheetSummary = new Array<CustomsRequestsSheetSummary>();
+    customsRequestsSheetSummary = new Array<PriorityRequestsSheetSummary>();
     IsTherecustomsRequestsSheetSummary = false;
     SumRequests = 0;
     
@@ -194,10 +194,12 @@ export class PrioritizeFlightRequestsComponent
 
 ////////////////////////////////////////
 
-export class CustomsRequestsSheetSummary {
+export class PriorityRequestsSheetSummary {
     id: string;
     count: number;
     totalCount:number;
     InterfaceTypeName: string;
+    TenantPriority: number;
+
 }
 //////////////////////////////////////////////////

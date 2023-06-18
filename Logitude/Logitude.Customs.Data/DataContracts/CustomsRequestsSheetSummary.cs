@@ -24,5 +24,7 @@ namespace Logitude.Customs.Data.DataContracts
         public int totalCount { get; set; }
         public string InterfaceTypeName { get; set; }
         public string InterfaceTypeCode { get; set; }
+        public int? TenantPriority { get; set; }
+
     }
 }

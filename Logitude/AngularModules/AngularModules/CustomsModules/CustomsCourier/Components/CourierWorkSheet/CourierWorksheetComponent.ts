@@ -2675,8 +2675,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         var logitudeWindow = new LogitudeWindow();
         var windowArgs: any = {};
         windowArgs.CourierMasterPM = this.entityPM;
-        logitudeWindow.Width = 400;
-        logitudeWindow.Height = 600;
+        logitudeWindow.Width = 480;
+        logitudeWindow.Height = 620;
         logitudeWindow.IsShowCloseButton = true;
         logitudeWindow.Title = "תעדוף בקשות לטיסה"; 
         logitudeWindow.WindowArgs = windowArgs;

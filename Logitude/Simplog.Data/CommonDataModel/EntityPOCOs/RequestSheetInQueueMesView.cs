@@ -16,7 +16,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string InterfaceTypeCode { get; set; }
         public string InterfaceTypeName { get; set; }
         public int Tenant { get; set; }
-
+        public int TenantPriority { get; set; }
 
     }
 }
