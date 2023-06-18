@@ -187,13 +187,14 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.EntityPM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
         this.EntityPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
 		this.EntityPM.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+		this.EntityPM.PaymentCurrencyExchangeRate = 1;
 		this.loadPartnerTypesFilter();
 		this.SetDefalutPaymentMethod();
     }
 	private loadPartnerTypesFilter()
     {
         this.checkPartnerTypesFilterFeature();
-       // if(this.isPartnerTypesFilterEnabled)
+      // if(this.isPartnerTypesFilterEnabled)
             this.getPartnerTypes();
     }
 	checkPartnerTypesFilterFeature(){
@@ -1180,7 +1181,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public set SelectedPartnerType(type : PartnerTypeList) {
         this._SelectedPartnerType = type;
         this.filterByPartnerTypeCode = type.Id;
-        this.AccountingPaymentMethodId = null;
+        this.BillToId = null;
 
     }
 
