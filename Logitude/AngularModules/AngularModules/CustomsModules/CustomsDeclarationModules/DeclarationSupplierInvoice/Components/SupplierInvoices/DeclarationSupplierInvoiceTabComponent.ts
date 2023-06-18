@@ -434,7 +434,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             logWindow.WindowClosed.subscribe((event: any) => {
                 if(event=="update"){
                     this.EntityPM.SupplierInvoices.forEach(element => {
-                        this.supplierInvoicePMService.update(element)
+                        this.supplierInvoicePMService.update(element).subscribe(e=>{}) ;
                     });
                 }
               
