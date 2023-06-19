@@ -1203,18 +1203,17 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         private void UpdateNoIdUnder150()
         {
-            Card myCard = null;
-            var repository = new CardRepository(_tenant);
-            myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, _tenant);
-            string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, _tenant);
          
             if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
             {
                 if (_CourierMasterPM != null)
                 {
-                   
+                    Card myCard = null;
+                    var repository = new CardRepository(_tenant);
+                    myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, _tenant);
                     if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
                     {
+                        string defValue = GetDefault("ISRAEL", "CGO_NO_ID_150", "NON", myCard.Code, _tenant);
                         if (defValue == "Y")
                         {
                             if (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault() != null && (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp == ChangeSetOperation.Insert || (this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().ChangeSetOp != ChangeSetOperation.Insert && this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceAmount.GetValueOrDefault() != this._SupplierInvoiceAmount)))
@@ -1275,7 +1274,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
 
 
-            if (defValue == "Y" && currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD <= 150)
+            if ( currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD <= 150)
 
             {
 
