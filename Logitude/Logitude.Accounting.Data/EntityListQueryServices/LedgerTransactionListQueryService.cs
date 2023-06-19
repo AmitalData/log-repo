@@ -263,7 +263,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                         CalculatedLocalAmount = ledger.LocalAmountCredit != 0 ? ledger.LocalAmountCredit : ledger.LocalAmountDebit,
                                                                         CurrencyId = ledger.CurrencyId,
                                                                         SearchFields = ledger.SearchFields,
-                                                                  //      SecurityLevelFiltering = 1,
+                                                                       // SecurityLevelFiltering = 1,
 
                                                                     }).Distinct();
             transactionBalanceFilter.TaxReportTotalCount = journalOutputLines.Count();
