@@ -1566,6 +1566,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         int tenant = 0;
                         int.TryParse(response.MessageValues["tenant"].ToString(), out tenant);
                         UpdateGLAccountAgingData(communicationLogId, queueservice, tenant);
+                        SetTenantIdle(response.Tenant);
                     }
                     else
                     {
@@ -1579,7 +1580,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
-                if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
+             /*   if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
                 {
                     try
                     {
@@ -1604,7 +1605,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         throw;
                     }
                 }
-
+             */
             }
 
             public void CreateBatchAccountingIntegrityCheck()
