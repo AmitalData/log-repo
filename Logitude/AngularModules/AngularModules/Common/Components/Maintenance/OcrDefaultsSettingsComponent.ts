@@ -28,7 +28,7 @@ import { SupplierInvoicePM } from 'Customs/EntityPMs/SupplierInvoicePM';
     selector: 'OcrDefaultsSettingsComponent',
 
     templateUrl: './OcrDefaultsSettingsComponent.html',
-})
+})  
 
 
 export class OcrDefaultsSettingsComponent extends BaseComponent {
@@ -109,7 +109,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
 
         }
     }
-
+    
     get TransactionNatureCode() { return this.SupplierInvioceExportDefaultPM?.TransactionNatureCode ?? "2" }
     set TransactionNatureCode(value: string) {
         if (this.SupplierInvioceExportDefaultPM.TransactionNatureCode != value) {
