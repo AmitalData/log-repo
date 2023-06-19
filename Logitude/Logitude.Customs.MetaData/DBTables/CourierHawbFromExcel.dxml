@@ -25,6 +25,12 @@
       PrimaryKey="true"
       Nullable="false" />
   </Column>
+  <Column
+    Name="NotFound"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
