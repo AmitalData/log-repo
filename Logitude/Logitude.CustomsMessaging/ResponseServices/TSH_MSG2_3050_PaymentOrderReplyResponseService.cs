@@ -271,8 +271,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     string key = ProcessLockTableUtil.Instance.GetKey4Declaration(firstDeclaratioNumber, requestParams.Tenant);
                     disposableToken =
-                           ///ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "DeclarationNumber");
-                           ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber");
+                           ///ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "2470ResponseService.Update");
+                           ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "2470ResponseService.Update");
                 }
                 LogPayment("6");
                 //Connect payment to declaration

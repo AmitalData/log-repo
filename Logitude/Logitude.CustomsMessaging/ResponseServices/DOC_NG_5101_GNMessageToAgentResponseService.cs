@@ -50,27 +50,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
         {
             var declarationNumber = customResponse?.MessageToAgent?.RelatedEntity?.entityIdKey1;
-            IDisposable disposableToken = null;
-
-            try
-            {                
-                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
-                disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5101ResponseService.Update");
             
+            string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
+            using (var disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant,true,key, "5101ResponseService.Update"))
+            {
                 UpdateIt(customResponse, requestParams);
             }
-            catch (ProcessLockException processLockException)
-            {
-                LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
-                throw;
-            }
-            finally
-            {
-                if (disposableToken != null)
-                    disposableToken.Dispose();
-            }
-        }
 
+        }
         public void UpdateIt(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
         {
             var context = CustomContext.GetContext(requestParams.Tenant);
