@@ -28,7 +28,7 @@ import { SupplierInvoicePM } from 'Customs/EntityPMs/SupplierInvoicePM';
     selector: 'OcrDefaultsSettingsComponent',
 
     templateUrl: './OcrDefaultsSettingsComponent.html',
-})
+})  
 
 
 export class OcrDefaultsSettingsComponent extends BaseComponent {
