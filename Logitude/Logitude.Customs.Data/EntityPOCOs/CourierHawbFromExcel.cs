@@ -28,6 +28,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
      [Key]
         [Column("DeclarationId")]
 	    public string DeclarationId { get; set; }
+        [Column("NotFound")]
+	    public bool? NotFound { get; set; }
     }
 }
 	 

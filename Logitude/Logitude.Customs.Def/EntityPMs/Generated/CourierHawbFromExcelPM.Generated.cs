@@ -89,6 +89,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? notFound ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? NotFound  
+	   {
+	    
+	     get
+		{
+		   return notFound;
+		 }
+		 set
+		 {
+		   if(notFound != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NotFound",OldValue=notFound,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   notFound=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
