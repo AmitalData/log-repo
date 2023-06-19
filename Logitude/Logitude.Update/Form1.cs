@@ -4767,9 +4767,10 @@ User/Pass",
                     KeywordsList.RemoveAll(s => string.IsNullOrWhiteSpace(s));
                     foreach (var word in KeywordsList)
                     {
+                        var NoCommas = word.Replace(",", "");
                         var newEntity = new PendingByKeywordPM();
-                        newEntity.KeywordsList = word;
-                        newEntity.SearchFields = word;
+                        newEntity.KeywordsList = NoCommas;
+                        newEntity.SearchFields = NoCommas;
                         newEntity.SearchByFieldCode = item.SearchByFieldCode;
                         newEntity.CourierPendingReasonCode = item.CourierPendingReasonCode;
                         newEntity.SearchType = item.SearchType;
