@@ -499,26 +499,27 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 if (rowData.Length > 0)
                 {
-                    if (!string.IsNullOrEmpty(rowData[0]))
+                    int ArrayIndex = 0;
+                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
                         DateTime.TryParse(rowData[0], out DateTime referenceDate);
                         excelReconcileExternalPageLine.ReferenceDate = referenceDate;
                     }
-                    if (!string.IsNullOrEmpty(rowData[1]))
+                    if (ArrayIndex < rowData.Length &&  !string.IsNullOrEmpty(rowData[ArrayIndex++]))
                     {
                         decimal.TryParse(rowData[1], out decimal debitAmount);
                         excelReconcileExternalPageLine.DebitAmount = debitAmount;
                     }
-                    if (!string.IsNullOrEmpty(rowData[2]))
+                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex++]))
                     {
                         decimal.TryParse(rowData[2], out decimal CreditAmount);
                         excelReconcileExternalPageLine.CreditAmount = CreditAmount;
                     }
-                    if (!string.IsNullOrEmpty(rowData[3]))
+                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex++]))
                     {
                         excelReconcileExternalPageLine.Reference = rowData[3];
                     }
-                    if (!string.IsNullOrEmpty(rowData[4]))
+                    if (ArrayIndex < rowData.Length && rowData.Length > 4 && !string.IsNullOrEmpty(rowData[ArrayIndex++]))
                     {
                         excelReconcileExternalPageLine.Notes = rowData[4];
                     }
