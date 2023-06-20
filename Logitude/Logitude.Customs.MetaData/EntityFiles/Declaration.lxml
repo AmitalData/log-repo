@@ -21045,10 +21045,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  
-  
-  
-  
   <field
     Id="&quot;57a0ba19-f365-4e0b-a611-6a87b9c3b310&quot;"
     FieldName="&quot;ExportFlightDate&quot;"
