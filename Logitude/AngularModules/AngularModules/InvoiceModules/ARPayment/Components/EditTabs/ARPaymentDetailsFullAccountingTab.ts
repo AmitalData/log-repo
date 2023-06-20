@@ -69,6 +69,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	public EnableNegativeOffsetARPayments: boolean = false;
 	public IsEditExchangeRateVisible: boolean = false;
 	_PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
+	DisabledPartnerTypes: boolean = true;
 	get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetARPayments == true && this.AccountingPaymentMethodCode == "FS" ? true : false; }
 	public isRTL: boolean = false;
 	public showLocal: boolean = false;
@@ -84,6 +85,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	public InvoiceAmountCurrency: string = TextCodeTranslator.Translate("Accounting.O.ARP.InvoiceAmount") + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
 	public PaymenyAmount: number;
 	_AccountingPaymentMethodListService = new AccountingPaymentMethodListService();
+	public PartnerTypes: PartnerTypeList[] = [];
 	get TextStore()
 	{
 		return TextStore;
@@ -111,7 +113,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
 		this.EntityPM = entityArgs.EntityPM;
-		this.CreateARPayment();
+		if( this.EntityPM.StatusCode==null)
+			this.CreateARPayment();
 		this.SetAmountCurrencyCode();
 		this.ComputeLocalAmount();
         this.SetPaymentAmount();
@@ -734,6 +737,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		}
 
 		else {
+			this.DisabledPartnerTypes = false;
 			this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, true);
 			this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, true);
 			this.UIProperties.SetEnabled("RegisterDate", this.ObjectTableName, true);
@@ -1160,14 +1164,12 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		// this.UpdateSummary();
 		// this.IsDataLoaded = true;
 	}
-	AllowedPartnerTypesCodes: string[] = ['CS','AG','AC','AL','CG','SG','SL','TR','VD','WH'];
-    PartnerTypes: PartnerTypeList[] = [];
+	AllowedPartnerTypesCodes: string[] = ['CS','AG','AC','AL','CG','SG','SL','TR','VD','WH'];  
     filterByPartnerTypeCode: string;
     isPartnerTypesFilterEnabled: boolean = false;
     getPartnerTypes(){
         this._PartnerTypeListService.getAll().subscribe((res:ServiceResponse)=>
         {
-            console.log('[PartnerTypeListService]');
             var partnerTypes: PartnerTypeList[] = res.Result || [];
             this.PartnerTypes = partnerTypes.filter(d => this.AllowedPartnerTypesCodes.indexOf(d.Id) > -1); // filter
             this.SelectedPartnerType = partnerTypes.filter(d => d.Id == 'CS')[0]; // default
@@ -1191,7 +1193,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		if (this.EntityPM == null) {
 			return null;
 		}
-		return this.EntityPM.BillToId;
+		this.getPartnerTypes();
+		return this.EntityPM.BillToId;		
 	}
 	set BillToId(value: string)
 	{
