@@ -37,6 +37,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using System.Threading.Tasks;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.Data.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -846,7 +847,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                 DeclarationCourierStatusPM _MyDeclarationCourierStatusPM = new DeclarationCourierStatusPM();
-                _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+
+                //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_MyDeclarationPM.Tenant);
+                _MyDeclarationCourierStatusPM = myDeclarationUpdateService._DeclarationCourierStatusPM;
+                //_MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
                 if (_MyDeclarationCourierStatusPM != null)
                 {
                     DeclarationPendingPM declarationPendingPM_900 = null;
