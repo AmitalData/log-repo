@@ -703,7 +703,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           MehesFee = MyDeclarationTaxesByTaxTypeCodeViews.MehesFee,
                                                           VATReshimonFee = MyDeclarationTaxesByTaxTypeCodeViews.VATReshimonFee,
                                                           SecurityFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
-                                                          ComputerFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
+                                                          ComputerFee = MyDeclarationTaxesByTaxTypeCodeViews.ComputerFee,
 
                                                       });
 
