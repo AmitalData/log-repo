@@ -112,6 +112,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string courierHawb ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierHawb  
+	   {
+	    
+	     get
+		{
+		   return courierHawb;
+		 }
+		 set
+		 {
+		   if(courierHawb != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierHawb",OldValue=courierHawb,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierHawb=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

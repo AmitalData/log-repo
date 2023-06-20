@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.NotFound).HasColumnName("NotFound");
+
+            this.Property(t => t.CourierHawb).HasColumnName("CourierHawb").HasMaxLength(35).IsUnicode(false);
         }
     }
 }
