@@ -1498,7 +1498,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     try
                     {
-                        if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
+                        string workerRoleName = "";
+                        if(!string.IsNullOrEmpty(LogitudeSettings.WorkerRoleName))
+                        {
+                            workerRoleName = LogitudeSettings.WorkerRoleName;
+                        }
+                        if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
                         {
                             if (DateTime.Now < new DateTime(2050, 06, 01))
                             {
@@ -1579,33 +1584,6 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
-
-             /*   if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
-                {
-                    try
-                    {
-                        if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
-                        {
-                            if (DateTime.Now < new DateTime(2050, 06, 01))
-                            {
-                                CreateBatchAccountingIntegrityCheck();
-                            }
-                            _NextDueDoneAt = DateTime.UtcNow.Date;
-                            var myDueLocalBalanceService = new DueLocalBalanceService();
-                            myDueLocalBalanceService.RunAllTenants();
-
-                            var dailyRebuildAgingService = new DailyRebuildAgingService();
-                            dailyRebuildAgingService.RunAllAgingTenants();
-
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        SetTenantIdle(response.Tenant);
-                        throw;
-                    }
-                }
-             */
             }
 
             public void CreateBatchAccountingIntegrityCheck()
