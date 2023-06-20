@@ -234,6 +234,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 case "I":
                     {
+                        declarationPM.ExcludeManifest = true;
                         return;
                     }
 
@@ -262,9 +263,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         if (!allAgentRoleCodes.Contains(declarationPM.AgentRoleCode))
                         {
                             throw new Exception("תפקיד סוכן - ערכים שגויים  ");
-                        }
+                        }                                         
                     }
-
+                    
 
                     break;
 
