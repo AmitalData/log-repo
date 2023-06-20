@@ -151,6 +151,26 @@
                                 <tr>
                                     <td style="width:360px;">
                                         <table>
+                                             <!-- PartnerTypes Filter -->
+                                            <tr  class="customtrclass">
+                                                <td style="width:120px; height: 25px; padding-left: 10px; ">
+                                                    {{ 'ARInvoice.F.PartnerType' | TextCodeTranslationPipe }}
+                                                </td>
+
+                                                <td style="width:230px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                    <ComboBox [ItemsSource]="PartnerTypes"
+                                                                [Binding]="'Name'"
+                                                                [SelectedItem]="SelectedPartnerType"
+                                                                (SelectedItemChanged)="SelectedPartnerType = $event"
+                                                                [IsDisabled]="DisabledPartnerTypes"></ComboBox>
+
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                            </tr>
                                             <!-- BillToId -->
                                             <tr class="customtrclass">
                                                 <td style="width:120px; height:25px; ">
@@ -160,15 +180,17 @@
                                                 </td>
 
                                                 <td style="width:230px; ">
-                                                    <LogLov [ObjectFieldName]="'BillToId'"
-                                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                            [SelectedValue]="BillToId" [LookUpTableName]="'Card'"
-                                                            [DependencyFilter1Value]="'CS,AG,AL,CG,SG,SL,TR,VD,WH'"
-                                                            [DependencyFilter1IsList]="true"
-                                                            [DisplayFieldsFromList]="DisplayFieldsFromList"
-                                                            [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                            [CustomizedWidth]="BillToLovSizeForFullAccounting">
-                                                    </LogLov>
+                                                <LogLov [ObjectFieldName]="'BillToId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [SelectedValue]="BillToId"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DependencyFilter1Value]="filterByPartnerTypeCode"
+                                                        [DisplayFieldsFromList]="DisplayFieldsFromList"
+                                                        [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
+                                                        [CustomizedWidth]="BillToLovSizeForFullAccounting">
+                                                </LogLov>
+
                                                 </td>
 
                                                 <td>
