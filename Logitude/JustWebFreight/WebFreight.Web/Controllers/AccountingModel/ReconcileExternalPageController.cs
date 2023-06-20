@@ -52,7 +52,6 @@ using WebFreight.Web.Controllers.CommonDataModel.Extended;
 using Syncfusion.XlsIO;
 using System.Globalization;
 using Microsoft.Owin;
-using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
