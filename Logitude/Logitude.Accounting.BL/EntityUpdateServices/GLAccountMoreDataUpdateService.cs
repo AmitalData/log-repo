@@ -40,14 +40,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(GLAccountMoreDataPM entityPM, GLAccountMoreData entityPOCO)
         {
-
+			if (currentContext == null) { 
+               currentContext = AccountingContext.GetContext(entityPM.Tenant);
+            }
             CashBookQueryService cashBookQueryService = new CashBookQueryService(entityPM.Tenant);
-            var cashBook=  cashBookQueryService.GetCashbookByAccountId(entityPM.AccountId,entityPM.Tenant);
-
-			if (cashBook.CashBookTypeCode == "1") { 
-                CashBookUpdateService cashBookUpdateService = new CashBookUpdateService(entityPM.Tenant);
-                cashBook.TotalAmount = entityPM.BalanceInForeignCurrency;
-                cashBookUpdateService.Update(cashBook, true);
+            if (!string.IsNullOrEmpty(entityPM.AccountId)) { 
+                var cashBook=  cashBookQueryService.GetCashbookByAccountId(entityPM.AccountId,entityPM.Tenant);
+                
+			    if (cashBook !=null && cashBook.CashBookTypeCode == "1") {
+                    CashBookUpdateService cashBookUpdateService = new CashBookUpdateService(currentContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    cashBook.TotalAmount = entityPM.BalanceInForeignCurrency;
+                    cashBook.ChangeSetOp = ChangeSetOperation.Update;
+                    cashBookUpdateService.Update(cashBook, true);
+                }
             }
         }
 
