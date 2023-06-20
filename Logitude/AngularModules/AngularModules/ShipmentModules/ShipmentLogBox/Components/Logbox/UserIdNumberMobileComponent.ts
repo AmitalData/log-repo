@@ -1,7 +1,7 @@
 declare var System: any, window: any;
 import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
 import { TransportsFilter } from '../../../../Controls/TransportsFilter';
-import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef, isDevMode } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { SearchTextBox } from '../../../../Controls/SearchTextBox';
 import { IconButton } from '../../../../Controls/IconButton';
@@ -34,17 +34,13 @@ import { CommonDomainService } from '../../../../Common/Services/CommonDomainSer
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 import { DatePipe } from '@angular/common';
-import { Subject } from 'rxjs';
 
 
 
 @Component({
 
     templateUrl: './UserIdNumberMobileComponent.html',
-    styleUrls: [
-        './mobilePayments.scss',
-        './UserIdNumberMobileComponent.scss',
-    ]
+    styleUrls: ['./mobilePayments.scss']
 })
 
 export class UserIdNumberMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
@@ -64,8 +60,6 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     RefreshTimer: any;
     _ImageLibraryService: ImageLibraryService;
     orianStyle: boolean = false;
-    showDialogUserAcceptSave: boolean = false;
-    $userAcceptSave: Subject<boolean> = new Subject<boolean>();
 
     constructor(private cd: ChangeDetectorRef) {
         super();
@@ -132,7 +126,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
             }
         }
         this.StartBusyIndicator("Loading ...");
-        this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe((myAdditionalResult: any) => {
+        this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe((myAdditionalResult:any) => {
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity && entity.IsUserIDNumberRequired == false) {
                 var myMessage = AppTool.IsNullOrEmpty(entity.UserIdNumber) ? "לא נדרשת השלמת תעודת זהות למשלוח זה" : "הפרטים נשמרו בהצלחה";
@@ -149,7 +143,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                 this.StopBusyIndicator();
             }
             else {
-                this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult: any) => {
+                this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
                     if (MyResult.Result) {
 
                         this.AdditionalData = MyResult.Result;//AdditionalResult.Result
@@ -254,7 +248,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
 
     SendButtonClicked() {
         this.ValidationList = [];
-        this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe(async (myAdditionalResult: any) => {
+        this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe((myAdditionalResult:any) => {
 
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity.IsUserIDNumberRequired == false) {
@@ -274,10 +268,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                     entity.IsUserIDNumberRequired = false;
                     entity.UserIdNumber = this.UserIdNumber;
                     if (this.IsValidIsraeliID(this.UserIdNumber)) {
-
-                        entity.UserAcceptSaveID = this.orianStyle ? await this.checkUserAcceptSave(): 0;
-
-                        this._ShipmentAdditionalCloudDataService.updateUserID(entity).subscribe((AdditionalResult: any) => {
+                        this._ShipmentAdditionalCloudDataService.updateUserID(entity).subscribe((AdditionalResult:any) => {
                             if (!AdditionalResult.HasError) {
                                 this.FinalMessage == "זיהוי משתמש נשלח בהצלחה ";
                                 this.ShowFinalMessage = true;
@@ -331,19 +322,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     private getEcommerceSupportEmail() {
         new CommonDomainService().GetTenantEcommerceSupportEmailByShipmentSecurityKey(this.Tenant, this.SecurityKey).subscribe((myTenant: any) => {
             if (myTenant.Result)
-                this.EcommerceSupportEmail = myTenant.Result;
+                this.EcommerceSupportEmail = myTenant.Result;            
         });
-    }
-
-    async checkUserAcceptSave(): Promise<boolean> {
-        this.showDialogUserAcceptSave = true;
-
-        return await new Promise(res => {
-            const subscribtion = this.$userAcceptSave.subscribe((userAcceptSave: boolean) => {
-                subscribtion.unsubscribe();
-                this.showDialogUserAcceptSave = false;
-                res(userAcceptSave);
-            })
-        })
     }
 }

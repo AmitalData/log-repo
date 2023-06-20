@@ -560,7 +560,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 data.UserIdNumber = entity.UserIdNumber;
                 data.UserIdNumberUpdateDate = TenantServerConfigration.GetCurrentDateTime(data.Tenant);
                 data.ApprovedByUserName = entity.ApprovedByUserName;
-                data.UserAcceptSaveID = entity.UserAcceptSaveID;
 
                 Repository.Update(data);
                 Repository.SubmitChanges();
@@ -600,8 +599,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 Action = "UserIdNumber",
                 Parameters = new List<Logitude.Server.Tools.Parameter>() {
                 new Logitude.Server.Tools.Parameter { Name = "ForwarderShipmentNumber", Value = MyShipment.ForwarderShipmentNumber},
-                new Logitude.Server.Tools.Parameter { Name = "UserIdNumber", Value = entity.UserIdNumber},
-                new Logitude.Server.Tools.Parameter { Name = "UserAcceptSaveID", Value = entity.UserAcceptSaveID.ToString()}
+                new Logitude.Server.Tools.Parameter { Name = "UserIdNumber", Value = entity.UserIdNumber}
                 }
             });
 
