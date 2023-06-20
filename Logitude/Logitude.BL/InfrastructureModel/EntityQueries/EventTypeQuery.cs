@@ -743,7 +743,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          join er in repository.context.EventRemarks on et.Id equals er.EventTypeId into erGroup
                          from er in erGroup.Where(e => e.PartnerTypeId == "CS").DefaultIfEmpty()
                          where te.Deleted == false && et.InActive == false && et.IsCustomerView == true && et.Tenant == tenant && te.EntityId == ShipmentId
-                         orderby te.EventDateTime
+                         orderby te.EventDateTime descending
                          select new Event()
                          {
                              LocalName = et.LocalName,
