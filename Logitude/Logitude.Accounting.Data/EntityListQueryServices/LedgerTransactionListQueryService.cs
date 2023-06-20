@@ -87,6 +87,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            CalculatedForeignAmount = a.ForeignAmountCredit != 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
                                                            CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
                                                            JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
+                                                           SecurityLevelFiltering = 1,
                                                        });
 
 
@@ -263,7 +264,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                         CalculatedLocalAmount = ledger.LocalAmountCredit != 0 ? ledger.LocalAmountCredit : ledger.LocalAmountDebit,
                                                                         CurrencyId = ledger.CurrencyId,
                                                                         SearchFields = ledger.SearchFields,
-                                                                       // SecurityLevelFiltering = 1,
+
 
                                                                     }).Distinct();
             transactionBalanceFilter.TaxReportTotalCount = journalOutputLines.Count();
