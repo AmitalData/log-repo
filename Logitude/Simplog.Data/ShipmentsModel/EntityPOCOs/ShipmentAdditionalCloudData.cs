@@ -40,7 +40,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? PaymentRequestDateTime { get; set; }
         public DateTime? DenyDate { get; set; }
         public DateTime? InvoiceIssuedDate { get; set; }
-        public bool UserAcceptSaveID { get; set; }
 
         /*
                  IsUserIDNumberRequired (Bit)
