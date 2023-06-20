@@ -50,6 +50,9 @@ using WebFreight.Web.CustomWebServices.BL.XLSImport;
 using Logitude.Accounting.BL.CoreBL.Reconcile;
 using WebFreight.Web.Controllers.CommonDataModel.Extended;
 using Syncfusion.XlsIO;
+using System.Globalization;
+using Microsoft.Owin;
+using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -500,9 +503,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 if (rowData.Length > 0)
                 {
                     int ArrayIndex = 0;
+                    string format = "dd.MM.yyyy";
                     if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
-                        DateTime.TryParse(rowData[0], out DateTime referenceDate);
+                        DateTime.TryParseExact(rowData[0],format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime referenceDate);
                         excelReconcileExternalPageLine.ReferenceDate = referenceDate;
                     }
                     if (ArrayIndex < rowData.Length &&  !string.IsNullOrEmpty(rowData[ArrayIndex++]))
