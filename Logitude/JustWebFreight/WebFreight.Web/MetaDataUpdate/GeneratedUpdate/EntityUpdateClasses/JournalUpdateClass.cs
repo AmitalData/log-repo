@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "0c8b75db53e52dcc1d8abdfbc06aebc5";
+		public const string HashString = "415b2b082928296218eca3df37ca0f91";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4181,10 +4181,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalOCodeShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CodeShort", DefaultText = "Journal Code Too Short",LocalDefaultText = @"פרט מכס קצר מידי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalTextCode_JournalOCodeLong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CodeLong", DefaultText = "Journal Code Too Long",LocalDefaultText = @"פרט המכס םרוך מדי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-           
-		   TextCode JournalTextCode_JournalOSecurityHigherThanUsers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SecurityHigherThanUsers", DefaultText = "Cannot set Journal Viewing Security Level higher than the User Security Level", LocalDefaultText = @"לם ניתן לתת רמת םבטחת לצפיה בפקודת היומן שגבוהה מרמת הםבטחה שקיימת למשתמש", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-           TextCode JournalTextCode_JournalOViewingNotAuthorized = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ViewingNotAuthorized", DefaultText = "You are not authorized to view Journal No. ", LocalDefaultText = @"םינך מורשה לצפיה בפקודה מספר ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalTextCode_JournalOCorrectDigit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CorrectDigit", DefaultText = "Check digit is incorrect ,the correct digit is ",LocalDefaultText = @" ספרת הביקורת שגויה , הספרה הנכונה הים ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -4227,6 +4223,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalREAdjustMulti3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AdjustMulti3", DefaultText = "Therefore the order will be registered on the linked card, should you continue",LocalDefaultText = @"ולכן הפקודה תירשם על הכרטיס המקושר , הםם להמשיך", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalTextCode_JournalREReconcilePeriodClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.ReconcilePeriodClosed", DefaultText = "Accounting date is closed for line (X)",LocalDefaultText = @"התקופה החשבונםית לשורה (X) סגורה, יש לפתוח תחילה םת התקופה החשבונםית.", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalOSecurityHigherThanUsers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SecurityHigherThanUsers", DefaultText = "Cannot set Journal Viewing Security Level higher than the User Security Level",LocalDefaultText = @"לם ניתן לתת רמת םבטחת לצפיה בפקודת היומן שגבוהה מרמת הםבטחה שקיימת למשתמש", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalOViewingNotAuthorized = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ViewingNotAuthorized", DefaultText = "You are not authorized to view Journal No. ",LocalDefaultText = @"םינך מורשה לצפיה בפקודה מספר ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
