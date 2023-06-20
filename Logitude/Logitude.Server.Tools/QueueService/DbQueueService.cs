@@ -506,6 +506,25 @@ namespace Logitude.Server.Tools.QueueService
             return response;
         }
 
+        public void FreeTenants()
+        {
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
+            {
+
+                string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    SqlCommand cmd = new SqlCommand("[dbo].[SetTenantIdleProcedure]", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+
+                }
+                scope.Complete();
+            }
+        }
 
         public QueueResponse Receive(TimeSpan? serverWaitTime = null)
         {
