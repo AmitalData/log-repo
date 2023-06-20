@@ -39,7 +39,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 new PartnerCardMetaData("Agent", "AgentId", "AgentName"),
                 new PartnerCardMetaData("Agent", "AgentId", "AgentName", true),
                 new PartnerCardMetaData("Customer", "CustomerId", "CustomerName"),
-                new PartnerCardMetaData("Freight Forwarder", "FreightForwarderId", "FreightForwarderName"),
+                new PartnerCardMetaData("Freight Forwarder", "FreightForwarderId", "FreightForwarderName",false,true),
                 new PartnerCardMetaData("consignee", "ConsigneeId", "ConsigneeName"),
                 new PartnerCardMetaData("consignee", "ConsigneeId", "ConsigneeName", true),
                 new PartnerCardMetaData("shipper", "ShipperId", "ShipperName"),
