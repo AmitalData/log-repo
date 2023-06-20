@@ -92,8 +92,9 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
         this.DeclarationPendingItemsSource = new ObservableCollection([]);
        
         console.log("....|| DeclarationPendingsGeneralComponent ||...."); 
-
-        this.decPM= this.CurrentSession.CurrentEditComponent.EntityPM;
+        if(this.CurrentSession.CurrentEditComponent?.EntityPM != null){
+            this.decPM= this.CurrentSession.CurrentEditComponent?.EntityPM;
+        }
         var windowArgs: any = {};
         this._DeclarationCourierStatusPMService.get(this.decPM.Id).subscribe((response: ServiceResponse) => {
             
@@ -252,8 +253,8 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                                 //declarationPendingPM.DeclarationID = this.declarationPM.Id;
                                 //declarationPendingPM.Tenant = this.declarationPM.Tenant;
                                 //this.declarationPendingPMService.update(declarationPendingPM).subscribe((response: ServiceResponse) => {
+                                    SessionLocator.SelectedSession.StopBusyIndicator();
                                     this.InitTab();
-                                SessionLocator.SelectedSession.StopBusyIndicator();
                             });
 
                         }
