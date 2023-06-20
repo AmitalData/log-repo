@@ -25,7 +25,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         CreatedByUserId, 
 	         DeclarationId, 
-	         NotFound,
+	         NotFound, 
+	         CourierHawb,
 	      }
 
 
@@ -35,7 +36,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         CreatedByUserId, 
 	         DeclarationId, 
-	         NotFound,
+	         NotFound, 
+	         CourierHawb,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -57,6 +59,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotFound))
             {
 				entityPOCO.NotFound = entityPM.NotFound;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierHawb))
+            {
+				entityPOCO.CourierHawb = entityPM.CourierHawb;
 			}
 			}
 
@@ -83,6 +90,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.NotFound = entityPOCO.NotFound;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierHawb))
+            {
+					entityPM.CourierHawb = entityPOCO.CourierHawb;
+            }
+
 		}
 
 		public void PMToOldPM(CourierHawbFromExcelPM entityPM, CourierHawbFromExcelPM oldEntityPM)
@@ -102,6 +114,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotFound))
             {
                 oldEntityPM.NotFound = entityPM.NotFound;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierHawb))
+            {
+                oldEntityPM.CourierHawb = entityPM.CourierHawb;
             }
 			
 		}
