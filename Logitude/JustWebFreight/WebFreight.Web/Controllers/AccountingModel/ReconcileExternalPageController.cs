@@ -502,7 +502,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 if (rowData.Length > 0)
                 {
                     int ArrayIndex = 0;
-                    string format = "dd.MM.yyyy";
+                    string format = "dd/MM/yyyy HH:mm:ss";
                     if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
                         DateTime.TryParseExact(rowData[0],format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime referenceDate);

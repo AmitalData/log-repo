@@ -715,7 +715,7 @@ export class AddEditRecoExPageComponent extends BaseComponent {
                 var pageLine: ReconcileExternalPageLinePM = new ReconcileExternalPageLinePM(this.ReconcileExternalPagePM);
                 pageLine.Tenant = SessionLocator.Tenant;
                 pageLine.ReconcileExternalPageId = this.isNewEntity ? "new" : this.ReconcileExternalPagePM.Id;
-                var datemomentobject = moment.utc(element.ReferenceDate, "YYYY-DD-MM")
+                var datemomentobject = moment.utc(element.ReferenceDate, "YYYY-MM-DD")
                 pageLine.ReferenceDate = datemomentobject.toDate();
                 pageLine.DebitAmount = element.DebitAmount;
                 pageLine.CreditAmount = element.CreditAmount;
