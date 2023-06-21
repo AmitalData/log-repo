@@ -1,0 +1,60 @@
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background-color: rgba(0, 0, 0, .75);
+    padding: 40px;
+    overflow: auto;
+    font-family: 'Heebo', sans-serif;
+
+
+    .modal-body {
+        width: 340px;
+        padding: 20px;
+        background: #fff;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        h1 {
+            color: #c90518;
+            font-family: 'Heebo', sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        p {
+            font-size: 15px;
+            margin-bottom: 26px;
+            word-break: break-word;
+            white-space: pre-line;
+        }
+
+        div {
+            display: flex;
+            justify-content: space-between;
+
+            button {
+                color: #ffffff;
+                width: 136px;
+                font-family: "Heebo", sans-serif;
+                font-size: 13px;
+                font-weight: 400;
+                background-color: #c90518;
+                border-radius: 5px;
+                border: 1px solid #697ca7;
+                height: 34px;
+            }
+
+            button.btn-not-agreed {
+                background-color: #bfbfbf;
+            }
+        }
+    }
+}
+
+
+body.modal-open {
+    overflow: hidden;
+}
