@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.CoreBL.BuildTenant;
 using Logitude.Accounting.BL.CoreBL.Fix;
+using Logitude.Accounting.BL.CoreBL.InterestReport;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Logitude.Accounting.BL.EntityQueryServices;
@@ -20,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
+using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.CoreBL.Testers
 {
@@ -155,9 +157,14 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     }
                     break;
                 
-                case "BuildTenant_Click":
+                //case "BuildTenant_Click":
+                //    {
+                //        return BuildTenant_Click(tenant, _TextBoxParam);
+                //    }
+                 //   break;
+                case "InterestReport_Click":
                     {
-                        return BuildTenant_Click(tenant, _TextBoxParam);
+                        return InterestReport2_Click(tenant, _TextBoxParam);
                     }
                     break;
 
@@ -298,9 +305,51 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
 
 
-        
+        private GateWayTesterResult InterestReport2_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+            textBoxParam = @"<InterestReportArgs>
+  <InterestReportId>1-25607</InterestReportId>
+  <Tenant>3</Tenant>
+  <RecalculateData>true</RecalculateData>
+  <InvoiceDate>0001-01-01T00:00:00</InvoiceDate>
+  <CloseWithoutInvoice>false</CloseWithoutInvoice>
+</InterestReportArgs>";
+
+            try
+            {
+
+                System.IO.StringReader stringReader = new System.IO.StringReader(textBoxParam);
+                XmlSerializer serializer = new XmlSerializer(typeof(InterestReportArgs));
+                InterestReportArgs interestReportArgs = serializer.Deserialize(stringReader) as InterestReportArgs;
+
+
             
-        private GateWayTesterResult BuildTenant_Click(int tenant, string textBoxParam)
+                InterestReportDataCalculations interestReportDataCalculation = new InterestReportDataCalculations(interestReportArgs);
+                interestReportDataCalculation.StartCalculations();
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
+        private GateWayTesterResult InterestReport_Click(int tenant, string textBoxParam)
         {
 
             var gateWayTesterResult = new GateWayTesterResult();
