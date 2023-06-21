@@ -2033,8 +2033,13 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
             });
     }
 
-    ImportCourierMasterFromExcel() {
-
+    ImportCourierMawbsFromExcel() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "הטענת אקסל למסך עבודה";
+        logitudeWindow.ShowCloseButton = true;
+        logitudeWindow.Height = 600;
+        logitudeWindow.Width = 700;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/ImportCourierMawbsFromExcel/ImportCourierMawbsFromExcelComponent')
     }
 
 

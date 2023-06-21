@@ -32,6 +32,7 @@ import { AWBWizardComponent } from 'ShipmentModules/ShipmentAWB/Components/AWBWi
 import { SharedManifestComponent } from 'ShipmentModules/ShipmentSharedManifest/Components/SharedManifestComponent';
 import { PrioritizeFlightRequestsComponent } from './Components/CourierWorkSheet/PrioritizeFlightRequestsComponent'; 
 import { UpdatePriorityComponent } from './Components/CourierWorkSheet/UpdatePriorityComponent';
+import { ImportCourierMawbsFromExcelComponent } from './Components/CourierWorkSheet/ImportCourierMawbsFromExcel/ImportCourierMawbsFromExcelComponent';
 
 export const Components =
     [
@@ -68,7 +69,8 @@ export const Components =
         AWBWizardComponent,
         AWBWizardLoadComponent,
         PrioritizeFlightRequestsComponent,
-        UpdatePriorityComponent
+        UpdatePriorityComponent,
+        ImportCourierMawbsFromExcelComponent
     ];
 
 export class ModuleDeclarations {
@@ -108,13 +110,15 @@ export class ModuleDeclarations {
             case "CourierWorksheetNGListTemplate": { myResult = CourierWorksheetNGListTemplate; break; }
             case "CourierDeclarationFiltersMenuComponent": { myResult = CourierDeclarationFiltersMenuComponent; break; }
             case "CourierWorksheetFromExcelComponent": { myResult = CourierWorksheetFromExcelComponent; break; }
+            case "ImportCourierMawbsFromExcelComponent": { myResult = ImportCourierMawbsFromExcelComponent; break; }   
 
             case "SharedManifestComponent": { myResult = SharedManifestComponent; break; }
             case "PrioritizeFlightRequestsComponent": { myResult = PrioritizeFlightRequestsComponent; break; }
             case "UpdatePriorityComponent": { myResult = UpdatePriorityComponent; break; }
             case "SharedManifestComponent": { myResult = SharedManifestComponent; break; }
             case "AWBWizardComponent": { myResult = AWBWizardComponent; break; }
-            case "AWBWizardLoadComponent": { myResult = AWBWizardLoadComponent; break; }   
+            case "AWBWizardLoadComponent": { myResult = AWBWizardLoadComponent; break; }
+   
         }
 
         return myResult;

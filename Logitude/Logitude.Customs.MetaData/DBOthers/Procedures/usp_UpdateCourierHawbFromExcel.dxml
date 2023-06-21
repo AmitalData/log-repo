@@ -1,0 +1,65 @@
+﻿<Procedure DBType="Main" Name="usp_UpdateCourierHawbFromExcel" Schema="dbo" Module="Customs">
+  <SqlScript>
+	  <![CDATA[
+	 
+
+    ]]>
+  </SqlScript>
+
+  <OracleScript>
+    <![CDATA[
+ CREATE or REPLACE TYPE VARCHAR_TABLE AS TABLE OF varchar(4000);
+
+/
+CREATE OR REPLACE PROCEDURE usp_UpdateCourierHawbFromExcel (
+    v_Tenant IN NUMBER DEFAULT NULL,
+    v_userid IN varchar DEFAULT NULL,
+    v_courierhawbList IN varchar_TABLE,
+    not_found_declarations OUT SYS_REFCURSOR
+)
+IS
+    -- Declare a collection to hold the non-existing strings
+    TYPE not_found_list IS TABLE OF varchar(4000) INDEX BY PLS_INTEGER;
+    non_existing_strings not_found_list;
+    v_dummy NUMBER; -- Declare a dummy variable
+    v_cursor SYS_REFCURSOR; -- Declare a cursor variable
+
+    -- Declare a nested table type to hold the not found strings
+    TYPE string_table IS TABLE OF varchar(4000) INDEX BY PLS_INTEGER;
+    v_not_found_strings string_table := string_table();
+
+BEGIN
+    -- Iterate over the input strings
+    FOR i IN 1..v_courierhawbList.COUNT LOOP
+        -- Check if the string exists in TableA
+        BEGIN
+            SELECT id
+            INTO   v_dummy
+            FROM   declarations
+            WHERE  courierhawb = v_courierhawbList(i);
+
+            -- If the string exists, insert the selected column value into TableB
+            INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid)
+            SELECT v_Tenant, v_userid, id
+            FROM   declarations
+            WHERE  courierhawb = v_courierhawbList(i);
+        EXCEPTION
+            WHEN NO_DATA_FOUND THEN
+                -- If the string doesn't exist, add it to the not found strings collection
+                insert  INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid,NotFound, CourierHawb) values ( v_Tenant,v_userid,i,1,v_courierhawbList(i));
+        END;
+    END LOOP;
+
+    -- Open the cursor with the not found strings
+    OPEN v_cursor FOR
+        SELECT CourierHawb
+        FROM CourierHawbFromExcels where CREATEDBYUSERID=v_userid and NotFound=1 and tenant=v_Tenant;
+
+    -- Assign the cursor variable to the output parameter
+    not_found_declarations := v_cursor;
+END;
+/
+	
+    ]]>
+  </OracleScript>
+</Procedure>

@@ -103,6 +103,7 @@
     <None Include="DBOthers\Procedures\Usp_DeleteComLogSteps.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteQueMessMoreDet.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteCommLogs.dxml" />
+    <None Include="DBOthers\Procedures\usp_UpdateCourierHawbFromExcel.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePrio2.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
