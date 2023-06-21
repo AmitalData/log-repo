@@ -2101,6 +2101,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
                     PaidDate = entityPOCO.PaidDate,
                     PaidStatus = entityPOCO.PaidStatus,
+                    IsFromInterestBatchInvoice= entityPOCO.IsFromInterestBatchInvoice,
                     PartnerId = entityPOCO.PartnerId,
                     ShipmentsNumbers = entityPOCO.ShipmentsNumbers,
                     MasterNumbers = entityPOCO.MasterNumbers,
