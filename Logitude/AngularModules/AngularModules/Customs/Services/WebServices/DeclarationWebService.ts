@@ -3,7 +3,7 @@
 *  GetDeclarationErrors, constraints , ....
 */
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, Observable, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -1295,6 +1295,18 @@ export class DeclarationWebService {
             }),catchError(ServiceHelper.HandleServiceError));
         }
         );
+    }
+    ImportCourierMawbsFromExcel(formData: FormData) {
+        
+
+            var authHeader = new HttpHeaders();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.post(this._apiUrl + "/ImportCourierMawbsFromExcel", formData, {headers: authHeader });
+
     }
 
     GetDeclarationMamanSpecialAction(declarationId: string, tenant: number, actionCode: string, mamanSpecialActionCode: string) {
