@@ -1793,7 +1793,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 itemPM.FullItemsCount = this.EntityPM.FullItemsCount;
                 itemPM.FullChildrenCount = this.EntityPM.FullChildrenCount;
                 var tableSupplierInvoice = window.ObjectTables.filter(d => d.Name === 'Customs.SupplierInvoice')[0];
-                var IsCopyfieldsFeature = FeatureLocator.Features.filter(f => (f.Code == "ISCOPYFIELDS") && f.ObjectTableId == tableSupplierInvoice.Id)[0];
+                var IsCopyfieldsFeature = FeatureLocator.Features.filter(f => (f.Code == "EXCOPYFIELDS") && f.ObjectTableId == tableSupplierInvoice.Id)[0];
                 if (IsCopyfieldsFeature) {
                     itemPM.IncotermCode = this.EntityPM.IncotermCode;
                     itemPM.InvoiceCurrencyTypeCode = this.EntityPM.InvoiceCurrencyTypeCode;

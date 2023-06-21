@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceUpdateClass
    {  		
-		public const string HashString = "4224d2ee72c1779a12bc10625856134f";
+		public const string HashString = "dab8dab3c399804b7a2d19447a05e236";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "חשבון",
 			      				    DefaultText =  "Supplier Invoice",
-			      				    Code =  "cc9c",
+			      				    Code =  "053c",
 			      				    Name =  "Customs.SupplierInvoice Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -4059,7 +4059,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature SupplierInvoiceFeature_ISCOPYFIELDS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ISCOPYFIELDS", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SupplierInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SupplierInvoice.Features.ISCOPYFIELDS", NameTextCodeDefaultText = @"Is Copy Fields" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceObjectTable);
+		   Feature SupplierInvoiceFeature_EXCOPYFIELDS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCOPYFIELDS", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SupplierInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SupplierInvoice.Features.ISCOPYFIELDS", NameTextCodeDefaultText = @"Is Copy Fields" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceObjectTable);
 
    
 	    
