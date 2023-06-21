@@ -174,6 +174,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 		// this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
 		this.InitializeBillToLov();
+		this.getPartnerTypes();
 	}
 
 	CreateARPayment() {
@@ -197,7 +198,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	private loadPartnerTypesFilter()
     {
         this.checkPartnerTypesFilterFeature();
-      // if(this.isPartnerTypesFilterEnabled)
             this.getPartnerTypes();
     }
 	checkPartnerTypesFilterFeature(){
@@ -1172,18 +1172,31 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         {
             var partnerTypes: PartnerTypeList[] = res.Result || [];
             this.PartnerTypes = partnerTypes.filter(d => this.AllowedPartnerTypesCodes.indexOf(d.Id) > -1); // filter
-            this.SelectedPartnerType = partnerTypes.filter(d => d.Id == 'CS')[0]; // default
+			if( this.EntityPM.StatusCode==null)
+           		this.SelectedPartnerType = partnerTypes.filter(d => d.Id == 'CS')[0]; // default
+			this.getSelectedPartnerTypes(partnerTypes);
         });
     }
 
+    getSelectedPartnerTypes(partnerTypes){
+		var myCardService = new CardListService;
+		myCardService.getSingle(this.EntityPM.BillToId).subscribe((myResponse: ServiceResponse) => {
+			if (myResponse != null) {
+				if (!myResponse.HasError) {
+					var list: CardList = myResponse.Result;
+					this.SelectedPartnerType = partnerTypes.filter(d => d.Id == list.PartnerTypeId)[0];
+				}
+			}
+		});
+
+	}
 	private _SelectedPartnerType : PartnerTypeList;
     public get SelectedPartnerType() : PartnerTypeList {
-        return this._SelectedPartnerType;
+		return this._SelectedPartnerType;
     }
     public set SelectedPartnerType(type : PartnerTypeList) {
         this._SelectedPartnerType = type;
         this.filterByPartnerTypeCode = type.Id;
-        this.BillToId = null;
 
     }
 
@@ -1193,7 +1206,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		if (this.EntityPM == null) {
 			return null;
 		}
-		this.getPartnerTypes();
 		return this.EntityPM.BillToId;		
 	}
 	set BillToId(value: string)
