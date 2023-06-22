@@ -38,6 +38,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CustomsDocumentUpload  { get; set; }
        [DataMember]
        public string CustomsDocumentUploadName  { get; set; }
+       [DataMember]
+       public string Code  { get; set; }
    }
 
 }
