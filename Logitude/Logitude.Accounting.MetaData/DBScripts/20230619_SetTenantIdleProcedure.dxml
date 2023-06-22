@@ -9,7 +9,7 @@
 CREATE procedure [dbo].[SetTenantIdleProcedure] as
 
 
- update [Logitude2-5_Main].[dbo].[TenantIdleStatuses]
+ update [dbo].[TenantIdleStatuses]
   set Idle = 0
   where DATEDIFF(MINUTE, UpdateDate, GetDate()) > 10
   and Idle = 1
