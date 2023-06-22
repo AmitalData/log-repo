@@ -268,6 +268,7 @@
     <None Include="DBTables\ClientDrivingLicense.dxml" />
     <None Include="DBTables\ClientDrivingLicenseType.dxml" />
     <None Include="DBTables\ClientItem.dxml" />
+    <None Include="DBTables\ClientIndication.dxml" />
     <None Include="DBTables\ClientsAddressCommType.dxml" />
     <None Include="DBTables\ClientsPoa.dxml" />
     <None Include="DBTables\ClientsTapag.dxml" />
@@ -599,6 +600,7 @@
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AddressCurrency.lxml" />
     <None Include="EntityFiles\ClientItem.lxml" />
+    <None Include="EntityFiles\ClientIndication.lxml" />
     <None Include="EntityFiles\CountryCurrency.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />

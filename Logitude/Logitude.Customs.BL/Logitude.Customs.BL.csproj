@@ -390,6 +390,7 @@
     <Compile Include="EntityDataMappings\ClientDrivingLicenseDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientDrivingLicenseTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientItemDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ClientIndicationDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientsAddressCommTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientsPoaDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientsTapagDataMapping.cs" />
@@ -613,6 +614,7 @@
     <Compile Include="EntityDataMappings\Generated\ClientDrivingLicenseDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientDrivingLicenseTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientItemDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ClientIndicationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientsAddressCommTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientsPoaDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientsTapagDataMapping.Generated.cs" />
@@ -1160,6 +1162,7 @@
     <Compile Include="EntityQueryServices\DefaultValueQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCounterQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SupplierInvioceExportDefaultQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\ClientIndicationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />
@@ -1692,6 +1695,7 @@
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityQueryServices\VendorCurrencyQueryService.cs" />
     <Compile Include="EntityUpdateServices\ClientItemUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CountryCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
@@ -1706,6 +1710,7 @@
     <Compile Include="EntityUpdateServices\Generated\InternationalSiteTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierInvioceExportDefaultUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\UIMessageTenantUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ClientIndicationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />

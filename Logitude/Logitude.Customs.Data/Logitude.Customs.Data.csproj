@@ -131,6 +131,7 @@
     <Compile Include="EntityKeys\ClientDrivingLicenseKeys.cs" />
     <Compile Include="EntityKeys\ClientDrivingLicenseTypeKeys.cs" />
     <Compile Include="EntityKeys\ClientItemKeys.cs" />
+    <Compile Include="EntityKeys\ClientIndicationKeys.cs" />
     <Compile Include="EntityKeys\ClientsPoaKeys.cs" />
     <Compile Include="EntityKeys\ClientsTapagKeys.cs" />
     <Compile Include="EntityKeys\ConsignmentPackDangerKeys.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientItemListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ClientIndicationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientsPoaListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientsTapagListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ConsignmentPackDangerListQueryService.cs" />
@@ -396,6 +398,7 @@
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientItemListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ClientIndicationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientsPoaListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientsTapagListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ConsignmentPackDangerListQueryService.Generated.cs" />
@@ -596,6 +599,7 @@
     <Compile Include="EntityListQueryServices\UpdateCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
     <Compile Include="EntityLists\Generated\ClientItemList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ClientIndicationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CountryCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierHawbFromExcelList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomDocumentTypeTenantList.Generated.cs" />
@@ -792,6 +796,7 @@
     <Compile Include="EntityMapping\ClientDrivingLicenseMap.cs" />
     <Compile Include="EntityMapping\ClientDrivingLicenseTypeMap.cs" />
     <Compile Include="EntityMapping\ClientItemMap.cs" />
+    <Compile Include="EntityMapping\ClientIndicationMap.cs" />
     <Compile Include="EntityMapping\ClientsPoaMap.cs" />
     <Compile Include="EntityMapping\ClientsTapagMap.cs" />
     <Compile Include="EntityMapping\ConsignmentPackDangerMap.cs" />
@@ -957,6 +962,7 @@
     <Compile Include="EntityPOCOs\ClientDrivingLicense.cs" />
     <Compile Include="EntityPOCOs\ClientDrivingLicenseType.cs" />
     <Compile Include="EntityPOCOs\ClientItem.cs" />
+    <Compile Include="EntityPOCOs\ClientIndication.cs" />
     <Compile Include="EntityPOCOs\ClientsPoa.cs" />
     <Compile Include="EntityPOCOs\ClientsTapag.cs" />
     <Compile Include="EntityPOCOs\ConsignmentPackDanger.cs" />
@@ -1123,6 +1129,7 @@
     <Compile Include="Repsitories\ClientDrivingLicenseRepository.cs" />
     <Compile Include="Repsitories\ClientDrivingLicenseTypeRepository.cs" />
     <Compile Include="Repsitories\ClientItemRepository.cs" />
+    <Compile Include="Repsitories\ClientIndicationRepository.cs" />
     <Compile Include="Repsitories\ClientsPoaRepository.cs" />
     <Compile Include="Repsitories\ClientsTapagRepository.cs" />
     <Compile Include="Repsitories\ConsignmentPackDangerRepository.cs" />
@@ -1223,6 +1230,7 @@
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientItemRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ClientIndicationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientsPoaRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientsTapagRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ConsignmentPackDangerRepository.Generated.cs" />
