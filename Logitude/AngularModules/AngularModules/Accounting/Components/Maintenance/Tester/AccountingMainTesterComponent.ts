@@ -304,6 +304,15 @@ export class AccountingMainTesterComponent extends BaseComponent {
         let obj = { Tenant: 1, JournalId: "1-55235" };
         this.StrandartOp(opr, obj, () => { });
     }
+
+
+    _InterestReport_Click() {
+        let opr = "InterestReport_Click";
+        let obj = { Tenant: 1, JournalId: "1-55235" };
+        this.StrandartOp(opr, obj, () => {  },true);
+    }
+
+
     _ButtonReverseTrans_Click() {
         let opr = "_ButtonReverseTrans_Click";
         let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
