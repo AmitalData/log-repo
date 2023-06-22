@@ -38,6 +38,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (authToken != null)
                 {
                     int tenant = authToken.Tenant;
+                    
+                    CustomDocumentTypeTenantQueryService customDocumentTypeTenantQueryService = new CustomDocumentTypeTenantQueryService(tenant);
+                    CustomDocumentTypeTenantPM customDocumentTypeTenantPm = customDocumentTypeTenantQueryService.GetByTenant(tenant).FirstOrDefault();
+                    if (customDocumentTypeTenantPm != null)
+                    {
+                        entityPM.AutoSetOriginalDocumentTrue = customDocumentTypeTenantPm.AutoSetOriginalDocumentTrue;
+                        entityPM.CustomsDocumentUpload = customDocumentTypeTenantPm.CustomsDocumentUpload;
+                        entityPM.IsCourierManadatory = customDocumentTypeTenantPm.IsCourierManadatory;
+                        entityPM.IsDiamondManadatory = customDocumentTypeTenantPm.IsDiamondManadatory;
+                        entityPM.PointerLevel = customDocumentTypeTenantPm.PointerLevel;
+                    }
 
                     if (entityPOCO.PointerLevel != null)
                     {
@@ -58,6 +69,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                             entityPM.CustomsDocumentUploadName = customsDocumentUploadPM.LocalName;
                         }
                     }
+                    
                 }
             }
         }

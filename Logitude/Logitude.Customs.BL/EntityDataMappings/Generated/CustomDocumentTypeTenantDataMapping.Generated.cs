@@ -31,7 +31,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoSetOriginalDocumentTrue, 
 	         IsCourierManadatory, 
 	         IsDiamondManadatory, 
-	         CustomsDocumentUpload,
+	         CustomsDocumentUpload, 
+	         Code,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsCourierManadatory, 
 	         IsDiamondManadatory, 
 	         CustomsDocumentUpload, 
-	         CustomsDocumentUploadName,
+	         CustomsDocumentUploadName, 
+	         Code,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -101,6 +103,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsDocumentUpload))
             {
 				entityPOCO.CustomsDocumentUpload = entityPM.CustomsDocumentUpload;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
+            {
+				entityPOCO.Code = entityPM.Code;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -159,6 +166,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CustomsDocumentUpload = entityPOCO.CustomsDocumentUpload;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
+            {
+					entityPM.Code = entityPOCO.Code;
+            }
+
 		}
 
 		public void PMToOldPM(CustomDocumentTypeTenantPM entityPM, CustomDocumentTypeTenantPM oldEntityPM)
@@ -208,6 +220,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsDocumentUpload))
             {
                 oldEntityPM.CustomsDocumentUpload = entityPM.CustomsDocumentUpload;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
+            {
+                oldEntityPM.Code = entityPM.Code;
             }
 			
 		}
