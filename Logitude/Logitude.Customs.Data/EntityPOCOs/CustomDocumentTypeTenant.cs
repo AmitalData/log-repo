@@ -48,6 +48,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CustomsDocumentUpload { get; set; }
 	      
         public virtual CustomsDocumentUpload CustomsDocumentUploadT { get; set; }
+        [ForeignKey("CustomDocumentType")]
+        [Column("Code")]
+	    public string Code { get; set; }
+	      
+        public virtual CustomDocumentType CustomDocumentType { get; set; }
     }
 }
 	 

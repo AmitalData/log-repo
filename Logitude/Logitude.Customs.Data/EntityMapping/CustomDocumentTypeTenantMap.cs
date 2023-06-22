@@ -42,6 +42,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsDiamondManadatory).HasColumnName("IsDiamondManadatory");
 
             this.Property(t => t.CustomsDocumentUpload).HasColumnName("CustomsDocumentUpload").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.Code).HasColumnName("Code").HasMaxLength(7).IsUnicode(false);
         }
     }
 }

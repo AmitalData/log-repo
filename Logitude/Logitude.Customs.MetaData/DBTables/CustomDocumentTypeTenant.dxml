@@ -70,6 +70,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="7">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
@@ -83,6 +90,11 @@
   <Relation
     ForeignKeyColumn="CustomsDocumentUpload"
     ReferencedTable="CustomsDocumentUploads"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="Code"
+    ReferencedTable="CustomDocumentTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

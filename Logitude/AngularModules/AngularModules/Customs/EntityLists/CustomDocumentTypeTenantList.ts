@@ -20,6 +20,7 @@ export class CustomDocumentTypeTenantList {
 	IsDiamondManadatory: boolean;
 	CustomsDocumentUpload: string;
 	CustomsDocumentUploadName: string;
+	Code: string;
 	
 }
  

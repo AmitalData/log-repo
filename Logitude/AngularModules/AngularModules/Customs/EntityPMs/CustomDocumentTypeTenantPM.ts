@@ -84,6 +84,11 @@ export class CustomDocumentTypeTenantPM {
     public set CustomsDocumentUploadName(newValue: string) { if (this.customsDocumentUploadName != newValue) { this.customsDocumentUploadName = newValue; this.MarkAsDirty("CustomsDocumentUploadName"); } }
        
 	 
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+       
+	 
 
     public OldEntityPM: CustomDocumentTypeTenantPM;
 		
