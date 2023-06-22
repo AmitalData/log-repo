@@ -56,8 +56,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                        UserRepository userRepository = new UserRepository(authToken.Tenant);
                         var us = new CustomDocumentTypeUpdateService(MyContext, new System.Collections.Generic.Dictionary<string, IContext>(), authToken.Tenant);
-
+                        if (authToken != null)
+                        {
+                            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, authToken.Email, authToken.Tenant, true);
+                            us.userId = loggedUser.Id;
+                        }
                         entityPM.ChangeSetOp = ChangeSetOperation.Update;
                         us.Update(entityPM, true);
 

@@ -40,7 +40,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     int tenant = authToken.Tenant;
                     
                     CustomDocumentTypeTenantQueryService customDocumentTypeTenantQueryService = new CustomDocumentTypeTenantQueryService(tenant);
-                    CustomDocumentTypeTenantPM customDocumentTypeTenantPm = customDocumentTypeTenantQueryService.GetByTenant(tenant).FirstOrDefault();
+                    CustomDocumentTypeTenantPM customDocumentTypeTenantPm = customDocumentTypeTenantQueryService.GetByTenant(tenant, entityPOCO.Code).FirstOrDefault();
                     if (customDocumentTypeTenantPm != null)
                     {
                         entityPM.AutoSetOriginalDocumentTrue = customDocumentTypeTenantPm.AutoSetOriginalDocumentTrue;
