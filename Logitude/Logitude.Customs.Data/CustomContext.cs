@@ -188,8 +188,9 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ClientDrivingLicenseTypeMap());
 	
-            modelBuilder.Configurations.Add(new ClientItemMap());
             modelBuilder.Configurations.Add(new ClientIndicationMap());
+	
+            modelBuilder.Configurations.Add(new ClientItemMap());
 	
             modelBuilder.Configurations.Add(new ClientsAddressCommTypeMap());
 	
@@ -1742,13 +1743,13 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<ClientItem> ClientItems 
+	 public IDbSet<ClientIndication> ClientIndications 
 	 {
 	      get; set;
 	 
 	 }
 	
-	 public IDbSet<ClientIndication> ClientIndications 
+	 public IDbSet<ClientItem> ClientItems 
 	 {
 	      get; set;
 	 
@@ -3803,4 +3804,4 @@ namespace Logitude.Customs.Data
  }
 
 
-}
+}
