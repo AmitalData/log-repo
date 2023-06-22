@@ -32,7 +32,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             CustomDocumentTypeTenantRepository documentTypeTenantRep = new CustomDocumentTypeTenantRepository(context);
             IQueryable<CustomDocumentTypeTenant> documentTypeTenants = documentTypeTenantRep.GetAll(tenant);
 
-            IQueryable<CustomDocumentTypeList> query = (from a in iQueryable.Include("Pointer").Include("CustomsDocumentUploadT")
+            IQueryable<CustomDocumentTypeList> query = (from a in iQueryable
                                                         join d in documentTypeTenants.Include("Pointer").Include("CustomsDocumentUploadT")
                                                          on a.Code equals d.Code into xy
                                                         from s in xy.DefaultIfEmpty()
@@ -43,13 +43,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                             LocalName = a.LocalName,
                                                             SearchFields = a.SearchFields,
                                                             Inactive = a.Inactive,
-                                                            PointerLevel = s.PointerLevel,
-                                                            PointerLevelName = s.Pointer.LocalName != null ? s.Pointer.LocalName : null,
-                                                            AutoSetOriginalDocumentTrue = s.AutoSetOriginalDocumentTrue,
-                                                            IsCourierManadatory= s.IsCourierManadatory,
-                                                            IsDiamondManadatory= s.IsDiamondManadatory,
-                                                            CustomsDocumentUpload = s.CustomsDocumentUpload,
-                                                            CustomsDocumentUploadName = s.CustomsDocumentUploadT.LocalName != null ? s.CustomsDocumentUploadT.LocalName : null,
+                                                            PointerLevel = s != null ? s.PointerLevel : null,
+                                                            PointerLevelName = s != null ?  (s.Pointer.LocalName != null ? s.Pointer.LocalName : null) : null,
+                                                            AutoSetOriginalDocumentTrue = s != null ? s.AutoSetOriginalDocumentTrue : false,
+                                                            IsCourierManadatory= s != null ? s.IsCourierManadatory : false,
+                                                            IsDiamondManadatory= s != null ? s.IsDiamondManadatory : false,
+                                                            CustomsDocumentUpload = s != null ? s.CustomsDocumentUpload : null,
+                                                            CustomsDocumentUploadName = s != null ? (s.CustomsDocumentUploadT.LocalName != null ? s.CustomsDocumentUploadT.LocalName : null) : null,
                                                         });
 
             return query;

@@ -21,7 +21,29 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public IQueryable<CustomDocumentTypeTenant> GetAll(int tenant, string code)
+        {
+            return from a in context.CustomDocumentTypeTenants
+                   where a.Tenant == tenant && a.Code == code
+                   select a;
+        }
+        public CustomDocumentTypeTenant GetSingleByCode(string code, int tenant)
+        {
+            if (!string.IsNullOrEmpty(code))
+            {
+                CustomDocumentTypeTenant entity;
+
+                entity = (from a in context.CustomDocumentTypeTenants
+                          where a.Code == code && a.Tenant == tenant
+                          select a).FirstOrDefault();
+                
+                return entity;
+            }
+            return null;
+        }
+
+
+    }
 
 }
    

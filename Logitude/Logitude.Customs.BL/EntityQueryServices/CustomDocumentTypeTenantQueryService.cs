@@ -21,11 +21,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
     {
 
 
-        public List<CustomDocumentTypeTenantPM> GetByTenant( int tenant)
+        public List<CustomDocumentTypeTenantPM> GetByTenant( int tenant, string code)
         {
-          var customDocumentTypes = repository.GetAll(tenant).ToList();
+            var customDocumentTypes = repository.GetAll(tenant, code).ToList();
 
-         return customDocumentTypes.Select(poco => this.GetEntityPM(poco)).ToList();
+            return customDocumentTypes.Select(poco => this.GetEntityPM(poco)).ToList();
 
         }
 
