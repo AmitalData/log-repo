@@ -77,6 +77,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ClientAddress> ClientAddresses { get; }
 		 IDbSet<ClientDrivingLicense> ClientDrivingLicenses { get; }
 		 IDbSet<ClientDrivingLicenseType> ClientDrivingLicenseTypes { get; }
+		 IDbSet<ClientIndication> ClientIndications { get; }
 		 IDbSet<ClientsAddressCommType> ClientsAddressCommTypes { get; }
 		 IDbSet<ClientsPoa> ClientsPoas { get; }
 		 IDbSet<ClientsTapag> ClientsTapags { get; }
