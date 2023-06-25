@@ -75,7 +75,6 @@ export class AddEditPendingByKeywordComponent
             
             this.UIProperties.SetRequired("KeywordsList", this.ObjectTableName, !this.EntityPM.KeywordsList);
 
-            this.WarningMessage = "יש להזין רשימת מילות מפתח מופרדות בפסיק, ואת קוד העיכוב שיש להרים עבורן. (למשל: medicine, drug, תרופה) ניתן להזין את אותו קוד עיכוב מספר פעמים.";
         });
     }
     public _SearchByFieldCode: string;
@@ -136,6 +135,10 @@ export class AddEditPendingByKeywordComponent
         this.UIProperties.SetRequired("KeywordsList", this.ObjectTableName, !newValue);
         
         this.EntityPM.KeywordsList = newValue;
+    }
+    public get ExceptKeywords() { return this.EntityPM.ExceptKeywords; }
+    public set ExceptKeywords(newValue: string) {
+        this.EntityPM.ExceptKeywords = newValue;
     }
 
     //#endregion\
