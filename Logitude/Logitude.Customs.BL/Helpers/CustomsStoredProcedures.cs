@@ -813,7 +813,6 @@ AS */
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
-                    cn.Close();
                 }
             }
         }
@@ -916,70 +915,63 @@ AS */
             string strConnString = GetConnection(tenant);
 
 
-            using (OracleConnection cn = new OracleConnection(strConnString))
+            using (Devart.Data.Oracle.OracleConnection cn = new Devart.Data.Oracle.OracleConnection(strConnString))
             {
                 // Open the connection
                 cn.Open();
-
-                // Create a temporary table to hold the courierHawbList values
-                string tempTableName = "TEMP_COURIER_HAWB_LIST_" + Guid.NewGuid().ToString().Replace("-", "");
-                string createTempTableQuery = $"CREATE GLOBAL TEMPORARY TABLE {tempTableName} (VALUE VARCHAR2(4000)) ON COMMIT PRESERVE ROWS";
-                using (OracleCommand createTempTableCommand = new OracleCommand(createTempTableQuery, cn))
-                {
-                    createTempTableCommand.ExecuteNonQuery();
-                }
-
+                notFoundDeclarations = new DataTable();
                 try
                 {
-                    // Insert the courierHawbList values into the temporary table
-                    string insertValuesQuery = $"INSERT INTO {tempTableName} (VALUE) VALUES (:value)";
-                    using (OracleCommand insertValuesCommand = new OracleCommand(insertValuesQuery, cn))
+                    using (Devart.Data.Oracle.OracleCommand command = new Devart.Data.Oracle.OracleCommand("usp_UpdateCourierHawbFromExcel", cn))
                     {
-                        OracleParameter valueParameter = new OracleParameter(":value", OracleDbType.VarChar);
-                        insertValuesCommand.Parameters.Add(valueParameter);
-
-                        foreach (string courierHawb in courierhawbsList)
-                        {
-                            valueParameter.Value = courierHawb;
-                            insertValuesCommand.ExecuteNonQuery();
-                        }
-                    }
-
-                    // Create an OracleCommand object to execute the stored procedure
-                    using (OracleCommand command = new OracleCommand("usp_UpdateCourierHawbFromExcel", cn))
-                    {
-                        // Set the command type to stored procedure
                         command.CommandType = CommandType.StoredProcedure;
 
                         // Add the input parameters
-                        command.Parameters.Add("v_Tenant", OracleDbType.Number).Value = tenant;
-                        command.Parameters.Add("v_userid", OracleDbType.VarChar).Value = userid;
-                        command.Parameters.Add("v_courierhawbList", OracleDbType.Cursor).Value = tempTableName;
+                        OracleParameter parameter1 = new OracleParameter("v_Tenant", OracleDbType.Integer);
+                        OracleParameter parameter2 = new OracleParameter("v_userid", OracleDbType.VarChar);
+
+                        parameter1.Direction = ParameterDirection.Input;
+                        parameter2.Direction = ParameterDirection.Input;
+
+
+                        parameter1.Value = tenant;
+                        parameter2.Value = userid;
+
+                        command.Parameters.Add(parameter1);
+                        command.Parameters.Add(parameter2);
+
+
+
+                        //input list
+                        OracleParameter stringsParam = command.Parameters.Add("v_courierhawbList", OracleDbType.Array);
+                        stringsParam.Direction = ParameterDirection.Input;
+                        OracleArray array = new OracleArray("VARCHAR_TABLE", cn, courierhawbsList);
+                        stringsParam.Value = array;
+
+
 
                         // Add the output parameter for not_found_declarations
-                        OracleParameter notFoundDeclarationsParam = command.Parameters.Add("not_found_declarations", OracleDbType.Cursor);
+                        Devart.Data.Oracle.OracleParameter notFoundDeclarationsParam = command.Parameters.Add("not_found_declarations", Devart.Data.Oracle.OracleDbType.Cursor);
                         notFoundDeclarationsParam.Direction = ParameterDirection.Output;
 
-                        // Execute the command
-                        using (OracleDataReader reader = command.ExecuteReader())
+                        command.ExecuteNonQuery();
+
+                        // Read the output cursor into a DataTable
+                        using (Devart.Data.Oracle.OracleDataReader reader = ((Devart.Data.Oracle.OracleCursor)notFoundDeclarationsParam.Value).GetDataReader())
                         {
-                            // Read the output cursor into a DataTable
-                            notFoundDeclarations = new DataTable();
                             notFoundDeclarations.Load(reader);
                         }
                     }
                 }
+                catch (OracleException ex)
+                {
+
+                }
                 finally
                 {
-                    // Drop the temporary table
-                    string dropTempTableQuery = $"DROP TABLE {tempTableName}";
-                    using (OracleCommand dropTempTableCommand = new OracleCommand(dropTempTableQuery, cn))
-                    {
-                        dropTempTableCommand.ExecuteNonQuery();
-                    }
+                    cn.Close();
                 }
             }
-
 
 
         }
