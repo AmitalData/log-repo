@@ -16,6 +16,7 @@ export class GovernmentProcTypeTenantList {
 	IsImport: boolean;
 	IndexOrder: number;
 	IsExport: boolean;
+	Code: string;
 	
 }
  

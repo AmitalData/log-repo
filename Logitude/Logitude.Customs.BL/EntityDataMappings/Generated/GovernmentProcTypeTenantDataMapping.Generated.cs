@@ -29,7 +29,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         IsImport, 
 	         IndexOrder, 
-	         IsExport,
+	         IsExport, 
+	         Code,
 	      }
 
 
@@ -43,7 +44,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         IsImport, 
 	         IndexOrder, 
-	         IsExport,
+	         IsExport, 
+	         Code,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -85,6 +87,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExport))
             {
 				entityPOCO.IsExport = entityPM.IsExport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
+            {
+				entityPOCO.Code = entityPM.Code;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -133,6 +140,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsExport = entityPOCO.IsExport;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
+            {
+					entityPM.Code = entityPOCO.Code;
+            }
+
 		}
 
 		public void PMToOldPM(GovernmentProcTypeTenantPM entityPM, GovernmentProcTypeTenantPM oldEntityPM)
@@ -172,6 +184,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExport))
             {
                 oldEntityPM.IsExport = entityPM.IsExport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
+            {
+                oldEntityPM.Code = entityPM.Code;
             }
 			
 		}
