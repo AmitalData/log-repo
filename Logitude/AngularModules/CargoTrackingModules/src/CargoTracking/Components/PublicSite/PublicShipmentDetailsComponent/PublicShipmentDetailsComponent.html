@@ -305,8 +305,8 @@
                             <!--  -->
                                                     
                             
-                            <svg *ngIf="!Delivered && AssignedTruckerDone && !InvoicedDone "  version="1.0" xmlns="http://www.w3.org/2000/svg"
-                            width="50px" height="50px" viewBox="0 0 512.000000 512.000000">
+                            <svg style="margin:-6px ;" *ngIf="!Delivered && AssignedTruckerDone && !InvoicedDone "  version="1.0" xmlns="http://www.w3.org/2000/svg"
+                            width="45px" height="45px" viewBox="0 0 512.000000 512.000000">
 
                             <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
                             fill="var(--secondaryColor)" stroke="none">
@@ -337,14 +337,16 @@
 
                             <!--  -->
 
-                            <div class="label" *ngIf="!Delivered && ( AssignedTruckerDone || InvoicedDone)">
+                            <div class="label hide-mobile" [ngStyle]="AssignedTruckerDone? {width: '144px', margin: '-3px'} : {}" *ngIf="!Delivered && ( AssignedTruckerDone || InvoicedDone)">
                                 {{currentMilestoneName||'In Progress'}}</div>
+                                <div class="label mobile-only"  *ngIf="!Delivered && ( AssignedTruckerDone || InvoicedDone)">
+                                    {{currentMilestoneName||'In Progress'}}</div>
 
 
                             <div *ngIf="!Delivered && !AssignedTruckerDone && !InvoicedDone" class="label dim">Delivered
                             </div>
                             <div *ngIf="Delivered" class="label">Delivered</div>
-                            <div class="details"
+                            <div class="details" [ngStyle]="AssignedTruckerDone? {margin: '4px'} : {}"
                                 *ngIf="Delivered || (!Delivered && ( AssignedTruckerDone || InvoicedDone))">{{Date |
                                 date: 'dd/MM/yyyy'}}</div>
                             <!-- <div class="details">details</div> -->

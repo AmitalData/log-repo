@@ -340,7 +340,7 @@ ul.line-list li.tick {
 }
 
 .milestones .end {
-    left: calc(100% - 70px);
+    left: calc(100% - 40px);
 }
 
 .start img,
