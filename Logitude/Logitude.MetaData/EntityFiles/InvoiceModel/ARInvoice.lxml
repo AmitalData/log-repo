@@ -16999,7 +16999,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;IsSigned&quot;"
     DefaultText="&quot;Is Signed&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
