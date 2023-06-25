@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityLists
        public int? IndexOrder  { get; set; }
        [DataMember]
        public bool? IsExport  { get; set; }
+       [DataMember]
+       public string Code  { get; set; }
    }
 
 }

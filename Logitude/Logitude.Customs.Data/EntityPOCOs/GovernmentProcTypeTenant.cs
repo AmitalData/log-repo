@@ -38,6 +38,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int? IndexOrder { get; set; }
         [Column("IsExport")]
 	    public bool? IsExport { get; set; }
+        [ForeignKey("GovernmentProcedureType")]
+        [Column("Code")]
+	    public string Code { get; set; }
+	      
+        public virtual GovernmentProcedureType GovernmentProcedureType { get; set; }
     }
 }
 	 
