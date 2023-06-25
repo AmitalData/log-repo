@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="SetTenantIdleProcedure"
+  Schema="dbo"
+  Module="Common">
+  <SqlScript>
+	  <![CDATA[
+CREATE procedure [dbo].[SetTenantIdleProcedure] as
+
+
+ update [dbo].[TenantIdleStatuses]
+  set Idle = 0
+  where DATEDIFF(MINUTE, UpdateDate, GetDate()) > 10
+  and Idle = 1
+
+
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

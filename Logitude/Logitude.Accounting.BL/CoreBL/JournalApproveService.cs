@@ -44,6 +44,7 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Data.CommonDataModel;
 using Newtonsoft.Json;
 using Microsoft.Practices.Unity;
+using System.Collections;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -72,6 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private IAccountingContext _AccountingContext;
         private JournalPM _JournalPM;
         private JournalApproveParser _JournalApproveParser = null;
+        
 
         public JournalApproveService(int tenant, string seedJournalId, string MessageId, string selectedQueue)
         {
@@ -1148,6 +1150,7 @@ namespace Logitude.Accounting.BL.CoreBL
             TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
             TenantIdleStatus tenantObj = tenantRepository.GetSingle(tenant);
             tenantObj.Idle = false;
+            tenantObj.UpdateDate = DateTime.Now;
             tenantRepository.Update(tenantObj);
             tenantRepository.SubmitChanges();
 
@@ -1426,6 +1429,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
+            private static DateTime _freeTenantsDateTime = DateTime.Now;
             static JournalApproveWorker()
             {
                 //_NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
@@ -1550,6 +1554,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     try
                     {
                         queueservice = new DbQueueService(selectedQueue, 0);
+                        if (DateTime.Now.Subtract(_freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
+                        {
+                            _freeTenantsDateTime = DateTime.Now;
+                            queueservice.FreeTenants();
+                        }
                         response = queueservice.ReceiveJournal(new TimeSpan(0, 0, 0, 5));
                     }
                     catch (Exception)
