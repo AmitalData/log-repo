@@ -85,7 +85,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             FeatureQuery featureQuery = new FeatureQuery();
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant), _DeclarationPM.Tenant);
-            var feature = features.Features.FirstOrDefault(x => x.Code == "SendManifest");
+            var feature = features.Features.FirstOrDefault(x => x.Code == "SendManifestEvent");
             if (feature != null)
             {
                 EventContextTagModel myEventContextTagModel = new EventContextTagModel()
