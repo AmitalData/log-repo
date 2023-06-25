@@ -1077,8 +1077,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
                 {
-
+                    
                     string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSKey(requestParams.CustomsRequestsSheetId);
+                    LogMessagingUtil.Instance.AppendLine(" ** try lock,MessagingServiceBase.ReqSheet.SendSheet.DoConcurrentKiller():1082, key: " + CRSKey);
+
                     using (var scope = TransactionFactory.GetNewTransaction())// why GetNewTransaction() => b4 send Started (test constraint b4 not after SEND !!!)
                     {
                         var concurrentKiller = new ConcurrentKiller();
