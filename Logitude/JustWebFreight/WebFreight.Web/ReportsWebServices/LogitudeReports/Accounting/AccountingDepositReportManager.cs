@@ -222,7 +222,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                         if (ariInvoicePayment.ARInvoice != null && ariInvoicePayment.ARPayment != null)
                         {
                             reportAPIPayment.Reference = ariInvoicePayment.ARInvoice.CustomerRef;
-                            reportAPIPayment.BillTo = ariInvoicePayment.ARInvoice.BillTo.LocalName;
+                            reportAPIPayment.BillTo =
+                                !string.IsNullOrEmpty(ariInvoicePayment.ARInvoice.BillTo.LocalName)
+                                    ? ariInvoicePayment.ARInvoice.BillTo.LocalName
+                                    : ariInvoicePayment.ARInvoice.BillTo.EnglishName;
                             reportAPIPayment.InvoiceNumber = ariInvoicePayment.ARInvoice.InvoiceNumber;
                             reportAPIPayment.InvocieDate = ariInvoicePayment.ARInvoice.InvoiceDate;
                             reportAPIPayment.DueDate = ariInvoicePayment.ARInvoice.DueDate;
