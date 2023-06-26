@@ -16,10 +16,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                 GetOptions = new NG_9100_MSG_OutgoingMessageRequestGetOptions()
                 {
 
-                    fromDate = requestParams.FromDate.Value,
-                    toDate = requestParams.ToDate.Value,
+                    fromDate = (requestParams.FromDate != null) ? requestParams.FromDate.Value : DateTime.MinValue,
+                    toDate = (requestParams.ToDate != null) ? requestParams.ToDate.Value : DateTime.MinValue,
                     CorrelationId = string.IsNullOrWhiteSpace(requestParams.CorrelationID) ? null : requestParams.CorrelationID,
-                    ServiceName =string.IsNullOrWhiteSpace(requestParams.ServiceName) ? null : requestParams.ServiceName,
+                    ServiceName = string.IsNullOrWhiteSpace(requestParams.ServiceName) ? null : requestParams.ServiceName,
 
 
                 },
