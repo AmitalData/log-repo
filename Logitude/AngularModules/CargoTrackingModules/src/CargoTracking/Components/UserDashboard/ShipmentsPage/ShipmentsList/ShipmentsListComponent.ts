@@ -32,6 +32,8 @@ import {SharedService} from 'src/CargoTracking/Services/Others/SharedService';
 import {QueryColumnPM} from 'src/CargoTracking/Services/Others/QueryColumnPM';
 import {ApiQueryFilters} from 'src/CargoTracking/Services/Others/ApiQueryFilters';
 import {LogitudeGridExportToExcelService} from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
+import { TenantManagementPMService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService copy';
+import { TenantManagementPM } from 'src/CargoTracking/Services/Others/TenantManagementPM';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -97,6 +99,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShipmentTypeFiltersNoResult: boolean;
     InvitedCustomersNoResult: boolean;
     SearchText: any="";
+    tenantManagementPM: TenantManagementPM;
 
     get tenant() {
         return CargoTrackingBrandingData.Tenant;
@@ -124,7 +127,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         private searchService: CargoTrackingSearchService,
         private milestonesService: CargoTrackingMilestoneService,
         public sharedService: SharedService,
-        private logitudeGridExportToExcelService: LogitudeGridExportToExcelService) {
+        private logitudeGridExportToExcelService: LogitudeGridExportToExcelService,
+        private tenantManagementPMService: TenantManagementPMService,
+        ) {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
 
@@ -729,18 +734,30 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         } else {
             this.InitiateShipmentDataSource();
         }
-
     }
 
-    private filterWithAllCustomersWhenCustomersNotSelected() {
-        let filter = Object.assign({}, this.ShipmentSearchInput);
-        filter.CustomersIds = filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds;
+    private async filterWithAllCustomersWhenCustomersNotSelected() {
+        let filter: CargoTrackingShipmentSearchInput = Object.assign({}, this.ShipmentSearchInput);
+        filter.CustomersIds = filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds;        
+        filter.FromDate = await this.getFromDate();
+
         return filter;
     }
 
+    private async getFromDate() {
+        const fromDate = new Date();
+        this.tenantManagementPM = this.tenantManagementPM || await this.tenantManagementPMService.get(this.tenant);
+        
+        let backMonths: number = 6;
+        if(this.tenantManagementPM.ActivatePrivateSite && this.tenantManagementPM.PermissionBuildMonths)
+            backMonths = this.tenantManagementPM.PermissionBuildMonths;
 
-    private InitiateShipmentDataSource() {
-        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
+        fromDate.setMonth(fromDate.getMonth() - backMonths);
+        return fromDate;
+    }
+
+    private async InitiateShipmentDataSource() {
+        let filter = await this.filterWithAllCustomersWhenCustomersNotSelected();
         this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
         let s = SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0];
         if(SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === true)
@@ -749,8 +766,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
     }
 
-    private ReloadShipments() {
-        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
+    private async ReloadShipments() {
+        let filter = await this.filterWithAllCustomersWhenCustomersNotSelected();
         this.ShipmentsDataSource.ReloadData(filter);
         this.ResetShipmentsScrollbarPosition();
     }

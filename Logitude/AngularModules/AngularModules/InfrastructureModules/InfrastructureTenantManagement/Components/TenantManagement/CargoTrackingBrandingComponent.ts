@@ -4,7 +4,7 @@ declare var window: any;
 
 
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -23,6 +23,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { GlobalDomainService } from '../../../../Common/Services/GlobalDomainService';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'CargoTrackingBrandingComponent',
@@ -48,8 +49,13 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     isGenerateClicked = false;
     isGenerateEnabled = true;
     private iGlobalDomainService: GlobalDomainService;
+    previousPermissionBuildMonthsValue: any;
+    showPermissionBuildMonths: boolean = true;
 
-    constructor(public entityArgs: EntityArgs) {
+    constructor(
+        private cd: ChangeDetectorRef,
+        public entityArgs: EntityArgs) {
+
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityId = this.EntityPM.Id;
@@ -205,10 +211,27 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     get PermissionBuildMonths() {
         return this.EntityPM.PermissionBuildMonths;
     }
-    set PermissionBuildMonths(value: number) {
-        this.EntityPM.PermissionBuildMonths = value;
 
+    set PermissionBuildMonths(value: any) {
+        if (!(value < 84 && value > 0) && (value !== null && value !== '')) {            
+            this.showPopupMessage(TextCodeTranslator.Translate("TenantManagement.TH.PermissionBuildMonthsLimit"));
+            this.PermissionBuildMonths = this.previousPermissionBuildMonthsValue;
+            this.showPermissionBuildMonths = false;
+            this.cd.detectChanges();
+            this.showPermissionBuildMonths = true;
+            this.cd.detectChanges();
+        } else {
+            this.previousPermissionBuildMonthsValue = value;
+            this.EntityPM.PermissionBuildMonths = value;
+        }    
     }
+
+    private async showPopupMessage(message: string) {
+        const win:MessageWindow = new MessageWindow();
+        win.Show(message);
+        await new Promise<void>(resolve => win.WindowClosed.subscribe(()=> resolve()));
+    }
+
     private ValidateMainColorCode(hexColor: string) {
         if (!this.ValidateHexCode(hexColor, "MainColorCode"))
             this.wrongMainColor = true;

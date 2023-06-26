@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data.EntityLists;
+using Logitude.CargoTracking.Data.Repositories;
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
 { 
@@ -43,9 +44,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
 			return iQueryable;
 		}
-		
-			}
 
-
+        public List<CargoTrackingTransportMode> GetAllFromCache()
+        {
+			return CacheManager.GetOrInsertNewObject(
+                "AllCargoTrackingTransportModes",
+				() => new CargoTrackingTransportModeRepository(context).GetAll().ToList()
+			);
+        }
+    }
 }
 	
