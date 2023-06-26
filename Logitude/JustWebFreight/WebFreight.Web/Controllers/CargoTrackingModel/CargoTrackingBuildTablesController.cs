@@ -1,5 +1,7 @@
 ﻿
 using Logitude.BL.CommonDataModel.Helpers;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.CargoTracking.BL.CoreBL.Batch;
@@ -57,12 +59,11 @@ namespace WebFreight.Web.Controllers.AccountingModel
         }
 
  
-
         private string CreateBatchTaskExecution(Logitude.CargoTracking.BL.CoreBL.Batch.CargoTrackingXMLParameters Args, string Subject, string ClassName, int tenant)
         {
             // 1- create BTE record
             BatchTaskExecutionPM taskExe;
-
+            AddDateRange(Args);
             var stringwriter = new System.IO.StringWriter();
             var serializer = new XmlSerializer(typeof(Logitude.CargoTracking.BL.CoreBL.Batch.CargoTrackingXMLParameters));
             serializer.Serialize(stringwriter, Args);
@@ -99,8 +100,15 @@ namespace WebFreight.Web.Controllers.AccountingModel
             return taskExe.Id;
         }
 
-     
+        private void AddDateRange(CargoTrackingXMLParameters Args)
+        {
+            TenantManagementPM tenantManagementPM = new TenantManagementQuery(Args.Tenant.Value).GetSinglePM(Args.Tenant.Value);
+            Args.ToDate = DateTime.Now;
 
+            Args.FromDate = tenantManagementPM.ActivatePrivateSite && tenantManagementPM.PermissionBuildMonths.HasValue ?
+                DateTime.Now.AddMonths(Convert.ToInt32(tenantManagementPM.PermissionBuildMonths.Value) * -1) :
+                DateTime.Now.AddMonths(-6);
+        }
     }
 
 

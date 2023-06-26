@@ -55,6 +55,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LogboxShipmentExportExcelService } from 'src/CargoTracking/Services/Others/LogboxShipmentExportExcelService';
 import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
 import { SafePipe } from 'src/Infrastructure/Pipes/SafePipe';
+import { TenantManagementPMService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService copy';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -133,6 +134,7 @@ export function getBaseUrl() {
         SharedService,
         LogboxShipmentExportExcelService,
         LogitudeGridExportToExcelService,
+        TenantManagementPMService,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }

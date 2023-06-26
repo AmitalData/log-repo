@@ -7,8 +7,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Logitude.CargoTracking.Data.Model;
-
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
 {
@@ -178,6 +177,155 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                IncotermName = shipment.IncotermName
 
                                                            });
+            return query;
+        }
+
+        private IQueryable<CargoTrackingShipmentList> GetIqueryableListWithouJoin(int tenant)
+        {
+            IQueryable<CargoTrackingShipmentList> query = (from shipment in context.CargoTrackingShipments
+                                                           where shipment.Tenant == tenant                                                                
+                                                                && shipment.IsMainRecord == true
+
+                                                           select new CargoTrackingShipmentList()
+                                                           {
+                                                               Id = shipment.Id,
+                                                               Tenant = shipment.Tenant,
+                                                               CustomerEnglishName = "",// card.EnglishName,
+                                                               CustomerLocalName = "",//card.LocalName,
+                                                               ShipmentNumber = shipment.ShipmentNumber,
+                                                               CustomerReference = shipment.EntityType == OrderType ? shipment.CustomerReference + "," + shipment.BookingNotes + "," + shipment.PoNumber : shipment.CustomerReference,
+                                                               House = shipment.House,
+                                                               ChargeableWeightInKG = shipment.ChargeableWeightInKG,
+                                                               ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode,
+                                                               PackagesQuantity = shipment.PackagesQuantity,
+                                                               CurrentMilestoneDate = shipment.CurrentMilestoneDate,
+                                                               TransportModeId = shipment.TransportModeId,
+                                                               FromPortId = shipment.FromPortId,
+                                                               ToPortId = shipment.ToPortId,
+                                                               CreateDate = shipment.CreateDate,
+                                                               CustomerId = shipment.CustomerId,
+                                                               EntityId = shipment.EntityId,
+                                                               EntityType = shipment.EntityType,
+                                                               BookingNotes = shipment.BookingNotes,
+                                                               ATAETASortingField = shipment.ArrivalDate != null ? shipment.ArrivalDate : shipment.ArrivalEstimationDate,
+                                                               ATDETDSortingField = shipment.DepartureDate != null ? shipment.DepartureDate : shipment.DepartureEstimationDate,
+                                                               PoNumber = shipment.PoNumber,
+                                                               NumberOfPackages = shipment.PackagesQuantity,
+                                                               ConsigneeName = shipment.ConsigneeName,
+                                                               ForwardingShipmentLevelCode = shipment.ForwardingShipmentLevelCode,
+                                                               ShipperName = shipment.ShipperName,
+                                                               ForwardingMaster = shipment.ForwardingMaster,
+                                                               ForwardingHouse = shipment.ForwardingHouse,
+                                                               DirectionId = shipment.DirectionId,
+                                                               GrossWeight = shipment.GrossWeight,
+                                                               GrossWeightUnitCode = shipment.GrossWeightUnitCode,
+                                                               ArrivalDate = shipment.ArrivalDate,
+                                                               ShipmentLevelCode = shipment.ShipmentLevelCode,
+                                                               ForwardingShipmentHeaderId = shipment.ForwardingShipmentHeaderId,
+                                                               Master = shipment.Master,
+                                                               ArrivalEstimationDate = shipment.ArrivalEstimationDate,
+                                                               DepartureDate = shipment.DepartureDate,
+                                                               DepartureEstimationDate = shipment.DepartureEstimationDate,
+                                                               CurrentMilestoneExceptions = shipment.CurrentMilestoneExceptions,
+                                                               IsOperationalClosed = shipment.IsOperationalClosed,
+
+                                                               //ForwardingShipmentNumber = shipment.ForwardingShipmentNumber,
+
+                                                               //SecurityKey = shipment.SecurityKey,
+                                                               //CustomsShipmentHeaderId = shipment.CustomsShipmentHeaderId,
+                                                               //CurrentMilestoneCode = shipment.CurrentMilestoneCode,
+
+                                                               //ShipperId = shipment.ShipperId,
+                                                               //DeliveredDate = shipment.DeliveredDate,
+                                                               //ConsigneeId = shipment.ConsigneeId,
+                                                               //Volume = shipment.Volume,
+                                                               //PickupDone = shipment.PickupDone,
+                                                               //ClearanceDone = shipment.ClearanceDone,
+                                                               //PickupDate = shipment.PickupDate,
+                                                               //PickupEstimationDate = shipment.PickupEstimationDate,
+                                                               //FromWarehouseEstimationDate = shipment.FromWarehouseEstimationDate,
+                                                               //ToWarehouseEstimationDate = shipment.ToWarehouseEstimationDate,
+                                                               //DepartureDone = shipment.DepartureDone,
+                                                               //DeliveredEstimationDate = shipment.DeliveredEstimationDate,
+                                                               //ClearanceDate = shipment.ClearanceDate,
+                                                               //AssignedCustomsAgentDate = shipment.AssignedCustomsAgentDate,
+                                                               //AssignedCustomsAgentDone = shipment.AssignedCustomsAgentDone,
+                                                               //AssignedCustomsAgentEstDate = shipment.AssignedCustomsAgentEstDate,
+                                                               //AssignedCustomsAgentExcReason = shipment.AssignedCustomsAgentExcReason,
+                                                               //AssignedCustomsAgentNotes = shipment.AssignedCustomsAgentNotes,
+                                                               //AssignedTruckerDate = shipment.AssignedTruckerDate,
+                                                               //AssignedTruckerDone = shipment.AssignedTruckerDone,
+
+                                                               //ArrivalDone = shipment.ArrivalDone,
+                                                               //CustomsPaymentDate = shipment.CustomsPaymentDate,
+                                                               //ContainersNumbers = shipment.ContainersNumbers,
+                                                               //FromWarehouseDate = shipment.FromWarehouseDate,
+                                                               //FromWarehouseNotes = shipment.FromWarehouseNotes,
+                                                               //ToWarehouseDate = shipment.ToWarehouseDate,
+                                                               //ToWarehouseNotes = shipment.ToWarehouseNotes,
+                                                               //DeliveryEstimationDate = shipment.DeliveryEstimationDate,
+                                                               //DeliveryDate = shipment.DeliveryDate,
+                                                               //DeliveryNotes = shipment.DeliveryNotes,
+                                                               //AssignedTruckerEstimationDate = shipment.AssignedTruckerEstimationDate,
+                                                               //AssignedTruckerNotes = shipment.AssignedTruckerNotes,
+
+
+                                                               //ImportManifest = shipment.ImportManifest,
+                                                               //GoodsClassificationDate = shipment.GoodsClassificationDate,
+                                                               //GoodsClassificationDone = shipment.GoodsClassificationDone,
+                                                               //GoodsClassificationNotes = shipment.GoodsClassificationNotes,
+                                                               //GoodsClassificationEstDate = shipment.GoodsClassificationEstDate,
+
+                                                               //DocumentInspectionDate = shipment.DocumentInspectionDate,
+                                                               //DocumentInspectionEstDate = shipment.DocumentInspectionEstDate,
+                                                               //DocumentInspectionDone = shipment.DocumentInspectionDone,
+                                                               //DocumentInspectionNotes = shipment.DocumentInspectionNotes,
+
+                                                               //BookingDate = shipment.BookingDate,
+                                                               //BookingEstimationDate = shipment.BookingEstimationDate,
+                                                               //BookingDone = shipment.BookingDone,
+                                                               //BookingExceptionReason = shipment.BookingExceptionReason,
+
+                                                               //GatepassArrivedDate = shipment.GatepassArrivedDate,
+                                                               //GatepassArrivedDone = shipment.GatepassArrivedDone,
+                                                               //GatepassArrivedEstDate = shipment.GatepassArrivedEstDate,
+                                                               //GatepassArrivedNotes = shipment.GatepassArrivedNotes,
+
+                                                               //PaymentRequiredDone = shipment.PaymentRequiredDone,
+                                                               //PaymentRequiredEstimationDate = shipment.PaymentRequiredEstimationDate,
+                                                               //PaymentRequiredDate = shipment.PaymentRequiredDate,
+                                                               //PaymentRequiredNotes = shipment.PaymentRequiredNotes,
+
+                                                               //PaymentReceivedDone = shipment.PaymentReceivedDone,
+                                                               //PaymentReceivedEstomationDate = shipment.PaymentReceivedEstomationDate,
+                                                               //PaymentReceivedDate = shipment.PaymentReceivedDate,
+                                                               //PaymentReceivedNotes = shipment.PaymentReceivedNotes,
+
+                                                               //ShipmentTypeCode = shipment.ShipmentTypeCode,
+                                                               //CustomsPaymentDone = shipment.CustomsPaymentDone,
+                                                               //SupplyDateTime = shipment.SupplyDateTime,
+                                                               //DescriptionOfGoods = shipment.DescriptionOfGoods,
+
+                                                               //InvoicedDate = shipment.InvoicedDate,
+                                                               //InvoicedDone = shipment.InvoicedDone,
+                                                               //InvoicedExceptionReason = shipment.InvoicedExceptionReason,
+                                                               //InvoicedNotes = shipment.InvoicedNotes,
+
+
+                                                               //CreatedDone = shipment.CreatedDone,
+                                                               //DeliveredDone = shipment.DeliveredDone,
+                                                               //DeliveryDone = shipment.DeliveryDone,
+                                                               //FromWarehouseDone = shipment.FromWarehouseDone,
+                                                               //ToWarehouseDone = shipment.ToWarehouseDone,
+                                                               //CustomsClearanceDate = shipment.CustomsClearanceDate,
+                                                               //DeclarationDate = shipment.DeclarationDate,
+                                                               //WarehouseLegActualEntryDate = shipment.WarehouseLegActualEntryDate,
+                                                               //WarehouseLegExpectedEntryDate = shipment.WarehouseLegExpectedEntryDate,
+                                                               //SHOHouse = shipment.SHOHouse,
+                                                               //ChargeableWeight = shipment.ChargeableWeight,
+                                                               //IncotermName = shipment.IncotermName
+
+                                                           }).Distinct();
             return query;
         }
 
@@ -531,24 +679,107 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             shipments = FilterShipments(shipmentSearchInput, shipments);
             shipments = SortShipments(shipmentSearchInput, shipments);
-            List<CargoTrackingShipmentList> shipmentsLists = GetPageOfShipmentsLists(pageIndex, pageSize, shipments);
+            List<CargoTrackingShipmentList> shipmentsLists = GetPageOfShipments(pageIndex, pageSize, shipments).ToList();
             return shipmentsLists;
         }
+
+        private IQueryable<CargoTrackingShipmentList> AddShipmentSearch(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            return string.IsNullOrEmpty(shipmentSearchInput.SearchText) ? shipments : shipments.Where(s =>
+                context.CargoTrackingShipmentSearches
+                .Where(x => x.Tenant == shipmentSearchInput.Tenant && x.SearchFields.Contains(shipmentSearchInput.SearchText))
+                .Select(x => x.ShipmentId)
+                .Any(x => x == s.EntityId));
+        }
+
+        private IQueryable<CargoTrackingShipmentList> AddCards(IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            return shipments.Join(context.CargoTrackingCards, shipment => shipment.CustomerId, card => card.Id, (shipment, card) => new CargoTrackingShipmentList
+            {
+                Id = shipment.Id,
+                Tenant = shipment.Tenant,
+                CustomerEnglishName = card.EnglishName,
+                CustomerLocalName = card.LocalName,
+                ShipmentNumber = shipment.ShipmentNumber,
+                CustomerReference = shipment.CustomerReference,
+                House = shipment.House,
+                ChargeableWeightInKG = shipment.ChargeableWeightInKG,
+                ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode,
+                PackagesQuantity = shipment.PackagesQuantity,
+                CurrentMilestoneDate = shipment.CurrentMilestoneDate,
+                TransportModeId = shipment.TransportModeId,
+                FromPortId = shipment.FromPortId,
+                ToPortId = shipment.ToPortId,
+                CreateDate = shipment.CreateDate,
+                CustomerId = shipment.CustomerId,
+                EntityId = shipment.EntityId,
+                EntityType = shipment.EntityType,
+                BookingNotes = shipment.BookingNotes,
+                ATAETASortingField = shipment.ATAETASortingField,
+                ATDETDSortingField = shipment.ATDETDSortingField,
+                PoNumber = shipment.PoNumber,
+                NumberOfPackages = shipment.PackagesQuantity,
+                ConsigneeName = shipment.ConsigneeName,
+                ForwardingShipmentLevelCode = shipment.ForwardingShipmentLevelCode,
+                ShipperName = shipment.ShipperName,
+                ForwardingMaster = shipment.ForwardingMaster,
+                ForwardingHouse = shipment.ForwardingHouse,
+                DirectionId = shipment.DirectionId,
+                GrossWeight = shipment.GrossWeight,
+                GrossWeightUnitCode = shipment.GrossWeightUnitCode,
+                ArrivalDate = shipment.ArrivalDate,
+                ShipmentLevelCode = shipment.ShipmentLevelCode,
+                ForwardingShipmentHeaderId = shipment.ForwardingShipmentHeaderId,
+                Master = shipment.Master,
+                ArrivalEstimationDate = shipment.ArrivalEstimationDate,
+                DepartureDate = shipment.DepartureDate,
+                DepartureEstimationDate = shipment.DepartureEstimationDate,
+                CurrentMilestoneExceptions = shipment.CurrentMilestoneExceptions,
+                IsOperationalClosed = shipment.IsOperationalClosed,
+            });
+        }
+
         public List<CargoTrackingShipmentList> GetFilteredSortedShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
-            IQueryable<CargoTrackingShipmentList> shipments = GetQueryableShipmentsBySearchText(shipmentSearchInput.SearchText, shipmentSearchInput.Tenant);
+            IQueryable<CargoTrackingShipmentList> shipments = GetIqueryableListWithouJoin(shipmentSearchInput.Tenant);
 
             shipments = FilterShipments(shipmentSearchInput, shipments);
+            shipments = AddShipmentSearch(shipmentSearchInput, shipments);
             shipments = SortShipments(shipmentSearchInput, shipments);
+            shipments = GetPageOfShipments(shipmentSearchInput.PageIndex, shipmentSearchInput.PageSize, shipments);
+            shipments = AddCards(shipments);
 
-            List<CargoTrackingShipmentList> shipmentsLists = GetPageOfShipmentsLists(shipmentSearchInput.PageIndex, shipmentSearchInput.PageSize, shipments);
+            List<CargoTrackingShipmentList> shipmentsLists = shipments.ToList();
+            List<CargoTrackingPortList> ports = GetPortFromCache();
+            List<CargoTrackingTransportMode> transportModes = new CargoTrackingTransportModeListQueryService(context).GetAllFromCache();
+
+            shipmentsLists.ForEach(shipment =>
+            {
+                CargoTrackingPortList fromPort = ports.FirstOrDefault(port => shipment.FromPortId == port.Id);
+                CargoTrackingPortList toPort = ports.FirstOrDefault(port => shipment.ToPortId == port.Id);
+                CargoTrackingTransportMode transportMode = transportModes.FirstOrDefault(t => shipment.TransportModeId == t.Id);
+
+                shipment.ToPortCountryCode = toPort?.CountryCode;
+                shipment.FromPortCountryCode = fromPort?.CountryCode;
+                shipment.FromPortName = fromPort?.EnglishName;
+                shipment.ToPortName = toPort?.EnglishName;
+                shipment.FromPortCode = fromPort?.Code;
+                shipment.ToPortCode = toPort?.Code;
+                shipment.TransportModeName = transportMode?.Name;
+            });
+
             return shipmentsLists;
         }
-        public List<Customer> GetShipmentsCustomers(int tenant)
+
+        private List<CargoTrackingPortList> GetPortFromCache() =>
+            CacheManager.GetOrInsertNewObject<List<CargoTrackingPortList>>("ListCargoTrackingPortList", () => GetPorts().ToList());        
+
+        public List<Model.Customer> GetShipmentsCustomers(int tenant)
         {
             CargoTrackingShipmentRepository shipmentRepository = new CargoTrackingShipmentRepository(context);
             return shipmentRepository.GetFilteredShipmentsByTenant(tenant).ToList();
         }
+        
         public IQueryable<CargoTrackingShipmentList> GetShipments(List<string> ShipmentIds, CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             IQueryable<CargoTrackingShipmentList> shipments = GetShipmentsQuerableByIds(ShipmentIds, shipmentSearchInput.Tenant);
@@ -557,6 +788,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             return shipments;
         }
+        
         public IQueryable<CargoTrackingShipmentList> GetShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             IQueryable<CargoTrackingShipmentList> shipments = GetQueryableShipmentsBySearchText(shipmentSearchInput.SearchText, shipmentSearchInput.Tenant);
@@ -566,10 +798,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments;
         }
 
-        private List<CargoTrackingShipmentList> GetPageOfShipmentsLists(int pageIndex, int pageSize, IQueryable<CargoTrackingShipmentList> shipments)
+        private IQueryable<CargoTrackingShipmentList> GetPageOfShipments(int pageIndex, int pageSize, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            List<CargoTrackingShipmentList> shipmentsLists = shipments.Skip(pageIndex * pageSize).Take(pageSize).ToList();
-            return shipmentsLists;
+            shipments = shipments.Skip(pageIndex * pageSize).Take(pageSize);
+            return shipments;
         }
 
         private static IQueryable<CargoTrackingShipmentList> SortShipments(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
@@ -630,14 +862,16 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             shipments = FilterShipments(shipmentSearchInput, shipments);
             return shipments.Count();
         }
+        
         public int GetShipmentsCount(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
-            IQueryable<CargoTrackingShipmentList> shipments = GetQueryableShipmentsBySearchText(shipmentSearchInput.SearchText, shipmentSearchInput.Tenant);
+            IQueryable<CargoTrackingShipmentList> shipments = GetIqueryableListWithouJoin(shipmentSearchInput.Tenant);
 
             shipments = FilterShipments(shipmentSearchInput, shipments);
+            shipments = AddShipmentSearch(shipmentSearchInput, shipments);
+
             return shipments.Count();
         }
-
 
         private IQueryable<CargoTrackingShipmentList> FilterShipments(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
@@ -646,6 +880,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             shipments = FilterTransportMode(shipmentSearchInput, shipments);
             shipments = FilterDirections(shipmentSearchInput, shipments);
             shipments = FilterShipmentsWhichMoreFilter(shipmentSearchInput, shipments);
+            shipments = FilterShipmentsDate(shipmentSearchInput, shipments);
+
             return shipments;
         }
 
@@ -693,6 +929,17 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments;
         }
 
+        private static IQueryable<CargoTrackingShipmentList> FilterShipmentsDate(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if (shipmentSearchInput.FromDate.HasValue)
+                shipments = shipments.Where(d => d.CreateDate >= shipmentSearchInput.FromDate);
+
+            if (shipmentSearchInput.ToDate.HasValue)
+                shipments = shipments.Where(d => d.CreateDate <= shipmentSearchInput.ToDate);
+
+            return shipments;
+        }
+
         private static IQueryable<CargoTrackingShipmentList> FilterByMileStones(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (shipmentSearchInput.MilestonesCodes.Count > 0)
@@ -702,8 +949,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments;
         }
 
-
-
         private IQueryable<CargoTrackingShipmentList> GetShipmentsQuerableByIds(List<string> ShipmentIds, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
@@ -712,6 +957,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             IQueryable<CargoTrackingShipmentList> shipmentsListQuerable = GetIqueryableList(shipments);
             return shipmentsListQuerable;
         }
+        
         private IQueryable<CargoTrackingShipmentList> GetQueryableShipmentsBySearchText(string searchKey, int tenant)
         {
             CargoTrackingShipmentRepository shipmentRepository = new CargoTrackingShipmentRepository(context);
@@ -720,8 +966,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             IQueryable<CargoTrackingShipmentList> shipmentsListQuerable = GetIqueryableList(shipments);
             return shipmentsListQuerable;
         }
-
-
 
         public CargoTrackingShipmentList GetShipment(string SecurityKey, int tenant)
         {
@@ -759,29 +1003,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(tenant);
             var shipmets = repo.GetBySecurityKey(SecurityKey, tenant);
             return shipmets.FirstOrDefault();
-        }
-
-
-
-
-        private void SetFutureMilstoneForShipment(CargoTrackingShipmentList cargoShipmentPM, List<Milestone> milestone)
-        {
-            Milestone futureMilstone = GetMostRecentEstimatedMilestone(milestone);
-
-            if (futureMilstone != null)
-            {
-                cargoShipmentPM.FutureMilstoneCode = futureMilstone.Code;
-                cargoShipmentPM.FutureMilstoneName = futureMilstone.Name;
-                cargoShipmentPM.FutureMilstoneDate = futureMilstone.EstimationDate;
-            }
-        }
-
-        private static Milestone GetMostRecentEstimatedMilestone(List<Milestone> milestones)
-        {
-            return milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null)
-                                                        .OrderByDescending(s => s.Weight)
-                                                        .FirstOrDefault();
-        }
+        } 
     }
 
 
