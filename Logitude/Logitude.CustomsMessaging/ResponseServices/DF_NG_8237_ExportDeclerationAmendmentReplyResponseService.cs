@@ -862,7 +862,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         item.ExportStoragesId = null;
                         item.ChangeSetOp = ChangeSetOperation.Update;
                         ConsignmentUpdateService cUpdateservice = new ConsignmentUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                        cUpdateservice.Update(item, false);
+                        cUpdateservice.Update(item, true);
                     }
             
                 }
@@ -873,7 +873,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     item.DeclarationId = null;
                     item.ChangeSetOp = ChangeSetOperation.Update;
                     ExportStorageUpdateService sUpdateservice = new ExportStorageUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                    sUpdateservice.Update(item, false);
+                    sUpdateservice.Update(item, true);
                 }
             }
             if (status == "2" || status == "1")
@@ -887,7 +887,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         item.ExportStoragesId = null;
                         item.ChangeSetOp = ChangeSetOperation.Update;
                         ConsignmentUpdateService cUpdateservice = new ConsignmentUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                        cUpdateservice.Update(item, false);
+                        cUpdateservice.Update(item, true);
                     }
                 }
                 var myExportStorageQueryService = new ExportStorageQueryService(context);
@@ -906,7 +906,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     item.ChangeSetOp = ChangeSetOperation.Update;
                     ExportStorageUpdateService cUpdateservice = new ExportStorageUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                    cUpdateservice.Update(item, false);
+                    cUpdateservice.Update(item, true);
                 }
             }         
         }
