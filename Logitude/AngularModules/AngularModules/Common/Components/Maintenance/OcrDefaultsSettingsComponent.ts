@@ -36,7 +36,7 @@ import { SupplierInvioceItemCertificatsService } from 'Customs/Services/WebServi
     selector: 'OcrDefaultsSettingsComponent',
 
     templateUrl: './OcrDefaultsSettingsComponent.html',
-})  
+})
 
 
 export class OcrDefaultsSettingsComponent extends BaseComponent {
@@ -62,17 +62,16 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
 
     }
     SetWindowArgs(args: any) {
-        
+
         if (!AppTool.IsNullOrEmpty(args)) {
             this.DeclarationPM = args.EntityPM;
-            this.SupplierInvoiceComprehensiveUpdate=args.SupplierInvoiceComprehensiveUpdate;
-            this.IsFromSupplierInvoice=args.IsFromSupplierInvoice
+            this.SupplierInvoiceComprehensiveUpdate = args.SupplierInvoiceComprehensiveUpdate;
+            this.IsFromSupplierInvoice = args.IsFromSupplierInvoice
         }
     }
     private LoadDefaults() {
         this.SupplierInvioceExportDefaultPM = new SupplierInvioceExportDefaultPM();
         var myService: SupplierInvioceExportDefaultExtendedPMService = new SupplierInvioceExportDefaultExtendedPMService();
-        var serviceDeclaration: DeclarationPMService = new DeclarationPMService();
         myService.getByTenat(SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
             this.SupplierInvioceExportDefaultPM = response.Result;
 
@@ -80,7 +79,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
                 this.SupplierInvioceExportDefaultPM = new SupplierInvioceExportDefaultPM();
             this.IsVisibile = true;
             this.CurrentSession.StopBusyIndicator();
-            
+
         });
 
 
@@ -121,7 +120,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
 
         }
     }
-    
+
     get TransactionNatureCode() { return this.SupplierInvioceExportDefaultPM?.TransactionNatureCode ?? "2" }
     set TransactionNatureCode(value: string) {
         if (this.SupplierInvioceExportDefaultPM.TransactionNatureCode != value) {
@@ -150,77 +149,47 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        
+
         var errors: string[] = [];
         Validator.TryValidateObject(this.SupplierInvioceExportDefaultPM, this.DataContext.ObjectTableName, errors);
 
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            ServiceLocator.SendTotangoUserActivity("CompanyDefaults", "Edit");
-            this.SubmitTenantChanges();
+            this.SubmitChanges();
 
         }
-        if (this.IsFromSupplierInvoice) {
-            this.SendMultiUpdate();
-            // if (this.SupplierInvoiceComprehensiveUpdate.length > 0) {
-
-
-
-            //     this.SupplierInvoiceComprehensiveUpdate.forEach(item => {
-
-            //       this.UpdateSupplierInvoice(this.DeclarationPM.SupplierInvoices.find(t=>t.InvoiceNumber==item.InvoiceNumber));
-
-            //     });
-            //    // this.declarationPMService.update(this.EntityPM).subscribe()
-            // }
-            // this.SupplierInvoiceComprehensiveUpdate;
-            // this.SupplierInvioceExportDefaultPM;
-           
-        }
-        
-
     }
 
     _SupplierInvoiceService: SupplierInvoiceService = new SupplierInvoiceService();
 
 
-    SendMultiUpdate() {
+    SupplierInvoiceMultiUpdate() {
         var currRequestParams = new MultiUpdateOcrParams();
-        currRequestParams.LoggingEnabled = true;
-        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-        currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.DeclarationId = this.CurrentSession.CurrentEditComponent.EntityPM.Id;
-        currRequestParams.SupplierInvoiceList=this.SupplierInvoiceComprehensiveUpdate;
-        currRequestParams.SupplierInvioceItemCertificats=[]
+        currRequestParams.SupplierInvoiceList = this.SupplierInvoiceComprehensiveUpdate;
+        currRequestParams.SupplierInvioceItemCertificats = []
         this.ItemsSource.Collection.forEach(element => {
-
             var supplierInvioceItemCertificat: SupplierInvioceItemCertificat = new SupplierInvioceItemCertificat();
-            
-            supplierInvioceItemCertificat.InvoiceCounterKey= element.InvoiceCounterKey;
-            supplierInvioceItemCertificat.LineNumber= element.LineNumber;
-            supplierInvioceItemCertificat.ItemCertificateCounterKey= element.ItemCertificateCounterKey;
-            supplierInvioceItemCertificat.CertificateNumber= element.CertificateNumber;
-            supplierInvioceItemCertificat.ReqConfirmationTypeCode=element.ReqConfirmationTypeCode;
-            supplierInvioceItemCertificat.CertificateExemptionTypeCode= element.CertificateExemptionTypeCode;
-            supplierInvioceItemCertificat.AttachmentTypeCode=element.AttachmentTypeCode;
-            supplierInvioceItemCertificat.ResConfirmationTypeCode=element.ResConfirmationTypeCode;
-            supplierInvioceItemCertificat.CustomsAttachmentID=element.CustomsAttachmentID;
-            supplierInvioceItemCertificat.ReqConfirmationTypeName= element.ReqConfirmationTypeName;
-            supplierInvioceItemCertificat.CertificateExemptionTypeName=element.CertificateExemptionTypeName;
-            supplierInvioceItemCertificat.AttachmentTypeName=element.AttachmentTypeName;
-            supplierInvioceItemCertificat.ResConfirmationTypeName=element.ResConfirmationTypeName;
-            supplierInvioceItemCertificat.SequenceNumeric=element.SequenceNumeric;
-            supplierInvioceItemCertificat.ExternalCertificatCode=element.ExternalCertificatCode;
-            supplierInvioceItemCertificat.ExternalRequestTypeCode= element.ExternalRequestTypeCode;
-            supplierInvioceItemCertificat.ApprovalRequestNumber= element.ApprovalRequestNumber;
-                
+            supplierInvioceItemCertificat.InvoiceCounterKey = element.InvoiceCounterKey;
+            supplierInvioceItemCertificat.LineNumber = element.LineNumber;
+            supplierInvioceItemCertificat.ItemCertificateCounterKey = element.ItemCertificateCounterKey;
+            supplierInvioceItemCertificat.CertificateNumber = element.CertificateNumber;
+            supplierInvioceItemCertificat.ReqConfirmationTypeCode = element.ReqConfirmationTypeCode;
+            supplierInvioceItemCertificat.CertificateExemptionTypeCode = element.CertificateExemptionTypeCode;
+            supplierInvioceItemCertificat.AttachmentTypeCode = element.AttachmentTypeCode;
+            supplierInvioceItemCertificat.ResConfirmationTypeCode = element.ResConfirmationTypeCode;
+            supplierInvioceItemCertificat.CustomsAttachmentID = element.CustomsAttachmentID;
+            supplierInvioceItemCertificat.ReqConfirmationTypeName = element.ReqConfirmationTypeName;
+            supplierInvioceItemCertificat.CertificateExemptionTypeName = element.CertificateExemptionTypeName;
+            supplierInvioceItemCertificat.AttachmentTypeName = element.AttachmentTypeName;
+            supplierInvioceItemCertificat.ResConfirmationTypeName = element.ResConfirmationTypeName;
+            supplierInvioceItemCertificat.SequenceNumeric = element.SequenceNumeric;
+            supplierInvioceItemCertificat.ExternalCertificatCode = element.ExternalCertificatCode;
+            supplierInvioceItemCertificat.ExternalRequestTypeCode = element.ExternalRequestTypeCode;
+            supplierInvioceItemCertificat.ApprovalRequestNumber = element.ApprovalRequestNumber;
+            currRequestParams.SupplierInvioceItemCertificats.push(supplierInvioceItemCertificat)
 
-             
-             currRequestParams.SupplierInvioceItemCertificats.push(supplierInvioceItemCertificat)
-             
-           
         });
-       
 
         SessionLocator.SelectedSession.StartBusyIndicator("");
         this._SupplierInvoiceService.PostMultiUpdateOCR(currRequestParams)
@@ -230,46 +199,35 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
                 myMessageWindow.Show(res.Result);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    
+
                 });
             });
     }
-
-
-
-
-
-
-
-
-
-
-
 
     UpdateSupplierInvoice(SupplierInvocie: SupplierInvoicePM) {
         SupplierInvocie.AccountTypeCode = this.SupplierInvioceExportDefaultPM.AccountTypeCode;
         SupplierInvocie.PartyRelationshipCode = this.SupplierInvioceExportDefaultPM.PartyRelationshipCode;
         SupplierInvocie.BuyerRoleCode = this.SupplierInvioceExportDefaultPM.BuyerRoleCode;
         SupplierInvocie.SupplierInvoiceItems.forEach(element => {
-            
-                element.SupplierInvoiceItemProcesTypes.forEach(ProcesTypes => {
-                ProcesTypes.ProcessTypeCode=this.SupplierInvioceExportDefaultPM.ProcessTypeCode;
-               
-             });
-             element.TransactionNatureCode=this.SupplierInvioceExportDefaultPM.TransactionNatureCode;
-             element.ClaimReasonCode=this.SupplierInvioceExportDefaultPM.ClaimReasonCode;
-             if(this.ItemsSource.Length>0){
-                element.SupplierInvioceItemCertificats=this.ItemsSource.Collection;
-             }
-        });
-        
-        this.supplierInvoicePMService.update(SupplierInvocie).subscribe(e=>{})
 
-       
+            element.SupplierInvoiceItemProcesTypes.forEach(ProcesTypes => {
+                ProcesTypes.ProcessTypeCode = this.SupplierInvioceExportDefaultPM.ProcessTypeCode;
+
+            });
+            element.TransactionNatureCode = this.SupplierInvioceExportDefaultPM.TransactionNatureCode;
+            element.ClaimReasonCode = this.SupplierInvioceExportDefaultPM.ClaimReasonCode;
+            if (this.ItemsSource.Length > 0) {
+                element.SupplierInvioceItemCertificats = this.ItemsSource.Collection;
+            }
+        });
+
+        this.supplierInvoicePMService.update(SupplierInvocie).subscribe(e => { })
+
+
     }
 
 
-    SubmitTenantChanges() {
+    SubmitChanges() {
         this.CurrentSession.StartBusyIndicator("Saving...");
 
         var myService: SupplierInvioceExportDefaultPMService = new SupplierInvioceExportDefaultPMService();
@@ -278,15 +236,16 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
             myService.insert(this.SupplierInvioceExportDefaultPM).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
-
-                        if(this.SupplierInvoiceComprehensiveUpdate)
-                        {
+                        if (this.IsFromSupplierInvoice) {
+                            this.SupplierInvoiceMultiUpdate();
                             this.CurrentSession.CloseCurrentWindowEmit("update")
-                        } 
-                      else{
-                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                        }
 
-                      }                    }
+                        else {
+                            this.CurrentSession.CloseCurrentWindowEmit("ok");
+
+                        }
+                    }
                     else {
 
                         this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -299,14 +258,14 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
             myService.update(this.SupplierInvioceExportDefaultPM).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
-                      if(this.SupplierInvoiceComprehensiveUpdate)
-                        {
+                        if (this.IsFromSupplierInvoice) {
+                            this.SupplierInvoiceMultiUpdate();
                             this.CurrentSession.CloseCurrentWindowEmit("update")
-                        } 
-                      else{
-                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                        }
+                        else {
+                            this.CurrentSession.CloseCurrentWindowEmit("ok");
 
-                      }
+                        }
                     }
                     else {
 
