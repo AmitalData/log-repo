@@ -147,12 +147,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 exceptionMessage = "בקשה לפיצול מטען נשלחה בהצלחה";
                 string userMess = null;
 
-                if ((customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumberSpecified && string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.RequestNumber))
+                if ((string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.RequestNumber))
                  || (customResponse.CargoSplitRequestResponse.responseStatus != _DeclarationCargoSplitPM.ResponseStatusCode))
                 {
                     var DeclarationCargoSplitUpdateService = new DeclarationCargoSplitUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
                     _DeclarationCargoSplitPM.ChangeSetOp = ChangeSetOperation.Update;
-                    if (customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumberSpecified && string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.RequestNumber))
+                    if (string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.RequestNumber))
                     {
                         _DeclarationCargoSplitPM.RequestNumber = customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumber.ToString();
                     }
