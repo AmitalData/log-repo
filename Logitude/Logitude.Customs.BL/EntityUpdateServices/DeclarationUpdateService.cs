@@ -489,6 +489,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                             if (OldValue != NewValue && !change.Contains("CreatedByUserId") && !change.Contains("IsChanged"))
                             {
+                                LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating: " + " CustomFileno : " + this.EntityPM.CustomFileNo + " = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
+                                LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating: " + " Old : " + OldValue + " = New " + NewValue, false, "CreateUD2LTService", stopLogAt);
                                 entityPM.IsChanged = true;
                                 break;
                             }

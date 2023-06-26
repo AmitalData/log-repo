@@ -79,7 +79,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.ResponseContentHeader.Exception == null)
             {
 
-                if (customResponse != null && customResponse.CargoSplitRequestResponse != null && customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumberSpecified)
+                if (customResponse != null && customResponse.CargoSplitRequestResponse != null)
                 {
                     cargoSpllitRequestNumber = customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumber.ToString();
                     declarationCargoSplitID = myDeclarationCargoSplitQueryService.GetIdByDeclarationCargoSplitRequestNumber(cargoSpllitRequestNumber, requestParams.Tenant);

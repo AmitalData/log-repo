@@ -296,6 +296,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                             )
                         {
                             string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
+                            LogMessagingUtil.Instance.AppendLine("lock in CustomsRequestsSheetDomainModelService.ConcurrentKiller():299 key: " + CRSKey);
                             var concurrentKiller = new ConcurrentKiller();
                             concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
                             bool ReleaseConcurrentKeyOn1stStep = true;

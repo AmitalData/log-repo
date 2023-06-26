@@ -1,4 +1,5 @@
-﻿using Simplog.Data.Helpers;
+﻿using Logitude.Server.Tools.Helpers;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
@@ -16,7 +17,7 @@ namespace Logitude.Server.Tools.Utils
         public void LockOrCrashOnCommitDueUnique(string GeneralKey, int tenant)
         {
             var repo = new GeneralLockRepository(tenant);
-
+            LogMessagingUtil.Instance.AppendLine(" ** try lock, LockOrCrashOnCommitDueUnique, key: " + GeneralKey);
 
             using (var scope = TransactionFactory.GetTransaction())
             {
@@ -39,6 +40,7 @@ namespace Logitude.Server.Tools.Utils
         public void FreeLock(string GeneralKey, int tenant)
         {
             var repo = new GeneralLockRepository(tenant);
+            LogMessagingUtil.Instance.AppendLine(" ** Rlease lock, FreeLock, key: " + GeneralKey);
 
             using (var scope = TransactionFactory.GetTransaction())
             {
@@ -56,6 +58,7 @@ namespace Logitude.Server.Tools.Utils
         public void FreeLockIfCreated15MinOld(string cRSKey, int tenant)
         {
             var repo = new GeneralLockRepository(tenant);
+            LogMessagingUtil.Instance.AppendLine(" ** Rlease old lock, FreeLockIfCreated15MinOld, key: " + cRSKey);
 
             using (var scope = TransactionFactory.GetTransaction())
             {
