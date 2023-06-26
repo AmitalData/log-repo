@@ -6,7 +6,7 @@
 ]]>
   </Sql>
 
-  <Oracle Version="1">
+  <Oracle Version="2">
     <![CDATA[
 DECLARE
   job_count NUMBER;
