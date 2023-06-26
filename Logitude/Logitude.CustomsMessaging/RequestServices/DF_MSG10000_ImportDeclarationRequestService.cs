@@ -386,15 +386,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override DF_MSG10000_ImportDeclaration GetRequest(GenericRequestParams requestParams)
         {
-
-            FeatureQuery featureQuery = new FeatureQuery();
-            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
-            var feature = features.Features.FirstOrDefault(x => x.Code == "ISEXCLUDEMANIFEST");
-            if(feature != null)
-			{
-                FeatureExcludeManifest = true;
-            }
-            IsSendWithManifest = (!FeatureExcludeManifest || !this._DeclarationPM.ExcludeManifest);
+         
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
@@ -463,7 +455,14 @@ namespace Logitude.CustomsMessaging.RequestServices
                 /// due isAccurate
                 //queryService.GetOnlyParent();//  work with parent only !!!!!  
             }
-
+            FeatureQuery featureQuery = new FeatureQuery();
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
+            var feature = features.Features.FirstOrDefault(x => x.Code == "ISEXCLUDEMANIFEST");
+            if (feature != null)
+            {
+                FeatureExcludeManifest = true;
+            }
+            IsSendWithManifest = (!FeatureExcludeManifest || !this._DeclarationPM.ExcludeManifest);
             //#endif
             bool fromMevaker = false;
             if (!string.IsNullOrWhiteSpace(requestParams.UnifreightListOnServerOnly))
