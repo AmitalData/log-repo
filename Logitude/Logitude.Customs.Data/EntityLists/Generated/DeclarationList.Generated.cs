@@ -466,5 +466,6 @@ namespace Logitude.Customs.Data.EntityLists
        public bool ShortProcedure  { get; set; }
     }
 
+
 }
 	 
