@@ -335,9 +335,10 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CasualImporterCountry).HasColumnName("CasualImporterCountry").HasMaxLength(4).IsUnicode(false);
 
-             this.Property(t => t.ExcludeManifest).HasColumnName("ExcludeManifest");
-             this.Property(t => t.ShortProcedure).HasColumnName("ShortProcedure");
-         }
+            this.Property(t => t.ExcludeManifest).HasColumnName("ExcludeManifest");
+
+            this.Property(t => t.ShortProcedure).HasColumnName("ShortProcedure");
+        }
     }
 }
 	 

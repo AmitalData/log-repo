@@ -452,7 +452,7 @@ namespace Logitude.Customs.Data.EntityLists
        public string IntegratorName  { get; set; }
        [DataMember]
        public string ExportCloseAmendStatusName  { get; set; }
-        [DataMember]
+       [DataMember]
        public bool ExcludeManifest  { get; set; }
        [DataMember]
        public decimal? MehesFee  { get; set; }
@@ -462,10 +462,9 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? SecurityFee  { get; set; }
        [DataMember]
        public decimal? ComputerFee  { get; set; }
-        [DataMember]
+       [DataMember]
        public bool ShortProcedure  { get; set; }
-    }
-
+   }
 
 }
 	 

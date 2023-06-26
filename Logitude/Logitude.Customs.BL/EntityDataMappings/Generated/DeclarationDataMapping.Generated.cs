@@ -178,9 +178,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportCloseAmendRequestNumber, 
 	         ExportCloseAmendmentStatus, 
 	         CasualImporterCountry, 
- 	         ExcludeManifest,
- 	         ShortProcedure,
- 	      }
+	         ExcludeManifest, 
+	         ShortProcedure,
+	      }
 
 
 	      public enum PMPropertyNames
@@ -430,9 +430,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterCountry, 
 	         ExportCloseAmendStatusName, 
 	         IsAramex, 
- 	         ExcludeManifest,
- 	         ShortProcedure,
- 	      }
+	         ExcludeManifest, 
+	         ShortProcedure,
+	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -1215,15 +1215,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.CasualImporterCountry = entityPM.CasualImporterCountry;
 			}
 			
- 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeManifest))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeManifest))
             {
 				entityPOCO.ExcludeManifest = entityPM.ExcludeManifest;
 			}
- 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
             {
 				entityPOCO.ShortProcedure = entityPM.ShortProcedure;
 			}
- 			
+			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -2010,17 +2011,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CasualImporterCountry = entityPOCO.CasualImporterCountry;
             }
 
- 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExcludeManifest))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExcludeManifest))
             {
 					entityPM.ExcludeManifest = entityPOCO.ExcludeManifest;
             }
 
- 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShortProcedure))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShortProcedure))
             {
 					entityPM.ShortProcedure = entityPOCO.ShortProcedure;
             }
 
- 		}
+		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
         {
@@ -2801,17 +2802,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CasualImporterCountry = entityPM.CasualImporterCountry;
             }
 			
- 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeManifest))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeManifest))
             {
                 oldEntityPM.ExcludeManifest = entityPM.ExcludeManifest;
             }
 			
- 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortProcedure))
             {
                 oldEntityPM.ShortProcedure = entityPM.ShortProcedure;
             }
 			
- 		}
+		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationPM entityPM)
         {

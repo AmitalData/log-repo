@@ -1502,6 +1502,8 @@ export class DeclarationPM {
     private excludeManifest: boolean;
     public get ExcludeManifest() { return this.excludeManifest; }
     public set ExcludeManifest(newValue: boolean) { if (this.excludeManifest != newValue) { this.excludeManifest = newValue; this.MarkAsDirty("ExcludeManifest"); } }
+       
+	 
     private shortProcedure: boolean;
     public get ShortProcedure() { return this.shortProcedure; }
     public set ShortProcedure(newValue: boolean) { if (this.shortProcedure != newValue) { this.shortProcedure = newValue; this.MarkAsDirty("ShortProcedure"); } }
@@ -1535,4 +1537,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
