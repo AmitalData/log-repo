@@ -502,30 +502,34 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 if (rowData.Length > 0)
                 {
                     int ArrayIndex = 0;
-                    string format = "dd/MM/yyyy HH:mm:ss";
+                    string format = "M/d/yyyy h:mm:ss tt";
                     if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
-                        DateTime.TryParseExact(rowData[0],format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime referenceDate);
+                        DateTime.TryParseExact(rowData[ArrayIndex],format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime referenceDate);
                         excelReconcileExternalPageLine.ReferenceDate = referenceDate;
                         excelReconcileExternalPageLine.Notes = rowData[0];
                     }
-                    if (ArrayIndex < rowData.Length &&  !string.IsNullOrEmpty(rowData[ArrayIndex++]))
+                    ArrayIndex++;
+                    if (ArrayIndex < rowData.Length &&  !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
-                        decimal.TryParse(rowData[1], out decimal debitAmount);
+                        decimal.TryParse(rowData[ArrayIndex], out decimal debitAmount);
                         excelReconcileExternalPageLine.DebitAmount = debitAmount;
                     }
-                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex++]))
+                    ArrayIndex++;
+                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
-                        decimal.TryParse(rowData[2], out decimal CreditAmount);
+                        decimal.TryParse(rowData[ArrayIndex], out decimal CreditAmount);
                         excelReconcileExternalPageLine.CreditAmount = CreditAmount;
                     }
-                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex++]))
+                    ArrayIndex++;
+                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
-                        excelReconcileExternalPageLine.Reference = rowData[3];
+                        excelReconcileExternalPageLine.Reference = rowData[ArrayIndex];
                     }
-                    if (ArrayIndex < rowData.Length && rowData.Length > 4 && !string.IsNullOrEmpty(rowData[ArrayIndex++]))
+                    ArrayIndex++;
+                    if (ArrayIndex < rowData.Length && rowData.Length > 4 && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
-                        excelReconcileExternalPageLine.Notes = rowData[4];
+                        excelReconcileExternalPageLine.Notes = rowData[ArrayIndex];
                     }
                 }
                 myResult.Add(excelReconcileExternalPageLine);
