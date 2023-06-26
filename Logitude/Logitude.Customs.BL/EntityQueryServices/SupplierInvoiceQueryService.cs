@@ -10,6 +10,10 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Customs.Data.Repsitories;
+using System.Runtime.Remoting.Contexts;
+using Logitude.Customs.BL.EntityUpdateServices;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -772,5 +776,54 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return supplierInvoicePMs.OrderBy(d => d.SequenceNumeric).ToList();
         }
+
+
+        public bool UpdateSupplierInvoiceByOcrDefaults(string declarationId, string supplierInvocieList,  SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats,int tenant)
+        {
+            var context = CustomContext.GetContext(tenant);
+            var myDeclarationQueryService = new DeclarationQueryService(context);
+            DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(declarationId, true, false);
+            var arrSupplierInvocie = supplierInvocieList.Split(',');
+            if (declarationPM == null)
+                return false;
+
+            var supplierInvoiceQueryServices = new SupplierInvoiceQueryService(context);
+            var supplierInvoices = supplierInvoiceQueryServices.GetSupplierInvoicesForDeclaration(declarationId, tenant,true).Where(i=> arrSupplierInvocie.Contains((i.InvoiceCounterKey).ToString(), StringComparer.OrdinalIgnoreCase));
+
+            SupplierInvioceExportDefaultQueryService queryService = new SupplierInvioceExportDefaultQueryService(context);
+            SupplierInvioceExportDefault supplierInvioceExportDefault = queryService.GetDepositByPaymentOrderNumberOrTapagId(tenant);
+
+            foreach (var supplierInvoice in supplierInvoices)
+            {
+                UpdateSupplierInvoices(supplierInvoice, supplierInvioceExportDefault, context);
+            }
+            // var supplierInvoiceItemUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                            return true;
+        }
+        private void UpdateSupplierInvoices(SupplierInvoicePM supplierInvoice, SupplierInvioceExportDefault supplierInvioceExportDefault,ICustomContext context)
+        {
+            var supplierInvoiceItemUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), supplierInvioceExportDefault.Tenant);
+
+            supplierInvoice.AccountTypeCode = supplierInvioceExportDefault.AccountTypeCode;
+            supplierInvoice.PartyRelationshipCode = supplierInvioceExportDefault.PartyRelationshipCode;
+            supplierInvoice.BuyerRoleCode = supplierInvioceExportDefault.BuyerRoleCode;
+            supplierInvoice.ChangeSetOp= ChangeSetOperation.Update;
+            foreach (var supplierInvoiceItem in supplierInvoice.SupplierInvoiceItems)
+            {
+                supplierInvoiceItem.TransactionNatureCode= supplierInvioceExportDefault.TransactionNatureCode;
+                supplierInvoiceItem.ClaimReasonCode = supplierInvioceExportDefault.ClaimReasonCode;
+                supplierInvoiceItem.ChangeSetOp= ChangeSetOperation.Update;
+                foreach (var supplierInvoiceItemProcesType in supplierInvoiceItem.SupplierInvoiceItemProcesTypes)
+                {
+                    supplierInvoiceItemProcesType.ProcessTypeCode=supplierInvioceExportDefault.ProcessTypeCode;
+                    supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Update;
+
+                }
+            }
+
+            supplierInvoiceItemUpdateService.Update(supplierInvoice, true);
+
+        }
+
     }
 }
