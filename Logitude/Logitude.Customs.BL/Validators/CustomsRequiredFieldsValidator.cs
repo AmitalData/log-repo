@@ -72,10 +72,12 @@ namespace Logitude.Customs.BL.Validators
                                  select a).Any();
                 if (required)
                 {
-                    if (info.GetValue(declaration) == null || info.GetValue(declaration) == "")
+                    if (info.GetValue(declaration) == null || info.GetValue(declaration) == "" )
                     {
                         string name = info.Name == "ImporterCode" && declaration.Direction == "E" ? "ExporterImporterCode" : info.Name;
-                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = name, TableName = "Customs.Declaration" });
+                        var a = name == "ExporterImporterCode" && declaration.ShortProcedure;
+                        if(!a)
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = name, TableName = "Customs.Declaration" });
                     }
                 }
             }
@@ -791,7 +793,7 @@ namespace Logitude.Customs.BL.Validators
                                  select a).Any();
                 if (required)
                 {
-                    if (info.GetValue(declaration) == null || info.GetValue(declaration) == "")
+                    if (info.GetValue(declaration) == null || info.GetValue(declaration) == "") 
                     {
                         string name = info.Name == "ImporterCode" && declaration.Direction == "E" ? "ExporterImporterCode" : info.Name;
                         requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = name, TableName = "Customs.Declaration" });

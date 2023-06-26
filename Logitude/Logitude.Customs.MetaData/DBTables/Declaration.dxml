@@ -1072,13 +1072,19 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
+   <Column
     Name="ExcludeManifest"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
-  <Relation
+   <Column
+    Name="ShortProcedure"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"

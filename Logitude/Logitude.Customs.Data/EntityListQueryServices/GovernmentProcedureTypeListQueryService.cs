@@ -31,7 +31,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           IsImport = a.IsImport,
                                                           Inactive = a.Inactive,
                                                           IndexOrder = a.IndexOrder,
-                                                          IsExport= a.IsExport
+                                                          IsExport= a.IsExport,
+                                                          ShortProcedure = a.ShortProcedure,
                                                       });
             return query;//.Where(d => !d.Code.StartsWith("1") );
 		}

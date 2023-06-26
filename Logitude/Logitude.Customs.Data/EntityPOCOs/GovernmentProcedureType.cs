@@ -35,6 +35,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int? IndexOrder { get; set; }
         [Column("IsExport")]
 	    public bool? IsExport { get; set; }
+        [Column("ShortProcedure")]
+	    public bool ShortProcedure { get; set; }
     }
 }
 	 

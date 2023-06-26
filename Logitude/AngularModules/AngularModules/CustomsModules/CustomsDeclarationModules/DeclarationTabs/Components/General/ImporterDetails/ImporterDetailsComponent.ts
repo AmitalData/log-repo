@@ -296,7 +296,7 @@ export class ImporterDetailsComponent extends BaseComponent {
              var service = new DeclarationWebService();
              service.SendPRIVEventPrivacyProtection(this.EntityPM.Id, this.EntityPM.Tenant, this.EntityPM.CustomFileNo).subscribe((res: ServiceResponse) => {
              });
-             
+
              switch (this.type) {
                  case "Importer": {
                      this.ImporterVisibility = true;
@@ -307,7 +307,7 @@ export class ImporterDetailsComponent extends BaseComponent {
                          if (this.EntityPM.ImporterCode != null || this.EntityPM.ImporterId != null) {
                              this.UIProperties.SetEnabled("ImporterTypeCode", this.ObjectTableName, false);
                          }
-                     }
+                     }                    
                      break;
                  }
 
@@ -409,7 +409,10 @@ export class ImporterDetailsComponent extends BaseComponent {
                   //   
                      this.UIProperties.SetEnabled("ImporterPassportNumber", this.ObjectTableName, false);
                      this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, false);
-                     
+                     if(this.EntityPM.Direction =='E' && this.EntityPM.ShortProcedure && AppTool.IsNullOrEmpty(this.EntityPM.ExporterImporterCode)){
+                        this.UIProperties.SetWarning("ImporterName", this.ObjectTableName, true);
+                        this.UIProperties.SetWarning("ImporterAddress", this.ObjectTableName, true);
+                    }
                  }
                  else if (xxxTypeCode == "2" || xxxTypeCode == "3") {
                      this.IsImporterEnabled = true;
@@ -501,9 +504,9 @@ export class ImporterDetailsComponent extends BaseComponent {
      }
 
     private SetFieldsEditibilityCourier() {
-        if (!this.isCourierDeclaration) {
-            return;
-        }
+        if (this.isCourierDeclaration) {
+           
+        
         //if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)) {
         
         this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, true);
@@ -544,6 +547,10 @@ export class ImporterDetailsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("CasualImporterTel", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CasualImporterContact", this.ObjectTableName, false);
 
+            }
+        }
+        else{
+            return;
         }
     }
 
