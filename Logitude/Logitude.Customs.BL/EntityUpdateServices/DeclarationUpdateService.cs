@@ -68,7 +68,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public bool IsFromCustomsFeedback { get; set; }
         public bool ToUpdateWithPaymentDate { get; set; }
-        public  DeclarationCourierStatusPM _DeclarationCourierStatusPM;
         protected override void OnCreating(DeclarationPM entityPM, EntityPM entityParentPM)
         {
             entityPM.Id = IdCounter.GetNumber("Customs.Declaration", entityPM.Tenant);
@@ -1482,7 +1481,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating, entityPM.IsCourierDeclaration = true");
                     var context = CustomContext.GetContext(entityPM.Tenant);
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                    _DeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(entityPM);
+                    DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(entityPM); 
                     if (IsFromU2L)
                     {
                         declarationCourierStatusUpdateService.TruckerId = TruckerId;
@@ -1490,8 +1489,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         declarationCourierStatusUpdateService.LastMileServiceType = LastMileServiceType;
                         declarationCourierStatusUpdateService.MAWB = MAWB;
 
-                        _DeclarationCourierStatusPM = declarationCourierStatusUpdateService.UpdateTrucker(_DeclarationCourierStatusPM, entityPM);
-                        _DeclarationCourierStatusPM = declarationCourierStatusUpdateService.UpdateLastMileServiceType(_DeclarationCourierStatusPM, entityPM);
+                        newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.UpdateTrucker(newDeclarationCourierStatusPM, entityPM);
+                        newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.UpdateLastMileServiceType(newDeclarationCourierStatusPM, entityPM);
                     }
                     
                     /*
@@ -1508,7 +1507,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     */
 
-                    declarationCourierStatusUpdateService.Update(_DeclarationCourierStatusPM, true);
+                    declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
                     /*
                     if(entityPM.CurrentContextTag != null && entityPM.CurrentContextTag.ToString() == "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()")
                     {
@@ -1555,7 +1554,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                     */
-                    if (_DeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Insert)
+                    if (newDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Insert)
                     {
                         if (entityPM.Consignments != null && entityPM.Consignments.Count() > 0)
                         {
@@ -1566,7 +1565,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 consignmentUpdateService.UpdatePendingByKeyWords(consignmentPM, true);
                             }
                         }
-                        this.updateDeclarationCourierStatusWithPending(entityPM, _DeclarationCourierStatusPM);
+                        this.updateDeclarationCourierStatusWithPending(entityPM, newDeclarationCourierStatusPM);
                     }
 
                     /*
