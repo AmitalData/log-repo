@@ -51,13 +51,14 @@ export class AmitalGatewayUtil {
         if (AppTool.IsNullOrEmpty(CustomFileNo)) {
             return false;
         }
+        return true;
         //if (IsConvertedDeclaration || IsConnectedToUnifreight) {
-        if (IsConnectedToUnifreight) {
+       /* if (IsConnectedToUnifreight) {
             return true;
         } else {
 
             return false;
-        }
+        }*/
     }
     NoteUnifreightIamReady() {
 
