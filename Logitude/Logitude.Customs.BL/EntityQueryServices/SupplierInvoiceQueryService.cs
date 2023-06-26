@@ -781,11 +781,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public bool UpdateSupplierInvoiceByOcrDefaults(string declarationId, string supplierInvocieList,  SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats,int tenant)
         {
             var context = CustomContext.GetContext(tenant);
+            var arrSupplierInvocie = supplierInvocieList.Split(',');
             var myDeclarationQueryService = new DeclarationQueryService(context);
             DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(declarationId, true, false);
-            var arrSupplierInvocie = supplierInvocieList.Split(',');
             if (declarationPM == null)
                 return false;
+           
 
             var supplierInvoiceQueryServices = new SupplierInvoiceQueryService(context);
             var supplierInvoices = supplierInvoiceQueryServices.GetSupplierInvoicesForDeclaration(declarationId, tenant,true).Where(i=> arrSupplierInvocie.Contains((i.InvoiceCounterKey).ToString(), StringComparer.OrdinalIgnoreCase));
@@ -795,29 +796,40 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             foreach (var supplierInvoice in supplierInvoices)
             {
-                UpdateSupplierInvoices(supplierInvoice, supplierInvioceExportDefault, context);
+                UpdateSupplierInvoices(supplierInvoice, supplierInvioceExportDefault, context,  supplierInvioceItemCertificats);
             }
             // var supplierInvoiceItemUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), tenant);
                             return true;
         }
-        private void UpdateSupplierInvoices(SupplierInvoicePM supplierInvoice, SupplierInvioceExportDefault supplierInvioceExportDefault,ICustomContext context)
+        private void UpdateSupplierInvoices(SupplierInvoicePM supplierInvoice, SupplierInvioceExportDefault supplierInvioceExportDefault,ICustomContext context, SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats)
         {
             var supplierInvoiceItemUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), supplierInvioceExportDefault.Tenant);
-
-            supplierInvoice.AccountTypeCode = supplierInvioceExportDefault.AccountTypeCode;
-            supplierInvoice.PartyRelationshipCode = supplierInvioceExportDefault.PartyRelationshipCode;
-            supplierInvoice.BuyerRoleCode = supplierInvioceExportDefault.BuyerRoleCode;
-            supplierInvoice.ChangeSetOp= ChangeSetOperation.Update;
+            if (supplierInvioceExportDefault != null) {
+                supplierInvoice.AccountTypeCode = supplierInvioceExportDefault.AccountTypeCode;
+                supplierInvoice.PartyRelationshipCode = supplierInvioceExportDefault.PartyRelationshipCode;
+                supplierInvoice.BuyerRoleCode = supplierInvioceExportDefault.BuyerRoleCode;
+                supplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
+            }
+           
             foreach (var supplierInvoiceItem in supplierInvoice.SupplierInvoiceItems)
             {
-                supplierInvoiceItem.TransactionNatureCode= supplierInvioceExportDefault.TransactionNatureCode;
-                supplierInvoiceItem.ClaimReasonCode = supplierInvioceExportDefault.ClaimReasonCode;
-                supplierInvoiceItem.ChangeSetOp= ChangeSetOperation.Update;
-                foreach (var supplierInvoiceItemProcesType in supplierInvoiceItem.SupplierInvoiceItemProcesTypes)
+                if (supplierInvioceExportDefault != null)
                 {
-                    supplierInvoiceItemProcesType.ProcessTypeCode=supplierInvioceExportDefault.ProcessTypeCode;
-                    supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Update;
+                    supplierInvoiceItem.TransactionNatureCode = supplierInvioceExportDefault.TransactionNatureCode;
+                    supplierInvoiceItem.ClaimReasonCode = supplierInvioceExportDefault.ClaimReasonCode;
+                    supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
 
+                    foreach (var supplierInvoiceItemProcesType in supplierInvoiceItem.SupplierInvoiceItemProcesTypes)
+                    {
+                        supplierInvoiceItemProcesType.ProcessTypeCode = supplierInvioceExportDefault.ProcessTypeCode;
+                        supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Update;
+
+                    }
+                }
+
+                if (supplierInvioceItemCertificats != null)
+                {
+                    supplierInvoiceItem.SupplierInvioceItemCertificats = supplierInvioceItemCertificats.ToList();
                 }
             }
 

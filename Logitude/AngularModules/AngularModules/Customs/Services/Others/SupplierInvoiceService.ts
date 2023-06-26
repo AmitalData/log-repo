@@ -120,8 +120,7 @@ export class SupplierInvoiceService {
     PostMultiUpdateOCR(requestParams: MultiUpdateOcrParams) {
 
         var supplierInvocieList=requestParams?.SupplierInvoiceList.map(p=>p.InvoiceCounterKey).join(',');
-        supplierInvioceItemCertificats=JSON.stringify(requestParams?.SupplierInvioceItemCertificats)
-
+        //supplierInvioceItemCertificats=JSON.stringify(requestParams?.SupplierInvioceItemCertificats)
         var supplierInvioceItemCertificats:any=requestParams.SupplierInvioceItemCertificats
 
         
