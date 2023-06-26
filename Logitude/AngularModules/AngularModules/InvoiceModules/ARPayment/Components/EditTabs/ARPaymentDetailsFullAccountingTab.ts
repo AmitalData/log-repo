@@ -69,7 +69,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	public EnableNegativeOffsetARPayments: boolean = false;
 	public IsEditExchangeRateVisible: boolean = false;
 	_PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
-	DisabledPartnerTypes: boolean = true;
+	DisabledPartnerTypes: boolean = false;
 	get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetARPayments == true && this.AccountingPaymentMethodCode == "FS" ? true : false; }
 	public isRTL: boolean = false;
 	public showLocal: boolean = false;
@@ -194,6 +194,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		this.EntityPM.PaymentCurrencyExchangeRate = 1;
 		this.loadPartnerTypesFilter();
 		this.SetDefalutPaymentMethod();
+
+		
     }
 	private loadPartnerTypesFilter()
     {
@@ -212,8 +214,12 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if(e && !e.HasError && e.Result.length > 0){
                     this.AccountingPaymentMethodId = e.Result[0].Id;
                     this.AccountingPaymentMethodCode = DefaultSelectedPaymentMethodCode;
+					this.UIProperties.SetVisibility("BankAccountId", this.ObjectTableName, true);
+					this.BankAccountIdVisibility = true;
+					this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, true);	
             }
         });
+		
     }
 
 
@@ -719,6 +725,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
 		if (!this.IsScreenEnabled) {
+			this.DisabledPartnerTypes = true;
 			this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, false);
 			this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, false);
 			this.UIProperties.SetEnabled("RegisterDate", this.ObjectTableName, false);
@@ -1172,7 +1179,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         {
             var partnerTypes: PartnerTypeList[] = res.Result || [];
             this.PartnerTypes = partnerTypes.filter(d => this.AllowedPartnerTypesCodes.indexOf(d.Id) > -1); // filter
-			if( this.EntityPM.StatusCode==null)
+			if( this.EntityPM.StatusCode=="DR")
            		this.SelectedPartnerType = partnerTypes.filter(d => d.Id == 'CS')[0]; // default
 			this.getSelectedPartnerTypes(partnerTypes);
         });
@@ -2236,12 +2243,23 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (this.EntityPM.ARPaymentBankTranfers.length == 1 || this.EntityPM.ARPaymentBankTranfers.length == 0) {
                 this.bankTransferAmount = value;
                 this.AmountInPaymentCurrency = value;
+				
             }
+			
             this.bankTransferAmount = value;
+			if(value==null){
+				this.UIProperties.SetRequired("AmountInPaymentCurrency", this.ObjectTableName, true);
+			}
+			else
+			{
+				this.UIProperties.SetRequired("AmountInPaymentCurrency", this.ObjectTableName, false);
+			}
+			
             if (this.EntityPM.AccountingPaymentMethodCode == "BT") {
                 this.UpdateBankTransferAmountFieldForBankTransferPayment();
             }
             this.CalculatePaymentTotalAmountForBankTransfers();
+
         }
     }
 
