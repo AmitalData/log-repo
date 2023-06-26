@@ -44,6 +44,7 @@ using System.Text.RegularExpressions;
 using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using WebFreight.Web.CustomWebServices.BL.XLSImport;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -1062,5 +1063,30 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+
+
+
+        public HttpResponseMessage PutMultiUpdateOCR(string declarationId, string supplierInvocieList, [FromBody] SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                SupplierInvoiceQueryService supplierInvoiceQuery = new SupplierInvoiceQueryService(customContext);
+                var ans = supplierInvoiceQuery.UpdateSupplierInvoiceByOcrDefaults(declarationId, supplierInvocieList, supplierInvioceItemCertificats, tenant);
+                //   var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, ans);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
