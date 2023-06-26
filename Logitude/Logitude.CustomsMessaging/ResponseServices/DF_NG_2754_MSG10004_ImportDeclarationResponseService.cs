@@ -38,6 +38,7 @@ using System.Threading.Tasks;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.Data.EntityPOCOs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Server.Tools;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -863,10 +864,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                 DeclarationCourierStatusPM _MyDeclarationCourierStatusPM = new DeclarationCourierStatusPM();
-
-                //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_MyDeclarationPM.Tenant);
-                _MyDeclarationCourierStatusPM = myDeclarationUpdateService._DeclarationCourierStatusPM;
-                //_MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
                 if (_MyDeclarationCourierStatusPM != null)
                 {
                     DeclarationPendingPM declarationPendingPM_900 = null;
@@ -1089,6 +1087,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (_MyDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                    _MyDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(_MyDeclarationPM);
                     declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
                 }
                 /*
