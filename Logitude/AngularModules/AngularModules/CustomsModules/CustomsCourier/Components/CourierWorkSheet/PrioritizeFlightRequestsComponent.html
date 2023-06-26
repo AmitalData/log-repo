@@ -93,6 +93,10 @@
         filter: FlipH;
         -ms-filter: "FlipH";
     }
+    .PriorityButton{
+        float: none!important;
+        margin-right: 9px!important;
+    }
 </style>
 <button class="LogitudeIconButton" style="top:1.2%;left: 1%;" (click)="RefreshButtonClicked()"> <img class="FlipImgHoriz" style="visibility: inherit; top: 0px; right: 1px; left: 0px; width: initial;" src="./Images/Buttons/Refresh.png" /></button>
 <table *ngIf="_TranslationLoaded ||  false" style="padding-top: 10px;width:100%">
@@ -109,25 +113,27 @@
                     <thead style="width: 100%; display:table; height: 28px;">
                         <tr>
                             <th style="width:40%" class="Statistics"><h2>סוג בקשה</h2></th>
-                            <th style="width:20%" class="Statistics"><h2>בקשות בטיסה</h2></th>
-                            <th style="width:20%" class="Statistics"><h2>סה"כ בקשות</h2></th>
+                            <th style="width:18%" class="Statistics"><h2>בקשות בטיסה</h2></th>
+                            <th style="width:18%" class="Statistics"><h2>סה"כ בקשות</h2></th>
+                            <th style="width:15%" class="Statistics"><h2>מס' תעדוף</h2></th>
                             <th style="width:15%" class="Statistics"><h2>תעדוף</h2></th>
-                            <th style="width:10%" class="Statistics"></th>
+                            <!-- <th style="width:10%" class="Statistics"></th> -->
                         </tr>
                     </thead>
                     <tbody *ngIf="IsTherecustomsRequestsSheetSummary">
                         <tr style="display: table; width: 100%; table-layout: fixed; height: 28px; border-bottom:1px solid #A7A9AC;" *ngFor="let item of customsRequestsSheetSummary">
                            <td class="Statistics"  style="width:40%">{{item.InterfaceTypeName}}</td> <!--   -->
-                            <td class="Statistics"  style="width:20%">{{item.count}}</td>
-                            <td class="Statistics"  style="width:20%">{{item.totalCount}}</td>
-                            <td class="Statistics"  style="width:10%"> 
-                                <button class="LogitudeIconButton"
+                           <td class="Statistics"  style="width:18%">{{item.count}}</td>
+                           <td class="Statistics"  style="width:18%">{{item.totalCount}}</td>
+                           <td class="Statistics"  style="width:15%">{{item.TenantPriority}}</td>
+                           <td class="Statistics">
+                               <button class="LogitudeIconButton PriorityButton"
                                
                                 (click)="ChangePriority(item)">
                                 <img class="FlipImgHoriz" style="visibility: inherit; top: 0px; right: 1px; left: 0px; width: initial;" src="./Images/Buttons/Edit.png" />
                            </button>
                             </td>   
-                            <td class="Statistics"  style="width:10%"></td>                        
+                            <!-- <td class="Statistics"  style="width:10%"></td>                         -->
                         </tr>
                     </tbody>
                     <tbody *ngIf="!IsTherecustomsRequestsSheetSummary">

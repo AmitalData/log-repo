@@ -76,6 +76,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                               EntityId1 = a.EntityId1,
                               InterfaceTypeCode = a.InterfaceTypeCode,
                               InterfaceTypeName = a.InterfaceTypeName,
+                              TenantPriority = a.TenantPriority
                           });
             var query2 = (from a in context.RequestSheetInQueueMesViews
                          join c in context.CourierDeclarations on
@@ -87,6 +88,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                              EntityId1 = a.EntityId1,
                              InterfaceTypeCode = a.InterfaceTypeCode,
                              InterfaceTypeName = a.InterfaceTypeName,
+                             TenantPriority = a.TenantPriority
                          }).Distinct();
             var resultQuery = query.Concat(query2);
 
@@ -102,13 +104,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   InterfaceTypeName = a.InterfaceManagement != null ? a.InterfaceManagement.Description : null,
                                                               });*/
 
-            var qGroupIt = resultQuery.GroupBy(q =>new { q.InterfaceTypeName, q.InterfaceTypeCode }).Select(g => new PriorityRequestsSheetSummary
+            var qGroupIt = resultQuery.GroupBy(q =>new { q.InterfaceTypeName, q.InterfaceTypeCode, q.TenantPriority }).Select(g => new PriorityRequestsSheetSummary
             {
                 Id = new Guid(),
                 count = g.Select(x => x.InterfaceTypeCode).Count(),
                 totalCount=g.Select(x => x.InterfaceTypeCode).Count(),
                 InterfaceTypeName = g.Key.InterfaceTypeName,
-                InterfaceTypeCode = g.Key.InterfaceTypeCode
+                InterfaceTypeCode = g.Key.InterfaceTypeCode,
+                TenantPriority = g.Key.TenantPriority
             });
             return qGroupIt.Where(r => r.count > 0).ToList();
         }
