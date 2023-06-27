@@ -507,7 +507,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     {
                         DateTime.TryParseExact(rowData[ArrayIndex],format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime referenceDate);
                         excelReconcileExternalPageLine.ReferenceDate = referenceDate;
-                        excelReconcileExternalPageLine.Notes = rowData[0];
                     }
                     ArrayIndex++;
                     if (ArrayIndex < rowData.Length &&  !string.IsNullOrEmpty(rowData[ArrayIndex]))
