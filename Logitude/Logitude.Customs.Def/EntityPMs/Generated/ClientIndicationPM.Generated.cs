@@ -67,7 +67,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string clientId ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]

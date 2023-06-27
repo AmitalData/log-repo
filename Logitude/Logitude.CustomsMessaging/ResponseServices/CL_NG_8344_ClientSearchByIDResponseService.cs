@@ -158,7 +158,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         customerActivity.CustomerIndicationList = new List<CustomerIndication>();
                         foreach (var customerIndicationItem in customerActivityItem.CustomerIndication)
-                        {
+                        {                            
                             var customerIndication = new CustomerIndication();
                             customerIndication.CustomerIndicationTypeID = customerIndicationItem.CustomerIndicationTypeID.ToString();
                             customerIndication.CustomerIndicationTypeName = customerIndicationItem.CustomerIndicationTypeName;
@@ -242,7 +242,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         client.ClientPoas
                             .Where(cp => cp.AuthorizedExternalId == authorizedId && cp.AuthorizerExternalId == authorizerId).ToList()
                             .ForEach(entity => entity.ChangeSetOp = ChangeSetOperation.Delete);
-
+                        if(customResponse.AuthorizedList!=null&& customResponse.AuthorizedList.Length > 0) { 
                         customResponse.AuthorizedList.ToList().ForEach(poa =>
                         {
                             var entity = new ClientsPoaPM
@@ -264,9 +264,46 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             client.ClientPoas.Add(entity);
                         });
 
-                        client.ChangeSetOp = ChangeSetOperation.Update;
-                        clientUpdateService.Update(client, true);
-                    }
+                        }
+
+
+                        client.ClientIndications
+                                   .Where(ci => ci.ClientId == client.Id && ci.Tenant == requestParams.Tenant).ToList()
+                                   .ForEach(entity => entity.ChangeSetOp = ChangeSetOperation.Delete);
+
+                        if (customResponse.CustomerActivity != null && customResponse.CustomerActivity.Length > 0)
+                        {
+                            foreach (var customerActivityItem in customResponse.CustomerActivity)
+                            {
+                                if (customerActivityItem.CustomerIndication != null && customerActivityItem.CustomerIndication.Length > 0)
+                                {
+
+
+                                   
+                                    customerActivityItem.CustomerIndication.ToList().ForEach(indication =>
+                                           {
+                                               var entity = new ClientIndicationPM
+                                               {
+
+                                                   ClientId = clientId,
+                                                   CustomerIndicationTypeID = indication.CustomerIndicationTypeID.ToString(),
+                                                   IsActive = indication.isActive,
+                                                   StartDate = indication.startDate.Date,
+                                                   EndDate = indication.endDate,
+
+
+                                               };
+
+                                               entity.ChangeSetOp = ChangeSetOperation.Insert;
+                                               client.ClientIndications.Add(entity);
+                                           });
+                                }
+                            }
+                        }
+                                               
+                      client.ChangeSetOp = ChangeSetOperation.Update;
+                      clientUpdateService.Update(client, true);
+                     }                  
                 }
             }
         }

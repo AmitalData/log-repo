@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("ClientIndications", "Customs");
 		
-		    this.HasKey(t => new { t.IndicationId });
+		    this.HasKey(t => new { t.IndicationId, t.ClientId });
 	 
             this.Property(t => t.IndicationId).HasColumnName("IndicationId").IsRequired().HasMaxLength(15).IsUnicode(false);
 

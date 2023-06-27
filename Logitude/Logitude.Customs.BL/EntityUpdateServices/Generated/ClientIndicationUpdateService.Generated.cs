@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class ClientIndicationUpdateService:EntityUpdateService<ClientIndication,ClientIndicationPM,EntityPM>
+   public partial class ClientIndicationUpdateService:EntityUpdateService<ClientIndication,ClientIndicationPM,ClientPM>
    {
    
         ClientIndicationRepository entityRepository;
@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(ClientIndicationPM entityPM)
         {
-            ClientIndicationKeys entityKeys = new ClientIndicationKeys() { IndicationId = entityPM.IndicationId };
+            ClientIndicationKeys entityKeys = new ClientIndicationKeys() { IndicationId = entityPM.IndicationId, ClientId = entityPM.ClientId };
             return entityKeys;
         }
 

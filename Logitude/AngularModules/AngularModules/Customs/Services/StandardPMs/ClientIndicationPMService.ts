@@ -32,12 +32,12 @@ export class ClientIndicationPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/clientindications';      
     }
 
-	get(indicationid: string) {       
+	get(indicationid: string, clientid: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'indicationid=' + indicationid, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'indicationid=' + indicationid+'&'+'clientid=' + clientid, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class ClientIndicationPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientIndication", "GetSinglePM", 'indicationid=' + indicationid);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientIndication", "GetSinglePM", 'indicationid=' + indicationid+'&'+'clientid=' + clientid);
 				 
 						return serviceResponse;
 

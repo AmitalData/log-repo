@@ -56,6 +56,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ClientsTapagUpdateService clientsTapagUpdateService = new ClientsTapagUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             clientsTapagUpdateService.UpdateMulti(entityPM.ClientsTapags, entityPM.DeletedClientsTapags, entityPM, false);
 
+            ClientIndicationUpdateService clientIndicationUpdateService = new ClientIndicationUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            clientIndicationUpdateService.UpdateMulti(entityPM.ClientIndications, entityPM.DeletedClientIndications, entityPM, false);
+
             base.UpdateComposition(entityPM);
         }
 

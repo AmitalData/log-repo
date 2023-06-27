@@ -23,6 +23,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string IndicationId { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+     [Key]
         [ForeignKey("Client")]
         [Column("ClientId")]
 	    public string ClientId { get; set; }

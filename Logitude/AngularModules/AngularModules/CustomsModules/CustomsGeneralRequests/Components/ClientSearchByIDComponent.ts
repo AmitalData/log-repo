@@ -20,6 +20,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { ClientList } from '../../../Customs/EntityLists/ClientList';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
     selector: 'ClientSearchByIDComponent',
@@ -42,13 +43,17 @@ export class ClientSearchByIDComponent
     public ExportRequestList: ObservableCollection;
     public IndicationPerClassificationList: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
+    EntityResourceService: EntityResourceService=new EntityResourceService();
     constructor() {
         super();
-        this.CustomerActivityList = new ObservableCollection([]);
-        this.AuthorizedList = new ObservableCollection([]);
-        this.AuthorizerList = new ObservableCollection([]);
-        this.ExportRequestList = new ObservableCollection([]);
-        this.IndicationPerClassificationList = new ObservableCollection([]);
+        this.EntityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
+
+           this.CustomerActivityList = new ObservableCollection([]);
+           this.AuthorizedList = new ObservableCollection([]);
+           this.AuthorizerList = new ObservableCollection([]);
+           this.ExportRequestList = new ObservableCollection([]);
+           this.IndicationPerClassificationList = new ObservableCollection([]);
+        });
     }
 
     SetWindowArgs(menuArg: any) {
@@ -203,10 +208,10 @@ export class ClientSearchByIDComponent
         windowArgs.CustomerIndicationList = item.CustomerIndicationList;
 
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 450;
-        logitudeWindow.Height = 400;
+        logitudeWindow.Width = 470;
+        logitudeWindow.Height = 520;
         logitudeWindow.IsShowCloseButton = false;
-        logitudeWindow.Title = "אינדיקציות ללקוח";
+        logitudeWindow.Title = TextCodeTranslator.Translate("Customs.ClientIndication.O.IndicationClient"); 
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/CustomerIndicationComponent');
     }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientIndicationUpdateClass
    {  		
-		public const string HashString = "9073123c9b9b8defeb71e9d02e8ed1c1";
+		public const string HashString = "8def7b49b2163bf01583efc4c4ae4352";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -109,24 +109,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
-			      				    HasCounter =  false,
+			      				    HasCounter =  true,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
-			      				    IsAutoComplete =  true,
+			      				    IsMain =  false,
+			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "CreateDate",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "MD",
+			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "אינדיקציה ללקוח",
 			      				    DefaultText =  "Client Indication",
-			      				    Code =  "5915",
+			      				    Code =  "ba2d",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -664,7 +664,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ClientIndicationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ClientIndication" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ClientIndicationTextCode_CustomsClientIndicationOIndicationExpOrImp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientIndication.O.IndicationExpOrImp", DefaultText = "IndicationExpOrImp",LocalDefaultText = @"אינדיקצית יצואן/יבואן", ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientIndicationTextCode_CustomsClientIndicationOUpdatDataImpExp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientIndication.O.UpdatDataImpExp", DefaultText = "Exporter data is not updated in the system - additional data must be retrieved for the importer/exporter",LocalDefaultText = @"נתוני יצואן לא מעודכנים במערכת -יש לשלוף נתונים נוספים ליבואן/יצואן", ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientIndicationTextCode_CustomsClientIndicationONotDeclareInCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientIndication.O.NotDeclareInCustoms", DefaultText = "The exporter is not set up for a preferential customs account",LocalDefaultText = @"היצואן לא מוגדר לחשבון העדפה במכס", ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientIndicationTextCode_CustomsClientIndicationODeclareInCustomsExpired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientIndication.O.DeclareInCustomsExpired", DefaultText = "The exporters definition of a preferential account is not valid at customs",LocalDefaultText = @"הגדרת היצואן לחשבון העדפה אינה בתוקף במכס", ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientIndicationTextCode_CustomsClientIndicationOIndicationClient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientIndication.O.IndicationClient", DefaultText = "Indications for the client",LocalDefaultText = @"אינדיקציות ללקוח", ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
