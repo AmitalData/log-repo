@@ -88,7 +88,7 @@ namespace Logitude.Accounting.Data.Repositories
                       where (a.GLAccountId == accountId || a.DeferredGLAccountId == accountId || a.TransferGLAcccountId == accountId) && a.Tenant == tenant
                       select a).Any();
         }
-    }
 
+    }
 }
    

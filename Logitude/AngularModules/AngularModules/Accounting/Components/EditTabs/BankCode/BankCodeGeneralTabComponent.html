@@ -8,11 +8,11 @@
         </tr>
 
         <tr>
-            <td style="width:330px">
+            <td style="width:400px">
                 <table>
 
                     <tr class="FormFieldRow" style="height:32px">
-                        <td style="width:120px">
+                        <td style="width:200px">
                             <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
                                       [DataContext]="DataContext"></LogLabel>
                         </td>
@@ -64,7 +64,18 @@
                         </td>
                         <td><div></div></td>
                     </tr>
-                 
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'DateFormat'" [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'DateFormat'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
                     <tr></tr>
                 </table>
 

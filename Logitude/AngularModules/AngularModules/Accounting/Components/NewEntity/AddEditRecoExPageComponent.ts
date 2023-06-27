@@ -688,7 +688,8 @@ export class AddEditRecoExPageComponent extends BaseComponent {
 
     SendExcelToServer(filters: ReconcileExternalPageLineParameters) {
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromExcel(filters).subscribe((response: ServiceResponse) => {
+        debugger;
+        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromExcel(filters,this.EntityPM.bankId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 filters = response.Result;
                 this.FillReconcileExternalPageLines(filters);
