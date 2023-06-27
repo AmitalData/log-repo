@@ -125,7 +125,7 @@
 
 
                                                     </tr>
-                                                    <tr *ngIf="isLoad && this.CurrentEntity.ClientIndications">
+                                                    <tr *ngIf="isLoad && this.CurrentEntity?.ClientIndications.length > 0">
                                                         <td class="FieldRow" style="width:150px">           
                                                                 <LogLabel [Text]="'Customs.ClientIndication.O.IndicationExpOrImp' | TextCodeTranslationPipe"
                                                                 [NoObjectField]="true"
