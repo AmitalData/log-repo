@@ -14,6 +14,8 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Customs.Data.Repsitories;
 using System.Runtime.Remoting.Contexts;
 using Logitude.Customs.BL.EntityUpdateServices;
+using System.Data.Entity;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -803,7 +805,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
         private void UpdateSupplierInvoices(SupplierInvoicePM supplierInvoice, SupplierInvioceExportDefault supplierInvioceExportDefault,ICustomContext context, SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats)
         {
+            var supplierInvioceItemCertificatUpdateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), supplierInvoice.Tenant); 
             var supplierInvoiceItemUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), supplierInvioceExportDefault.Tenant);
+
             if (supplierInvioceExportDefault != null) {
                 supplierInvoice.AccountTypeCode = supplierInvioceExportDefault.AccountTypeCode;
                 supplierInvoice.PartyRelationshipCode = supplierInvioceExportDefault.PartyRelationshipCode;
@@ -827,9 +831,18 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     }
                 }
 
-                if (supplierInvioceItemCertificats != null)
+                if (supplierInvioceItemCertificats?.Length>0)
                 {
-                    supplierInvoiceItem.SupplierInvioceItemCertificats = supplierInvioceItemCertificats.ToList();
+
+                    supplierInvoiceItem.SupplierInvioceItemCertificats.ForEach(x => x.ChangeSetOp = ChangeSetOperation.Delete);
+                    foreach (var Certificat in supplierInvioceItemCertificats)
+                    {
+                        Certificat.ChangeSetOp = ChangeSetOperation.Insert;
+                        
+                        supplierInvoiceItem.SupplierInvioceItemCertificats.Add(Certificat);
+                            //CertificatUpdateService.Update(MyCertificat,true);
+                    }
+                   
                 }
             }
 

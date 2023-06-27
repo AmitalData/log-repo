@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvioceExportDefaultUpdateClass
    {  		
-		public const string HashString = "3048e36b369ffa8a31f641d1bd184b14";
+		public const string HashString = "5db16ae193ef9ee8f945afb52f34a258";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "ברירות מחדל חשבונות ספק",
 			      				    DefaultText =  "Supplier Invioce Export Default",
-			      				    Code =  "df2e",
+			      				    Code =  "6576",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -622,6 +622,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   ObjectTable SupplierInvioceExportDefaultObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvioceExportDefault" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode SupplierInvioceExportDefaultTextCode_CustomsSupplierInvioceExportDefaultOOCRDefaults = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvioceExportDefault.O.OCRDefaults", DefaultText = "OCR Defaults",LocalDefaultText = @"ברירות מחדל OCR - יצוא", ObjectTableId = SupplierInvioceExportDefaultObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SupplierInvioceExportDefaultTextCode_CustomsSupplierInvioceExportDefaultOSupplierInvioceItemCertificats = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvioceExportDefault.O.SupplierInvioceItemCertificats", DefaultText = "supplier Invioce Item Certificats",LocalDefaultText = @"אישורים לפרט מכס", ObjectTableId = SupplierInvioceExportDefaultObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
