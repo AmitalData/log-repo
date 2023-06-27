@@ -68,7 +68,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public bool IsFromCustomsFeedback { get; set; }
         public bool ToUpdateWithPaymentDate { get; set; }
-
         protected override void OnCreating(DeclarationPM entityPM, EntityPM entityParentPM)
         {
             entityPM.Id = IdCounter.GetNumber("Customs.Declaration", entityPM.Tenant);
@@ -1494,7 +1493,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating, entityPM.IsCourierDeclaration = true");
                     var context = CustomContext.GetContext(entityPM.Tenant);
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                    DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(entityPM);
+                    DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(entityPM); 
                     if (IsFromU2L)
                     {
                         declarationCourierStatusUpdateService.TruckerId = TruckerId;
