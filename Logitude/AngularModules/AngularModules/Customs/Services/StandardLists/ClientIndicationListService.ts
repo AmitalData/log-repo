@@ -32,12 +32,12 @@ export class ClientIndicationListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/clientindicationviews';  
     }
 
-	getSingle(indicationid: string) {
+	getSingle(indicationid: string, clientid: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'indicationid=' + indicationid, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'indicationid=' + indicationid+'&'+'clientid=' + clientid, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class ClientIndicationListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientIndication", "GetSingleList", 'indicationid=' + indicationid); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientIndication", "GetSingleList", 'indicationid=' + indicationid+'&'+'clientid=' + clientid); 
 
 						return serviceResponse;
 					}),

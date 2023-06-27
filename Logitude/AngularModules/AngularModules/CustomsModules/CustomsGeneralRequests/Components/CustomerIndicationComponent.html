@@ -1,14 +1,19 @@
-﻿
-<table>
+
+<table *ngIf="isLoad">
+
+    <tr style="height:5px">
+        <td style=" font-size: 18px;  color: #1B90CB;position: absolute;left: 15px; top:-28px;"> {{UpdateDate|DateTimePipe:'D'}}</td>
+     </tr>
+ 
     <tr>
         <td>
             <fieldset [disabled]="!IsControlEnabled">
                 <div class="TableHolder">
-                    <table style="width: 400px; height: 350px;padding-top: 10px;">
+                    <table style="width: 420px; height: 500px;padding-top: 10px;">
                         <tr style="height: 100%; width: 100%; top:0px">
                             <td>
                                 <div>
-                                    <table style="width: 400px; height: 350px;padding-top: 10px;">
+                                    <table style="width: 420px; height: 500px;padding-top: 10px;">
                                         <tr class="FormFieldRow" style="width: 100%; height:100%">
                                             <td colspan="5">
                                                 <div class="CellContent">
@@ -16,14 +21,14 @@
                                                                         [ItemSource]="CustomerIndicationList" [IsReadOnly]="IsControlEnabled">
 
                                                         <!-- CustomerIndicationType -->
-                                                        <log-column [width]="'120'" [Alignment]="'right'"
-                                                                    [header]="'אינדיקציה'"
+                                                        <log-column [width]="'145'" [Alignment]="'right'"
+                                                        [header]="'Customs.ClientIndication.F.CustomerIndicationTypeName' | TextCodeTranslationPipe"
                                                                     [binding]="'CustomerIndicationTypeName'">
                                                             <ng-template let-item>
 <log-cell-template  #logcelltemplate>
                                                                 <div style="width:100%;height:100%;">
                                                                     <div class="RightCenter">
-                                                                        <span>{{item.CustomerIndicationTypeName }}</span>
+                                                                        <span title="{{item.CustomerIndicationTypeName}}">{{item.CustomerIndicationTypeName }}</span>
                                                                     </div>
                                                                 </div>
                                                             </log-cell-template>
@@ -32,7 +37,7 @@
 
                                                         <!-- IsActive -->
                                                         <log-column [width]="'70'" [Alignment]="'right'"
-                                                                    [header]="'סטטוס'"
+                                                        [header]="'Customs.ClientIndication.F.IsActive' | TextCodeTranslationPipe"
                                                                     [binding]="'IsActive'">
                                                             <ng-template let-item>
 <log-cell-template  #logcelltemplate>
@@ -48,13 +53,14 @@
 
                                                         <!-- StartDate -->
                                                         <log-column [width]="'90'" [Alignment]="'right'"
-                                                                    [header]="'מתאריך'"
-                                                                    [binding]="'StartDate'">
+                                                        [header]="'Customs.ClientIndication.F.StartDate' | TextCodeTranslationPipe"
+                                                        [binding]="'StartDate'">
                                                             <ng-template let-item>
 <log-cell-template  #logcelltemplate>
                                                                 <div style="width:100%;height:100%;">
                                                                     <div class="RightCenter">
-                                                                        <span>{{item.StartDate }}</span>
+                                                                        <span *ngIf="!this.IsClientIndication">{{item.StartDate }}</span>
+                                                                        <span *ngIf="this.IsClientIndication">{{item.StartDate|DateTimeToDatePipe }}</span>
                                                                     </div>
                                                                 </div>
                                                             </log-cell-template>
@@ -63,13 +69,14 @@
 
                                                         <!-- EndDate -->
                                                         <log-column [width]="'90'" [Alignment]="'right'"
-                                                                    [header]="'עד תאריך'"
-                                                                    [binding]="'EndDate'">
+                                                        [header]="'Customs.ClientIndication.F.EndDate' | TextCodeTranslationPipe"
+                                                        [binding]="'EndDate'">
                                                             <ng-template let-item>
 <log-cell-template  #logcelltemplate>
                                                                 <div style="width:100%;height:100%;">
                                                                     <div class="RightCenter">
-                                                                        <span>{{item.EndDate }}</span>
+                                                                        <span *ngIf="!this.IsClientIndication">{{item.EndDate }}</span>
+                                                                        <span *ngIf="this.IsClientIndication">{{item.EndDate|DateTimeToDatePipe }}</span>
                                                                     </div>
                                                                 </div>
                                                             </log-cell-template>

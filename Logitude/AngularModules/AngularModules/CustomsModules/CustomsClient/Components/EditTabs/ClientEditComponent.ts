@@ -19,6 +19,7 @@ import { ClientsTapagPM } from 'Customs/EntityPMs/ClientsTapagPM';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { ClientItemPMService } from 'Customs/Services/StandardPMs/ClientItemPMService';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class ClientEditComponent extends BaseComponent {
     ocrFeature: any = null;
     ClientsTapagList: ClientsTapag[] = [];
     tapagNumberName = '';
-
+    public isLoad:boolean = false;
     constructor(
         public entityArgs: EntityArgs,
     ) {
@@ -59,20 +60,26 @@ export class ClientEditComponent extends BaseComponent {
         this.entityResourceService.getEntityResourceByTableName("Customs.ClientsTapag").subscribe((response: any) => {
             this.tapagNumberName = 'TapagNumber';
         });
+        this.entityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
 
         this.entityArgs.EntityArgEventEmitter.subscribe(
             theMessage => {
+
                 if (theMessage == "ReloadEntity") {
-                    this.clientPMService.get(this.CurrentEntity.Id).subscribe((response: any) => {
-                        var result = response.Result;
-                        if (!AppTool.IsNullOrEmpty(result)) {
-                            this.CurrentEntity = result;
-                            this.entityArgs.EntityPM = this.CurrentEntity;
-                        }
-                    });
-                }
-            }
-        );
+                         this.clientPMService.get(this.CurrentEntity.Id).subscribe((response: any) => {
+                             var result = response.Result;
+                             if (!AppTool.IsNullOrEmpty(result)) {
+                                 this.CurrentEntity = result;
+                                 this.entityArgs.EntityPM = this.CurrentEntity;
+                             }
+
+                         });
+                     }
+                 }
+
+             );
+             this.isLoad=true;
+        });
     }
 
     SetWindowArgs(args: any) {
@@ -348,13 +355,13 @@ export class ClientEditComponent extends BaseComponent {
         }
 
         if (this.CurrentEntity.ClientAddresses == null || (this.CurrentEntity.ClientAddresses != null && this.CurrentEntity.ClientAddresses.length == 0)) {
-            errors.push("חובה להזין לפחות כתובת אחת ללקוח");
+            errors.push("חובה להזין לפחות כתובת םחת ללקוח");
         }
 
         if (this.CurrentEntity.ClientDrivingLicenses != null && this.CurrentEntity.ClientDrivingLicenses.length > 0) {
             for (let item of this.CurrentEntity.ClientDrivingLicenses) {
                 if (item.ClientDrivingLicenseTypes == null || (item.ClientDrivingLicenseTypes != null && item.ClientDrivingLicenseTypes.length == 0)) {
-                    errors.push("חובה להזין לפחות סוג רישיון אחד לכל רישיון");
+                    errors.push("חובה להזין לפחות סוג רישיון םחד לכל רישיון");
                 }
             }
         }
@@ -557,6 +564,23 @@ export class ClientEditComponent extends BaseComponent {
 
 
     }
+    ShowClientIndication() {
+       
+        if (this.CurrentEntity.ClientIndications == null || this.CurrentEntity.ClientIndications.length == 0) {
+            return;
+        }
+
+        var windowArgs: any = {};
+        windowArgs.CustomerIndicationList =  this.CurrentEntity.ClientIndications;;
+        windowArgs.IsClientIndication = true
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 470;
+        logitudeWindow.Height = 520;
+        logitudeWindow.IsShowCloseButton = false;
+        logitudeWindow.Title = TextCodeTranslator.Translate("Customs.ClientIndication.O.IndicationClient"); 
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/CustomerIndicationComponent');
+    }
 
 }
 
@@ -651,7 +675,7 @@ export class ClientsTapag extends BaseComponent {
                 this.Parent.BuildClientsTapagList();
             }
         });
-    }
+    }  
 }
 
 

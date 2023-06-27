@@ -104,7 +104,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.CreateDate);
+                                query2 = query2.OrderByDescending(d => d.CreateDate);
                                 break;
                             }
                     }
@@ -113,7 +113,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.CreateDate);
+                query2 = query2.OrderByDescending(d => d.CreateDate);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public ClientIndicationList GetSingle(string indicationid)
+        public ClientIndicationList GetSingle(string indicationid, string clientid)
         {
             IQueryable<ClientIndication> ClientIndicationQuery = (from a in context.ClientIndications
-                                                       where a.IndicationId == indicationid
+                                                       where a.IndicationId == indicationid && a.ClientId == clientid
                                                        select a);
 
              

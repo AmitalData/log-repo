@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<ClientIndicationList> GetIqueryableList(IQueryable<ClientIndication> iQueryable)
         {
-		IQueryable<ClientIndicationList> query = (from a in iQueryable
+		  IQueryable<ClientIndicationList> query = (from a in iQueryable
                                             select new ClientIndicationList()
 											{
                      
@@ -40,14 +40,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          EndDate = a.EndDate,
 					
 					                          CreateDate = a.CreateDate,
-					
-		                    	            });
+
+										      CustomerIndicationTypeName = a.CustomerIndicationType.LocalName,
+
+											});
             return query;
 		}
 
 		private IQueryable<ClientIndication> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ClientIndication> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 			}
 

@@ -1011,7 +1011,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<ClientIndicationPM> clientIndications;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClientIndication", "IndicationId","ClientId")]
+	   [DataMember]
+	   public virtual List<ClientIndicationPM> ClientIndications  
+	   {
+	        get
+             {
+                 if (clientIndications == null)
+                 {
+                     clientIndications = new List<ClientIndicationPM>();
+                 }
+                 return clientIndications;
+              }
+             set { clientIndications = value; }
+	    }
+		   
+	   private List<ClientIndicationPM>  deletedClientIndications;
+	   public virtual List<ClientIndicationPM> DeletedClientIndications  
+	   {
+	        get
+             {
+                 if ( deletedClientIndications == null)
+                 {
+                      deletedClientIndications = new List<ClientIndicationPM>();
+                 }
+                 return  deletedClientIndications;
+              }
+             set {  deletedClientIndications = value; }
+	    }
+	     }
    
 }
 	 
