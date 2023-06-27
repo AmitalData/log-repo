@@ -204,6 +204,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string dateFormat ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DateFormat  
+	   {
+	    
+	     get
+		{
+		   return dateFormat;
+		 }
+		 set
+		 {
+		   if(dateFormat != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DateFormat",OldValue=dateFormat,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dateFormat=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

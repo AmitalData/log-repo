@@ -64,6 +64,11 @@ export class BankCodePM {
     public set LogoId(newValue: string) { if (this.logoId != newValue) { this.logoId = newValue; this.MarkAsDirty("LogoId"); } }
        
 	 
+    private dateFormat: string;
+    public get DateFormat() { return this.dateFormat; }
+    public set DateFormat(newValue: string) { if (this.dateFormat != newValue) { this.dateFormat = newValue; this.MarkAsDirty("DateFormat"); } }
+       
+	 
 
     public OldEntityPM: BankCodePM;
 		

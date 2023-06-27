@@ -30,6 +30,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool? Inactive  { get; set; }
        [DataMember]
        public string LogoId  { get; set; }
+       [DataMember]
+       public string DateFormat  { get; set; }
    }
 
 }
