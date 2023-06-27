@@ -35,6 +35,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool? Inactive { get; set; }
         [Column("LogoId")]
 	    public string LogoId { get; set; }
+        [Column("DateFormat")]
+	    public string DateFormat { get; set; }
     }
 }
 	 

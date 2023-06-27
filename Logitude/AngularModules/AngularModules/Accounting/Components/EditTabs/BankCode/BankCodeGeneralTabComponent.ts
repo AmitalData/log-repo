@@ -80,6 +80,15 @@ export class BankCodeGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get DateFormat() { return this.EntityPM.DateFormat; }
+    set DateFormat(value: string) {
+        if (this.EntityPM.DateFormat != value) {
+            this.EntityPM.DateFormat = value;
+
+
+        }
+    }
+
 
     InactiveChecked(checked: boolean) {
      

@@ -35,6 +35,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          LocalName = a.LocalName,
 
                                               Inactive = a.Inactive,
+
+											  DateFormat= a.DateFormat,
 					
 		                    	            });
             return query;
