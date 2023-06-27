@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string indicationid)
+        public HttpResponseMessage GetSingle(string indicationid, string clientid)
         {
 		  try
             {
@@ -59,9 +59,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.ClientIndication", "READ", authToken.Tenant);
+	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 ClientIndicationListQueryService clientIndicationQuery = new ClientIndicationListQueryService(MyContext);
-                ClientIndicationList clientIndicationList = clientIndicationQuery.GetSingle(indicationid);
+                ClientIndicationList clientIndicationList = clientIndicationQuery.GetSingle(indicationid, clientid);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  clientIndicationList);
@@ -81,7 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.ClientIndication", "READ", authToken.Tenant);
+	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 ClientIndicationListQueryService clientIndicationQuery = new ClientIndicationListQueryService(MyContext);
                 List<ClientIndicationList> result = clientIndicationQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -103,7 +105,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("Customs.ClientIndication", "READ", authToken.Tenant);
+	                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()

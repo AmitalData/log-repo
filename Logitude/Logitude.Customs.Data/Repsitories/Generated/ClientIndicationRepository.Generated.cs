@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  ClientIndication GetSingle(string indicationid, int tenant)
+		public  ClientIndication GetSingle(string indicationid, string clientid, int tenant)
         {
             return (from a in context.ClientIndications
-                    where a.IndicationId == indicationid && a.Tenant == tenant
+                    where a.IndicationId == indicationid && a.ClientId == clientid && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             ClientIndicationKeys keys = entityKeys as ClientIndicationKeys;
             return (from a in context.ClientIndications
-                    where a.IndicationId == keys.IndicationId
+                    where a.IndicationId == keys.IndicationId && a.ClientId == keys.ClientId
                     select a).FirstOrDefault();
         }
 		         

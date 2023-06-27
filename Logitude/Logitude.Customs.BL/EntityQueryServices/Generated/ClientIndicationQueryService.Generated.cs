@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class ClientIndicationQueryService: EntityQueryService<ClientIndication,ClientIndicationKeys,ClientIndicationPM,object,ClientIndicationKeys>
+   public partial class ClientIndicationQueryService: EntityQueryService<ClientIndication,ClientIndicationKeys,ClientIndicationPM,ClientPM,ClientKeys>
    {
    
         ClientIndicationRepository repository;
@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new ClientIndicationDataMapping();
         }
 		 
-		public  ClientIndicationPM GetSingle(string indicationid,bool getComposition, bool getFromCache)
+		public  ClientIndicationPM GetSingle(string indicationid, string clientid,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new ClientIndicationKeys(){ IndicationId = indicationid };
+             EntityKeys = new ClientIndicationKeys(){ IndicationId = indicationid, ClientId = clientid };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(ClientIndication entityPOCO)
         {
-            ClientIndicationKeys entityKeys = new ClientIndicationKeys() { IndicationId = entityPOCO.IndicationId,  };
+            ClientIndicationKeys entityKeys = new ClientIndicationKeys() { IndicationId = entityPOCO.IndicationId, ClientId = entityPOCO.ClientId,  };
             return entityKeys;
         }
      

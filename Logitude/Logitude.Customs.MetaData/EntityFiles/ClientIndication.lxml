@@ -20,24 +20,26 @@
   IsClosed="false"
   CacheOnClient="false"
   EditableFromAutoCompleteWindow="false"
-  HasCounter="false"
+  HasCounter="true"
   EnableAddFromLOV="false"
   IsRestrictable="false"
-  IsMain="true"
-  IsAutoComplete="true"
+  IsMain="false"
+  IsAutoComplete="false"
   EnableEditFromLOV="false"
   SortingByObjectField="&quot;CreateDate&quot;"
+  SortingByDirection="&quot;Descending&quot;"
   InActive="false"
   IsSaveButtonVisible="false"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
-  ObjectTableTypeCode="&quot;MD&quot;"
+  ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
+  ParentTableName="Client"
   LocalDefaultText="&quot;אינדיקציה ללקוח&quot;"
   DefaultText="&quot;Client Indication&quot;"
-  Code="&quot;5915&quot;"
+  Code="&quot;ba2d&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -263,7 +265,7 @@
     ForeignEntity="Client"
     DontBuildRelationOnDB="false"
     NavigationPropertyName="Client"
-    IsPrimaryKey="false"
+    IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
@@ -772,7 +774,38 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.ClientIndication.O.IndicationExpOrImp&quot;"
+      DefaultText="&quot;IndicationExpOrImp&quot;"
+      LocalDefaultText="&quot;אינדיקצית יצואן/יבואן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ClientIndication.O.UpdatDataImpExp&quot;"
+      DefaultText="&quot;Exporter data is not updated in the system - additional data must be retrieved for the importer/exporter&quot;"
+      LocalDefaultText="&quot;נתוני יצואן לא מעודכנים במערכת -יש לשלוף נתונים נוספים ליבואן/יצואן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ClientIndication.O.NotDeclareInCustoms&quot;"
+      DefaultText="&quot;The exporter is not set up for a preferential customs account&quot;"
+      LocalDefaultText="&quot;היצואן לא מוגדר לחשבון העדפה במכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ClientIndication.O.DeclareInCustomsExpired&quot;"
+      DefaultText="&quot;The exporters definition of a preferential account is not valid at customs&quot;"
+      LocalDefaultText="&quot;הגדרת היצואן לחשבון העדפה אינה בתוקף במכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ClientIndication.O.IndicationClient&quot;"
+      DefaultText="&quot;Indications for the client&quot;"
+      LocalDefaultText="&quot;אינדיקציות ללקוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;IndicationsClient&quot;"
