@@ -284,11 +284,11 @@ export class ReconcileExternalPageExtendedPMService {
         }
     }
 
-    ImportReconcileExternalPageLineFromExcel(fileUpload: any) {
+    ImportReconcileExternalPageLineFromExcel(fileUpload: any,bankCodeId:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return this.httpClient.post(this._apiUrl + "/ImportReconcileExternalPageLineFromExcel?"
+        return this.httpClient.post(this._apiUrl + "/ImportReconcileExternalPageLineFromExcel?"+ 'bankCodeId=' + bankCodeId
             , JSON.stringify(fileUpload), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
                 var result = response;
                 var pmresponse: ServiceResponse;

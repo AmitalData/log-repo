@@ -52,6 +52,7 @@ using WebFreight.Web.Controllers.CommonDataModel.Extended;
 using Syncfusion.XlsIO;
 using System.Globalization;
 using Microsoft.Owin;
+using Logitude.Accounting.Data.Repositories;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -461,7 +462,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
         [ActionName(name: "ImportReconcileExternalPageLineFromExcel")]
-        public HttpResponseMessage ImportReconcileExternalPageLineFromExcel(ReconcileExternalPageLineParameters filter)
+        public HttpResponseMessage ImportReconcileExternalPageLineFromExcel(ReconcileExternalPageLineParameters filter, string bankCodeId)
         {
             try
             {
@@ -474,7 +475,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IApplication application = excelEngine.Excel;
                 IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
                 IWorksheet sheet = workbook.Worksheets[0];
-                List<ExcelReconcileExternalPageLine> myResult = this.BuildReconcileExternalPageLineFromExcelLines(sheet, authToken.Tenant);
+                List<ExcelReconcileExternalPageLine> myResult = this.BuildReconcileExternalPageLineFromExcelLines(sheet, authToken.Tenant, bankCodeId);
                 filter.RowsCount = sheet.UsedRange.Rows.Count() - 1;
                 filter.ExcelReconcileExternalPageLines = myResult;
 
@@ -485,9 +486,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private List<ExcelReconcileExternalPageLine> BuildReconcileExternalPageLineFromExcelLines(IWorksheet sheet,int tenant)
+        private List<ExcelReconcileExternalPageLine> BuildReconcileExternalPageLineFromExcelLines(IWorksheet sheet,int tenant, string bankCodeId)
         {
             List<ExcelReconcileExternalPageLine> myResult = new List<ExcelReconcileExternalPageLine>();
+            var bankCodeRepository = new BankCodeRepository(tenant);
+            var bankcodePM = bankCodeRepository.GetSingle(bankCodeId, tenant);
+            string format = "M/d/yyyy h:mm:ss tt";
+            if (bankcodePM?.DateFormat != null)
+            {
+                format = bankcodePM.DateFormat;
+            }
 
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
@@ -502,7 +510,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 if (rowData.Length > 0)
                 {
                     int ArrayIndex = 0;
-                    string format = "M/d/yyyy h:mm:ss tt";
+                   
                     if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
                         DateTime.TryParseExact(rowData[ArrayIndex],format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime referenceDate);

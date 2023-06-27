@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -88,7 +89,7 @@ namespace Logitude.Accounting.Data.Repositories
                       where (a.GLAccountId == accountId || a.DeferredGLAccountId == accountId || a.TransferGLAcccountId == accountId) && a.Tenant == tenant
                       select a).Any();
         }
-    }
 
+    }
 }
    
