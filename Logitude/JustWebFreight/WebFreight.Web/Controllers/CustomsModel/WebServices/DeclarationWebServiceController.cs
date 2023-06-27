@@ -1711,11 +1711,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             try
             {
                 CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
+ 
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(requestParamsCredit.Tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(requestParamsCredit.Tenant);
 
-                DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParamsCredit.Tenant);
-                DeclarationPM declarationPM = declarationQueryService.GetSingleDeclarationById(requestParamsCredit.AppicationId, requestParamsCredit.Tenant);
-                if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
-                {
+                if (setting.IsConnectedToUniFreight)
+                { 
                     try
                     {
                         ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(requestParamsCredit.PBId, "שליחת בקשה לבדיקת אשראי");
@@ -1818,10 +1819,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
 
-                DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParamsCredit.Tenant);
-                DeclarationPM declarationPM = declarationQueryService.GetSingleDeclarationById(requestParamsCredit.AppicationId, requestParamsCredit.Tenant);
-                if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
-                {
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(requestParamsCredit.Tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(requestParamsCredit.Tenant);
+
+                if (setting.IsConnectedToUniFreight)
+                { 
                     try
                     {
                         ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(requestParamsCredit.PBId, "שליחת בקשת העברה לגובה");
@@ -1914,10 +1916,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
 
-                DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParamsCredit.Tenant);
-                DeclarationPM declarationPM = declarationQueryService.GetSingleDeclarationById(requestParamsCredit.AppicationId, requestParamsCredit.Tenant);
-                if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
-                {
+
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(requestParamsCredit.Tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(requestParamsCredit.Tenant);
+
+                if (setting.IsConnectedToUniFreight)
+                { 
                     try
                     {
                         ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(requestParamsCredit.PBId, "שליחת בקשה לבדיקת אשראי");
