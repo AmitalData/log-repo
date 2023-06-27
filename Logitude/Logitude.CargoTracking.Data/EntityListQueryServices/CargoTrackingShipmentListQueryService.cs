@@ -8,6 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Data.Entity.Core.Objects;
+using System.Reflection;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
 {
@@ -750,7 +754,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             shipments = GetPageOfShipments(shipmentSearchInput.PageIndex, shipmentSearchInput.PageSize, shipments);
             shipments = AddCards(shipments);
 
-            List<CargoTrackingShipmentList> shipmentsLists = shipments.ToList();
+            string queryString = GetQueryStringWithParameters(shipments);
+            queryString = AddArithabortConfig(queryString);
+            List<CargoTrackingShipmentList> shipmentsLists = ExcuteStringQuery<CargoTrackingShipmentList>(queryString).ToList();
+
             List<CargoTrackingPortList> ports = GetPortFromCache();
             List<CargoTrackingTransportMode> transportModes = new CargoTrackingTransportModeListQueryService(context).GetAllFromCache();
 
@@ -771,6 +778,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             return shipmentsLists;
         }
+
+        private static string AddArithabortConfig(string queryString) =>
+            $"SET ARITHABORT ON; {queryString}; SET ARITHABORT OFF;";
 
         private List<CargoTrackingPortList> GetPortFromCache() =>
             CacheManager.GetOrInsertNewObject<List<CargoTrackingPortList>>("ListCargoTrackingPortList", () => GetPorts().ToList());        
@@ -1004,7 +1014,31 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(tenant);
             var shipmets = repo.GetBySecurityKey(SecurityKey, tenant);
             return shipmets.FirstOrDefault();
-        } 
+        }
+
+        private DbRawSqlQuery<T> ExcuteStringQuery<T>(string queryString) =>
+            context.GetActiveDbContext().Database.SqlQuery<T>(queryString);
+
+        private string GetQueryStringWithParameters(IQueryable<CargoTrackingShipmentList> query)
+        {
+            Dictionary<string, object> parameters = ExtractParameters(query);
+            string queryString = query.ToString();
+            foreach (var parameter in parameters)
+                queryString = queryString.Replace("@" + parameter.Key, (parameter.Value is DateTime) ? "'" + parameter.Value.ToString() + "'" : parameter.Value.ToString());
+            return queryString;
+        }
+
+        public Dictionary<string, object> ExtractParameters<T>(IQueryable<T> query)
+        {
+            query.ToString();
+            var internalQueryField = query.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(f => f.Name.Equals("_internalQuery")).FirstOrDefault();
+            var internalQuery = internalQueryField.GetValue(query);
+            var objectQueryField = internalQuery.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(f => f.Name.Equals("_objectQuery")).FirstOrDefault();
+            var objectQuery = objectQueryField.GetValue(internalQuery) as ObjectQuery<T>;
+            Dictionary<string,object> parameters = objectQuery.Parameters.ToDictionary(x => x.Name, x => x.Value);
+
+            return parameters;
+        }
     }
 
 
