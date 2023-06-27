@@ -64,6 +64,11 @@ export class CustomsCountryTenantPM {
     public set TarriffName(newValue: string) { if (this.tarriffName != newValue) { this.tarriffName = newValue; this.MarkAsDirty("TarriffName"); } }
        
 	 
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+       
+	 
 
     public OldEntityPM: CustomsCountryTenantPM;
 		

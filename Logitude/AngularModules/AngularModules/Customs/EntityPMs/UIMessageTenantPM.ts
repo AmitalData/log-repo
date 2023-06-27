@@ -59,6 +59,11 @@ export class UIMessageTenantPM {
     public set Sort(newValue: number) { if (this.sort != newValue) { this.sort = newValue; this.MarkAsDirty("Sort"); } }
        
 	 
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+       
+	 
 
     public OldEntityPM: UIMessageTenantPM;
 		

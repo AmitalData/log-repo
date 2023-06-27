@@ -18,6 +18,7 @@ export class CustomsHouseTypeTenantList {
 	TransportModeName: string;
 	UnloadPortName: string;
 	Inactive: boolean;
+	Code: string;
 	
 }
  

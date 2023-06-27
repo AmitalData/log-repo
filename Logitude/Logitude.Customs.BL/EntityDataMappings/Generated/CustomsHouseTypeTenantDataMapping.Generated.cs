@@ -27,7 +27,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UpdateDate, 
 	         UpdatedByUserId, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         Code,
 	      }
 
 
@@ -43,7 +44,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UnloadPortCode, 
 	         TransportModeName, 
 	         UnloadPortName, 
-	         Inactive,
+	         Inactive, 
+	         Code,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -75,6 +77,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
+            {
+				entityPOCO.Code = entityPM.Code;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -113,6 +120,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
+            {
+					entityPM.Code = entityPOCO.Code;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsHouseTypeTenantPM entityPM, CustomsHouseTypeTenantPM oldEntityPM)
@@ -142,6 +154,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
+            {
+                oldEntityPM.Code = entityPM.Code;
             }
 			
 		}

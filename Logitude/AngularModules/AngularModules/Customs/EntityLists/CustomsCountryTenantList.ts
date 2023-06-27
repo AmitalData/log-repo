@@ -16,6 +16,7 @@ export class CustomsCountryTenantList {
 	Inactive: boolean;
 	MalamId: string;
 	TarriffName: string;
+	Code: string;
 	
 }
  

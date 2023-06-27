@@ -64,6 +64,11 @@ export class InternationalSiteTenantPM {
     public set CountryTypeName(newValue: string) { if (this.countryTypeName != newValue) { this.countryTypeName = newValue; this.MarkAsDirty("CountryTypeName"); } }
        
 	 
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+       
+	 
 
     public OldEntityPM: InternationalSiteTenantPM;
 		

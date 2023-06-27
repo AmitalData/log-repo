@@ -34,6 +34,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [ForeignKey("UIMessage")]
+        [Column("Code")]
+	    public string Code { get; set; }
+	      
+        public virtual UIMessage UIMessage { get; set; }
     }
 }
 	 

@@ -28,6 +28,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool Inactive  { get; set; }
        [DataMember]
        public int? Sort  { get; set; }
+       [DataMember]
+       public string Code  { get; set; }
    }
 
 }

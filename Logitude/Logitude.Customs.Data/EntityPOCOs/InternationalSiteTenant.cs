@@ -39,6 +39,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CountryTypeCode { get; set; }
 	      
         public virtual CustomsCountryTenant CustomsCountryTenant { get; set; }
+        [ForeignKey("InternationalSite")]
+        [Column("Code")]
+	    public string Code { get; set; }
+	      
+        public virtual InternationalSite InternationalSite { get; set; }
     }
 }
 	 
