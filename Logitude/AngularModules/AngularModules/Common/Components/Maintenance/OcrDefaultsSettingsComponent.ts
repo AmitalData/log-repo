@@ -168,18 +168,16 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         currRequestParams.DeclarationId = this.CurrentSession.CurrentEditComponent.EntityPM.Id;
         currRequestParams.SupplierInvoiceList = this.SupplierInvoiceComprehensiveUpdate;
         currRequestParams.SupplierInvioceItemCertificats = []
+        
         this.ItemsSource.Collection.forEach(element => {
             var supplierInvioceItemCertificat: SupplierInvioceItemCertificat = new SupplierInvioceItemCertificat();
-            supplierInvioceItemCertificat.InvoiceCounterKey = element.InvoiceCounterKey;
-            supplierInvioceItemCertificat.LineNumber = element.LineNumber;
-            supplierInvioceItemCertificat.ItemCertificateCounterKey = element.ItemCertificateCounterKey;
             supplierInvioceItemCertificat.CertificateNumber = element.CertificateNumber;
-            supplierInvioceItemCertificat.ReqConfirmationTypeCode = element.ReqConfirmationTypeCode;
+            supplierInvioceItemCertificat.ReqConfirmationTypeCode = element.ConfirmationTypeCode;
             supplierInvioceItemCertificat.CertificateExemptionTypeCode = element.CertificateExemptionTypeCode;
             supplierInvioceItemCertificat.AttachmentTypeCode = element.AttachmentTypeCode;
             supplierInvioceItemCertificat.ResConfirmationTypeCode = element.ResConfirmationTypeCode;
             supplierInvioceItemCertificat.CustomsAttachmentID = element.CustomsAttachmentID;
-            supplierInvioceItemCertificat.ReqConfirmationTypeName = element.ReqConfirmationTypeName;
+            supplierInvioceItemCertificat.ReqConfirmationTypeName = element.ConfirmationTypeName;
             supplierInvioceItemCertificat.CertificateExemptionTypeName = element.CertificateExemptionTypeName;
             supplierInvioceItemCertificat.AttachmentTypeName = element.AttachmentTypeName;
             supplierInvioceItemCertificat.ResConfirmationTypeName = element.ResConfirmationTypeName;
