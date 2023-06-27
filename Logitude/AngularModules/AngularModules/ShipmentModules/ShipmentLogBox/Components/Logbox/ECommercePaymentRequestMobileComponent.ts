@@ -45,6 +45,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public DimDenyButton: boolean = false;
     public DimApproveButton: boolean = false;
     public orianStyle: boolean = false;
+    public dsvStyle: boolean = false;
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
     //private messageWindow: MessageWindow = new MessageWindow();
@@ -117,6 +118,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
 
                     this.orianStyle = +this.Tenant === 126 || +this.Tenant === 1153;
+                    this.dsvStyle = +this.Tenant === 49 || +this.Tenant === 1062;
 
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
