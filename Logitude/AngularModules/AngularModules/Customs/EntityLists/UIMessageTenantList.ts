@@ -15,6 +15,7 @@ export class UIMessageTenantList {
 	SearchFields: string;
 	Inactive: boolean;
 	Sort: number;
+	Code: string;
 	
 }
  

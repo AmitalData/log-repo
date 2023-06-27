@@ -36,6 +36,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool Inactive { get; set; }
         [Column("MalamId")]
 	    public string MalamId { get; set; }
+        [ForeignKey("CustomsCountry")]
+        [Column("Code")]
+	    public string Code { get; set; }
+	      
+        public virtual CustomsCountry CustomsCountry { get; set; }
     }
 }
 	 

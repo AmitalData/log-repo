@@ -16,6 +16,7 @@ export class InternationalSiteTenantList {
 	Inactive: boolean;
 	CountryTypeCode: string;
 	CountryTypeName: string;
+	Code: string;
 	
 }
  

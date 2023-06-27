@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CountryTypeCode  { get; set; }
        [DataMember]
        public string CountryTypeName  { get; set; }
+       [DataMember]
+       public string Code  { get; set; }
    }
 
 }
