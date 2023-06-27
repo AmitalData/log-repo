@@ -446,6 +446,7 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
                 this.CurrentSession.StartBusyIndicator("");
                 this.declarationPMService.update(this.CurrentSession.CurrentEditComponent.EntityPM).subscribe((response: ServiceResponse) => {
                     var declaration = response.Result;
+                    DeclarationEventManager.SavePendingAfterDeclarationSaved.emit(null);;
                     this.CurrentSession.StopBusyIndicator();
                     if (!AppTool.IsNullOrEmpty(declaration)) {
                         if (!AppTool.IsNullOrEmpty(item)) {
