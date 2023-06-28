@@ -1746,9 +1746,13 @@ After that Remove file  from DCA  .. ");
                 CustomsCommandEnum nxtCustomsCommandEnum = CustomsCommandEnum.CustomsCommandAnalyzeResponseWR;
                 bool toContinueNextCommand = false;
                 bool raiseDifferentWR = false;
+                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+.AppendLine("before : if (!this.DualResponseHeaderStatusReturnAckSentResponseOnDCA) ");
                 if (!this.DualResponseHeaderStatusReturnAckSentResponseOnDCA)
                 {
                     toContinueNextCommand = EndStepToContinueNextCommand(out raiseDifferentWR);
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+.AppendLine("into : if (!this.DualResponseHeaderStatusReturnAckSentResponseOnDCA) ");
                     if (!toContinueNextCommand && !raiseDifferentWR)
                     {
                         nxtCustomsCommandEnum = CalcNextCommandSQ();
@@ -1931,7 +1935,11 @@ After that Remove file  from DCA  .. ");
 
             raiseDifferentWR = false;
             var toContinueNextCommand = true;
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+                .AppendLine("if (!CurrentWR.HasValue): " + !CurrentWR.HasValue);
             if (!CurrentWR.HasValue) return toContinueNextCommand;
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+              .AppendLine("if (!_StartCustomsCommand.HasValue):" + _StartCustomsCommand.HasValue);
             if (!_StartCustomsCommand.HasValue) return toContinueNextCommand;
 
 
@@ -1939,8 +1947,13 @@ After that Remove file  from DCA  .. ");
             var curVal = CurrentWR.GetValueOrDefault();
             if (!RequestParams.SuppressSplitWR)//the eblity to continue work 1 proccess without Split
             {
+                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+              .AppendLine("!RequestParams.SuppressSplitWR");
+
                 if (CurrentWR.Value != _StartCustomsCommand)
                 {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+           .AppendLine("if (CurrentWR.Value != _StartCustomsCommand) : CurrentWR.Value + "  + CurrentWR.Value + "_StartCustomsCommand:" + _StartCustomsCommand);
                     raiseDifferentWR = true;
                     //throw new BusinessErrorException("");
                     return false;
@@ -1949,10 +1962,15 @@ After that Remove file  from DCA  .. ");
                 toContinueNextCommand = false;
                 if (curVal == CustomsCommandEnum.CustomsCommandAnalyzeResponseWR)//End Step ,No more Steps
                 {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+.AppendLine("if (curVal == CustomsCommandEnum.CustomsCommandAnalyzeResponseWR):" + curVal);
+
                     toContinueNextCommand = true;
                 }
                 else if (curVal == CustomsCommandEnum.CustomsCommandSendDCAUploadStatusWR)//end Step - Wait to dca  In
                 {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+.AppendLine("else if (curVal == CustomsCommandEnum.CustomsCommandSendDCAUploadStatusWR):" + curVal);
                     toContinueNextCommand = true;
                 }
             }
