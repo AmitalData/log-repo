@@ -67,7 +67,6 @@ import { formatDate } from '@angular/common';
 import { SupplierInvoiceModificationPM } from 'Customs/EntityPMs/SupplierInvoiceModificationPM';
 import { CurrencyTypeListService } from 'Customs/Services/StandardLists/CurrencyTypeListService';
 import { SupplierInvoicePM } from 'Customs/EntityPMs/SupplierInvoicePM';
-import { SupplierInvoiceService } from 'Customs/Services/Others/SupplierInvoiceService';
 import { SupplierInvoicePMService } from 'Customs/Services/StandardPMs/SupplierInvoicePMService';
 @Component({
 
