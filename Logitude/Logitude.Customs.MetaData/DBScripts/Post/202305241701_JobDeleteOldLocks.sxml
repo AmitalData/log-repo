@@ -6,9 +6,19 @@
 ]]>
   </Sql>
 
-  <Oracle Version="1">
+  <Oracle Version="2">
     <![CDATA[
-    BEGIN
+DECLARE
+  job_count NUMBER;
+BEGIN
+
+  SELECT COUNT(*)
+  INTO job_count
+  FROM all_scheduler_jobs 
+  WHERE job_name = 'DELETE_OLD_LOCKS'
+  and owner = USER;
+
+  IF job_count = 0 THEN
     DBMS_SCHEDULER.CREATE_JOB (
             job_name => '"DELETE_OLD_LOCKS"',
             job_type => 'PLSQL_BLOCK',
@@ -23,22 +33,17 @@ commit;',
             auto_drop => FALSE,
             comments => 'delete locks form generallocks table when is greater from day');
 
-         
-     
- 
-    DBMS_SCHEDULER.SET_ATTRIBUTE( 
-             name => '"DELETE_OLD_LOCKS"', 
-             attribute => 'store_output', value => TRUE);
     DBMS_SCHEDULER.SET_ATTRIBUTE( 
              name => '"DELETE_OLD_LOCKS"', 
              attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
       
-   
-  
     
     DBMS_SCHEDULER.enable(
              name => '"DELETE_OLD_LOCKS"');
-END;
+               
+   END IF;
+ END;
+
 
     ]]>
   </Oracle>
