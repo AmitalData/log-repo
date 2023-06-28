@@ -119,10 +119,6 @@ export class SupplierInvoiceService {
 
     PostMultiUpdateOCR(requestParams: MultiUpdateOcrParams) {
 
-        var supplierInvocieList=requestParams?.SupplierInvoiceList.map(p=>p.InvoiceCounterKey).join(',');
-        //supplierInvioceItemCertificats=JSON.stringify(requestParams?.SupplierInvioceItemCertificats)
-        var supplierInvioceItemCertificats:any=requestParams.SupplierInvioceItemCertificats
-
         
         return defer(() => {
             var authHeader = new Headers();
@@ -133,9 +129,10 @@ export class SupplierInvoiceService {
             serviceResponse = new ServiceResponse();
 
             return this._http.put(
-                this._apiUrl + "/PutMultiUpdateOCR?" + "declarationId=" + requestParams.DeclarationId
-                + "&supplierInvocieList=" + supplierInvocieList ,  JSON.parse(JSON.stringify(supplierInvioceItemCertificats))
-                , ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                this._apiUrl + "/PutMultiUpdateOCR/"
+                , 
+                JSON.stringify(requestParams),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     var messString = res;
                     var serviceResponse: ServiceResponse;
                     serviceResponse = new ServiceResponse();

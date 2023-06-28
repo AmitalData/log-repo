@@ -16,6 +16,7 @@ using System.Runtime.Remoting.Contexts;
 using Logitude.Customs.BL.EntityUpdateServices;
 using System.Data.Entity;
 using Microsoft.Practices.ObjectBuilder2;
+using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -780,7 +781,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public bool UpdateSupplierInvoiceByOcrDefaults(string declarationId, string supplierInvocieList,  SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats,int tenant)
+        public bool UpdateSupplierInvoiceByOcrDefaults(string declarationId, string supplierInvocieList,  SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats, SupplierInvioceExportDefaultPM supplierInvioceExportDefault,int tenant)
         {
             var context = CustomContext.GetContext(tenant);
             var arrSupplierInvocie = supplierInvocieList.Split(',');
@@ -793,9 +794,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var supplierInvoiceQueryServices = new SupplierInvoiceQueryService(context);
             var supplierInvoices = supplierInvoiceQueryServices.GetSupplierInvoicesForDeclaration(declarationId, tenant,true).Where(i=> arrSupplierInvocie.Contains((i.InvoiceCounterKey).ToString(), StringComparer.OrdinalIgnoreCase));
 
-            SupplierInvioceExportDefaultQueryService queryService = new SupplierInvioceExportDefaultQueryService(context);
-            SupplierInvioceExportDefault supplierInvioceExportDefault = queryService.GetDepositByPaymentOrderNumberOrTapagId(tenant);
-
             foreach (var supplierInvoice in supplierInvoices)
             {
                 UpdateSupplierInvoices(supplierInvoice, supplierInvioceExportDefault, context,  supplierInvioceItemCertificats);
@@ -803,15 +801,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
             // var supplierInvoiceItemUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), tenant);
                             return true;
         }
-        private void UpdateSupplierInvoices(SupplierInvoicePM supplierInvoice, SupplierInvioceExportDefault supplierInvioceExportDefault,ICustomContext context, SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats)
+        private void UpdateSupplierInvoices(SupplierInvoicePM supplierInvoice, SupplierInvioceExportDefaultPM supplierInvioceExportDefault,ICustomContext context, SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats)
         {
             var supplierInvioceItemCertificatUpdateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), supplierInvoice.Tenant); 
             var supplierInvoiceItemUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), supplierInvioceExportDefault.Tenant);
 
             if (supplierInvioceExportDefault != null) {
-                supplierInvoice.AccountTypeCode = supplierInvioceExportDefault.AccountTypeCode;
-                supplierInvoice.PartyRelationshipCode = supplierInvioceExportDefault.PartyRelationshipCode;
-                supplierInvoice.BuyerRoleCode = supplierInvioceExportDefault.BuyerRoleCode;
+                supplierInvoice.AccountTypeCode = supplierInvioceExportDefault.AccountTypeCode != "none" ? supplierInvioceExportDefault.AccountTypeCode : supplierInvoice.AccountTypeCode;
+                supplierInvoice.PartyRelationshipCode = supplierInvioceExportDefault.PartyRelationshipCode!="none" ? supplierInvioceExportDefault.PartyRelationshipCode: supplierInvoice.PartyRelationshipCode;
+                supplierInvoice.BuyerRoleCode = supplierInvioceExportDefault.BuyerRoleCode!="none"? supplierInvioceExportDefault.BuyerRoleCode : supplierInvoice.BuyerRoleCode;
                 supplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
             }
            
@@ -819,15 +817,18 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 if (supplierInvioceExportDefault != null)
                 {
-                    supplierInvoiceItem.TransactionNatureCode = supplierInvioceExportDefault.TransactionNatureCode;
-                    supplierInvoiceItem.ClaimReasonCode = supplierInvioceExportDefault.ClaimReasonCode;
+                    supplierInvoiceItem.TransactionNatureCode = supplierInvioceExportDefault.TransactionNatureCode!="none"? supplierInvioceExportDefault.TransactionNatureCode: supplierInvoiceItem.TransactionNatureCode;
+                    supplierInvoiceItem.ClaimReasonCode = supplierInvioceExportDefault.ClaimReasonCode!="none"? supplierInvioceExportDefault.ClaimReasonCode: supplierInvoiceItem.ClaimReasonCode;
                     supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
 
-                    foreach (var supplierInvoiceItemProcesType in supplierInvoiceItem.SupplierInvoiceItemProcesTypes)
+                    if (supplierInvioceExportDefault.ProcessTypeCode != "none")
                     {
-                        supplierInvoiceItemProcesType.ProcessTypeCode = supplierInvioceExportDefault.ProcessTypeCode;
-                        supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Update;
+                        foreach (var supplierInvoiceItemProcesType in supplierInvoiceItem.SupplierInvoiceItemProcesTypes)
+                        {
+                            supplierInvoiceItemProcesType.ProcessTypeCode = supplierInvioceExportDefault.ProcessTypeCode;
+                            supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Update;
 
+                        }
                     }
                 }
 

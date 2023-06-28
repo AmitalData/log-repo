@@ -43,21 +43,29 @@
                                         <td>
                                             <table>
                                                 <tr>
+                                                   
+
                                                     <td style="height: 100%">
                                                         <div class="noselect">
                                                             <table>
                                                                 <tr style="height: 10%">
-                                                                    <td></td>
                                                                 </tr>
 
                                                                 <tr>
-                                                                    <td
+                                                                    <td 
                                                                         style="position: absolute; top:0px; bottom:0; left:0; right:0; margin:auto; padding: 10px; background: white;border-radius:0 5px 5px 0;">
                                                                         <table class="noselect">
+
                                                                             <tr class="FormFieldRow">
 
-
-                                                                                <td style="width: 150px;">
+                                                                                  
+                                                                                <td *ngIf="IsFromSupplierInvoice" style="width: 4%;">
+                                                                                    <LogCheckBox [Checked]="AccountTypeCodeChecked" [ObjectFieldName]="'AccountTypeCodeChecked'" [ObjectTableName]="ObjectTableName"  [DataContext]="DataContext"></LogCheckBox> 
+                                            
+                                                                                </td>
+                                                                                                                                               
+                                                                                <td  style="width: 150px;">
+                                                                                   
                                                                                     <LogLabel
                                                                                         [ObjectFieldName]="'AccountTypeCode'"
                                                                                         [ObjectTableName]="ObjectTableName"
@@ -65,7 +73,7 @@
                                                                                     </LogLabel>
                                                                                 </td>
 
-                                                                                <td style="width: 160px;">
+                                                                                <td  style="width: 160px;">
                                                                                     <LogLov tabindex="1"
                                                                                         [ObjectFieldName]="'AccountTypeCode'"
                                                                                         [ObjectTableName]="ObjectTableName"
@@ -77,16 +85,19 @@
                                                                                     </LogLov>
                                                                                 </td>
 
-
-
-
                                                                                 <td>
                                                                                     <div></div>
                                                                                 </td>
+
+
+                                                                                
                                                                             </tr>
 
                                                                             <tr class="FormFieldRow">
-
+                                                                                 <td  *ngIf="IsFromSupplierInvoice" style="width: 4%;">
+                                                                                    <LogCheckBox [Checked]="PartyRelationshipCodeChecked" [ObjectFieldName]="'PartyRelationshipCodeChecked'" [ObjectTableName]="ObjectTableName"  [DataContext]="DataContext"></LogCheckBox> 
+                                            
+                                                                                 </td>
                                                                                 <td style="width: 130px;">
                                                                                     <LogLabel
                                                                                         [ObjectFieldName]="'PartyRelationshipCode'"
@@ -106,14 +117,16 @@
                                                                                 </td>
 
 
-                                                                                <td>
-                                                                                    <div></div>
-                                                                                </td>
+                                                                                
                                                                             </tr>
 
 
 
                                                                             <tr class="FormFieldRow">
+                                                                                <td *ngIf="IsFromSupplierInvoice"  style="width: 4%;">
+                                                                                    <LogCheckBox [Checked]="BuyerRoleCodeChecked" [ObjectFieldName]="'BuyerRoleCodeChecked'" [ObjectTableName]="ObjectTableName"  [DataContext]="DataContext"></LogCheckBox> 
+                                            
+                                                                                 </td>
                                                                                 <td style="width: 130px;">
                                                                                     <LogLabel
                                                                                         [ObjectFieldName]="'BuyerRoleCode'"
@@ -138,6 +151,10 @@
                                                                             </tr>
 
                                                                             <tr class="FormFieldRow">
+                                                                                <td  *ngIf="IsFromSupplierInvoice" style="width: 4%;">
+                                                                                    <LogCheckBox [Checked]="ClaimReasonCodeChecked" [ObjectFieldName]="'ClaimReasonCodeChecked'" [ObjectTableName]="ObjectTableName"  [DataContext]="DataContext"></LogCheckBox> 
+                                            
+                                                                                 </td>
                                                                                 <td style="width: 140px;">
                                                                                     <LogLabel
                                                                                         [ObjectFieldName]="'ClaimReasonCode'"
@@ -154,11 +171,17 @@
                                                                                         [LookUpTableName]="'Customs.ClaimReasonType'">
                                                                                     </LogLov>
                                                                                 </td>
-
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
                                                                             </tr>
 
 
                                                                             <tr class="FormFieldRow">
+                                                                                <td *ngIf="IsFromSupplierInvoice" style="width: 4%;">
+                                                                                    <LogCheckBox [Checked]="TransactionNatureCodeChecked" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'TransactionNatureCodeChecked'" [DataContext]="DataContext"></LogCheckBox> 
+                                            
+                                                                                 </td>
                                                                                 <td>
                                                                                     <LogLabel
                                                                                         [ObjectFieldName]="'TransactionNatureCode'"
@@ -176,10 +199,16 @@
                                                                                         [LookUpTableName]="'Customs.TransactionNatureType'">
                                                                                     </LogLov>
                                                                                 </td>
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
                                                                             </tr>
 
                                                                             <tr class="FormFieldRow">
-
+                                                                                <td *ngIf="IsFromSupplierInvoice" style="width: 4%;">
+                                                                                    <LogCheckBox [Checked]="ProcessTypeCodeChecked" [ObjectFieldName]="'ProcessTypeCodeChecked'" [ObjectTableName]="ObjectTableName"  [DataContext]="DataContext"></LogCheckBox> 
+                                            
+                                                                                 </td>
                                                                                 <td>
                                                                                     <LogLabel
                                                                                         [ObjectFieldName]="'ProcessTypeCode'"
@@ -198,6 +227,9 @@
                                                                                         [FocusOnMe]="true">
                                                                                     </LogLov>
 
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div></div>
                                                                                 </td>
 
                                                                             </tr>
@@ -219,7 +251,7 @@
                                                     </td>
 
                                                     <td style="width: 4px;">
-                                                        <div></div>
+                                                        
                                                     </td>
                                                 </tr>
                                             </table>
@@ -247,7 +279,9 @@
 
                     <!-- ClassificationCode -->
                     <td style="width:85px; padding-right: 15px;">
-                        <div style="color: #3b95d5;font-size:15px;">{{'Customs.SupplierInvioceExportDefault.O.SupplierInvioceItemCertificats'| TextCodeTranslationPipe}}</div>
+                        <div style="color: #3b95d5;font-size:15px;">
+                            {{'Customs.SupplierInvioceExportDefault.O.SupplierInvioceItemCertificats'|
+                            TextCodeTranslationPipe}}</div>
                     </td>
 
 
@@ -289,28 +323,29 @@
 
 
 
-                                            <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ReqConfirmationTypeCode' | TextCodeTranslationPipe" [binding]="'ConfirmationTypeCode'" [width]="'85'" [Editable]="true" [Alignment]="'right'">
+                                            <log-column
+                                                [header]="'Customs.SupplierInvioceItemCertificat.F.ReqConfirmationTypeCode' | TextCodeTranslationPipe"
+                                                [binding]="'ConfirmationTypeCode'" [width]="'85'" [Editable]="true"
+                                                [Alignment]="'right'">
                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate>
-                                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                                        <div class="TextTrimming" style="text-align:right"
+                                                            *ngIf="logcelltemplate.IsDisplayMode">
                                                             <span>{{item.ConfirmationTypeName}}</span>
                                                         </div>
                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                             <LogLov [ObjectFieldName]="'ConfirmationTypeCode'"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="item"
-                                                                    [LookUpTableName]="'Customs.ConfirmationType'"
-                                                                    (SelectedItemChanged)="item.ConfirmationType = $event"
-                                                                    [FocusOnMe]="'true'"
-                                                                    [HideColumns]="true"
-                                                                   >
+                                                                [ObjectTableName]="ObjectTableName" [DataContext]="item"
+                                                                [LookUpTableName]="'Customs.ConfirmationType'"
+                                                                (SelectedItemChanged)="item.ConfirmationType = $event"
+                                                                [FocusOnMe]="'true'" [HideColumns]="true">
                                                             </LogLov>
-            
+
                                                         </div>
                                                     </log-cell-template>
                                                 </ng-template>
-            
-            
+
+
                                             </log-column>
 
 
