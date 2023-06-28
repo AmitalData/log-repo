@@ -45,8 +45,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CountryCurrencyList> query2 = GetIqueryableList(iQueryable);
-           
-            query2 = filter.GetFilteredQuery<CountryCurrencyList>(listQueryOperation, query2);
+			            query2 = filter.GetFilteredQuery<CountryCurrencyList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {

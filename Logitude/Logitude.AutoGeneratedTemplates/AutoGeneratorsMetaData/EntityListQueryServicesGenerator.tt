@@ -451,10 +451,10 @@ namespace <#= querylistservicenamespacestring #>
 
             IQueryable<<#= listName #>> query2 = GetIqueryableList(iQueryable);
 			<#+
-             if (iscustoms)
+             if (iscustoms && tableName=="Declaration")
          {
             #>
-			iQueryable = ApplyCustomFiltersList(queryOperations, query2<#=tenantParamValue#>);
+			query2 = ApplyCustomFiltersList(queryOperations, query2<#=tenantParamValue#>);
 			<#+
          }
 		 #>
