@@ -1,6 +1,9 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,6 +18,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
     {
         public int tenant;
         public List<GGGHDAY> holidayList;
+        public List<BusinessHoursHoliday> BusinessHoursHolidayList;
+
         public SlaConcentratedReport(string tenant)
         {
             this.tenant = int.Parse(tenant);
@@ -29,8 +34,19 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
             var fromDateTime = DateTime.Parse(fromDate);
             var OpenCourierMasters = courierMasterQueryService.AllCourierMastersWithLandingDateBetweenTwoDates(tenant, fromDateTime, toDateTime, integratorCode);
             var qs = new DeclarationCourierStatusQueryService(context);
-            var GGGHDAYRepository = new GGGHDAYRepository(this.tenant);
-            this.holidayList = GGGHDAYRepository.All();
+            if (CustomsSettingQueryService.GetSettingByTenant(this.tenant).IsConnectedToUniFreight) {
+                var GGGHDAYRepository = new GGGHDAYRepository(this.tenant);
+                this.holidayList = GGGHDAYRepository.All();
+            }
+            else
+            {
+                IWebFreightContext MyContext = WebFreightContext.GetContext(this.tenant);
+                BusinessHoursHolidayRepository businessHoursHolidayRepository = new BusinessHoursHolidayRepository(MyContext);
+                this.BusinessHoursHolidayList = businessHoursHolidayRepository.All();
+            }
+
+            
+
             var concentratedReportDataList = new List<ConcentratedReportData>();
             foreach (var item in OpenCourierMasters)
             {
@@ -123,10 +139,21 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
                     DateTime day = (DateTime)(landingDate?.Date);
                     while (daysBetween >= 0)
                     {
-                        if (daysBetween > 1 && day.DayOfWeek != DayOfWeek.Friday && day.DayOfWeek != DayOfWeek.Saturday && this.holidayList.Find(x => x.HOLIDAY.Day == day.Day && x.HOLIDAY.Month == day.Month && x.HOLIDAY.Year == day.Year) == null)
-                        {
-                            SlaDays++;
+                        if (CustomsSettingQueryService.GetSettingByTenant(this.tenant).IsConnectedToUniFreight) {
+                            if (daysBetween > 1 && day.DayOfWeek != DayOfWeek.Friday && day.DayOfWeek != DayOfWeek.Saturday && this.holidayList.Find(x => x.HOLIDAY.Day == day.Day && x.HOLIDAY.Month == day.Month && x.HOLIDAY.Year == day.Year) == null)
+                            {
+                                SlaDays++;
+                            }
                         }
+                        else
+                        {
+                            if (daysBetween > 1 && day.DayOfWeek != DayOfWeek.Friday && day.DayOfWeek != DayOfWeek.Saturday && this.BusinessHoursHolidayList.Find(x => x.Day == day.Day && x.Month == day.Month && x.Year == day.Year) == null)
+                            {
+                                SlaDays++;
+                            }
+                        }
+
+                       
                         daysBetween--;
                         day = day.AddDays(1);
                     }
