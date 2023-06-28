@@ -12,6 +12,11 @@ using System.Data.Entity.Core.Objects;
 using System.Reflection;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Infrastructure.Interception;
+using System.Data.Common;
+using Simplog.Server.Infrastructure;
+using System.Configuration;
+using System.Runtime.Remoting.Contexts;
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
 {
@@ -186,7 +191,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private IQueryable<CargoTrackingShipmentList> GetIqueryableListWithouJoin(int tenant)
         {
-            IQueryable<CargoTrackingShipmentList> query = 
+            IQueryable<CargoTrackingShipmentList> query =
                 context.CargoTrackingShipments.Where(shipment =>
                     shipment.Tenant == tenant                                                                
                     && shipment.IsMainRecord == true)
@@ -705,7 +710,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 CustomerEnglishName = card.EnglishName,
                 CustomerLocalName = card.LocalName,
                 ShipmentNumber = shipment.ShipmentNumber,
-                CustomerReference = shipment.CustomerReference,
+                CustomerReference = shipment.EntityType == OrderType ? shipment.CustomerReference + "," + shipment.BookingNotes + "," + shipment.PoNumber : shipment.CustomerReference,
                 House = shipment.House,
                 ChargeableWeightInKG = shipment.ChargeableWeightInKG,
                 ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode,
@@ -719,8 +724,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 EntityId = shipment.EntityId,
                 EntityType = shipment.EntityType,
                 BookingNotes = shipment.BookingNotes,
-                ATAETASortingField = shipment.ATAETASortingField,
-                ATDETDSortingField = shipment.ATDETDSortingField,
+                ATAETASortingField = shipment.ArrivalDate != null ? shipment.ArrivalDate : shipment.ArrivalEstimationDate,
+                ATDETDSortingField = shipment.DepartureDate != null ? shipment.DepartureDate : shipment.DepartureEstimationDate,
                 PoNumber = shipment.PoNumber,
                 NumberOfPackages = shipment.PackagesQuantity,
                 ConsigneeName = shipment.ConsigneeName,
@@ -747,16 +752,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         public List<CargoTrackingShipmentList> GetFilteredSortedShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             IQueryable<CargoTrackingShipmentList> shipments = GetIqueryableListWithouJoin(shipmentSearchInput.Tenant);
-
             shipments = FilterShipments(shipmentSearchInput, shipments);
             shipments = AddShipmentSearch(shipmentSearchInput, shipments);
             shipments = SortShipments(shipmentSearchInput, shipments);
             shipments = GetPageOfShipments(shipmentSearchInput.PageIndex, shipmentSearchInput.PageSize, shipments);
             shipments = AddCards(shipments);
-
-            string queryString = GetQueryStringWithParameters(shipments);
-            queryString = AddArithabortConfig(queryString);
-            List<CargoTrackingShipmentList> shipmentsLists = ExcuteStringQuery<CargoTrackingShipmentList>(queryString).ToList();
+            List<CargoTrackingShipmentList> shipmentsLists = shipments.ToList();
 
             List<CargoTrackingPortList> ports = GetPortFromCache();
             List<CargoTrackingTransportMode> transportModes = new CargoTrackingTransportModeListQueryService(context).GetAllFromCache();
@@ -778,9 +779,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             return shipmentsLists;
         }
-
-        private static string AddArithabortConfig(string queryString) =>
-            $"SET ARITHABORT ON; {queryString}; SET ARITHABORT OFF;";
 
         private List<CargoTrackingPortList> GetPortFromCache() =>
             CacheManager.GetOrInsertNewObject<List<CargoTrackingPortList>>("ListCargoTrackingPortList", () => GetPorts().ToList());        
@@ -875,7 +873,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         }
         
         public int GetShipmentsCount(CargoTrackingShipmentSearchInput shipmentSearchInput)
-        {
+        {            
             IQueryable<CargoTrackingShipmentList> shipments = GetIqueryableListWithouJoin(shipmentSearchInput.Tenant);
 
             shipments = FilterShipments(shipmentSearchInput, shipments);
@@ -1014,30 +1012,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(tenant);
             var shipmets = repo.GetBySecurityKey(SecurityKey, tenant);
             return shipmets.FirstOrDefault();
-        }
-
-        private DbRawSqlQuery<T> ExcuteStringQuery<T>(string queryString) =>
-            context.GetActiveDbContext().Database.SqlQuery<T>(queryString);
-
-        private string GetQueryStringWithParameters(IQueryable<CargoTrackingShipmentList> query)
-        {
-            Dictionary<string, object> parameters = ExtractParameters(query);
-            string queryString = query.ToString();
-            foreach (var parameter in parameters)
-                queryString = queryString.Replace("@" + parameter.Key, (parameter.Value is DateTime) ? "'" + parameter.Value.ToString() + "'" : parameter.Value.ToString());
-            return queryString;
-        }
-
-        public Dictionary<string, object> ExtractParameters<T>(IQueryable<T> query)
-        {
-            query.ToString();
-            var internalQueryField = query.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(f => f.Name.Equals("_internalQuery")).FirstOrDefault();
-            var internalQuery = internalQueryField.GetValue(query);
-            var objectQueryField = internalQuery.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(f => f.Name.Equals("_objectQuery")).FirstOrDefault();
-            var objectQuery = objectQueryField.GetValue(internalQuery) as ObjectQuery<T>;
-            Dictionary<string,object> parameters = objectQuery.Parameters.ToDictionary(x => x.Name, x => x.Value);
-
-            return parameters;
         }
     }
 

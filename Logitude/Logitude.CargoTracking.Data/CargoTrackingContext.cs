@@ -21,10 +21,27 @@ using System.Configuration;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data; 
 using Logitude.CargoTracking.Data.EntityMapping;
+using System.Data.Entity.Infrastructure.Interception;
 
 namespace Logitude.CargoTracking.Data
 {
-   public  partial  class CargoTrackingContext: DbContextBase, ICargoTrackingContext
+    public class Interceptor : IDbCommandInterceptor
+    {
+        public void ReaderExecuting(DbCommand command, DbCommandInterceptionContext<DbDataReader> interceptionContext)
+        {
+            command.CommandText = "SET ARITHABORT ON; " + command.CommandText;
+        }
+
+        public void NonQueryExecuting(DbCommand command, DbCommandInterceptionContext<int> interceptionContext) { }
+        public void NonQueryExecuted(DbCommand command, DbCommandInterceptionContext<int> interceptionContext) { }
+        public void ReaderExecuted(DbCommand command, DbCommandInterceptionContext<DbDataReader> interceptionContext) { }
+        public void ScalarExecuting(DbCommand command, DbCommandInterceptionContext<object> interceptionContext) { }
+
+        public void ScalarExecuted(DbCommand command, DbCommandInterceptionContext<object> interceptionContext) { }
+    }
+
+
+    public  partial  class CargoTrackingContext: DbContextBase, ICargoTrackingContext
     {
         public CargoTrackingContext()
         {
@@ -35,6 +52,7 @@ namespace Logitude.CargoTracking.Data
         public CargoTrackingContext(DbConnection conn)
             : base(conn,true)
         {
+            DbInterception.Add(new Interceptor());
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.SetInitializer<CargoTrackingContext>(null);
