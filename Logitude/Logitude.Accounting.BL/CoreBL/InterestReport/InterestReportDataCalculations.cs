@@ -61,14 +61,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     }
                     CalculateDataForInterestReport();
 
-                    InterestReportQueryService interestReportQueryService = new InterestReportQueryService(interestReportPM.Tenant);
-                    List<InterestReportPM> interestReportPMs = interestReportQueryService.GetInterestReportsForCustomer(interestReportPM.CustomerId, interestReportPM.GLAccountId, interestReportPM.Tenant);
-
-                    bool isFirstReport = false;
-                    if (interestReportPMs == null || interestReportPMs.Count == 0 || (interestReportPMs.Count == 1 && interestReportPMs[0].Id == interestReportPM.Id)) {
-
-                        isFirstReport= true;    
-                    }
+      
 
                     decimal? sumOfEXReports = GetInterestReportOpenBalance();
                     if (sumOfEXReports > 0 && interestReportPM.OpenBalance != sumOfEXReports) 
