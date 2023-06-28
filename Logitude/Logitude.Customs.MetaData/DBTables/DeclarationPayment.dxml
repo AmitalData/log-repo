@@ -70,6 +70,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsRepeatPayment"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"

@@ -412,6 +412,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isRepeatPayment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRepeatPayment  
+	   {
+	    
+	     get
+		{
+		   return isRepeatPayment;
+		 }
+		 set
+		 {
+		   if(isRepeatPayment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRepeatPayment",OldValue=isRepeatPayment,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isRepeatPayment=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
