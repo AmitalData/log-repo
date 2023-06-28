@@ -45,8 +45,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClaimImporterDeclarsPage3BList> query2 = GetIqueryableList(iQueryable);
-           
-            query2 = filter.GetFilteredQuery<ClaimImporterDeclarsPage3BList>(listQueryOperation, query2);
+			            query2 = filter.GetFilteredQuery<ClaimImporterDeclarsPage3BList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {

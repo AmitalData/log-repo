@@ -44,8 +44,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AssigneeNotificationTypeList> query2 = GetIqueryableList(iQueryable);
-           
-            query2 = filter.GetFilteredQuery<AssigneeNotificationTypeList>(listQueryOperation, query2);
+			            query2 = filter.GetFilteredQuery<AssigneeNotificationTypeList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
