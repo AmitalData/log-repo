@@ -228,7 +228,7 @@ export class DeclarationList {
 	CasualImporterCountry: string;
 	IntegratorName: string;
 	ExportCloseAmendStatusName: string;
-	ExcludeManifest: boolean;
+ 	ExcludeManifest: boolean;
 	ForwarderFiles: string;
 	ShortProcedure: boolean;
 	ExportFlightDate: Date;
@@ -237,6 +237,6 @@ export class DeclarationList {
 	VATReshimonFee: number;
 	SecurityFee: number;
 	ComputerFee: number;
-	
+ 
 }
  

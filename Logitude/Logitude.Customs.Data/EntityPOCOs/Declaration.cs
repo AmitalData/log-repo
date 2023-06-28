@@ -469,16 +469,16 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual AmendmentRequestStatus AmendmentRequestStatus { get; set; }
         [Column("CasualImporterCountry")]
 	    public string CasualImporterCountry { get; set; }
-        [Column("ExcludeManifest")]
+         [Column("ExcludeManifest")]
 	    public bool ExcludeManifest { get; set; }
         [Column("ForwarderFiles")]
 	    public string ForwarderFiles { get; set; }
-        [Column("ShortProcedure")]
+         [Column("ShortProcedure")]
 	    public bool ShortProcedure { get; set; }
         [Column("ExportFlightDate")]
 	    public DateTime? ExportFlightDate { get; set; }
         [Column("UNFCourier")]
 	    public bool UNFCourier { get; set; }
-    }
+     }
 }
 	 

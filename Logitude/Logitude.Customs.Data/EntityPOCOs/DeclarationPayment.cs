@@ -45,6 +45,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime? FuturePaymentDateTime { get; set; }
         [Column("AutomaticPayment")]
 	    public int AutomaticPayment { get; set; }
+        [Column("IsRepeatPayment")]
+	    public bool IsRepeatPayment { get; set; }
     }
 }
 	 

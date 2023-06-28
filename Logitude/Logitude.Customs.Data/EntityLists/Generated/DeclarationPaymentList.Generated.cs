@@ -32,6 +32,8 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? FuturePaymentDateTime  { get; set; }
        [DataMember]
        public int AutomaticPayment  { get; set; }
+       [DataMember]
+       public bool IsRepeatPayment  { get; set; }
    }
 
 }
