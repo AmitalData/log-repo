@@ -62,6 +62,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     public itemsList: SupplierInvoiceItemPM[];
     public IsVisible = false;
     public MultiUpdate = false;
+    public IsOcr = false;
+
     private _entityListService: EntityListService;
     public IsDisplayOnly: boolean = false;
     public ShowStorageStatusMessage: boolean = false;
@@ -108,6 +110,10 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                         var multiUpdateFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "MultiUpdate");
                         if (multiUpdateFeature) {
                             this.MultiUpdate = true;
+                        }
+                        var isOcrFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
+                        if (isOcrFeature) {
+                            this.IsOcr = true;
                         }
      
 
@@ -410,7 +416,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         
     }
 
-    private  SupplierInvoiceComprehensiveUpdate:SupplierInvoicePM[]=[];
+    public  SupplierInvoiceComprehensiveUpdate:SupplierInvoicePM[]=[];
     IsComprehensiveUpdateChecked(checked: boolean, item: SupplierInvoicePM){
         
         if(checked){

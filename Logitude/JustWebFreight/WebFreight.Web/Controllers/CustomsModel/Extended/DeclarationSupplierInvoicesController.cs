@@ -1066,7 +1066,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
 
-        public HttpResponseMessage PutMultiUpdateOCR(string declarationId, string supplierInvocieList, [FromBody] SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats)
+        public HttpResponseMessage PutMultiUpdateOCR( [FromBody] PutMultiUpdateOCRRequest requestParams)
         {
             try
             {
@@ -1078,7 +1078,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 SupplierInvoiceQueryService supplierInvoiceQuery = new SupplierInvoiceQueryService(customContext);
-                var ans = supplierInvoiceQuery.UpdateSupplierInvoiceByOcrDefaults(declarationId, supplierInvocieList, supplierInvioceItemCertificats, tenant);
+                var ans = supplierInvoiceQuery.UpdateSupplierInvoiceByOcrDefaults(requestParams?.DeclarationId, requestParams.SupplierInvoiceList, requestParams.SupplierInvioceItemCertificates, requestParams.SupplierInvioceExportDefault,tenant);
                 //   var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
                 return Request.CreateResponse(HttpStatusCode.OK, ans);
             }
@@ -1088,5 +1088,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
+        public class PutMultiUpdateOCRRequest
+        {
+            public SupplierInvioceItemCertificatPM[] SupplierInvioceItemCertificates { get; set; }
+            public SupplierInvioceExportDefaultPM SupplierInvioceExportDefault { get; set; }
+            public string DeclarationId { get; set; }
+            public string SupplierInvoiceList { get; set; }
+
+
+
+        }
+
     }
 }

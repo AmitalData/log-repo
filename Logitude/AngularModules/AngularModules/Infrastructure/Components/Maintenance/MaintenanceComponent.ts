@@ -489,14 +489,14 @@ export class MaintenanceComponent {
 
             if (FeatureLocator.HasFeaturePermession("Customs.Client", "AUTHORIZAT")) {
                 this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
-                var item = new MenusTablePM();
-                item.CategoryTypeCode = "CSM";
-                item.Icon = "Table"
-                item.Code = "SAL"; 
-                item.TranslatedName=TextCodeTranslator.Translate("Customs.Client.AuthorizationLetters")
-                item.ObjectTableName = "Customs.Client";
-                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
-                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+                    var item = new MenusTablePM();
+                    item.CategoryTypeCode = "CSM";
+                    item.Icon = "Table"
+                    item.Code = "SAL";
+                    item.TranslatedName = TextCodeTranslator.Translate("Customs.Client.AuthorizationLetters")
+                    item.ObjectTableName = "Customs.Client";
+                    item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
+                    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 });
             }
             this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
@@ -510,17 +510,18 @@ export class MaintenanceComponent {
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             });
         }
-
-        this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "CSM";
-            item.Icon = "Table"
-            item.Code = "DOCR";
-            item.TranslatedName ="ברירות מחדל OCR - יצוא"
-            item.ObjectTableName = "Customs.Client";
-            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        });
+        if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR")) {
+            this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CSM";
+                item.Icon = "Table"
+                item.Code = "DOCR";
+                item.TranslatedName = "ברירות מחדל OCR - יצוא"
+                item.ObjectTableName = "Customs.Client";
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            });
+        }
         if (window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0] != null) {
             this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequiredField", 0).subscribe((response: any) => {
                 if (FeatureLocator.HasFeaturePermession("Customs.CustomsRequiredField", "CSTMREQFIELDMTC")) {
@@ -543,7 +544,7 @@ export class MaintenanceComponent {
                     item.TranslatedName = TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ExportRequiredFields")
                     item.ObjectTableName = "Customs.CustomsRequiredField";
                     item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
-                    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item)); 
+                    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 }
 
             });
@@ -791,7 +792,7 @@ export class MaintenanceComponent {
     }
 
     ItemClicked(item: MaintenanceMenuItem) {
-        
+
         if (item) {
             switch (item.Code) {
                 case "DFES": {
@@ -1549,7 +1550,7 @@ export class MaintenanceComponent {
                             messageWindow.Show("Logged User Is not Customer Care ");
                             return;
                         }
-                        let msg =TextCodeTranslator.Translate("Customs.Client.IsSelectAuthorizationLetters")
+                        let msg = TextCodeTranslator.Translate("Customs.Client.IsSelectAuthorizationLetters")
                         let confirmWindow = new ConfirmWindow();
                         confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.SelectAuthorizationLetters");
                         confirmWindow.Width = 350;
@@ -1562,11 +1563,11 @@ export class MaintenanceComponent {
                             if (confirmWindow.Yes) {
 
                                 var servicelink = './Customs/CustomsGeneralRequests/Components/RecallClientsForCutoms';
-                               
+
 
                                 SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                                     service.SendRecallMessageConcurrencyGuidToServer();
-                                });                   
+                                });
                             }
                         });
                         break;

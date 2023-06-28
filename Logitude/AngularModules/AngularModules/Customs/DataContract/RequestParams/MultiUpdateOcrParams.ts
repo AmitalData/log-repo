@@ -1,12 +1,15 @@
 import { SupplierInvoicePM } from "Customs/EntityPMs/SupplierInvoicePM";
 import { GenericRequestParams } from "./GenericRequestParams";
 import { SupplierInvioceItemCertificatPM } from "Customs/EntityPMs/SupplierInvioceItemCertificatPM";
+import { SupplierInvioceExportDefaultList } from "Customs/EntityLists/SupplierInvioceExportDefaultList";
+import { SupplierInvioceExportDefaultPM } from "Customs/EntityPMs/SupplierInvioceExportDefaultPM";
 
 export class MultiUpdateOcrParams extends GenericRequestParams {
     
     public SupplierInvioceItemCertificats:SupplierInvioceItemCertificat[];
     public DeclarationId:string;
-    public SupplierInvoiceList:SupplierInvoicePM[];
+    public SupplierInvoiceList:String;
+    public SupplierInvioceExportDefault:SupplierInvioceExportDefaultPM;
 
 }
 
@@ -102,3 +105,4 @@ export class SupplierInvioceItemCertificat{
 
 
 }
+
