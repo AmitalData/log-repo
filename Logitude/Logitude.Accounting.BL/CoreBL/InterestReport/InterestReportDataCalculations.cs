@@ -7,6 +7,7 @@ using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools;
 using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -59,8 +60,21 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                         ClearOldDataForInterestReport();
                     }
                     CalculateDataForInterestReport();
-                    if(interestReportPM.OpenBalance != GetInterestReportOpenBalance())
+
+                    InterestReportQueryService interestReportQueryService = new InterestReportQueryService(interestReportPM.Tenant);
+                    List<InterestReportPM> interestReportPMs = interestReportQueryService.GetInterestReportsForCustomer(interestReportPM.CustomerId, interestReportPM.GLAccountId, interestReportPM.Tenant);
+
+                    bool isFirstReport = false;
+                    if (interestReportPMs == null || interestReportPMs.Count == 0 || (interestReportPMs.Count == 1 && interestReportPMs[0].Id == interestReportPM.Id)) {
+
+                        isFirstReport= true;    
+                    }
+
+                    decimal? sumOfEXReports = GetInterestReportOpenBalance();
+                    if (sumOfEXReports > 0 && interestReportPM.OpenBalance != sumOfEXReports) 
                         throw new ApplicationException("The open balance in the newly created report should be equal to the close balance for the last invoiced report");
+                    
+
                     scope.Complete();
                 }
             }
