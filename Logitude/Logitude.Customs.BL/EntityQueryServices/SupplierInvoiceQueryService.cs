@@ -807,9 +807,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var supplierInvoiceItemUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), supplierInvioceExportDefault.Tenant);
 
             if (supplierInvioceExportDefault != null) {
-                supplierInvoice.AccountTypeCode = supplierInvioceExportDefault.AccountTypeCode != "none" ? supplierInvioceExportDefault.AccountTypeCode : supplierInvoice.AccountTypeCode;
-                supplierInvoice.PartyRelationshipCode = supplierInvioceExportDefault.PartyRelationshipCode!="none" ? supplierInvioceExportDefault.PartyRelationshipCode: supplierInvoice.PartyRelationshipCode;
-                supplierInvoice.BuyerRoleCode = supplierInvioceExportDefault.BuyerRoleCode!="none"? supplierInvioceExportDefault.BuyerRoleCode : supplierInvoice.BuyerRoleCode;
+                supplierInvoice.AccountTypeCode = supplierInvioceExportDefault.AccountTypeCode != "non" ? supplierInvioceExportDefault.AccountTypeCode : supplierInvoice.AccountTypeCode;
+                supplierInvoice.PartyRelationshipCode = supplierInvioceExportDefault.PartyRelationshipCode!="non" ? supplierInvioceExportDefault.PartyRelationshipCode: supplierInvoice.PartyRelationshipCode;
+                supplierInvoice.BuyerRoleCode = supplierInvioceExportDefault.BuyerRoleCode!="non"? supplierInvioceExportDefault.BuyerRoleCode : supplierInvoice.BuyerRoleCode;
                 supplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
             }
            
@@ -817,11 +817,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 if (supplierInvioceExportDefault != null)
                 {
-                    supplierInvoiceItem.TransactionNatureCode = supplierInvioceExportDefault.TransactionNatureCode!="none"? supplierInvioceExportDefault.TransactionNatureCode: supplierInvoiceItem.TransactionNatureCode;
-                    supplierInvoiceItem.ClaimReasonCode = supplierInvioceExportDefault.ClaimReasonCode!="none"? supplierInvioceExportDefault.ClaimReasonCode: supplierInvoiceItem.ClaimReasonCode;
+                    supplierInvoiceItem.TransactionNatureCode = supplierInvioceExportDefault.TransactionNatureCode!="non"? supplierInvioceExportDefault.TransactionNatureCode: supplierInvoiceItem.TransactionNatureCode;
+                    supplierInvoiceItem.ClaimReasonCode = supplierInvioceExportDefault.ClaimReasonCode!="non"? supplierInvioceExportDefault.ClaimReasonCode: supplierInvoiceItem.ClaimReasonCode;
                     supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
 
-                    if (supplierInvioceExportDefault.ProcessTypeCode != "none")
+                    if (supplierInvioceExportDefault.ProcessTypeCode != "non")
                     {
                         foreach (var supplierInvoiceItemProcesType in supplierInvoiceItem.SupplierInvoiceItemProcesTypes)
                         {
