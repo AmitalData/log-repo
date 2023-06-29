@@ -45,8 +45,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DecCargoSplitConsPackDetList> query2 = GetIqueryableList(iQueryable);
-			            query2 = filter.GetFilteredQuery<DecCargoSplitConsPackDetList>(listQueryOperation, query2);
-
+					  query2 = filter.GetFilteredQuery<DecCargoSplitConsPackDetList>(listQueryOperation, query2);
+		
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DecCargoSplitConsPackDetList).GetProperty(queryOperations.SortByColumnName);
@@ -160,9 +160,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DecCargoSplitConsPackDet>(nonListQueryOperation, iQueryable);
 
             IQueryable<DecCargoSplitConsPackDetList> query2 = GetIqueryableList(iQueryable);
-
-            query2 = filter.GetFilteredQuery<DecCargoSplitConsPackDetList>(listQueryOperation, query2);
-            int count = query2.Count();
+			
+		    query2 = filter.GetFilteredQuery<DecCargoSplitConsPackDetList>(listQueryOperation, query2);
+		            int count = query2.Count();
             return count;
         }
 

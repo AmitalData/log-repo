@@ -189,6 +189,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          IsConvertedDeclaration = a.IsConvertedDeclaration,
                                                          CorrectionsXml = a.CorrectionsXml,
                                                          SignedByUserId = a.SignedByUserId,
+                                                         IsAmendment = a.IsAmendment,
                                                          ImporterCode = a.ImporterCode,
                                                          ExporterImporterCode = a.ImporterCode,
                                                          ImporterNameForExport = a.Importer != null ? a.Importer.FullName : a.ImporterName,
@@ -525,7 +526,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, tenant, containerID, CargoTypeCode, ManifestNumber, SecondCargoID, ThirdCargoID);
 
-            query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
+            query2 = ApplyCustomFiltersList(queryOperations, query2, tenant);
+            query2 = filter.GetFilteredQuery<DeclarationList>(queryOperations, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {

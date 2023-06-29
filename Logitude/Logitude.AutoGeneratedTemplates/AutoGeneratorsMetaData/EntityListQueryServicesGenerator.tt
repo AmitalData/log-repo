@@ -455,10 +455,14 @@ namespace <#= querylistservicenamespacestring #>
          {
             #>
 			query2 = ApplyCustomFiltersList(queryOperations, query2<#=tenantParamValue#>);
+			query2 = filter.GetFilteredQuery<<#= listName #>>(queryOperations, query2);
 			<#+
          }
+		  else{
+		#>
+		  query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
+		<#+ } 
 		 #>
-            query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -580,8 +584,19 @@ namespace <#= querylistservicenamespacestring #>
 			iQueryable = filter.GetFilteredQuery<<#= tableName #>>(nonListQueryOperation, iQueryable);
 
             IQueryable<<#= listName #>> query2 = GetIqueryableList(iQueryable);
+			<#+
+            if (iscustoms && tableName=="Declaration")
+         {
+            #>
+			query2 = ApplyCustomFiltersList(queryOperations, query2<#=tenantParamValue#>);
+			query2 = filter.GetFilteredQuery<<#= listName #>>(queryOperations, query2);
+			<#+
+         }
+		 else{ #>
 
-            query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
+		    query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
+		<#+ }
+		 #>
             int count = query2.Count();
             return count;
         }
