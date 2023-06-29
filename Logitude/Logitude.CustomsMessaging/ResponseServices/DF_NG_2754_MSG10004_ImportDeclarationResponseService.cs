@@ -176,6 +176,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
+            if (customResponse.Response.Status.NameCode.Value == "13")
+            {
+                var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(context);
+                var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                if (declarationPaymentPM != null)
+                {
+                    if (declarationPaymentPM.IsRepeatPayment)
+                    {
+                        _MyDeclarationPM.PaymentDate = null;
+                        _MyDeclarationPM.PaymentOrderNumber = null;
+                        _MyDeclarationPM.PaymentStatusCode = null;
+                        _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
+                        declarationPaymentPM.IsRepeatPayment = false;
+                        declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                        DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        declarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                    }
+                }
+            }
+
             if (_MyDeclarationPM.IsCourierDeclaration && this._MyDeclarationPM.PaymentDate.HasValue)
             {
                 if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")

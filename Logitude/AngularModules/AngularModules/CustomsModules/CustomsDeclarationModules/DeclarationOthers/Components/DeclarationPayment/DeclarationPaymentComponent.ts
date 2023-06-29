@@ -105,6 +105,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     _2LogBankList: boolean = false;
     IsDisplayMessage: boolean;
     DisplayAutomaticPayment: boolean = true;
+    DisplayIsRepeatPayment: boolean = false;
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
     _CourierWorksheet: DeclarationCourierStatusList;
     _TestCase: TestCase;
@@ -143,6 +144,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     }
 
+    OnCheckedIsRepeatPayment(event) {
+
+        
+        if (event.target.checked) {
+
+            this.SendButtonEnabled = true;
+            this.DisplayIsRepeatPayment = false;
+        }
+        
+        
+        this.IsRepeatPayment = Boolean(event.target.checked);
+    }
 
 
     OnCheckedAutomaticPayment(event) {
@@ -342,6 +355,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     public get IsProcessA() { return this.paymentPM.IsProcessA == null ? false : this.paymentPM.IsProcessA; }
     public set IsProcessA(newValue: boolean) {
         this.paymentPM.IsProcessA = newValue;
+    }
+
+    public get IsRepeatPayment() { return this.paymentPM.IsRepeatPayment == null ? false : this.paymentPM.IsRepeatPayment; }
+    public set IsRepeatPayment(newValue: boolean) {
+        this.paymentPM.IsRepeatPayment = newValue;
     }
 
     public get SignatoryIdentification() { return this.paymentPM.SignatoryIdentification; }
@@ -1191,6 +1209,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         if (entityPM.AutomaticPayment && this.ErrorMessage != TextCodeTranslator.Translate("Customs.General.O.InAutomaticPayment")) {
             this.OkButtonEnabled = true;
             this.DisplayAutomaticPayment = false;
+
+        }
+
+        if (!AppTool.IsNullOrEmpty(entityPM.PaymentDate) && !AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods.find(d => d.MethodTypeCode == "2"))) {
+            if (!this.IsRepeatPayment)
+            this.DisplayIsRepeatPayment = true;
 
         }
 
