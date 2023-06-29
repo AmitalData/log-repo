@@ -36,7 +36,6 @@ namespace Logitude.CargoTracking.Data
         public CargoTrackingContext(DbConnection conn)
             : base(conn,true)
         {
-            DbInterception.Add(new InterceptorArithabort());
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.SetInitializer<CargoTrackingContext>(null);
