@@ -216,7 +216,7 @@ CancelButtonClicked() {
 OkButtonClicked() {
 
     var errors: string[] = [];
-    Validator.TryValidateObject(this.SupplierInvioceExportDefaultPM, this.DataContext.ObjectTableName, errors);
+    //Validator.TryValidateObject(this.SupplierInvioceExportDefaultPM, this.DataContext.ObjectTableName, errors);
 
     this.ValidationErrorsList = errors;
     if (this.ValidationErrorsList.length == 0) {
@@ -260,6 +260,8 @@ SupplierInvoiceMultiUpdate() {
     SessionLocator.SelectedSession.StartBusyIndicator("");
     this._SupplierInvoiceService.PostMultiUpdateOCR(currRequestParams)
         .subscribe((res: any) => {
+            this.CurrentSession.CloseCurrentWindowEmit("update");
+
             SessionLocator.SelectedSession.StopBusyIndicator();
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Show(res.Result);

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvioceExportDefaultUpdateClass
    {  		
-		public const string HashString = "5db16ae193ef9ee8f945afb52f34a258";
+		public const string HashString = "3adf1e971a136c1c27002f9b00d9e49d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "ברירות מחדל חשבונות ספק",
 			      				    DefaultText =  "Supplier Invioce Export Default",
-			      				    Code =  "6576",
+			      				    Code =  "0952",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
