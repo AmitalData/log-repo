@@ -115,7 +115,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     get AccountTypeCode() { return this.SupplierInvioceExportDefaultPM?.AccountTypeCode; }
     set AccountTypeCode(value: string) {
         if (this.SupplierInvioceExportDefaultPM.AccountTypeCode != value) {
-            this.SupplierInvioceExportDefaultPM.AccountTypeCode = this.AccountTypeCodeChecked ? value : "none";
+            this.SupplierInvioceExportDefaultPM.AccountTypeCode = this.AccountTypeCodeChecked ? value : "non";
 
         }
     }
@@ -124,7 +124,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     set PartyRelationshipCode(value: string) {
         
         if (this.SupplierInvioceExportDefaultPM.PartyRelationshipCode != value) {
-            this.SupplierInvioceExportDefaultPM.PartyRelationshipCode = this.PartyRelationshipCodeChecked ? value : "none";
+            this.SupplierInvioceExportDefaultPM.PartyRelationshipCode = this.PartyRelationshipCodeChecked ? value : "non";
 
         }
     }
@@ -132,7 +132,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     get ClaimReasonCode() { return this.SupplierInvioceExportDefaultPM?.ClaimReasonCode }
     set ClaimReasonCode(value: string) {
         if (this.SupplierInvioceExportDefaultPM.ClaimReasonCode != value) {
-            this.SupplierInvioceExportDefaultPM.ClaimReasonCode = this.ClaimReasonCodeChecked ? value : "none";
+            this.SupplierInvioceExportDefaultPM.ClaimReasonCode = this.ClaimReasonCodeChecked ? value : "non";
 
         }
     }
@@ -140,14 +140,14 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     get TransactionNatureCode() { return this.SupplierInvioceExportDefaultPM?.TransactionNatureCode }
     set TransactionNatureCode(value: string) {
         if (this.SupplierInvioceExportDefaultPM.TransactionNatureCode != value) {
-            this.SupplierInvioceExportDefaultPM.TransactionNatureCode = this.TransactionNatureCodeChecked ? value : "none";
+            this.SupplierInvioceExportDefaultPM.TransactionNatureCode = this.TransactionNatureCodeChecked ? value : "non";
 
         }
     }
     get ProcessTypeCode() { return this.SupplierInvioceExportDefaultPM?.ProcessTypeCode }
     set ProcessTypeCode(value: string) {
         if (this.SupplierInvioceExportDefaultPM.ProcessTypeCode != value) {
-            this.SupplierInvioceExportDefaultPM.ProcessTypeCode = this.ProcessTypeCodeChecked ? value : "none";
+            this.SupplierInvioceExportDefaultPM.ProcessTypeCode = this.ProcessTypeCodeChecked ? value : "non";
 
         }
     }
@@ -155,7 +155,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     get BuyerRoleCode() { return this.SupplierInvioceExportDefaultPM?.BuyerRoleCode }
     set BuyerRoleCode(value: string) {
         if (this.SupplierInvioceExportDefaultPM.BuyerRoleCode != value) {
-            this.SupplierInvioceExportDefaultPM.BuyerRoleCode = this.BuyerRoleCodeChecked ? value : "none";
+            this.SupplierInvioceExportDefaultPM.BuyerRoleCode = this.BuyerRoleCodeChecked ? value : "non";
 
         }
     }
@@ -164,7 +164,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     get AccountTypeCodeChecked() { return this.accountTypeCodeChecked }
     set AccountTypeCodeChecked(value: boolean) {
         if (!value)
-            this.SupplierInvioceExportDefaultPM.AccountTypeCode = "none";
+            this.SupplierInvioceExportDefaultPM.AccountTypeCode = "non";
 
     }
 
@@ -173,7 +173,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     set PartyRelationshipCodeChecked(value: boolean) {
         
     if (!value) 
-        this.SupplierInvioceExportDefaultPM.PartyRelationshipCode =  "none";
+        this.SupplierInvioceExportDefaultPM.PartyRelationshipCode =  "non";
 
     }
 
@@ -181,7 +181,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     get ClaimReasonCodeChecked() { return this.claimReasonCodeChecked }
     set ClaimReasonCodeChecked(value: boolean) {
     if (!value) {
-        this.SupplierInvioceExportDefaultPM.ClaimReasonCode =  "none";
+        this.SupplierInvioceExportDefaultPM.ClaimReasonCode =  "non";
 
     }
 }
@@ -189,14 +189,14 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     get TransactionNatureCodeChecked() { return this.transactionNatureCodeChecked }
     set TransactionNatureCodeChecked(value: boolean) {
     if (!value) {
-        this.SupplierInvioceExportDefaultPM.TransactionNatureCode =  "none";
+        this.SupplierInvioceExportDefaultPM.TransactionNatureCode =  "non";
 
     }
 }
     get ProcessTypeCodeChecked() { return this.processTypeCodeChecked}
     set ProcessTypeCodeChecked(value: boolean) {
     if (!value) {
-        this.SupplierInvioceExportDefaultPM.ProcessTypeCode = "none";
+        this.SupplierInvioceExportDefaultPM.ProcessTypeCode = "non";
 
     }
 }
@@ -204,7 +204,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     get BuyerRoleCodeChecked() { return this.buyerRoleCodeChecked }
     set BuyerRoleCodeChecked(value: boolean) {
     if (!value) {
-        this.SupplierInvioceExportDefaultPM.BuyerRoleCode =  "none";
+        this.SupplierInvioceExportDefaultPM.BuyerRoleCode =  "non";
 
     }
 }
