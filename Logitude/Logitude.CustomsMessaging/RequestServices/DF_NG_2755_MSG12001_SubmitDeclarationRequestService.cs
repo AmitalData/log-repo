@@ -356,7 +356,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.RequestDescription = "הגשת תשלום " + declarationPM.DeclarationNumber + " " + declarationPM.VersionId;
 
             myGeneralData.declarationID = declarationPM.DeclarationNumber;
-            myGeneralData.declarationVersion = declarationPM.VersionId;
+            if(myDeclarationPaymentsPM.IsRepeatPayment)
+            {
+                myGeneralData.declarationVersion = "99999";
+            }
+            else
+            {
+                myGeneralData.declarationVersion = declarationPM.VersionId;
+            }
             //myGeneralData.AgentFileReferenceID = declarationPM.ExternalDeclarationNumber;
             myGeneralData.AgentFileReferenceID = declarationPM.CustomFileNo;
 
