@@ -275,6 +275,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<NotificationReply> NotificationReplies { get; }
 		 IDbSet<NotificationTenantDefinition> NotificationTenantDefinition { get; }
 		 IDbSet<NotificationType> NotificationTypes { get; }
+		 IDbSet<OcrDocument> OcrDocuments { get; }
+		 IDbSet<OcrStatus> OcrStatuses { get; }
 		 IDbSet<OrganizationUnitType> OrganizationUnitTypes { get; }
 		 IDbSet<PackageMeasureQualifier> PackageMeasureQualifiers { get; }
 		 IDbSet<PackingType> PackingTypes { get; }

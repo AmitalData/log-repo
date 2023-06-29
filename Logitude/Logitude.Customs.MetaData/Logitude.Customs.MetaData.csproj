@@ -454,6 +454,8 @@
     <None Include="DBTables\NotificationReply.dxml" />
     <None Include="DBTables\NotificationTenantDefinition.dxml" />
     <None Include="DBTables\NotificationType.dxml" />
+    <None Include="DBTables\OcrDocument.dxml" />
+    <None Include="DBTables\OcrStatus.dxml" />
     <None Include="DBTables\OrganizationUnitType.dxml" />
     <None Include="DBTables\PackageMeasureQualifier.dxml" />
     <None Include="DBTables\PackingType.dxml" />
@@ -584,6 +586,8 @@
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
+    <None Include="EntityFiles\OcrDocument.lxml" />
+    <None Include="EntityFiles\OcrStatus.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />
     <None Include="EntityFiles\SignStation.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />

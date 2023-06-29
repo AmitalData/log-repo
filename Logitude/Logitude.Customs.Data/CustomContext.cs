@@ -584,6 +584,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new NotificationTypeMap());
 	
+            modelBuilder.Configurations.Add(new OcrDocumentMap());
+	
+            modelBuilder.Configurations.Add(new OcrStatusMap());
+	
             modelBuilder.Configurations.Add(new OrganizationUnitTypeMap());
 	
             modelBuilder.Configurations.Add(new PackageMeasureQualifierMap());
@@ -2898,6 +2902,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<NotificationType> NotificationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OcrDocument> OcrDocuments 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OcrStatus> OcrStatuses 
 	 {
 	      get; set;
 	 

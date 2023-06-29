@@ -5941,7 +5941,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
- 	  private bool excludeManifest ;
+	  private bool excludeManifest ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -5964,7 +5964,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
- 	  private bool shortProcedure ;
+	  private bool shortProcedure ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -5987,7 +5987,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-    }
+   }
    
 }
 	 
