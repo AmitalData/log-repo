@@ -257,53 +257,56 @@
                                     <td>
                                         <div></div>
                                     </td>
+                                    <td *ngIf="AllowVatTypes">
+                                        <tr>
+                                            <td style="width: 1px;" class="Label">{{'ARInvoice.S.Details.VatType' | TextCodeTranslationPipe}}:</td>
 
-                                    <td style="width: 1px;" class="Label">{{'ARInvoice.S.Details.VatType' | TextCodeTranslationPipe}}:</td>
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
 
-                                    <td style="width: 5px;">
-                                        <div></div>
+                                            <td style="width: 150px">
+                                                <LogLov [ObjectFieldName]="'VatTypeId'"
+                                                        [SelectedValue]="VatTypeId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'VatType'"
+                                                        [HideColumns]="true"  [DependencyFilter2Value]="false">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width: 2px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 80px;">
+                                                <button class="Button" [disabled]="!VatTypeFilterIsEnabled" (click)="VatTypeFilterClicked()">{{'ARInvoice.B.Details.ApplyToAll' | TextCodeTranslationPipe}}</button>
+                                            </td>
+
+                                            <!--<div><td style="width: 20px;">
+                                                    <div></div>
+                                                </td>
+                                            <td style="width: 1px;" class="Label">{{'ARInvoice.S.Details.FilterBy' | TextCodeTranslationPipe}}: </td>
+
+                                                <td style="width: 5px;">
+                                                    <div></div>
+                                                </td>
+                                            <td style="width: 165px;">
+                                                    <ul class="FiltersMenu" [class.FiltersMenuDisabled]="!IsEditingEnabled">
+                                                        <li (click)="OnSelectPrepaidCollect('B')" [class.SelectedFilter]="PrepaidCollectId === 'B'" style="width:55px; min-width: 55px; max-width: 55px;">
+                                                            {{'ARInvoice.S.Details.All' | TextCodeTranslationPipe}}
+                                                        </li>
+                                                        <li (click)="OnSelectPrepaidCollect('P')" [class.SelectedFilter]="PrepaidCollectId === 'P'" style="width:55px; min-width: 55px; max-width: 55px;">
+                                                            {{'ARInvoice.S.Details.Prepaid' | TextCodeTranslationPipe}}
+                                                        </li>
+                                                        <li (click)="OnSelectPrepaidCollect('C')" [class.SelectedFilter]="PrepaidCollectId === 'C'" style="width:55px; min-width: 55px; max-width: 55px;">
+                                                            {{'ARInvoice.S.Details.Collect' | TextCodeTranslationPipe}}
+                                                        </li>
+                                                    </ul>
+                                                </td></div>-->
+
+                                        </tr>
                                     </td>
-
-                                    <td style="width: 150px">
-                                        <LogLov [ObjectFieldName]="'VatTypeId'"
-                                                [SelectedValue]="VatTypeId"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'VatType'"
-                                                [HideColumns]="true"  [DependencyFilter2Value]="false">
-                                        </LogLov>
-                                    </td>
-
-                                    <td style="width: 2px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 80px;">
-                                        <button class="Button" [disabled]="!VatTypeFilterIsEnabled" (click)="VatTypeFilterClicked()">{{'ARInvoice.B.Details.ApplyToAll' | TextCodeTranslationPipe}}</button>
-                                    </td>
-
-                                    <!--<td style="width: 20px;">
-                                        <div></div>
-                                    </td>-->
-                                    <!--<td style="width: 1px;" class="Label">{{'ARInvoice.S.Details.FilterBy' | TextCodeTranslationPipe}}: </td>
-
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>-->
-                                    <!--<td style="width: 165px;">
-                                        <ul class="FiltersMenu" [class.FiltersMenuDisabled]="!IsEditingEnabled">
-                                            <li (click)="OnSelectPrepaidCollect('B')" [class.SelectedFilter]="PrepaidCollectId === 'B'" style="width:55px; min-width: 55px; max-width: 55px;">
-                                                {{'ARInvoice.S.Details.All' | TextCodeTranslationPipe}}
-                                            </li>
-                                            <li (click)="OnSelectPrepaidCollect('P')" [class.SelectedFilter]="PrepaidCollectId === 'P'" style="width:55px; min-width: 55px; max-width: 55px;">
-                                                {{'ARInvoice.S.Details.Prepaid' | TextCodeTranslationPipe}}
-                                            </li>
-                                            <li (click)="OnSelectPrepaidCollect('C')" [class.SelectedFilter]="PrepaidCollectId === 'C'" style="width:55px; min-width: 55px; max-width: 55px;">
-                                                {{'ARInvoice.S.Details.Collect' | TextCodeTranslationPipe}}
-                                            </li>
-                                        </ul>
-                                    </td>-->
-
                                 </tr>
                             </table>
                         </td>

@@ -38,6 +38,7 @@ import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GL
 import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+declare var window: any;
 
 @Component({
 
@@ -62,6 +63,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
     IsAccountingActivated: boolean = false;
+    public AllowVatTypes: boolean = true;
     public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -75,7 +77,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ShowLocal=  !SessionLocator.LoggedUserPM.DontShowLocal;
 
-
+        this.CheckFeatures();
         this.InitializeBillToLov();
         this.InitializeServices();
         this.InitializeComponent();
@@ -149,6 +151,16 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.SetGridColumns();
         this.ComputeRelativeRateDate();
         this.BillToDependencyProperty1 = InvoiceTool.GetBillToPartnerTypes();
+    }
+
+
+    CheckFeatures() {
+
+        var table = window.ObjectTables.filter(d => d.Name === 'ARInvoice')[0];
+        var hideVatTypesFeature = FeatureLocator.Features.filter(f => (f.Code == "HideVatTypes") && f.ObjectTableId == table.Id)[0];
+        if (hideVatTypesFeature) {
+            this.AllowVatTypes = false;
+        }
     }
 
     public LocalAmountHeader: string = null;
