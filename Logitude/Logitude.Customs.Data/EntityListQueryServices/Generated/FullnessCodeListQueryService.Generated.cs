@@ -44,8 +44,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<FullnessCodeList> query2 = GetIqueryableList(iQueryable);
-			            query2 = filter.GetFilteredQuery<FullnessCodeList>(listQueryOperation, query2);
-
+					  query2 = filter.GetFilteredQuery<FullnessCodeList>(listQueryOperation, query2);
+		
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(FullnessCodeList).GetProperty(queryOperations.SortByColumnName);
@@ -158,9 +158,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<FullnessCode>(nonListQueryOperation, iQueryable);
 
             IQueryable<FullnessCodeList> query2 = GetIqueryableList(iQueryable);
-
-            query2 = filter.GetFilteredQuery<FullnessCodeList>(listQueryOperation, query2);
-            int count = query2.Count();
+			
+		    query2 = filter.GetFilteredQuery<FullnessCodeList>(listQueryOperation, query2);
+		            int count = query2.Count();
             return count;
         }
 

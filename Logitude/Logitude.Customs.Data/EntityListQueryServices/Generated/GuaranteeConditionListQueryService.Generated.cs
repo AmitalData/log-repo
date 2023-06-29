@@ -45,8 +45,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<GuaranteeConditionList> query2 = GetIqueryableList(iQueryable);
-			            query2 = filter.GetFilteredQuery<GuaranteeConditionList>(listQueryOperation, query2);
-
+					  query2 = filter.GetFilteredQuery<GuaranteeConditionList>(listQueryOperation, query2);
+		
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(GuaranteeConditionList).GetProperty(queryOperations.SortByColumnName);
@@ -160,9 +160,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<GuaranteeCondition>(nonListQueryOperation, iQueryable);
 
             IQueryable<GuaranteeConditionList> query2 = GetIqueryableList(iQueryable);
-
-            query2 = filter.GetFilteredQuery<GuaranteeConditionList>(listQueryOperation, query2);
-            int count = query2.Count();
+			
+		    query2 = filter.GetFilteredQuery<GuaranteeConditionList>(listQueryOperation, query2);
+		            int count = query2.Count();
             return count;
         }
 

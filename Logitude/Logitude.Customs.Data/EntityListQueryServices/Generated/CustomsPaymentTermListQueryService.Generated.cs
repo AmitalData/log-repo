@@ -44,8 +44,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsPaymentTermList> query2 = GetIqueryableList(iQueryable);
-			            query2 = filter.GetFilteredQuery<CustomsPaymentTermList>(listQueryOperation, query2);
-
+					  query2 = filter.GetFilteredQuery<CustomsPaymentTermList>(listQueryOperation, query2);
+		
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsPaymentTermList).GetProperty(queryOperations.SortByColumnName);
@@ -158,9 +158,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsPaymentTerm>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsPaymentTermList> query2 = GetIqueryableList(iQueryable);
-
-            query2 = filter.GetFilteredQuery<CustomsPaymentTermList>(listQueryOperation, query2);
-            int count = query2.Count();
+			
+		    query2 = filter.GetFilteredQuery<CustomsPaymentTermList>(listQueryOperation, query2);
+		            int count = query2.Count();
             return count;
         }
 

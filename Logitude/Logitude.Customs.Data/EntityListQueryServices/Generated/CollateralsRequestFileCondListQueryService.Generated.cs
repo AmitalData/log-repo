@@ -45,8 +45,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CollateralsRequestFileCondList> query2 = GetIqueryableList(iQueryable);
-			            query2 = filter.GetFilteredQuery<CollateralsRequestFileCondList>(listQueryOperation, query2);
-
+					  query2 = filter.GetFilteredQuery<CollateralsRequestFileCondList>(listQueryOperation, query2);
+		
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CollateralsRequestFileCondList).GetProperty(queryOperations.SortByColumnName);
@@ -160,9 +160,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CollateralsRequestFileCond>(nonListQueryOperation, iQueryable);
 
             IQueryable<CollateralsRequestFileCondList> query2 = GetIqueryableList(iQueryable);
-
-            query2 = filter.GetFilteredQuery<CollateralsRequestFileCondList>(listQueryOperation, query2);
-            int count = query2.Count();
+			
+		    query2 = filter.GetFilteredQuery<CollateralsRequestFileCondList>(listQueryOperation, query2);
+		            int count = query2.Count();
             return count;
         }
 

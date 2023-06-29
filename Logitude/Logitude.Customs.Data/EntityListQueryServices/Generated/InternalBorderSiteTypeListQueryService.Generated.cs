@@ -44,8 +44,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<InternalBorderSiteTypeList> query2 = GetIqueryableList(iQueryable);
-			            query2 = filter.GetFilteredQuery<InternalBorderSiteTypeList>(listQueryOperation, query2);
-
+					  query2 = filter.GetFilteredQuery<InternalBorderSiteTypeList>(listQueryOperation, query2);
+		
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(InternalBorderSiteTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -158,9 +158,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<InternalBorderSiteType>(nonListQueryOperation, iQueryable);
 
             IQueryable<InternalBorderSiteTypeList> query2 = GetIqueryableList(iQueryable);
-
-            query2 = filter.GetFilteredQuery<InternalBorderSiteTypeList>(listQueryOperation, query2);
-            int count = query2.Count();
+			
+		    query2 = filter.GetFilteredQuery<InternalBorderSiteTypeList>(listQueryOperation, query2);
+		            int count = query2.Count();
             return count;
         }
 
