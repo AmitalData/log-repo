@@ -1,4 +1,5 @@
 ﻿
+using DocumentFormat.OpenXml.Drawing.Charts;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using System;
 using UnifreightIIG.Common.OutgoingMessageRequestServiceReference;
@@ -13,11 +14,9 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             var customReq = new NG_9100_MSG_OutgoingMessageRequest()
             {
-                GetOptions = new NG_9100_MSG_OutgoingMessageRequestGetOptions()
+                GetOptions = new NG_9100_MSG_OutgoingMessageRequestGetOptions() 
                 {
 
-                    fromDate = (requestParams.FromDate != null) ? requestParams.FromDate.Value : DateTime.MinValue,
-                    toDate = (requestParams.ToDate != null) ? requestParams.ToDate.Value : DateTime.MinValue,
                     CorrelationId = string.IsNullOrWhiteSpace(requestParams.CorrelationID) ? null : requestParams.CorrelationID,
                     ServiceName = string.IsNullOrWhiteSpace(requestParams.ServiceName) ? null : requestParams.ServiceName,
 
@@ -29,6 +28,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                     Take = 999,
                 },
             };
+
+            if (requestParams.FromDate!= null && requestParams.ToDate != null ) {
+
+                customReq.GetOptions.fromDate = (DateTime)requestParams.FromDate;
+                customReq.GetOptions.toDate = (DateTime)requestParams.ToDate.Value;
+
+            }
 
 
             //customReq = new NG_9100_MSG_OutgoingMessageRequest()
