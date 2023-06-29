@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "a256c3dd70a6e992e5eda74b4c502e0e";
+		public const string HashString = "40fe1b92c648a7e8a4bb259b0b792768";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9209,6 +9209,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APInvoiceTextCode_APInvoiceMSameInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.SameInvoiceNumber", DefaultText = "Please Note that there is already another invoice with the same number by the same vendor",LocalDefaultText = @"שים לב שקיימת חשבונית לספק זה עם מספר זהה", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APInvoiceTextCode_APInvoiceOInvalidNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.InvalidNumber", DefaultText = "Invalid invoice number",LocalDefaultText = @"מספר חשבונית לא תקין", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APInvoiceTextCode_APInvoiceOVendorInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.VendorInvoice", DefaultText = "Vendor Invoice",LocalDefaultText = @"חשבונית מס (ספק)", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APInvoiceTextCode_APInvoiceCHOtherPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.CH.OtherPayments", DefaultText = "Other Payments",LocalDefaultText = @"קבלות אחרות", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
