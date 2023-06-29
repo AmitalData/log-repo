@@ -1,0 +1,173 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityLists;
+
+namespace Logitude.Customs.Data.EntityListQueryServices
+{ 
+
+    public partial class OcrDocumentListQueryService
+    {
+         private ICustomContext context;
+        public OcrDocumentListQueryService(ICustomContext context)
+        {
+            this.context = context;
+        }
+
+        public List<OcrDocumentList> GetList(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<OcrDocument> iQueryable = (from a in context.OcrDocuments
+                                              
+                   where a.Tenant == tenant select a);
+            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<OcrDocument>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<OcrDocumentList> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<OcrDocumentList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(OcrDocumentList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> OcrDocumentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.OcrDocument",tenant).ToList();
+
+                ObjectField objectField = (from a in OcrDocumentObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<OcrDocumentList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<OcrDocumentList, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<OcrDocumentList, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<OcrDocumentList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<OcrDocumentList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<OcrDocumentList, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<OcrDocumentList, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderByDescending(d => d.Id);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.OrderByDescending(d => d.Id);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<OcrDocumentList> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public OcrDocumentList GetSingle(string id)
+        {
+            IQueryable<OcrDocument> OcrDocumentQuery = (from a in context.OcrDocuments
+                                                       where a.Id == id
+                                                       select a);
+
+             
+            IQueryable<OcrDocumentList> OcrDocumentListQuery = GetIqueryableList( OcrDocumentQuery);
+            OcrDocumentList OcrDocumentList = OcrDocumentListQuery.FirstOrDefault();
+            return OcrDocumentList;
+           
+        }
+
+        public int GetListCount(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<OcrDocument> iQueryable = (from a in context.OcrDocuments 
+                   where a.Tenant == tenant select a);
+
+			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<OcrDocument>(nonListQueryOperation, iQueryable);
+
+            IQueryable<OcrDocumentList> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<OcrDocumentList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+      
+    }
+}
+	 

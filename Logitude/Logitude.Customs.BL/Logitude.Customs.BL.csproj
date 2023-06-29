@@ -190,6 +190,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\LogisticActionRequestTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LogisticActionResponseReqSDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\NDMessageActionCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\OcrStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PhysicalCheckCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaAuthorizationTypeLookupDetails.Generated.cs" />
@@ -824,6 +825,7 @@
     <Compile Include="EntityDataMappings\Generated\NotificationReplyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationTenantDefinitionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OcrStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OrganizationUnitTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PackageMeasureQualifierDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PackingTypeDataMapping.Generated.cs" />
@@ -1011,6 +1013,7 @@
     <Compile Include="EntityDataMappings\NotificationReplyDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationTenantDefinitionDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OcrStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\OrganizationUnitTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PackageMeasureQualifierDataMapping.cs" />
     <Compile Include="EntityDataMappings\PackingTypeDataMapping.cs" />
@@ -1173,6 +1176,7 @@
     <Compile Include="EntityQueryServices\Generated\InternationalSiteTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SupplierInvioceExportDefaultQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\UIMessageTenantQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OcrStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VendorCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StatusCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SchedulerParamQueryService.cs" />
@@ -1714,6 +1718,7 @@
     <Compile Include="EntityUpdateServices\Generated\UIMessageTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClientIndicationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\CustomDocumentTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OcrStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
