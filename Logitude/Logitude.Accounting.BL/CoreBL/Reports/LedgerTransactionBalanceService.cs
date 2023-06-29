@@ -189,12 +189,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     LogIt("after list");
                     //}
                 }
-                LedgerTransactionHelper ledgerTransactionHelper2 = new LedgerTransactionHelper();
-
-                list.ForEach(rec =>
+                else
                 {
-                    MapLedgerTransactionLine(rec, ledgerTransactionHelper2, isFromExcelGenerater);
-                });
+                    LedgerTransactionHelper ledgerTransactionHelper2 = new LedgerTransactionHelper();
+
+                    list.ForEach(rec =>
+                    {
+                        MapLedgerTransactionLine(rec, ledgerTransactionHelper2, isFromExcelGenerater);
+                    });
+                }
+              
                 Response.MyLedgerTransactionList = list;
             }
             this.Response.TookMS = sw.ElapsedMilliseconds;
@@ -239,6 +243,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             if (isFromExcelGenerator)
             {
                 rec.CalculatedForeignAmount = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit * -1 : rec.ForeignAmountDebit;
+
                 rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
                 ledgerTransactionHelper.MapAmountWithNegativeValue(rec);
                 rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
