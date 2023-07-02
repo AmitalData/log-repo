@@ -695,7 +695,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
     RefreshStatistic() {
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetStatistic(this.entityPM.Id)
+        this._CourierMasterService.GetStatistic(this.entityPM.Id,false, SessionLocator.LoggedUserId)
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var list: KeyValuePair[];

@@ -20,8 +20,13 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
-
-   }
+        public IQueryable<CourierHawbFromExcel> GetAllByUser(int tenant,string userId)
+        {
+            return from a in context.CourierHawbFromExcels
+                   where a.Tenant == tenant  && a.CreatedByUserId == userId && a.NotFound != true
+                   select a;
+        }
+    }
 
 }
    

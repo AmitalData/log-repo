@@ -118,14 +118,15 @@ export class ImportCourierMawbsFromExcelComponent
     }
     
     UploadSuccess: any = false;
-    
+
     OkButtonClicked() {
-        this._DeclarationWebService.ImportCourierMawbsFromExcel(this.formData).subscribe((res) => {
+        this.ErrorsResultList.Clear();
+        this._DeclarationWebService.ImportCourierMawbsFromExcel(this.formData,SessionLocator.LoggedUserId,this.tenant).subscribe((res:string[]) => {
+            debugger;
             this.UploadSuccess = true;
-            //this.ErrorsResultList.InsertCollection(res);
-            if (this.ErrorsResultList.Collection.length > 0) {
-                this.ExportAsExcelButtonIsEnabled = true;
-            }
+            this.ErrorsResultList.InsertCollection(res);
+               // this.ErrorsResultList.InsertCollection(res);
+            
         });
 
     }

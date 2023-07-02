@@ -165,11 +165,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return declarationPMs;
         }
 
-        public void GetStatistic(string courierMasterId, int tenant, out List<KeyValuePair<string, int>> keyValuePairList)
+        public void GetStatistic(string courierMasterId, int tenant, out List<KeyValuePair<string, int>> keyValuePairList, Boolean IsWorkSheetFromExcel,string userId)
         {
             keyValuePairList = new List<KeyValuePair<string, int>>();
 
             var repositoryCourierDeclarations = new CourierDeclarationRepository(MainContext as ICustomContext);
+            var repoCourierHawbFromExcel = new CourierHawbFromExcelRepository(MainContext as ICustomContext);
+
             var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(MainContext as ICustomContext);
             //var declarationRepository = new DeclarationRepository(MainContext as ICustomContext);
 
@@ -182,6 +184,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  //on dStatus.DeclarationId equals declaration.Id
                  //select new { dStatus, declaration ,tooltip="" }
              );
+            if (IsWorkSheetFromExcel)
+            {
+                q = (from cd in repoCourierHawbFromExcel.GetAllByUser(tenant, userId)
+                     join dStatus in declarationCourierStatusRepository.GetAll(tenant)
+                     on cd.DeclarationId equals dStatus.DeclarationId
+                     select dStatus
+                   );
+            }
 
             int HOLD = 0;
             int ALL = 0;

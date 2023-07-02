@@ -740,7 +740,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     RefreshStatistic() {
         // SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetStatistic(this.entityPM.Id)
+        this._CourierMasterService.GetStatistic(this.entityPM.Id,false ,SessionLocator.LoggedUserId)
             .subscribe((res: any) => {
                 //    this.currentSession.StopBusyIndicator();
                 var list: KeyValuePair[];
@@ -1449,6 +1449,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
+        debugger;
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
@@ -1954,6 +1955,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     public MyScrollTop: number = 0;
     OnRowSelected(event) {
+        debugger;
         this.MyScrollTop = event.scrollTop;
         if (this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction) {
             this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = false;
@@ -1970,6 +1972,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     preventSelect: boolean = false;
     OnRowSelectedBL(event) {
+        debugger;
         if (this.preventSelect) {
             return;
         }

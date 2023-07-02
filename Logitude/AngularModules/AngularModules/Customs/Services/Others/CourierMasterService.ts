@@ -278,12 +278,12 @@ export class CourierMasterService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetStatistic(CourierMasterId) {
+    GetStatistic(CourierMasterId,IsWorkSheetFromExcel:boolean,userId:string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetStatistic?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetStatistic?' + 'CourierMasterId=' + CourierMasterId + '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel+ '&userId=' + userId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var KeyValuePairList = response;
 
 

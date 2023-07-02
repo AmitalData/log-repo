@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -41,7 +42,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             //    var resQ = qMmmnActionError.ToList();
             //}        
             //TestSql(iQueryable);
-
+            var FromExcelQueryJoin = (from courierhawb in context.CourierHawbFromExcels
+                                      where courierhawb.CreatedByUser.Id == this.isFilter && courierhawb.NotFound != true 
+                                      select courierhawb);
+            if (string.IsNullOrEmpty(this.isFilter))
+            {
+                FromExcelQueryJoin = context.CourierHawbFromExcels.Where(r => r.DeclarationId == "-1");
+            }
             var qDeclarationPaymentPendingHold =
             (from p in context.DeclarationPendings
              where p.Status == "A"
@@ -83,17 +90,22 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                               join cm in context.CourierMasters on c.CourierMasterId equals cm.Id
 
-                                                              //join pendingListNames in qDeclarationPendingListNames
-                                                              //on a.DeclarationId equals pendingListNames.DeclarationId
-                                                              //into pendingListNamesOuterJoin
-                                                              //from pendingListNamesOuterJoinNullable in pendingListNamesOuterJoin.DefaultIfEmpty()
-                                                              //from pendingListNamesOuterJoinNullable in pendingListNamesOuterJoin.ToList().ToString()
+                                                              join recFromExcelQueryJoin in FromExcelQueryJoin
+                                                              on a.DeclarationId equals recFromExcelQueryJoin.DeclarationId into qFromExcelJoin
+                                                              from myJoinFromExcel in qFromExcelJoin.DefaultIfEmpty()
 
 
-                                                              //join declarationPendings in context.DeclarationPendings
-                                                              //on a.DeclarationId equals declarationPendings.DeclarationID
-                                                              //into declarationPendingsJoin
-                                                              //from declarationPendingsListNames in declarationPendingsJoin.Where(r => r.Status == "A").ToList()
+                                                                  //join pendingListNames in qDeclarationPendingListNames
+                                                                  //on a.DeclarationId equals pendingListNames.DeclarationId
+                                                                  //into pendingListNamesOuterJoin
+                                                                  //from pendingListNamesOuterJoinNullable in pendingListNamesOuterJoin.DefaultIfEmpty()
+                                                                  //from pendingListNamesOuterJoinNullable in pendingListNamesOuterJoin.ToList().ToString()
+
+
+                                                                  //join declarationPendings in context.DeclarationPendings
+                                                                  //on a.DeclarationId equals declarationPendings.DeclarationID
+                                                                  //into declarationPendingsJoin
+                                                                  //from declarationPendingsListNames in declarationPendingsJoin.Where(r => r.Status == "A").ToList()
 
                                                               select new DeclarationCourierStatusList()
                                                               {
@@ -234,7 +246,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 var sql = logger.ToString();
             }
         }
-
+        private string isFilter;
         private IQueryable<DeclarationCourierStatus> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationCourierStatus> iQueryable, int tenant)
         {
             //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
@@ -256,7 +268,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 iQueryable = iQueryable.Where(x => x.CourierPendingReasonList.StartsWith(myFilter + ",") || x.CourierPendingReasonList.Contains("," + myFilter + ",") || x.CourierPendingReasonList.EndsWith("," + myFilter) || x.CourierPendingReasonList.Equals(myFilter));
 
             }
-          
+            this.isFilter = null;
+            var CourierHawbsFromExcel = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierHawbsFromExcel").FirstOrDefault();
+            if(CourierHawbsFromExcel != null)
+            {
+                this.isFilter = CourierHawbsFromExcel.FieldValue.ToString();
+                IQueryable<CourierHawbFromExcel> FromExcelQueryJoin = (from courierhawb in context.CourierHawbFromExcels
+                                          where courierhawb.CreatedByUser.Id == this.isFilter && courierhawb.NotFound != true
+                                          select courierhawb);
+                iQueryable = iQueryable.Where(d => FromExcelQueryJoin.Select(de => de.DeclarationId).Contains(d.DeclarationId));
+            }
+
+
             return iQueryable;
         }
 
@@ -504,6 +527,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public bool ErrorPlace { get; set; }
         public string CourierPendingReason1stName { get; set; }
         public string CourierPendingReasonNameList { get; set; }
+        internal string DeclarationId { get; set; }
+    }
+
+    public class FromExcelJoin
+    {
         internal string DeclarationId { get; set; }
     }
 }

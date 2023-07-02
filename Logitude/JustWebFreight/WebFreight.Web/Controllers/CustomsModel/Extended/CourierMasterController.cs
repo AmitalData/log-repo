@@ -184,7 +184,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetStatistic(string CourierMasterId)
+        public HttpResponseMessage GetStatistic(string CourierMasterId,Boolean IsWorkSheetFromExcel,string userId)
         {
             try
             {
@@ -192,13 +192,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
+                //string user=authToken.
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(customContext);
                 var keyValuePairList = new List<KeyValuePair<string, int>>();
-                courierMasterQueryService.GetStatistic(CourierMasterId, tenant, out keyValuePairList);
+                courierMasterQueryService.GetStatistic(CourierMasterId, tenant, out keyValuePairList, IsWorkSheetFromExcel, userId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, keyValuePairList);
             }
