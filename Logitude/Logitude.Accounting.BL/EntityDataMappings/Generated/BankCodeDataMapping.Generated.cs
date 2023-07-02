@@ -29,7 +29,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LocalName, 
 	         Id, 
 	         Inactive, 
-	         LogoId,
+	         LogoId, 
+	         DateFormat,
 	      }
 
 
@@ -43,7 +44,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LocalName, 
 	         Id, 
 	         Inactive, 
-	         LogoId,
+	         LogoId, 
+	         DateFormat,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -85,6 +87,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LogoId))
             {
 				entityPOCO.LogoId = entityPM.LogoId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateFormat))
+            {
+				entityPOCO.DateFormat = entityPM.DateFormat;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -133,6 +140,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.LogoId = entityPOCO.LogoId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DateFormat))
+            {
+					entityPM.DateFormat = entityPOCO.DateFormat;
+            }
+
 		}
 
 		public void PMToOldPM(BankCodePM entityPM, BankCodePM oldEntityPM)
@@ -174,6 +186,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.LogoId = entityPM.LogoId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateFormat))
+            {
+                oldEntityPM.DateFormat = entityPM.DateFormat;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(BankCodePM entityPM)
@@ -190,6 +207,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.LocalName)) //T4 find type == nText 
             {
                 entityPM.LocalName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LocalName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DateFormat)) //T4 find type == nText 
+            {
+                entityPM.DateFormat = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DateFormat));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

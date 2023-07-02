@@ -50,6 +50,9 @@ using WebFreight.Web.CustomWebServices.BL.XLSImport;
 using Logitude.Accounting.BL.CoreBL.Reconcile;
 using WebFreight.Web.Controllers.CommonDataModel.Extended;
 using Syncfusion.XlsIO;
+using System.Globalization;
+using Microsoft.Owin;
+using Logitude.Accounting.Data.Repositories;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -459,7 +462,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
         [ActionName(name: "ImportReconcileExternalPageLineFromExcel")]
-        public HttpResponseMessage ImportReconcileExternalPageLineFromExcel(ReconcileExternalPageLineParameters filter)
+        public HttpResponseMessage ImportReconcileExternalPageLineFromExcel(ReconcileExternalPageLineParameters filter, string bankCodeId)
         {
             try
             {
@@ -472,7 +475,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IApplication application = excelEngine.Excel;
                 IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
                 IWorksheet sheet = workbook.Worksheets[0];
-                List<ExcelReconcileExternalPageLine> myResult = this.BuildReconcileExternalPageLineFromExcelLines(sheet, authToken.Tenant);
+                List<ExcelReconcileExternalPageLine> myResult = this.BuildReconcileExternalPageLineFromExcelLines(sheet, authToken.Tenant, bankCodeId);
                 filter.RowsCount = sheet.UsedRange.Rows.Count() - 1;
                 filter.ExcelReconcileExternalPageLines = myResult;
 
@@ -483,9 +486,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private List<ExcelReconcileExternalPageLine> BuildReconcileExternalPageLineFromExcelLines(IWorksheet sheet,int tenant)
+        private List<ExcelReconcileExternalPageLine> BuildReconcileExternalPageLineFromExcelLines(IWorksheet sheet,int tenant, string bankCodeId)
         {
             List<ExcelReconcileExternalPageLine> myResult = new List<ExcelReconcileExternalPageLine>();
+            var bankCodeRepository = new BankCodeRepository(tenant);
+            var bankcodePM = bankCodeRepository.GetSingle(bankCodeId, tenant);
+            string format = "M/d/yyyy h:mm:ss tt";
+            if (bankcodePM?.DateFormat != null)
+            {
+                format = bankcodePM.DateFormat;
+            }
 
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
@@ -499,28 +509,34 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 if (rowData.Length > 0)
                 {
-                    if (!string.IsNullOrEmpty(rowData[0]))
+                    int ArrayIndex = 0;
+                   
+                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
-                        DateTime.TryParse(rowData[0], out DateTime referenceDate);
+                        DateTime.TryParseExact(rowData[ArrayIndex],format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime referenceDate);
                         excelReconcileExternalPageLine.ReferenceDate = referenceDate;
                     }
-                    if (!string.IsNullOrEmpty(rowData[1]))
+                    ArrayIndex++;
+                    if (ArrayIndex < rowData.Length &&  !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
-                        decimal.TryParse(rowData[1], out decimal debitAmount);
+                        decimal.TryParse(rowData[ArrayIndex], out decimal debitAmount);
                         excelReconcileExternalPageLine.DebitAmount = debitAmount;
                     }
-                    if (!string.IsNullOrEmpty(rowData[2]))
+                    ArrayIndex++;
+                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
-                        decimal.TryParse(rowData[2], out decimal CreditAmount);
+                        decimal.TryParse(rowData[ArrayIndex], out decimal CreditAmount);
                         excelReconcileExternalPageLine.CreditAmount = CreditAmount;
                     }
-                    if (!string.IsNullOrEmpty(rowData[3]))
+                    ArrayIndex++;
+                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
-                        excelReconcileExternalPageLine.Reference = rowData[3];
+                        excelReconcileExternalPageLine.Reference = rowData[ArrayIndex];
                     }
-                    if (!string.IsNullOrEmpty(rowData[4]))
+                    ArrayIndex++;
+                    if (ArrayIndex < rowData.Length && rowData.Length > 4 && !string.IsNullOrEmpty(rowData[ArrayIndex]))
                     {
-                        excelReconcileExternalPageLine.Notes = rowData[4];
+                        excelReconcileExternalPageLine.Notes = rowData[ArrayIndex];
                     }
                 }
                 myResult.Add(excelReconcileExternalPageLine);

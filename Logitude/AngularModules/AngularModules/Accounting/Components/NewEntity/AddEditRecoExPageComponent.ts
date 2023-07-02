@@ -688,7 +688,7 @@ export class AddEditRecoExPageComponent extends BaseComponent {
 
     SendExcelToServer(filters: ReconcileExternalPageLineParameters) {
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromExcel(filters).subscribe((response: ServiceResponse) => {
+        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromExcel(filters,this.EntityPM.bankId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 filters = response.Result;
                 this.FillReconcileExternalPageLines(filters);
@@ -715,7 +715,7 @@ export class AddEditRecoExPageComponent extends BaseComponent {
                 var pageLine: ReconcileExternalPageLinePM = new ReconcileExternalPageLinePM(this.ReconcileExternalPagePM);
                 pageLine.Tenant = SessionLocator.Tenant;
                 pageLine.ReconcileExternalPageId = this.isNewEntity ? "new" : this.ReconcileExternalPagePM.Id;
-                var datemomentobject = moment.utc(element.ReferenceDate, "YYYY-DD-MM")
+                var datemomentobject = moment.utc(element.ReferenceDate, "YYYY-MM-DD")
                 pageLine.ReferenceDate = datemomentobject.toDate();
                 pageLine.DebitAmount = element.DebitAmount;
                 pageLine.CreditAmount = element.CreditAmount;

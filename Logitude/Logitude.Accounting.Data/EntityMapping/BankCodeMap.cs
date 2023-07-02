@@ -38,6 +38,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.Inactive).HasColumnName("Inactive");
 
             this.Property(t => t.LogoId).HasColumnName("LogoId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DateFormat).HasColumnName("DateFormat").HasMaxLength(50).IsUnicode(true);
         }
     }
 }
