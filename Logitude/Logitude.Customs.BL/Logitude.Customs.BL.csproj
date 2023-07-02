@@ -805,6 +805,7 @@
     <Compile Include="EntityDataMappings\Generated\NotificationReplyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationTenantDefinitionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OcrDocumentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OcrStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OrganizationUnitTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PackageMeasureQualifierDataMapping.Generated.cs" />
@@ -988,6 +989,7 @@
     <Compile Include="EntityDataMappings\NotificationReplyDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationTenantDefinitionDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OcrDocumentDataMapping.cs" />
     <Compile Include="EntityDataMappings\OcrStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\OrganizationUnitTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PackageMeasureQualifierDataMapping.cs" />
@@ -1130,6 +1132,7 @@
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OcrDocumentQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OcrStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VendorCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SchedulerParamQueryService.cs" />
@@ -1652,10 +1655,12 @@
     <Compile Include="EntityQueryServices\VehicleQueryService.cs" />
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityQueryServices\VendorCurrencyQueryService.cs" />
+    <Compile Include="EntityUpdateServices\OcrDocumentUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CountryCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsItemDetailsHistoryUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OcrDocumentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\OcrStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
