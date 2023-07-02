@@ -38,7 +38,9 @@ import { InterfaceTenantDefinitionsWebService } from 'Customs/Services/WebServic
 
 @Component({
     templateUrl: './CourierWorksheetFromExcelComponent.html',
-    selector: 'CourierWorksheetFromExcelComponent'
+    selector: 'CourierWorksheetFromExcelComponent',
+    providers: [CourierWorksheetSharedDataService],
+
 })
 
 
@@ -111,8 +113,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
     isAllowBulkPendind: boolean = false;
     IsILOVLEnabled: boolean = false;
     IsILSWSEnabled: boolean = false;
-    ImportedCourierMasterFromExcel: boolean = false;
-
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
@@ -143,28 +143,27 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                         this._TabFilterList.push(new TabFilter("PAY", "תשלום", null, null));
                         this._TabFilterList.push(new TabFilter("HOLD", "Pending", null, null));
                         this._TabFilterList.push(new TabFilter("ACC", "מסוף", null, null));
-                        this._SelectedTabFilter = this._TabFilterList[0];
                         this.GetMamanPUR();
                         this.GetIsSendDocumentsFromQueueButton();
                         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
                         this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
                         this.DelayFormVisibility = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowDelayForm");
-                        this.BuildColumns();
-                        this.BuildColumnsPending();
                         this.EntityResourceImported = true;
+                        this._SelectedTabFilter = this._TabFilterList[0];
+                        this.TabFilterClick(this._SelectedTabFilter);
                     });
                 });
             });
         });
-
-        //this.entityPM = entityArgs.EntityPM;
 
 
     }
 
     ngOnInit() {
         debugger;
-
+        this.BuildColumns();
+        this.BuildColumnsPending();
+        
 
         this._CourierWorksheetSharedDataService.CurrentMessage
             .subscribe(message => {
@@ -232,7 +231,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
     }
 
     SetWindowArgs(windowArgs) {
-        debugger;
         this.entityPM = windowArgs.CurrentEntity;
         this.CheckRequiredFields();
 
@@ -375,8 +373,9 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.CourierMasterId = this.entityPM.Id;
-        currRequestParams.HAWB = this.entityPM.HAWB;
+        currRequestParams.CourierMasterId = this.entityPM?.Id;
+        currRequestParams.HAWB = this.entityPM?.HAWB;
+        currRequestParams.IsWorkSheetFromExcel=true;
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
@@ -434,8 +433,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                         currRequestParams.LoggingEnabled = true;
                         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
                         currRequestParams.Tenant = SessionLocator.Tenant;
-                        currRequestParams.CourierMasterId = this.entityPM.Id;
-                        currRequestParams.HAWB = this.entityPM.HAWB;
+                        currRequestParams.CourierMasterId = this.entityPM?.Id;
+                        currRequestParams.HAWB = this.entityPM?.HAWB;
                         currRequestParams.InternalBankId = InternalBankId;
                         currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
                         this._CourierMasterService.PostSendPayReadyLow2755(currRequestParams)
@@ -449,7 +448,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                             });
                     }
                     else {
-                        this._CourierMasterService.GetSendPayReadyLow2755(this.entityPM.Id, this.entityPM.HAWB, InternalBankId)
+                        this._CourierMasterService.GetSendPayReadyLow2755(this.entityPM?.Id, this.entityPM?.HAWB, InternalBankId)
                             .subscribe((res: any) => {
                                 this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
@@ -498,8 +497,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.CourierMasterId = this.entityPM.Id;
-        currRequestParams.HAWB = this.entityPM.HAWB;
+        currRequestParams.CourierMasterId = this.entityPM?.Id;
+        currRequestParams.HAWB = this.entityPM?.HAWB;
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
@@ -611,7 +610,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
 
     RefreshButtonClicked() {
         //this.onQueryChangeEvent.emit({ Filters: this.filterAgrs, Reload: true });
-        if (this.ImportedCourierMasterFromExcel) {
             this.RefreshStatistic();
             this.RefreshList();
             this.DisplayOnlyCheck();
@@ -621,7 +619,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
 
             if (this._ValidationErrors2.length > 0) {
                 this._ValidationErrors2 = []
-                this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
+                this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM?.Id).subscribe(
                     (data: any) => {
                         //if (data.Result != "")
                         //    this._ValidationErrors2.push();
@@ -635,7 +633,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                         }
                     });
             }
-        }
+        
     }
 
     RefreshList() {
@@ -724,7 +722,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
 
     RefreshStatistic() {
         // SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetStatistic(this.entityPM.Id)
+        this._CourierMasterService.GetStatistic(this.entityPM?.Id,true, SessionLocator.LoggedUserId)
             .subscribe((res: any) => {
                 //    this.currentSession.StopBusyIndicator();
                 var list: KeyValuePair[];
@@ -1379,7 +1377,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
 
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        debugger;
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
@@ -1404,13 +1401,12 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
     }
 
     BuildFiltersForQuery(filters: ApiQueryFilters = null) {
-        if (!this.ImportedCourierMasterFromExcel) {
-            filters = new ApiQueryFilters();
-        } else {
+       
             if (filters == null) {
                 filters = new ApiQueryFilters();
             }
-            filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
+            filters.addAdditionalFilter("CourierHawbsFromExcel", SessionLocator.LoggedUserId, null, null, "Equal", true, false, false, "string");
+
             filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
 
             switch (this._SelectedTabFilter.Code) {
@@ -1668,7 +1664,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
             if (this._SelectedDelivered == 'A') {
                 filters.addAdditionalFilter("Delivered", false, null, null, "Equals", false, false, false, "Boolean");
             }
-        }
+        
     }
 
 
@@ -1739,7 +1735,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
             this._PendingCodes.push({ 'Key': "NotApproved", 'Value': TextCodeTranslator.Translate("Customs.CourierPendingReason.O.NotApprovedPending") });
         }
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetPending(this.entityPM.Id)
+        this._CourierMasterService.GetPending(this.entityPM?.Id)
             .subscribe((resu: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var list: string[];
@@ -1887,6 +1883,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
 
     public MyScrollTop: number = 0;
     OnRowSelected(event) {
+        debugger;
         this.MyScrollTop = event.scrollTop;
         if (this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction) {
             this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = false;
@@ -1903,6 +1900,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
 
     preventSelect: boolean = false;
     OnRowSelectedBL(event) {
+        debugger;
         if (this.preventSelect) {
             return;
         }
@@ -1973,7 +1971,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
 
                     if (currentScreenCode == "DEGC" && selected.IsAmendment == true) currentScreenCode = "DCCR";
 
-                    SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
@@ -1983,9 +1980,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                                 ObjectTableName: objectTableName,
                             });
                             cmpRef.instance.BackCompleted.subscribe(bk => {
-                                if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
-                                    SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
-                                }
                                 this.OnBackFromEdit(selected.DeclarationId, event);
                             });
                             if (this._SelectedTabFilter.Code == "MNF" && this._SelectedMNFValue == 'W') {
@@ -2024,7 +2018,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
     DeclarationsStatusRequestMethod() {
 
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id)
+        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM?.Id)
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
@@ -2048,8 +2042,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.CourierMasterId = this.entityPM.Id;
-        currRequestParams.HAWB = this.entityPM.HAWB;
+        currRequestParams.CourierMasterId = this.entityPM?.Id;
+        currRequestParams.HAWB = this.entityPM?.HAWB;
 
 
         this._CourierMasterService.PostSendALLTerminal(currRequestParams)
@@ -2082,8 +2076,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                 currRequestParams.LoggingEnabled = true;
                 currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
                 currRequestParams.Tenant = SessionLocator.Tenant;
-                currRequestParams.CourierMasterId = this.entityPM.Id;
-                currRequestParams.HAWB = this.entityPM.HAWB;
+                currRequestParams.CourierMasterId = this.entityPM?.Id;
+                currRequestParams.HAWB = this.entityPM?.HAWB;
                 if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
                     currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
                 }
@@ -2154,8 +2148,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.CourierMasterId = this.entityPM.Id;
-        currRequestParams.MAWB = this.entityPM.MAWB;
+        currRequestParams.CourierMasterId = this.entityPM?.Id;
+        currRequestParams.MAWB = this.entityPM?.MAWB;
         let text = "נא אשר מחיקת קוד עיכוב";
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
@@ -2206,8 +2200,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.CourierMasterId = this.entityPM.Id;
-        currRequestParams.MAWB = this.entityPM.MAWB;
+        currRequestParams.CourierMasterId = this.entityPM?.Id;
+        currRequestParams.MAWB = this.entityPM?.MAWB;
         let text = "האם לאשר את כל Pending שלא אושרו בטיסה";
 
         var confirmWindow = new ConfirmWindow();
@@ -2247,7 +2241,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
 
         //communicationLogStepListService.GetExportExcelByRequestId("8305", this.MyLastCustomsRequestSheetId, SessionLocator.Tenant);
         //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
-        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM.Id + '&tenant=' + this.entityPM.Tenant.toString();
+        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM?.Id + '&tenant=' + SessionLocator.Tenant.toString();
 
 
         window.open(url);
@@ -2272,7 +2266,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
 
 
     DisplayOnlyCheckDeletePending() {
-        this.IsDisplayOnly = false;
+        /*this.IsDisplayOnly = false;
         this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
 
         //Check if deleting pending
@@ -2287,10 +2281,11 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
-        });
+        });*/
     }
 
     DisplayOnlyCheckApprovePending() {
+        /*
         this.IsDisplayOnly = false;
         this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
 
@@ -2306,7 +2301,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
-        });
+        });*/
     }
 
     DisplayOnlyCheck() {
@@ -2314,8 +2309,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
         this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
 
         //Check if changing StorageSiteCode
-        this._CourierMasterValidator.SetEntityPM(this.entityPM);
-        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.Id).subscribe((response: any) => {
+       // this._CourierMasterValidator.SetEntityPM(this.entityPM);
+        /*this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(SessionLocator.Tenant, "UCBCMSS", this.entityPM.Id).subscribe((response: any) => {
             var displayOnlyCheckResult = response.Result;
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
@@ -2325,7 +2320,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
-        });
+        });*/
     }
 
     SendUncorrectDocuments(sendMode: string) {
@@ -2342,8 +2337,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.CourierMasterId = this.entityPM.Id;
-        currRequestParams.HAWB = this.entityPM.HAWB;
+        currRequestParams.CourierMasterId = this.entityPM?.Id;
+        currRequestParams.HAWB = this.entityPM?.HAWB;
         /*if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }*/
@@ -2371,7 +2366,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
     SendDocumentsFromQueue() {
 
 
-        this._CourierMasterService.GetSendDocumentsFromQueue(this.entityPM.Id, this.entityPM.MAWB)
+        this._CourierMasterService.GetSendDocumentsFromQueue(this.entityPM?.Id, this.entityPM?.MAWB)
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();

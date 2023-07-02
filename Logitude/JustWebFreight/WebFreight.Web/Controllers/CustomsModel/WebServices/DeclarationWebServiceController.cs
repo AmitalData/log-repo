@@ -2429,11 +2429,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
         [HttpPost]
-        public async Task<HttpResponseMessage> ImportCourierMawbsFromExcel()
+        public async Task<HttpResponseMessage> ImportCourierMawbsFromExcel(string userid,int tenant)
         {
             try
             {
-                
                 if (!Request. Content.IsMimeMultipartContent())
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid request format");
@@ -2476,14 +2475,19 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                                     values.Add(cellValue);
                                 }
                             }
+                            if (cell != null && cell.CellType == CellType.Numeric)
+                            {
+                                var cellValue = cell.NumericCellValue;
+                                values.Add(cellValue.ToString());
+                            }
                         }
-                        DataTable notFoundDeclarations;
-                        CustomsStoredProcedures.UpdateCourierHawbFromExcel(7, "1-9", values, out notFoundDeclarations);
+                        var notFoundDeclarations=new List<string>();
+                        CustomsStoredProcedures.UpdateCourierHawbFromExcel(tenant, userid, values, out notFoundDeclarations);
 
                         if (values.Count > 0)
                         {
                             var firstValue = values[0];
-                            return Request.CreateResponse(HttpStatusCode.OK, firstValue);
+                            return Request.CreateResponse(HttpStatusCode.OK, notFoundDeclarations);
                         }
                     }
                 }

@@ -89,6 +89,24 @@ namespace Logitude.Customs.Data.Repsitories
 
 
         }
+        public List<DeclarationCourierStatus> GeCourierManifestStatusCodeFromExcel(int tenant,string userId, string CourierManifestStatusCode
+            , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue
+            )
+        {
+            var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in GetAll(tenant).Where(r => r.CourierManifestStatusCode == CourierManifestStatusCode && r.Declaration.HatraDate == null)
+                     on dec.DeclarationId equals status.DeclarationId
+                     orderby rDec.CourierHAWB ascending
+                     select status);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
+            var pocos = q.ToList();
+            return pocos;
+
+
+        }
         public List<string> GetPendingByMasterID(int tenant, string CourierMasterId)
         {
             IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);

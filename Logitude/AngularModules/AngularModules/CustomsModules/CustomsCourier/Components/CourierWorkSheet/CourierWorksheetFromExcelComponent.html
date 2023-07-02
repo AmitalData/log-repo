@@ -160,9 +160,6 @@
                                             <td style="width: 30px; font-weight:bold; font-size:16px; color: black;"> >>
                                             </td>
                                             <td style="width: 100px; font-weight:bold ; font-size:16px;">
-                                                <div *ngIf="ImportedCourierMasterFromExcel">
-                                                    {{entityPM.AirlinePrefix}}-{{entityPM.MAWB}}
-                                                </div>
                                             </td>
                                             <td></td>
                                             <td class="dropdown" style="width: 115px; float:left">
@@ -438,7 +435,7 @@
                                                             <td>
                                                                 <!--All-->
                                                                 <table
-                                                                    *ngIf="ImportedCourierMasterFromExcel && _SelectedTabFilter.Code=='ALL' ">
+                                                                    *ngIf="_SelectedTabFilter.Code=='ALL' ">
                                                                     <tr>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
@@ -593,7 +590,7 @@
                                                                 </table>
                                                                 <!--SVG-->
                                                                 <table
-                                                                    *ngIf="ImportedCourierMasterFromExcel && _SelectedTabFilter.Code=='SVG' ">
+                                                                    *ngIf="_SelectedTabFilter.Code=='SVG' ">
                                                                     <tr>
                                                                         <td style="width:100px"><button class="Button"
                                                                                 (click)="SendALLSVG(false)"
@@ -605,7 +602,7 @@
                                                                 </table>
                                                                 <!--MNF-->
                                                                 <table
-                                                                    *ngIf="ImportedCourierMasterFromExcel && _SelectedTabFilter.Code=='MNF' ">
+                                                                    *ngIf=" _SelectedTabFilter.Code=='MNF' ">
                                                                     <tr>
                                                                         <td style="width:300px;">
                                                                             <ul class="FiltersMenu"
@@ -671,7 +668,7 @@
                                                                 </table>
                                                                 <!--DEC-->
                                                                 <table
-                                                                    *ngIf=" ImportedCourierMasterFromExcel && _SelectedTabFilter.Code=='DEC' ">
+                                                                    *ngIf="_SelectedTabFilter.Code=='DEC' ">
                                                                     <tr>
                                                                         <td style="width: 300px;">
                                                                             <ul class="FiltersMenu"
@@ -737,7 +734,7 @@
                                                                 </table>
                                                                 <!--DOC-->
                                                                 <table
-                                                                    *ngIf="ImportedCourierMasterFromExcel && _SelectedTabFilter.Code=='DOC' ">
+                                                                    *ngIf="_SelectedTabFilter.Code=='DOC' ">
                                                                     <tr>
                                                                         <td style="width: 250px;">
                                                                             <ul class="FiltersMenu"
@@ -859,7 +856,7 @@
                                                                 </table>
                                                                 <!--PAY-->
                                                                 <table
-                                                                    *ngIf="ImportedCourierMasterFromExcel && _SelectedTabFilter.Code=='PAY' ">
+                                                                    *ngIf=" _SelectedTabFilter.Code=='PAY' ">
                                                                     <tr>
                                                                         <td *ngIf="_SelectedItems == null || (_SelectedItems != null && _SelectedItems.Collection.length == 0)"
                                                                             style="width:100px; text-align:right"
@@ -909,7 +906,7 @@
                                                                 </table>
                                                                 <!--ACC-->
                                                                 <table
-                                                                    *ngIf="ImportedCourierMasterFromExcel && _SelectedTabFilter.Code=='ACC' ">
+                                                                    *ngIf=" _SelectedTabFilter.Code=='ACC' ">
                                                                     <tr>
                                                                         <td style="width: 250px;">
                                                                             <ul class="FiltersMenu"
@@ -939,7 +936,7 @@
                                                                 </table>
                                                                 <!-- HOLD -->
                                                                 <table
-                                                                    *ngIf="ImportedCourierMasterFromExcel && _SelectedTabFilter.Code=='HOLD' ">
+                                                                    *ngIf=" _SelectedTabFilter.Code=='HOLD' ">
                                                                     <tr>
                                                                         <td class="col1Label"
                                                                             style="width:80px; font-size: 13px; font-weight:bold; padding-right: 10px;">

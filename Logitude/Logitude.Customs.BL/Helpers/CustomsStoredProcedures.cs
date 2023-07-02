@@ -910,7 +910,7 @@ AS */
             }
 
         }
-        public static void UpdateCourierHawbFromExcel(int tenant, string userid, List<string> courierhawbsList, out DataTable notFoundDeclarations)
+        public static void UpdateCourierHawbFromExcel(int tenant, string userid, List<string> courierhawbsList, out List<string> notFoundDeclarations)
         {
             string strConnString = GetConnection(tenant);
 
@@ -919,7 +919,7 @@ AS */
             {
                 // Open the connection
                 cn.Open();
-                notFoundDeclarations = new DataTable();
+                notFoundDeclarations = new List<string>();
                 try
                 {
                     using (Devart.Data.Oracle.OracleCommand command = new Devart.Data.Oracle.OracleCommand("usp_UpdateCourierHawbFromExcel", cn))
@@ -959,7 +959,10 @@ AS */
                         // Read the output cursor into a DataTable
                         using (Devart.Data.Oracle.OracleDataReader reader = ((Devart.Data.Oracle.OracleCursor)notFoundDeclarationsParam.Value).GetDataReader())
                         {
-                            notFoundDeclarations.Load(reader);
+                            while (reader.Read())
+                            {
+                                notFoundDeclarations.Add(reader.GetString(0));
+                            }
                         }
                     }
                 }

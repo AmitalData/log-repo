@@ -13,7 +13,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string CourierDeclarationStatusCode { get; set; }
         public List<string> Declarations { get; set; }
 
-
+        public bool IsWorkSheetFromExcel { get; set; }
         public string SelectedBOLValue { get; set; }
         public string SelectedStatusValue { get; set; }
         public string SelectedAvailableValue { get; set; }

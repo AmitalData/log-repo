@@ -1296,7 +1296,7 @@ export class DeclarationWebService {
         }
         );
     }
-    ImportCourierMawbsFromExcel(formData: FormData) {
+    ImportCourierMawbsFromExcel(formData: FormData,userid:string,tenant:number) {
         
 
             var authHeader = new HttpHeaders();
@@ -1305,7 +1305,7 @@ export class DeclarationWebService {
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.post(this._apiUrl + "/ImportCourierMawbsFromExcel", formData, {headers: authHeader });
+            return this._http.post(this._apiUrl + "/ImportCourierMawbsFromExcel/?userid=" + userid+ "&tenant=" + tenant , formData, {headers: authHeader });
 
     }
 
