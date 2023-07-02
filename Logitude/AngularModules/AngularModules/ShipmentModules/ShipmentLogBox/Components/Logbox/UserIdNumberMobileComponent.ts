@@ -66,7 +66,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     orianStyle: boolean = false;
     showDialogUserAcceptSave: boolean = false;
     $userAcceptSave: Subject<boolean> = new Subject<boolean>();
-
+   
     constructor(private cd: ChangeDetectorRef) {
         super();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();

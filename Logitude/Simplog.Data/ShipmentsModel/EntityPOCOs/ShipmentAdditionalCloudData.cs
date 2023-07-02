@@ -48,6 +48,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         UserIdNumberXMLData (VCMax)
         UserIdNumber (VC35)
          */
-
+          
     }
 }
