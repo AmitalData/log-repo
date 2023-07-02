@@ -446,13 +446,14 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             logWindow.WindowArgs=args;
             logWindow.Show('./Common/Components/Maintenance/OcrDefaultsSettingsComponent');
             logWindow.WindowClosed.subscribe((event: any) => {
+                           
                 if(event=="update"){
-                   
+                    this.RefreshEntity();
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                                     
                 }
               
-               
+                this.CD.reattach();
                 
                
             });
