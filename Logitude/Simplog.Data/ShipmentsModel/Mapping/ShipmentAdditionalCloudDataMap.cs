@@ -80,7 +80,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.InvoiceIssuedDate).HasColumnName("InvoiceIssuedDate");
             this.Property(t => t.UserAcceptSaveID).HasColumnName("UserAcceptSaveID");
             this.HasRequired(t => t.Shipment);
-
+              
         }
     }
 }
