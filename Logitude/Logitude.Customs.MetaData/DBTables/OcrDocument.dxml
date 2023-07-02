@@ -7,7 +7,7 @@
   <Column
     Name="Id"
     Type="varchar"
-    Size="40">
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -28,14 +28,15 @@
   <Column
     Name="JsonData"
     Type="varchar"
-    Size="-1">
+    Size="500">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Score"
-    Type="varchar"
-    Size="10">
+    Type="decimal"
+    Precision="3"
+    Scale="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -60,14 +61,28 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="Id"
-    ReferencedTable="DocumentsFilings"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+  <Column
+    Name="OcrId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DocId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="StatusCode"
     ReferencedTable="OcrStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DocId"
+    ReferencedTable="DocumentsFilings"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

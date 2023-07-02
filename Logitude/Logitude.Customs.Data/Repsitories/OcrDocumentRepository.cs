@@ -21,7 +21,14 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public OcrDocument GetSingleByDocId(string docId, int tenant)
+        {
+            return (from a in context.OcrDocuments
+                    where a.DocId == docId && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+    }
 
 }
    

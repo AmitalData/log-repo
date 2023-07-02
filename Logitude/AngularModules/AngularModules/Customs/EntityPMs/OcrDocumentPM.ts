@@ -44,9 +44,9 @@ export class OcrDocumentPM {
     public set JsonData(newValue: string) { if (this.jsonData != newValue) { this.jsonData = newValue; this.MarkAsDirty("JsonData"); } }
        
 	 
-    private score: string;
+    private score: number;
     public get Score() { return this.score; }
-    public set Score(newValue: string) { if (this.score != newValue) { this.score = newValue; this.MarkAsDirty("Score"); } }
+    public set Score(newValue: number) { if (this.score != newValue) { this.score = newValue; this.MarkAsDirty("Score"); } }
        
 	 
     private jsonTif: string;
@@ -67,6 +67,16 @@ export class OcrDocumentPM {
     private statusCode: string;
     public get StatusCode() { return this.statusCode; }
     public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
+       
+	 
+    private ocrId: string;
+    public get OcrId() { return this.ocrId; }
+    public set OcrId(newValue: string) { if (this.ocrId != newValue) { this.ocrId = newValue; this.MarkAsDirty("OcrId"); } }
+       
+	 
+    private docId: string;
+    public get DocId() { return this.docId; }
+    public set DocId(newValue: string) { if (this.docId != newValue) { this.docId = newValue; this.MarkAsDirty("DocId"); } }
        
 	 
 

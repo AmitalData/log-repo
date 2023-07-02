@@ -5140,6 +5140,7 @@
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
     <Content Include="WcfApi\OceanInsightsTestWcfService.svc" />
+    <Content Include="WcfApi\OcrDocumentWcfService.svc" />
     <Content Include="WcfApi\PaymentTermWcfService.svc" />
     <Content Include="WcfApi\UserIDNumberRequestWcfService.svc" />
     <Content Include="WcfApi\DeclarationApprovalRequestWcfService.svc" />
@@ -6715,11 +6716,15 @@
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
     <Compile Include="WcfApi\ExternalTasksQueueWcfService.ExportSignQ.cs" />
+    <Compile Include="WcfApi\IOcrDocumentWcfService.cs" />
     <Compile Include="WcfApi\IExternalTasksQueueExportSignWcfService.cs" />
     <Compile Include="WcfApi\IPaymentTermWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
     <Compile Include="WcfApi\OceanInsightsTestWcfService.svc.cs">
       <DependentUpon>OceanInsightsTestWcfService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WcfApi\OcrDocumentWcfService.svc.cs">
+      <DependentUpon>OcrDocumentWcfService.svc</DependentUpon>
     </Compile>
     <Compile Include="WcfApi\PaymentTermWcfService.svc.cs">
       <DependentUpon>PaymentTermWcfService.svc</DependentUpon>
