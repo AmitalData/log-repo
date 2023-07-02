@@ -19,11 +19,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	 string dbms;
 
         [Key]
-        [ForeignKey("DocumentsFiling")]
         [Column("Id")]
 	    public string Id { get; set; }
-	      
-        public virtual DocumentsFiling DocumentsFiling { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("Process")]
@@ -31,7 +28,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("JsonData")]
 	    public string JsonData { get; set; }
         [Column("Score")]
-	    public string Score { get; set; }
+	    public decimal? Score { get; set; }
         [Column("JsonTif")]
 	    public string JsonTif { get; set; }
         [Column("ErrorMsg")]
@@ -41,6 +38,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string StatusCode { get; set; }
 	      
         public virtual OcrStatus OcrStatus { get; set; }
+        [Column("OcrId")]
+	    public string OcrId { get; set; }
+        [ForeignKey("DocumentsFiling")]
+        [Column("DocId")]
+	    public string DocId { get; set; }
+	      
+        public virtual DocumentsFiling DocumentsFiling { get; set; }
     }
 }
 	 

@@ -12,11 +12,13 @@ export class OcrDocumentList {
 	Tenant: number;
 	Process: string;
 	JsonData: string;
-	Score: string;
+	Score: number;
 	JsonTif: string;
 	ErrorMsg: string;
 	StatusName: string;
 	StatusCode: string;
+	OcrId: string;
+	DocId: string;
 	
 }
  

@@ -112,12 +112,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string score ;
+	  private decimal? score ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Score  
+       public decimal? Score  
 	   {
 	    
 	     get
@@ -128,7 +128,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(score != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Score",OldValue=score,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Score",OldValue=score,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   score=value;
 		   }
@@ -223,6 +223,52 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusCode",OldValue=statusCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   statusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string ocrId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OcrId  
+	   {
+	    
+	     get
+		{
+		   return ocrId;
+		 }
+		 set
+		 {
+		   if(ocrId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrId",OldValue=ocrId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ocrId=value;
+		   }
+			
+		 }
+	   }
+	  private string docId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocId  
+	   {
+	    
+	     get
+		{
+		   return docId;
+		 }
+		 set
+		 {
+		   if(docId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocId",OldValue=docId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   docId=value;
 		   }
 			
 		 }

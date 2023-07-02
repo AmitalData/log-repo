@@ -134,6 +134,7 @@
     <Compile Include="EntityPMs\Generated\LogisticsReferenceTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NDMessageActionCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OcrDocumentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OcrStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PhysicalCheckCodePM.Generated.cs" />

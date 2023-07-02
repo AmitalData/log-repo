@@ -36,6 +36,8 @@ import { DeclarationEventManager } from '../../../../Customs/Utilities/Declarati
 import { ControlsIdCounter } from '../../../../Infrastructure/Utilities/ControlsIdCounter';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 import { SupplierInvoiceItemPM } from '../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
+import { CustomsDocumentsDataProvider } from 'CustomsModules/CustomsDocuments/Components/CustomsDocumentsDataProvider';
+import { NullTemplateVisitor } from '@angular/compiler';
 @Component({
     
     templateUrl: './DeclarationSplitComponent.html',
@@ -59,6 +61,9 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     startY = 0;
     endX = 0;
     endY = 0;
+
+    public customs: string = "עמילות";
+    public forwarding: string = "שילוח";
     //Services
     private custDocRelatedDocsWebService: CustDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
     private _ImageLibraryService: ImageLibraryService = new ImageLibraryService();
@@ -103,7 +108,12 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                     var customsSetting = list;
                     this.IsConnectedToUniFreight = customsSetting.IsConnectedToUniFreight;
                 }
-
+                if (this.DeclarationPM.Direction == 'E') {
+                    this.customs = "תיק מכס";
+                    this.forwarding = "תיק יצום";
+        
+                    this.DocumentFilterSelectedValue = "all";
+                }
                 //// 2- get metadata values then
                 //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                 //this.custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
@@ -175,6 +185,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
     IsMouseOverDownload: boolean = false;
     TicketItemClicked(document: RelatedDocumentViewModel,  selectItem: boolean = false) {
+        
         if (this.IsMouseOverDownload) return;
 
         this.IsDocsPanelVisible = false;
@@ -351,12 +362,15 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         this.showSplitIndicator = false;
     }
     //#endregion
+    private customsDocumentsDataProvider: CustomsDocumentsDataProvider;
 
     LoadDocuments() {
+        this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.DeclarationPM, null, null, null);
+
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
 
-        this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.DeclarationPM.Id, null, objecttable.Id, "I", this.DeclarationPM.CustomFileNo, this.DocumentFilterSelectedValue, this.DeclarationPM.Direction, this.DeclarationPM.ExportFile, this.DeclarationPM.ForwarderFiles)
+        this.customsDocumentsDataProvider.GetCustomsDocumentsRelatedDocuments( this.DocumentFilterSelectedValue)
             .subscribe((response: ServiceResponse) => {
                 console.log("[response] GetDocumentsFilingsForRelatedDocuments:", response);
                 SessionLocator.SelectedSession.StopBusyIndicator();
@@ -384,7 +398,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
                     //ClassifcationComponent Build B4 This Component finish Load Document !!!
                     if (
-                        !AppTool.IsNullOrEmpty(this.RelatedDocuments) &&
+                        this.RelatedDocuments.length!=0 &&
                         AppTool.IsNullOrEmpty(this._DocumentFilingIdToSetWhileLoadDocument)) {
                         var document = this.RelatedDocuments.find(d => d.Id == this._DocumentFilingIdToSetWhileLoadDocument);
                         this._DocumentFilingIdToSetWhileLoadDocument = null;
@@ -393,6 +407,9 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                 }
             });
     }
+
+
+
 
     DownloadDocumentFile(documentsFilingId: string) {
 

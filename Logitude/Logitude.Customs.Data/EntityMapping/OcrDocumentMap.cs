@@ -23,21 +23,25 @@ namespace Logitude.Customs.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 
             this.Property(t => t.Process).HasColumnName("Process").HasMaxLength(5).IsUnicode(false);
 
-            this.Property(t => t.JsonData).HasColumnName("JsonData").IsMaxLength().IsUnicode(false);
+            this.Property(t => t.JsonData).HasColumnName("JsonData").HasMaxLength(500).IsUnicode(false);
 
-            this.Property(t => t.Score).HasColumnName("Score").HasMaxLength(10).IsUnicode(false);
+            this.Property(t => t.Score).HasColumnName("Score").HasPrecision(3, 2);
 
             this.Property(t => t.JsonTif).HasColumnName("JsonTif").HasMaxLength(500).IsUnicode(false);
 
             this.Property(t => t.ErrorMsg).HasColumnName("ErrorMsg").HasMaxLength(1000).IsUnicode(false);
 
             this.Property(t => t.StatusCode).HasColumnName("StatusCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.OcrId).HasColumnName("OcrId").HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.DocId).HasColumnName("DocId").HasMaxLength(40).IsUnicode(false);
         }
     }
 }

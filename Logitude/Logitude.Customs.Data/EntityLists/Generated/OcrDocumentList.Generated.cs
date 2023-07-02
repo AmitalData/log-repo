@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string JsonData  { get; set; }
        [DataMember]
-       public string Score  { get; set; }
+       public decimal? Score  { get; set; }
        [DataMember]
        public string JsonTif  { get; set; }
        [DataMember]
@@ -32,6 +32,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string StatusName  { get; set; }
        [DataMember]
        public string StatusCode  { get; set; }
+       [DataMember]
+       public string OcrId  { get; set; }
+       [DataMember]
+       public string DocId  { get; set; }
    }
 
 }

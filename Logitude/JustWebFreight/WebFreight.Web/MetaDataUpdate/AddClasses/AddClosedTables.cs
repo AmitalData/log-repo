@@ -29,6 +29,7 @@ using Logitude.Accounting.BL.CloseTables;
 using Logitude.Infrastructure.BL;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
 
 namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
@@ -3437,5 +3438,32 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
+        public static void AddOcrStatus(OcrStatus OcrStatusDetails, OcrStatusRepository OcrStatusRepository)
+        {
+            Dictionary<string, OcrStatus> tenant = OcrStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(OcrStatusDetails.Code))
+            {
+                OcrStatus ocrStatus = OcrStatusRepository.GetSingle(OcrStatusDetails.Code);
+                ocrStatus.EnglishName = OcrStatusDetails.EnglishName;
+                ocrStatus.LocalName = OcrStatusDetails.LocalName;
+                ocrStatus.SearchFields = (OcrStatusDetails.LocalName + "," + OcrStatusDetails.EnglishName).ToLower();
+
+
+                OcrStatusRepository.Update(ocrStatus);
+            }
+            else
+            {
+                OcrStatus newOcrStatus = new OcrStatus()
+                {
+                    Code = OcrStatusDetails.Code,
+                    LocalName = OcrStatusDetails.LocalName,
+                    EnglishName = OcrStatusDetails.EnglishName,
+                    SearchFields = (OcrStatusDetails.LocalName + "," + OcrStatusDetails.EnglishName).ToLower()
+
+            };
+                OcrStatusRepository.Add(newOcrStatus);
+            }
+        }
     }
 }
