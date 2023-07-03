@@ -1887,7 +1887,11 @@ export class MaintenanceComponent {
             } break;
             case "jokeracctest": {
 
-             
+                if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Show("nono NO only Customer Care ");
+                    return;
+                }
                 var logitudeWindow = new LogitudeWindow();
                 logitudeWindow.Width = 1600;
                 logitudeWindow.Height = 1200;
