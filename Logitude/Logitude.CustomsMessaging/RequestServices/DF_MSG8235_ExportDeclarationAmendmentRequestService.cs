@@ -1104,31 +1104,18 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                 //
                 declarationGoodsShipment.Invoice = GetDeclarationGoodsShipmentInvoice(supplierInvoicePM, declarationPM.Direction);
-                //CustomContext context = new CustomContext();
-                //ConnectedEntity conn = new ConnectedEntity();
-                //var vendorNumber = (from v in context.Vendors where v.Id == supplierInvoicePM.VendorId select v.VendorNumber);
+ 
                 string vendorNumber = GetVendorNumber(supplierInvoicePM.VendorId);
-                //if (!String.IsNullOrWhiteSpace(vendorNumber)) // moran 13.7.14 - Task 6817 - enter into 'if'
-                //{
-                //    declarationGoodsShipment.Supplier = new DeclarationGoodsShipmentSupplier()
-                //    {
-                //        //hardcoded VendorId
-                //        // ID = SetIDTypeValue<SupplierIdentificationIDType>(String.IsNullOrWhiteSpace(supplierInvoicePM.VendorId) ? "2000012" : supplierInvoicePM.VendorId) // new SupplierIdentificationIDType() { Value = String.IsNullOrWhiteSpace(supplierInvoicePM.VendorId) ? "04" : supplierInvoicePM.VendorId } //HARDCODED
-                //        // moran 13.7.14 - Task 6817 - cancel hard code
-                //        //ID = SetIDTypeValue<SupplierIdentificationIDType>(String.IsNullOrWhiteSpace(vendorNumber) ? "2000012" : vendorNumber) // hard coded
-                //        ID = SetIDTypeValue<SupplierIdentificationIDType>(vendorNumber) // hard coded
 
-                //    };
-                //}
-                declarationGoodsShipment.TradeTerms = new DeclarationGoodsShipmentTradeTerms() // MUST 
+                if (!string.IsNullOrEmpty(supplierInvoicePM.IncotermCode))
                 {
-                    //ConditionCode = SetCodeTypeValue<TradeTermsConditionCodeType>(String.IsNullOrWhiteSpace(supplierInvoicePM.IncotermCode) ? "FOB" : supplierInvoicePM.IncotermCode), 
-                    ConditionCode = SetCodeTypeValue<TradeTermsConditionCodeType>(supplierInvoicePM.IncotermCode),
-                    //LocationID = SetIDTypeValue <TradeTermsLocationIDType >(String.IsNullOrWhiteSpace(supplierInvoicePM.IssueCountryCode) ? "CN" : supplierInvoicePM.IssueCountryCode) 
-                    //   LocationID = SetIDTypeValue<TradeTermsLocationIDType>(supplierInvoicePM.IssueCountryCode)
-                };
-                //    declarationGoodsShipment.CustomsValuation = GetcustomsValuation(supplierInvoicePM).ToArray();
-
+                    declarationGoodsShipment.TradeTerms = new DeclarationGoodsShipmentTradeTerms() // MUST 
+                    {
+                        ConditionCode = SetCodeTypeValue<TradeTermsConditionCodeType>(supplierInvoicePM.IncotermCode),
+                    };
+                }
+  
+ 
                 var declarationConsignmentList = new List<DeclarationGoodsShipmentExportConsignment>();
                 var declarationImportConsignmentList = new List<DeclarationGoodsShipmentImportConsignment>();
                 for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
