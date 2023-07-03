@@ -1,11 +1,13 @@
 
 
-<table>
+<table>   
     <tr>
         <td>
-            <div class="TableHolder">
-              
+            <div class="TableHolder">     
                 <table>
+                    <tr style="position:absolute;bottom:100%;left:97%;">
+                        <div><IconButton [IsEnabled]="IsExcelEnabled" [IsSmall]="true"  [Name]="'excel'"  (click)="ExportToExcelClick()" ></IconButton></div>
+                    </tr>
 
                     <!-- Transactions Grid -->
                     <tr>
