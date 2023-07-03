@@ -99,18 +99,26 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         this.ProcessTypeCode = "1100105"
         this.BuyerRoleCode = "9"
     }
-    private sequenceNumeric = 0;
+    
     Add() {
 
         var item: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(null);
-        item.SequenceNumeric = ++this.sequenceNumeric;
+        item.SequenceNumeric = this.ItemsSource.Collection.length+1;
         item.Tenant = this.SupplierInvioceExportDefaultPM.Tenant;
         this.ItemsSource.Insert(new InvoiceItemCertificateLine(item, null));
     }
 
     DeleteButtonClicked(item: any) {
-        this.ItemsSource.Remove(item);
+       var  sequenceNumeric = 1;
+       this.ItemsSource.Remove(item);
+        this.ItemsSource.Collection.forEach((item:InvoiceItemCertificateLine) => {
+            item.SequenceNumeric = sequenceNumeric;
+            sequenceNumeric++;
+        });
+       
     }
+   
+
 
     get AccountTypeCode() { return this.SupplierInvioceExportDefaultPM?.AccountTypeCode; }
     set AccountTypeCode(value: string) {

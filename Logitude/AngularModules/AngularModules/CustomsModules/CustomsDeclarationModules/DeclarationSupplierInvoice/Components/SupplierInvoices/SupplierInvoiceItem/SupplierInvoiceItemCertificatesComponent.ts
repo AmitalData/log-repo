@@ -1,30 +1,30 @@
-import {Component}  from '@angular/core';
-import {BaseComponent} from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {AppTool} from '../../../../../../Infrastructure/Tools';
+import { Component } from '@angular/core';
+import { BaseComponent } from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { AppTool } from '../../../../../../Infrastructure/Tools';
 import { SupplierInvoiceItemPM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
 import { SupplierInvoicePM } from '../../../../../../Customs/EntityPMs/SupplierInvoicePM';
 import { SupplierInvioceItemCertificatPM } from '../../../../../../Customs/EntityPMs/SupplierInvioceItemCertificatPM';
-import {SessionLocator} from '../../../../../../Infrastructure/Utilities/SessionLocator';
-import {ConfirmWindow} from '../../../../../../Controls/Windows/ConfirmWindow';
-import {TextCodeTranslator} from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { SupplierInvoiceItemsProdIdentPM } from  '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsProdIdentPM';
-import {ObservableCollection} from '../../../../../../Infrastructure/Utilities/ObservableCollection';
-import {ProductIdentificationTypeListService} from  '../../../../../../Customs/Services/StandardLists/ProductIdentificationTypeListService';
+import { SessionLocator } from '../../../../../../Infrastructure/Utilities/SessionLocator';
+import { ConfirmWindow } from '../../../../../../Controls/Windows/ConfirmWindow';
+import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { SupplierInvoiceItemsProdIdentPM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsProdIdentPM';
+import { ObservableCollection } from '../../../../../../Infrastructure/Utilities/ObservableCollection';
+import { ProductIdentificationTypeListService } from '../../../../../../Customs/Services/StandardLists/ProductIdentificationTypeListService';
 import { ProductIdentificationTypeList } from '../../../../../../Customs/EntityLists/ProductIdentificationTypeList';
-import { ConfirmationTypePM } from  '../../../../../../Customs/EntityPMs/ConfirmationTypePM';
-import { AttachmentTypePM } from  '../../../../../../Customs/EntityPMs/AttachmentTypePM';
-import { CertificateExemptionTypePM } from  '../../../../../../Customs/EntityPMs/CertificateExemptionTypePM';
-import { CertificateExemptionTypeListService } from  '../../../../../../Customs/Services/StandardLists/CertificateExemptionTypeListService';
-import {EntityResourceService} from '../../../../../../Infrastructure/Services/EntityResourceService';
+import { ConfirmationTypePM } from '../../../../../../Customs/EntityPMs/ConfirmationTypePM';
+import { AttachmentTypePM } from '../../../../../../Customs/EntityPMs/AttachmentTypePM';
+import { CertificateExemptionTypePM } from '../../../../../../Customs/EntityPMs/CertificateExemptionTypePM';
+import { CertificateExemptionTypeListService } from '../../../../../../Customs/Services/StandardLists/CertificateExemptionTypeListService';
+import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
 import { SupplierInvoicePMService } from '../../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
-import {ApiQueryFilters, FilterItem} from '../../../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {FeatureLocator} from '../../../../../../Infrastructure/Utilities/FeatureLocator';
-import { AttachmentTypeListService } from  '../../../../../../Customs/Services/StandardLists/AttachmentTypeListService';
+import { ApiQueryFilters, FilterItem } from '../../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { FeatureLocator } from '../../../../../../Infrastructure/Utilities/FeatureLocator';
+import { AttachmentTypeListService } from '../../../../../../Customs/Services/StandardLists/AttachmentTypeListService';
 import { ConfirmationTypeListService } from 'Customs/Services/StandardLists/ConfirmationTypeListService';
 declare var window: any;
 
 @Component({
-    
+
     templateUrl: './SupplierInvoiceItemCertificatesComponent.html',
 })
 
@@ -85,7 +85,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
             listService.getAllFromCache().subscribe((res: any) => {
             });
         });
-            
+
         if (!AppTool.IsNullOrEmpty(args)) {
             this.invoiceItemPM = args.SupplierInvoiceItemPM;
             this.BuildCertificatesList();
@@ -155,7 +155,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
 
         var errors = [];
         if (!AppTool.IsNullOrEmpty(error.Description)) {
-            var xmlErrors: any[] = error.Description.split(/,|:/); 
+            var xmlErrors: any[] = error.Description.split(/,|:/);
             for (var xmlError of xmlErrors) {
                 errors.push(xmlError);
             }
@@ -218,7 +218,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
         if (!this.IsDisplayOnly) {
             var counter: number = 0;
 
-           
+
             if (this.invoiceItemPM.SupplierInvioceItemCertificats.length > 0) {
 
                 var items = this.invoiceItemPM.SupplierInvioceItemCertificats.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
@@ -227,7 +227,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
                     counter = items[this.invoiceItemPM.SupplierInvioceItemCertificats.length - 1].LineNumber;
                 }
 
-               
+
             }
 
             counter += 1;
@@ -241,7 +241,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
                 else {
                     sequence = items[this.invoiceItemPM.SupplierInvioceItemCertificats.length - 1].SequenceNumeric;
                 }
-               
+
             }
 
 
@@ -264,7 +264,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
             }
 
         }
-    //    this.BuildCertificatesList();
+        //    this.BuildCertificatesList();
 
 
 
@@ -275,11 +275,11 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
     CloneEntity(entityToClone: SupplierInvoiceItemPM) {
 
         var clonedEntity: SupplierInvoiceItemPM;
-        clonedEntity = new SupplierInvoiceItemPM(entityToClone.EntityParentPM); 
+        clonedEntity = new SupplierInvoiceItemPM(entityToClone.EntityParentPM);
 
         this.MapEntitytoEntity(entityToClone, clonedEntity);
 
-       
+
         clonedEntity.SupplierInvioceItemCertificats = [];
         entityToClone.SupplierInvioceItemCertificats.forEach((itemMod) => {
             var clonedItemMod = new SupplierInvioceItemCertificatPM(itemMod.EntityParentPM);
@@ -287,7 +287,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
             clonedEntity.SupplierInvioceItemCertificats.push(clonedItemMod);
         });
 
-      
+
 
 
         return clonedEntity;
@@ -306,7 +306,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
         }
     }
     CancelButtonClicked() {
-     
+
 
         if (this.invoiceItemPM.IsDirty && !this.IsDisplayOnly && !this.IsFromCustomsAnswers) {
             var confirm = new ConfirmWindow();
@@ -341,7 +341,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
 
     isValid: boolean;
     inValid: boolean;
-     hasRequest:boolean;
+    hasRequest: boolean;
     notMandatoryIsNotEmpty: boolean = false;
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -421,7 +421,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
                 if (confirm.Yes) {
 
 
-              
+
                     if (errors.length == 0) {
                         if (this.hasRequest) {
                             this.invoiceItemPM.CertificatesStatusCode = "4";
@@ -458,7 +458,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
                     }
 
                     confirm.Close();
-                   
+
                 }
 
             });
@@ -471,7 +471,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
 
             if (errors.length == 0) {
 
-               
+
                 if (this.invoiceItemPM.SupplierInvioceItemCertificats.length > 0) {
                     if (this.hasRequest) {
                         this.invoiceItemPM.CertificatesStatusCode = "3";
@@ -505,7 +505,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
                 else {
                     this.CurrentSession.CloseCurrentWindow();
                 }
-               
+
             }
 
             else {
@@ -513,10 +513,10 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
             }
 
 
-    }
-        
+        }
 
-   
+
+
         return this.isValid;
 
 
@@ -562,9 +562,9 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
         item.InvoiceCounterKey = this.invoiceItemPM.CounterKey;
         item.InvoiceItemLineNumber = this.invoiceItemPM.LineNumber;
         item.LineNumber = line,
-        item.Identification = this.CatalogNumber;
+            item.Identification = this.CatalogNumber;
         item.TypeCode = "MN";
-        this.productIdentificationTypeListService.getSingle(item.TypeCode).subscribe((response:any) => {
+        this.productIdentificationTypeListService.getSingle(item.TypeCode).subscribe((response: any) => {
 
             var result: ProductIdentificationTypeList;
             result = response.Result;
@@ -604,10 +604,10 @@ export class InvoiceItemCertificateLine extends BaseComponent {
         super();
         this.entityPM = EntityPM;
         this.parent = Parent;
-        var confirmationTypeService= new ConfirmationTypeListService();
-        confirmationTypeService.getSingleFromCache(EntityPM.ReqConfirmationTypeCode).subscribe((req:any)=>{
-            if(req.Result != null){
-                this.ConfirmationType=req.Result;
+        var confirmationTypeService = new ConfirmationTypeListService();
+        confirmationTypeService.getSingleFromCache(EntityPM.ReqConfirmationTypeCode).subscribe((req: any) => {
+            if (req.Result != null) {
+                this.ConfirmationType = req.Result;
             }
         });
     }
@@ -616,7 +616,9 @@ export class InvoiceItemCertificateLine extends BaseComponent {
 
 
     get SequenceNumeric() { return this.entityPM.SequenceNumeric; }
-
+    set SequenceNumeric(value: number) {
+        this.entityPM.SequenceNumeric = value;
+    }
     confirmationType: ConfirmationTypePM;
     get ConfirmationType() { return this.confirmationType; }
     set ConfirmationType(value: ConfirmationTypePM) {
@@ -633,7 +635,7 @@ export class InvoiceItemCertificateLine extends BaseComponent {
         }
     }
 
-    
+
     attachmentType: AttachmentTypePM;
     get AttachmentType() { return this.attachmentType; }
     set AttachmentType(value: AttachmentTypePM) {
@@ -652,7 +654,7 @@ export class InvoiceItemCertificateLine extends BaseComponent {
     }
 
 
-    
+
     certificateExemptionType: CertificateExemptionTypePM;
     get CertificateExemptionType() { return this.certificateExemptionType; }
     set CertificateExemptionType(value: CertificateExemptionTypePM) {
@@ -670,7 +672,7 @@ export class InvoiceItemCertificateLine extends BaseComponent {
         }
     }
 
-    
+
     resConfirmationType: ConfirmationTypePM;
     get ResConfirmationType() { return this.resConfirmationType; }
     set ResConfirmationType(value: ConfirmationTypePM) {
@@ -704,7 +706,7 @@ export class InvoiceItemCertificateLine extends BaseComponent {
 
         }
     }
-    
+
     get ResConfirmationTypeCode() { return this.entityPM.ResConfirmationTypeCode; }
     set ResConfirmationTypeCode(value: string) {
         if (this.entityPM.ResConfirmationTypeCode != value) {
@@ -753,9 +755,9 @@ export class InvoiceItemCertificateLine extends BaseComponent {
 
         }
     }
-     
-   
-      
+
+
+
 
     get AttachmentTypeName() { return this.entityPM.AttachmentTypeName; }
     set AttachmentTypeName(value: string) {
@@ -789,7 +791,7 @@ export class InvoiceItemCertificateLine extends BaseComponent {
         }
     }
 
-       //#endregion
+    //#endregion
 
     DeleteButtonClicked() {
 
@@ -798,11 +800,11 @@ export class InvoiceItemCertificateLine extends BaseComponent {
             this.parent.invoiceItemPM.RemoveSupplierInvioceItemCertificat(this.entityPM);
         }
 
-    //    this.parent.BuildCertificatesList();
+        //    this.parent.BuildCertificatesList();
 
 
 
     }
-    
- 
+
+
 }
