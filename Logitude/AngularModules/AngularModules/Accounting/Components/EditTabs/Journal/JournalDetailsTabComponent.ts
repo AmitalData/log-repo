@@ -126,6 +126,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     ) {
         super();
 
+        this.fullAccountingSettingListService = new FullAccountingSettingListService();
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.JournalLines = new ObservableCollection([]);
 
