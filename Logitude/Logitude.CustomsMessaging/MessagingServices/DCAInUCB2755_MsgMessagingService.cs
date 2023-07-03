@@ -210,8 +210,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
         public string master { get; set; }
-
-
+        public bool IsWorkSheetFromExcel { get; set; }
         public string MyMoreParams { get; set; }
         public string InternalBankId { get; set; }
         public List<string> ClientFilterDeclarationsList { get; set; }

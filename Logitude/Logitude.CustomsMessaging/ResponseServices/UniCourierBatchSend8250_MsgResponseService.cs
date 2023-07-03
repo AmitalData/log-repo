@@ -76,7 +76,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 //List<DeclarationCourierStatus> listPoco = repo.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.AppicationId);
                 string MAWB = "";
-                List<string> listPoco = repo.GetByMasterIDDeclarationList(requestParams.Tenant, requestParams.AppicationId, out MAWB);
+                List<string> listPoco;
+                if (customResponse.IsWorkSheetFromExcel) {
+                    listPoco = repo.GetFromExcelDeclarationList(requestParams.Tenant, requestParams.LoggingUserId);
+                }
+                else
+                {
+                    listPoco = repo.GetByMasterIDDeclarationList(requestParams.Tenant, requestParams.AppicationId, out MAWB);
+                }
 
                 mess.AppendLine($"ראשי - מפצל");
                 mess.AppendLine($"כל ההצהרות יפוצלו.....");

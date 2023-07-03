@@ -245,37 +245,72 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private static List<DeclarationCourierStatus> GetByMasterIDCourierDeclarationStatusCode(DCAInUCB2750WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository repo)
         {
             List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
-            if (customResponse.CourierDeclarationStatusCode == "X")
+            if (customResponse.IsWorkSheetFromExcel)
             {
-                listPoco = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "X",
-                customResponse.SelectedBOLValue,
-                customResponse.SelectedStatusValue,
-                customResponse.SelectedTotalInvoiceValue,
-                customResponse.SelectedFastIndividualProcessValue,
-                customResponse.SelectedCustomStatusValue,
-                customResponse.SelectedFinalReleaseValue);
-            }
-            else
-            {
-                listPoco = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
-                customResponse.SelectedBOLValue,
-                customResponse.SelectedStatusValue,
-                customResponse.SelectedTotalInvoiceValue,
-                customResponse.SelectedFastIndividualProcessValue,
-                customResponse.SelectedCustomStatusValue,
-                customResponse.SelectedFinalReleaseValue);
-                if (customResponse.CourierDeclarationStatusCode == "RV")
+                if (customResponse.CourierDeclarationStatusCode == "X")
                 {
-                    var listPM2 = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
+                    listPoco = repo.GetFromExcelCourierDeclarationStatusCode(requestParams.Tenant, requestParams.LoggingUserId, "X",
+                    customResponse.SelectedBOLValue,
                     customResponse.SelectedStatusValue,
                     customResponse.SelectedTotalInvoiceValue,
                     customResponse.SelectedFastIndividualProcessValue,
                     customResponse.SelectedCustomStatusValue,
                     customResponse.SelectedFinalReleaseValue);
-                    listPoco = listPoco.Concat(listPM2).ToList();
+                }
+                else
+                {
+                    listPoco = repo.GetFromExcelCourierDeclarationStatusCode(requestParams.Tenant, requestParams.LoggingUserId, "R",
+                    customResponse.SelectedBOLValue,
+                    customResponse.SelectedStatusValue,
+                    customResponse.SelectedTotalInvoiceValue,
+                    customResponse.SelectedFastIndividualProcessValue,
+                    customResponse.SelectedCustomStatusValue,
+                    customResponse.SelectedFinalReleaseValue);
+                    if (customResponse.CourierDeclarationStatusCode == "RV")
+                    {
+                        var listPM2 = repo.GetFromExcelCourierDeclarationStatusCode(requestParams.Tenant, requestParams.LoggingUserId, "V", customResponse.SelectedBOLValue,
+                        customResponse.SelectedStatusValue,
+                        customResponse.SelectedTotalInvoiceValue,
+                        customResponse.SelectedFastIndividualProcessValue,
+                        customResponse.SelectedCustomStatusValue,
+                        customResponse.SelectedFinalReleaseValue);
+                        listPoco = listPoco.Concat(listPM2).ToList();
+                    }
                 }
             }
-
+            else
+            {
+                if (customResponse.CourierDeclarationStatusCode == "X")
+                {
+                    listPoco = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "X",
+                    customResponse.SelectedBOLValue,
+                    customResponse.SelectedStatusValue,
+                    customResponse.SelectedTotalInvoiceValue,
+                    customResponse.SelectedFastIndividualProcessValue,
+                    customResponse.SelectedCustomStatusValue,
+                    customResponse.SelectedFinalReleaseValue);
+                }
+                else
+                {
+                    listPoco = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
+                    customResponse.SelectedBOLValue,
+                    customResponse.SelectedStatusValue,
+                    customResponse.SelectedTotalInvoiceValue,
+                    customResponse.SelectedFastIndividualProcessValue,
+                    customResponse.SelectedCustomStatusValue,
+                    customResponse.SelectedFinalReleaseValue);
+                    if (customResponse.CourierDeclarationStatusCode == "RV")
+                    {
+                        var listPM2 = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
+                        customResponse.SelectedStatusValue,
+                        customResponse.SelectedTotalInvoiceValue,
+                        customResponse.SelectedFastIndividualProcessValue,
+                        customResponse.SelectedCustomStatusValue,
+                        customResponse.SelectedFinalReleaseValue);
+                        listPoco = listPoco.Concat(listPM2).ToList();
+                    }
+                }
+            }
             return listPoco;
         }
 

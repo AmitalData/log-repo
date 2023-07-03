@@ -149,6 +149,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                         this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
                         this.DelayFormVisibility = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowDelayForm");
                         this.EntityResourceImported = true;
+                        this.BuildColumns();
+                        this.BuildColumnsPending();
                         this._SelectedTabFilter = this._TabFilterList[0];
                         this.TabFilterClick(this._SelectedTabFilter);
                     });
@@ -160,26 +162,12 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
     }
 
     ngOnInit() {
-        debugger;
-        this.BuildColumns();
-        this.BuildColumnsPending();
-        
-
         this._CourierWorksheetSharedDataService.CurrentMessage
             .subscribe(message => {
                 if (message == "DoRefresh") {
                     this.RefreshButtonClicked();
                 }
             });
-
-
-
-        this.ChangedUnloadPortSite = false;
-        //if (!AppTool.IsNullOrEmpty(this.PendingFilter)) {
-        //    setTimeout(() => {
-        //        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-        //    }, 300);
-        //}
     }
 
     TabFilterClick(item) {
@@ -2018,7 +2006,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
     DeclarationsStatusRequestMethod() {
 
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM?.Id)
+        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM?.Id,null,true)
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();

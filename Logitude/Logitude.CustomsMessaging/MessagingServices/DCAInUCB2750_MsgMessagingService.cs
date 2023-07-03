@@ -125,7 +125,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SelectedFastIndividualProcessValue = mySendALLCorrectRequestParams.SelectedFastIndividualProcessValue,
                 SelectedCustomStatusValue = mySendALLCorrectRequestParams.SelectedCustomStatusValue,
                 SelectedFinalReleaseValue = mySendALLCorrectRequestParams.SelectedFinalReleaseValue,
-
+                IsWorkSheetFromExcel = mySendALLCorrectRequestParams.IsWorkSheetFromExcel,
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
@@ -229,6 +229,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public List<string> ClientFilterDeclarationsList { get; set; }
         public List<string> ServerSplitDeclarationsList { get; set; }
         public string MyMoreParams { get; set; }
+        public bool IsWorkSheetFromExcel { get; set; }
 
         //public SendALLCorrectRequestParams MySendALLCorrectRequestParams { get; set; }
         public string SelectedBOLValue { get; set; }

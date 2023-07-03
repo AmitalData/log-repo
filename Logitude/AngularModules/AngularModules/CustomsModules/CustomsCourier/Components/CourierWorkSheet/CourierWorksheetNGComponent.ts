@@ -1829,7 +1829,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     DeclarationsStatusRequestMethod() {
 
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id)
+        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id,null,false)
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
