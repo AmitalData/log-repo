@@ -66,15 +66,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                 {
                     mess.AppendLine($"GetByMasterIDCourierDocumentStatus");
-
-                    listPoco = repo.GetByMasterIDCourierDocumentStatus(requestParams.Tenant, requestParams.AppicationId, "X",
-                        customResponse.SelectedBOLValue,
-                        customResponse.SelectedStatusValue,
-                        customResponse.SelectedTotalInvoiceValue,
-                        customResponse.SelectedFastIndividualProcessValue,
-                        customResponse.SelectedCustomStatusValue,
-                        customResponse.SelectedFinalReleaseValue);
-
+                    if (customResponse.IsWorkSheetFromExcel)
+                    {
+                        listPoco = repo.GetFromExcelCourierDocumentStatus(requestParams.Tenant, requestParams.LoggingUserId, "X",
+                          customResponse.SelectedBOLValue,
+                          customResponse.SelectedStatusValue,
+                          customResponse.SelectedTotalInvoiceValue,
+                          customResponse.SelectedFastIndividualProcessValue,
+                          customResponse.SelectedCustomStatusValue,
+                          customResponse.SelectedFinalReleaseValue);
+                    }
+                    else
+                    {
+                        listPoco = repo.GetByMasterIDCourierDocumentStatus(requestParams.Tenant, requestParams.AppicationId, "X",
+                            customResponse.SelectedBOLValue,
+                            customResponse.SelectedStatusValue,
+                            customResponse.SelectedTotalInvoiceValue,
+                            customResponse.SelectedFastIndividualProcessValue,
+                            customResponse.SelectedCustomStatusValue,
+                            customResponse.SelectedFinalReleaseValue);
+                    }
                 }
                 if (listPoco.Count == 0)
                 {

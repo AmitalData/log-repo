@@ -98,7 +98,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                 {
                     mess.AppendLine("GetByMasterIDCourierPaymentStatusCode(R, L)");
-                    listPoco = repo.GetByMasterIDCourierPaymentStatusCode(requestParams.Tenant, requestParams.AppicationId, "R", "L");
+                    if (customResponse.IsWorkSheetFromExcel)
+                    {
+                        listPoco = repo.GetFromExcelCourierPaymentStatusCode(requestParams.Tenant, requestParams.LoggingUserId, "R", "L");
+                    }
+                    else
+                    {
+                        listPoco = repo.GetByMasterIDCourierPaymentStatusCode(requestParams.Tenant, requestParams.AppicationId, "R", "L");
+                    }
                 }
 
 

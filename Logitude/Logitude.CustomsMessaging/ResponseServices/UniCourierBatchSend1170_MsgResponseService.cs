@@ -144,7 +144,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             List<DeclarationCourierStatus> listPM;
             if (customResponse.IsWorkSheetFromExcel)
             {
-                listPM = qs.GeCourierManifestStatusCodeFromExcel(requestParams.Tenant, requestParams.AppicationId, "R",
+                listPM = qs.GeCourierManifestStatusCodeFromExcel(requestParams.Tenant, requestParams.LoggingUserId, "R",
                customResponse.SelectedBOLValue,
                customResponse.SelectedStatusValue,
                customResponse.SelectedTotalInvoiceValue,
@@ -153,7 +153,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                customResponse.SelectedFinalReleaseValue);
                 if (customResponse.CourierDeclarationStatusCode == "RV")
                 {
-                    var listPM2 = qs.GeCourierManifestStatusCodeFromExcel(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
+                    var listPM2 = qs.GeCourierManifestStatusCodeFromExcel(requestParams.Tenant, requestParams.LoggingUserId, "V", customResponse.SelectedBOLValue,
                     customResponse.SelectedStatusValue,
                     customResponse.SelectedTotalInvoiceValue,
                     customResponse.SelectedFastIndividualProcessValue,
