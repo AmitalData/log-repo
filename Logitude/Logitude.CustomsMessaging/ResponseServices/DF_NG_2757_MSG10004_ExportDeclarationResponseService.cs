@@ -132,7 +132,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
             if (_MyDeclarationPM != null)
             {
-                
+              
                 if (_MyDeclarationPM.Direction == "E" && requestParams.RequestVIA == SendRequestVIA.WebServiceBatch && !setting.IsConnectedToUniFreight && customResponse.ResponseContentHeader?.Exception?.Length > 0 && customResponse.Response?.Declaration == null)
                 {
                     DeclarationError declarationError = new DeclarationError();
@@ -170,7 +170,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
                 
-                //myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
+                //myDeclarationUpdateService.Update(this._MyDe'clarationPM, true);
             }
             if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
             {
@@ -254,27 +254,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (requestParams.GetType() == typeof(DeclarationRestoreRequestParams))// moran 10.1.16 Task 19724 // Mirit 24/01/16 19845 
             {
 
-              
-                if (this._MyDeclarationPM.PaymentDate.HasValue && !_MyDeclarationPM.IsCourierDeclaration && customResponse?.Response?.Status[0]?.NameCode?.Value != "36") //If declaration was already paid 
+                if (this._MyDeclarationPM.Direction != "E")
                 {
-                    //Task 44715 allow update of 1.0 if current <1.0 and it's a restore response
-                    if (!(requestParams.GetType() == typeof(DeclarationRestoreRequestParams) && System.Convert.ToDouble(_MyDeclarationPM.VersionId) < 1.0 && System.Convert.ToDouble(customResponse.Response.Declaration.DMExtensions.VersionID.Value) == 1.0) //restored version 1.0 and current 0.x
-                        && (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value)) //Compare Declaration Version
+                    if (this._MyDeclarationPM.PaymentDate.HasValue && !_MyDeclarationPM.IsCourierDeclaration ) //If declaration was already paid 
+                    {
+                        //Task 44715 allow update of 1.0 if current <1.0 and it's a restore response
+                        if (!(requestParams.GetType() == typeof(DeclarationRestoreRequestParams) && System.Convert.ToDouble(_MyDeclarationPM.VersionId) < 1.0 && System.Convert.ToDouble(customResponse.Response.Declaration.DMExtensions.VersionID.Value) == 1.0) //restored version 1.0 and current 0.x
+                            && (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value)) //Compare Declaration Version
 
-                    {
-                        string mess = "נתוני ההצהרה לא עודכנו " + " (" + _MyDeclarationPM.DeclarationNumber + ")" + " הצהרה כבר שולמה ויש שוני בין הגרסאות";
-                        LogMessagingUtil.Instance.AppendLine(mess);
-                        this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                        this.MyResponseData.Succeeded = true;
-                        this.MyResponseData.UserMessage = mess;
-                        this.MyResponseData.HasException = true;
-                        return;
-                    }
-                    else
-                    {
-                        _MyDeclarationPM.PaymentDate = null;
-                        _MyDeclarationPM.PaymentOrderNumber = "";
-                        _MyDeclarationPM.PaymentStatusCode = "";
+                        {
+                            string mess = "נתוני ההצהרה לא עודכנו " + " (" + _MyDeclarationPM.DeclarationNumber + ")" + " הצהרה כבר שולמה ויש שוני בין הגרסאות";
+                            LogMessagingUtil.Instance.AppendLine(mess);
+                            this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                            this.MyResponseData.Succeeded = true;
+                            this.MyResponseData.UserMessage = mess;
+                            this.MyResponseData.HasException = true;
+                            return;
+                        }
+                        else
+                        {
+                            _MyDeclarationPM.PaymentDate = null;
+                            _MyDeclarationPM.PaymentOrderNumber = "";
+                            _MyDeclarationPM.PaymentStatusCode = "";
+                        }
                     }
                 }
             }
