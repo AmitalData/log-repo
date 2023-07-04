@@ -46,6 +46,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsExcelEnabled = true;
+    public IsFutureOpenCheques= false;
     constructor( private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -59,6 +60,10 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
         if (!AppTool.IsNullOrEmpty(args)) {
             var TransactionCount;
             this.EntityPM = args.EntityPM;
+            if(args.IsFutureOpenCheques) {
+                this.IsFutureOpenCheques = args.IsFutureOpenCheques;
+            }
+            
             this.LoadData();
             this.CreateApiQueryFilters(50, null, "PaymentValueDate", "Descending");
             this._entityListService.getARPyamentChequesListAsLedgerTransactions("LedgerTransaction", this.filterAgrs); 
@@ -95,7 +100,8 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true,
-            ServerSideSortable: true
+            ServerSideSortable: true,
+            SortByName: 'PaymentValueDate'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("PaymentValueDate",'DateTime',TextCodeTranslator.Translate("ARPayment.F.ValueDate")));
 
@@ -106,7 +112,9 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             Styles: { width: '110px' }, // TASK 47563
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Source'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
 
@@ -118,7 +126,9 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             Styles: { width: '120px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'LocalAmountCredit'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("LocalAmountCredit", 'Decimal', TextCodeTranslator.Translate("LedgerTransaction.F.LocalAmountCredit")));
 
@@ -129,7 +139,9 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             Styles: { width: '120px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'ForeignAmountCredit'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmountCredit", 'Double', TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmountCredit")));
 
@@ -138,7 +150,9 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference1"), // 'Ref. 1',
             Styles: { width: '85px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Reference1'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference1", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.Reference1")));
 
@@ -147,7 +161,9 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference2"), // 'Ref. 2',
             Styles: { width: '85px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Reference2'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference2", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.Reference2")));
 
@@ -156,7 +172,9 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference3"), // 'Ref. 3',
             Styles: { width: '85px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Reference3'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference3", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.Reference3")));
 
@@ -167,7 +185,9 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             Styles: { width: '85px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'JournalNumber'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("JournalNumber", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.JournalNumber")));
 
@@ -179,7 +199,9 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'PaymentChequeStatus'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("PaymentChequeStatus", 'Text', TextCodeTranslator.Translate("ARPaymentCheque.F.StatusCode")));
 
@@ -191,7 +213,9 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Notes'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.Notes")));
     }
@@ -233,7 +257,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
         }
 
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-
+        this.filterAgrs.addAdditionalFilter("IsFutureOpenCheques", this.IsFutureOpenCheques, null, null, "Equals", true, false, false, "Boolean");
     }
 
     CancelButtonClicked() {
