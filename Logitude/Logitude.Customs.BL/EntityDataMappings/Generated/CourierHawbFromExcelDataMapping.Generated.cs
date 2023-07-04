@@ -26,7 +26,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CreatedByUserId, 
 	         DeclarationId, 
 	         NotFound, 
-	         CourierHawb,
+	         CourierHawb, 
+	         ErrorMessage,
 	      }
 
 
@@ -37,7 +38,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CreatedByUserId, 
 	         DeclarationId, 
 	         NotFound, 
-	         CourierHawb,
+	         CourierHawb, 
+	         ErrorMessage,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +66,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierHawb))
             {
 				entityPOCO.CourierHawb = entityPM.CourierHawb;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorMessage))
+            {
+				entityPOCO.ErrorMessage = entityPM.ErrorMessage;
 			}
 			}
 
@@ -95,6 +102,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CourierHawb = entityPOCO.CourierHawb;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ErrorMessage))
+            {
+					entityPM.ErrorMessage = entityPOCO.ErrorMessage;
+            }
+
 		}
 
 		public void PMToOldPM(CourierHawbFromExcelPM entityPM, CourierHawbFromExcelPM oldEntityPM)
@@ -121,6 +133,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CourierHawb = entityPM.CourierHawb;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorMessage))
+            {
+                oldEntityPM.ErrorMessage = entityPM.ErrorMessage;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CourierHawbFromExcelPM entityPM)
@@ -129,6 +146,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ErrorMessage)) //T4 find type == nText 
+            {
+                entityPM.ErrorMessage = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ErrorMessage));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
