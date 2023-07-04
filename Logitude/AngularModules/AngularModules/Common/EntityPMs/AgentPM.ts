@@ -198,6 +198,11 @@ export class AgentPM extends ObjectCustomFieldPM {
     public set SharedLogisticsInvitationStatusName(newValue: string) { if (this.sharedLogisticsInvitationStatusName != newValue) { this.sharedLogisticsInvitationStatusName = newValue; this.MarkAsDirty("SharedLogisticsInvitationStatusName"); } }
        
 	 
+    private cargoTrackingInvitationStatusName: string;
+    public get CargoTrackingInvitationStatusName() { return this.cargoTrackingInvitationStatusName; }
+    public set CargoTrackingInvitationStatusName(newValue: string) { if (this.cargoTrackingInvitationStatusName != newValue) { this.cargoTrackingInvitationStatusName = newValue; this.MarkAsDirty("CargoTrackingInvitationStatusName"); } }
+       
+	 
     private lastLoginDate: Date;
     public get LastLoginDate() { return this.lastLoginDate; }
     public set LastLoginDate(newValue: Date) { if (this.lastLoginDate != newValue) { this.lastLoginDate = newValue; this.MarkAsDirty("LastLoginDate"); } }

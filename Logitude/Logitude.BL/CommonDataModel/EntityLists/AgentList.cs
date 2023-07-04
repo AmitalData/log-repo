@@ -24,6 +24,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PaymentTermId { get; set; }
         public string SearchFields { get; set; }
         public string SharedLogisticsInvitationStatusName { get; set; }
+        public string CargoTrackingInvitationStatusName { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public bool EnableConsolidationInvoices { get; set; }
         public string CityName { get; set; }

@@ -224,7 +224,7 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
     }
 
     LoadCardData() {
-        this._sharedLogisticsService.getSharedLogisticsStatistics(SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+        this._sharedLogisticsService.getSharedLogisticsStatistics(SessionInfo.LoggedUserTenant, "DigitalPortal").subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

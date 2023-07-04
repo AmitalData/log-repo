@@ -16,9 +16,10 @@ dbo.Customers.Id, dbo.Customers.Tenant,dbo.cards.EnglishName,dbo.cards.ZipCode,d
 ,dbo.CustomFieldsMainObjects.Field29,dbo.CustomFieldsMainObjects.Field30,dbo.CustomFieldsMainObjects.Field31,dbo.CustomFieldsMainObjects.Field32,dbo.CustomFieldsMainObjects.Field33,dbo.CustomFieldsMainObjects.Field34,dbo.CustomFieldsMainObjects.Field35,dbo.CustomFieldsMainObjects.Field36,dbo.CustomFieldsMainObjects.Field37,dbo.CustomFieldsMainObjects.Field38
 ,dbo.CustomFieldsMainObjects.Field39,dbo.CustomFieldsMainObjects.Field40,dbo.CustomFieldsMainObjects.Field41,dbo.CustomFieldsMainObjects.Field42,dbo.CustomFieldsMainObjects.Field43,dbo.CustomFieldsMainObjects.Field44,dbo.CustomFieldsMainObjects.Field45,dbo.CustomFieldsMainObjects.Field46,dbo.CustomFieldsMainObjects.Field47,dbo.CustomFieldsMainObjects.Field48
 ,dbo.CustomFieldsMainObjects.Field49,dbo.CustomFieldsMainObjects.Field50,dbo.Ranks.Code as RankCode,dbo.Ranks.Name as RankName,dbo.CustomerTeams.Id as TeamId,dbo.CustomerTeams.Name as TeamName
-,dbo.Cards.SharedLogisticsInvitationStatusCode, dbo.Customers.ActivityWatch 
+,dbo.Cards.SharedLogisticsInvitationStatusCode,dbo.Cards.CargoTrackingInvitationStatusCode, dbo.Customers.ActivityWatch 
 ,dbo.SharedLogisticsInvitationStatus.Name as SharedLogisticsInvitationStatusName
-,dbo.cards.LastLoginDate,dbo.cards.InvitationDate,dbo.Industries.Name as IndustryName
+,CargoTrackingInvitationStatus.Name as CargoTrackingInvitationStatusName
+,dbo.cards.LastLoginDate,dbo.cards.InvitationDate,dbo.cards.CargoTrackingInvitationDate,dbo.Industries.Name as IndustryName
 ,dbo.customers.LeadDescription,dbo.customers.ClassifierId ,dbo.Cards.IsCustomer,dbo.Customers.CollectorId,dbo.customers.FreelancerId,FreelancerContacts.EnglishName as FreelancerName,dbo.customers.ForwarderId,ForwarderCards.EnglishName as ForwarderName
 ,dbo.Customers.CustomsAgentId,CustomsAgentCards.EnglishName as CustomsAgentName,dbo.customers.MediatorId,MediatorCards.EnglishName as MediatorName,dbo.customers.BeforeDeactiveStatusCode,dbo.Customers.ReadyForActivationDate,CreatedByUserContacts.EnglishName as UpdatedByUserName
 ,PrimaryContacts.EnglishName as PrimaryContactName
@@ -50,6 +51,7 @@ FROM dbo.Customers  Inner join
                          dbo.Ranks  ON dbo.Customers.RankId = dbo.Ranks.Id LEFT OUTER JOIN
                          dbo.CustomerTeams  ON dbo.Customers.TeamId = dbo.CustomerTeams.Id LEFT OUTER JOIN
                          dbo.SharedLogisticsInvitationStatus ON dbo.Cards.SharedLogisticsInvitationStatusCode = dbo.SharedLogisticsInvitationStatus.Code LEFT OUTER JOIN
+                         dbo.SharedLogisticsInvitationStatus CargoTrackingInvitationStatus ON dbo.Cards.CargoTrackingInvitationStatusCode = CargoTrackingInvitationStatus.Code LEFT OUTER JOIN
                          dbo.Industries ON dbo.Customers.IndustryId = dbo.Industries.Id LEFT OUTER JOIN
                          dbo.Contacts AS FreelancerContacts ON dbo.Customers.FreelancerId = FreelancerContacts.Id LEFT OUTER JOIN
                          dbo.Cards AS ForwarderCards ON dbo.Customers.ForwarderId = ForwarderCards.Id LEFT OUTER JOIN

@@ -31,7 +31,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AccountNumber).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.IBANNumber).HasMaxLength(30).IsUnicode(true);
             this.Property(t => t.InvitationDate);
+            this.Property(t => t.CargoTrackingInvitationDate);
             this.Property(t => t.SharedLogisticsInvitationStatusCode);
+            this.Property(t => t.CargoTrackingInvitationStatusCode);
             this.Property(t => t.LastLoginDate);
             this.Ignore(t => t.PartnerTypeName);
             this.Property(t => t.ClassifierId).HasMaxLength(15).IsUnicode(false);
@@ -96,6 +98,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AccountNumber).HasColumnName("AccountNumber");
             this.Property(t => t.IBANNumber).HasColumnName("IBANNumber");
             this.Property(t => t.InvitationDate).HasColumnName("InvitationDate");
+            this.Property(t => t.CargoTrackingInvitationDate).HasColumnName("CargoTrackingInvitationDate");
             this.Property(t => t.LastLoginDate).HasColumnName("LastLoginDate");
             this.Property(t => t.ClassifierId).HasColumnName("ClassifierId");
             this.Property(t => t.CollectorId).HasColumnName("CollectorId");
@@ -143,12 +146,14 @@ namespace Simplog.Data.CommonDataModel.Mapping
          if (dbms == "oracle")
          {
              this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogInvitationStatCode");
-         }
+                this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTracInvitationStatCode");
+            }
          //#else
          else
          {
              this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogisticsInvitationStatusCode");
-         }
+                this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTrackingInvitationStatusCode");
+            }
             
 //#endif
 

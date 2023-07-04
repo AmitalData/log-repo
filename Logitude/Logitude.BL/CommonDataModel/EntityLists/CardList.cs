@@ -46,8 +46,11 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool InUse { get; set; }
         public string RecentlyAdded { get; set; }
         public DateTime? InvitationDate { get; set; }
+        public DateTime? CargoTrackingInvitationDate { get; set; }
         public int? SharedLogisticsInvitationStatusCode { get; set; }
         public string SharedLogisticsInvitationStatusName { get; set; }
+        public int? CargoTrackingInvitationStatusCode { get; set; }
+        public string CargoTrackingInvitationStatusName { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public string AirlineAccountNumber { get; set; }
         public string ContactId { get; set; }

@@ -56,6 +56,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.IndustryName).HasColumnName("IndustryName");
             this.Property(t => t.InvitationDate).HasColumnName("InvitationDate");
+            this.Property(t => t.CargoTrackingInvitationDate).HasColumnName("CargoTrackingInvitationDate");
             this.Property(t => t.InvoiceCurrencyId).HasColumnName("InvoiceCurrencyId");
             this.Property(t => t.IsCustomer).HasColumnName("IsCustomer");
             this.Property(t => t.LastLoginDate).HasColumnName("LastLoginDate");
@@ -132,13 +133,17 @@ namespace Simplog.Data.CommonDataModel.Mapping
             {
                 this.Property(t => t.SharedLogisticsInvitationStatusName).HasColumnName("SharedLogsInvitationStatusName");
                 this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogInvitationStatCode");
+                this.Property(t => t.CargoTrackingInvitationStatusName).HasColumnName("CargoTracInvitationStatName");
+                this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTracInvitationStatCode");
             }
             //#elseelse
             else
             {
                 this.Property(t => t.SharedLogisticsInvitationStatusName).HasColumnName("SharedLogisticsInvitationStatusName");
                 this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogisticsInvitationStatusCode");
-                
+                this.Property(t => t.CargoTrackingInvitationStatusName).HasColumnName("CargoTrackingInvitationStatusName");
+                this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTrackingInvitationStatusCode");
+
             }
             //#endif
         }

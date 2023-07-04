@@ -94,9 +94,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string TeamName { get; set; }
         public int? SharedLogisticsInvitationStatusCode { get; set; }
         public string SharedLogisticsInvitationStatusName { get; set; }
+        public int? CargoTrackingInvitationStatusCode { get; set; }
+        public string CargoTrackingInvitationStatusName { get; set; }
         public bool IsActiveForMobile { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public DateTime? InvitationDate { get; set; }
+        public DateTime? CargoTrackingInvitationDate { get; set; }
         public string IndustryName { get; set; }
         public string LeadDescription { get; set; }
         public string ClassifierId { get; set; }

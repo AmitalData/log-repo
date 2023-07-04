@@ -786,6 +786,7 @@ namespace WebFreight.Web.WcfApi
                                                                  //SharedLogisticsInvitationStatusName = customer.Card.SharedLogisticsInvitationStatus != null ? customer.Card.SharedLogisticsInvitationStatus.Name : null,
                                                                  LastLoginDate = customer.Card.LastLoginDate,
                                                                  InvitationDate = customer.Card.InvitationDate,
+                                                                 CargoTrackingInvitationDate = customer.Card.CargoTrackingInvitationDate,
                                                                  IsAutonomy = customer.Card.IsAutonomy,
                                                              }).FirstOrDefault();
 
