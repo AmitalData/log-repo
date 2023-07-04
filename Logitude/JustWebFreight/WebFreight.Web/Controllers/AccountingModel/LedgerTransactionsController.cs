@@ -9,6 +9,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
+using NPOI.SS.Formula.Functions;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -155,8 +156,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             try
             {
                 string accountId = GetGLAccountFilterValueFromQueryOperations(filters, tenant);
+                string isFutureOpenCheques = GetIsFutureOpenChequesFilterValueFromQueryOperations(filters, tenant);
 
-                List<LedgerTransactionList> tranactions = GetAccountChequesTransactions(tenant, accountId);
+                List<LedgerTransactionList> tranactions = GetAccountChequesTransactions(tenant, accountId, isFutureOpenCheques, filters.SortBy, filters.SortDirection);
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
@@ -182,11 +184,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             return accountId;
         }
 
-        private static List<LedgerTransactionList> GetAccountChequesTransactions(int tenant, string accountId)
+        private static string GetIsFutureOpenChequesFilterValueFromQueryOperations(ApiQueryFilters filters, int tenant)
+        {
+            QueryOperations queryOperations = BuildQueryOperationsForLedgerTransactions(filters, tenant);
+            string IsFutureOpenCheques = GetIsFutureOpenChequesFilterValue(queryOperations);
+            return IsFutureOpenCheques;
+        }
+
+        private static List<LedgerTransactionList> GetAccountChequesTransactions(int tenant, string accountId, string isFutureOpenCheques, string sortBy, string sortDirection)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-            GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, MyContext);
-            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(accountId);
+            GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, MyContext, isFutureOpenCheques == "True");
+            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(accountId, sortBy, sortDirection);
             return tranactions;
         }
 
@@ -256,6 +265,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == "GLAccountId");
             return filterItem?.FieldValue.ToString();
 
+        }
+
+        private static string GetIsFutureOpenChequesFilterValue(QueryOperations queryOperations)
+        {
+            QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == "IsFutureOpenCheques");
+            return filterItem?.FieldValue.ToString();
         }
 
         private static int AuthinticateTenant()

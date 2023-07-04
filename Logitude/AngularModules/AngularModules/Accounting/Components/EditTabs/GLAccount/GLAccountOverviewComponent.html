@@ -706,8 +706,8 @@
 
 
                                             </div>
-                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start text-start >
-                                                <!-- {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }} -->
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayFutureChequelistClicked(GLAccountMoreData.AccountId)" float-start text-start >
+                                                {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
                                             </a>
                                         </div>
 
