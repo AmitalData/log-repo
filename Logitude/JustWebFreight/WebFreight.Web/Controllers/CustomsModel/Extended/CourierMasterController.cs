@@ -84,7 +84,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetExportCourierMaster2Excel(string CourierMasterId, int tenant)
+        public HttpResponseMessage GetExportCourierMaster2Excel(string CourierMasterId, int tenant,string userId,bool IsWorkSheetFromExcel)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
                 var o = new CourierMasterWSheetExport();
-                var result = o.ExportReport(CourierMasterId, tenant);
+                var result = o.ExportReport(CourierMasterId, tenant,userId, IsWorkSheetFromExcel);
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
                 response.Content = new StreamContent(new MemoryStream(result));

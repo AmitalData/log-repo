@@ -1757,6 +1757,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string integratorName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IntegratorName  
+	   {
+	    
+	     get
+		{
+		   return integratorName;
+		 }
+		 set
+		 {
+		   if(integratorName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IntegratorName",OldValue=integratorName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   integratorName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

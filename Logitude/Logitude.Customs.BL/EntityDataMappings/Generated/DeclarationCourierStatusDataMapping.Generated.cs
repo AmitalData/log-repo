@@ -133,7 +133,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HatraDate, 
 	         MissedDocumentStatusCode, 
 	         ApprovedCourierPendingList, 
-	         NotApprovedPendingList,
+	         NotApprovedPendingList, 
+	         IntegratorName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
