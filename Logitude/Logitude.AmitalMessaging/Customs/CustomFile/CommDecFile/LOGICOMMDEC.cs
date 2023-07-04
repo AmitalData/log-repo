@@ -152,6 +152,8 @@
 
         private Pendings pendingsField;
 
+        private bool isClosedForFollowUp;
+
         /// <remarks/>
         public string CustomFileNo
         {
@@ -789,6 +791,18 @@
             set
             {
                 this.lastMileServiceTypeField = value;
+            }
+        }
+
+        public bool IsClosedForFollowUp
+        {
+            get
+            {
+                return this.isClosedForFollowUp;
+            }
+            set
+            {
+                this.isClosedForFollowUp = value;
             }
         }
     }
