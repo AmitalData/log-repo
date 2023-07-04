@@ -336,7 +336,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSendPayReadyLow2755(string CourierMasterId, string HAWB, string InternalBankId)
+        public HttpResponseMessage GetSendPayReadyLow2755(string CourierMasterId, string HAWB, string InternalBankId, Boolean IsWorkSheetFromExcel)
         {
             try
             {
@@ -345,11 +345,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new
                     DCAInUCB2755_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, HAWB, InternalBankId);
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, HAWB, InternalBankId, IsWorkSheetFromExcel);
 
                 return Request.CreateResponse(HttpStatusCode.OK,
 
@@ -372,10 +373,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB2755_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData.CourierMasterId, requestParamsData.HAWB, requestParamsData.InternalBankId, requestParamsData.Declarations);
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, requestParamsData.CourierMasterId, requestParamsData.HAWB, requestParamsData.InternalBankId, requestParamsData.IsWorkSheetFromExcel, requestParamsData.Declarations);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
