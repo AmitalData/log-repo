@@ -3337,7 +3337,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
    
     ShowIndication(){
-       
+
        
       this.entityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
          var table = window.ObjectTables.filter(d => d.Name === 'Customs.ClientIndication')[0];
@@ -3370,8 +3370,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                            if(this.clientIndicationList.length > 0) {
                            
                               if(this.clientIndicationList.filter(x=>x.CustomerIndicationTypeID =="2").length > 0){
-                                  var date=new Date();
-                                  if(!(this.clientIndicationList.filter(x=>x.CustomerIndicationTypeID =="2"&&x.StartDate<date&&x.EndDate>date).length > 0)){
+                                  var d=new Date();
+                                  var date=Date.parse(d.toString())                                                              
+                                  var IsExporterExpire=this.clientIndicationList.find(x=>x.CustomerIndicationTypeID =="2"&&Date.parse(x.StartDate.toString())<date&&Date.parse(x.EndDate.toString())>date);
+                                 
+                                  if(!IsExporterExpire){
                                        msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.DeclareInCustomsExpired"));
                                   }
                               }
