@@ -83,6 +83,23 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.RequestDescription = "מסר מניפסט";
 
 
+            FeatureQuery featureQuery = new FeatureQuery();
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant), _DeclarationPM.Tenant);
+            var feature = features.Features.FirstOrDefault(x => x.Code == "SendManifestEvent");
+            if (feature != null)
+            {
+                EventContextTagModel myEventContextTagModel = new EventContextTagModel()
+                {
+                    CallProccessID = EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService,
+                    EventCode = "MNS",
+                    EventRemarks = "Manifest Sent ",
+                    StatusDateTime = DateTime.Now,
+                };
+                string loggingUserId = AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant);
+                RaiseEvent(_DeclarationPM, loggingUserId, myEventContextTagModel);
+            }
+           
+
             //this._DeclarationPM.CurrentContextTag = myInsertEventContextTagModel;
             _DeclarationPM.ManifestCargoStatusCode = "4";
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
