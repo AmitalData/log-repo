@@ -389,11 +389,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             return currentDeclarationCourierStatusPM;
         }
-        public DeclarationCourierStatusPM CalculateDeclarationCourierStatus(DeclarationPM declarationPM, bool isRequiredFieldHasChanged = false)
+        public DeclarationCourierStatusPM CalculateDeclarationCourierStatus(DeclarationPM declarationPM, bool isRequiredFieldHasChanged = false, DeclarationCourierStatusPM _MyDeclarationCourierStatusPM=null)
         {
             LogMessagingUtil.Instance.AppendLine("CalculateDeclarationCourierStatus()");
             CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(declarationPM);
-            return calculateDeclarationCourierStatus.CalcAll();
+            return calculateDeclarationCourierStatus.CalcAll(_MyDeclarationCourierStatusPM);
 
             if (declarationPM.IsCourierDeclaration)
             {
