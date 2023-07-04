@@ -113,7 +113,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 CourierMasterId = mySendALLCorrectRequestParams.CourierMasterId,
                 LoggingUserId = LoggingUserId,
                 master = mySendALLCorrectRequestParams.HAWB,
-
+                IsWorkSheetFromExcel= mySendALLCorrectRequestParams.IsWorkSheetFromExcel,
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
@@ -207,6 +207,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
         public string master { get; set; }
+        public bool IsWorkSheetFromExcel { get; set; }
 
 
         public string MyMoreParams { get; set; }

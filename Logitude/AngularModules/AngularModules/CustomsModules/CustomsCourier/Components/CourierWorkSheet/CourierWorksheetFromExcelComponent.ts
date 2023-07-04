@@ -424,6 +424,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                         currRequestParams.CourierMasterId = this.entityPM?.Id;
                         currRequestParams.HAWB = this.entityPM?.HAWB;
                         currRequestParams.InternalBankId = InternalBankId;
+                        currRequestParams.IsWorkSheetFromExcel=true;
                         currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
                         this._CourierMasterService.PostSendPayReadyLow2755(currRequestParams)
                             .subscribe((res: any) => {
@@ -436,7 +437,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                             });
                     }
                     else {
-                        this._CourierMasterService.GetSendPayReadyLow2755(this.entityPM?.Id, this.entityPM?.HAWB, InternalBankId)
+                        this._CourierMasterService.GetSendPayReadyLow2755(this.entityPM?.Id, this.entityPM?.HAWB, InternalBankId,true)
                             .subscribe((res: any) => {
                                 this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
@@ -2030,8 +2031,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.CourierMasterId = this.entityPM?.Id;
-        currRequestParams.HAWB = this.entityPM?.HAWB;
+        currRequestParams.IsWorkSheetFromExcel=true;
 
 
         this._CourierMasterService.PostSendALLTerminal(currRequestParams)

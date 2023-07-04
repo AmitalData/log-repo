@@ -11,6 +11,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string CourierMasterId { get; set; }
         public string HAWB { get; set; }
         public string InternalBankId { get; set; }
+        public Boolean IsWorkSheetFromExcel { get; set; }
         public List<string> Declarations { get; set; }
     }
 

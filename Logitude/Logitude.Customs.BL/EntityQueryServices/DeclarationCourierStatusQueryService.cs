@@ -219,6 +219,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
             res = anyList.Select(r => new KeyValuePair<string, string>(r.DeclarationId, r.StorageSiteCode)).ToList();
             return res;
         }
+        public List<KeyValuePair<string, string>> GetFromExcelStorageSiteCode(int tenant, string userId,
+        List<string> storageSiteCodeList)
+        {
+            var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+            var repoDecConsignment = new ConsignmentRepository(this.context);
+            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
+                     join rDecConsignment in repoDecConsignment.GetAll(tenant).Where(r => storageSiteCodeList.Contains(r.StorageSiteCode))
+                     on dec.DeclarationId equals rDecConsignment.DeclarationId
+                     select new { rDecConsignment.StorageSiteCode, rDecConsignment.DeclarationId });
+            var anyList = q.ToList();
+            var res = new List<KeyValuePair<string, string>>();
+            res = anyList.Select(r => new KeyValuePair<string, string>(r.DeclarationId, r.StorageSiteCode)).ToList();
+            return res;
+        }
 
 
 

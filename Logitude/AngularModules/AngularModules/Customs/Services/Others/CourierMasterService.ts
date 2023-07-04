@@ -301,12 +301,12 @@ export class CourierMasterService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetSendPayReadyLow2755(CourierMasterId, HAWB, InternalBankId:string ) {
+    GetSendPayReadyLow2755(CourierMasterId, HAWB, InternalBankId:string,IsWorkSheetFromExcel:boolean=false) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendPayReadyLow2755?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&InternalBankId=' + InternalBankId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetSendPayReadyLow2755?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&InternalBankId=' + InternalBankId+ '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var messString = response;
                 
 
