@@ -67,7 +67,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     Voided: boolean = false;
     private CancelledStatusCode: string = "5";
     private fullAccountingSettingListService: FullAccountingSettingListService;
-    public IsSecurityLevelVisibile: boolean = false;
+    public IsSecurityLevelVisible: boolean = false;
     IsJournalSecurityManaged: boolean = false;
     public IsSecurityLevelOK: boolean = true;
     public UserSecurityLevel: number = SessionLocator.LoggedUserPM.SecurityLevel;
@@ -135,7 +135,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
         this.CheckFeatures();
         this.getAccountingSettingSecurityLevelField();
-        if (!this.IsSecurityLevelOK) {
+        if (this.IsSecurityLevelOK != undefined && !this.IsSecurityLevelOK) {
             this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Journal.O.ViewingNotAuthorized"));
 
@@ -181,24 +181,36 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         if (this.IsJournalSecurityManaged) {
             this.fullAccountingSettingListService.getSingle(SessionLocator.Tenant.toString()).subscribe((response: any) => {
                 this.CurrentSession.StopBusyIndicator();
+                var userSecurityLevel: number = 0;
+                if (this.UserSecurityLevel != undefined) {
+                    userSecurityLevel = this.UserSecurityLevel;
+                }
+                var journalSecurityLevel: number = 0;
+                if (this.EntityPM.SecurityLevel != undefined) {
+                    journalSecurityLevel = this.EntityPM.SecurityLevel;
+                }
+                this.IsSecurityLevelOK = true;
+
                 if (response != null) {
                     var response = response.Result;
-                    if (response.IsSecurityLevelActivated && this.UserSecurityLevel >= 1) {
-                        this.IsSecurityLevelVisibile = true;
-                        if (this.EntityPM.SecurityLevel > this.UserSecurityLevel) {
+                    if (response.IsSecurityLevelActivated && userSecurityLevel >= 1) {
+                        this.IsSecurityLevelVisible = true;
+                        if (journalSecurityLevel > userSecurityLevel) {
                             this.IsSecurityLevelOK = false;
+                            this.IsSecurityLevelVisible = false;
                         }
                     }
-                    else if (response.IsSecurityLevelActivated && this.UserSecurityLevel == 0 && this.EntityPM.SecurityLevel > 0) {
+                    else if (response.IsSecurityLevelActivated && userSecurityLevel == 0 && journalSecurityLevel > 0) {
                         this.IsSecurityLevelOK = false;
+                        this.IsSecurityLevelVisible = false;
                     }
                     else {
-                        this.IsSecurityLevelVisibile = false;
+                        this.IsSecurityLevelVisible = false;
                     }
                 }
             });
         } else {
-            this.IsSecurityLevelVisibile = false;
+            this.IsSecurityLevelVisible = false;
         }
     }
 
@@ -250,7 +262,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
     SetUIProperties() {
         //Display only
-        if (!this.IsSecurityLevelOK) {
+        if (this.IsSecurityLevelOK != undefined && !this.IsSecurityLevelOK) {
             //disable controls
             this.journalDisabled = true;
             this.PointerEvents = 'none';
@@ -343,7 +355,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     FillGrid() {
-        if (!this.IsSecurityLevelOK) {
+        if (this.IsSecurityLevelOK == undefined || this.IsSecurityLevelOK) {
             // if entity in edit mode
             if (this.EntityPM.Id != undefined || this.EntityPM.JournalLines.length > 0) {
                 var tempItemSource: JournalLineModel[] = [];
