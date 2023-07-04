@@ -271,7 +271,6 @@ export class CourierWorksheetListTemplate {
     }
 
     BuildDeclarationsCheckBox() {
-        debugger;
         if (this._CourierWorksheetSharedDataService._SelectedItems.Collection.includes(this._CourierWorksheet.DeclarationId)) {
             this.IsDeclarationChecked = true;
         }
@@ -730,7 +729,7 @@ export class CourierWorksheetListTemplate {
         this.CD.detectChanges();
     }
 
-
+  
     CourierPendingReasonCommand(event, declarationId, mode) {
         this.ButtonClick(event);
 

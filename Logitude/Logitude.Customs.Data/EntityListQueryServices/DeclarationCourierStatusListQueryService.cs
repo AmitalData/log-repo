@@ -151,7 +151,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   //CourierPendingReasonCode = a.CourierPendingReasonCode,
                                                                   //CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
 
-
+                                                                  
                                                                   CourierPendingReasonErrorPlace = errorPlaceOuterJoinNullable != null ?
                                                                   (
                                                                   errorPlaceOuterJoinNullable.ErrorPlace == true ? "1" : null)
@@ -168,7 +168,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   //PendingRemarks = a.PendingRemarks,
                                                                   //PendingRemarks = declarationPendingsListNames.CourierPendingReason.LocalName,
 
-
+                                                                 
                                                                   CourierSuspentionReasonName = d.CourierSuspentionReasonCode != null ? d.AgentTalkBackType.LocalName : null,
                                                                   AcceptanceStatusCode = d.AcceptanceStatusCode,
                                                                   CourierSuspentionCode = d.CourierSuspentionCode,
@@ -191,6 +191,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
                                                                   AirlineId = cm.CustomsAirline.AirlinePrefix,
+                                                                  
+                                                                  IntegratorName=cm.Card != null ? cm.Card.LocalName : null,
                                                                   MAWB = cm.MAWB,
                                                                   MasterGrossMassMeasure = cm.GrossMassMeasure,
                                                                   MasterPackageQuantity = cm.PackageQuantity,
@@ -283,7 +285,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return iQueryable;
         }
 
-        public IQueryable<DeclarationCourierStatusList> GetByCourierMasterId(string courierMasterId, int tenant)
+        public IQueryable<DeclarationCourierStatusList> GetByCourierMasterId(string courierMasterId, int tenant, string userId=null, bool IsWorkSheetFromExcel=false)
         {
             IQueryable<DeclarationCourierStatus> DeclarationCourierStatusQuery = (from a in context.DeclarationCourierStatuses
                                                                                   where a.Tenant == tenant
@@ -291,8 +293,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
             IQueryable<DeclarationCourierStatusList> q = GetIqueryableList(DeclarationCourierStatusQuery);
-            q = q.Where(r => r.CourierMasterId == courierMasterId);
-
+            if (IsWorkSheetFromExcel)
+            {
+                var hawbsFromExcel=(from a in context.CourierHawbFromExcels
+                   where a.Tenant == tenant && a.CreatedByUserId == userId && a.NotFound != true
+                   select a);
+                q = (from cd in hawbsFromExcel
+                     join dStatus in q
+                     on cd.DeclarationId equals dStatus.DeclarationId
+                     select dStatus);
+            }
+            else
+            {
+                q = q.Where(r => r.CourierMasterId == courierMasterId);
+            }
 
             return q;
 

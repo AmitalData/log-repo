@@ -17,12 +17,12 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 {
     public class CourierMasterWSheetExport
     {
-        public byte[] ExportReport(string courierMasterId, int tenant)
+        public byte[] ExportReport(string courierMasterId, int tenant,string userId,bool IsWorkSheetFromExcel)
         {
             ICustomContext MyContext = CustomContext.GetContext(tenant);
             DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(MyContext);
             declarationCourierStatusQuery.RequiredFieldErrorsForCourierDeclarationIsValid = true;
-            var q = declarationCourierStatusQuery.GetByCourierMasterId(courierMasterId, tenant)
+            var q = declarationCourierStatusQuery.GetByCourierMasterId(courierMasterId, tenant,userId, IsWorkSheetFromExcel)
                 .Select(r => new
                 {
                     r.AirlineId,

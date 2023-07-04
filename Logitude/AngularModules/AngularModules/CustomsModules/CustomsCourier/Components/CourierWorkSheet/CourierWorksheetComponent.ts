@@ -1449,7 +1449,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
-        debugger;
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
@@ -2192,6 +2191,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.HAWB = this.entityPM.HAWB;
 
 
+
         this._CourierMasterService.PostSendALLTerminal(currRequestParams)
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
@@ -2450,7 +2450,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
         //communicationLogStepListService.GetExportExcelByRequestId("8305", this.MyLastCustomsRequestSheetId, SessionLocator.Tenant);
         //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
-        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM.Id + '&tenant=' + this.entityPM.Tenant.toString();
+        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM?.Id + '&tenant=' + SessionLocator.Tenant.toString()+ '&userId=' + SessionLocator.LoggedUserId +  '&IsWorkSheetFromExcel=' + false;
 
 
         window.open(url);

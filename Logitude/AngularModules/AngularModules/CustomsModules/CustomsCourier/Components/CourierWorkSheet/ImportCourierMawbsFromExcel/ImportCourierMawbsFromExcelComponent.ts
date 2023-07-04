@@ -122,7 +122,6 @@ export class ImportCourierMawbsFromExcelComponent
     OkButtonClicked() {
         this.ErrorsResultList.Clear();
         this._DeclarationWebService.ImportCourierMawbsFromExcel(this.formData,SessionLocator.LoggedUserId,this.tenant).subscribe((res:string[]) => {
-            debugger;
             this.UploadSuccess = true;
             this.ErrorsResultList.InsertCollection(res);
                // this.ErrorsResultList.InsertCollection(res);

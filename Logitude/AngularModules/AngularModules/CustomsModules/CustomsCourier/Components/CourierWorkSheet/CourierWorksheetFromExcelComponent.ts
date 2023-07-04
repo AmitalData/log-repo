@@ -44,7 +44,7 @@ import { InterfaceTenantDefinitionsWebService } from 'Customs/Services/WebServic
 })
 
 
-export class CourierWorksheetFromExcelComponent extends BaseComponent {
+export class CourierWorksheetFromExcelComponent extends BaseComponent implements OnDestroy {
     public _SelectedItems: any;
 
     ObjectTableName: string = "Customs.CourierMaster";
@@ -168,6 +168,9 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                     this.RefreshButtonClicked();
                 }
             });
+    }
+    ngOnDestroy() {
+
     }
 
     TabFilterClick(item) {
@@ -554,12 +557,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                 response.Result.forEach((item) => {
                     ids.push(item.DeclarationId);
                 });
-
-                console.log(ids);
-
                 var selectedEntityId = ids[0];
-
-                SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         var label = "מסך עבודה";//TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
@@ -572,9 +570,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
                             ObjectTableName: "Customs.Declaration",
                         });
                         cmpRef.instance.BackCompleted.subscribe(bk => {
-                            if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
-                                SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
-                            }
                             this.OnBackFromEdit(selectedEntityId, event);
                         });                        //  if (SessionLocator.LoggedUserPM.Email == "mohammad@fnarsoft.com") {
                         //this.DestroyMe = true;
@@ -1157,6 +1152,28 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
             SortByName: 'CourierHawb'
+        });
+        this.columns.push({
+            FieldName: 'MAWB',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.MAWB"),
+            Styles: { width: '108px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'MAWB'
+        });
+        this.columns.push({
+            FieldName: 'IntegratorName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IntegratorName"),
+            Styles: { width: '108px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'IntegratorName'
         });
         //SortByName: 'CourierHawb'
 
@@ -2023,6 +2040,10 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
         logitudeWindow.Height = 600;
         logitudeWindow.Width = 700;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/ImportCourierMawbsFromExcel/ImportCourierMawbsFromExcelComponent')
+        logitudeWindow.WindowClosed.subscribe((event: any) => {
+            this.RefreshButtonClicked();
+        });
+
     }
 
 
@@ -2229,7 +2250,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent {
 
         //communicationLogStepListService.GetExportExcelByRequestId("8305", this.MyLastCustomsRequestSheetId, SessionLocator.Tenant);
         //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
-        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM?.Id + '&tenant=' + SessionLocator.Tenant.toString();
+        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM?.Id + '&tenant=' + SessionLocator.Tenant.toString()+ '&userId=' + SessionLocator.LoggedUserId +  '&IsWorkSheetFromExcel=' + true;
 
 
         window.open(url);
