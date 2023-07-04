@@ -789,7 +789,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 GLAccountChequesTransactionsRetreivingService ledgerTransactionQuery = new GLAccountChequesTransactionsRetreivingService(tenant,MyContext);
-                List<LedgerTransactionList> myResult = ledgerTransactionQuery.GetAccountChequesTransactions(accountId);
+                List<LedgerTransactionList> myResult = ledgerTransactionQuery.GetAccountChequesTransactions(accountId, null, null);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

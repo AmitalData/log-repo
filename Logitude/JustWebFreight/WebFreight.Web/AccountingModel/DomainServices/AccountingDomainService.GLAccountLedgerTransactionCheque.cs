@@ -26,8 +26,9 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             queryOperations.QueryFilterItems.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldName = "AccountId";
             var AccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AccountId").FirstOrDefault().FieldValue.ToString();
-            GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, accountingContext);
-            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(AccountId);
+            var IsFutureOpenCheques = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsFutureOpenCheques").FirstOrDefault().FieldValue.ToString();
+            GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, accountingContext, IsFutureOpenCheques == "True");
+            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(AccountId, queryOperations.SortByColumnName, queryOperations.SortDirectin);
             MapLedgerTransactionnList(tranactions);
             return tranactions;
         }
@@ -52,11 +53,24 @@ namespace WebFreight.Web.AccountingModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
             accountingContext = AccountingContext.GetContext(tenant);
-            LedgerTransactionListQueryService queryService = new LedgerTransactionListQueryService(accountingContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            queryOperations.QueryFilterItems.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldName = "AccountId";
-            return queryService.GetListCount(queryOperations, tenant);
+            string accountId = GetGLAccountFilterValue(queryOperations);
+            string isFutureOpenCheques = GetIsFutureOpenChequesFilterValue(queryOperations);
+            GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, accountingContext, isFutureOpenCheques == "True");
+            return ledgerTransactionRetreivingService.GetAccountChequesTransactionsCount(accountId);
+        }
 
+        private static string GetIsFutureOpenChequesFilterValue(QueryOperations queryOperations)
+        {
+            QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == "IsFutureOpenCheques");
+            return filterItem?.FieldValue.ToString();
+
+        }
+
+        private static string GetGLAccountFilterValue(QueryOperations queryOperations)
+        {
+            QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == "GLAccountId");
+            return filterItem?.FieldValue.ToString();
 
         }
     }

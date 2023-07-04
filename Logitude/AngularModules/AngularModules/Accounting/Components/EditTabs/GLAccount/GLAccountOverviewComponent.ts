@@ -763,6 +763,22 @@ export class GLAccountOverviewComponent extends BaseComponent {
         logWindow.Show('./Accounting/Components/EditTabs/GLAccount/GLAccountChequeListComponent');
     }
 
+    DisplayFutureChequelistClicked(id) {
+
+        var windowArgs: any = {};
+         windowArgs.EntityPM = this.EntityPM;
+         windowArgs.IsFutureOpenCheques = true;
+         var logWindow = new LogitudeWindow();
+         logWindow.Width = 1100;
+         logWindow.Height = 600;
+         logWindow.Title = TextCodeTranslator.Translate('GLAccount.O.ChequesList');
+         logWindow.ShowCloseButton = false;
+         logWindow.WindowArgs = windowArgs;
+         logWindow.WindowClosed.subscribe(($event: any) => { });
+         logWindow.Show('./Accounting/Components/EditTabs/GLAccount/GLAccountChequeListComponent');
+     }
+
+    
     CardIndexClicked(){
         this.DisplayTransactionsLinkClicked();
     }
