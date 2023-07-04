@@ -396,6 +396,11 @@ export class CardPM extends ObjectCustomFieldPM {
     public set InvitationDate(newValue: Date) { if (this.invitationDate != newValue) { this.invitationDate = newValue; this.MarkAsDirty("InvitationDate"); } }
        
 	 
+    private cargoTrackingInvitationDate: Date;
+    public get CargoTrackingInvitationDate() { return this.cargoTrackingInvitationDate; }
+    public set CargoTrackingInvitationDate(newValue: Date) { if (this.cargoTrackingInvitationDate != newValue) { this.cargoTrackingInvitationDate = newValue; this.MarkAsDirty("CargoTrackingInvitationDate"); } }
+       
+	 
     private sharedLogisticsInvitationStatusCode: number;
     public get SharedLogisticsInvitationStatusCode() { return this.sharedLogisticsInvitationStatusCode; }
     public set SharedLogisticsInvitationStatusCode(newValue: number) { if (this.sharedLogisticsInvitationStatusCode != newValue) { this.sharedLogisticsInvitationStatusCode = newValue; this.MarkAsDirty("SharedLogisticsInvitationStatusCode"); } }
@@ -404,6 +409,16 @@ export class CardPM extends ObjectCustomFieldPM {
     private sharedLogisticsInvitationStatusName: string;
     public get SharedLogisticsInvitationStatusName() { return this.sharedLogisticsInvitationStatusName; }
     public set SharedLogisticsInvitationStatusName(newValue: string) { if (this.sharedLogisticsInvitationStatusName != newValue) { this.sharedLogisticsInvitationStatusName = newValue; this.MarkAsDirty("SharedLogisticsInvitationStatusName"); } }
+       
+	 
+    private cargoTrackingInvitationStatusCode: number;
+    public get CargoTrackingInvitationStatusCode() { return this.cargoTrackingInvitationStatusCode; }
+    public set CargoTrackingInvitationStatusCode(newValue: number) { if (this.cargoTrackingInvitationStatusCode != newValue) { this.cargoTrackingInvitationStatusCode = newValue; this.MarkAsDirty("CargoTrackingInvitationStatusCode"); } }
+       
+	 
+    private cargoTrackingInvitationStatusName: string;
+    public get CargoTrackingInvitationStatusName() { return this.cargoTrackingInvitationStatusName; }
+    public set CargoTrackingInvitationStatusName(newValue: string) { if (this.cargoTrackingInvitationStatusName != newValue) { this.cargoTrackingInvitationStatusName = newValue; this.MarkAsDirty("CargoTrackingInvitationStatusName"); } }
        
 	 
     private lastLoginDate: Date;

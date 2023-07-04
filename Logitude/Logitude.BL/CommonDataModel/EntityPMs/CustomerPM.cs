@@ -240,6 +240,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string CargoTrackingInvitationStatusName { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsActiveForMobile { get; set; }
 
         [DataMember]
@@ -249,6 +253,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? InvitationDate { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? CargoTrackingInvitationDate { get; set; }
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

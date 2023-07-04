@@ -78,7 +78,13 @@ namespace WebFreight.Web.Helpers
 
             if (sharedLogisticsContact.InternetAccess)
             {
-                if (card.SharedLogisticsInvitationStatusCode != 3)
+                if (sharedLogisticsContact.IsCargoTrackingInvitation && card.CargoTrackingInvitationStatusCode != 3)
+                {
+                    card.CargoTrackingInvitationStatusCode = 2;
+                    card.CargoTrackingInvitationDate = DateTime.Now;
+                }
+
+                if (!sharedLogisticsContact.IsCargoTrackingInvitation && card.SharedLogisticsInvitationStatusCode != 3)
                 {
                     card.SharedLogisticsInvitationStatusCode = 2;
                     card.InvitationDate = DateTime.Now;
@@ -326,8 +332,10 @@ namespace WebFreight.Web.Helpers
                 List<CardContact> CardContacts = objectContext.CardContacts.Where(t => t.Tenant == sharedLogisticsContact.Tenant).ToList();
                 if (!CardContacts.Where(d => d.InternetAccess).Any())
                 {
-                    card.SharedLogisticsInvitationStatusCode = 1;
+                    card.SharedLogisticsInvitationStatusCode = !sharedLogisticsContact.IsCargoTrackingInvitation ? 1 : card.SharedLogisticsInvitationStatusCode;
+                    card.CargoTrackingInvitationStatusCode = sharedLogisticsContact.IsCargoTrackingInvitation ? 1 : card.CargoTrackingInvitationStatusCode;
                     card.InvitationDate = null;
+                    card.CargoTrackingInvitationDate = null;
 
                     using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
                     {

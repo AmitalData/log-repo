@@ -24,6 +24,7 @@ export class AgentList {
 		PaymentTermId: string;
 		SearchFields: string;
 		SharedLogisticsInvitationStatusName: string;
+		CargoTrackingInvitationStatusName: string;
 		LastLoginDate: Date;
 		EnableConsolidationInvoices: boolean;
 		CityName: string;

@@ -149,6 +149,19 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="CargoTrackingInvitationStatusCode"
+    ShortName="CargoTracInvitationStatCode"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CargoTrackingInvitationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="LastLoginDate"
     Type="datetime">
     <Constraints
@@ -540,6 +553,11 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="SharedLogisticsInvitationStatusCode"
+    ReferencedTable="SharedLogisticsInvitationStatus"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CargoTrackingInvitationStatusCode"
     ReferencedTable="SharedLogisticsInvitationStatus"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />

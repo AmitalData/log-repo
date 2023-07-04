@@ -33,7 +33,7 @@ export class FieldTemplateComponent {
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
 
-            if (this.FieldName == "SharedLogisticsInvitationStatusName" && this.ObjectTableName == "Card") {
+            if ((this.FieldName == "SharedLogisticsInvitationStatusName" || this.FieldName == "CargoTrackingInvitationStatusName") && this.ObjectTableName == "Card") {
                 this.SetSharedLogisticsInvitationStatusTemplate();
             }
 
@@ -49,7 +49,7 @@ export class FieldTemplateComponent {
                 else if (this.FieldName == "StartWorkingDate") {
                     this.SetStartWorkingDateTemplate();
                 }
-                else if (this.FieldName == "SharedLogisticsInvitationStatusName") {
+                else if ((this.FieldName == "SharedLogisticsInvitationStatusName" || this.FieldName == "CargoTrackingInvitationStatusName")) {
                     this.SetSharedLogisticsInvitationStatusTemplate();
                 }
 
