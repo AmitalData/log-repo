@@ -1066,7 +1066,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (_MyDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                    _MyDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(_MyDeclarationPM);
+                    _MyDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(_MyDeclarationPM ,_MyDeclarationCourierStatusPM: _MyDeclarationCourierStatusPM);
                     declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
                 }
                 /*
