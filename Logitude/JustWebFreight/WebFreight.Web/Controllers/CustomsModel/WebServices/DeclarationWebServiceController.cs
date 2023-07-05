@@ -2457,13 +2457,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                                 values.Add(cellValue.ToString());
                             }
                         }
-                        var notFoundDeclarations=new List<string>();
-                        CustomsStoredProcedures.UpdateCourierHawbFromExcel(tenant, userid, values, out notFoundDeclarations);
+                        var errorWithMawbs=new List<CourierHawbFromExcel>();
+                        CustomsStoredProcedures.UpdateCourierHawbFromExcel(tenant, userid, values, out errorWithMawbs);
 
                         if (values.Count > 0)
                         {
                             var firstValue = values[0];
-                            return Request.CreateResponse(HttpStatusCode.OK, notFoundDeclarations);
+                            return Request.CreateResponse(HttpStatusCode.OK, errorWithMawbs);
                         }
                     }
                 }

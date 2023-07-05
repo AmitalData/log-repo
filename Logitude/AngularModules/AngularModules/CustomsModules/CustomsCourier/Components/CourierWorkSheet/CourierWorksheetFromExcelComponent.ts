@@ -1157,7 +1157,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             FieldName: 'MAWB',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.MAWB"),
-            Styles: { width: '108px' },
+            Styles: { width: '90px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1168,7 +1168,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             FieldName: 'IntegratorName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IntegratorName"),
-            Styles: { width: '108px' },
+            Styles: { width: '94px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1203,7 +1203,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             FieldName: 'ImporterName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-            Styles: { width: '173px' },
+            Styles: { width: '160px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'ImporterName'
@@ -1213,7 +1213,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             FieldName: 'ImporterCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
-            Styles: { width: '90px' },
+            Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'SortedImporterCode'
@@ -1223,7 +1223,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             FieldName: 'DocumentStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DocumentStatusCode"),
-            Styles: { width: '55px' },
+            Styles: { width: '47px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1247,7 +1247,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             FieldName: 'CourierManifestStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierManifestStatusCode"),
-            Styles: { width: '50px' },
+            Styles: { width: '47px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1259,7 +1259,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             FieldName: 'CourierDeclarationStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierDeclarationStatusCode"),
-            Styles: { width: '50px' },
+            Styles: { width: '47px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1271,7 +1271,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             FieldName: 'CourierPaymentStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPaymentStatusCode"),
-            Styles: { width: '53px' },
+            Styles: { width: '47px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1283,7 +1283,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '100px' },
+            Styles: { width: '90px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1307,7 +1307,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             FieldName: 'SpecialActionStatus',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.SpecialActionStatus"),
-            Styles: { width: '54px' },
+            Styles: { width: '47px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1329,7 +1329,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             FieldName: 'CourierPendingReasonName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
-            Styles: { width: '105px' },
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -2419,7 +2419,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         logitudeWindow.Height = 800;
         logitudeWindow.IsShowCloseButton = true;
         logitudeWindow.Title = "עדכון גורף";
-        logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM };
+        logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM ,IsWorkSheetFromExcel : true};
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent');
         this.ChangedUnloadPortSite = true;
         logitudeWindow.WindowClosed.subscribe(($event: any) => this.RefreshButtonClicked());

@@ -681,12 +681,12 @@ export class CourierMasterService {
         });
     }
 
-    GetPending(CourierMasterId) {
+    GetPending(CourierMasterId,IsWorkSheetFromExcel : boolean=false) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetPending?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetPending?' + 'CourierMasterId=' + CourierMasterId+ '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var KeyValuePairList = response;
 
                 var serviceResponse: ServiceResponse;

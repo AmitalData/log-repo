@@ -55,6 +55,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
 
     checkboxAll: boolean;
     courierMasterId: string;
+    IsWorkSheetFromExcel:boolean=false;
     filter: ApiQueryFilters = null as any;
 
     constructor(private pendingWebService: PendingWebService) {
@@ -75,7 +76,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
                 this.notUpdateSelf = args.notUpdateSelf;
                 this.declarationIdsList = args.declarationIdsList;
                 this.allWithoutdeclarationIdsList = args.allWithoutdeclarationIdsList;
-
+                this.IsWorkSheetFromExcel=args.IsWorkSheetFromExcel
                 this.checkboxAll = args.checkboxAll;
                 this.courierMasterId = args.courierMasterId;
                 //this.DeclarationPendingsList = args.DeclarationIdList;
@@ -105,7 +106,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
             return this.showMessage("?? ???? ?????? ??? ?? ???? ??? ?????");
 
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-        const msg: string = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.courierMasterId, this.checkboxAll, this.allWithoutdeclarationIdsList, this.filter, false)
+        const msg: string = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.courierMasterId, this.checkboxAll, this.allWithoutdeclarationIdsList, this.filter, false,this.IsWorkSheetFromExcel)
         SessionLocator.SelectedSession.StopBusyIndicator();
 
         this.showMessage(msg);

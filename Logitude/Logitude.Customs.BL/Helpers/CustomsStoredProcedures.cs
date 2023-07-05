@@ -1,5 +1,6 @@
 ﻿using Devart.Data.Oracle;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -910,7 +911,7 @@ AS */
             }
 
         }
-        public static void UpdateCourierHawbFromExcel(int tenant, string userid, List<string> courierhawbsList, out List<string> notFoundDeclarations)
+        public static void UpdateCourierHawbFromExcel(int tenant, string userid, List<string> courierhawbsList, out List<CourierHawbFromExcel> notFoundDeclarations)
         {
             string strConnString = GetConnection(tenant);
 
@@ -919,7 +920,7 @@ AS */
             {
                 // Open the connection
                 cn.Open();
-                notFoundDeclarations = new List<string>();
+                notFoundDeclarations = new List<CourierHawbFromExcel>();
                 try
                 {
                     using (Devart.Data.Oracle.OracleCommand command = new Devart.Data.Oracle.OracleCommand("usp_UpdateCourierHawbFromExcel", cn))
@@ -961,7 +962,11 @@ AS */
                         {
                             while (reader.Read())
                             {
-                                notFoundDeclarations.Add(reader.GetString(0));
+                                var courierHawbFromExcel = new CourierHawbFromExcel();
+                                courierHawbFromExcel.DeclarationId = reader.GetString(2);
+                                courierHawbFromExcel.CourierHawb=(reader.GetString(4));
+                                courierHawbFromExcel.ErrorMessage = (reader.GetString(5));
+                                notFoundDeclarations.Add(courierHawbFromExcel);
                             }
                         }
                     }

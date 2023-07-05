@@ -25,6 +25,7 @@ TYPE string_table IS TABLE OF VARCHAR(4000) INDEX BY PLS_INTEGER;
 v_not_found_strings string_table := string_table();
 BEGIN
 -- Iterate over the input strings
+delete from CourierHawbFromExcels where notfound=1 ;
 delete from CourierHawbFromExcels where tenant=v_Tenant and createdbyuserid=v_userid ;
 FOR i IN 1..v_courierhawbList.COUNT LOOP
 -- Check if the string exists in TableA
@@ -43,7 +44,7 @@ WHEN NO_DATA_FOUND THEN
 -- If the string doesn't exist, add it to the not found strings collection
 INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid, NotFound, CourierHawb,ErrorMessage)
 VALUES (v_Tenant, v_userid, i, 1, v_courierhawbList(i),'Not  Found');
-WHEN DUP_VAL_ON_INDEX THEN
+WHEN DUP_VAL_ON_INDEX  THEN 
 INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid, NotFound, CourierHawb,ErrorMessage)
 VALUES (v_Tenant, v_userid, i, 1, v_courierhawbList(i),'Duplicate');
 END;
