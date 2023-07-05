@@ -18636,6 +18636,20 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
         }
 
+        public void FillOcrStatusTable()
+        {
+
+            OcrStatusRepository ocrStatusRepository = new OcrStatusRepository(0);
+            Dictionary<string, OcrStatus> TenantOcrStatus = ocrStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "1", EnglishName = "Sent", LocalName = "נשלח" }, ocrStatusRepository);
+            AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "2", EnglishName = "Accepted", LocalName ="התקבל" }, ocrStatusRepository);
+            AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "3", EnglishName = "Failed", LocalName = "נכשל" }, ocrStatusRepository);
+
+            ocrStatusRepository.SubmitChanges();
+
+        }
+
     }
 
 

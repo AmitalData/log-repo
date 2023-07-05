@@ -29,7 +29,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Score, 
 	         JsonTif, 
 	         ErrorMsg, 
-	         StatusCode,
+	         StatusCode, 
+	         OcrId, 
+	         DocId,
 	      }
 
 
@@ -44,7 +46,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         JsonTif, 
 	         ErrorMsg, 
 	         StatusName, 
-	         StatusCode,
+	         StatusCode, 
+	         OcrId, 
+	         DocId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -86,6 +90,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
             {
 				entityPOCO.StatusCode = entityPM.StatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrId))
+            {
+				entityPOCO.OcrId = entityPM.OcrId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocId))
+            {
+				entityPOCO.DocId = entityPM.DocId;
 			}
 			}
 
@@ -132,6 +146,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.StatusCode = entityPOCO.StatusCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OcrId))
+            {
+					entityPM.OcrId = entityPOCO.OcrId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocId))
+            {
+					entityPM.DocId = entityPOCO.DocId;
+            }
+
 		}
 
 		public void PMToOldPM(OcrDocumentPM entityPM, OcrDocumentPM oldEntityPM)
@@ -171,6 +195,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
             {
                 oldEntityPM.StatusCode = entityPM.StatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrId))
+            {
+                oldEntityPM.OcrId = entityPM.OcrId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocId))
+            {
+                oldEntityPM.DocId = entityPM.DocId;
             }
 			
 		}

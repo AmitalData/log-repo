@@ -784,6 +784,7 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.FillToggle();
             updateClass.FillFacilitationType();
             updateClass.FillContainerizationHataraStatus();
+            updateClass.FillOcrStatusTable();
 
 
         }
