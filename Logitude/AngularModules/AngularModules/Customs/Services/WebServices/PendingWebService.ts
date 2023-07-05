@@ -40,7 +40,6 @@ export class PendingWebService {
                     take: '' + take,
                     sortingCol: sortingCol,
                     sortingDir: sortingDir,
-                    IsWorkSheetFromExcel:
                 }
             }
         );
