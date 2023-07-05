@@ -20,7 +20,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var customContext = MainContext as ICustomContext;
                 var customsDocumentQueryService = new CustomsDocumentQueryService(customContext);
                 CustomsDocumentPM customsDocumentPM = customsDocumentQueryService.GetSingleCustomsDocumentPMWithDeclarationId(entityPM.Id, entityPM.Tenant);
-                  if (customsDocumentPM != null)
+                  if (customsDocumentPM != null && customsDocumentPM?.CustomsDocId==null)
                  {
 
                     CustomsDocumentUpdateService CustomsDocumentUpdateService = new CustomsDocumentUpdateService(entityPM.Tenant);
