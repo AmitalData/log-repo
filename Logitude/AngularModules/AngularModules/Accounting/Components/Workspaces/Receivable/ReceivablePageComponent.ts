@@ -1,7 +1,7 @@
 declare var makeAmBarChart;
 declare var window: any;
 import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -29,6 +29,7 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 import { ModulesService } from '../../../Services/ModulesService';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { ARPaymentPM } from 'Invoice/EntityPMs/ARPaymentPM';
+import { ARInvoicePM } from 'Invoice/EntityPMs/ARInvoicePM';
 
 
 @Component({
@@ -294,6 +295,35 @@ export class ReceivablePageComponent {
 
     //#region General ARInvoice
     public NewGeneralARInvoice(type: string) {
+
+        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated ) {
+        
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+            
+                var todayDate = DateTool.GetCurrentDateAsUtc();
+                
+                var entity = new ARInvoicePM();
+                entity.IsGeneralInvoice = true;
+                entity.ARInvoiceTypeCode = type;
+                entity.IssuedByUserId = SessionLocator.LoggedUserId;
+                entity.CreatedByUserId = SessionLocator.LoggedUserId;
+                entity.UpdatedByUserId = SessionLocator.LoggedUserId;
+                entity.CreateDate = todayDate;
+                entity.UpdateDate = todayDate;
+                entity.InvoiceDate = todayDate;
+                entity.LocalCurrencyId = SessionLocator.LocalCurrencyId;
+                entity.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+                cmpRef.instance.ComponentRef = cmpRef;
+                
+                cmpRef.instance.Run({ EntityPM: entity, ObjectTableName: 'ARInvoice' });
+            });
+
+            return;
+
+        }
+        
+
         //var str = TextCodeTranslator.Translate("General.O.NewEntity");
         //str = str.replace("%Entity", "General Invoice");
         var str_NewGeneralInvoice = TextCodeTranslator.Translate("Accounting.General.O.NewGeneralInvoice");
