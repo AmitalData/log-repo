@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChildren, QueryList, Output, Input, OnInit, ViewEncapsulation, ViewChild, HostListener,ElementRef } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChildren, QueryList, Output, Input, OnInit, ViewEncapsulation, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
 import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -39,7 +39,7 @@ import { SupplierInvoiceItemPM } from '../../../../Customs/EntityPMs/SupplierInv
 import { CustomsDocumentsDataProvider } from 'CustomsModules/CustomsDocuments/Components/CustomsDocumentsDataProvider';
 import { NullTemplateVisitor } from '@angular/compiler';
 @Component({
-    
+
     templateUrl: './DeclarationSplitComponent.html',
 })
 
@@ -47,7 +47,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     public DataContext: any = this;
     public DeclarationPM: DeclarationPM;
     public ObjectTableName: string = "Customs.Declaration";
-    IsDocsPanelVisible: boolean = true;
+    IsDocsPanelVisible: boolean = false;
     public MetadataValues: CustomsDocumentMetaDataValuePM[];
     public RelatedDocuments: RelatedDocumentViewModel[];
     base64Image: string;
@@ -86,7 +86,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
             this.recognizeText();
         }*/
         this.startRenderingImage();
-       
+
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.DeclarationSplitDocumentSelectionEVENT);
@@ -94,7 +94,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
     }
 
-   
+
     _DocumentFilingIdToSetWhileLoadDocument: string;
     SetComponentArgs(args: any) {
         debugger;
@@ -111,7 +111,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                 if (this.DeclarationPM.Direction == 'E') {
                     this.customs = "תיק מכס";
                     this.forwarding = "תיק יצום";
-        
+
                     this.DocumentFilterSelectedValue = "all";
                 }
                 //// 2- get metadata values then
@@ -130,7 +130,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                 //    });
             });
 
-             this.DeclarationSplitDocumentSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentSelection.subscribe((DocumentFilingId: any) => {
+            this.DeclarationSplitDocumentSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentSelection.subscribe((DocumentFilingId: any) => {
                 console.log("-->> Loading document for supplier invoice: " + DocumentFilingId);
                 if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
                     //ClassifcationComponent Build B4 This Component finish Load Document !!!
@@ -184,11 +184,11 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     }
 
     IsMouseOverDownload: boolean = false;
-    TicketItemClicked(document: RelatedDocumentViewModel,  selectItem: boolean = false) {
-        
-        if (this.IsMouseOverDownload) return;
+    TicketItemClicked(document: RelatedDocumentViewModel, selectItem: boolean = false) {
 
-        this.IsDocsPanelVisible = false;
+        if (this.IsMouseOverDownload) return;
+        if (this.DeclarationPM.Direction != "E")
+            this.IsDocsPanelVisible = false;
         //reset counters
         this.pagesCount = 1;
         this.CurrentPageIndex = 1;
@@ -212,10 +212,10 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         // //this.renderImage();
     }
     OpenInWindowButtonClicked() {
-        
 
-          
-                //var documentFiling = resp.Result;
+
+
+        //var documentFiling = resp.Result;
         this._ImageLibraryService.DownloadFile(this.SelectedTicket.documentsFilingPM.DocumentId, this.SelectedTicket.documentsFilingPM.FileExtension, this.SelectedTicket.documentsFilingPM.Folder, SessionLocator.Tenant).subscribe((res: any) => {
 
 
@@ -224,10 +224,10 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
             DownloadManager.DownloadPage(documentName);
 
-                });
-          
+        });
 
-        
+
+
     }
 
     composedPath(el) {
@@ -244,16 +244,16 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     }
 
 
- 
+
 
     LoadDocumentPage(pageIndex: number = null, selectItem: boolean = false) {
         debugger;
-         if (this.SelectedTicket) {
+        if (this.SelectedTicket) {
 
             this.StartBusyIndicator("Loading page...");
 
             var index = pageIndex ? pageIndex : this.CurrentPageIndex;
- 
+
             if (index == 0) index = 1;
 
             if (this.invoiceItem != null && !AppTool.IsNullOrEmpty(this.invoiceItem.OcrPageNumber) && this.invoiceItem.OcrPageNumber != 0 && selectItem) {
@@ -294,8 +294,8 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                         while (elements.length > 0) {
                             elements[0].parentNode.removeChild(elements[0]);
                         }
-                        
-                        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrTop != undefined && this.invoiceItem.OcrHeight != 0 && this.invoiceItem.OcrHeight != undefined&& selectItem) {
+
+                        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrTop != undefined && this.invoiceItem.OcrHeight != 0 && this.invoiceItem.OcrHeight != undefined && selectItem) {
                             var elem = document.getElementsByClassName("grabbable")[0] as HTMLImageElement;;
 
                             let rect = document.createElement('div');
@@ -306,21 +306,21 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                             rect.style.borderRadius = '3px';
                             rect.style.left = 0 + 'px';
                             var percent = (elem.height / elem.naturalHeight);
-                            rect.style.top = (this.invoiceItem.OcrTop * percent)- 1   + 'px';
-                                rect.style.width = '100%';
-                            rect.style.height = (this.invoiceItem.OcrHeight * percent) +2 + 'px';
-                                document.getElementsByClassName("div-grabbable")[0].appendChild(rect);
+                            rect.style.top = (this.invoiceItem.OcrTop * percent) - 1 + 'px';
+                            rect.style.width = '100%';
+                            rect.style.height = (this.invoiceItem.OcrHeight * percent) + 2 + 'px';
+                            document.getElementsByClassName("div-grabbable")[0].appendChild(rect);
 
-                                console.log(this.base64Image);
-                                this.CurrentPageIndex = this.invoiceItem.OcrPageNumber;
-                            }
-                            else {
-                                this.CurrentPageIndex = index;
+                            console.log(this.base64Image);
+                            this.CurrentPageIndex = this.invoiceItem.OcrPageNumber;
+                        }
+                        else {
+                            this.CurrentPageIndex = index;
 
-                            }
-                     
+                        }
 
-                      
+
+
                         // this.img.src = this.base64Image;
                         // this.renderImage();
                         // var t = setTimeout(() => { this.renderImage(); }, 20);
@@ -370,7 +370,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
 
-        this.customsDocumentsDataProvider.GetCustomsDocumentsRelatedDocuments( this.DocumentFilterSelectedValue)
+        this.customsDocumentsDataProvider.GetCustomsDocumentsRelatedDocuments(this.DocumentFilterSelectedValue)
             .subscribe((response: ServiceResponse) => {
                 console.log("[response] GetDocumentsFilingsForRelatedDocuments:", response);
                 SessionLocator.SelectedSession.StopBusyIndicator();
@@ -398,7 +398,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
                     //ClassifcationComponent Build B4 This Component finish Load Document !!!
                     if (
-                        this.RelatedDocuments.length!=0 &&
+                        this.RelatedDocuments.length != 0 &&
                         AppTool.IsNullOrEmpty(this._DocumentFilingIdToSetWhileLoadDocument)) {
                         var document = this.RelatedDocuments.find(d => d.Id == this._DocumentFilingIdToSetWhileLoadDocument);
                         this._DocumentFilingIdToSetWhileLoadDocument = null;
@@ -415,7 +415,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
         this.custDocRelatedDocsWebService.GetSingleDocumentsFilingPM(documentsFilingId).subscribe((resp: ServiceResponse) => {
             var documentFiling = resp.Result;
-            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res:any) => {
+            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res: any) => {
 
 
                 var documentName = documentFiling.DocumentId;
@@ -491,7 +491,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         //var scaleValue = this.trackBarValue / 100 + 1;
         var scaleValue = this.trackBarValue;
         this.ImgScaleValue = "scale(" + scaleValue + ")";
-        this.ImgHeight = (scaleValue * 100).toString() +"%";
+        this.ImgHeight = (scaleValue * 100).toString() + "%";
     }
     //#endregion
 
@@ -854,9 +854,9 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         }
     }*/
 
-    
 
-    
+
+
     /*recognizeText() {
         // Calculate the coordinates of the selected area
         const x = Math.min(this.startX, this.endX);
@@ -895,11 +895,11 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     }*/
     @HostListener('mouseup', ['$event'])
     OnMouseUp(event) {
-      /*  if (event) {
-            this.endX = event.clientX;
-            this.endY = event.clientY;
-            this.recognizeText();
-        }*/
+        /*  if (event) {
+              this.endX = event.clientX;
+              this.endY = event.clientY;
+              this.recognizeText();
+          }*/
     }
 
     @HostListener('mousedown', ['$event'])
