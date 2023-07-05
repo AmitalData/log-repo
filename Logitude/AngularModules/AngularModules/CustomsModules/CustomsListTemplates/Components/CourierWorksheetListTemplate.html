@@ -169,7 +169,12 @@
     <div class="TextTrimming" *ngIf="fieldName == 'CourierHawb'" style="text-align:right;">
         <span style="font-weight: bold">{{_CourierWorksheet.CourierHawb}}</span>
     </div>
-
+    <div class="TextTrimming" *ngIf="fieldName == 'MAWB'" style="text-align:right;">
+        <span style="font-weight: bold">{{_CourierWorksheet.MAWB}}</span>
+    </div>
+    <div class="TextTrimming" *ngIf="fieldName == 'IntegratorName'" style="text-align:right;">
+        <span style="font-weight: bold">{{_CourierWorksheet.IntegratorName}}</span>
+    </div>
     <div class="TextTrimming" *ngIf="fieldName == 'IsClosedForFollowUp'" style="text-align:right;">
         <span *ngIf="!_CourierWorksheet['IsClosedForFollowUp']">{{'Customs.CourierMaster.Status.Open'  | TextCodeTranslationPipe }}</span>
         <span *ngIf="_CourierWorksheet['IsClosedForFollowUp']">{{'Customs.CourierMaster.Status.Close'  | TextCodeTranslationPipe }}</span>

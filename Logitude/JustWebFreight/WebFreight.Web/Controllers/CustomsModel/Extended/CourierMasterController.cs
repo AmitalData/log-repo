@@ -164,7 +164,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
 
-        public HttpResponseMessage GetPending(string CourierMasterId)
+        public HttpResponseMessage GetPending(string CourierMasterId,Boolean IsWorkSheetFromExcel)
         {
             try
             {
@@ -174,7 +174,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(MyContext);
-                List<string> result = declarationCourierStatusRepository.GetPendingByMasterID(authToken.Tenant, CourierMasterId);
+                string loggingUserId = AuthenticationUtil.ResolveUserId(authToken.Tenant);
+                List<string> result = declarationCourierStatusRepository.GetPendingByMasterID(authToken.Tenant, CourierMasterId, loggingUserId, IsWorkSheetFromExcel);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);

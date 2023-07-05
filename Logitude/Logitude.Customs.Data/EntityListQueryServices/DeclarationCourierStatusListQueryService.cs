@@ -15,6 +15,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.Repsitories;
+using Devart.Data.Linq;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -323,24 +324,43 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         private IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations)
         {
-            string courierMasterId = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault().FieldValue.ToString();
-           // var qDeclarationPaymentPendingHold =
-           //(from p in context.DeclarationPendings
-           // where p.Status == "A"
-           // group p by p.DeclarationID into g
-           // select new MyJoin
-           // {
-           //     DeclarationId = g.Key,
-           //     //ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1"),
-           //     CourierPendingReason1stName = g.Any() ? g.FirstOrDefault().CourierPendingReason.LocalName : null,
-           // });
+            IQueryable<DeclarationCourierStatus> iQueryable = (from a in context.DeclarationCourierStatuses
+                                                               where a.Tenant == tenant
+                                                               select a);
+            string courierMasterId = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault()?.FieldValue.ToString();
+            this.isFilter = null;
+            var CourierHawbsFromExcel = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierHawbsFromExcel").FirstOrDefault();
+            if (CourierHawbsFromExcel != null)
+            {
+                //courierMasterId = "-1";
+                this.isFilter = CourierHawbsFromExcel.FieldValue.ToString();
+                IQueryable<CourierHawbFromExcel> FromExcelQueryJoin = (from courierhawb in context.CourierHawbFromExcels
+                                                                       where courierhawb.CreatedByUser.Id == this.isFilter && courierhawb.NotFound != true
+                                                                       select courierhawb);
+                iQueryable = iQueryable.Where(d => FromExcelQueryJoin.Select(de => de.DeclarationId).Contains(d.DeclarationId));
+            }
+
+            // var qDeclarationPaymentPendingHold =
+            //(from p in context.DeclarationPendings
+            // where p.Status == "A"
+            // group p by p.DeclarationID into g
+            // select new MyJoin
+            // {
+            //     DeclarationId = g.Key,
+            //     //ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1"),
+            //     CourierPendingReason1stName = g.Any() ? g.FirstOrDefault().CourierPendingReason.LocalName : null,
+            // });
 
             var q1 = (
-                    from cd in context.CourierDeclarations.Include("Declarations").Include("Importer").Where(cd => cd.CourierMasterId == courierMasterId)
+                from dcs in iQueryable.Include("Declarations").Include("Importer")
 
-                    join dcs in context.DeclarationCourierStatuses on cd.Declaration.Id equals dcs.DeclarationId
+                join cd in context.CourierDeclarations on dcs.DeclarationId equals cd.DeclarationId
+                join cm in context.CourierMasters on cd.CourierMasterId equals cm.Id
 
-                    join dp in context.DeclarationPendings.Include("CourierPendingReason").Where(x => x.Status == "A")
+
+                //join dcs in context.DeclarationCourierStatuses on cd.Declaration.Id equals dcs.DeclarationId
+
+                join dp in context.DeclarationPendings.Include("CourierPendingReason").Where(x => x.Status == "A")
                      on dcs.DeclarationId equals dp.DeclarationID into dpjoin
 
                     //join errorPlace in qDeclarationPaymentPendingHold on dcs.DeclarationId equals errorPlace.DeclarationId into errorPlaceOuterJoin

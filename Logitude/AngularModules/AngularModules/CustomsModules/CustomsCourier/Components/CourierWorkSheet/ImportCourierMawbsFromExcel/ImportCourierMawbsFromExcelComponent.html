@@ -56,7 +56,17 @@
                                             <ng-template let-item>
                                     <log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
-                                            <span>{{item}}</span>
+                                            <span>{{item.CourierHawb}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
+                                <log-column [header]="'הודעת שגאיה'"
+                                            [width]="'190'" [Alignment]="'Right'">
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.ErrorMessage}}</span>
                                         </div>
                                     </log-cell-template>
                                 </ng-template>
