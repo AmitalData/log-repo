@@ -12566,6 +12566,15 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
+      Code="&quot;HideVatTypes&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;APInvoice.Features.HideVatTypes&quot;"
+      FeatureDefaultText="&quot;Hide Vat Types&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
       Code="&quot;AUTOMATION&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;APInvoice.Features.AUTOMATION&quot;"

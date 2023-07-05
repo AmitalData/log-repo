@@ -220,39 +220,48 @@
                                         <button id="{{'AddInvoiceLine' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled" class="Button" (click)="AddButtonClicked()">{{'APInvoice.B.AddLine' | TextCodeTranslationPipe}}</button>
                                     </td>
 
-                                    <td>
-                                        <div></div>
-                                    </td>
-
-                                    <td [style.float]="isRTL ? 'left' : 'right'" style="width:285px;">
+                                    <td *ngIf="AllowVatTypes" style="width: 300px">
                                         <table>
                                             <tr>
-                                                <td style="width: 1px;" class="Label">{{'APInvoice.S.Details.VatType' | TextCodeTranslationPipe}}:</td>
-
-                                                <td style="width: 5px;">
+                                                
+                                                <td>
                                                     <div></div>
                                                 </td>
 
-                                                <td style="width: 150px">
-                                                    <LogLov [ObjectFieldName]="'VatTypeId'"
-                                                            [SelectedValue]="VatTypeId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'VatType'"
-                                                            [HideColumns]="true"  [DependencyFilter2Value]="false">
-                                                    </LogLov>
-                                                </td>
+                                                <td [style.float]="isRTL ? 'left' : 'right'" style="width:285px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 1px;" class="Label">{{'APInvoice.S.Details.VatType' | TextCodeTranslationPipe}}:</td>
 
-                                                <td style="width: 2px;">
-                                                    <div></div>
-                                                </td>
+                                                            <td style="width: 5px;">
+                                                                <div></div>
+                                                            </td>
 
-                                                <td style="width: 80px;">
-                                                    <button id="{{'VATApplyToAll' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="!VatTypeFilterButtonIsEnabled" (click)="RunVatTypeFilterMethod()">{{'APInvoice.B.ApplyToAll' | TextCodeTranslationPipe}}</button>
+                                                            <td style="width: 150px">
+                                                                <LogLov [ObjectFieldName]="'VatTypeId'"
+                                                                        [SelectedValue]="VatTypeId"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'VatType'"
+                                                                        [HideColumns]="true" [DependencyFilter2Value]="false">
+                                                                </LogLov>
+                                                            </td>
+
+                                                            <td style="width: 2px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 80px;">
+                                                                <button id="{{'VATApplyToAll' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="!VatTypeFilterButtonIsEnabled" (click)="RunVatTypeFilterMethod()">{{'APInvoice.B.ApplyToAll' | TextCodeTranslationPipe}}</button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
+                                                
                                             </tr>
                                         </table>
                                     </td>
+
                                 </tr>
                             </table>
                         </td>
