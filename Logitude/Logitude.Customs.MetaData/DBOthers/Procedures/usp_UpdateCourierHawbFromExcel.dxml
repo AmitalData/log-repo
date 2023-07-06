@@ -43,10 +43,10 @@ EXCEPTION
 WHEN NO_DATA_FOUND THEN
 -- If the string doesn't exist, add it to the not found strings collection
 INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid, NotFound, CourierHawb,ErrorMessage)
-VALUES (v_Tenant, v_userid, i, 1, v_courierhawbList(i),'Not  Found');
+VALUES (v_Tenant, v_userid, i, 1, v_courierhawbList(i),'ש.מ.ב לא אותר במערכת');
 WHEN DUP_VAL_ON_INDEX  THEN 
 INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid, NotFound, CourierHawb,ErrorMessage)
-VALUES (v_Tenant, v_userid, i, 1, v_courierhawbList(i),'Duplicate');
+VALUES (v_Tenant, v_userid, i, 1, v_courierhawbList(i),'ש.מ.ב נקלט ע"י משתמש אחר');
 END;
 END LOOP;
 -- Open the cursor with the not found strings
