@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<LogisticsReferenceType> LogisticsReferenceTypeQuery = (from a in context.LogisticsReferenceTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<LogisticsReferenceTypeList> LogisticsReferenceTypeListQuery = GetIqueryableList( LogisticsReferenceTypeQuery);
-            LogisticsReferenceTypeList LogisticsReferenceTypeList = LogisticsReferenceTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<LogisticsReferenceTypeList> LogisticsReferenceTypeListQuery = GetIqueryableList( LogisticsReferenceTypeQuery);
+			            LogisticsReferenceTypeList LogisticsReferenceTypeList = LogisticsReferenceTypeListQuery.FirstOrDefault();
             return LogisticsReferenceTypeList;
            
         }

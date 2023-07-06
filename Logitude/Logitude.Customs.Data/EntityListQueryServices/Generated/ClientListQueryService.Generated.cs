@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Client> ClientQuery = (from a in context.Clients
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<ClientList> ClientListQuery = GetIqueryableList( ClientQuery);
-            ClientList ClientList = ClientListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ClientList> ClientListQuery = GetIqueryableList( ClientQuery);
+			            ClientList ClientList = ClientListQuery.FirstOrDefault();
             return ClientList;
            
         }

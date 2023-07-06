@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TransportMeansType> TransportMeansTypeQuery = (from a in context.TransportMeansTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<TransportMeansTypeList> TransportMeansTypeListQuery = GetIqueryableList( TransportMeansTypeQuery);
-            TransportMeansTypeList TransportMeansTypeList = TransportMeansTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<TransportMeansTypeList> TransportMeansTypeListQuery = GetIqueryableList( TransportMeansTypeQuery);
+			            TransportMeansTypeList TransportMeansTypeList = TransportMeansTypeListQuery.FirstOrDefault();
             return TransportMeansTypeList;
            
         }

@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsAutonomyKeyword> CustomsAutonomyKeywordQuery = (from a in context.CustomsAutonomyKeywords
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<CustomsAutonomyKeywordList> CustomsAutonomyKeywordListQuery = GetIqueryableList( CustomsAutonomyKeywordQuery);
-            CustomsAutonomyKeywordList CustomsAutonomyKeywordList = CustomsAutonomyKeywordListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsAutonomyKeywordList> CustomsAutonomyKeywordListQuery = GetIqueryableList( CustomsAutonomyKeywordQuery);
+			            CustomsAutonomyKeywordList CustomsAutonomyKeywordList = CustomsAutonomyKeywordListQuery.FirstOrDefault();
             return CustomsAutonomyKeywordList;
            
         }

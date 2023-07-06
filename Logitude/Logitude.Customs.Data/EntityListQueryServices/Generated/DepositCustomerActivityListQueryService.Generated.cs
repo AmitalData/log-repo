@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DepositCustomerActivity> DepositCustomerActivityQuery = (from a in context.DepositCustomerActivities
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<DepositCustomerActivityList> DepositCustomerActivityListQuery = GetIqueryableList( DepositCustomerActivityQuery);
-            DepositCustomerActivityList DepositCustomerActivityList = DepositCustomerActivityListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<DepositCustomerActivityList> DepositCustomerActivityListQuery = GetIqueryableList( DepositCustomerActivityQuery);
+			            DepositCustomerActivityList DepositCustomerActivityList = DepositCustomerActivityListQuery.FirstOrDefault();
             return DepositCustomerActivityList;
            
         }

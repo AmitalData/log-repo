@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AcceptanceStatus> AcceptanceStatusQuery = (from a in context.AcceptanceStatuses
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<AcceptanceStatusList> AcceptanceStatusListQuery = GetIqueryableList( AcceptanceStatusQuery);
-            AcceptanceStatusList AcceptanceStatusList = AcceptanceStatusListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<AcceptanceStatusList> AcceptanceStatusListQuery = GetIqueryableList( AcceptanceStatusQuery);
+			            AcceptanceStatusList AcceptanceStatusList = AcceptanceStatusListQuery.FirstOrDefault();
             return AcceptanceStatusList;
            
         }

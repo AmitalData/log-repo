@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsEnvoirmentType> CustomsEnvoirmentTypeQuery = (from a in context.CustomsEnvoirmentTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<CustomsEnvoirmentTypeList> CustomsEnvoirmentTypeListQuery = GetIqueryableList( CustomsEnvoirmentTypeQuery);
-            CustomsEnvoirmentTypeList CustomsEnvoirmentTypeList = CustomsEnvoirmentTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsEnvoirmentTypeList> CustomsEnvoirmentTypeListQuery = GetIqueryableList( CustomsEnvoirmentTypeQuery);
+			            CustomsEnvoirmentTypeList CustomsEnvoirmentTypeList = CustomsEnvoirmentTypeListQuery.FirstOrDefault();
             return CustomsEnvoirmentTypeList;
            
         }

@@ -26,7 +26,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     public partial class DeclarationListQueryService
     {
 
-         private IQueryable<DeclarationList> GetIqueryableList(IQueryable<Declaration> iQueryable)
+         private IQueryable<DeclarationList> GetIqueryableList(IQueryable<Declaration> iQueryable, bool fromGetSingle= false)
         {
             var arrAmentmentStatus = new string[] { "6", "7", "8", "10" };
 
@@ -45,8 +45,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int tenant = tenant = authToken.Tenant;
 
             bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType == "B";
+            if (!fromGetSingle)
+            {
+                iQueryable = context.Declarations;
+            }
+
  
-                IQueryable<DeclarationList> query = (from a in context.Declarations.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
+                IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                      .Include("Importer").Include("EntitleImporter").Include("TransferImporter").Include("ImporterType").Include("TransferImporterType").Include("EntitleImporterType").Include("StorageStatus").Include("FreightPaymentMethod")
                                                      .Include("CustomsCountry").Include("CustomsShip")
 
@@ -121,7 +126,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          CustomFileNo = a.CustomFileNo,
                                                          DealValue = a.DealValue,
                                                          DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : (!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
-
                                                          EntitleImporterCountryName = a.EntitleImporterCountry.LocalName,
                                                          ExternalDeclarationNumber = a.ExternalDeclarationNumber,
                                                          HatraDate = a.HatraDate,
@@ -279,7 +283,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ComputerFee = MyDeclarationTaxesByTaxTypeCodeViews.ComputerFee,
                                                      });
 
-                return query;
+                return query.Where(x=>x.Tenant==tenant);
 
         
 
@@ -496,7 +500,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
                                                      TaxationDateTime = a.TaxationDateTime,
                                                      CustomerName = a.IsCourierDeclaration ? a.ImporterName : (a.CustomerCard.LocalName != null ? a.CustomerCard.LocalName : a.CustomerCard.EnglishName),
-                                                     CargoTypeCode = myJoinConsignment.CargoTypeCode
+                                                     CargoTypeCode = myJoinConsignment.CargoTypeCode,
+                                                     AmendmentDontDisplayInList= a.AmendmentDontDisplayInList
                                                  });
 
 

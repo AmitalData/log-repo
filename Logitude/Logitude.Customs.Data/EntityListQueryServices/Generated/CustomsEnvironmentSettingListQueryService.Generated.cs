@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsEnvironmentSetting> CustomsEnvironmentSettingQuery = (from a in context.CustomsEnvironmentSettings
                                                        where a.Id == id && a.EnvironmentCode == environmentcode
                                                        select a);
-
-             
-            IQueryable<CustomsEnvironmentSettingList> CustomsEnvironmentSettingListQuery = GetIqueryableList( CustomsEnvironmentSettingQuery);
-            CustomsEnvironmentSettingList CustomsEnvironmentSettingList = CustomsEnvironmentSettingListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsEnvironmentSettingList> CustomsEnvironmentSettingListQuery = GetIqueryableList( CustomsEnvironmentSettingQuery);
+			            CustomsEnvironmentSettingList CustomsEnvironmentSettingList = CustomsEnvironmentSettingListQuery.FirstOrDefault();
             return CustomsEnvironmentSettingList;
            
         }

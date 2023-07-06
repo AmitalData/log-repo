@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationFollowUp> DeclarationFollowUpQuery = (from a in context.DeclarationFollowUps
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<DeclarationFollowUpList> DeclarationFollowUpListQuery = GetIqueryableList( DeclarationFollowUpQuery);
-            DeclarationFollowUpList DeclarationFollowUpList = DeclarationFollowUpListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<DeclarationFollowUpList> DeclarationFollowUpListQuery = GetIqueryableList( DeclarationFollowUpQuery);
+			            DeclarationFollowUpList DeclarationFollowUpList = DeclarationFollowUpListQuery.FirstOrDefault();
             return DeclarationFollowUpList;
            
         }

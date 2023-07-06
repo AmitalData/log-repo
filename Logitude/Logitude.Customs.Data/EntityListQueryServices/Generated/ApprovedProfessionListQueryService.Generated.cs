@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ApprovedProfession> ApprovedProfessionQuery = (from a in context.ApprovedProfessions
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ApprovedProfessionList> ApprovedProfessionListQuery = GetIqueryableList( ApprovedProfessionQuery);
-            ApprovedProfessionList ApprovedProfessionList = ApprovedProfessionListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ApprovedProfessionList> ApprovedProfessionListQuery = GetIqueryableList( ApprovedProfessionQuery);
+			            ApprovedProfessionList ApprovedProfessionList = ApprovedProfessionListQuery.FirstOrDefault();
             return ApprovedProfessionList;
            
         }

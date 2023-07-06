@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<NDMessageActionCode> NDMessageActionCodeQuery = (from a in context.NDMessageActionCodes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<NDMessageActionCodeList> NDMessageActionCodeListQuery = GetIqueryableList( NDMessageActionCodeQuery);
-            NDMessageActionCodeList NDMessageActionCodeList = NDMessageActionCodeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<NDMessageActionCodeList> NDMessageActionCodeListQuery = GetIqueryableList( NDMessageActionCodeQuery);
+			            NDMessageActionCodeList NDMessageActionCodeList = NDMessageActionCodeListQuery.FirstOrDefault();
             return NDMessageActionCodeList;
            
         }

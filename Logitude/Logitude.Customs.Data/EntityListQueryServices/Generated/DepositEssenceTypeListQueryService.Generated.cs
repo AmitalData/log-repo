@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DepositEssenceType> DepositEssenceTypeQuery = (from a in context.DepositEssenceTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<DepositEssenceTypeList> DepositEssenceTypeListQuery = GetIqueryableList( DepositEssenceTypeQuery);
-            DepositEssenceTypeList DepositEssenceTypeList = DepositEssenceTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<DepositEssenceTypeList> DepositEssenceTypeListQuery = GetIqueryableList( DepositEssenceTypeQuery);
+			            DepositEssenceTypeList DepositEssenceTypeList = DepositEssenceTypeListQuery.FirstOrDefault();
             return DepositEssenceTypeList;
            
         }

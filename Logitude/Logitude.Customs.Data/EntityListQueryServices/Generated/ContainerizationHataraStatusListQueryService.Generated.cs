@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ContainerizationHataraStatus> ContainerizationHataraStatusQuery = (from a in context.ContainerizationHataraStatuses
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ContainerizationHataraStatusList> ContainerizationHataraStatusListQuery = GetIqueryableList( ContainerizationHataraStatusQuery);
-            ContainerizationHataraStatusList ContainerizationHataraStatusList = ContainerizationHataraStatusListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ContainerizationHataraStatusList> ContainerizationHataraStatusListQuery = GetIqueryableList( ContainerizationHataraStatusQuery);
+			            ContainerizationHataraStatusList ContainerizationHataraStatusList = ContainerizationHataraStatusListQuery.FirstOrDefault();
             return ContainerizationHataraStatusList;
            
         }

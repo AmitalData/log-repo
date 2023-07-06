@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CheckRepresentativeType> CheckRepresentativeTypeQuery = (from a in context.CheckRepresentativeTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<CheckRepresentativeTypeList> CheckRepresentativeTypeListQuery = GetIqueryableList( CheckRepresentativeTypeQuery);
-            CheckRepresentativeTypeList CheckRepresentativeTypeList = CheckRepresentativeTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CheckRepresentativeTypeList> CheckRepresentativeTypeListQuery = GetIqueryableList( CheckRepresentativeTypeQuery);
+			            CheckRepresentativeTypeList CheckRepresentativeTypeList = CheckRepresentativeTypeListQuery.FirstOrDefault();
             return CheckRepresentativeTypeList;
            
         }

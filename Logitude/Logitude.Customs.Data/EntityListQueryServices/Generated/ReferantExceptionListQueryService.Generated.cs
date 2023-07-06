@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ReferantException> ReferantExceptionQuery = (from a in context.ReferantExceptions
                                                        where a.DeclarationId == declarationid && a.ExceptionReasonsCode == exceptionreasonscode
                                                        select a);
-
-             
-            IQueryable<ReferantExceptionList> ReferantExceptionListQuery = GetIqueryableList( ReferantExceptionQuery);
-            ReferantExceptionList ReferantExceptionList = ReferantExceptionListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ReferantExceptionList> ReferantExceptionListQuery = GetIqueryableList( ReferantExceptionQuery);
+			            ReferantExceptionList ReferantExceptionList = ReferantExceptionListQuery.FirstOrDefault();
             return ReferantExceptionList;
            
         }

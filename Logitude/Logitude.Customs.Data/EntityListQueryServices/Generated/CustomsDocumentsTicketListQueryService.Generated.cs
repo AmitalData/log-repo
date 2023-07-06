@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsDocumentsTicket> CustomsDocumentsTicketQuery = (from a in context.CustomsDocumentsTickets
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<CustomsDocumentsTicketList> CustomsDocumentsTicketListQuery = GetIqueryableList( CustomsDocumentsTicketQuery);
-            CustomsDocumentsTicketList CustomsDocumentsTicketList = CustomsDocumentsTicketListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsDocumentsTicketList> CustomsDocumentsTicketListQuery = GetIqueryableList( CustomsDocumentsTicketQuery);
+			            CustomsDocumentsTicketList CustomsDocumentsTicketList = CustomsDocumentsTicketListQuery.FirstOrDefault();
             return CustomsDocumentsTicketList;
            
         }

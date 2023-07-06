@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<HazardousSubstance> HazardousSubstanceQuery = (from a in context.HazardousSubstances
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<HazardousSubstanceList> HazardousSubstanceListQuery = GetIqueryableList( HazardousSubstanceQuery);
-            HazardousSubstanceList HazardousSubstanceList = HazardousSubstanceListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<HazardousSubstanceList> HazardousSubstanceListQuery = GetIqueryableList( HazardousSubstanceQuery);
+			            HazardousSubstanceList HazardousSubstanceList = HazardousSubstanceListQuery.FirstOrDefault();
             return HazardousSubstanceList;
            
         }

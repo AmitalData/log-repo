@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ReferenceInputType> ReferenceInputTypeQuery = (from a in context.ReferenceInputTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ReferenceInputTypeList> ReferenceInputTypeListQuery = GetIqueryableList( ReferenceInputTypeQuery);
-            ReferenceInputTypeList ReferenceInputTypeList = ReferenceInputTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ReferenceInputTypeList> ReferenceInputTypeListQuery = GetIqueryableList( ReferenceInputTypeQuery);
+			            ReferenceInputTypeList ReferenceInputTypeList = ReferenceInputTypeListQuery.FirstOrDefault();
             return ReferenceInputTypeList;
            
         }

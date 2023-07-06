@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VendorCommunication> VendorCommunicationQuery = (from a in context.VendorCommunications
                                                        where a.VendorId == vendorid && a.LineNumber == linenumber
                                                        select a);
-
-             
-            IQueryable<VendorCommunicationList> VendorCommunicationListQuery = GetIqueryableList( VendorCommunicationQuery);
-            VendorCommunicationList VendorCommunicationList = VendorCommunicationListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<VendorCommunicationList> VendorCommunicationListQuery = GetIqueryableList( VendorCommunicationQuery);
+			            VendorCommunicationList VendorCommunicationList = VendorCommunicationListQuery.FirstOrDefault();
             return VendorCommunicationList;
            
         }

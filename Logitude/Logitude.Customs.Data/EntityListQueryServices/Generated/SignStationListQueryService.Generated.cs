@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SignStation> SignStationQuery = (from a in context.SignStations
                                                        where a.CustomsAgentId == customsagentid && a.PersonId == personid
                                                        select a);
-
-             
-            IQueryable<SignStationList> SignStationListQuery = GetIqueryableList( SignStationQuery);
-            SignStationList SignStationList = SignStationListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<SignStationList> SignStationListQuery = GetIqueryableList( SignStationQuery);
+			            SignStationList SignStationList = SignStationListQuery.FirstOrDefault();
             return SignStationList;
            
         }

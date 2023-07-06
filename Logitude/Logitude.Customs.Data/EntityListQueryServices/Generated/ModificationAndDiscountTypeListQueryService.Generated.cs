@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ModificationAndDiscountType> ModificationAndDiscountTypeQuery = (from a in context.ModificationAndDiscountTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ModificationAndDiscountTypeList> ModificationAndDiscountTypeListQuery = GetIqueryableList( ModificationAndDiscountTypeQuery);
-            ModificationAndDiscountTypeList ModificationAndDiscountTypeList = ModificationAndDiscountTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ModificationAndDiscountTypeList> ModificationAndDiscountTypeListQuery = GetIqueryableList( ModificationAndDiscountTypeQuery);
+			            ModificationAndDiscountTypeList ModificationAndDiscountTypeList = ModificationAndDiscountTypeListQuery.FirstOrDefault();
             return ModificationAndDiscountTypeList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ActionCode> ActionCodeQuery = (from a in context.ActionCodes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ActionCodeList> ActionCodeListQuery = GetIqueryableList( ActionCodeQuery);
-            ActionCodeList ActionCodeList = ActionCodeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ActionCodeList> ActionCodeListQuery = GetIqueryableList( ActionCodeQuery);
+			            ActionCodeList ActionCodeList = ActionCodeListQuery.FirstOrDefault();
             return ActionCodeList;
            
         }

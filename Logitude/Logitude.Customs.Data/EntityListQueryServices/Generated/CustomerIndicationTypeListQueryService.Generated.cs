@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomerIndicationType> CustomerIndicationTypeQuery = (from a in context.CustomerIndicationTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<CustomerIndicationTypeList> CustomerIndicationTypeListQuery = GetIqueryableList( CustomerIndicationTypeQuery);
-            CustomerIndicationTypeList CustomerIndicationTypeList = CustomerIndicationTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomerIndicationTypeList> CustomerIndicationTypeListQuery = GetIqueryableList( CustomerIndicationTypeQuery);
+			            CustomerIndicationTypeList CustomerIndicationTypeList = CustomerIndicationTypeListQuery.FirstOrDefault();
             return CustomerIndicationTypeList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DebtNotificationType> DebtNotificationTypeQuery = (from a in context.DebtNotificationTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<DebtNotificationTypeList> DebtNotificationTypeListQuery = GetIqueryableList( DebtNotificationTypeQuery);
-            DebtNotificationTypeList DebtNotificationTypeList = DebtNotificationTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<DebtNotificationTypeList> DebtNotificationTypeListQuery = GetIqueryableList( DebtNotificationTypeQuery);
+			            DebtNotificationTypeList DebtNotificationTypeList = DebtNotificationTypeListQuery.FirstOrDefault();
             return DebtNotificationTypeList;
            
         }

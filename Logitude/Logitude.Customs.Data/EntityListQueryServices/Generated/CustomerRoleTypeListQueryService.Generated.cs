@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomerRoleType> CustomerRoleTypeQuery = (from a in context.CustomerRoleTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<CustomerRoleTypeList> CustomerRoleTypeListQuery = GetIqueryableList( CustomerRoleTypeQuery);
-            CustomerRoleTypeList CustomerRoleTypeList = CustomerRoleTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomerRoleTypeList> CustomerRoleTypeListQuery = GetIqueryableList( CustomerRoleTypeQuery);
+			            CustomerRoleTypeList CustomerRoleTypeList = CustomerRoleTypeListQuery.FirstOrDefault();
             return CustomerRoleTypeList;
            
         }

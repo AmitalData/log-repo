@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmountType> AmountTypeQuery = (from a in context.AmountTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<AmountTypeList> AmountTypeListQuery = GetIqueryableList( AmountTypeQuery);
-            AmountTypeList AmountTypeList = AmountTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<AmountTypeList> AmountTypeListQuery = GetIqueryableList( AmountTypeQuery);
+			            AmountTypeList AmountTypeList = AmountTypeListQuery.FirstOrDefault();
             return AmountTypeList;
            
         }

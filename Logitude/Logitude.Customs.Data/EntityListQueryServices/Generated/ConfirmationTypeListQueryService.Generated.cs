@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConfirmationType> ConfirmationTypeQuery = (from a in context.ConfirmationTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ConfirmationTypeList> ConfirmationTypeListQuery = GetIqueryableList( ConfirmationTypeQuery);
-            ConfirmationTypeList ConfirmationTypeList = ConfirmationTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ConfirmationTypeList> ConfirmationTypeListQuery = GetIqueryableList( ConfirmationTypeQuery);
+			            ConfirmationTypeList ConfirmationTypeList = ConfirmationTypeListQuery.FirstOrDefault();
             return ConfirmationTypeList;
            
         }

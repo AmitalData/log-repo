@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PassportType> PassportTypeQuery = (from a in context.PassportTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<PassportTypeList> PassportTypeListQuery = GetIqueryableList( PassportTypeQuery);
-            PassportTypeList PassportTypeList = PassportTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<PassportTypeList> PassportTypeListQuery = GetIqueryableList( PassportTypeQuery);
+			            PassportTypeList PassportTypeList = PassportTypeListQuery.FirstOrDefault();
             return PassportTypeList;
            
         }

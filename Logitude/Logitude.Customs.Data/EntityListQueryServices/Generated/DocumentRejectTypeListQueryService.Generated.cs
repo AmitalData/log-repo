@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DocumentRejectType> DocumentRejectTypeQuery = (from a in context.DocumentRejectTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<DocumentRejectTypeList> DocumentRejectTypeListQuery = GetIqueryableList( DocumentRejectTypeQuery);
-            DocumentRejectTypeList DocumentRejectTypeList = DocumentRejectTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<DocumentRejectTypeList> DocumentRejectTypeListQuery = GetIqueryableList( DocumentRejectTypeQuery);
+			            DocumentRejectTypeList DocumentRejectTypeList = DocumentRejectTypeListQuery.FirstOrDefault();
             return DocumentRejectTypeList;
            
         }

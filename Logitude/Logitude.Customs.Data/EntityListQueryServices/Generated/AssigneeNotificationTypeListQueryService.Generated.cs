@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AssigneeNotificationType> AssigneeNotificationTypeQuery = (from a in context.AssigneeNotificationTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<AssigneeNotificationTypeList> AssigneeNotificationTypeListQuery = GetIqueryableList( AssigneeNotificationTypeQuery);
-            AssigneeNotificationTypeList AssigneeNotificationTypeList = AssigneeNotificationTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<AssigneeNotificationTypeList> AssigneeNotificationTypeListQuery = GetIqueryableList( AssigneeNotificationTypeQuery);
+			            AssigneeNotificationTypeList AssigneeNotificationTypeList = AssigneeNotificationTypeListQuery.FirstOrDefault();
             return AssigneeNotificationTypeList;
            
         }

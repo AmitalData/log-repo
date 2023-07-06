@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SplitOrMergeReason> SplitOrMergeReasonQuery = (from a in context.SplitOrMergeReasons
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<SplitOrMergeReasonList> SplitOrMergeReasonListQuery = GetIqueryableList( SplitOrMergeReasonQuery);
-            SplitOrMergeReasonList SplitOrMergeReasonList = SplitOrMergeReasonListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<SplitOrMergeReasonList> SplitOrMergeReasonListQuery = GetIqueryableList( SplitOrMergeReasonQuery);
+			            SplitOrMergeReasonList SplitOrMergeReasonList = SplitOrMergeReasonListQuery.FirstOrDefault();
             return SplitOrMergeReasonList;
            
         }

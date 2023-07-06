@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PointerLevel> PointerLevelQuery = (from a in context.PointerLevels
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<PointerLevelList> PointerLevelListQuery = GetIqueryableList( PointerLevelQuery);
-            PointerLevelList PointerLevelList = PointerLevelListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<PointerLevelList> PointerLevelListQuery = GetIqueryableList( PointerLevelQuery);
+			            PointerLevelList PointerLevelList = PointerLevelListQuery.FirstOrDefault();
             return PointerLevelList;
            
         }

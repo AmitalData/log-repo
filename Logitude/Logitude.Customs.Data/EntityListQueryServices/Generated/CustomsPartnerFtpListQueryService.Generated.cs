@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsPartnerFtp> CustomsPartnerFtpQuery = (from a in context.CustomsPartnerFtps
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<CustomsPartnerFtpList> CustomsPartnerFtpListQuery = GetIqueryableList( CustomsPartnerFtpQuery);
-            CustomsPartnerFtpList CustomsPartnerFtpList = CustomsPartnerFtpListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsPartnerFtpList> CustomsPartnerFtpListQuery = GetIqueryableList( CustomsPartnerFtpQuery);
+			            CustomsPartnerFtpList CustomsPartnerFtpList = CustomsPartnerFtpListQuery.FirstOrDefault();
             return CustomsPartnerFtpList;
            
         }
