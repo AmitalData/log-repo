@@ -47,18 +47,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.Email).HasColumnName("Email").HasMaxLength(70).IsUnicode(false);
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.ErrorMessage).HasMaxLength(2000);
-			}
-            else
-            {
-              this.Property(t => t.ErrorMessage).HasMaxLength(4000);
-			}
-
-
-            this.Property(t => t.ErrorMessage).HasColumnName("ErrorMessage").IsUnicode(true);
+            this.Property(t => t.ErrorMessage).HasColumnName("ErrorMessage").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.ByMonth).HasColumnName("ByMonth");
 
