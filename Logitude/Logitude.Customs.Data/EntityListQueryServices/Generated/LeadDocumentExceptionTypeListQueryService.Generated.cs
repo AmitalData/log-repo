@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<LeadDocumentExceptionType> LeadDocumentExceptionTypeQuery = (from a in context.LeadDocumentExceptionTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<LeadDocumentExceptionTypeList> LeadDocumentExceptionTypeListQuery = GetIqueryableList( LeadDocumentExceptionTypeQuery);
-            LeadDocumentExceptionTypeList LeadDocumentExceptionTypeList = LeadDocumentExceptionTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<LeadDocumentExceptionTypeList> LeadDocumentExceptionTypeListQuery = GetIqueryableList( LeadDocumentExceptionTypeQuery);
+			            LeadDocumentExceptionTypeList LeadDocumentExceptionTypeList = LeadDocumentExceptionTypeListQuery.FirstOrDefault();
             return LeadDocumentExceptionTypeList;
            
         }

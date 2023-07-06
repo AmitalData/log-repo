@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmendmentFieldReasonType> AmendmentFieldReasonTypeQuery = (from a in context.AmendmentFieldReasonTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<AmendmentFieldReasonTypeList> AmendmentFieldReasonTypeListQuery = GetIqueryableList( AmendmentFieldReasonTypeQuery);
-            AmendmentFieldReasonTypeList AmendmentFieldReasonTypeList = AmendmentFieldReasonTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<AmendmentFieldReasonTypeList> AmendmentFieldReasonTypeListQuery = GetIqueryableList( AmendmentFieldReasonTypeQuery);
+			            AmendmentFieldReasonTypeList AmendmentFieldReasonTypeList = AmendmentFieldReasonTypeListQuery.FirstOrDefault();
             return AmendmentFieldReasonTypeList;
            
         }

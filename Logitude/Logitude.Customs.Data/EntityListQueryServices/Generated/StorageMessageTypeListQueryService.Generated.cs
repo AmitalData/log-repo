@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<StorageMessageType> StorageMessageTypeQuery = (from a in context.StorageMessageTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<StorageMessageTypeList> StorageMessageTypeListQuery = GetIqueryableList( StorageMessageTypeQuery);
-            StorageMessageTypeList StorageMessageTypeList = StorageMessageTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<StorageMessageTypeList> StorageMessageTypeListQuery = GetIqueryableList( StorageMessageTypeQuery);
+			            StorageMessageTypeList StorageMessageTypeList = StorageMessageTypeListQuery.FirstOrDefault();
             return StorageMessageTypeList;
            
         }

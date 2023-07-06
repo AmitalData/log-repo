@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimsRelatedEntitiesRefund> ClaimsRelatedEntitiesRefundQuery = (from a in context.ClaimsRelatedEntitiesRefunds
                                                        where a.ClaimId == claimid && a.CounterKey == counterkey && a.RefundQuntityLineNo == refundquntitylineno
                                                        select a);
-
-             
-            IQueryable<ClaimsRelatedEntitiesRefundList> ClaimsRelatedEntitiesRefundListQuery = GetIqueryableList( ClaimsRelatedEntitiesRefundQuery);
-            ClaimsRelatedEntitiesRefundList ClaimsRelatedEntitiesRefundList = ClaimsRelatedEntitiesRefundListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ClaimsRelatedEntitiesRefundList> ClaimsRelatedEntitiesRefundListQuery = GetIqueryableList( ClaimsRelatedEntitiesRefundQuery);
+			            ClaimsRelatedEntitiesRefundList ClaimsRelatedEntitiesRefundList = ClaimsRelatedEntitiesRefundListQuery.FirstOrDefault();
             return ClaimsRelatedEntitiesRefundList;
            
         }

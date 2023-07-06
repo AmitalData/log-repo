@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsRequiredField> CustomsRequiredFieldQuery = (from a in context.CustomsRequiredFields
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<CustomsRequiredFieldList> CustomsRequiredFieldListQuery = GetIqueryableList( CustomsRequiredFieldQuery);
-            CustomsRequiredFieldList CustomsRequiredFieldList = CustomsRequiredFieldListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsRequiredFieldList> CustomsRequiredFieldListQuery = GetIqueryableList( CustomsRequiredFieldQuery);
+			            CustomsRequiredFieldList CustomsRequiredFieldList = CustomsRequiredFieldListQuery.FirstOrDefault();
             return CustomsRequiredFieldList;
            
         }

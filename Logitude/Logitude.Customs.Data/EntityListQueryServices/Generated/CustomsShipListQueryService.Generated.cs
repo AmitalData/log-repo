@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsShip> CustomsShipQuery = (from a in context.CustomsShips
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<CustomsShipList> CustomsShipListQuery = GetIqueryableList( CustomsShipQuery);
-            CustomsShipList CustomsShipList = CustomsShipListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsShipList> CustomsShipListQuery = GetIqueryableList( CustomsShipQuery);
+			            CustomsShipList CustomsShipList = CustomsShipListQuery.FirstOrDefault();
             return CustomsShipList;
            
         }

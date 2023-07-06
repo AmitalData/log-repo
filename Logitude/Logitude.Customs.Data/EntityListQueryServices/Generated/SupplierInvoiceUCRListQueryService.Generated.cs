@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceUCR> SupplierInvoiceUCRQuery = (from a in context.SupplierInvoiceUCRs
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.SequenceNumeric == sequencenumeric
                                                        select a);
-
-             
-            IQueryable<SupplierInvoiceUCRList> SupplierInvoiceUCRListQuery = GetIqueryableList( SupplierInvoiceUCRQuery);
-            SupplierInvoiceUCRList SupplierInvoiceUCRList = SupplierInvoiceUCRListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<SupplierInvoiceUCRList> SupplierInvoiceUCRListQuery = GetIqueryableList( SupplierInvoiceUCRQuery);
+			            SupplierInvoiceUCRList SupplierInvoiceUCRList = SupplierInvoiceUCRListQuery.FirstOrDefault();
             return SupplierInvoiceUCRList;
            
         }

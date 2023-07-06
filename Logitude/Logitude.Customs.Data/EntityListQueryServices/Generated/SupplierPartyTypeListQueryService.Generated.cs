@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierPartyType> SupplierPartyTypeQuery = (from a in context.SupplierPartyTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<SupplierPartyTypeList> SupplierPartyTypeListQuery = GetIqueryableList( SupplierPartyTypeQuery);
-            SupplierPartyTypeList SupplierPartyTypeList = SupplierPartyTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<SupplierPartyTypeList> SupplierPartyTypeListQuery = GetIqueryableList( SupplierPartyTypeQuery);
+			            SupplierPartyTypeList SupplierPartyTypeList = SupplierPartyTypeListQuery.FirstOrDefault();
             return SupplierPartyTypeList;
            
         }

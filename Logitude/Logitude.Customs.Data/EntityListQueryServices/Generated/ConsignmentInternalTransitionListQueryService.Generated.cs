@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConsignmentInternalTransition> ConsignmentInternalTransitionQuery = (from a in context.ConsignmentInternalTransitions
                                                        where a.DeclarationId == declarationid && a.ConsignmentNumber == consignmentnumber && a.LineNumber == linenumber
                                                        select a);
-
-             
-            IQueryable<ConsignmentInternalTransitionList> ConsignmentInternalTransitionListQuery = GetIqueryableList( ConsignmentInternalTransitionQuery);
-            ConsignmentInternalTransitionList ConsignmentInternalTransitionList = ConsignmentInternalTransitionListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ConsignmentInternalTransitionList> ConsignmentInternalTransitionListQuery = GetIqueryableList( ConsignmentInternalTransitionQuery);
+			            ConsignmentInternalTransitionList ConsignmentInternalTransitionList = ConsignmentInternalTransitionListQuery.FirstOrDefault();
             return ConsignmentInternalTransitionList;
            
         }

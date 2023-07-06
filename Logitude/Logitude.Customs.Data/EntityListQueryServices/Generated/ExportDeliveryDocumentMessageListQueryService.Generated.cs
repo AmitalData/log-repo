@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportDeliveryDocumentMessage> ExportDeliveryDocumentMessageQuery = (from a in context.ExportDeliveryDocumentMessages
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ExportDeliveryDocumentMessageList> ExportDeliveryDocumentMessageListQuery = GetIqueryableList( ExportDeliveryDocumentMessageQuery);
-            ExportDeliveryDocumentMessageList ExportDeliveryDocumentMessageList = ExportDeliveryDocumentMessageListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ExportDeliveryDocumentMessageList> ExportDeliveryDocumentMessageListQuery = GetIqueryableList( ExportDeliveryDocumentMessageQuery);
+			            ExportDeliveryDocumentMessageList ExportDeliveryDocumentMessageList = ExportDeliveryDocumentMessageListQuery.FirstOrDefault();
             return ExportDeliveryDocumentMessageList;
            
         }

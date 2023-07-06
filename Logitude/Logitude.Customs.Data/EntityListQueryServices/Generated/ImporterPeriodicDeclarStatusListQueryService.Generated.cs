@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ImporterPeriodicDeclarStatus> ImporterPeriodicDeclarStatusQuery = (from a in context.ImporterPeriodicDeclarStatuses
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ImporterPeriodicDeclarStatusList> ImporterPeriodicDeclarStatusListQuery = GetIqueryableList( ImporterPeriodicDeclarStatusQuery);
-            ImporterPeriodicDeclarStatusList ImporterPeriodicDeclarStatusList = ImporterPeriodicDeclarStatusListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ImporterPeriodicDeclarStatusList> ImporterPeriodicDeclarStatusListQuery = GetIqueryableList( ImporterPeriodicDeclarStatusQuery);
+			            ImporterPeriodicDeclarStatusList ImporterPeriodicDeclarStatusList = ImporterPeriodicDeclarStatusListQuery.FirstOrDefault();
             return ImporterPeriodicDeclarStatusList;
            
         }

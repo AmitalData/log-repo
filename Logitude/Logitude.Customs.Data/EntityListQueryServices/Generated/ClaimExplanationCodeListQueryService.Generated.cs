@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimExplanationCode> ClaimExplanationCodeQuery = (from a in context.ClaimExplanationCodes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ClaimExplanationCodeList> ClaimExplanationCodeListQuery = GetIqueryableList( ClaimExplanationCodeQuery);
-            ClaimExplanationCodeList ClaimExplanationCodeList = ClaimExplanationCodeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ClaimExplanationCodeList> ClaimExplanationCodeListQuery = GetIqueryableList( ClaimExplanationCodeQuery);
+			            ClaimExplanationCodeList ClaimExplanationCodeList = ClaimExplanationCodeListQuery.FirstOrDefault();
             return ClaimExplanationCodeList;
            
         }

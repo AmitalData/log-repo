@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsCollateral> CustomsCollateralQuery = (from a in context.CustomsCollaterals
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<CustomsCollateralList> CustomsCollateralListQuery = GetIqueryableList( CustomsCollateralQuery);
-            CustomsCollateralList CustomsCollateralList = CustomsCollateralListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsCollateralList> CustomsCollateralListQuery = GetIqueryableList( CustomsCollateralQuery);
+			            CustomsCollateralList CustomsCollateralList = CustomsCollateralListQuery.FirstOrDefault();
             return CustomsCollateralList;
            
         }

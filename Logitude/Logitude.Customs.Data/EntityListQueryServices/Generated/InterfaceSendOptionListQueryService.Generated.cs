@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<InterfaceSendOption> InterfaceSendOptionQuery = (from a in context.InterfaceSendOptions
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<InterfaceSendOptionList> InterfaceSendOptionListQuery = GetIqueryableList( InterfaceSendOptionQuery);
-            InterfaceSendOptionList InterfaceSendOptionList = InterfaceSendOptionListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<InterfaceSendOptionList> InterfaceSendOptionListQuery = GetIqueryableList( InterfaceSendOptionQuery);
+			            InterfaceSendOptionList InterfaceSendOptionList = InterfaceSendOptionListQuery.FirstOrDefault();
             return InterfaceSendOptionList;
            
         }

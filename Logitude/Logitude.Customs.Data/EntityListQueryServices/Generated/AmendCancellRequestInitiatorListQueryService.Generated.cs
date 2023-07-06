@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmendCancellRequestInitiator> AmendCancellRequestInitiatorQuery = (from a in context.AmendCancellRequestInitiators
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<AmendCancellRequestInitiatorList> AmendCancellRequestInitiatorListQuery = GetIqueryableList( AmendCancellRequestInitiatorQuery);
-            AmendCancellRequestInitiatorList AmendCancellRequestInitiatorList = AmendCancellRequestInitiatorListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<AmendCancellRequestInitiatorList> AmendCancellRequestInitiatorListQuery = GetIqueryableList( AmendCancellRequestInitiatorQuery);
+			            AmendCancellRequestInitiatorList AmendCancellRequestInitiatorList = AmendCancellRequestInitiatorListQuery.FirstOrDefault();
             return AmendCancellRequestInitiatorList;
            
         }

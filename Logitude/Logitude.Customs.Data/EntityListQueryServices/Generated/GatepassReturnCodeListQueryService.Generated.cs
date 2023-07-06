@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<GatepassReturnCode> GatepassReturnCodeQuery = (from a in context.GatepassReturnCodes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<GatepassReturnCodeList> GatepassReturnCodeListQuery = GetIqueryableList( GatepassReturnCodeQuery);
-            GatepassReturnCodeList GatepassReturnCodeList = GatepassReturnCodeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<GatepassReturnCodeList> GatepassReturnCodeListQuery = GetIqueryableList( GatepassReturnCodeQuery);
+			            GatepassReturnCodeList GatepassReturnCodeList = GatepassReturnCodeListQuery.FirstOrDefault();
             return GatepassReturnCodeList;
            
         }

@@ -81,6 +81,7 @@ namespace Logitude.Customs.Data.CustomFilters
                 }
             }
 
+            queryableData = queryableData.Where(x => x.Tenant == tenant);
             return queryableData;
         }
 

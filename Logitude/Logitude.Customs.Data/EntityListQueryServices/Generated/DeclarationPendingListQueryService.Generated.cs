@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationPending> DeclarationPendingQuery = (from a in context.DeclarationPendings
                                                        where a.DeclarationID == declarationid && a.CourierPendingReasonCode == courierpendingreasoncode
                                                        select a);
-
-             
-            IQueryable<DeclarationPendingList> DeclarationPendingListQuery = GetIqueryableList( DeclarationPendingQuery);
-            DeclarationPendingList DeclarationPendingList = DeclarationPendingListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<DeclarationPendingList> DeclarationPendingListQuery = GetIqueryableList( DeclarationPendingQuery);
+			            DeclarationPendingList DeclarationPendingList = DeclarationPendingListQuery.FirstOrDefault();
             return DeclarationPendingList;
            
         }

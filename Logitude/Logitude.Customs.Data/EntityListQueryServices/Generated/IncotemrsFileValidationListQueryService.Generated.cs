@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<IncotemrsFileValidation> IncotemrsFileValidationQuery = (from a in context.IncotemrsFileValidations
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<IncotemrsFileValidationList> IncotemrsFileValidationListQuery = GetIqueryableList( IncotemrsFileValidationQuery);
-            IncotemrsFileValidationList IncotemrsFileValidationList = IncotemrsFileValidationListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<IncotemrsFileValidationList> IncotemrsFileValidationListQuery = GetIqueryableList( IncotemrsFileValidationQuery);
+			            IncotemrsFileValidationList IncotemrsFileValidationList = IncotemrsFileValidationListQuery.FirstOrDefault();
             return IncotemrsFileValidationList;
            
         }

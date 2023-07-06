@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsVerificationStatusType> CustomsVerificationStatusTypeQuery = (from a in context.CustomsVerificationStatusTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<CustomsVerificationStatusTypeList> CustomsVerificationStatusTypeListQuery = GetIqueryableList( CustomsVerificationStatusTypeQuery);
-            CustomsVerificationStatusTypeList CustomsVerificationStatusTypeList = CustomsVerificationStatusTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsVerificationStatusTypeList> CustomsVerificationStatusTypeListQuery = GetIqueryableList( CustomsVerificationStatusTypeQuery);
+			            CustomsVerificationStatusTypeList CustomsVerificationStatusTypeList = CustomsVerificationStatusTypeListQuery.FirstOrDefault();
             return CustomsVerificationStatusTypeList;
            
         }

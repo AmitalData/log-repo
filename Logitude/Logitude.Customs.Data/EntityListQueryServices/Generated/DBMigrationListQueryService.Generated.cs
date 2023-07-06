@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DBMigration> DBMigrationQuery = (from a in context.DBMigrations
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<DBMigrationList> DBMigrationListQuery = GetIqueryableList( DBMigrationQuery);
-            DBMigrationList DBMigrationList = DBMigrationListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<DBMigrationList> DBMigrationListQuery = GetIqueryableList( DBMigrationQuery);
+			            DBMigrationList DBMigrationList = DBMigrationListQuery.FirstOrDefault();
             return DBMigrationList;
            
         }

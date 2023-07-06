@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CheckEntityType> CheckEntityTypeQuery = (from a in context.CheckEntityTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<CheckEntityTypeList> CheckEntityTypeListQuery = GetIqueryableList( CheckEntityTypeQuery);
-            CheckEntityTypeList CheckEntityTypeList = CheckEntityTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CheckEntityTypeList> CheckEntityTypeListQuery = GetIqueryableList( CheckEntityTypeQuery);
+			            CheckEntityTypeList CheckEntityTypeList = CheckEntityTypeListQuery.FirstOrDefault();
             return CheckEntityTypeList;
            
         }

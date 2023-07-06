@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClientDrivingLicense> ClientDrivingLicenseQuery = (from a in context.ClientDrivingLicenses
                                                        where a.ClientId == clientid && a.Line == line
                                                        select a);
-
-             
-            IQueryable<ClientDrivingLicenseList> ClientDrivingLicenseListQuery = GetIqueryableList( ClientDrivingLicenseQuery);
-            ClientDrivingLicenseList ClientDrivingLicenseList = ClientDrivingLicenseListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ClientDrivingLicenseList> ClientDrivingLicenseListQuery = GetIqueryableList( ClientDrivingLicenseQuery);
+			            ClientDrivingLicenseList ClientDrivingLicenseList = ClientDrivingLicenseListQuery.FirstOrDefault();
             return ClientDrivingLicenseList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TreatmentWay> TreatmentWayQuery = (from a in context.TreatmentWays
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<TreatmentWayList> TreatmentWayListQuery = GetIqueryableList( TreatmentWayQuery);
-            TreatmentWayList TreatmentWayList = TreatmentWayListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<TreatmentWayList> TreatmentWayListQuery = GetIqueryableList( TreatmentWayQuery);
+			            TreatmentWayList TreatmentWayList = TreatmentWayListQuery.FirstOrDefault();
             return TreatmentWayList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CommercialSale> CommercialSaleQuery = (from a in context.CommercialSales
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<CommercialSaleList> CommercialSaleListQuery = GetIqueryableList( CommercialSaleQuery);
-            CommercialSaleList CommercialSaleList = CommercialSaleListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CommercialSaleList> CommercialSaleListQuery = GetIqueryableList( CommercialSaleQuery);
+			            CommercialSaleList CommercialSaleList = CommercialSaleListQuery.FirstOrDefault();
             return CommercialSaleList;
            
         }

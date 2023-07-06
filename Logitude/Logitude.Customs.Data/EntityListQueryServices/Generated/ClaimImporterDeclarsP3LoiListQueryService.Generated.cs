@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimImporterDeclarsP3Loi> ClaimImporterDeclarsP3LoiQuery = (from a in context.ClaimImporterDeclarsP3Lois
                                                        where a.ClaimId == claimid && a.CounterKey == counterkey && a.LineNo == lineno
                                                        select a);
-
-             
-            IQueryable<ClaimImporterDeclarsP3LoiList> ClaimImporterDeclarsP3LoiListQuery = GetIqueryableList( ClaimImporterDeclarsP3LoiQuery);
-            ClaimImporterDeclarsP3LoiList ClaimImporterDeclarsP3LoiList = ClaimImporterDeclarsP3LoiListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ClaimImporterDeclarsP3LoiList> ClaimImporterDeclarsP3LoiListQuery = GetIqueryableList( ClaimImporterDeclarsP3LoiQuery);
+			            ClaimImporterDeclarsP3LoiList ClaimImporterDeclarsP3LoiList = ClaimImporterDeclarsP3LoiListQuery.FirstOrDefault();
             return ClaimImporterDeclarsP3LoiList;
            
         }

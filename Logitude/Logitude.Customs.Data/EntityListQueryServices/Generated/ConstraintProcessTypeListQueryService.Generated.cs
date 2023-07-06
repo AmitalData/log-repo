@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConstraintProcessType> ConstraintProcessTypeQuery = (from a in context.ConstraintProcessTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ConstraintProcessTypeList> ConstraintProcessTypeListQuery = GetIqueryableList( ConstraintProcessTypeQuery);
-            ConstraintProcessTypeList ConstraintProcessTypeList = ConstraintProcessTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ConstraintProcessTypeList> ConstraintProcessTypeListQuery = GetIqueryableList( ConstraintProcessTypeQuery);
+			            ConstraintProcessTypeList ConstraintProcessTypeList = ConstraintProcessTypeListQuery.FirstOrDefault();
             return ConstraintProcessTypeList;
            
         }

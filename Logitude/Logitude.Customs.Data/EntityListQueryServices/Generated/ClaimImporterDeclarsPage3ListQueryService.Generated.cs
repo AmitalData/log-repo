@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimImporterDeclarsPage3> ClaimImporterDeclarsPage3Query = (from a in context.ClaimImporterDeclarsPage3s
                                                        where a.ClaimId == claimid && a.LineNo == lineno
                                                        select a);
-
-             
-            IQueryable<ClaimImporterDeclarsPage3List> ClaimImporterDeclarsPage3ListQuery = GetIqueryableList( ClaimImporterDeclarsPage3Query);
-            ClaimImporterDeclarsPage3List ClaimImporterDeclarsPage3List = ClaimImporterDeclarsPage3ListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ClaimImporterDeclarsPage3List> ClaimImporterDeclarsPage3ListQuery = GetIqueryableList( ClaimImporterDeclarsPage3Query);
+			            ClaimImporterDeclarsPage3List ClaimImporterDeclarsPage3List = ClaimImporterDeclarsPage3ListQuery.FirstOrDefault();
             return ClaimImporterDeclarsPage3List;
            
         }

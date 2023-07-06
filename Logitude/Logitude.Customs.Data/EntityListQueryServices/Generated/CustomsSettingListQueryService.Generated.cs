@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsSetting> CustomsSettingQuery = (from a in context.CustomsSettings
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<CustomsSettingList> CustomsSettingListQuery = GetIqueryableList( CustomsSettingQuery);
-            CustomsSettingList CustomsSettingList = CustomsSettingListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsSettingList> CustomsSettingListQuery = GetIqueryableList( CustomsSettingQuery);
+			            CustomsSettingList CustomsSettingList = CustomsSettingListQuery.FirstOrDefault();
             return CustomsSettingList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<UnloadingSiteType> UnloadingSiteTypeQuery = (from a in context.UnloadingSiteType
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<UnloadingSiteTypeList> UnloadingSiteTypeListQuery = GetIqueryableList( UnloadingSiteTypeQuery);
-            UnloadingSiteTypeList UnloadingSiteTypeList = UnloadingSiteTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<UnloadingSiteTypeList> UnloadingSiteTypeListQuery = GetIqueryableList( UnloadingSiteTypeQuery);
+			            UnloadingSiteTypeList UnloadingSiteTypeList = UnloadingSiteTypeListQuery.FirstOrDefault();
             return UnloadingSiteTypeList;
            
         }

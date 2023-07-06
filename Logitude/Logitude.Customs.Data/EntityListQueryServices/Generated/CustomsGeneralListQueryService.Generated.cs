@@ -135,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsGeneral> CustomsGeneralQuery = (from a in context.CustomsGenerals
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<CustomsGeneralList> CustomsGeneralListQuery = GetIqueryableList( CustomsGeneralQuery);
-            CustomsGeneralList CustomsGeneralList = CustomsGeneralListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsGeneralList> CustomsGeneralListQuery = GetIqueryableList( CustomsGeneralQuery);
+			            CustomsGeneralList CustomsGeneralList = CustomsGeneralListQuery.FirstOrDefault();
             return CustomsGeneralList;
            
         }
