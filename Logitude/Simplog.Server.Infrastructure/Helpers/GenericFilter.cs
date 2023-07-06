@@ -14,9 +14,9 @@ namespace Simplog.Server.Infrastructure.Helpers
         CustomFieldClass customFilterClass = new CustomFieldClass();
         public IQueryable<T> GetFilteredQuery<T>(QueryOperations operations, IQueryable<T> queryableData)
         {
-
+            
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
-
+           
             if (queryFilters.Count != 0)
             {
                 Expression grandExpression = null;
@@ -29,7 +29,7 @@ namespace Simplog.Server.Infrastructure.Helpers
                     {
                         if (item.FieldName == "SearchFields")
                         {
-                            item.FieldValue = item.FieldValue.ToString().ToLower();
+                           item.FieldValue=  item.FieldValue.ToString().ToLower();
                         }
                     }
                     if (!item.IsCustom)
@@ -38,7 +38,7 @@ namespace Simplog.Server.Infrastructure.Helpers
 
                         if (item.Operator != null)
                         {
-
+                            
                             switch (item.Operator)
                             {
                                 case "LargerThan":
@@ -280,7 +280,7 @@ namespace Simplog.Server.Infrastructure.Helpers
                                         Expression inListExpression = null;
                                         foreach (string v in listOfValus)
                                         {
-
+                                            
                                             MethodInfo mi = typeof(String).GetMethod("Contains", new Type[] { typeof(String) });
 
                                             MemberExpression field = System.Linq.Expressions.Expression.PropertyOrField(pe, item.FieldName);
@@ -337,7 +337,7 @@ namespace Simplog.Server.Infrastructure.Helpers
                                             {
                                                 right = System.Linq.Expressions.Expression.Constant(null);
                                             }
-
+                                                 
 
                                             if (e1 == null)
                                             {
@@ -381,11 +381,11 @@ namespace Simplog.Server.Infrastructure.Helpers
 
                                 //            MemberExpression field = System.Linq.Expressions.Expression.PropertyOrField(pe, item.FieldName);
 
-
+                                         
                                 //            System.Linq.Expressions.Expression left = System.Linq.Expressions.Expression.Property(pe, typeof(T).GetProperty(item.FieldName));
                                 //            System.Linq.Expressions.Expression right = System.Linq.Expressions.Expression.Constant(v);
 
-
+                                        
                                 //            if (e1 == null)
                                 //            {
                                 //                e1 = System.Linq.Expressions.Expression.Equal(left, right);
@@ -602,18 +602,18 @@ namespace Simplog.Server.Infrastructure.Helpers
 
                                 case "Exclude":
                                     {
-                                        string[] listOfValus = item.FieldValue.ToString().Split(',');
+                                         string[] listOfValus = item.FieldValue.ToString().Split(',');
                                         Expression notInListExpression = null;
                                         foreach (string v in listOfValus)
                                         {
-
+                                            
                                             MethodInfo mi = typeof(String).GetMethod("Contains", new Type[] { typeof(String) });
 
                                             MemberExpression field = System.Linq.Expressions.Expression.PropertyOrField(pe, item.FieldName);
-
+                                           
                                             MethodCallExpression contains = System.Linq.Expressions.Expression.Call(field, mi, System.Linq.Expressions.Expression.Constant(v));
                                             var doesNotContain = Expression.Not(contains);
-
+                                           
                                             if (notInListExpression == null)
                                             {
                                                 notInListExpression = doesNotContain;
@@ -823,27 +823,14 @@ namespace Simplog.Server.Infrastructure.Helpers
                 }
                 else
                 {
-                    IQueryable<T> result;
-                    if (!LogitudeSettings.IsCostomsDeploy)
-                    {
-                        MethodCallExpression whereCallExpression = Expression.Call(
-                                                                                   typeof(Queryable),
-                                                                                   "Where",
-                                                                                   new Type[] { queryableData.ElementType },
-                                                                                   queryableData.Expression,
-                                                                                   Expression.Lambda<Func<T, bool>>(grandExpression, new ParameterExpression[] { pe }));
+                    MethodCallExpression whereCallExpression = Expression.Call(
+                       typeof(Queryable),
+                       "Where",
+                       new Type[] { queryableData.ElementType },
+                       queryableData.Expression,
+                       Expression.Lambda<Func<T, bool>>(grandExpression, new ParameterExpression[] { pe }));
+                    IQueryable<T> result = queryableData.Provider.CreateQuery<T>(whereCallExpression);
 
-                        result = queryableData.Provider.CreateQuery<T>(whereCallExpression);
-                    }
-
-                    else
-                    {
-                        var lambda = Expression.Lambda<Func<T, bool>>(grandExpression, pe);
-
-
-                        result = queryableData.Where<T>(lambda);
-
-                    }
 
 
                     return result;
@@ -856,7 +843,7 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
         }
 
-
+      
 
         private void GetCustomFieldStringValue(QueryFilterItem filterItem)
         {
@@ -867,7 +854,7 @@ namespace Simplog.Server.Infrastructure.Helpers
                     filterItem.FieldValue = customFilterClass.SetFieldDataType(filterItem.FieldDataType, filterItem.FieldValue);
                     if (filterItem.FieldValue != null && filterItem.FieldValue.ToString().ToLower() == "false")
                         filterItem.FieldValue = null;
-
+                  
                 }
                 if (filterItem.FieldValue2 != null)
                 {
@@ -879,7 +866,7 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
         }
 
-
+     
 
     }
 }
