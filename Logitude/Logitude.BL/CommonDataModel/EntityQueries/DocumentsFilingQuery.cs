@@ -2155,8 +2155,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 //.Include("CreatedByUser.Contact")
                                                 //.Include("ReceivedByUser.Contact")
                                                 .Include("Document").Include("DocumentType")
-                                                //.Include("Owner.Contact")
-                                                where a.Tenant == tenant && externalEntityReferences.Contains(a.ExternalEntityReference)
+                                                    //.Include("Owner.Contact")
+                                                where a.Tenant == tenant && externalEntityReferences.Any(e => a.ExternalEntityReference.IndexOf(e + ",") == 0 || a.ExternalEntityReference == e)
                                                 select new DocumentsFilingPM()
                                                 {
                                                     Id = a.Id,
