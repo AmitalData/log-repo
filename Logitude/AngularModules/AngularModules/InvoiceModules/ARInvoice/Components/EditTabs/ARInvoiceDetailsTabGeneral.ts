@@ -448,7 +448,13 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.BillToName = newValue;
         }
     }
-
+    
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
 
     get BillToLocalName() { return this.EntityPM.BillToLocalName; }
     set BillToLocalName(newValue: string) {
