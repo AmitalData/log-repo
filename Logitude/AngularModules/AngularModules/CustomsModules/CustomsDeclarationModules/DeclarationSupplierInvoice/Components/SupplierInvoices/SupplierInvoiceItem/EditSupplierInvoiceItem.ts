@@ -874,7 +874,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
 
         if (this.StatisticQuantity != null || this.AdditionalQuantity != null || this.CustomsBookTypeCode != null || this.PreferenceDocumentNumber != null || this.ActualInvoiceLines != null
             || this.DeferredCustomsTax != null || this.DeferredPurchaseTax != null || this.SalesTaxExemptionTypeCode != null || this.TaxExemptCode != null || this.OptionalTamaPercentage != null
-            || this.NonCustomsItemPrice != null || this.WholeSaleItemPrice != null || this.IsUsed || this.ManufactureIdentifier != null || this.DangerousClassificationCode != null || this.DangerousPackingGroupTypeCode != null
+            || this.NonCustomsItemPrice != null || this.WholeSaleItemPrice != null || this.IsUsed || this.ManufactureIdentifier != null || this.DangerousClassificationCode != null || this.DangerousPackingGroupTypeCode != null || this.ClaimReasonCode ||this.TransactionNatureCode
             || this.OriginalItemPM.SupplierInvoiceItemsMods.length > 0 || this.OriginalItemPM.SupplierInvoiceItemProcesTypes.length > 0 || this.OriginalItemPM.SupplierInvoiceItemsConDeclars.length > 0 || this.OriginalItemPM.SupplierInvoiceItemLevies.length > 0
             || this.OriginalItemPM.SupplierInvoiceItemsDescripts.length > 0 || this.OriginalItemPM.SupplierInvoiceItemsSerialNums.length > 0 || this.OriginalItemPM.SupplierInvoiceItemsProdIdents.length > 0) {
 
