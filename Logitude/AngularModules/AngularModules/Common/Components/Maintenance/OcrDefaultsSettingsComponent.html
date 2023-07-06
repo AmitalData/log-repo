@@ -20,12 +20,20 @@
         -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
         background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
     }
+    .ValidationSummary div{
+        height: auto !important;
+    }
 </style>
 
 <table *ngIf="IsVisibile">
-  
-
-    <tr style="height: 80px;">
+   
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td >
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+    
+    <tr style="height: 60%;">
         <td>
             <ScrollViewer>
                 <div class="TableHolder" style="padding-top: 5px;">
@@ -264,7 +272,7 @@
         </td>
     </tr>
 
-    <tr style="height: 70px;">
+    <tr style="height: 40%;">
 
         <td style="vertical-align: bottom">
 
@@ -515,7 +523,7 @@
         </td>
     </tr>
 
-    <tr style="height: 5px;">
+    <tr style="height: 10%;">
 
         <td style="vertical-align: bottom">
             <table style="height: 5px;">
