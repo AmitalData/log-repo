@@ -516,6 +516,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     GetTemplates() {
 
         this.CurrentSession.StartBusyIndicatorLoading();
+        var entityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.DataContext.DocumentTypePM.Id, this.DataContext.DocumentTypePM.Tenant).subscribe((res: any) => {
             this.DocumentTypeTemplateLists = new Array<DocumentTypeTemplateViewModel>();
 
@@ -523,11 +524,19 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
-                    myResult.filter(d => d.InActive == false).forEach((item) => {
-                        if (item.TemplateType == "P") {
-                            this.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
-                        }
-                    });
+                    if ((this.ObjectTableName == "ARInvoice") && entityPM.IsFromInterestBatchInvoice && entityPM.IsPrinted == false) {
+                        myResult.filter(d => d.InActive == false && d.IsDefault == true).forEach((item) => {
+                            if (item.TemplateType == "P") {
+                                this.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
+                            }
+                        });    
+                    } else {
+                        myResult.filter(d => d.InActive == false).forEach((item) => {
+                            if (item.TemplateType == "P") {
+                                this.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
+                            }
+                        });
+                    }
 
                     if (!this.IsNoTemplateFound && !this.IsQuotationDocument) {
                         if (this.DocumentTypeTemplateLists.length == 0) {
@@ -1422,7 +1431,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, docoumentTypeCopyName + " Viewing");
 
-        DownloadManager.DownloadPage(id, this.CurrentDocumentOut.SecurityId);
+        DownloadManager.DownloadPage(id, this.CurrentDocumentOut.SecurityId, false, this.ObjectTableName);
 
     }
 
@@ -1460,7 +1469,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     PrintingFieldsScreenCode: string;
     BuildingDocumentText: string = "Building document...";
     Start(item: DocsOutDataViewModel) {
-
         this.DataContext = item;
         var buildingDocumentText: string = TextCodeTranslator.Translate("Accounting.General.O.BuildingDocument");
 
