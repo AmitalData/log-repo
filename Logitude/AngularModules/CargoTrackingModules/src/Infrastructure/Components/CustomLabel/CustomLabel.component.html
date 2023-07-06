@@ -20,7 +20,7 @@
             </svg>
         </div>
 
-        <app-tooltip class="hide-mobile" >
+        <app-tooltip class="hide-mobile"  [isHasMore]="isHasMore">
             <div tooltip-trigger>             
                 <span *ngIf="!isMobile"  class="nowrap" appLabelUtilElement>
                     <ng-container [ngTemplateOutlet]="myContent?.templateRef"></ng-container>
