@@ -41,6 +41,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private bool IncludesTransferGlaccount;
         private int? ExternalReconciliationNumber;
         private string ObjectTableId;
+        private string CrossYearReconcile;
+
         List<TransactionBalance> transactionsBalances;
         IAccountingContext accountingContext;
 
@@ -100,6 +102,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 dataProvider.RefDateTo = valueGetter.GetFilterValue<DateTime>("REFToDate");
                 dataProvider.IsExternalReconciled = valueGetter.GetFilterValue<string>("IsExternalReconciled");
                 dataProvider.IncludesTransferGlaccount = valueGetter.GetFilterValue<bool>("IncludesTransferGlaccount");
+                dataProvider.CrossYearReconcile = valueGetter.GetFilterValue<string>("CrossYearReconcile");
+
             }
 
             dataProvider.ExternalReconciliationNumber = valueGetter.GetFilterValue<int>("ExternalReconciliationNumber");
@@ -591,6 +595,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 {
                     reconcileExternalPageLines = reconcileExternalPageLines.Where(line => line.ReconcileExternalPage.ObjectTableId == ObjectTableId);
                 }
+                if (CrossYearReconcile == "only")
+                {
+                    reconcileExternalPageLines= (from a in accountingContext.ExternalReconciliationLines where a.ExternalReconciliation.CrossYearReconcile == true && a.Tenant == tenant && a.ExternalPageLineId != null select a.ReconcileExternalPageLine);
+                }
+
+                if(CrossYearReconcile== "without")
+                {
+                    reconcileExternalPageLines = (from a in accountingContext.ExternalReconciliationLines where a.ExternalReconciliation.CrossYearReconcile == false && a.Tenant == tenant && a.ExternalPageLineId != null select a.ReconcileExternalPageLine);
+
+                }
                 if (!string.IsNullOrEmpty(BankAccountId))
                 {
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
@@ -599,7 +613,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     reconcileExternalPageLines = reconcileExternalPageLines.Include("ReconcileExternalPage")
                         .Where(line => line.ReconcileExternalPage.EntityId == BankAccountId && line.ReconcileExternalPage.ObjectTableId == bankAccountObjectTable.Id);
                 }
-
                 if (IsExternalReconciled == "close")
                 {
                     reconcileExternalPageLines = reconcileExternalPageLines.Where(s => s.IsReconciled == true);
@@ -669,7 +682,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             ExternalReconciliationNumber = valueGetter.GetFilterValue<int?>("ExternalReconciliationNumber");
             SortBy = valueGetter.GetFilterValue<string>("SortBy");
             ObjectTableId = valueGetter.GetFilterValue<string>("ObjectTableId");
-
+            CrossYearReconcile= valueGetter.GetFilterValue<string>("CrossYearReconcile");
         }
         private QueryOperations DeserializeQueryOperationFromXml(byte[] xmlFilters)
         {
