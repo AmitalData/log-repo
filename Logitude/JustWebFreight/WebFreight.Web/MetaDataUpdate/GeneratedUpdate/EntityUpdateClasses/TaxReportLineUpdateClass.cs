@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportLineUpdateClass
    {  		
-
-		public const string HashString = "2783059d3dfe94d38947b6d45aa2ec8c";
+		public const string HashString = "d349761aca1908d731e661338ad82306";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -256,7 +255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastUpdateDateTime",
 					  						DefaultText =  "Last Update Date Time",
-					  						FullLocalDefaultText =  "תםריך עדכון םחרון",
+					  						FullLocalDefaultText =  "תאריך עדכון אחרון",
 					  						ListFieldLable =  "LastUpdateDateTimeListLable",
 					  						ListLableDefaultText =  "Update Date",
 					  						IsForeignKey =  false,
@@ -751,7 +750,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference",
 					  						DefaultText =  "Reference",
-					  						FullLocalDefaultText =  "םסמכתם",
+					  						FullLocalDefaultText =  "אסמכתא",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -811,7 +810,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReferecneGroup",
 					  						DefaultText =  "Referecne Group",
-					  						FullLocalDefaultText =  "קבוצת םסמכתם",
+					  						FullLocalDefaultText =  "קבוצת אסמכתא",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -871,7 +870,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReferenceDate",
 					  						DefaultText =  "Reference Date",
-					  						FullLocalDefaultText =  "תםריך םסמכתם",
+					  						FullLocalDefaultText =  "תאריך אסמכתא",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1926,7 +1925,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreviousReference",
 					  						DefaultText =  "Previous Reference",
-					  						FullLocalDefaultText =  "םסמכתם קודמת",
+					  						FullLocalDefaultText =  "אסמכתא קודמת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2221,11 +2220,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable TaxReportLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReportLine" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode TaxReportLineTextCode_TaxReportLineOExternalTooltip = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.ExternalTooltip", DefaultText = "This is an outside row from a related company, so this row cannot be edited. \n Loading another TXT file into this report will delete the this line and create new lines according to the new file.",LocalDefaultText = @"זוהי שורה חיצונית מחברה קשורה , טעינת קובץ חיצוני נוסף לדוח זה ימחק םת השורה וייצור שורות חדשות בהתםם לקובץ החדש.", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TaxReportLineTextCode_TaxReportLineOExternalTooltip = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.ExternalTooltip", DefaultText = "This is an outside row from a related company, so this row cannot be edited. \n Loading another TXT file into this report will delete the this line and create new lines according to the new file.",LocalDefaultText = @"זוהי שורה חיצונית מחברה קשורה , טעינת קובץ חיצוני נוסף לדוח זה ימחק את השורה וייצור שורות חדשות בהתאם לקובץ החדש.", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TaxReportLineTextCode_TaxReportLineOLastUpdatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.LastUpdatedBy", DefaultText = "Last updated by",LocalDefaultText = "עודכן לםחרונה ע''י ", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TaxReportLineTextCode_TaxReportLineOLastUpdatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.LastUpdatedBy", DefaultText = "Last updated by",LocalDefaultText = "עודכן לאחרונה ע''י ", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TaxReportLineTextCode_TaxReportLineOOn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.On", DefaultText = "on",LocalDefaultText = @"בתםריך ", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TaxReportLineTextCode_TaxReportLineOOn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.On", DefaultText = "on",LocalDefaultText = @"בתאריך ", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
