@@ -1305,14 +1305,14 @@
                  <div class="no-data-available" *ngIf="cargoTrackingShipmentPM.Events?.length == 0" style="margin-top:10px">
                     No Events defined for this shipment
                  </div>
-                 <div *ngIf="cargoTrackingShipmentPM.Events?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 600px);">
+                 <div *ngIf="cargoTrackingShipmentPM.Events?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 10px);">
                     <table class="row-hover" style="width: 100%;">
                         <tr *ngFor="let item of cargoTrackingShipmentPM.Events">
                             <td style="width: 30px;"><img src="./assets/images/icons/tick.png" alt=""></td>
                             <td style="width: 300px;">{{item.LocalName}}</td>
                             <td style="width: 300px;">{{item.EventDatetime | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</td>                               
                             <td class="hide-mobile" style="width: calc(100% - 450px);" *ngIf="item.IsChoose && item.PartnerTypeId=='CS'"> 
-                                <custom-label [width]="180">{{item.Notes}}</custom-label>
+                                <custom-label [width]="600">{{item.Notes}}</custom-label>
                             </td>
                            
                         </tr>
