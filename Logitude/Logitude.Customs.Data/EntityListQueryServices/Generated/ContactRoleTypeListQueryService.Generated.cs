@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ContactRoleType> ContactRoleTypeQuery = (from a in context.ContactRoleTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ContactRoleTypeList> ContactRoleTypeListQuery = GetIqueryableList( ContactRoleTypeQuery);
-			            ContactRoleTypeList ContactRoleTypeList = ContactRoleTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ContactRoleTypeList> ContactRoleTypeListQuery = GetIqueryableList( ContactRoleTypeQuery);
+            ContactRoleTypeList ContactRoleTypeList = ContactRoleTypeListQuery.FirstOrDefault();
             return ContactRoleTypeList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AutonomyRegionType> AutonomyRegionTypeQuery = (from a in context.AutonomyRegionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AutonomyRegionTypeList> AutonomyRegionTypeListQuery = GetIqueryableList( AutonomyRegionTypeQuery);
-			            AutonomyRegionTypeList AutonomyRegionTypeList = AutonomyRegionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AutonomyRegionTypeList> AutonomyRegionTypeListQuery = GetIqueryableList( AutonomyRegionTypeQuery);
+            AutonomyRegionTypeList AutonomyRegionTypeList = AutonomyRegionTypeListQuery.FirstOrDefault();
             return AutonomyRegionTypeList;
            
         }

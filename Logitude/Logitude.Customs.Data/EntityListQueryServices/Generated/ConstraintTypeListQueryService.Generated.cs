@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConstraintType> ConstraintTypeQuery = (from a in context.ConstraintTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ConstraintTypeList> ConstraintTypeListQuery = GetIqueryableList( ConstraintTypeQuery);
-			            ConstraintTypeList ConstraintTypeList = ConstraintTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConstraintTypeList> ConstraintTypeListQuery = GetIqueryableList( ConstraintTypeQuery);
+            ConstraintTypeList ConstraintTypeList = ConstraintTypeListQuery.FirstOrDefault();
             return ConstraintTypeList;
            
         }

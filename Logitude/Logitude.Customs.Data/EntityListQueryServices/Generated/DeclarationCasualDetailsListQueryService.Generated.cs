@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationCasualDetails> DeclarationCasualDetailsQuery = (from a in context.DeclarationCasualDetailses
                                                        where a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationCasualDetailsList> DeclarationCasualDetailsListQuery = GetIqueryableList( DeclarationCasualDetailsQuery);
-			            DeclarationCasualDetailsList DeclarationCasualDetailsList = DeclarationCasualDetailsListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationCasualDetailsList> DeclarationCasualDetailsListQuery = GetIqueryableList( DeclarationCasualDetailsQuery);
+            DeclarationCasualDetailsList DeclarationCasualDetailsList = DeclarationCasualDetailsListQuery.FirstOrDefault();
             return DeclarationCasualDetailsList;
            
         }

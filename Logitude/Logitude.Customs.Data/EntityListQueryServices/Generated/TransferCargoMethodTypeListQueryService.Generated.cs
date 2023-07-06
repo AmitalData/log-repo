@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TransferCargoMethodType> TransferCargoMethodTypeQuery = (from a in context.TransferCargoMethodTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TransferCargoMethodTypeList> TransferCargoMethodTypeListQuery = GetIqueryableList( TransferCargoMethodTypeQuery);
-			            TransferCargoMethodTypeList TransferCargoMethodTypeList = TransferCargoMethodTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<TransferCargoMethodTypeList> TransferCargoMethodTypeListQuery = GetIqueryableList( TransferCargoMethodTypeQuery);
+            TransferCargoMethodTypeList TransferCargoMethodTypeList = TransferCargoMethodTypeListQuery.FirstOrDefault();
             return TransferCargoMethodTypeList;
            
         }

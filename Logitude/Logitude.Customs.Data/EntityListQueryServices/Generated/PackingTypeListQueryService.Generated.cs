@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PackingType> PackingTypeQuery = (from a in context.PackingTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PackingTypeList> PackingTypeListQuery = GetIqueryableList( PackingTypeQuery);
-			            PackingTypeList PackingTypeList = PackingTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PackingTypeList> PackingTypeListQuery = GetIqueryableList( PackingTypeQuery);
+            PackingTypeList PackingTypeList = PackingTypeListQuery.FirstOrDefault();
             return PackingTypeList;
            
         }

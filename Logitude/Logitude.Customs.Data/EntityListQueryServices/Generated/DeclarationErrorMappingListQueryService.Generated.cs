@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationErrorMapping> DeclarationErrorMappingQuery = (from a in context.DeclarationErrorMappings
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationErrorMappingList> DeclarationErrorMappingListQuery = GetIqueryableList( DeclarationErrorMappingQuery);
-			            DeclarationErrorMappingList DeclarationErrorMappingList = DeclarationErrorMappingListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationErrorMappingList> DeclarationErrorMappingListQuery = GetIqueryableList( DeclarationErrorMappingQuery);
+            DeclarationErrorMappingList DeclarationErrorMappingList = DeclarationErrorMappingListQuery.FirstOrDefault();
             return DeclarationErrorMappingList;
            
         }

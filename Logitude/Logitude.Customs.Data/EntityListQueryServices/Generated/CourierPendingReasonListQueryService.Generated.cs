@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CourierPendingReason> CourierPendingReasonQuery = (from a in context.CourierPendingReasons
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CourierPendingReasonList> CourierPendingReasonListQuery = GetIqueryableList( CourierPendingReasonQuery);
-			            CourierPendingReasonList CourierPendingReasonList = CourierPendingReasonListQuery.FirstOrDefault();
+
+             
+            IQueryable<CourierPendingReasonList> CourierPendingReasonListQuery = GetIqueryableList( CourierPendingReasonQuery);
+            CourierPendingReasonList CourierPendingReasonList = CourierPendingReasonListQuery.FirstOrDefault();
             return CourierPendingReasonList;
            
         }

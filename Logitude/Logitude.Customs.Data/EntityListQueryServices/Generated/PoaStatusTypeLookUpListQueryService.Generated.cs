@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PoaStatusTypeLookUp> PoaStatusTypeLookUpQuery = (from a in context.PoaStatusTypeLookUps
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PoaStatusTypeLookUpList> PoaStatusTypeLookUpListQuery = GetIqueryableList( PoaStatusTypeLookUpQuery);
-			            PoaStatusTypeLookUpList PoaStatusTypeLookUpList = PoaStatusTypeLookUpListQuery.FirstOrDefault();
+
+             
+            IQueryable<PoaStatusTypeLookUpList> PoaStatusTypeLookUpListQuery = GetIqueryableList( PoaStatusTypeLookUpQuery);
+            PoaStatusTypeLookUpList PoaStatusTypeLookUpList = PoaStatusTypeLookUpListQuery.FirstOrDefault();
             return PoaStatusTypeLookUpList;
            
         }

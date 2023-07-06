@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportDeclarationClosingData> ExportDeclarationClosingDataQuery = (from a in context.ExportDeclarationClosingDatas
                                                        where a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<ExportDeclarationClosingDataList> ExportDeclarationClosingDataListQuery = GetIqueryableList( ExportDeclarationClosingDataQuery);
-			            ExportDeclarationClosingDataList ExportDeclarationClosingDataList = ExportDeclarationClosingDataListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExportDeclarationClosingDataList> ExportDeclarationClosingDataListQuery = GetIqueryableList( ExportDeclarationClosingDataQuery);
+            ExportDeclarationClosingDataList ExportDeclarationClosingDataList = ExportDeclarationClosingDataListQuery.FirstOrDefault();
             return ExportDeclarationClosingDataList;
            
         }

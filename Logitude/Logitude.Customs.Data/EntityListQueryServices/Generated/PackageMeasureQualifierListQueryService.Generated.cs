@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PackageMeasureQualifier> PackageMeasureQualifierQuery = (from a in context.PackageMeasureQualifiers
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PackageMeasureQualifierList> PackageMeasureQualifierListQuery = GetIqueryableList( PackageMeasureQualifierQuery);
-			            PackageMeasureQualifierList PackageMeasureQualifierList = PackageMeasureQualifierListQuery.FirstOrDefault();
+
+             
+            IQueryable<PackageMeasureQualifierList> PackageMeasureQualifierListQuery = GetIqueryableList( PackageMeasureQualifierQuery);
+            PackageMeasureQualifierList PackageMeasureQualifierList = PackageMeasureQualifierListQuery.FirstOrDefault();
             return PackageMeasureQualifierList;
            
         }

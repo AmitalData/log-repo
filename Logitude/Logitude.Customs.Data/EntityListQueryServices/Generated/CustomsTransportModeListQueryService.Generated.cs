@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsTransportMode> CustomsTransportModeQuery = (from a in context.CustomsTransportModes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsTransportModeList> CustomsTransportModeListQuery = GetIqueryableList( CustomsTransportModeQuery);
-			            CustomsTransportModeList CustomsTransportModeList = CustomsTransportModeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsTransportModeList> CustomsTransportModeListQuery = GetIqueryableList( CustomsTransportModeQuery);
+            CustomsTransportModeList CustomsTransportModeList = CustomsTransportModeListQuery.FirstOrDefault();
             return CustomsTransportModeList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PendingErrorPlace> PendingErrorPlaceQuery = (from a in context.PendingErrorPlaces
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PendingErrorPlaceList> PendingErrorPlaceListQuery = GetIqueryableList( PendingErrorPlaceQuery);
-			            PendingErrorPlaceList PendingErrorPlaceList = PendingErrorPlaceListQuery.FirstOrDefault();
+
+             
+            IQueryable<PendingErrorPlaceList> PendingErrorPlaceListQuery = GetIqueryableList( PendingErrorPlaceQuery);
+            PendingErrorPlaceList PendingErrorPlaceList = PendingErrorPlaceListQuery.FirstOrDefault();
             return PendingErrorPlaceList;
            
         }

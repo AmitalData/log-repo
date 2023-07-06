@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomBanksCard> CustomBanksCardQuery = (from a in context.CustomBanksCards
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomBanksCardList> CustomBanksCardListQuery = GetIqueryableList( CustomBanksCardQuery);
-			            CustomBanksCardList CustomBanksCardList = CustomBanksCardListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomBanksCardList> CustomBanksCardListQuery = GetIqueryableList( CustomBanksCardQuery);
+            CustomBanksCardList CustomBanksCardList = CustomBanksCardListQuery.FirstOrDefault();
             return CustomBanksCardList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CertificatesStatus> CertificatesStatusQuery = (from a in context.CertificatesStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CertificatesStatusList> CertificatesStatusListQuery = GetIqueryableList( CertificatesStatusQuery);
-			            CertificatesStatusList CertificatesStatusList = CertificatesStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<CertificatesStatusList> CertificatesStatusListQuery = GetIqueryableList( CertificatesStatusQuery);
+            CertificatesStatusList CertificatesStatusList = CertificatesStatusListQuery.FirstOrDefault();
             return CertificatesStatusList;
            
         }

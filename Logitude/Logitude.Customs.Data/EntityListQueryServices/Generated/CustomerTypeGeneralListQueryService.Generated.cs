@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomerTypeGeneral> CustomerTypeGeneralQuery = (from a in context.CustomerTypeGenerals
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomerTypeGeneralList> CustomerTypeGeneralListQuery = GetIqueryableList( CustomerTypeGeneralQuery);
-			            CustomerTypeGeneralList CustomerTypeGeneralList = CustomerTypeGeneralListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomerTypeGeneralList> CustomerTypeGeneralListQuery = GetIqueryableList( CustomerTypeGeneralQuery);
+            CustomerTypeGeneralList CustomerTypeGeneralList = CustomerTypeGeneralListQuery.FirstOrDefault();
             return CustomerTypeGeneralList;
            
         }

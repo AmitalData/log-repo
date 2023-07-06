@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SealCompletenes> SealCompletenesQuery = (from a in context.SealCompleteness
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SealCompletenesList> SealCompletenesListQuery = GetIqueryableList( SealCompletenesQuery);
-			            SealCompletenesList SealCompletenesList = SealCompletenesListQuery.FirstOrDefault();
+
+             
+            IQueryable<SealCompletenesList> SealCompletenesListQuery = GetIqueryableList( SealCompletenesQuery);
+            SealCompletenesList SealCompletenesList = SealCompletenesListQuery.FirstOrDefault();
             return SealCompletenesList;
            
         }

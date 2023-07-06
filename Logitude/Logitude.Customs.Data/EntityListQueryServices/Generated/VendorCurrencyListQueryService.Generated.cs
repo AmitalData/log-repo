@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VendorCurrency> VendorCurrencyQuery = (from a in context.VendorCurrencies
                                                        where a.VendorId == vendorid && a.Currency == currency
                                                        select a);
-          
-		  
-		  			IQueryable<VendorCurrencyList> VendorCurrencyListQuery = GetIqueryableList( VendorCurrencyQuery);
-			            VendorCurrencyList VendorCurrencyList = VendorCurrencyListQuery.FirstOrDefault();
+
+             
+            IQueryable<VendorCurrencyList> VendorCurrencyListQuery = GetIqueryableList( VendorCurrencyQuery);
+            VendorCurrencyList VendorCurrencyList = VendorCurrencyListQuery.FirstOrDefault();
             return VendorCurrencyList;
            
         }

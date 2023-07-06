@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConstraintStatus> ConstraintStatusQuery = (from a in context.ConstraintStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ConstraintStatusList> ConstraintStatusListQuery = GetIqueryableList( ConstraintStatusQuery);
-			            ConstraintStatusList ConstraintStatusList = ConstraintStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConstraintStatusList> ConstraintStatusListQuery = GetIqueryableList( ConstraintStatusQuery);
+            ConstraintStatusList ConstraintStatusList = ConstraintStatusListQuery.FirstOrDefault();
             return ConstraintStatusList;
            
         }

@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationConstraint> DeclarationConstraintQuery = (from a in context.DeclarationConstraints
                                                        where a.DeclarationID == declarationid && a.ConstraintNumber == constraintnumber
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationConstraintList> DeclarationConstraintListQuery = GetIqueryableList( DeclarationConstraintQuery);
-			            DeclarationConstraintList DeclarationConstraintList = DeclarationConstraintListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationConstraintList> DeclarationConstraintListQuery = GetIqueryableList( DeclarationConstraintQuery);
+            DeclarationConstraintList DeclarationConstraintList = DeclarationConstraintListQuery.FirstOrDefault();
             return DeclarationConstraintList;
            
         }

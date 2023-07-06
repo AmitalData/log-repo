@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SealUpdateReasonType> SealUpdateReasonTypeQuery = (from a in context.SealUpdateReasonTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SealUpdateReasonTypeList> SealUpdateReasonTypeListQuery = GetIqueryableList( SealUpdateReasonTypeQuery);
-			            SealUpdateReasonTypeList SealUpdateReasonTypeList = SealUpdateReasonTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SealUpdateReasonTypeList> SealUpdateReasonTypeListQuery = GetIqueryableList( SealUpdateReasonTypeQuery);
+            SealUpdateReasonTypeList SealUpdateReasonTypeList = SealUpdateReasonTypeListQuery.FirstOrDefault();
             return SealUpdateReasonTypeList;
            
         }

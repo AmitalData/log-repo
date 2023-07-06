@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PaymentType> PaymentTypeQuery = (from a in context.PaymentTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PaymentTypeList> PaymentTypeListQuery = GetIqueryableList( PaymentTypeQuery);
-			            PaymentTypeList PaymentTypeList = PaymentTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PaymentTypeList> PaymentTypeListQuery = GetIqueryableList( PaymentTypeQuery);
+            PaymentTypeList PaymentTypeList = PaymentTypeListQuery.FirstOrDefault();
             return PaymentTypeList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PhysicalCheckStatusMessage> PhysicalCheckStatusMessageQuery = (from a in context.PhysicalCheckStatusMessages
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PhysicalCheckStatusMessageList> PhysicalCheckStatusMessageListQuery = GetIqueryableList( PhysicalCheckStatusMessageQuery);
-			            PhysicalCheckStatusMessageList PhysicalCheckStatusMessageList = PhysicalCheckStatusMessageListQuery.FirstOrDefault();
+
+             
+            IQueryable<PhysicalCheckStatusMessageList> PhysicalCheckStatusMessageListQuery = GetIqueryableList( PhysicalCheckStatusMessageQuery);
+            PhysicalCheckStatusMessageList PhysicalCheckStatusMessageList = PhysicalCheckStatusMessageListQuery.FirstOrDefault();
             return PhysicalCheckStatusMessageList;
            
         }

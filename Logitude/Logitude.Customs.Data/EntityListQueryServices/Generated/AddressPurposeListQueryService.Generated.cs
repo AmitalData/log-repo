@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AddressPurpose> AddressPurposeQuery = (from a in context.AddressPurposes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AddressPurposeList> AddressPurposeListQuery = GetIqueryableList( AddressPurposeQuery);
-			            AddressPurposeList AddressPurposeList = AddressPurposeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AddressPurposeList> AddressPurposeListQuery = GetIqueryableList( AddressPurposeQuery);
+            AddressPurposeList AddressPurposeList = AddressPurposeListQuery.FirstOrDefault();
             return AddressPurposeList;
            
         }

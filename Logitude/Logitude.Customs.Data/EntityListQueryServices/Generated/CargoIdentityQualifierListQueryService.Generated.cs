@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CargoIdentityQualifier> CargoIdentityQualifierQuery = (from a in context.CargoIdentityQualifiers
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CargoIdentityQualifierList> CargoIdentityQualifierListQuery = GetIqueryableList( CargoIdentityQualifierQuery);
-			            CargoIdentityQualifierList CargoIdentityQualifierList = CargoIdentityQualifierListQuery.FirstOrDefault();
+
+             
+            IQueryable<CargoIdentityQualifierList> CargoIdentityQualifierListQuery = GetIqueryableList( CargoIdentityQualifierQuery);
+            CargoIdentityQualifierList CargoIdentityQualifierList = CargoIdentityQualifierListQuery.FirstOrDefault();
             return CargoIdentityQualifierList;
            
         }

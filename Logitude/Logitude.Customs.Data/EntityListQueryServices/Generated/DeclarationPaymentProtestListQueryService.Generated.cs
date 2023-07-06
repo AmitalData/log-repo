@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationPaymentProtest> DeclarationPaymentProtestQuery = (from a in context.DeclarationPaymentProtests
                                                        where a.DeclarationId == declarationid && a.Line == line
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationPaymentProtestList> DeclarationPaymentProtestListQuery = GetIqueryableList( DeclarationPaymentProtestQuery);
-			            DeclarationPaymentProtestList DeclarationPaymentProtestList = DeclarationPaymentProtestListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationPaymentProtestList> DeclarationPaymentProtestListQuery = GetIqueryableList( DeclarationPaymentProtestQuery);
+            DeclarationPaymentProtestList DeclarationPaymentProtestList = DeclarationPaymentProtestListQuery.FirstOrDefault();
             return DeclarationPaymentProtestList;
            
         }

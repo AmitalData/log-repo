@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<MeasurmentUnit> MeasurmentUnitQuery = (from a in context.MeasurmentUnits
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<MeasurmentUnitList> MeasurmentUnitListQuery = GetIqueryableList( MeasurmentUnitQuery);
-			            MeasurmentUnitList MeasurmentUnitList = MeasurmentUnitListQuery.FirstOrDefault();
+
+             
+            IQueryable<MeasurmentUnitList> MeasurmentUnitListQuery = GetIqueryableList( MeasurmentUnitQuery);
+            MeasurmentUnitList MeasurmentUnitList = MeasurmentUnitListQuery.FirstOrDefault();
             return MeasurmentUnitList;
            
         }

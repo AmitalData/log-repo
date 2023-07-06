@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<InvoiceType> InvoiceTypeQuery = (from a in context.InvoiceTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<InvoiceTypeList> InvoiceTypeListQuery = GetIqueryableList( InvoiceTypeQuery);
-			            InvoiceTypeList InvoiceTypeList = InvoiceTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<InvoiceTypeList> InvoiceTypeListQuery = GetIqueryableList( InvoiceTypeQuery);
+            InvoiceTypeList InvoiceTypeList = InvoiceTypeListQuery.FirstOrDefault();
             return InvoiceTypeList;
            
         }

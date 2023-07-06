@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationConsAcceptance> DeclarationConsAcceptanceQuery = (from a in context.DeclarationConsAcceptances
                                                        where a.DeclarationId == declarationid && a.ConsignmentNumber == consignmentnumber && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationConsAcceptanceList> DeclarationConsAcceptanceListQuery = GetIqueryableList( DeclarationConsAcceptanceQuery);
-			            DeclarationConsAcceptanceList DeclarationConsAcceptanceList = DeclarationConsAcceptanceListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationConsAcceptanceList> DeclarationConsAcceptanceListQuery = GetIqueryableList( DeclarationConsAcceptanceQuery);
+            DeclarationConsAcceptanceList DeclarationConsAcceptanceList = DeclarationConsAcceptanceListQuery.FirstOrDefault();
             return DeclarationConsAcceptanceList;
            
         }

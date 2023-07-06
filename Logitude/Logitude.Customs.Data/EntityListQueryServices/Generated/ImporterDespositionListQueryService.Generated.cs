@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ImporterDesposition> ImporterDespositionQuery = (from a in context.ImporterDespositions
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ImporterDespositionList> ImporterDespositionListQuery = GetIqueryableList( ImporterDespositionQuery);
-			            ImporterDespositionList ImporterDespositionList = ImporterDespositionListQuery.FirstOrDefault();
+
+             
+            IQueryable<ImporterDespositionList> ImporterDespositionListQuery = GetIqueryableList( ImporterDespositionQuery);
+            ImporterDespositionList ImporterDespositionList = ImporterDespositionListQuery.FirstOrDefault();
             return ImporterDespositionList;
            
         }

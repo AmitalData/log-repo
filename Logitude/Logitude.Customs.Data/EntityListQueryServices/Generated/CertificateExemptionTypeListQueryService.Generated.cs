@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CertificateExemptionType> CertificateExemptionTypeQuery = (from a in context.CertificateExemptionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CertificateExemptionTypeList> CertificateExemptionTypeListQuery = GetIqueryableList( CertificateExemptionTypeQuery);
-			            CertificateExemptionTypeList CertificateExemptionTypeList = CertificateExemptionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CertificateExemptionTypeList> CertificateExemptionTypeListQuery = GetIqueryableList( CertificateExemptionTypeQuery);
+            CertificateExemptionTypeList CertificateExemptionTypeList = CertificateExemptionTypeListQuery.FirstOrDefault();
             return CertificateExemptionTypeList;
            
         }

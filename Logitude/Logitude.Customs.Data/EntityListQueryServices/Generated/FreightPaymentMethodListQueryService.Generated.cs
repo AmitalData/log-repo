@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<FreightPaymentMethod> FreightPaymentMethodQuery = (from a in context.FreightPaymentMethods
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<FreightPaymentMethodList> FreightPaymentMethodListQuery = GetIqueryableList( FreightPaymentMethodQuery);
-			            FreightPaymentMethodList FreightPaymentMethodList = FreightPaymentMethodListQuery.FirstOrDefault();
+
+             
+            IQueryable<FreightPaymentMethodList> FreightPaymentMethodListQuery = GetIqueryableList( FreightPaymentMethodQuery);
+            FreightPaymentMethodList FreightPaymentMethodList = FreightPaymentMethodListQuery.FirstOrDefault();
             return FreightPaymentMethodList;
            
         }

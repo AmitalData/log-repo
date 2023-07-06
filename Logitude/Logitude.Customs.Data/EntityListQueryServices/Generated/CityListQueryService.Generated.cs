@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<City> CityQuery = (from a in context.Cities
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CityList> CityListQuery = GetIqueryableList( CityQuery);
-			            CityList CityList = CityListQuery.FirstOrDefault();
+
+             
+            IQueryable<CityList> CityListQuery = GetIqueryableList( CityQuery);
+            CityList CityList = CityListQuery.FirstOrDefault();
             return CityList;
            
         }

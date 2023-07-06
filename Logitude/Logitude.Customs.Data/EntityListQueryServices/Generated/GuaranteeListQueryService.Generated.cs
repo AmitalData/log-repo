@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Guarantee> GuaranteeQuery = (from a in context.Guarantees
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<GuaranteeList> GuaranteeListQuery = GetIqueryableList( GuaranteeQuery);
-			            GuaranteeList GuaranteeList = GuaranteeListQuery.FirstOrDefault();
+
+             
+            IQueryable<GuaranteeList> GuaranteeListQuery = GetIqueryableList( GuaranteeQuery);
+            GuaranteeList GuaranteeList = GuaranteeListQuery.FirstOrDefault();
             return GuaranteeList;
            
         }

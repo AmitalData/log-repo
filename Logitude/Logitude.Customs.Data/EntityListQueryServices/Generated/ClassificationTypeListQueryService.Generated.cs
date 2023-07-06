@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClassificationType> ClassificationTypeQuery = (from a in context.ClassificationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ClassificationTypeList> ClassificationTypeListQuery = GetIqueryableList( ClassificationTypeQuery);
-			            ClassificationTypeList ClassificationTypeList = ClassificationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClassificationTypeList> ClassificationTypeListQuery = GetIqueryableList( ClassificationTypeQuery);
+            ClassificationTypeList ClassificationTypeList = ClassificationTypeListQuery.FirstOrDefault();
             return ClassificationTypeList;
            
         }

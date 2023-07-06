@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConverterType> ConverterTypeQuery = (from a in context.ConverterTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ConverterTypeList> ConverterTypeListQuery = GetIqueryableList( ConverterTypeQuery);
-			            ConverterTypeList ConverterTypeList = ConverterTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConverterTypeList> ConverterTypeListQuery = GetIqueryableList( ConverterTypeQuery);
+            ConverterTypeList ConverterTypeList = ConverterTypeListQuery.FirstOrDefault();
             return ConverterTypeList;
            
         }

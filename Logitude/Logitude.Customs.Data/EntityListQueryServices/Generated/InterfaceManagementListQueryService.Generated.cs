@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<InterfaceManagement> InterfaceManagementQuery = (from a in context.InterfaceManagements
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<InterfaceManagementList> InterfaceManagementListQuery = GetIqueryableList( InterfaceManagementQuery);
-			            InterfaceManagementList InterfaceManagementList = InterfaceManagementListQuery.FirstOrDefault();
+
+             
+            IQueryable<InterfaceManagementList> InterfaceManagementListQuery = GetIqueryableList( InterfaceManagementQuery);
+            InterfaceManagementList InterfaceManagementList = InterfaceManagementListQuery.FirstOrDefault();
             return InterfaceManagementList;
            
         }

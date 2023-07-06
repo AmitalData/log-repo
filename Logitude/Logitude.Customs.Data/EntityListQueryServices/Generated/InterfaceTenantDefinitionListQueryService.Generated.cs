@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<InterfaceTenantDefinition> InterfaceTenantDefinitionQuery = (from a in context.InterfaceTenantDefinitions
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<InterfaceTenantDefinitionList> InterfaceTenantDefinitionListQuery = GetIqueryableList( InterfaceTenantDefinitionQuery);
-			            InterfaceTenantDefinitionList InterfaceTenantDefinitionList = InterfaceTenantDefinitionListQuery.FirstOrDefault();
+
+             
+            IQueryable<InterfaceTenantDefinitionList> InterfaceTenantDefinitionListQuery = GetIqueryableList( InterfaceTenantDefinitionQuery);
+            InterfaceTenantDefinitionList InterfaceTenantDefinitionList = InterfaceTenantDefinitionListQuery.FirstOrDefault();
             return InterfaceTenantDefinitionList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AgentTalkBackType> AgentTalkBackTypeQuery = (from a in context.AgentTalkBackTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AgentTalkBackTypeList> AgentTalkBackTypeListQuery = GetIqueryableList( AgentTalkBackTypeQuery);
-			            AgentTalkBackTypeList AgentTalkBackTypeList = AgentTalkBackTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AgentTalkBackTypeList> AgentTalkBackTypeListQuery = GetIqueryableList( AgentTalkBackTypeQuery);
+            AgentTalkBackTypeList AgentTalkBackTypeList = AgentTalkBackTypeListQuery.FirstOrDefault();
             return AgentTalkBackTypeList;
            
         }

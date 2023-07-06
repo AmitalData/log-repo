@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsDocumentPointer> CustomsDocumentPointerQuery = (from a in context.CustomsDocumentPointers
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsDocumentPointerList> CustomsDocumentPointerListQuery = GetIqueryableList( CustomsDocumentPointerQuery);
-			            CustomsDocumentPointerList CustomsDocumentPointerList = CustomsDocumentPointerListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsDocumentPointerList> CustomsDocumentPointerListQuery = GetIqueryableList( CustomsDocumentPointerQuery);
+            CustomsDocumentPointerList CustomsDocumentPointerList = CustomsDocumentPointerListQuery.FirstOrDefault();
             return CustomsDocumentPointerList;
            
         }

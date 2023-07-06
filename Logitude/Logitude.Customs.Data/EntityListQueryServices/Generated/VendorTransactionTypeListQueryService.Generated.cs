@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VendorTransactionType> VendorTransactionTypeQuery = (from a in context.VendorTransactionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<VendorTransactionTypeList> VendorTransactionTypeListQuery = GetIqueryableList( VendorTransactionTypeQuery);
-			            VendorTransactionTypeList VendorTransactionTypeList = VendorTransactionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<VendorTransactionTypeList> VendorTransactionTypeListQuery = GetIqueryableList( VendorTransactionTypeQuery);
+            VendorTransactionTypeList VendorTransactionTypeList = VendorTransactionTypeListQuery.FirstOrDefault();
             return VendorTransactionTypeList;
            
         }

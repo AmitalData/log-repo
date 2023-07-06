@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CheckQueueType> CheckQueueTypeQuery = (from a in context.CheckQueueTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CheckQueueTypeList> CheckQueueTypeListQuery = GetIqueryableList( CheckQueueTypeQuery);
-			            CheckQueueTypeList CheckQueueTypeList = CheckQueueTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CheckQueueTypeList> CheckQueueTypeListQuery = GetIqueryableList( CheckQueueTypeQuery);
+            CheckQueueTypeList CheckQueueTypeList = CheckQueueTypeListQuery.FirstOrDefault();
             return CheckQueueTypeList;
            
         }

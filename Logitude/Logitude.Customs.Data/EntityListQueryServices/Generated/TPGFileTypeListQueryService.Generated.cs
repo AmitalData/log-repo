@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TPGFileType> TPGFileTypeQuery = (from a in context.TPGFileTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TPGFileTypeList> TPGFileTypeListQuery = GetIqueryableList( TPGFileTypeQuery);
-			            TPGFileTypeList TPGFileTypeList = TPGFileTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<TPGFileTypeList> TPGFileTypeListQuery = GetIqueryableList( TPGFileTypeQuery);
+            TPGFileTypeList TPGFileTypeList = TPGFileTypeListQuery.FirstOrDefault();
             return TPGFileTypeList;
            
         }

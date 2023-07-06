@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CollateralsRequestFileCond> CollateralsRequestFileCondQuery = (from a in context.CollateralsRequestFileConds
                                                        where a.CustomsCollateralId == customscollateralid && a.ConditionCode == conditioncode && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<CollateralsRequestFileCondList> CollateralsRequestFileCondListQuery = GetIqueryableList( CollateralsRequestFileCondQuery);
-			            CollateralsRequestFileCondList CollateralsRequestFileCondList = CollateralsRequestFileCondListQuery.FirstOrDefault();
+
+             
+            IQueryable<CollateralsRequestFileCondList> CollateralsRequestFileCondListQuery = GetIqueryableList( CollateralsRequestFileCondQuery);
+            CollateralsRequestFileCondList CollateralsRequestFileCondList = CollateralsRequestFileCondListQuery.FirstOrDefault();
             return CollateralsRequestFileCondList;
            
         }

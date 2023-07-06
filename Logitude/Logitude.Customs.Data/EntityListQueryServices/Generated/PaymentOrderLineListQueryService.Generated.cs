@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PaymentOrderLine> PaymentOrderLineQuery = (from a in context.PaymentOrderLines
                                                        where a.PaymentOrderId == paymentorderid && a.ParagraphTypeCode == paragraphtypecode
                                                        select a);
-          
-		  
-		  			IQueryable<PaymentOrderLineList> PaymentOrderLineListQuery = GetIqueryableList( PaymentOrderLineQuery);
-			            PaymentOrderLineList PaymentOrderLineList = PaymentOrderLineListQuery.FirstOrDefault();
+
+             
+            IQueryable<PaymentOrderLineList> PaymentOrderLineListQuery = GetIqueryableList( PaymentOrderLineQuery);
+            PaymentOrderLineList PaymentOrderLineList = PaymentOrderLineListQuery.FirstOrDefault();
             return PaymentOrderLineList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AuthorizedSignerPermit> AuthorizedSignerPermitQuery = (from a in context.AuthorizedSignerPermits
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AuthorizedSignerPermitList> AuthorizedSignerPermitListQuery = GetIqueryableList( AuthorizedSignerPermitQuery);
-			            AuthorizedSignerPermitList AuthorizedSignerPermitList = AuthorizedSignerPermitListQuery.FirstOrDefault();
+
+             
+            IQueryable<AuthorizedSignerPermitList> AuthorizedSignerPermitListQuery = GetIqueryableList( AuthorizedSignerPermitQuery);
+            AuthorizedSignerPermitList AuthorizedSignerPermitList = AuthorizedSignerPermitListQuery.FirstOrDefault();
             return AuthorizedSignerPermitList;
            
         }

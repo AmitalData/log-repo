@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportStorage> ExportStorageQuery = (from a in context.ExportStorages
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ExportStorageList> ExportStorageListQuery = GetIqueryableList( ExportStorageQuery);
-			            ExportStorageList ExportStorageList = ExportStorageListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExportStorageList> ExportStorageListQuery = GetIqueryableList( ExportStorageQuery);
+            ExportStorageList ExportStorageList = ExportStorageListQuery.FirstOrDefault();
             return ExportStorageList;
            
         }

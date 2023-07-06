@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsHouseTypeAdditional> CustomsHouseTypeAdditionalQuery = (from a in context.CustomsHouseTypeAdditionals
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsHouseTypeAdditionalList> CustomsHouseTypeAdditionalListQuery = GetIqueryableList( CustomsHouseTypeAdditionalQuery);
-			            CustomsHouseTypeAdditionalList CustomsHouseTypeAdditionalList = CustomsHouseTypeAdditionalListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsHouseTypeAdditionalList> CustomsHouseTypeAdditionalListQuery = GetIqueryableList( CustomsHouseTypeAdditionalQuery);
+            CustomsHouseTypeAdditionalList CustomsHouseTypeAdditionalList = CustomsHouseTypeAdditionalListQuery.FirstOrDefault();
             return CustomsHouseTypeAdditionalList;
            
         }

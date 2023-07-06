@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ProceduralFaultsConnEntity> ProceduralFaultsConnEntityQuery = (from a in context.ProceduralFaultsConnEntities
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ProceduralFaultsConnEntityList> ProceduralFaultsConnEntityListQuery = GetIqueryableList( ProceduralFaultsConnEntityQuery);
-			            ProceduralFaultsConnEntityList ProceduralFaultsConnEntityList = ProceduralFaultsConnEntityListQuery.FirstOrDefault();
+
+             
+            IQueryable<ProceduralFaultsConnEntityList> ProceduralFaultsConnEntityListQuery = GetIqueryableList( ProceduralFaultsConnEntityQuery);
+            ProceduralFaultsConnEntityList ProceduralFaultsConnEntityList = ProceduralFaultsConnEntityListQuery.FirstOrDefault();
             return ProceduralFaultsConnEntityList;
            
         }

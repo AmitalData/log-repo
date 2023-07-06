@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ItemGovernmentProcedureType> ItemGovernmentProcedureTypeQuery = (from a in context.ItemGovernmentProcedureTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ItemGovernmentProcedureTypeList> ItemGovernmentProcedureTypeListQuery = GetIqueryableList( ItemGovernmentProcedureTypeQuery);
-			            ItemGovernmentProcedureTypeList ItemGovernmentProcedureTypeList = ItemGovernmentProcedureTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ItemGovernmentProcedureTypeList> ItemGovernmentProcedureTypeListQuery = GetIqueryableList( ItemGovernmentProcedureTypeQuery);
+            ItemGovernmentProcedureTypeList ItemGovernmentProcedureTypeList = ItemGovernmentProcedureTypeListQuery.FirstOrDefault();
             return ItemGovernmentProcedureTypeList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CourtInstance> CourtInstanceQuery = (from a in context.CourtInstances
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CourtInstanceList> CourtInstanceListQuery = GetIqueryableList( CourtInstanceQuery);
-			            CourtInstanceList CourtInstanceList = CourtInstanceListQuery.FirstOrDefault();
+
+             
+            IQueryable<CourtInstanceList> CourtInstanceListQuery = GetIqueryableList( CourtInstanceQuery);
+            CourtInstanceList CourtInstanceList = CourtInstanceListQuery.FirstOrDefault();
             return CourtInstanceList;
            
         }

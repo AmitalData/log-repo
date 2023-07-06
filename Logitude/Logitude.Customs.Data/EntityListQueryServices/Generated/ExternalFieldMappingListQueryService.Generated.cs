@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExternalFieldMapping> ExternalFieldMappingQuery = (from a in context.ExternalFieldMappings
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ExternalFieldMappingList> ExternalFieldMappingListQuery = GetIqueryableList( ExternalFieldMappingQuery);
-			            ExternalFieldMappingList ExternalFieldMappingList = ExternalFieldMappingListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExternalFieldMappingList> ExternalFieldMappingListQuery = GetIqueryableList( ExternalFieldMappingQuery);
+            ExternalFieldMappingList ExternalFieldMappingList = ExternalFieldMappingListQuery.FirstOrDefault();
             return ExternalFieldMappingList;
            
         }

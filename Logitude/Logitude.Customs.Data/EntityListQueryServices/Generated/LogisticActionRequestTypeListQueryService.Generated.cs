@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<LogisticActionRequestType> LogisticActionRequestTypeQuery = (from a in context.LogisticActionRequestTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<LogisticActionRequestTypeList> LogisticActionRequestTypeListQuery = GetIqueryableList( LogisticActionRequestTypeQuery);
-			            LogisticActionRequestTypeList LogisticActionRequestTypeList = LogisticActionRequestTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<LogisticActionRequestTypeList> LogisticActionRequestTypeListQuery = GetIqueryableList( LogisticActionRequestTypeQuery);
+            LogisticActionRequestTypeList LogisticActionRequestTypeList = LogisticActionRequestTypeListQuery.FirstOrDefault();
             return LogisticActionRequestTypeList;
            
         }

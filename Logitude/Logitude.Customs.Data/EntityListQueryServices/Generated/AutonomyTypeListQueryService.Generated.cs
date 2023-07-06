@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AutonomyType> AutonomyTypeQuery = (from a in context.AutonomyTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AutonomyTypeList> AutonomyTypeListQuery = GetIqueryableList( AutonomyTypeQuery);
-			            AutonomyTypeList AutonomyTypeList = AutonomyTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AutonomyTypeList> AutonomyTypeListQuery = GetIqueryableList( AutonomyTypeQuery);
+            AutonomyTypeList AutonomyTypeList = AutonomyTypeListQuery.FirstOrDefault();
             return AutonomyTypeList;
            
         }

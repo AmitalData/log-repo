@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TradeLevyExamptType> TradeLevyExamptTypeQuery = (from a in context.TradeLevyExamptTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TradeLevyExamptTypeList> TradeLevyExamptTypeListQuery = GetIqueryableList( TradeLevyExamptTypeQuery);
-			            TradeLevyExamptTypeList TradeLevyExamptTypeList = TradeLevyExamptTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<TradeLevyExamptTypeList> TradeLevyExamptTypeListQuery = GetIqueryableList( TradeLevyExamptTypeQuery);
+            TradeLevyExamptTypeList TradeLevyExamptTypeList = TradeLevyExamptTypeListQuery.FirstOrDefault();
             return TradeLevyExamptTypeList;
            
         }

@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationReferantData> DeclarationReferantDataQuery = (from a in context.DeclarationReferantDatas
                                                        where a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationReferantDataList> DeclarationReferantDataListQuery = GetIqueryableList( DeclarationReferantDataQuery);
-			            DeclarationReferantDataList DeclarationReferantDataList = DeclarationReferantDataListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationReferantDataList> DeclarationReferantDataListQuery = GetIqueryableList( DeclarationReferantDataQuery);
+            DeclarationReferantDataList DeclarationReferantDataList = DeclarationReferantDataListQuery.FirstOrDefault();
             return DeclarationReferantDataList;
            
         }

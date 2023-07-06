@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Gender> GenderQuery = (from a in context.Genders
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<GenderList> GenderListQuery = GetIqueryableList( GenderQuery);
-			            GenderList GenderList = GenderListQuery.FirstOrDefault();
+
+             
+            IQueryable<GenderList> GenderListQuery = GetIqueryableList( GenderQuery);
+            GenderList GenderList = GenderListQuery.FirstOrDefault();
             return GenderList;
            
         }

@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CurrencyTypeTenant> CurrencyTypeTenantQuery = (from a in context.CurrencyTypeTenants
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CurrencyTypeTenantList> CurrencyTypeTenantListQuery = GetIqueryableList( CurrencyTypeTenantQuery);
-			            CurrencyTypeTenantList CurrencyTypeTenantList = CurrencyTypeTenantListQuery.FirstOrDefault();
+
+             
+            IQueryable<CurrencyTypeTenantList> CurrencyTypeTenantListQuery = GetIqueryableList( CurrencyTypeTenantQuery);
+            CurrencyTypeTenantList CurrencyTypeTenantList = CurrencyTypeTenantListQuery.FirstOrDefault();
             return CurrencyTypeTenantList;
            
         }

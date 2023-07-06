@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomDocumentTypeMetaData> CustomDocumentTypeMetaDataQuery = (from a in context.CustomDocumentTypeMetaData
                                                        where a.MetaDataTypeCode == metadatatypecode && a.DocumentTypeCode == documenttypecode
                                                        select a);
-          
-		  
-		  			IQueryable<CustomDocumentTypeMetaDataList> CustomDocumentTypeMetaDataListQuery = GetIqueryableList( CustomDocumentTypeMetaDataQuery);
-			            CustomDocumentTypeMetaDataList CustomDocumentTypeMetaDataList = CustomDocumentTypeMetaDataListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomDocumentTypeMetaDataList> CustomDocumentTypeMetaDataListQuery = GetIqueryableList( CustomDocumentTypeMetaDataQuery);
+            CustomDocumentTypeMetaDataList CustomDocumentTypeMetaDataList = CustomDocumentTypeMetaDataListQuery.FirstOrDefault();
             return CustomDocumentTypeMetaDataList;
            
         }

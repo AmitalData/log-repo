@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<StatusFieldType> StatusFieldTypeQuery = (from a in context.StatusFieldTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<StatusFieldTypeList> StatusFieldTypeListQuery = GetIqueryableList( StatusFieldTypeQuery);
-			            StatusFieldTypeList StatusFieldTypeList = StatusFieldTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<StatusFieldTypeList> StatusFieldTypeListQuery = GetIqueryableList( StatusFieldTypeQuery);
+            StatusFieldTypeList StatusFieldTypeList = StatusFieldTypeListQuery.FirstOrDefault();
             return StatusFieldTypeList;
            
         }

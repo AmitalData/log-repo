@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PartyRelationshipType> PartyRelationshipTypeQuery = (from a in context.PartyRelationshipTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PartyRelationshipTypeList> PartyRelationshipTypeListQuery = GetIqueryableList( PartyRelationshipTypeQuery);
-			            PartyRelationshipTypeList PartyRelationshipTypeList = PartyRelationshipTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PartyRelationshipTypeList> PartyRelationshipTypeListQuery = GetIqueryableList( PartyRelationshipTypeQuery);
+            PartyRelationshipTypeList PartyRelationshipTypeList = PartyRelationshipTypeListQuery.FirstOrDefault();
             return PartyRelationshipTypeList;
            
         }

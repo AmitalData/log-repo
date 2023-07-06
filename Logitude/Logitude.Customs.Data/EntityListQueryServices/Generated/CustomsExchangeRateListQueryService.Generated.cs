@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsExchangeRate> CustomsExchangeRateQuery = (from a in context.CustomsExchangeRates
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsExchangeRateList> CustomsExchangeRateListQuery = GetIqueryableList( CustomsExchangeRateQuery);
-			            CustomsExchangeRateList CustomsExchangeRateList = CustomsExchangeRateListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsExchangeRateList> CustomsExchangeRateListQuery = GetIqueryableList( CustomsExchangeRateQuery);
+            CustomsExchangeRateList CustomsExchangeRateList = CustomsExchangeRateListQuery.FirstOrDefault();
             return CustomsExchangeRateList;
            
         }

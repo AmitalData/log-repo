@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<StorageStatus> StorageStatusQuery = (from a in context.StorageStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<StorageStatusList> StorageStatusListQuery = GetIqueryableList( StorageStatusQuery);
-			            StorageStatusList StorageStatusList = StorageStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<StorageStatusList> StorageStatusListQuery = GetIqueryableList( StorageStatusQuery);
+            StorageStatusList StorageStatusList = StorageStatusListQuery.FirstOrDefault();
             return StorageStatusList;
            
         }

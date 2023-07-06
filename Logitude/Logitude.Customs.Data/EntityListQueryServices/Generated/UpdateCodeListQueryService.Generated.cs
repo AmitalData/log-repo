@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<UpdateCode> UpdateCodeQuery = (from a in context.UpdateCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<UpdateCodeList> UpdateCodeListQuery = GetIqueryableList( UpdateCodeQuery);
-			            UpdateCodeList UpdateCodeList = UpdateCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<UpdateCodeList> UpdateCodeListQuery = GetIqueryableList( UpdateCodeQuery);
+            UpdateCodeList UpdateCodeList = UpdateCodeListQuery.FirstOrDefault();
             return UpdateCodeList;
            
         }

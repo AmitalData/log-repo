@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CollateralAnswerType> CollateralAnswerTypeQuery = (from a in context.CollateralAnswerTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CollateralAnswerTypeList> CollateralAnswerTypeListQuery = GetIqueryableList( CollateralAnswerTypeQuery);
-			            CollateralAnswerTypeList CollateralAnswerTypeList = CollateralAnswerTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CollateralAnswerTypeList> CollateralAnswerTypeListQuery = GetIqueryableList( CollateralAnswerTypeQuery);
+            CollateralAnswerTypeList CollateralAnswerTypeList = CollateralAnswerTypeListQuery.FirstOrDefault();
             return CollateralAnswerTypeList;
            
         }

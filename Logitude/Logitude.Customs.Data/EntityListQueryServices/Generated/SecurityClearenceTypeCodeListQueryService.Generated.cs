@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SecurityClearenceTypeCode> SecurityClearenceTypeCodeQuery = (from a in context.SecurityClearenceTypeCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SecurityClearenceTypeCodeList> SecurityClearenceTypeCodeListQuery = GetIqueryableList( SecurityClearenceTypeCodeQuery);
-			            SecurityClearenceTypeCodeList SecurityClearenceTypeCodeList = SecurityClearenceTypeCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SecurityClearenceTypeCodeList> SecurityClearenceTypeCodeListQuery = GetIqueryableList( SecurityClearenceTypeCodeQuery);
+            SecurityClearenceTypeCodeList SecurityClearenceTypeCodeList = SecurityClearenceTypeCodeListQuery.FirstOrDefault();
             return SecurityClearenceTypeCodeList;
            
         }

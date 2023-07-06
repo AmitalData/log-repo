@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportReference> ExportReferenceQuery = (from a in context.ExportReferences
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ExportReferenceList> ExportReferenceListQuery = GetIqueryableList( ExportReferenceQuery);
-			            ExportReferenceList ExportReferenceList = ExportReferenceListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExportReferenceList> ExportReferenceListQuery = GetIqueryableList( ExportReferenceQuery);
+            ExportReferenceList ExportReferenceList = ExportReferenceListQuery.FirstOrDefault();
             return ExportReferenceList;
            
         }

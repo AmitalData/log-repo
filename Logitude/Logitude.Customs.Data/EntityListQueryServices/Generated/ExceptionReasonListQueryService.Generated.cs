@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExceptionReason> ExceptionReasonQuery = (from a in context.ExceptionReasons
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ExceptionReasonList> ExceptionReasonListQuery = GetIqueryableList( ExceptionReasonQuery);
-			            ExceptionReasonList ExceptionReasonList = ExceptionReasonListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExceptionReasonList> ExceptionReasonListQuery = GetIqueryableList( ExceptionReasonQuery);
+            ExceptionReasonList ExceptionReasonList = ExceptionReasonListQuery.FirstOrDefault();
             return ExceptionReasonList;
            
         }

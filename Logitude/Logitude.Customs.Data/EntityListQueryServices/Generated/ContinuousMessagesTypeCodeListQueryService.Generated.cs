@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ContinuousMessagesTypeCode> ContinuousMessagesTypeCodeQuery = (from a in context.ContinuousMessagesTypeCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ContinuousMessagesTypeCodeList> ContinuousMessagesTypeCodeListQuery = GetIqueryableList( ContinuousMessagesTypeCodeQuery);
-			            ContinuousMessagesTypeCodeList ContinuousMessagesTypeCodeList = ContinuousMessagesTypeCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ContinuousMessagesTypeCodeList> ContinuousMessagesTypeCodeListQuery = GetIqueryableList( ContinuousMessagesTypeCodeQuery);
+            ContinuousMessagesTypeCodeList ContinuousMessagesTypeCodeList = ContinuousMessagesTypeCodeListQuery.FirstOrDefault();
             return ContinuousMessagesTypeCodeList;
            
         }

@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Consignment> ConsignmentQuery = (from a in context.Consignments
                                                        where a.DeclarationId == declarationid && a.ConsignmentNumber == consignmentnumber
                                                        select a);
-          
-		  
-		  			IQueryable<ConsignmentList> ConsignmentListQuery = GetIqueryableList( ConsignmentQuery);
-			            ConsignmentList ConsignmentList = ConsignmentListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConsignmentList> ConsignmentListQuery = GetIqueryableList( ConsignmentQuery);
+            ConsignmentList ConsignmentList = ConsignmentListQuery.FirstOrDefault();
             return ConsignmentList;
            
         }

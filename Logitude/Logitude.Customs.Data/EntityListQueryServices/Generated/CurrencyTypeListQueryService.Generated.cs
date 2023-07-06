@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CurrencyType> CurrencyTypeQuery = (from a in context.CurrencyTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CurrencyTypeList> CurrencyTypeListQuery = GetIqueryableList( CurrencyTypeQuery);
-			            CurrencyTypeList CurrencyTypeList = CurrencyTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CurrencyTypeList> CurrencyTypeListQuery = GetIqueryableList( CurrencyTypeQuery);
+            CurrencyTypeList CurrencyTypeList = CurrencyTypeListQuery.FirstOrDefault();
             return CurrencyTypeList;
            
         }

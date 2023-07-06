@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VendorCommission> VendorCommissionQuery = (from a in context.VendorCommissions
                                                        where a.VendorId == vendorid && a.CustomerId == customerid && a.ModificationsTypeCode == modificationstypecode
                                                        select a);
-          
-		  
-		  			IQueryable<VendorCommissionList> VendorCommissionListQuery = GetIqueryableList( VendorCommissionQuery);
-			            VendorCommissionList VendorCommissionList = VendorCommissionListQuery.FirstOrDefault();
+
+             
+            IQueryable<VendorCommissionList> VendorCommissionListQuery = GetIqueryableList( VendorCommissionQuery);
+            VendorCommissionList VendorCommissionList = VendorCommissionListQuery.FirstOrDefault();
             return VendorCommissionList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CommunicationType> CommunicationTypeQuery = (from a in context.CommunicationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CommunicationTypeList> CommunicationTypeListQuery = GetIqueryableList( CommunicationTypeQuery);
-			            CommunicationTypeList CommunicationTypeList = CommunicationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CommunicationTypeList> CommunicationTypeListQuery = GetIqueryableList( CommunicationTypeQuery);
+            CommunicationTypeList CommunicationTypeList = CommunicationTypeListQuery.FirstOrDefault();
             return CommunicationTypeList;
            
         }

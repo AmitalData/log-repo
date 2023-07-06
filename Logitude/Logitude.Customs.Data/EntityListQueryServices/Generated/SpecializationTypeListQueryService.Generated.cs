@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SpecializationType> SpecializationTypeQuery = (from a in context.SpecializationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SpecializationTypeList> SpecializationTypeListQuery = GetIqueryableList( SpecializationTypeQuery);
-			            SpecializationTypeList SpecializationTypeList = SpecializationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SpecializationTypeList> SpecializationTypeListQuery = GetIqueryableList( SpecializationTypeQuery);
+            SpecializationTypeList SpecializationTypeList = SpecializationTypeListQuery.FirstOrDefault();
             return SpecializationTypeList;
            
         }

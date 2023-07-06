@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeliverySiteType> DeliverySiteTypeQuery = (from a in context.DeliverySiteTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<DeliverySiteTypeList> DeliverySiteTypeListQuery = GetIqueryableList( DeliverySiteTypeQuery);
-			            DeliverySiteTypeList DeliverySiteTypeList = DeliverySiteTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeliverySiteTypeList> DeliverySiteTypeListQuery = GetIqueryableList( DeliverySiteTypeQuery);
+            DeliverySiteTypeList DeliverySiteTypeList = DeliverySiteTypeListQuery.FirstOrDefault();
             return DeliverySiteTypeList;
            
         }

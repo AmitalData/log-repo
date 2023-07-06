@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<RansomViolationType> RansomViolationTypeQuery = (from a in context.RansomViolationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<RansomViolationTypeList> RansomViolationTypeListQuery = GetIqueryableList( RansomViolationTypeQuery);
-			            RansomViolationTypeList RansomViolationTypeList = RansomViolationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<RansomViolationTypeList> RansomViolationTypeListQuery = GetIqueryableList( RansomViolationTypeQuery);
+            RansomViolationTypeList RansomViolationTypeList = RansomViolationTypeListQuery.FirstOrDefault();
             return RansomViolationTypeList;
            
         }

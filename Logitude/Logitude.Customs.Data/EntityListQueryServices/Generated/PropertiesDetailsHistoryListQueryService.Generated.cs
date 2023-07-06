@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PropertiesDetailsHistory> PropertiesDetailsHistoryQuery = (from a in context.PropertiesDetailsHistorys
                                                        where a.ID == id
                                                        select a);
-          
-		  
-		  			IQueryable<PropertiesDetailsHistoryList> PropertiesDetailsHistoryListQuery = GetIqueryableList( PropertiesDetailsHistoryQuery);
-			            PropertiesDetailsHistoryList PropertiesDetailsHistoryList = PropertiesDetailsHistoryListQuery.FirstOrDefault();
+
+             
+            IQueryable<PropertiesDetailsHistoryList> PropertiesDetailsHistoryListQuery = GetIqueryableList( PropertiesDetailsHistoryQuery);
+            PropertiesDetailsHistoryList PropertiesDetailsHistoryList = PropertiesDetailsHistoryListQuery.FirstOrDefault();
             return PropertiesDetailsHistoryList;
            
         }

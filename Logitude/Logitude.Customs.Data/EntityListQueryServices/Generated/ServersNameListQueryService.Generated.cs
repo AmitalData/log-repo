@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ServersName> ServersNameQuery = (from a in context.ServersNames
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ServersNameList> ServersNameListQuery = GetIqueryableList( ServersNameQuery);
-			            ServersNameList ServersNameList = ServersNameListQuery.FirstOrDefault();
+
+             
+            IQueryable<ServersNameList> ServersNameListQuery = GetIqueryableList( ServersNameQuery);
+            ServersNameList ServersNameList = ServersNameListQuery.FirstOrDefault();
             return ServersNameList;
            
         }

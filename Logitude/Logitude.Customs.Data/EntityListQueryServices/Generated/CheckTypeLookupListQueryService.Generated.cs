@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CheckTypeLookup> CheckTypeLookupQuery = (from a in context.CheckTypeLookups
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CheckTypeLookupList> CheckTypeLookupListQuery = GetIqueryableList( CheckTypeLookupQuery);
-			            CheckTypeLookupList CheckTypeLookupList = CheckTypeLookupListQuery.FirstOrDefault();
+
+             
+            IQueryable<CheckTypeLookupList> CheckTypeLookupListQuery = GetIqueryableList( CheckTypeLookupQuery);
+            CheckTypeLookupList CheckTypeLookupList = CheckTypeLookupListQuery.FirstOrDefault();
             return CheckTypeLookupList;
            
         }

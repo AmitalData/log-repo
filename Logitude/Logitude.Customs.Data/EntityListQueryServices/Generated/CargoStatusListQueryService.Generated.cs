@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CargoStatus> CargoStatusQuery = (from a in context.CargoStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CargoStatusList> CargoStatusListQuery = GetIqueryableList( CargoStatusQuery);
-			            CargoStatusList CargoStatusList = CargoStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<CargoStatusList> CargoStatusListQuery = GetIqueryableList( CargoStatusQuery);
+            CargoStatusList CargoStatusList = CargoStatusListQuery.FirstOrDefault();
             return CargoStatusList;
            
         }

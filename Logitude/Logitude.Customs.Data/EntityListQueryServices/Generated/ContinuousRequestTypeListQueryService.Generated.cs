@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ContinuousRequestType> ContinuousRequestTypeQuery = (from a in context.ContinuousRequestTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ContinuousRequestTypeList> ContinuousRequestTypeListQuery = GetIqueryableList( ContinuousRequestTypeQuery);
-			            ContinuousRequestTypeList ContinuousRequestTypeList = ContinuousRequestTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ContinuousRequestTypeList> ContinuousRequestTypeListQuery = GetIqueryableList( ContinuousRequestTypeQuery);
+            ContinuousRequestTypeList ContinuousRequestTypeList = ContinuousRequestTypeListQuery.FirstOrDefault();
             return ContinuousRequestTypeList;
            
         }

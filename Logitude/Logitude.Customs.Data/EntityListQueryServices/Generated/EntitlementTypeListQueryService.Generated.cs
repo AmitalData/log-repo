@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<EntitlementType> EntitlementTypeQuery = (from a in context.EntitlementTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<EntitlementTypeList> EntitlementTypeListQuery = GetIqueryableList( EntitlementTypeQuery);
-			            EntitlementTypeList EntitlementTypeList = EntitlementTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<EntitlementTypeList> EntitlementTypeListQuery = GetIqueryableList( EntitlementTypeQuery);
+            EntitlementTypeList EntitlementTypeList = EntitlementTypeListQuery.FirstOrDefault();
             return EntitlementTypeList;
            
         }

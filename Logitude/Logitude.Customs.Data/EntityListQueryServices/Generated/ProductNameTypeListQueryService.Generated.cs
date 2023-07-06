@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ProductNameType> ProductNameTypeQuery = (from a in context.ProductNameTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ProductNameTypeList> ProductNameTypeListQuery = GetIqueryableList( ProductNameTypeQuery);
-			            ProductNameTypeList ProductNameTypeList = ProductNameTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ProductNameTypeList> ProductNameTypeListQuery = GetIqueryableList( ProductNameTypeQuery);
+            ProductNameTypeList ProductNameTypeList = ProductNameTypeListQuery.FirstOrDefault();
             return ProductNameTypeList;
            
         }

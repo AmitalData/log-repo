@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<RefundCustomerActivityType> RefundCustomerActivityTypeQuery = (from a in context.RefundCustomerActivityTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<RefundCustomerActivityTypeList> RefundCustomerActivityTypeListQuery = GetIqueryableList( RefundCustomerActivityTypeQuery);
-			            RefundCustomerActivityTypeList RefundCustomerActivityTypeList = RefundCustomerActivityTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<RefundCustomerActivityTypeList> RefundCustomerActivityTypeListQuery = GetIqueryableList( RefundCustomerActivityTypeQuery);
+            RefundCustomerActivityTypeList RefundCustomerActivityTypeList = RefundCustomerActivityTypeListQuery.FirstOrDefault();
             return RefundCustomerActivityTypeList;
            
         }

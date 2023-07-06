@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ProcessingReason> ProcessingReasonQuery = (from a in context.ProcessingReasons
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ProcessingReasonList> ProcessingReasonListQuery = GetIqueryableList( ProcessingReasonQuery);
-			            ProcessingReasonList ProcessingReasonList = ProcessingReasonListQuery.FirstOrDefault();
+
+             
+            IQueryable<ProcessingReasonList> ProcessingReasonListQuery = GetIqueryableList( ProcessingReasonQuery);
+            ProcessingReasonList ProcessingReasonList = ProcessingReasonListQuery.FirstOrDefault();
             return ProcessingReasonList;
            
         }

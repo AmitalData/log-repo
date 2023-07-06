@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeficitDecision> DeficitDecisionQuery = (from a in context.DeficitDecisions
                                                        where a.DeficitId == deficitid && a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<DeficitDecisionList> DeficitDecisionListQuery = GetIqueryableList( DeficitDecisionQuery);
-			            DeficitDecisionList DeficitDecisionList = DeficitDecisionListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeficitDecisionList> DeficitDecisionListQuery = GetIqueryableList( DeficitDecisionQuery);
+            DeficitDecisionList DeficitDecisionList = DeficitDecisionListQuery.FirstOrDefault();
             return DeficitDecisionList;
            
         }

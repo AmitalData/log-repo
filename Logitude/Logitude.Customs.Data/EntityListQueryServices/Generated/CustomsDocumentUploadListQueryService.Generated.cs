@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsDocumentUpload> CustomsDocumentUploadQuery = (from a in context.CustomsDocumentUploads
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsDocumentUploadList> CustomsDocumentUploadListQuery = GetIqueryableList( CustomsDocumentUploadQuery);
-			            CustomsDocumentUploadList CustomsDocumentUploadList = CustomsDocumentUploadListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsDocumentUploadList> CustomsDocumentUploadListQuery = GetIqueryableList( CustomsDocumentUploadQuery);
+            CustomsDocumentUploadList CustomsDocumentUploadList = CustomsDocumentUploadListQuery.FirstOrDefault();
             return CustomsDocumentUploadList;
            
         }

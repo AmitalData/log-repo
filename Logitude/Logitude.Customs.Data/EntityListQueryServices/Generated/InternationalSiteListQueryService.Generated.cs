@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<InternationalSite> InternationalSiteQuery = (from a in context.InternationalSites
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<InternationalSiteList> InternationalSiteListQuery = GetIqueryableList( InternationalSiteQuery);
-			            InternationalSiteList InternationalSiteList = InternationalSiteListQuery.FirstOrDefault();
+
+             
+            IQueryable<InternationalSiteList> InternationalSiteListQuery = GetIqueryableList( InternationalSiteQuery);
+            InternationalSiteList InternationalSiteList = InternationalSiteListQuery.FirstOrDefault();
             return InternationalSiteList;
            
         }

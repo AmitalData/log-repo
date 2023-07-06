@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ParagraphType> ParagraphTypeQuery = (from a in context.ParagraphTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ParagraphTypeList> ParagraphTypeListQuery = GetIqueryableList( ParagraphTypeQuery);
-			            ParagraphTypeList ParagraphTypeList = ParagraphTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ParagraphTypeList> ParagraphTypeListQuery = GetIqueryableList( ParagraphTypeQuery);
+            ParagraphTypeList ParagraphTypeList = ParagraphTypeListQuery.FirstOrDefault();
             return ParagraphTypeList;
            
         }

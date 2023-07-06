@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceItemsDescript> SupplierInvoiceItemsDescriptQuery = (from a in context.SupplierInvoiceItemsDescripts
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<SupplierInvoiceItemsDescriptList> SupplierInvoiceItemsDescriptListQuery = GetIqueryableList( SupplierInvoiceItemsDescriptQuery);
-			            SupplierInvoiceItemsDescriptList SupplierInvoiceItemsDescriptList = SupplierInvoiceItemsDescriptListQuery.FirstOrDefault();
+
+             
+            IQueryable<SupplierInvoiceItemsDescriptList> SupplierInvoiceItemsDescriptListQuery = GetIqueryableList( SupplierInvoiceItemsDescriptQuery);
+            SupplierInvoiceItemsDescriptList SupplierInvoiceItemsDescriptList = SupplierInvoiceItemsDescriptListQuery.FirstOrDefault();
             return SupplierInvoiceItemsDescriptList;
            
         }

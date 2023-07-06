@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<MeasureQualifier> MeasureQualifierQuery = (from a in context.MeasureQualifier
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<MeasureQualifierList> MeasureQualifierListQuery = GetIqueryableList( MeasureQualifierQuery);
-			            MeasureQualifierList MeasureQualifierList = MeasureQualifierListQuery.FirstOrDefault();
+
+             
+            IQueryable<MeasureQualifierList> MeasureQualifierListQuery = GetIqueryableList( MeasureQualifierQuery);
+            MeasureQualifierList MeasureQualifierList = MeasureQualifierListQuery.FirstOrDefault();
             return MeasureQualifierList;
            
         }

@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationExportRecipient> DeclarationExportRecipientQuery = (from a in context.DeclarationExportRecipients
                                                        where a.DeclarationId == declarationid && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationExportRecipientList> DeclarationExportRecipientListQuery = GetIqueryableList( DeclarationExportRecipientQuery);
-			            DeclarationExportRecipientList DeclarationExportRecipientList = DeclarationExportRecipientListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationExportRecipientList> DeclarationExportRecipientListQuery = GetIqueryableList( DeclarationExportRecipientQuery);
+            DeclarationExportRecipientList DeclarationExportRecipientList = DeclarationExportRecipientListQuery.FirstOrDefault();
             return DeclarationExportRecipientList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<LastReleaseFromWarehouse> LastReleaseFromWarehouseQuery = (from a in context.LastReleaseFromWarehouses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<LastReleaseFromWarehouseList> LastReleaseFromWarehouseListQuery = GetIqueryableList( LastReleaseFromWarehouseQuery);
-			            LastReleaseFromWarehouseList LastReleaseFromWarehouseList = LastReleaseFromWarehouseListQuery.FirstOrDefault();
+
+             
+            IQueryable<LastReleaseFromWarehouseList> LastReleaseFromWarehouseListQuery = GetIqueryableList( LastReleaseFromWarehouseQuery);
+            LastReleaseFromWarehouseList LastReleaseFromWarehouseList = LastReleaseFromWarehouseListQuery.FirstOrDefault();
             return LastReleaseFromWarehouseList;
            
         }

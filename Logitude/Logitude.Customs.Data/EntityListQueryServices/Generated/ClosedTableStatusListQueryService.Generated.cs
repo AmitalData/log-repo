@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClosedTableStatus> ClosedTableStatusQuery = (from a in context.ClosedTableStatus
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ClosedTableStatusList> ClosedTableStatusListQuery = GetIqueryableList( ClosedTableStatusQuery);
-			            ClosedTableStatusList ClosedTableStatusList = ClosedTableStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClosedTableStatusList> ClosedTableStatusListQuery = GetIqueryableList( ClosedTableStatusQuery);
+            ClosedTableStatusList ClosedTableStatusList = ClosedTableStatusListQuery.FirstOrDefault();
             return ClosedTableStatusList;
            
         }

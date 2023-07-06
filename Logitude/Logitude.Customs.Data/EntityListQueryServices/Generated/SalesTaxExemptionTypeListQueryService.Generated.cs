@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SalesTaxExemptionType> SalesTaxExemptionTypeQuery = (from a in context.SalesTaxExemptionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SalesTaxExemptionTypeList> SalesTaxExemptionTypeListQuery = GetIqueryableList( SalesTaxExemptionTypeQuery);
-			            SalesTaxExemptionTypeList SalesTaxExemptionTypeList = SalesTaxExemptionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SalesTaxExemptionTypeList> SalesTaxExemptionTypeListQuery = GetIqueryableList( SalesTaxExemptionTypeQuery);
+            SalesTaxExemptionTypeList SalesTaxExemptionTypeList = SalesTaxExemptionTypeListQuery.FirstOrDefault();
             return SalesTaxExemptionTypeList;
            
         }

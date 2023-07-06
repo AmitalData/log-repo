@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<NotificationReply> NotificationReplyQuery = (from a in context.NotificationReplies
                                                        where a.NotificationId == notificationid && a.Line == line
                                                        select a);
-          
-		  
-		  			IQueryable<NotificationReplyList> NotificationReplyListQuery = GetIqueryableList( NotificationReplyQuery);
-			            NotificationReplyList NotificationReplyList = NotificationReplyListQuery.FirstOrDefault();
+
+             
+            IQueryable<NotificationReplyList> NotificationReplyListQuery = GetIqueryableList( NotificationReplyQuery);
+            NotificationReplyList NotificationReplyList = NotificationReplyListQuery.FirstOrDefault();
             return NotificationReplyList;
            
         }

@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClientAddress> ClientAddressQuery = (from a in context.ClientAddresses
                                                        where a.ClientId == clientid && a.AddressId == addressid
                                                        select a);
-          
-		  
-		  			IQueryable<ClientAddressList> ClientAddressListQuery = GetIqueryableList( ClientAddressQuery);
-			            ClientAddressList ClientAddressList = ClientAddressListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClientAddressList> ClientAddressListQuery = GetIqueryableList( ClientAddressQuery);
+            ClientAddressList ClientAddressList = ClientAddressListQuery.FirstOrDefault();
             return ClientAddressList;
            
         }

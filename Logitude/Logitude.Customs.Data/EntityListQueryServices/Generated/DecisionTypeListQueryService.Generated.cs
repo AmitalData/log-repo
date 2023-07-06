@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DecisionType> DecisionTypeQuery = (from a in context.DecisionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<DecisionTypeList> DecisionTypeListQuery = GetIqueryableList( DecisionTypeQuery);
-			            DecisionTypeList DecisionTypeList = DecisionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<DecisionTypeList> DecisionTypeListQuery = GetIqueryableList( DecisionTypeQuery);
+            DecisionTypeList DecisionTypeList = DecisionTypeListQuery.FirstOrDefault();
             return DecisionTypeList;
            
         }

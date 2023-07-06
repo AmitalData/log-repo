@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<UIMessageAdditional> UIMessageAdditionalQuery = (from a in context.UIMessageAdditionals
                                                        where a.Id == id && a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<UIMessageAdditionalList> UIMessageAdditionalListQuery = GetIqueryableList( UIMessageAdditionalQuery);
-			            UIMessageAdditionalList UIMessageAdditionalList = UIMessageAdditionalListQuery.FirstOrDefault();
+
+             
+            IQueryable<UIMessageAdditionalList> UIMessageAdditionalListQuery = GetIqueryableList( UIMessageAdditionalQuery);
+            UIMessageAdditionalList UIMessageAdditionalList = UIMessageAdditionalListQuery.FirstOrDefault();
             return UIMessageAdditionalList;
            
         }

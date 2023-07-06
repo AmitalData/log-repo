@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<FacilitationType> FacilitationTypeQuery = (from a in context.FacilitationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<FacilitationTypeList> FacilitationTypeListQuery = GetIqueryableList( FacilitationTypeQuery);
-			            FacilitationTypeList FacilitationTypeList = FacilitationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<FacilitationTypeList> FacilitationTypeListQuery = GetIqueryableList( FacilitationTypeQuery);
+            FacilitationTypeList FacilitationTypeList = FacilitationTypeListQuery.FirstOrDefault();
             return FacilitationTypeList;
            
         }

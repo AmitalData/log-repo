@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CoolingReportingMethod> CoolingReportingMethodQuery = (from a in context.CoolingReportingMethods
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CoolingReportingMethodList> CoolingReportingMethodListQuery = GetIqueryableList( CoolingReportingMethodQuery);
-			            CoolingReportingMethodList CoolingReportingMethodList = CoolingReportingMethodListQuery.FirstOrDefault();
+
+             
+            IQueryable<CoolingReportingMethodList> CoolingReportingMethodListQuery = GetIqueryableList( CoolingReportingMethodQuery);
+            CoolingReportingMethodList CoolingReportingMethodList = CoolingReportingMethodListQuery.FirstOrDefault();
             return CoolingReportingMethodList;
            
         }

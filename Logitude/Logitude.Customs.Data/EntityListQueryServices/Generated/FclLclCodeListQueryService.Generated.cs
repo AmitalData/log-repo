@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<FclLclCode> FclLclCodeQuery = (from a in context.FclLclCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<FclLclCodeList> FclLclCodeListQuery = GetIqueryableList( FclLclCodeQuery);
-			            FclLclCodeList FclLclCodeList = FclLclCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<FclLclCodeList> FclLclCodeListQuery = GetIqueryableList( FclLclCodeQuery);
+            FclLclCodeList FclLclCodeList = FclLclCodeListQuery.FirstOrDefault();
             return FclLclCodeList;
            
         }

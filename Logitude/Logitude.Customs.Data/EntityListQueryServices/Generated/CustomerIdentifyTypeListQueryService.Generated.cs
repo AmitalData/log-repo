@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomerIdentifyType> CustomerIdentifyTypeQuery = (from a in context.CustomerIdentifyTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomerIdentifyTypeList> CustomerIdentifyTypeListQuery = GetIqueryableList( CustomerIdentifyTypeQuery);
-			            CustomerIdentifyTypeList CustomerIdentifyTypeList = CustomerIdentifyTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomerIdentifyTypeList> CustomerIdentifyTypeListQuery = GetIqueryableList( CustomerIdentifyTypeQuery);
+            CustomerIdentifyTypeList CustomerIdentifyTypeList = CustomerIdentifyTypeListQuery.FirstOrDefault();
             return CustomerIdentifyTypeList;
            
         }

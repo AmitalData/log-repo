@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ReferenceStatus> ReferenceStatusQuery = (from a in context.ReferenceStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ReferenceStatusList> ReferenceStatusListQuery = GetIqueryableList( ReferenceStatusQuery);
-			            ReferenceStatusList ReferenceStatusList = ReferenceStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<ReferenceStatusList> ReferenceStatusListQuery = GetIqueryableList( ReferenceStatusQuery);
+            ReferenceStatusList ReferenceStatusList = ReferenceStatusListQuery.FirstOrDefault();
             return ReferenceStatusList;
            
         }

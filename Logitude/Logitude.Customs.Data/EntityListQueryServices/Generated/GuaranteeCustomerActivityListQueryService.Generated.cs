@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<GuaranteeCustomerActivity> GuaranteeCustomerActivityQuery = (from a in context.GuaranteeCustomerActivities
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<GuaranteeCustomerActivityList> GuaranteeCustomerActivityListQuery = GetIqueryableList( GuaranteeCustomerActivityQuery);
-			            GuaranteeCustomerActivityList GuaranteeCustomerActivityList = GuaranteeCustomerActivityListQuery.FirstOrDefault();
+
+             
+            IQueryable<GuaranteeCustomerActivityList> GuaranteeCustomerActivityListQuery = GetIqueryableList( GuaranteeCustomerActivityQuery);
+            GuaranteeCustomerActivityList GuaranteeCustomerActivityList = GuaranteeCustomerActivityListQuery.FirstOrDefault();
             return GuaranteeCustomerActivityList;
            
         }

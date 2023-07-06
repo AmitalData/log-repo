@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SpecialActionDescriptionType> SpecialActionDescriptionTypeQuery = (from a in context.SpecialActionDescriptionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SpecialActionDescriptionTypeList> SpecialActionDescriptionTypeListQuery = GetIqueryableList( SpecialActionDescriptionTypeQuery);
-			            SpecialActionDescriptionTypeList SpecialActionDescriptionTypeList = SpecialActionDescriptionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SpecialActionDescriptionTypeList> SpecialActionDescriptionTypeListQuery = GetIqueryableList( SpecialActionDescriptionTypeQuery);
+            SpecialActionDescriptionTypeList SpecialActionDescriptionTypeList = SpecialActionDescriptionTypeListQuery.FirstOrDefault();
             return SpecialActionDescriptionTypeList;
            
         }

@@ -551,16 +551,9 @@ namespace <#= querylistservicenamespacestring #>
             IQueryable<<#= tableName #>> <#= tableName #>Query = (from a in context.<#= dBTableName #>
                                                        where <#= primarykeyCondition #>
                                                        select a);
-          
-		  
-		  <#+
-          if (iscustoms && tableName=="Declaration")
-         {#>IQueryable<<#= listName #>> <#= listName #>Query = GetIqueryableList( <#= tableName #>Query,true);
-			<#+}
-			else{#>
-			IQueryable<<#= listName #>> <#= listName #>Query = GetIqueryableList( <#= tableName #>Query);
-			<#+}
-			#>
+
+             
+            IQueryable<<#= listName #>> <#= listName #>Query = GetIqueryableList( <#= tableName #>Query);
             <#= listName #> <#= listName #> = <#= listName #>Query.FirstOrDefault();
             return <#= listName #>;
            

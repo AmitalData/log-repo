@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<FuelType> FuelTypeQuery = (from a in context.FuelTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<FuelTypeList> FuelTypeListQuery = GetIqueryableList( FuelTypeQuery);
-			            FuelTypeList FuelTypeList = FuelTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<FuelTypeList> FuelTypeListQuery = GetIqueryableList( FuelTypeQuery);
+            FuelTypeList FuelTypeList = FuelTypeListQuery.FirstOrDefault();
             return FuelTypeList;
            
         }

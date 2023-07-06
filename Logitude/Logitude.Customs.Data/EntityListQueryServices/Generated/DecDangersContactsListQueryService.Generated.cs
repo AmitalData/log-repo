@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DecDangersContact> DecDangersContactQuery = (from a in context.DecDangersContacts
                                                        where a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<DecDangersContactList> DecDangersContactListQuery = GetIqueryableList( DecDangersContactQuery);
-			            DecDangersContactList DecDangersContactList = DecDangersContactListQuery.FirstOrDefault();
+
+             
+            IQueryable<DecDangersContactList> DecDangersContactListQuery = GetIqueryableList( DecDangersContactQuery);
+            DecDangersContactList DecDangersContactList = DecDangersContactListQuery.FirstOrDefault();
             return DecDangersContactList;
            
         }

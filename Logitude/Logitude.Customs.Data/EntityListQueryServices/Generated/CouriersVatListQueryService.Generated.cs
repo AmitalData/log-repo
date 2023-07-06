@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CouriersVat> CouriersVatQuery = (from a in context.CouriersVats
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CouriersVatList> CouriersVatListQuery = GetIqueryableList( CouriersVatQuery);
-			            CouriersVatList CouriersVatList = CouriersVatListQuery.FirstOrDefault();
+
+             
+            IQueryable<CouriersVatList> CouriersVatListQuery = GetIqueryableList( CouriersVatQuery);
+            CouriersVatList CouriersVatList = CouriersVatListQuery.FirstOrDefault();
             return CouriersVatList;
            
         }

@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CargoSeal> CargoSealQuery = (from a in context.CargoSeals
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CargoSealList> CargoSealListQuery = GetIqueryableList( CargoSealQuery);
-			            CargoSealList CargoSealList = CargoSealListQuery.FirstOrDefault();
+
+             
+            IQueryable<CargoSealList> CargoSealListQuery = GetIqueryableList( CargoSealQuery);
+            CargoSealList CargoSealList = CargoSealListQuery.FirstOrDefault();
             return CargoSealList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DepositFileType> DepositFileTypeQuery = (from a in context.DepositFileTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<DepositFileTypeList> DepositFileTypeListQuery = GetIqueryableList( DepositFileTypeQuery);
-			            DepositFileTypeList DepositFileTypeList = DepositFileTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<DepositFileTypeList> DepositFileTypeListQuery = GetIqueryableList( DepositFileTypeQuery);
+            DepositFileTypeList DepositFileTypeList = DepositFileTypeListQuery.FirstOrDefault();
             return DepositFileTypeList;
            
         }

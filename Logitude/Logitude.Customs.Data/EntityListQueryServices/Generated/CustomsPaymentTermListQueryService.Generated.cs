@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsPaymentTerm> CustomsPaymentTermQuery = (from a in context.CustomsPaymentTerms
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsPaymentTermList> CustomsPaymentTermListQuery = GetIqueryableList( CustomsPaymentTermQuery);
-			            CustomsPaymentTermList CustomsPaymentTermList = CustomsPaymentTermListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsPaymentTermList> CustomsPaymentTermListQuery = GetIqueryableList( CustomsPaymentTermQuery);
+            CustomsPaymentTermList CustomsPaymentTermList = CustomsPaymentTermListQuery.FirstOrDefault();
             return CustomsPaymentTermList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AccumalationState> AccumalationStateQuery = (from a in context.AccumalationStates
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AccumalationStateList> AccumalationStateListQuery = GetIqueryableList( AccumalationStateQuery);
-			            AccumalationStateList AccumalationStateList = AccumalationStateListQuery.FirstOrDefault();
+
+             
+            IQueryable<AccumalationStateList> AccumalationStateListQuery = GetIqueryableList( AccumalationStateQuery);
+            AccumalationStateList AccumalationStateList = AccumalationStateListQuery.FirstOrDefault();
             return AccumalationStateList;
            
         }

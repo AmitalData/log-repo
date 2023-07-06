@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<FaultInspectionType> FaultInspectionTypeQuery = (from a in context.FaultInspectionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<FaultInspectionTypeList> FaultInspectionTypeListQuery = GetIqueryableList( FaultInspectionTypeQuery);
-			            FaultInspectionTypeList FaultInspectionTypeList = FaultInspectionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<FaultInspectionTypeList> FaultInspectionTypeListQuery = GetIqueryableList( FaultInspectionTypeQuery);
+            FaultInspectionTypeList FaultInspectionTypeList = FaultInspectionTypeListQuery.FirstOrDefault();
             return FaultInspectionTypeList;
            
         }

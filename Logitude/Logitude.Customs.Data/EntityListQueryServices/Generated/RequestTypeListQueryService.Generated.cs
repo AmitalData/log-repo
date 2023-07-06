@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<RequestType> RequestTypeQuery = (from a in context.RequestTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<RequestTypeList> RequestTypeListQuery = GetIqueryableList( RequestTypeQuery);
-			            RequestTypeList RequestTypeList = RequestTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<RequestTypeList> RequestTypeListQuery = GetIqueryableList( RequestTypeQuery);
+            RequestTypeList RequestTypeList = RequestTypeListQuery.FirstOrDefault();
             return RequestTypeList;
            
         }

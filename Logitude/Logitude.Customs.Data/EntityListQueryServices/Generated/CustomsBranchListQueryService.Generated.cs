@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsBranch> CustomsBranchQuery = (from a in context.CustomsBranches
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsBranchList> CustomsBranchListQuery = GetIqueryableList( CustomsBranchQuery);
-			            CustomsBranchList CustomsBranchList = CustomsBranchListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsBranchList> CustomsBranchListQuery = GetIqueryableList( CustomsBranchQuery);
+            CustomsBranchList CustomsBranchList = CustomsBranchListQuery.FirstOrDefault();
             return CustomsBranchList;
            
         }

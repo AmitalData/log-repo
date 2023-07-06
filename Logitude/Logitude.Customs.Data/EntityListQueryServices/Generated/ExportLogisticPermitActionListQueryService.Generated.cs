@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportLogisticPermitAction> ExportLogisticPermitActionQuery = (from a in context.ExportLogisticPermitActions
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ExportLogisticPermitActionList> ExportLogisticPermitActionListQuery = GetIqueryableList( ExportLogisticPermitActionQuery);
-			            ExportLogisticPermitActionList ExportLogisticPermitActionList = ExportLogisticPermitActionListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExportLogisticPermitActionList> ExportLogisticPermitActionListQuery = GetIqueryableList( ExportLogisticPermitActionQuery);
+            ExportLogisticPermitActionList ExportLogisticPermitActionList = ExportLogisticPermitActionListQuery.FirstOrDefault();
             return ExportLogisticPermitActionList;
            
         }

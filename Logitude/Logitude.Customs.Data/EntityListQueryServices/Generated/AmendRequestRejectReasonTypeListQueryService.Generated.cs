@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmendRequestRejectReasonType> AmendRequestRejectReasonTypeQuery = (from a in context.AmendRequestRejectReasonTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AmendRequestRejectReasonTypeList> AmendRequestRejectReasonTypeListQuery = GetIqueryableList( AmendRequestRejectReasonTypeQuery);
-			            AmendRequestRejectReasonTypeList AmendRequestRejectReasonTypeList = AmendRequestRejectReasonTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AmendRequestRejectReasonTypeList> AmendRequestRejectReasonTypeListQuery = GetIqueryableList( AmendRequestRejectReasonTypeQuery);
+            AmendRequestRejectReasonTypeList AmendRequestRejectReasonTypeList = AmendRequestRejectReasonTypeListQuery.FirstOrDefault();
             return AmendRequestRejectReasonTypeList;
            
         }

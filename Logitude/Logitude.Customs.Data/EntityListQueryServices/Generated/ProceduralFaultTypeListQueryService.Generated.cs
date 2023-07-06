@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ProceduralFaultType> ProceduralFaultTypeQuery = (from a in context.ProceduralFaultTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ProceduralFaultTypeList> ProceduralFaultTypeListQuery = GetIqueryableList( ProceduralFaultTypeQuery);
-			            ProceduralFaultTypeList ProceduralFaultTypeList = ProceduralFaultTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ProceduralFaultTypeList> ProceduralFaultTypeListQuery = GetIqueryableList( ProceduralFaultTypeQuery);
+            ProceduralFaultTypeList ProceduralFaultTypeList = ProceduralFaultTypeListQuery.FirstOrDefault();
             return ProceduralFaultTypeList;
            
         }

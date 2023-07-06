@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TransactionNatureType> TransactionNatureTypeQuery = (from a in context.TransactionNatureTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TransactionNatureTypeList> TransactionNatureTypeListQuery = GetIqueryableList( TransactionNatureTypeQuery);
-			            TransactionNatureTypeList TransactionNatureTypeList = TransactionNatureTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<TransactionNatureTypeList> TransactionNatureTypeListQuery = GetIqueryableList( TransactionNatureTypeQuery);
+            TransactionNatureTypeList TransactionNatureTypeList = TransactionNatureTypeListQuery.FirstOrDefault();
             return TransactionNatureTypeList;
            
         }

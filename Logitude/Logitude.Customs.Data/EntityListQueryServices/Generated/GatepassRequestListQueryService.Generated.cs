@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<GatepassRequest> GatepassRequestQuery = (from a in context.GatepassRequests
                                                        where a.MasterCourierId == mastercourierid
                                                        select a);
-          
-		  
-		  			IQueryable<GatepassRequestList> GatepassRequestListQuery = GetIqueryableList( GatepassRequestQuery);
-			            GatepassRequestList GatepassRequestList = GatepassRequestListQuery.FirstOrDefault();
+
+             
+            IQueryable<GatepassRequestList> GatepassRequestListQuery = GetIqueryableList( GatepassRequestQuery);
+            GatepassRequestList GatepassRequestList = GatepassRequestListQuery.FirstOrDefault();
             return GatepassRequestList;
            
         }

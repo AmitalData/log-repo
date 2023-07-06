@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VehicleOwner> VehicleOwnerQuery = (from a in context.VehicleOwners
                                                        where a.VehicleId == vehicleid && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<VehicleOwnerList> VehicleOwnerListQuery = GetIqueryableList( VehicleOwnerQuery);
-			            VehicleOwnerList VehicleOwnerList = VehicleOwnerListQuery.FirstOrDefault();
+
+             
+            IQueryable<VehicleOwnerList> VehicleOwnerListQuery = GetIqueryableList( VehicleOwnerQuery);
+            VehicleOwnerList VehicleOwnerList = VehicleOwnerListQuery.FirstOrDefault();
             return VehicleOwnerList;
            
         }

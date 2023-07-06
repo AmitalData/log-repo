@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TapagConnectionTable> TapagConnectionTableQuery = (from a in context.TapagConnectionTables
                                                        where a.TapagId == tapagid && a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<TapagConnectionTableList> TapagConnectionTableListQuery = GetIqueryableList( TapagConnectionTableQuery);
-			            TapagConnectionTableList TapagConnectionTableList = TapagConnectionTableListQuery.FirstOrDefault();
+
+             
+            IQueryable<TapagConnectionTableList> TapagConnectionTableListQuery = GetIqueryableList( TapagConnectionTableQuery);
+            TapagConnectionTableList TapagConnectionTableList = TapagConnectionTableListQuery.FirstOrDefault();
             return TapagConnectionTableList;
            
         }

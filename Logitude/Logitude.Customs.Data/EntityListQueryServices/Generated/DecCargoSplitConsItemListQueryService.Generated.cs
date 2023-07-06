@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DecCargoSplitConsItem> DecCargoSplitConsItemQuery = (from a in context.DecCargoSplitConsItems
                                                        where a.DeclarationCargoSplitId == declarationcargosplitid && a.DecCargoSplitConsLineNo == deccargosplitconslineno && a.ItemLine == itemline
                                                        select a);
-          
-		  
-		  			IQueryable<DecCargoSplitConsItemList> DecCargoSplitConsItemListQuery = GetIqueryableList( DecCargoSplitConsItemQuery);
-			            DecCargoSplitConsItemList DecCargoSplitConsItemList = DecCargoSplitConsItemListQuery.FirstOrDefault();
+
+             
+            IQueryable<DecCargoSplitConsItemList> DecCargoSplitConsItemListQuery = GetIqueryableList( DecCargoSplitConsItemQuery);
+            DecCargoSplitConsItemList DecCargoSplitConsItemList = DecCargoSplitConsItemListQuery.FirstOrDefault();
             return DecCargoSplitConsItemList;
            
         }

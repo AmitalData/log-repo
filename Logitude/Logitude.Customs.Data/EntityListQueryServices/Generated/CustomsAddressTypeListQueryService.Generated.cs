@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsAddressType> CustomsAddressTypeQuery = (from a in context.CustomsAddressTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsAddressTypeList> CustomsAddressTypeListQuery = GetIqueryableList( CustomsAddressTypeQuery);
-			            CustomsAddressTypeList CustomsAddressTypeList = CustomsAddressTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsAddressTypeList> CustomsAddressTypeListQuery = GetIqueryableList( CustomsAddressTypeQuery);
+            CustomsAddressTypeList CustomsAddressTypeList = CustomsAddressTypeListQuery.FirstOrDefault();
             return CustomsAddressTypeList;
            
         }

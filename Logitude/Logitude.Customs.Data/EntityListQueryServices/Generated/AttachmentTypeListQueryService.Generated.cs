@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AttachmentType> AttachmentTypeQuery = (from a in context.AttachmentTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AttachmentTypeList> AttachmentTypeListQuery = GetIqueryableList( AttachmentTypeQuery);
-			            AttachmentTypeList AttachmentTypeList = AttachmentTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AttachmentTypeList> AttachmentTypeListQuery = GetIqueryableList( AttachmentTypeQuery);
+            AttachmentTypeList AttachmentTypeList = AttachmentTypeListQuery.FirstOrDefault();
             return AttachmentTypeList;
            
         }

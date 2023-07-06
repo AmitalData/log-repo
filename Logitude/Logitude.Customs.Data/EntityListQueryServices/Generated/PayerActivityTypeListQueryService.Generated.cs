@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PayerActivityType> PayerActivityTypeQuery = (from a in context.PayerActivityTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PayerActivityTypeList> PayerActivityTypeListQuery = GetIqueryableList( PayerActivityTypeQuery);
-			            PayerActivityTypeList PayerActivityTypeList = PayerActivityTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PayerActivityTypeList> PayerActivityTypeListQuery = GetIqueryableList( PayerActivityTypeQuery);
+            PayerActivityTypeList PayerActivityTypeList = PayerActivityTypeListQuery.FirstOrDefault();
             return PayerActivityTypeList;
            
         }

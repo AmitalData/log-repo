@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CancelRequestRejectReasonType> CancelRequestRejectReasonTypeQuery = (from a in context.CancelRequestRejectReasonTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CancelRequestRejectReasonTypeList> CancelRequestRejectReasonTypeListQuery = GetIqueryableList( CancelRequestRejectReasonTypeQuery);
-			            CancelRequestRejectReasonTypeList CancelRequestRejectReasonTypeList = CancelRequestRejectReasonTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CancelRequestRejectReasonTypeList> CancelRequestRejectReasonTypeListQuery = GetIqueryableList( CancelRequestRejectReasonTypeQuery);
+            CancelRequestRejectReasonTypeList CancelRequestRejectReasonTypeList = CancelRequestRejectReasonTypeListQuery.FirstOrDefault();
             return CancelRequestRejectReasonTypeList;
            
         }

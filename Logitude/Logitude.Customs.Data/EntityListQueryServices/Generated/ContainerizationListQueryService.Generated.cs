@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Containerization> ContainerizationQuery = (from a in context.Containerizations
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ContainerizationList> ContainerizationListQuery = GetIqueryableList( ContainerizationQuery);
-			            ContainerizationList ContainerizationList = ContainerizationListQuery.FirstOrDefault();
+
+             
+            IQueryable<ContainerizationList> ContainerizationListQuery = GetIqueryableList( ContainerizationQuery);
+            ContainerizationList ContainerizationList = ContainerizationListQuery.FirstOrDefault();
             return ContainerizationList;
            
         }

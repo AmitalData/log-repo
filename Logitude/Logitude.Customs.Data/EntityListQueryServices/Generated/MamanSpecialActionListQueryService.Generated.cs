@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<MamanSpecialAction> MamanSpecialActionQuery = (from a in context.MamanSpecialActions
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<MamanSpecialActionList> MamanSpecialActionListQuery = GetIqueryableList( MamanSpecialActionQuery);
-			            MamanSpecialActionList MamanSpecialActionList = MamanSpecialActionListQuery.FirstOrDefault();
+
+             
+            IQueryable<MamanSpecialActionList> MamanSpecialActionListQuery = GetIqueryableList( MamanSpecialActionQuery);
+            MamanSpecialActionList MamanSpecialActionList = MamanSpecialActionListQuery.FirstOrDefault();
             return MamanSpecialActionList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ReturnCondition> ReturnConditionQuery = (from a in context.ReturnConditions
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ReturnConditionList> ReturnConditionListQuery = GetIqueryableList( ReturnConditionQuery);
-			            ReturnConditionList ReturnConditionList = ReturnConditionListQuery.FirstOrDefault();
+
+             
+            IQueryable<ReturnConditionList> ReturnConditionListQuery = GetIqueryableList( ReturnConditionQuery);
+            ReturnConditionList ReturnConditionList = ReturnConditionListQuery.FirstOrDefault();
             return ReturnConditionList;
            
         }

@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<NotificationTenantDefinition> NotificationTenantDefinitionQuery = (from a in context.NotificationTenantDefinition
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<NotificationTenantDefinitionList> NotificationTenantDefinitionListQuery = GetIqueryableList( NotificationTenantDefinitionQuery);
-			            NotificationTenantDefinitionList NotificationTenantDefinitionList = NotificationTenantDefinitionListQuery.FirstOrDefault();
+
+             
+            IQueryable<NotificationTenantDefinitionList> NotificationTenantDefinitionListQuery = GetIqueryableList( NotificationTenantDefinitionQuery);
+            NotificationTenantDefinitionList NotificationTenantDefinitionList = NotificationTenantDefinitionListQuery.FirstOrDefault();
             return NotificationTenantDefinitionList;
            
         }

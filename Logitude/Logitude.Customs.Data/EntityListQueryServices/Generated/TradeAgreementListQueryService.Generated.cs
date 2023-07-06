@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TradeAgreement> TradeAgreementQuery = (from a in context.TradeAgreements
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TradeAgreementList> TradeAgreementListQuery = GetIqueryableList( TradeAgreementQuery);
-			            TradeAgreementList TradeAgreementList = TradeAgreementListQuery.FirstOrDefault();
+
+             
+            IQueryable<TradeAgreementList> TradeAgreementListQuery = GetIqueryableList( TradeAgreementQuery);
+            TradeAgreementList TradeAgreementList = TradeAgreementListQuery.FirstOrDefault();
             return TradeAgreementList;
            
         }

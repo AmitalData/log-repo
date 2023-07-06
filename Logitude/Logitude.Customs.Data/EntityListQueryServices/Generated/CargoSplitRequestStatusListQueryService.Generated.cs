@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CargoSplitRequestStatus> CargoSplitRequestStatusQuery = (from a in context.CargoSplitRequestStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CargoSplitRequestStatusList> CargoSplitRequestStatusListQuery = GetIqueryableList( CargoSplitRequestStatusQuery);
-			            CargoSplitRequestStatusList CargoSplitRequestStatusList = CargoSplitRequestStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<CargoSplitRequestStatusList> CargoSplitRequestStatusListQuery = GetIqueryableList( CargoSplitRequestStatusQuery);
+            CargoSplitRequestStatusList CargoSplitRequestStatusList = CargoSplitRequestStatusListQuery.FirstOrDefault();
             return CargoSplitRequestStatusList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExporterRoleType> ExporterRoleTypeQuery = (from a in context.ExporterRoleTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ExporterRoleTypeList> ExporterRoleTypeListQuery = GetIqueryableList( ExporterRoleTypeQuery);
-			            ExporterRoleTypeList ExporterRoleTypeList = ExporterRoleTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExporterRoleTypeList> ExporterRoleTypeListQuery = GetIqueryableList( ExporterRoleTypeQuery);
+            ExporterRoleTypeList ExporterRoleTypeList = ExporterRoleTypeListQuery.FirstOrDefault();
             return ExporterRoleTypeList;
            
         }

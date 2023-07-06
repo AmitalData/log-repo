@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SignatureType> SignatureTypeQuery = (from a in context.SignatureTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SignatureTypeList> SignatureTypeListQuery = GetIqueryableList( SignatureTypeQuery);
-			            SignatureTypeList SignatureTypeList = SignatureTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SignatureTypeList> SignatureTypeListQuery = GetIqueryableList( SignatureTypeQuery);
+            SignatureTypeList SignatureTypeList = SignatureTypeListQuery.FirstOrDefault();
             return SignatureTypeList;
            
         }

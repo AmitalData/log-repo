@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CancellationRequestStatus> CancellationRequestStatusQuery = (from a in context.CancellationRequestStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CancellationRequestStatusList> CancellationRequestStatusListQuery = GetIqueryableList( CancellationRequestStatusQuery);
-			            CancellationRequestStatusList CancellationRequestStatusList = CancellationRequestStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<CancellationRequestStatusList> CancellationRequestStatusListQuery = GetIqueryableList( CancellationRequestStatusQuery);
+            CancellationRequestStatusList CancellationRequestStatusList = CancellationRequestStatusListQuery.FirstOrDefault();
             return CancellationRequestStatusList;
            
         }

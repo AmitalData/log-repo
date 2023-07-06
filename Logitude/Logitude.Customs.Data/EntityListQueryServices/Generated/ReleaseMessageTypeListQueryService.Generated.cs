@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ReleaseMessageType> ReleaseMessageTypeQuery = (from a in context.ReleaseMessageTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ReleaseMessageTypeList> ReleaseMessageTypeListQuery = GetIqueryableList( ReleaseMessageTypeQuery);
-			            ReleaseMessageTypeList ReleaseMessageTypeList = ReleaseMessageTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ReleaseMessageTypeList> ReleaseMessageTypeListQuery = GetIqueryableList( ReleaseMessageTypeQuery);
+            ReleaseMessageTypeList ReleaseMessageTypeList = ReleaseMessageTypeListQuery.FirstOrDefault();
             return ReleaseMessageTypeList;
            
         }

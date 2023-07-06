@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<StuffingSiteType> StuffingSiteTypeQuery = (from a in context.StuffingSiteTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<StuffingSiteTypeList> StuffingSiteTypeListQuery = GetIqueryableList( StuffingSiteTypeQuery);
-			            StuffingSiteTypeList StuffingSiteTypeList = StuffingSiteTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<StuffingSiteTypeList> StuffingSiteTypeListQuery = GetIqueryableList( StuffingSiteTypeQuery);
+            StuffingSiteTypeList StuffingSiteTypeList = StuffingSiteTypeListQuery.FirstOrDefault();
             return StuffingSiteTypeList;
            
         }

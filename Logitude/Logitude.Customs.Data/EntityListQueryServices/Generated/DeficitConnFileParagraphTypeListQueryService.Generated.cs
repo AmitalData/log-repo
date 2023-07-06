@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeficitConnFileParagraphType> DeficitConnFileParagraphTypeQuery = (from a in context.DeficitConnFileParagraphTypes
                                                        where a.DeficitId == deficitid && a.DeclarationId == declarationid && a.ParagraphTypeCode == paragraphtypecode
                                                        select a);
-          
-		  
-		  			IQueryable<DeficitConnFileParagraphTypeList> DeficitConnFileParagraphTypeListQuery = GetIqueryableList( DeficitConnFileParagraphTypeQuery);
-			            DeficitConnFileParagraphTypeList DeficitConnFileParagraphTypeList = DeficitConnFileParagraphTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeficitConnFileParagraphTypeList> DeficitConnFileParagraphTypeListQuery = GetIqueryableList( DeficitConnFileParagraphTypeQuery);
+            DeficitConnFileParagraphTypeList DeficitConnFileParagraphTypeList = DeficitConnFileParagraphTypeListQuery.FirstOrDefault();
             return DeficitConnFileParagraphTypeList;
            
         }

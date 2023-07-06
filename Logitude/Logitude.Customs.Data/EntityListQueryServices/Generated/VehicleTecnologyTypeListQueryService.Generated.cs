@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VehicleTecnologyType> VehicleTecnologyTypeQuery = (from a in context.VehicleTecnologyTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<VehicleTecnologyTypeList> VehicleTecnologyTypeListQuery = GetIqueryableList( VehicleTecnologyTypeQuery);
-			            VehicleTecnologyTypeList VehicleTecnologyTypeList = VehicleTecnologyTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<VehicleTecnologyTypeList> VehicleTecnologyTypeListQuery = GetIqueryableList( VehicleTecnologyTypeQuery);
+            VehicleTecnologyTypeList VehicleTecnologyTypeList = VehicleTecnologyTypeListQuery.FirstOrDefault();
             return VehicleTecnologyTypeList;
            
         }

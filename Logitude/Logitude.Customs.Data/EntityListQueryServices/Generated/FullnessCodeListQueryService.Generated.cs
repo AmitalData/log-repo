@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<FullnessCode> FullnessCodeQuery = (from a in context.FullnessCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<FullnessCodeList> FullnessCodeListQuery = GetIqueryableList( FullnessCodeQuery);
-			            FullnessCodeList FullnessCodeList = FullnessCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<FullnessCodeList> FullnessCodeListQuery = GetIqueryableList( FullnessCodeQuery);
+            FullnessCodeList FullnessCodeList = FullnessCodeListQuery.FirstOrDefault();
             return FullnessCodeList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CollateralRequestStatus> CollateralRequestStatusQuery = (from a in context.CollateralRequestStatus
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CollateralRequestStatusList> CollateralRequestStatusListQuery = GetIqueryableList( CollateralRequestStatusQuery);
-			            CollateralRequestStatusList CollateralRequestStatusList = CollateralRequestStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<CollateralRequestStatusList> CollateralRequestStatusListQuery = GetIqueryableList( CollateralRequestStatusQuery);
+            CollateralRequestStatusList CollateralRequestStatusList = CollateralRequestStatusListQuery.FirstOrDefault();
             return CollateralRequestStatusList;
            
         }

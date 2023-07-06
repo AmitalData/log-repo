@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SeizureMethodType> SeizureMethodTypeQuery = (from a in context.SeizureMethodTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SeizureMethodTypeList> SeizureMethodTypeListQuery = GetIqueryableList( SeizureMethodTypeQuery);
-			            SeizureMethodTypeList SeizureMethodTypeList = SeizureMethodTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SeizureMethodTypeList> SeizureMethodTypeListQuery = GetIqueryableList( SeizureMethodTypeQuery);
+            SeizureMethodTypeList SeizureMethodTypeList = SeizureMethodTypeListQuery.FirstOrDefault();
             return SeizureMethodTypeList;
            
         }

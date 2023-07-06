@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomMetaDataType> CustomMetaDataTypeQuery = (from a in context.CustomMetaDataTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomMetaDataTypeList> CustomMetaDataTypeListQuery = GetIqueryableList( CustomMetaDataTypeQuery);
-			            CustomMetaDataTypeList CustomMetaDataTypeList = CustomMetaDataTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomMetaDataTypeList> CustomMetaDataTypeListQuery = GetIqueryableList( CustomMetaDataTypeQuery);
+            CustomMetaDataTypeList CustomMetaDataTypeList = CustomMetaDataTypeListQuery.FirstOrDefault();
             return CustomMetaDataTypeList;
            
         }

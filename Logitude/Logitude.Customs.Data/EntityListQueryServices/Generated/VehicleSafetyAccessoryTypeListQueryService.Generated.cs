@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VehicleSafetyAccessoryType> VehicleSafetyAccessoryTypeQuery = (from a in context.VehicleSafetyAccessoryTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<VehicleSafetyAccessoryTypeList> VehicleSafetyAccessoryTypeListQuery = GetIqueryableList( VehicleSafetyAccessoryTypeQuery);
-			            VehicleSafetyAccessoryTypeList VehicleSafetyAccessoryTypeList = VehicleSafetyAccessoryTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<VehicleSafetyAccessoryTypeList> VehicleSafetyAccessoryTypeListQuery = GetIqueryableList( VehicleSafetyAccessoryTypeQuery);
+            VehicleSafetyAccessoryTypeList VehicleSafetyAccessoryTypeList = VehicleSafetyAccessoryTypeListQuery.FirstOrDefault();
             return VehicleSafetyAccessoryTypeList;
            
         }
