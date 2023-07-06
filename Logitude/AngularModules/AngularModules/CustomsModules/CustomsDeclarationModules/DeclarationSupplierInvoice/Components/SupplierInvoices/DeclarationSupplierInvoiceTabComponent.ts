@@ -90,6 +90,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             //this.ObjectTableName = this.entityArgs.ObjectTableName;
             //this.getSupplierInvoices();
             
+            
         //});
     }
 
@@ -558,6 +559,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                 this.CD.detach();
                 logWindow.WindowClosed.subscribe((event: any) => {
                     if (event != 'cancel') {
+                        this.SupplierInvoiceComprehensiveUpdate=  []; 
 
                         this.RefreshEntity();
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
