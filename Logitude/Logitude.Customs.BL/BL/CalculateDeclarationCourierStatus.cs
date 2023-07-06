@@ -99,7 +99,7 @@ namespace Logitude.Customs.BL.BL
 
             }
         }
-        public DeclarationCourierStatusPM CalcAll()
+        public DeclarationCourierStatusPM CalcAll(DeclarationCourierStatusPM _MyDeclarationCourierStatusPM = null)
         {
             LogMessagingUtil.Instance.AppendLine("CalcAll()");
             if (declarationPM == null) return null;
@@ -107,7 +107,7 @@ namespace Logitude.Customs.BL.BL
             {
                 var context = CustomContext.GetContext(declarationPM.Tenant);
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
+                DeclarationCourierStatusPM myDeclarationCourierStatusPM = _MyDeclarationCourierStatusPM!= null? _MyDeclarationCourierStatusPM : declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
                 if (myDeclarationCourierStatusPM == null)
                 {
                     myDeclarationCourierStatusPM =

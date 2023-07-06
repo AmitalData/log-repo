@@ -176,30 +176,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-            if (customResponse.Response.Status.NameCode.Value == "13")
-            {
-                var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(context);
-                var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
-                if (declarationPaymentPM != null)
-                {
-                    if (declarationPaymentPM.IsRepeatPayment)
-                    {
-                        _MyDeclarationPM.PaymentDate = null;
-                        _MyDeclarationPM.PaymentOrderNumber = null;
-                        _MyDeclarationPM.PaymentStatusCode = null;
-                        _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
-                        declarationPaymentPM.IsRepeatPayment = false;
-                        declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
 
-                        DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                        declarationPaymentUpdateService.Update(declarationPaymentPM, true);
-                    }
-                }
-            }
-
-            if (_MyDeclarationPM.IsCourierDeclaration && this._MyDeclarationPM.PaymentDate.HasValue)
+            if (this._MyDeclarationPM.PaymentDate.HasValue)
             {
-                if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")
+                if (customResponse.Response != null && customResponse.Response.Status != null && (customResponse.Response.Status.NameCode.Value == "13" || customResponse.Response.Status.NameCode.Value == "14") )
                 {
                     // Clear Fields
                     _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
@@ -1108,7 +1088,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (_MyDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                    _MyDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(_MyDeclarationPM);
+                    _MyDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(_MyDeclarationPM ,_MyDeclarationCourierStatusPM: _MyDeclarationCourierStatusPM);
                     declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
                 }
                 /*

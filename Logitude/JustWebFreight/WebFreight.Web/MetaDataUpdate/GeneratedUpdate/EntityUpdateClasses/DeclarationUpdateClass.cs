@@ -86,7 +86,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class DeclarationUpdateClass
    {  		
 
-		public const string HashString = "4bf3fd62ce5a84c3797cf5e269294ca0";
+
+		public const string HashString = "c0fe20541ab6a1ad6a468c59a85e8b49";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18438,6 +18439,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_SendManifestEvent = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendManifestEvent", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.SendManifest", NameTextCodeDefaultText = @"Send Manifest Event" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_IsAutoInsuranceExportSubmit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsAutoInsuranceExportSubmit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISDefineToInsureFromSubmit", NameTextCodeDefaultText = @"Automatic insurance in export submission" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
+		   Feature DeclarationFeature_SendManifestEvent = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendManifestEvent", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.SendManifest", NameTextCodeDefaultText = @"Send Manifest Event" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
