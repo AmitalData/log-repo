@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsEnvironmentSettingList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomsEnvironmentSettingList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomsEnvironmentSettingList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsEnvironmentSettingList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsEnvironmentSetting> CustomsEnvironmentSettingQuery = (from a in context.CustomsEnvironmentSettings
                                                        where a.Id == id && a.EnvironmentCode == environmentcode
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsEnvironmentSettingList> CustomsEnvironmentSettingListQuery = GetIqueryableList( CustomsEnvironmentSettingQuery);
-			            CustomsEnvironmentSettingList CustomsEnvironmentSettingList = CustomsEnvironmentSettingListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsEnvironmentSettingList> CustomsEnvironmentSettingListQuery = GetIqueryableList( CustomsEnvironmentSettingQuery);
+            CustomsEnvironmentSettingList CustomsEnvironmentSettingList = CustomsEnvironmentSettingListQuery.FirstOrDefault();
             return CustomsEnvironmentSettingList;
            
         }

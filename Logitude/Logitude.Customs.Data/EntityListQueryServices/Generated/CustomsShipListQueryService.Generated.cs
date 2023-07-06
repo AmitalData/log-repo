@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsShipList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomsShipList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomsShipList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsShipList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsShip> CustomsShipQuery = (from a in context.CustomsShips
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsShipList> CustomsShipListQuery = GetIqueryableList( CustomsShipQuery);
-			            CustomsShipList CustomsShipList = CustomsShipListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsShipList> CustomsShipListQuery = GetIqueryableList( CustomsShipQuery);
+            CustomsShipList CustomsShipList = CustomsShipListQuery.FirstOrDefault();
             return CustomsShipList;
            
         }

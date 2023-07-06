@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PaymentOrderTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<PaymentOrderTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<PaymentOrderTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PaymentOrderTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PaymentOrderType> PaymentOrderTypeQuery = (from a in context.PaymentOrderTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PaymentOrderTypeList> PaymentOrderTypeListQuery = GetIqueryableList( PaymentOrderTypeQuery);
-			            PaymentOrderTypeList PaymentOrderTypeList = PaymentOrderTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PaymentOrderTypeList> PaymentOrderTypeListQuery = GetIqueryableList( PaymentOrderTypeQuery);
+            PaymentOrderTypeList PaymentOrderTypeList = PaymentOrderTypeListQuery.FirstOrDefault();
             return PaymentOrderTypeList;
            
         }

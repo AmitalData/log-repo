@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PassportTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<PassportTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<PassportTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PassportTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PassportType> PassportTypeQuery = (from a in context.PassportTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PassportTypeList> PassportTypeListQuery = GetIqueryableList( PassportTypeQuery);
-			            PassportTypeList PassportTypeList = PassportTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PassportTypeList> PassportTypeListQuery = GetIqueryableList( PassportTypeQuery);
+            PassportTypeList PassportTypeList = PassportTypeListQuery.FirstOrDefault();
             return PassportTypeList;
            
         }

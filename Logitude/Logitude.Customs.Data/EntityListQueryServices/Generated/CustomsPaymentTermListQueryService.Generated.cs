@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsPaymentTermList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomsPaymentTermList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomsPaymentTermList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsPaymentTermList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsPaymentTerm> CustomsPaymentTermQuery = (from a in context.CustomsPaymentTerms
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsPaymentTermList> CustomsPaymentTermListQuery = GetIqueryableList( CustomsPaymentTermQuery);
-			            CustomsPaymentTermList CustomsPaymentTermList = CustomsPaymentTermListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsPaymentTermList> CustomsPaymentTermListQuery = GetIqueryableList( CustomsPaymentTermQuery);
+            CustomsPaymentTermList CustomsPaymentTermList = CustomsPaymentTermListQuery.FirstOrDefault();
             return CustomsPaymentTermList;
            
         }

@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ConverterTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ConverterTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ConverterTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ConverterTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConverterType> ConverterTypeQuery = (from a in context.ConverterTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ConverterTypeList> ConverterTypeListQuery = GetIqueryableList( ConverterTypeQuery);
-			            ConverterTypeList ConverterTypeList = ConverterTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConverterTypeList> ConverterTypeListQuery = GetIqueryableList( ConverterTypeQuery);
+            ConverterTypeList ConverterTypeList = ConverterTypeListQuery.FirstOrDefault();
             return ConverterTypeList;
            
         }

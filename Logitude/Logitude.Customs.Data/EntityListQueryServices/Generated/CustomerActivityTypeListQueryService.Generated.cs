@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomerActivityTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomerActivityTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomerActivityTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomerActivityTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomerActivityType> CustomerActivityTypeQuery = (from a in context.CustomerActivityTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomerActivityTypeList> CustomerActivityTypeListQuery = GetIqueryableList( CustomerActivityTypeQuery);
-			            CustomerActivityTypeList CustomerActivityTypeList = CustomerActivityTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomerActivityTypeList> CustomerActivityTypeListQuery = GetIqueryableList( CustomerActivityTypeQuery);
+            CustomerActivityTypeList CustomerActivityTypeList = CustomerActivityTypeListQuery.FirstOrDefault();
             return CustomerActivityTypeList;
            
         }

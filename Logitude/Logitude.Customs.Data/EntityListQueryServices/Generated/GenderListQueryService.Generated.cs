@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<GenderList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<GenderList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<GenderList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(GenderList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Gender> GenderQuery = (from a in context.Genders
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<GenderList> GenderListQuery = GetIqueryableList( GenderQuery);
-			            GenderList GenderList = GenderListQuery.FirstOrDefault();
+
+             
+            IQueryable<GenderList> GenderListQuery = GetIqueryableList( GenderQuery);
+            GenderList GenderList = GenderListQuery.FirstOrDefault();
             return GenderList;
            
         }

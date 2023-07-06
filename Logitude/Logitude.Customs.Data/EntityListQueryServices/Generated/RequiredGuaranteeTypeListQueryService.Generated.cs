@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<RequiredGuaranteeTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<RequiredGuaranteeTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<RequiredGuaranteeTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(RequiredGuaranteeTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<RequiredGuaranteeType> RequiredGuaranteeTypeQuery = (from a in context.RequiredGuaranteeTypes
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<RequiredGuaranteeTypeList> RequiredGuaranteeTypeListQuery = GetIqueryableList( RequiredGuaranteeTypeQuery);
-			            RequiredGuaranteeTypeList RequiredGuaranteeTypeList = RequiredGuaranteeTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<RequiredGuaranteeTypeList> RequiredGuaranteeTypeListQuery = GetIqueryableList( RequiredGuaranteeTypeQuery);
+            RequiredGuaranteeTypeList RequiredGuaranteeTypeList = RequiredGuaranteeTypeListQuery.FirstOrDefault();
             return RequiredGuaranteeTypeList;
            
         }

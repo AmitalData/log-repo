@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CountryCurrencyList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CountryCurrencyList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CountryCurrencyList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CountryCurrencyList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CountryCurrency> CountryCurrencyQuery = (from a in context.CountryCurrencies
                                                        where a.CountryId == countryid && a.Currency == currency
                                                        select a);
-          
-		  
-		  			IQueryable<CountryCurrencyList> CountryCurrencyListQuery = GetIqueryableList( CountryCurrencyQuery);
-			            CountryCurrencyList CountryCurrencyList = CountryCurrencyListQuery.FirstOrDefault();
+
+             
+            IQueryable<CountryCurrencyList> CountryCurrencyListQuery = GetIqueryableList( CountryCurrencyQuery);
+            CountryCurrencyList CountryCurrencyList = CountryCurrencyListQuery.FirstOrDefault();
             return CountryCurrencyList;
            
         }

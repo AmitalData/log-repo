@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ReturnConditionList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ReturnConditionList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ReturnConditionList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ReturnConditionList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ReturnCondition> ReturnConditionQuery = (from a in context.ReturnConditions
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ReturnConditionList> ReturnConditionListQuery = GetIqueryableList( ReturnConditionQuery);
-			            ReturnConditionList ReturnConditionList = ReturnConditionListQuery.FirstOrDefault();
+
+             
+            IQueryable<ReturnConditionList> ReturnConditionListQuery = GetIqueryableList( ReturnConditionQuery);
+            ReturnConditionList ReturnConditionList = ReturnConditionListQuery.FirstOrDefault();
             return ReturnConditionList;
            
         }

@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CourtInstanceList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CourtInstanceList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CourtInstanceList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CourtInstanceList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CourtInstance> CourtInstanceQuery = (from a in context.CourtInstances
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CourtInstanceList> CourtInstanceListQuery = GetIqueryableList( CourtInstanceQuery);
-			            CourtInstanceList CourtInstanceList = CourtInstanceListQuery.FirstOrDefault();
+
+             
+            IQueryable<CourtInstanceList> CourtInstanceListQuery = GetIqueryableList( CourtInstanceQuery);
+            CourtInstanceList CourtInstanceList = CourtInstanceListQuery.FirstOrDefault();
             return CourtInstanceList;
            
         }

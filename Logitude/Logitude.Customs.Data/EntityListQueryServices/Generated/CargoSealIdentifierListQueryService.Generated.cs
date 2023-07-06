@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CargoSealIdentifierList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CargoSealIdentifierList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CargoSealIdentifierList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CargoSealIdentifierList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CargoSealIdentifier> CargoSealIdentifierQuery = (from a in context.CargoSealIdentifiers
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CargoSealIdentifierList> CargoSealIdentifierListQuery = GetIqueryableList( CargoSealIdentifierQuery);
-			            CargoSealIdentifierList CargoSealIdentifierList = CargoSealIdentifierListQuery.FirstOrDefault();
+
+             
+            IQueryable<CargoSealIdentifierList> CargoSealIdentifierListQuery = GetIqueryableList( CargoSealIdentifierQuery);
+            CargoSealIdentifierList CargoSealIdentifierList = CargoSealIdentifierListQuery.FirstOrDefault();
             return CargoSealIdentifierList;
            
         }

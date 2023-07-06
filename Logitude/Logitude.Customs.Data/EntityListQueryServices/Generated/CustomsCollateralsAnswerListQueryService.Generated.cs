@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsCollateralsAnswerList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomsCollateralsAnswerList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomsCollateralsAnswerList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsCollateralsAnswerList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsCollateralsAnswer> CustomsCollateralsAnswerQuery = (from a in context.CustomsCollateralsAnswers
                                                        where a.CustomsCollateralId == customscollateralid && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsCollateralsAnswerList> CustomsCollateralsAnswerListQuery = GetIqueryableList( CustomsCollateralsAnswerQuery);
-			            CustomsCollateralsAnswerList CustomsCollateralsAnswerList = CustomsCollateralsAnswerListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsCollateralsAnswerList> CustomsCollateralsAnswerListQuery = GetIqueryableList( CustomsCollateralsAnswerQuery);
+            CustomsCollateralsAnswerList CustomsCollateralsAnswerList = CustomsCollateralsAnswerListQuery.FirstOrDefault();
             return CustomsCollateralsAnswerList;
            
         }

@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationMamanSpecialActionList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<DeclarationMamanSpecialActionList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<DeclarationMamanSpecialActionList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationMamanSpecialActionList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationMamanSpecialAction> DeclarationMamanSpecialActionQuery = (from a in context.DeclarationMamanSpecialActions
                                                        where a.DeclarationId == declarationid && a.MamanSpecialActionCode == mamanspecialactioncode
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationMamanSpecialActionList> DeclarationMamanSpecialActionListQuery = GetIqueryableList( DeclarationMamanSpecialActionQuery);
-			            DeclarationMamanSpecialActionList DeclarationMamanSpecialActionList = DeclarationMamanSpecialActionListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationMamanSpecialActionList> DeclarationMamanSpecialActionListQuery = GetIqueryableList( DeclarationMamanSpecialActionQuery);
+            DeclarationMamanSpecialActionList DeclarationMamanSpecialActionList = DeclarationMamanSpecialActionListQuery.FirstOrDefault();
             return DeclarationMamanSpecialActionList;
            
         }

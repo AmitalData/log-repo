@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<TransactionNatureTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<TransactionNatureTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<TransactionNatureTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(TransactionNatureTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TransactionNatureType> TransactionNatureTypeQuery = (from a in context.TransactionNatureTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TransactionNatureTypeList> TransactionNatureTypeListQuery = GetIqueryableList( TransactionNatureTypeQuery);
-			            TransactionNatureTypeList TransactionNatureTypeList = TransactionNatureTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<TransactionNatureTypeList> TransactionNatureTypeListQuery = GetIqueryableList( TransactionNatureTypeQuery);
+            TransactionNatureTypeList TransactionNatureTypeList = TransactionNatureTypeListQuery.FirstOrDefault();
             return TransactionNatureTypeList;
            
         }

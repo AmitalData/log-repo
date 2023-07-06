@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<MorningMessageTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<MorningMessageTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<MorningMessageTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(MorningMessageTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<MorningMessageType> MorningMessageTypeQuery = (from a in context.MorningMessageTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<MorningMessageTypeList> MorningMessageTypeListQuery = GetIqueryableList( MorningMessageTypeQuery);
-			            MorningMessageTypeList MorningMessageTypeList = MorningMessageTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<MorningMessageTypeList> MorningMessageTypeListQuery = GetIqueryableList( MorningMessageTypeQuery);
+            MorningMessageTypeList MorningMessageTypeList = MorningMessageTypeListQuery.FirstOrDefault();
             return MorningMessageTypeList;
            
         }

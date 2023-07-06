@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClientDrivingLicenseList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ClientDrivingLicenseList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ClientDrivingLicenseList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClientDrivingLicenseList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClientDrivingLicense> ClientDrivingLicenseQuery = (from a in context.ClientDrivingLicenses
                                                        where a.ClientId == clientid && a.Line == line
                                                        select a);
-          
-		  
-		  			IQueryable<ClientDrivingLicenseList> ClientDrivingLicenseListQuery = GetIqueryableList( ClientDrivingLicenseQuery);
-			            ClientDrivingLicenseList ClientDrivingLicenseList = ClientDrivingLicenseListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClientDrivingLicenseList> ClientDrivingLicenseListQuery = GetIqueryableList( ClientDrivingLicenseQuery);
+            ClientDrivingLicenseList ClientDrivingLicenseList = ClientDrivingLicenseListQuery.FirstOrDefault();
             return ClientDrivingLicenseList;
            
         }

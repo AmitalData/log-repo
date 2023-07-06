@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PaymentMethodTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<PaymentMethodTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<PaymentMethodTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PaymentMethodTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PaymentMethodType> PaymentMethodTypeQuery = (from a in context.PaymentMethodTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PaymentMethodTypeList> PaymentMethodTypeListQuery = GetIqueryableList( PaymentMethodTypeQuery);
-			            PaymentMethodTypeList PaymentMethodTypeList = PaymentMethodTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PaymentMethodTypeList> PaymentMethodTypeListQuery = GetIqueryableList( PaymentMethodTypeQuery);
+            PaymentMethodTypeList PaymentMethodTypeList = PaymentMethodTypeListQuery.FirstOrDefault();
             return PaymentMethodTypeList;
            
         }

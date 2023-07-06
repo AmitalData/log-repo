@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PropertiesDetailsHistoryList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<PropertiesDetailsHistoryList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<PropertiesDetailsHistoryList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PropertiesDetailsHistoryList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PropertiesDetailsHistory> PropertiesDetailsHistoryQuery = (from a in context.PropertiesDetailsHistorys
                                                        where a.ID == id
                                                        select a);
-          
-		  
-		  			IQueryable<PropertiesDetailsHistoryList> PropertiesDetailsHistoryListQuery = GetIqueryableList( PropertiesDetailsHistoryQuery);
-			            PropertiesDetailsHistoryList PropertiesDetailsHistoryList = PropertiesDetailsHistoryListQuery.FirstOrDefault();
+
+             
+            IQueryable<PropertiesDetailsHistoryList> PropertiesDetailsHistoryListQuery = GetIqueryableList( PropertiesDetailsHistoryQuery);
+            PropertiesDetailsHistoryList PropertiesDetailsHistoryList = PropertiesDetailsHistoryListQuery.FirstOrDefault();
             return PropertiesDetailsHistoryList;
            
         }

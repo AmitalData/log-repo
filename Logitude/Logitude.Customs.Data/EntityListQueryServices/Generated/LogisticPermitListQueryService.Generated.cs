@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<LogisticPermitList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<LogisticPermitList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<LogisticPermitList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(LogisticPermitList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<LogisticPermit> LogisticPermitQuery = (from a in context.LogisticPermits
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<LogisticPermitList> LogisticPermitListQuery = GetIqueryableList( LogisticPermitQuery);
-			            LogisticPermitList LogisticPermitList = LogisticPermitListQuery.FirstOrDefault();
+
+             
+            IQueryable<LogisticPermitList> LogisticPermitListQuery = GetIqueryableList( LogisticPermitQuery);
+            LogisticPermitList LogisticPermitList = LogisticPermitListQuery.FirstOrDefault();
             return LogisticPermitList;
            
         }

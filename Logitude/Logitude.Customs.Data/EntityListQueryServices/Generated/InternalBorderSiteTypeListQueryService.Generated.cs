@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<InternalBorderSiteTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<InternalBorderSiteTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<InternalBorderSiteTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(InternalBorderSiteTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<InternalBorderSiteType> InternalBorderSiteTypeQuery = (from a in context.InternalBorderSiteTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<InternalBorderSiteTypeList> InternalBorderSiteTypeListQuery = GetIqueryableList( InternalBorderSiteTypeQuery);
-			            InternalBorderSiteTypeList InternalBorderSiteTypeList = InternalBorderSiteTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<InternalBorderSiteTypeList> InternalBorderSiteTypeListQuery = GetIqueryableList( InternalBorderSiteTypeQuery);
+            InternalBorderSiteTypeList InternalBorderSiteTypeList = InternalBorderSiteTypeListQuery.FirstOrDefault();
             return InternalBorderSiteTypeList;
            
         }

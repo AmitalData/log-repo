@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CityList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CityList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CityList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CityList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<City> CityQuery = (from a in context.Cities
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CityList> CityListQuery = GetIqueryableList( CityQuery);
-			            CityList CityList = CityListQuery.FirstOrDefault();
+
+             
+            IQueryable<CityList> CityListQuery = GetIqueryableList( CityQuery);
+            CityList CityList = CityListQuery.FirstOrDefault();
             return CityList;
            
         }

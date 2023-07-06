@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomMetaDataTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomMetaDataTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomMetaDataTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomMetaDataTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomMetaDataType> CustomMetaDataTypeQuery = (from a in context.CustomMetaDataTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomMetaDataTypeList> CustomMetaDataTypeListQuery = GetIqueryableList( CustomMetaDataTypeQuery);
-			            CustomMetaDataTypeList CustomMetaDataTypeList = CustomMetaDataTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomMetaDataTypeList> CustomMetaDataTypeListQuery = GetIqueryableList( CustomMetaDataTypeQuery);
+            CustomMetaDataTypeList CustomMetaDataTypeList = CustomMetaDataTypeListQuery.FirstOrDefault();
             return CustomMetaDataTypeList;
            
         }

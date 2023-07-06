@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PartyRelationshipTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<PartyRelationshipTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<PartyRelationshipTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PartyRelationshipTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PartyRelationshipType> PartyRelationshipTypeQuery = (from a in context.PartyRelationshipTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PartyRelationshipTypeList> PartyRelationshipTypeListQuery = GetIqueryableList( PartyRelationshipTypeQuery);
-			            PartyRelationshipTypeList PartyRelationshipTypeList = PartyRelationshipTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PartyRelationshipTypeList> PartyRelationshipTypeListQuery = GetIqueryableList( PartyRelationshipTypeQuery);
+            PartyRelationshipTypeList PartyRelationshipTypeList = PartyRelationshipTypeListQuery.FirstOrDefault();
             return PartyRelationshipTypeList;
            
         }

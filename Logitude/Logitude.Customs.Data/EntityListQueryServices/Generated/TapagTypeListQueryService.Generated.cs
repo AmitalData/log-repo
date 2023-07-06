@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<TapagTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<TapagTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<TapagTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(TapagTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TapagType> TapagTypeQuery = (from a in context.TapagTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TapagTypeList> TapagTypeListQuery = GetIqueryableList( TapagTypeQuery);
-			            TapagTypeList TapagTypeList = TapagTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<TapagTypeList> TapagTypeListQuery = GetIqueryableList( TapagTypeQuery);
+            TapagTypeList TapagTypeList = TapagTypeListQuery.FirstOrDefault();
             return TapagTypeList;
            
         }

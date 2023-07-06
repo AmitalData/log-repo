@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<UIMessageList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<UIMessageList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<UIMessageList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(UIMessageList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<UIMessage> UIMessageQuery = (from a in context.UIMessages
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<UIMessageList> UIMessageListQuery = GetIqueryableList( UIMessageQuery);
-			            UIMessageList UIMessageList = UIMessageListQuery.FirstOrDefault();
+
+             
+            IQueryable<UIMessageList> UIMessageListQuery = GetIqueryableList( UIMessageQuery);
+            UIMessageList UIMessageList = UIMessageListQuery.FirstOrDefault();
             return UIMessageList;
            
         }

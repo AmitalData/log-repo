@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SupplierInvoiceFreightAmountList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<SupplierInvoiceFreightAmountList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<SupplierInvoiceFreightAmountList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SupplierInvoiceFreightAmountList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceFreightAmount> SupplierInvoiceFreightAmountQuery = (from a in context.SupplierInvoiceFreightAmounts
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.CurrencyTypeCode == currencytypecode
                                                        select a);
-          
-		  
-		  			IQueryable<SupplierInvoiceFreightAmountList> SupplierInvoiceFreightAmountListQuery = GetIqueryableList( SupplierInvoiceFreightAmountQuery);
-			            SupplierInvoiceFreightAmountList SupplierInvoiceFreightAmountList = SupplierInvoiceFreightAmountListQuery.FirstOrDefault();
+
+             
+            IQueryable<SupplierInvoiceFreightAmountList> SupplierInvoiceFreightAmountListQuery = GetIqueryableList( SupplierInvoiceFreightAmountQuery);
+            SupplierInvoiceFreightAmountList SupplierInvoiceFreightAmountList = SupplierInvoiceFreightAmountListQuery.FirstOrDefault();
             return SupplierInvoiceFreightAmountList;
            
         }

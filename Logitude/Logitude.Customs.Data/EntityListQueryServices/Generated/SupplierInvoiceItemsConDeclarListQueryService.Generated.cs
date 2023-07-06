@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SupplierInvoiceItemsConDeclarList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<SupplierInvoiceItemsConDeclarList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<SupplierInvoiceItemsConDeclarList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SupplierInvoiceItemsConDeclarList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceItemsConDeclar> SupplierInvoiceItemsConDeclarQuery = (from a in context.SupplierInvoiceItemsConDeclars
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<SupplierInvoiceItemsConDeclarList> SupplierInvoiceItemsConDeclarListQuery = GetIqueryableList( SupplierInvoiceItemsConDeclarQuery);
-			            SupplierInvoiceItemsConDeclarList SupplierInvoiceItemsConDeclarList = SupplierInvoiceItemsConDeclarListQuery.FirstOrDefault();
+
+             
+            IQueryable<SupplierInvoiceItemsConDeclarList> SupplierInvoiceItemsConDeclarListQuery = GetIqueryableList( SupplierInvoiceItemsConDeclarQuery);
+            SupplierInvoiceItemsConDeclarList SupplierInvoiceItemsConDeclarList = SupplierInvoiceItemsConDeclarListQuery.FirstOrDefault();
             return SupplierInvoiceItemsConDeclarList;
            
         }

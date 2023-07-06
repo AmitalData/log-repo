@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<RefundCustomerActivityTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<RefundCustomerActivityTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<RefundCustomerActivityTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(RefundCustomerActivityTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<RefundCustomerActivityType> RefundCustomerActivityTypeQuery = (from a in context.RefundCustomerActivityTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<RefundCustomerActivityTypeList> RefundCustomerActivityTypeListQuery = GetIqueryableList( RefundCustomerActivityTypeQuery);
-			            RefundCustomerActivityTypeList RefundCustomerActivityTypeList = RefundCustomerActivityTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<RefundCustomerActivityTypeList> RefundCustomerActivityTypeListQuery = GetIqueryableList( RefundCustomerActivityTypeQuery);
+            RefundCustomerActivityTypeList RefundCustomerActivityTypeList = RefundCustomerActivityTypeListQuery.FirstOrDefault();
             return RefundCustomerActivityTypeList;
            
         }

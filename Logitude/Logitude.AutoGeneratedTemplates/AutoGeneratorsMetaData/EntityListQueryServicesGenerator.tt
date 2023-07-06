@@ -450,19 +450,19 @@ namespace <#= querylistservicenamespacestring #>
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<<#= listName #>> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
+           
+=======
 			<#+
-             if (iscustoms && tableName=="Declaration")
+             if (iscustoms)
          {
             #>
-			query2 = ApplyCustomFiltersList(queryOperations, query2<#=tenantParamValue#>);
-			query2 = filter.GetFilteredQuery<<#= listName #>>(queryOperations, query2);
+			iQueryable = ApplyCustomFiltersList(queryOperations, query2<#=tenantParamValue#>);
 			<#+
          }
-		  else{
-		#>
-		  query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
-		<#+ } 
 		 #>
+>>>>>>> parent of 094118ae335 (#181601)
+            query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -551,16 +551,9 @@ namespace <#= querylistservicenamespacestring #>
             IQueryable<<#= tableName #>> <#= tableName #>Query = (from a in context.<#= dBTableName #>
                                                        where <#= primarykeyCondition #>
                                                        select a);
-          
-		  
-		  <#+
-          if (iscustoms && tableName=="Declaration")
-         {#>IQueryable<<#= listName #>> <#= listName #>Query = GetIqueryableList( <#= tableName #>Query,true);
-			<#+}
-			else{#>
-			IQueryable<<#= listName #>> <#= listName #>Query = GetIqueryableList( <#= tableName #>Query);
-			<#+}
-			#>
+
+             
+            IQueryable<<#= listName #>> <#= listName #>Query = GetIqueryableList( <#= tableName #>Query);
             <#= listName #> <#= listName #> = <#= listName #>Query.FirstOrDefault();
             return <#= listName #>;
            

@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SeizureFactorTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<SeizureFactorTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<SeizureFactorTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SeizureFactorTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SeizureFactorType> SeizureFactorTypeQuery = (from a in context.SeizureFactorTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SeizureFactorTypeList> SeizureFactorTypeListQuery = GetIqueryableList( SeizureFactorTypeQuery);
-			            SeizureFactorTypeList SeizureFactorTypeList = SeizureFactorTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SeizureFactorTypeList> SeizureFactorTypeListQuery = GetIqueryableList( SeizureFactorTypeQuery);
+            SeizureFactorTypeList SeizureFactorTypeList = SeizureFactorTypeListQuery.FirstOrDefault();
             return SeizureFactorTypeList;
            
         }

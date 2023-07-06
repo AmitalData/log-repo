@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<VehicleSafetyAccessoryTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<VehicleSafetyAccessoryTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<VehicleSafetyAccessoryTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(VehicleSafetyAccessoryTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VehicleSafetyAccessoryType> VehicleSafetyAccessoryTypeQuery = (from a in context.VehicleSafetyAccessoryTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<VehicleSafetyAccessoryTypeList> VehicleSafetyAccessoryTypeListQuery = GetIqueryableList( VehicleSafetyAccessoryTypeQuery);
-			            VehicleSafetyAccessoryTypeList VehicleSafetyAccessoryTypeList = VehicleSafetyAccessoryTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<VehicleSafetyAccessoryTypeList> VehicleSafetyAccessoryTypeListQuery = GetIqueryableList( VehicleSafetyAccessoryTypeQuery);
+            VehicleSafetyAccessoryTypeList VehicleSafetyAccessoryTypeList = VehicleSafetyAccessoryTypeListQuery.FirstOrDefault();
             return VehicleSafetyAccessoryTypeList;
            
         }

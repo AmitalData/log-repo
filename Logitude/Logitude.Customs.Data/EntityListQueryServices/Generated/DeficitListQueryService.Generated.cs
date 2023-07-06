@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeficitList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<DeficitList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<DeficitList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeficitList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Deficit> DeficitQuery = (from a in context.Deficits
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<DeficitList> DeficitListQuery = GetIqueryableList( DeficitQuery);
-			            DeficitList DeficitList = DeficitListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeficitList> DeficitListQuery = GetIqueryableList( DeficitQuery);
+            DeficitList DeficitList = DeficitListQuery.FirstOrDefault();
             return DeficitList;
            
         }

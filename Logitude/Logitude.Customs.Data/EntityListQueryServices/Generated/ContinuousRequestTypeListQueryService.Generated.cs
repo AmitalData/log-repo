@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ContinuousRequestTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ContinuousRequestTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ContinuousRequestTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ContinuousRequestTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ContinuousRequestType> ContinuousRequestTypeQuery = (from a in context.ContinuousRequestTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ContinuousRequestTypeList> ContinuousRequestTypeListQuery = GetIqueryableList( ContinuousRequestTypeQuery);
-			            ContinuousRequestTypeList ContinuousRequestTypeList = ContinuousRequestTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ContinuousRequestTypeList> ContinuousRequestTypeListQuery = GetIqueryableList( ContinuousRequestTypeQuery);
+            ContinuousRequestTypeList ContinuousRequestTypeList = ContinuousRequestTypeListQuery.FirstOrDefault();
             return ContinuousRequestTypeList;
            
         }

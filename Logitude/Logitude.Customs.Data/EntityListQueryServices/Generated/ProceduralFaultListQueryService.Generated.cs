@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ProceduralFaultList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ProceduralFaultList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ProceduralFaultList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ProceduralFaultList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ProceduralFault> ProceduralFaultQuery = (from a in context.ProceduralFaults
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ProceduralFaultList> ProceduralFaultListQuery = GetIqueryableList( ProceduralFaultQuery);
-			            ProceduralFaultList ProceduralFaultList = ProceduralFaultListQuery.FirstOrDefault();
+
+             
+            IQueryable<ProceduralFaultList> ProceduralFaultListQuery = GetIqueryableList( ProceduralFaultQuery);
+            ProceduralFaultList ProceduralFaultList = ProceduralFaultListQuery.FirstOrDefault();
             return ProceduralFaultList;
            
         }

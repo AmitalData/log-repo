@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AmendmentFieldReasonTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<AmendmentFieldReasonTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<AmendmentFieldReasonTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AmendmentFieldReasonTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmendmentFieldReasonType> AmendmentFieldReasonTypeQuery = (from a in context.AmendmentFieldReasonTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AmendmentFieldReasonTypeList> AmendmentFieldReasonTypeListQuery = GetIqueryableList( AmendmentFieldReasonTypeQuery);
-			            AmendmentFieldReasonTypeList AmendmentFieldReasonTypeList = AmendmentFieldReasonTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AmendmentFieldReasonTypeList> AmendmentFieldReasonTypeListQuery = GetIqueryableList( AmendmentFieldReasonTypeQuery);
+            AmendmentFieldReasonTypeList AmendmentFieldReasonTypeList = AmendmentFieldReasonTypeListQuery.FirstOrDefault();
             return AmendmentFieldReasonTypeList;
            
         }

@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<NotificationReplyList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<NotificationReplyList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<NotificationReplyList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(NotificationReplyList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<NotificationReply> NotificationReplyQuery = (from a in context.NotificationReplies
                                                        where a.NotificationId == notificationid && a.Line == line
                                                        select a);
-          
-		  
-		  			IQueryable<NotificationReplyList> NotificationReplyListQuery = GetIqueryableList( NotificationReplyQuery);
-			            NotificationReplyList NotificationReplyList = NotificationReplyListQuery.FirstOrDefault();
+
+             
+            IQueryable<NotificationReplyList> NotificationReplyListQuery = GetIqueryableList( NotificationReplyQuery);
+            NotificationReplyList NotificationReplyList = NotificationReplyListQuery.FirstOrDefault();
             return NotificationReplyList;
            
         }

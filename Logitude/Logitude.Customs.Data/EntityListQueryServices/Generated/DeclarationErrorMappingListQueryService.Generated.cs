@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationErrorMappingList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<DeclarationErrorMappingList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<DeclarationErrorMappingList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationErrorMappingList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationErrorMapping> DeclarationErrorMappingQuery = (from a in context.DeclarationErrorMappings
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationErrorMappingList> DeclarationErrorMappingListQuery = GetIqueryableList( DeclarationErrorMappingQuery);
-			            DeclarationErrorMappingList DeclarationErrorMappingList = DeclarationErrorMappingListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationErrorMappingList> DeclarationErrorMappingListQuery = GetIqueryableList( DeclarationErrorMappingQuery);
+            DeclarationErrorMappingList DeclarationErrorMappingList = DeclarationErrorMappingListQuery.FirstOrDefault();
             return DeclarationErrorMappingList;
            
         }

@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CertificateExemptionTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CertificateExemptionTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CertificateExemptionTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CertificateExemptionTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CertificateExemptionType> CertificateExemptionTypeQuery = (from a in context.CertificateExemptionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CertificateExemptionTypeList> CertificateExemptionTypeListQuery = GetIqueryableList( CertificateExemptionTypeQuery);
-			            CertificateExemptionTypeList CertificateExemptionTypeList = CertificateExemptionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CertificateExemptionTypeList> CertificateExemptionTypeListQuery = GetIqueryableList( CertificateExemptionTypeQuery);
+            CertificateExemptionTypeList CertificateExemptionTypeList = CertificateExemptionTypeListQuery.FirstOrDefault();
             return CertificateExemptionTypeList;
            
         }

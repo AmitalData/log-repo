@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DebtNotificationTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<DebtNotificationTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<DebtNotificationTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DebtNotificationTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DebtNotificationType> DebtNotificationTypeQuery = (from a in context.DebtNotificationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<DebtNotificationTypeList> DebtNotificationTypeListQuery = GetIqueryableList( DebtNotificationTypeQuery);
-			            DebtNotificationTypeList DebtNotificationTypeList = DebtNotificationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<DebtNotificationTypeList> DebtNotificationTypeListQuery = GetIqueryableList( DebtNotificationTypeQuery);
+            DebtNotificationTypeList DebtNotificationTypeList = DebtNotificationTypeListQuery.FirstOrDefault();
             return DebtNotificationTypeList;
            
         }

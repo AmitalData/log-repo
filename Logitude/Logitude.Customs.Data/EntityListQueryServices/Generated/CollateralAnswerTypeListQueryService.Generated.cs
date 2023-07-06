@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CollateralAnswerTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CollateralAnswerTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CollateralAnswerTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CollateralAnswerTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CollateralAnswerType> CollateralAnswerTypeQuery = (from a in context.CollateralAnswerTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CollateralAnswerTypeList> CollateralAnswerTypeListQuery = GetIqueryableList( CollateralAnswerTypeQuery);
-			            CollateralAnswerTypeList CollateralAnswerTypeList = CollateralAnswerTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CollateralAnswerTypeList> CollateralAnswerTypeListQuery = GetIqueryableList( CollateralAnswerTypeQuery);
+            CollateralAnswerTypeList CollateralAnswerTypeList = CollateralAnswerTypeListQuery.FirstOrDefault();
             return CollateralAnswerTypeList;
            
         }

@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<TermsOfSaleTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<TermsOfSaleTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<TermsOfSaleTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(TermsOfSaleTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TermsOfSaleType> TermsOfSaleTypeQuery = (from a in context.TermsOfSaleTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TermsOfSaleTypeList> TermsOfSaleTypeListQuery = GetIqueryableList( TermsOfSaleTypeQuery);
-			            TermsOfSaleTypeList TermsOfSaleTypeList = TermsOfSaleTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<TermsOfSaleTypeList> TermsOfSaleTypeListQuery = GetIqueryableList( TermsOfSaleTypeQuery);
+            TermsOfSaleTypeList TermsOfSaleTypeList = TermsOfSaleTypeListQuery.FirstOrDefault();
             return TermsOfSaleTypeList;
            
         }

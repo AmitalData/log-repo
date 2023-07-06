@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsRequestsSheetList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomsRequestsSheetList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomsRequestsSheetList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsRequestsSheetList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsRequestsSheet> CustomsRequestsSheetQuery = (from a in context.CustomsRequestsSheets
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsRequestsSheetList> CustomsRequestsSheetListQuery = GetIqueryableList( CustomsRequestsSheetQuery);
-			            CustomsRequestsSheetList CustomsRequestsSheetList = CustomsRequestsSheetListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsRequestsSheetList> CustomsRequestsSheetListQuery = GetIqueryableList( CustomsRequestsSheetQuery);
+            CustomsRequestsSheetList CustomsRequestsSheetList = CustomsRequestsSheetListQuery.FirstOrDefault();
             return CustomsRequestsSheetList;
            
         }

@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<NDMessageActionCodeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<NDMessageActionCodeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<NDMessageActionCodeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(NDMessageActionCodeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<NDMessageActionCode> NDMessageActionCodeQuery = (from a in context.NDMessageActionCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<NDMessageActionCodeList> NDMessageActionCodeListQuery = GetIqueryableList( NDMessageActionCodeQuery);
-			            NDMessageActionCodeList NDMessageActionCodeList = NDMessageActionCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<NDMessageActionCodeList> NDMessageActionCodeListQuery = GetIqueryableList( NDMessageActionCodeQuery);
+            NDMessageActionCodeList NDMessageActionCodeList = NDMessageActionCodeListQuery.FirstOrDefault();
             return NDMessageActionCodeList;
            
         }

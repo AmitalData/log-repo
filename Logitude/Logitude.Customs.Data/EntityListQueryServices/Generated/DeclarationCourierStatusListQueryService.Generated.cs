@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationCourierStatusList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationCourierStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationCourierStatus> DeclarationCourierStatusQuery = (from a in context.DeclarationCourierStatuses
                                                        where a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationCourierStatusList> DeclarationCourierStatusListQuery = GetIqueryableList( DeclarationCourierStatusQuery);
-			            DeclarationCourierStatusList DeclarationCourierStatusList = DeclarationCourierStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationCourierStatusList> DeclarationCourierStatusListQuery = GetIqueryableList( DeclarationCourierStatusQuery);
+            DeclarationCourierStatusList DeclarationCourierStatusList = DeclarationCourierStatusListQuery.FirstOrDefault();
             return DeclarationCourierStatusList;
            
         }

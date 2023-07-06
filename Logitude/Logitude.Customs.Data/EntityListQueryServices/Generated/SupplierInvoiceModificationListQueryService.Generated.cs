@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SupplierInvoiceModificationList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<SupplierInvoiceModificationList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<SupplierInvoiceModificationList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SupplierInvoiceModificationList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceModification> SupplierInvoiceModificationQuery = (from a in context.SupplierInvoiceModifications
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.ModificationCounterKey == modificationcounterkey
                                                        select a);
-          
-		  
-		  			IQueryable<SupplierInvoiceModificationList> SupplierInvoiceModificationListQuery = GetIqueryableList( SupplierInvoiceModificationQuery);
-			            SupplierInvoiceModificationList SupplierInvoiceModificationList = SupplierInvoiceModificationListQuery.FirstOrDefault();
+
+             
+            IQueryable<SupplierInvoiceModificationList> SupplierInvoiceModificationListQuery = GetIqueryableList( SupplierInvoiceModificationQuery);
+            SupplierInvoiceModificationList SupplierInvoiceModificationList = SupplierInvoiceModificationListQuery.FirstOrDefault();
             return SupplierInvoiceModificationList;
            
         }

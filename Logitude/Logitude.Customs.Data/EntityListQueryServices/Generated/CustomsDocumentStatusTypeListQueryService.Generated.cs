@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsDocumentStatusTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomsDocumentStatusTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomsDocumentStatusTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsDocumentStatusTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsDocumentStatusType> CustomsDocumentStatusTypeQuery = (from a in context.CustomsDocumentStatusTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsDocumentStatusTypeList> CustomsDocumentStatusTypeListQuery = GetIqueryableList( CustomsDocumentStatusTypeQuery);
-			            CustomsDocumentStatusTypeList CustomsDocumentStatusTypeList = CustomsDocumentStatusTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsDocumentStatusTypeList> CustomsDocumentStatusTypeListQuery = GetIqueryableList( CustomsDocumentStatusTypeQuery);
+            CustomsDocumentStatusTypeList CustomsDocumentStatusTypeList = CustomsDocumentStatusTypeListQuery.FirstOrDefault();
             return CustomsDocumentStatusTypeList;
            
         }

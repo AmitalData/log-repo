@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<VehicleReductionTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<VehicleReductionTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<VehicleReductionTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(VehicleReductionTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VehicleReductionType> VehicleReductionTypeQuery = (from a in context.VehicleReductionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<VehicleReductionTypeList> VehicleReductionTypeListQuery = GetIqueryableList( VehicleReductionTypeQuery);
-			            VehicleReductionTypeList VehicleReductionTypeList = VehicleReductionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<VehicleReductionTypeList> VehicleReductionTypeListQuery = GetIqueryableList( VehicleReductionTypeQuery);
+            VehicleReductionTypeList VehicleReductionTypeList = VehicleReductionTypeListQuery.FirstOrDefault();
             return VehicleReductionTypeList;
            
         }

@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<RegisteredWarehouseSiteTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<RegisteredWarehouseSiteTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<RegisteredWarehouseSiteTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(RegisteredWarehouseSiteTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypeQuery = (from a in context.RegisteredWarehouseSiteTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<RegisteredWarehouseSiteTypeList> RegisteredWarehouseSiteTypeListQuery = GetIqueryableList( RegisteredWarehouseSiteTypeQuery);
-			            RegisteredWarehouseSiteTypeList RegisteredWarehouseSiteTypeList = RegisteredWarehouseSiteTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<RegisteredWarehouseSiteTypeList> RegisteredWarehouseSiteTypeListQuery = GetIqueryableList( RegisteredWarehouseSiteTypeQuery);
+            RegisteredWarehouseSiteTypeList RegisteredWarehouseSiteTypeList = RegisteredWarehouseSiteTypeListQuery.FirstOrDefault();
             return RegisteredWarehouseSiteTypeList;
            
         }

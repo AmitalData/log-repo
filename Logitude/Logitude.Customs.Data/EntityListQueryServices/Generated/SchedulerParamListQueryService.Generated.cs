@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SchedulerParamList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<SchedulerParamList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<SchedulerParamList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SchedulerParamList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SchedulerParam> SchedulerParamQuery = (from a in context.SchedulerParams
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<SchedulerParamList> SchedulerParamListQuery = GetIqueryableList( SchedulerParamQuery);
-			            SchedulerParamList SchedulerParamList = SchedulerParamListQuery.FirstOrDefault();
+
+             
+            IQueryable<SchedulerParamList> SchedulerParamListQuery = GetIqueryableList( SchedulerParamQuery);
+            SchedulerParamList SchedulerParamList = SchedulerParamListQuery.FirstOrDefault();
             return SchedulerParamList;
            
         }

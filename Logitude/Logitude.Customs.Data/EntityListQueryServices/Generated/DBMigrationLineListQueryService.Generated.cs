@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DBMigrationLineList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<DBMigrationLineList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<DBMigrationLineList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DBMigrationLineList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DBMigrationLine> DBMigrationLineQuery = (from a in context.DBMigrationLines
                                                        where a.DBMigrationId == dbmigrationid && a.CounterKey == counterkey
                                                        select a);
-          
-		  
-		  			IQueryable<DBMigrationLineList> DBMigrationLineListQuery = GetIqueryableList( DBMigrationLineQuery);
-			            DBMigrationLineList DBMigrationLineList = DBMigrationLineListQuery.FirstOrDefault();
+
+             
+            IQueryable<DBMigrationLineList> DBMigrationLineListQuery = GetIqueryableList( DBMigrationLineQuery);
+            DBMigrationLineList DBMigrationLineList = DBMigrationLineListQuery.FirstOrDefault();
             return DBMigrationLineList;
            
         }

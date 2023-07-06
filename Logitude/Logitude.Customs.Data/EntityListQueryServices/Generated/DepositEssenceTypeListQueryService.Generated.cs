@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DepositEssenceTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<DepositEssenceTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<DepositEssenceTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DepositEssenceTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DepositEssenceType> DepositEssenceTypeQuery = (from a in context.DepositEssenceTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<DepositEssenceTypeList> DepositEssenceTypeListQuery = GetIqueryableList( DepositEssenceTypeQuery);
-			            DepositEssenceTypeList DepositEssenceTypeList = DepositEssenceTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<DepositEssenceTypeList> DepositEssenceTypeListQuery = GetIqueryableList( DepositEssenceTypeQuery);
+            DepositEssenceTypeList DepositEssenceTypeList = DepositEssenceTypeListQuery.FirstOrDefault();
             return DepositEssenceTypeList;
            
         }

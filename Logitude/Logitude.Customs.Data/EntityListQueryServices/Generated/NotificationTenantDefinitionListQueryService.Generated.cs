@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<NotificationTenantDefinitionList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<NotificationTenantDefinitionList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<NotificationTenantDefinitionList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(NotificationTenantDefinitionList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<NotificationTenantDefinition> NotificationTenantDefinitionQuery = (from a in context.NotificationTenantDefinition
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<NotificationTenantDefinitionList> NotificationTenantDefinitionListQuery = GetIqueryableList( NotificationTenantDefinitionQuery);
-			            NotificationTenantDefinitionList NotificationTenantDefinitionList = NotificationTenantDefinitionListQuery.FirstOrDefault();
+
+             
+            IQueryable<NotificationTenantDefinitionList> NotificationTenantDefinitionListQuery = GetIqueryableList( NotificationTenantDefinitionQuery);
+            NotificationTenantDefinitionList NotificationTenantDefinitionList = NotificationTenantDefinitionListQuery.FirstOrDefault();
             return NotificationTenantDefinitionList;
            
         }

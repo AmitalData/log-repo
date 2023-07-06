@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SealCompletenesList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<SealCompletenesList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<SealCompletenesList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SealCompletenesList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SealCompletenes> SealCompletenesQuery = (from a in context.SealCompleteness
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SealCompletenesList> SealCompletenesListQuery = GetIqueryableList( SealCompletenesQuery);
-			            SealCompletenesList SealCompletenesList = SealCompletenesListQuery.FirstOrDefault();
+
+             
+            IQueryable<SealCompletenesList> SealCompletenesListQuery = GetIqueryableList( SealCompletenesQuery);
+            SealCompletenesList SealCompletenesList = SealCompletenesListQuery.FirstOrDefault();
             return SealCompletenesList;
            
         }

@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<TapagConnectionTableList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<TapagConnectionTableList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<TapagConnectionTableList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(TapagConnectionTableList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TapagConnectionTable> TapagConnectionTableQuery = (from a in context.TapagConnectionTables
                                                        where a.TapagId == tapagid && a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<TapagConnectionTableList> TapagConnectionTableListQuery = GetIqueryableList( TapagConnectionTableQuery);
-			            TapagConnectionTableList TapagConnectionTableList = TapagConnectionTableListQuery.FirstOrDefault();
+
+             
+            IQueryable<TapagConnectionTableList> TapagConnectionTableListQuery = GetIqueryableList( TapagConnectionTableQuery);
+            TapagConnectionTableList TapagConnectionTableList = TapagConnectionTableListQuery.FirstOrDefault();
             return TapagConnectionTableList;
            
         }

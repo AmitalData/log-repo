@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CancellationReasonRequestTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CancellationReasonRequestTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CancellationReasonRequestTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CancellationReasonRequestTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CancellationReasonRequestType> CancellationReasonRequestTypeQuery = (from a in context.CancellationReasonRequestTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CancellationReasonRequestTypeList> CancellationReasonRequestTypeListQuery = GetIqueryableList( CancellationReasonRequestTypeQuery);
-			            CancellationReasonRequestTypeList CancellationReasonRequestTypeList = CancellationReasonRequestTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CancellationReasonRequestTypeList> CancellationReasonRequestTypeListQuery = GetIqueryableList( CancellationReasonRequestTypeQuery);
+            CancellationReasonRequestTypeList CancellationReasonRequestTypeList = CancellationReasonRequestTypeListQuery.FirstOrDefault();
             return CancellationReasonRequestTypeList;
            
         }

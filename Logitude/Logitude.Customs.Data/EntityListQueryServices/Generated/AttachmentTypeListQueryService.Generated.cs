@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AttachmentTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<AttachmentTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<AttachmentTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AttachmentTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AttachmentType> AttachmentTypeQuery = (from a in context.AttachmentTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AttachmentTypeList> AttachmentTypeListQuery = GetIqueryableList( AttachmentTypeQuery);
-			            AttachmentTypeList AttachmentTypeList = AttachmentTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AttachmentTypeList> AttachmentTypeListQuery = GetIqueryableList( AttachmentTypeQuery);
+            AttachmentTypeList AttachmentTypeList = AttachmentTypeListQuery.FirstOrDefault();
             return AttachmentTypeList;
            
         }

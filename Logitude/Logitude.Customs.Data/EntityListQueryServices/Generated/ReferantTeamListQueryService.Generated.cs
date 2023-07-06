@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ReferantTeamList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ReferantTeamList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ReferantTeamList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ReferantTeamList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ReferantTeam> ReferantTeamQuery = (from a in context.ReferantTeams
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ReferantTeamList> ReferantTeamListQuery = GetIqueryableList( ReferantTeamQuery);
-			            ReferantTeamList ReferantTeamList = ReferantTeamListQuery.FirstOrDefault();
+
+             
+            IQueryable<ReferantTeamList> ReferantTeamListQuery = GetIqueryableList( ReferantTeamQuery);
+            ReferantTeamList ReferantTeamList = ReferantTeamListQuery.FirstOrDefault();
             return ReferantTeamList;
            
         }

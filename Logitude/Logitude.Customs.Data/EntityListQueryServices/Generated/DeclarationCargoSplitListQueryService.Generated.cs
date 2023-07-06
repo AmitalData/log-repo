@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationCargoSplitList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<DeclarationCargoSplitList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<DeclarationCargoSplitList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationCargoSplitList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationCargoSplit> DeclarationCargoSplitQuery = (from a in context.DeclarationCargoSplits
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationCargoSplitList> DeclarationCargoSplitListQuery = GetIqueryableList( DeclarationCargoSplitQuery);
-			            DeclarationCargoSplitList DeclarationCargoSplitList = DeclarationCargoSplitListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationCargoSplitList> DeclarationCargoSplitListQuery = GetIqueryableList( DeclarationCargoSplitQuery);
+            DeclarationCargoSplitList DeclarationCargoSplitList = DeclarationCargoSplitListQuery.FirstOrDefault();
             return DeclarationCargoSplitList;
            
         }

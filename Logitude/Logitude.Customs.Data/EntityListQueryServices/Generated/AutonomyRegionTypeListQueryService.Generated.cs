@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AutonomyRegionTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<AutonomyRegionTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<AutonomyRegionTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AutonomyRegionTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AutonomyRegionType> AutonomyRegionTypeQuery = (from a in context.AutonomyRegionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AutonomyRegionTypeList> AutonomyRegionTypeListQuery = GetIqueryableList( AutonomyRegionTypeQuery);
-			            AutonomyRegionTypeList AutonomyRegionTypeList = AutonomyRegionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AutonomyRegionTypeList> AutonomyRegionTypeListQuery = GetIqueryableList( AutonomyRegionTypeQuery);
+            AutonomyRegionTypeList AutonomyRegionTypeList = AutonomyRegionTypeListQuery.FirstOrDefault();
             return AutonomyRegionTypeList;
            
         }

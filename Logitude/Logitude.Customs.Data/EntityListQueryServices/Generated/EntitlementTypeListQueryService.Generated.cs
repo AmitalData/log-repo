@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<EntitlementTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<EntitlementTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<EntitlementTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(EntitlementTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<EntitlementType> EntitlementTypeQuery = (from a in context.EntitlementTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<EntitlementTypeList> EntitlementTypeListQuery = GetIqueryableList( EntitlementTypeQuery);
-			            EntitlementTypeList EntitlementTypeList = EntitlementTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<EntitlementTypeList> EntitlementTypeListQuery = GetIqueryableList( EntitlementTypeQuery);
+            EntitlementTypeList EntitlementTypeList = EntitlementTypeListQuery.FirstOrDefault();
             return EntitlementTypeList;
            
         }

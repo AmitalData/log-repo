@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PhysicalCheckOperationList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<PhysicalCheckOperationList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<PhysicalCheckOperationList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PhysicalCheckOperationList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PhysicalCheckOperation> PhysicalCheckOperationQuery = (from a in context.PhysicalCheckOperations
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PhysicalCheckOperationList> PhysicalCheckOperationListQuery = GetIqueryableList( PhysicalCheckOperationQuery);
-			            PhysicalCheckOperationList PhysicalCheckOperationList = PhysicalCheckOperationListQuery.FirstOrDefault();
+
+             
+            IQueryable<PhysicalCheckOperationList> PhysicalCheckOperationListQuery = GetIqueryableList( PhysicalCheckOperationQuery);
+            PhysicalCheckOperationList PhysicalCheckOperationList = PhysicalCheckOperationListQuery.FirstOrDefault();
             return PhysicalCheckOperationList;
            
         }

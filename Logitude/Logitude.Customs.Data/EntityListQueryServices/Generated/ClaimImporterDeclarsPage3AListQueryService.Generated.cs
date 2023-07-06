@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClaimImporterDeclarsPage3AList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ClaimImporterDeclarsPage3AList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ClaimImporterDeclarsPage3AList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClaimImporterDeclarsPage3AList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimImporterDeclarsPage3A> ClaimImporterDeclarsPage3AQuery = (from a in context.ClaimImporterDeclarsPage3As
                                                        where a.ClaimId == claimid && a.LineNo == lineno
                                                        select a);
-          
-		  
-		  			IQueryable<ClaimImporterDeclarsPage3AList> ClaimImporterDeclarsPage3AListQuery = GetIqueryableList( ClaimImporterDeclarsPage3AQuery);
-			            ClaimImporterDeclarsPage3AList ClaimImporterDeclarsPage3AList = ClaimImporterDeclarsPage3AListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClaimImporterDeclarsPage3AList> ClaimImporterDeclarsPage3AListQuery = GetIqueryableList( ClaimImporterDeclarsPage3AQuery);
+            ClaimImporterDeclarsPage3AList ClaimImporterDeclarsPage3AList = ClaimImporterDeclarsPage3AListQuery.FirstOrDefault();
             return ClaimImporterDeclarsPage3AList;
            
         }

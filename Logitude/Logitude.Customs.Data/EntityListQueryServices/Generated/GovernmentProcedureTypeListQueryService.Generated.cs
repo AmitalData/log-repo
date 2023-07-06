@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<GovernmentProcedureTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<GovernmentProcedureTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<GovernmentProcedureTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(GovernmentProcedureTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<GovernmentProcedureType> GovernmentProcedureTypeQuery = (from a in context.GovernmentProcedureTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<GovernmentProcedureTypeList> GovernmentProcedureTypeListQuery = GetIqueryableList( GovernmentProcedureTypeQuery);
-			            GovernmentProcedureTypeList GovernmentProcedureTypeList = GovernmentProcedureTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<GovernmentProcedureTypeList> GovernmentProcedureTypeListQuery = GetIqueryableList( GovernmentProcedureTypeQuery);
+            GovernmentProcedureTypeList GovernmentProcedureTypeList = GovernmentProcedureTypeListQuery.FirstOrDefault();
             return GovernmentProcedureTypeList;
            
         }

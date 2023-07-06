@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CommunicationTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CommunicationTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CommunicationTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CommunicationTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CommunicationType> CommunicationTypeQuery = (from a in context.CommunicationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CommunicationTypeList> CommunicationTypeListQuery = GetIqueryableList( CommunicationTypeQuery);
-			            CommunicationTypeList CommunicationTypeList = CommunicationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CommunicationTypeList> CommunicationTypeListQuery = GetIqueryableList( CommunicationTypeQuery);
+            CommunicationTypeList CommunicationTypeList = CommunicationTypeListQuery.FirstOrDefault();
             return CommunicationTypeList;
            
         }

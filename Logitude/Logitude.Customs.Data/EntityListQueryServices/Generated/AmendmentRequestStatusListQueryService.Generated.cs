@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AmendmentRequestStatusList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<AmendmentRequestStatusList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<AmendmentRequestStatusList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AmendmentRequestStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmendmentRequestStatus> AmendmentRequestStatusQuery = (from a in context.AmendmentRequestStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AmendmentRequestStatusList> AmendmentRequestStatusListQuery = GetIqueryableList( AmendmentRequestStatusQuery);
-			            AmendmentRequestStatusList AmendmentRequestStatusList = AmendmentRequestStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<AmendmentRequestStatusList> AmendmentRequestStatusListQuery = GetIqueryableList( AmendmentRequestStatusQuery);
+            AmendmentRequestStatusList AmendmentRequestStatusList = AmendmentRequestStatusListQuery.FirstOrDefault();
             return AmendmentRequestStatusList;
            
         }

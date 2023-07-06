@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsDocumentMetaDataValueList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomsDocumentMetaDataValueList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomsDocumentMetaDataValueList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsDocumentMetaDataValueList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsDocumentMetaDataValue> CustomsDocumentMetaDataValueQuery = (from a in context.CustomsDocumentMetaDataValues
                                                        where a.CustomsDocumentId == customsdocumentid && a.MetaDataTypeCode == metadatatypecode
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsDocumentMetaDataValueList> CustomsDocumentMetaDataValueListQuery = GetIqueryableList( CustomsDocumentMetaDataValueQuery);
-			            CustomsDocumentMetaDataValueList CustomsDocumentMetaDataValueList = CustomsDocumentMetaDataValueListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsDocumentMetaDataValueList> CustomsDocumentMetaDataValueListQuery = GetIqueryableList( CustomsDocumentMetaDataValueQuery);
+            CustomsDocumentMetaDataValueList CustomsDocumentMetaDataValueList = CustomsDocumentMetaDataValueListQuery.FirstOrDefault();
             return CustomsDocumentMetaDataValueList;
            
         }

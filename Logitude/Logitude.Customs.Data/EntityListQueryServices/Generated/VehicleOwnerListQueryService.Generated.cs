@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<VehicleOwnerList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<VehicleOwnerList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<VehicleOwnerList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(VehicleOwnerList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VehicleOwner> VehicleOwnerQuery = (from a in context.VehicleOwners
                                                        where a.VehicleId == vehicleid && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<VehicleOwnerList> VehicleOwnerListQuery = GetIqueryableList( VehicleOwnerQuery);
-			            VehicleOwnerList VehicleOwnerList = VehicleOwnerListQuery.FirstOrDefault();
+
+             
+            IQueryable<VehicleOwnerList> VehicleOwnerListQuery = GetIqueryableList( VehicleOwnerQuery);
+            VehicleOwnerList VehicleOwnerList = VehicleOwnerListQuery.FirstOrDefault();
             return VehicleOwnerList;
            
         }

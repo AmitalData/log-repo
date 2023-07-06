@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsVerificationStatusTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomsVerificationStatusTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomsVerificationStatusTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsVerificationStatusTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsVerificationStatusType> CustomsVerificationStatusTypeQuery = (from a in context.CustomsVerificationStatusTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsVerificationStatusTypeList> CustomsVerificationStatusTypeListQuery = GetIqueryableList( CustomsVerificationStatusTypeQuery);
-			            CustomsVerificationStatusTypeList CustomsVerificationStatusTypeList = CustomsVerificationStatusTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsVerificationStatusTypeList> CustomsVerificationStatusTypeListQuery = GetIqueryableList( CustomsVerificationStatusTypeQuery);
+            CustomsVerificationStatusTypeList CustomsVerificationStatusTypeList = CustomsVerificationStatusTypeListQuery.FirstOrDefault();
             return CustomsVerificationStatusTypeList;
            
         }

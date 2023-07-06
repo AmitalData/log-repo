@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ProcessingReasonList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ProcessingReasonList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ProcessingReasonList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ProcessingReasonList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ProcessingReason> ProcessingReasonQuery = (from a in context.ProcessingReasons
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ProcessingReasonList> ProcessingReasonListQuery = GetIqueryableList( ProcessingReasonQuery);
-			            ProcessingReasonList ProcessingReasonList = ProcessingReasonListQuery.FirstOrDefault();
+
+             
+            IQueryable<ProcessingReasonList> ProcessingReasonListQuery = GetIqueryableList( ProcessingReasonQuery);
+            ProcessingReasonList ProcessingReasonList = ProcessingReasonListQuery.FirstOrDefault();
             return ProcessingReasonList;
            
         }

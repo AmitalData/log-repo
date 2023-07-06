@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ImporterDeclarationTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ImporterDeclarationTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ImporterDeclarationTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ImporterDeclarationTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ImporterDeclarationType> ImporterDeclarationTypeQuery = (from a in context.ImporterDeclarationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ImporterDeclarationTypeList> ImporterDeclarationTypeListQuery = GetIqueryableList( ImporterDeclarationTypeQuery);
-			            ImporterDeclarationTypeList ImporterDeclarationTypeList = ImporterDeclarationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ImporterDeclarationTypeList> ImporterDeclarationTypeListQuery = GetIqueryableList( ImporterDeclarationTypeQuery);
+            ImporterDeclarationTypeList ImporterDeclarationTypeList = ImporterDeclarationTypeListQuery.FirstOrDefault();
             return ImporterDeclarationTypeList;
            
         }

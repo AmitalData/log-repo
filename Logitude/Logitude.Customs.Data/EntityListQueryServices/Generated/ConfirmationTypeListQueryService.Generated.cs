@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ConfirmationTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ConfirmationTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ConfirmationTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ConfirmationTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConfirmationType> ConfirmationTypeQuery = (from a in context.ConfirmationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ConfirmationTypeList> ConfirmationTypeListQuery = GetIqueryableList( ConfirmationTypeQuery);
-			            ConfirmationTypeList ConfirmationTypeList = ConfirmationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConfirmationTypeList> ConfirmationTypeListQuery = GetIqueryableList( ConfirmationTypeQuery);
+            ConfirmationTypeList ConfirmationTypeList = ConfirmationTypeListQuery.FirstOrDefault();
             return ConfirmationTypeList;
            
         }

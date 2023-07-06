@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SecurityClearenceTypeCodeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<SecurityClearenceTypeCodeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<SecurityClearenceTypeCodeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SecurityClearenceTypeCodeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SecurityClearenceTypeCode> SecurityClearenceTypeCodeQuery = (from a in context.SecurityClearenceTypeCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SecurityClearenceTypeCodeList> SecurityClearenceTypeCodeListQuery = GetIqueryableList( SecurityClearenceTypeCodeQuery);
-			            SecurityClearenceTypeCodeList SecurityClearenceTypeCodeList = SecurityClearenceTypeCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SecurityClearenceTypeCodeList> SecurityClearenceTypeCodeListQuery = GetIqueryableList( SecurityClearenceTypeCodeQuery);
+            SecurityClearenceTypeCodeList SecurityClearenceTypeCodeList = SecurityClearenceTypeCodeListQuery.FirstOrDefault();
             return SecurityClearenceTypeCodeList;
            
         }

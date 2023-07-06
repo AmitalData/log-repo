@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AmendCancellRequestInitiatorList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<AmendCancellRequestInitiatorList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<AmendCancellRequestInitiatorList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AmendCancellRequestInitiatorList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmendCancellRequestInitiator> AmendCancellRequestInitiatorQuery = (from a in context.AmendCancellRequestInitiators
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AmendCancellRequestInitiatorList> AmendCancellRequestInitiatorListQuery = GetIqueryableList( AmendCancellRequestInitiatorQuery);
-			            AmendCancellRequestInitiatorList AmendCancellRequestInitiatorList = AmendCancellRequestInitiatorListQuery.FirstOrDefault();
+
+             
+            IQueryable<AmendCancellRequestInitiatorList> AmendCancellRequestInitiatorListQuery = GetIqueryableList( AmendCancellRequestInitiatorQuery);
+            AmendCancellRequestInitiatorList AmendCancellRequestInitiatorList = AmendCancellRequestInitiatorListQuery.FirstOrDefault();
             return AmendCancellRequestInitiatorList;
            
         }

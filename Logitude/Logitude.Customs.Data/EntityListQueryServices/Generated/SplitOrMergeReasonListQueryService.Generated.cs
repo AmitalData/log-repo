@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SplitOrMergeReasonList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<SplitOrMergeReasonList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<SplitOrMergeReasonList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SplitOrMergeReasonList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SplitOrMergeReason> SplitOrMergeReasonQuery = (from a in context.SplitOrMergeReasons
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SplitOrMergeReasonList> SplitOrMergeReasonListQuery = GetIqueryableList( SplitOrMergeReasonQuery);
-			            SplitOrMergeReasonList SplitOrMergeReasonList = SplitOrMergeReasonListQuery.FirstOrDefault();
+
+             
+            IQueryable<SplitOrMergeReasonList> SplitOrMergeReasonListQuery = GetIqueryableList( SplitOrMergeReasonQuery);
+            SplitOrMergeReasonList SplitOrMergeReasonList = SplitOrMergeReasonListQuery.FirstOrDefault();
             return SplitOrMergeReasonList;
            
         }

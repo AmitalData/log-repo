@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<VendorCurrencyList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<VendorCurrencyList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<VendorCurrencyList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(VendorCurrencyList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VendorCurrency> VendorCurrencyQuery = (from a in context.VendorCurrencies
                                                        where a.VendorId == vendorid && a.Currency == currency
                                                        select a);
-          
-		  
-		  			IQueryable<VendorCurrencyList> VendorCurrencyListQuery = GetIqueryableList( VendorCurrencyQuery);
-			            VendorCurrencyList VendorCurrencyList = VendorCurrencyListQuery.FirstOrDefault();
+
+             
+            IQueryable<VendorCurrencyList> VendorCurrencyListQuery = GetIqueryableList( VendorCurrencyQuery);
+            VendorCurrencyList VendorCurrencyList = VendorCurrencyListQuery.FirstOrDefault();
             return VendorCurrencyList;
            
         }

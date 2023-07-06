@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ConsignmentPackDangerList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ConsignmentPackDangerList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ConsignmentPackDangerList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ConsignmentPackDangerList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConsignmentPackDanger> ConsignmentPackDangerQuery = (from a in context.ConsignmentPackDangers
                                                        where a.DeclarationId == declarationid && a.ConsignmentNumber == consignmentnumber && a.LineNumber == linenumber && a.DangerousLineNo == dangerouslineno
                                                        select a);
-          
-		  
-		  			IQueryable<ConsignmentPackDangerList> ConsignmentPackDangerListQuery = GetIqueryableList( ConsignmentPackDangerQuery);
-			            ConsignmentPackDangerList ConsignmentPackDangerList = ConsignmentPackDangerListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConsignmentPackDangerList> ConsignmentPackDangerListQuery = GetIqueryableList( ConsignmentPackDangerQuery);
+            ConsignmentPackDangerList ConsignmentPackDangerList = ConsignmentPackDangerListQuery.FirstOrDefault();
             return ConsignmentPackDangerList;
            
         }

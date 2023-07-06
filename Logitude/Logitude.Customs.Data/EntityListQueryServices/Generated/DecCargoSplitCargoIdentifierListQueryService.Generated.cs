@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DecCargoSplitCargoIdentifierList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<DecCargoSplitCargoIdentifierList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<DecCargoSplitCargoIdentifierList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DecCargoSplitCargoIdentifierList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DecCargoSplitCargoIdentifier> DecCargoSplitCargoIdentifierQuery = (from a in context.DecCargoSplitCargoIdentifiers
                                                        where a.DeclarationCargoSplitId == declarationcargosplitid && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<DecCargoSplitCargoIdentifierList> DecCargoSplitCargoIdentifierListQuery = GetIqueryableList( DecCargoSplitCargoIdentifierQuery);
-			            DecCargoSplitCargoIdentifierList DecCargoSplitCargoIdentifierList = DecCargoSplitCargoIdentifierListQuery.FirstOrDefault();
+
+             
+            IQueryable<DecCargoSplitCargoIdentifierList> DecCargoSplitCargoIdentifierListQuery = GetIqueryableList( DecCargoSplitCargoIdentifierQuery);
+            DecCargoSplitCargoIdentifierList DecCargoSplitCargoIdentifierList = DecCargoSplitCargoIdentifierListQuery.FirstOrDefault();
             return DecCargoSplitCargoIdentifierList;
            
         }

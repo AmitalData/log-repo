@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<IncotemrsFileValidationList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<IncotemrsFileValidationList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<IncotemrsFileValidationList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(IncotemrsFileValidationList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<IncotemrsFileValidation> IncotemrsFileValidationQuery = (from a in context.IncotemrsFileValidations
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<IncotemrsFileValidationList> IncotemrsFileValidationListQuery = GetIqueryableList( IncotemrsFileValidationQuery);
-			            IncotemrsFileValidationList IncotemrsFileValidationList = IncotemrsFileValidationListQuery.FirstOrDefault();
+
+             
+            IQueryable<IncotemrsFileValidationList> IncotemrsFileValidationListQuery = GetIqueryableList( IncotemrsFileValidationQuery);
+            IncotemrsFileValidationList IncotemrsFileValidationList = IncotemrsFileValidationListQuery.FirstOrDefault();
             return IncotemrsFileValidationList;
            
         }

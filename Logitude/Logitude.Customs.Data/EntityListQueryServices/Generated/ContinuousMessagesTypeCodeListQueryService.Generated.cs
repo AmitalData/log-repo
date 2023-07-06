@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ContinuousMessagesTypeCodeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ContinuousMessagesTypeCodeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ContinuousMessagesTypeCodeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ContinuousMessagesTypeCodeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ContinuousMessagesTypeCode> ContinuousMessagesTypeCodeQuery = (from a in context.ContinuousMessagesTypeCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ContinuousMessagesTypeCodeList> ContinuousMessagesTypeCodeListQuery = GetIqueryableList( ContinuousMessagesTypeCodeQuery);
-			            ContinuousMessagesTypeCodeList ContinuousMessagesTypeCodeList = ContinuousMessagesTypeCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ContinuousMessagesTypeCodeList> ContinuousMessagesTypeCodeListQuery = GetIqueryableList( ContinuousMessagesTypeCodeQuery);
+            ContinuousMessagesTypeCodeList ContinuousMessagesTypeCodeList = ContinuousMessagesTypeCodeListQuery.FirstOrDefault();
             return ContinuousMessagesTypeCodeList;
            
         }

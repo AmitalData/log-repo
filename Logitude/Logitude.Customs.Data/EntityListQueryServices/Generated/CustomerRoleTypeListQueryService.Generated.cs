@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomerRoleTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomerRoleTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomerRoleTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomerRoleTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomerRoleType> CustomerRoleTypeQuery = (from a in context.CustomerRoleTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomerRoleTypeList> CustomerRoleTypeListQuery = GetIqueryableList( CustomerRoleTypeQuery);
-			            CustomerRoleTypeList CustomerRoleTypeList = CustomerRoleTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomerRoleTypeList> CustomerRoleTypeListQuery = GetIqueryableList( CustomerRoleTypeQuery);
+            CustomerRoleTypeList CustomerRoleTypeList = CustomerRoleTypeListQuery.FirstOrDefault();
             return CustomerRoleTypeList;
            
         }

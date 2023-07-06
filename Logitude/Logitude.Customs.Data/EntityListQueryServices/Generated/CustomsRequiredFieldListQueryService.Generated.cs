@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsRequiredFieldList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomsRequiredFieldList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomsRequiredFieldList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsRequiredFieldList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsRequiredField> CustomsRequiredFieldQuery = (from a in context.CustomsRequiredFields
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsRequiredFieldList> CustomsRequiredFieldListQuery = GetIqueryableList( CustomsRequiredFieldQuery);
-			            CustomsRequiredFieldList CustomsRequiredFieldList = CustomsRequiredFieldListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsRequiredFieldList> CustomsRequiredFieldListQuery = GetIqueryableList( CustomsRequiredFieldQuery);
+            CustomsRequiredFieldList CustomsRequiredFieldList = CustomsRequiredFieldListQuery.FirstOrDefault();
             return CustomsRequiredFieldList;
            
         }

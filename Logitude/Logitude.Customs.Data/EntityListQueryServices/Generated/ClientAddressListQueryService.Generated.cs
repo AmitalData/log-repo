@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClientAddressList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ClientAddressList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ClientAddressList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClientAddressList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClientAddress> ClientAddressQuery = (from a in context.ClientAddresses
                                                        where a.ClientId == clientid && a.AddressId == addressid
                                                        select a);
-          
-		  
-		  			IQueryable<ClientAddressList> ClientAddressListQuery = GetIqueryableList( ClientAddressQuery);
-			            ClientAddressList ClientAddressList = ClientAddressListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClientAddressList> ClientAddressListQuery = GetIqueryableList( ClientAddressQuery);
+            ClientAddressList ClientAddressList = ClientAddressListQuery.FirstOrDefault();
             return ClientAddressList;
            
         }

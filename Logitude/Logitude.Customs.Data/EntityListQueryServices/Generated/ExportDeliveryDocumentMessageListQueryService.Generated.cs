@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ExportDeliveryDocumentMessageList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ExportDeliveryDocumentMessageList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ExportDeliveryDocumentMessageList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ExportDeliveryDocumentMessageList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportDeliveryDocumentMessage> ExportDeliveryDocumentMessageQuery = (from a in context.ExportDeliveryDocumentMessages
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ExportDeliveryDocumentMessageList> ExportDeliveryDocumentMessageListQuery = GetIqueryableList( ExportDeliveryDocumentMessageQuery);
-			            ExportDeliveryDocumentMessageList ExportDeliveryDocumentMessageList = ExportDeliveryDocumentMessageListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExportDeliveryDocumentMessageList> ExportDeliveryDocumentMessageListQuery = GetIqueryableList( ExportDeliveryDocumentMessageQuery);
+            ExportDeliveryDocumentMessageList ExportDeliveryDocumentMessageList = ExportDeliveryDocumentMessageListQuery.FirstOrDefault();
             return ExportDeliveryDocumentMessageList;
            
         }

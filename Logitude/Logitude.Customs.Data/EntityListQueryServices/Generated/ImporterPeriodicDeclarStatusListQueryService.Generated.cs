@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ImporterPeriodicDeclarStatusList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ImporterPeriodicDeclarStatusList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ImporterPeriodicDeclarStatusList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ImporterPeriodicDeclarStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ImporterPeriodicDeclarStatus> ImporterPeriodicDeclarStatusQuery = (from a in context.ImporterPeriodicDeclarStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ImporterPeriodicDeclarStatusList> ImporterPeriodicDeclarStatusListQuery = GetIqueryableList( ImporterPeriodicDeclarStatusQuery);
-			            ImporterPeriodicDeclarStatusList ImporterPeriodicDeclarStatusList = ImporterPeriodicDeclarStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<ImporterPeriodicDeclarStatusList> ImporterPeriodicDeclarStatusListQuery = GetIqueryableList( ImporterPeriodicDeclarStatusQuery);
+            ImporterPeriodicDeclarStatusList ImporterPeriodicDeclarStatusList = ImporterPeriodicDeclarStatusListQuery.FirstOrDefault();
             return ImporterPeriodicDeclarStatusList;
            
         }

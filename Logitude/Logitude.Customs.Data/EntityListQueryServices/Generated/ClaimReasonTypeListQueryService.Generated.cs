@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClaimReasonTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ClaimReasonTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ClaimReasonTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClaimReasonTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimReasonType> ClaimReasonTypeQuery = (from a in context.ClaimReasonTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ClaimReasonTypeList> ClaimReasonTypeListQuery = GetIqueryableList( ClaimReasonTypeQuery);
-			            ClaimReasonTypeList ClaimReasonTypeList = ClaimReasonTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClaimReasonTypeList> ClaimReasonTypeListQuery = GetIqueryableList( ClaimReasonTypeQuery);
+            ClaimReasonTypeList ClaimReasonTypeList = ClaimReasonTypeListQuery.FirstOrDefault();
             return ClaimReasonTypeList;
            
         }

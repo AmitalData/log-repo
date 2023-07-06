@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsItemDetailsHistoryList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<CustomsItemDetailsHistoryList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<CustomsItemDetailsHistoryList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsItemDetailsHistoryList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsItemDetailsHistory> CustomsItemDetailsHistoryQuery = (from a in context.CustomsItemDetailsHistorys
                                                        where a.ID == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsItemDetailsHistoryList> CustomsItemDetailsHistoryListQuery = GetIqueryableList( CustomsItemDetailsHistoryQuery);
-			            CustomsItemDetailsHistoryList CustomsItemDetailsHistoryList = CustomsItemDetailsHistoryListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsItemDetailsHistoryList> CustomsItemDetailsHistoryListQuery = GetIqueryableList( CustomsItemDetailsHistoryQuery);
+            CustomsItemDetailsHistoryList CustomsItemDetailsHistoryList = CustomsItemDetailsHistoryListQuery.FirstOrDefault();
             return CustomsItemDetailsHistoryList;
            
         }

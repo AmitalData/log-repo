@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<TradeLevyExamptTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<TradeLevyExamptTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<TradeLevyExamptTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(TradeLevyExamptTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TradeLevyExamptType> TradeLevyExamptTypeQuery = (from a in context.TradeLevyExamptTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TradeLevyExamptTypeList> TradeLevyExamptTypeListQuery = GetIqueryableList( TradeLevyExamptTypeQuery);
-			            TradeLevyExamptTypeList TradeLevyExamptTypeList = TradeLevyExamptTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<TradeLevyExamptTypeList> TradeLevyExamptTypeListQuery = GetIqueryableList( TradeLevyExamptTypeQuery);
+            TradeLevyExamptTypeList TradeLevyExamptTypeList = TradeLevyExamptTypeListQuery.FirstOrDefault();
             return TradeLevyExamptTypeList;
            
         }

@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<GatepassRequestList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<GatepassRequestList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<GatepassRequestList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(GatepassRequestList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<GatepassRequest> GatepassRequestQuery = (from a in context.GatepassRequests
                                                        where a.MasterCourierId == mastercourierid
                                                        select a);
-          
-		  
-		  			IQueryable<GatepassRequestList> GatepassRequestListQuery = GetIqueryableList( GatepassRequestQuery);
-			            GatepassRequestList GatepassRequestList = GatepassRequestListQuery.FirstOrDefault();
+
+             
+            IQueryable<GatepassRequestList> GatepassRequestListQuery = GetIqueryableList( GatepassRequestQuery);
+            GatepassRequestList GatepassRequestList = GatepassRequestListQuery.FirstOrDefault();
             return GatepassRequestList;
            
         }

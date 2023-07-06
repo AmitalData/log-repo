@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<InterfaceSendOptionList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<InterfaceSendOptionList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<InterfaceSendOptionList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(InterfaceSendOptionList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<InterfaceSendOption> InterfaceSendOptionQuery = (from a in context.InterfaceSendOptions
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<InterfaceSendOptionList> InterfaceSendOptionListQuery = GetIqueryableList( InterfaceSendOptionQuery);
-			            InterfaceSendOptionList InterfaceSendOptionList = InterfaceSendOptionListQuery.FirstOrDefault();
+
+             
+            IQueryable<InterfaceSendOptionList> InterfaceSendOptionListQuery = GetIqueryableList( InterfaceSendOptionQuery);
+            InterfaceSendOptionList InterfaceSendOptionList = InterfaceSendOptionListQuery.FirstOrDefault();
             return InterfaceSendOptionList;
            
         }

@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeliverySiteTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<DeliverySiteTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<DeliverySiteTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeliverySiteTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeliverySiteType> DeliverySiteTypeQuery = (from a in context.DeliverySiteTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<DeliverySiteTypeList> DeliverySiteTypeListQuery = GetIqueryableList( DeliverySiteTypeQuery);
-			            DeliverySiteTypeList DeliverySiteTypeList = DeliverySiteTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeliverySiteTypeList> DeliverySiteTypeListQuery = GetIqueryableList( DeliverySiteTypeQuery);
+            DeliverySiteTypeList DeliverySiteTypeList = DeliverySiteTypeListQuery.FirstOrDefault();
             return DeliverySiteTypeList;
            
         }

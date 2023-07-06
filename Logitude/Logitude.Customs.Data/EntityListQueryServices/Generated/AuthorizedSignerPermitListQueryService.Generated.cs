@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AuthorizedSignerPermitList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<AuthorizedSignerPermitList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<AuthorizedSignerPermitList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AuthorizedSignerPermitList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AuthorizedSignerPermit> AuthorizedSignerPermitQuery = (from a in context.AuthorizedSignerPermits
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AuthorizedSignerPermitList> AuthorizedSignerPermitListQuery = GetIqueryableList( AuthorizedSignerPermitQuery);
-			            AuthorizedSignerPermitList AuthorizedSignerPermitList = AuthorizedSignerPermitListQuery.FirstOrDefault();
+
+             
+            IQueryable<AuthorizedSignerPermitList> AuthorizedSignerPermitListQuery = GetIqueryableList( AuthorizedSignerPermitQuery);
+            AuthorizedSignerPermitList AuthorizedSignerPermitList = AuthorizedSignerPermitListQuery.FirstOrDefault();
             return AuthorizedSignerPermitList;
            
         }

@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PhysicalCheckStatusMessageList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<PhysicalCheckStatusMessageList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<PhysicalCheckStatusMessageList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PhysicalCheckStatusMessageList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PhysicalCheckStatusMessage> PhysicalCheckStatusMessageQuery = (from a in context.PhysicalCheckStatusMessages
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PhysicalCheckStatusMessageList> PhysicalCheckStatusMessageListQuery = GetIqueryableList( PhysicalCheckStatusMessageQuery);
-			            PhysicalCheckStatusMessageList PhysicalCheckStatusMessageList = PhysicalCheckStatusMessageListQuery.FirstOrDefault();
+
+             
+            IQueryable<PhysicalCheckStatusMessageList> PhysicalCheckStatusMessageListQuery = GetIqueryableList( PhysicalCheckStatusMessageQuery);
+            PhysicalCheckStatusMessageList PhysicalCheckStatusMessageList = PhysicalCheckStatusMessageListQuery.FirstOrDefault();
             return PhysicalCheckStatusMessageList;
            
         }

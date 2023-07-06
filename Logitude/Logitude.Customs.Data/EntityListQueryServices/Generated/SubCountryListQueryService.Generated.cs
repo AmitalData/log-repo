@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SubCountryList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<SubCountryList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<SubCountryList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SubCountryList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SubCountry> SubCountryQuery = (from a in context.SubCountries
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SubCountryList> SubCountryListQuery = GetIqueryableList( SubCountryQuery);
-			            SubCountryList SubCountryList = SubCountryListQuery.FirstOrDefault();
+
+             
+            IQueryable<SubCountryList> SubCountryListQuery = GetIqueryableList( SubCountryQuery);
+            SubCountryList SubCountryList = SubCountryListQuery.FirstOrDefault();
             return SubCountryList;
            
         }

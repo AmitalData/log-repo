@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DangerousGoodsPackingReqList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<DangerousGoodsPackingReqList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<DangerousGoodsPackingReqList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DangerousGoodsPackingReqList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DangerousGoodsPackingReq> DangerousGoodsPackingReqQuery = (from a in context.DangerousGoodsPackingReqs
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<DangerousGoodsPackingReqList> DangerousGoodsPackingReqListQuery = GetIqueryableList( DangerousGoodsPackingReqQuery);
-			            DangerousGoodsPackingReqList DangerousGoodsPackingReqList = DangerousGoodsPackingReqListQuery.FirstOrDefault();
+
+             
+            IQueryable<DangerousGoodsPackingReqList> DangerousGoodsPackingReqListQuery = GetIqueryableList( DangerousGoodsPackingReqQuery);
+            DangerousGoodsPackingReqList DangerousGoodsPackingReqList = DangerousGoodsPackingReqListQuery.FirstOrDefault();
             return DangerousGoodsPackingReqList;
            
         }

@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SignatureTypeList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<SignatureTypeList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<SignatureTypeList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SignatureTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SignatureType> SignatureTypeQuery = (from a in context.SignatureTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SignatureTypeList> SignatureTypeListQuery = GetIqueryableList( SignatureTypeQuery);
-			            SignatureTypeList SignatureTypeList = SignatureTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SignatureTypeList> SignatureTypeListQuery = GetIqueryableList( SignatureTypeQuery);
+            SignatureTypeList SignatureTypeList = SignatureTypeListQuery.FirstOrDefault();
             return SignatureTypeList;
            
         }

@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ApprovedProfessionList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ApprovedProfessionList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ApprovedProfessionList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ApprovedProfessionList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ApprovedProfession> ApprovedProfessionQuery = (from a in context.ApprovedProfessions
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ApprovedProfessionList> ApprovedProfessionListQuery = GetIqueryableList( ApprovedProfessionQuery);
-			            ApprovedProfessionList ApprovedProfessionList = ApprovedProfessionListQuery.FirstOrDefault();
+
+             
+            IQueryable<ApprovedProfessionList> ApprovedProfessionListQuery = GetIqueryableList( ApprovedProfessionQuery);
+            ApprovedProfessionList ApprovedProfessionList = ApprovedProfessionListQuery.FirstOrDefault();
             return ApprovedProfessionList;
            
         }

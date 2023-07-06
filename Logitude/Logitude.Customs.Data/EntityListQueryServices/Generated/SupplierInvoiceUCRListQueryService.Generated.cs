@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SupplierInvoiceUCRList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<SupplierInvoiceUCRList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<SupplierInvoiceUCRList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SupplierInvoiceUCRList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceUCR> SupplierInvoiceUCRQuery = (from a in context.SupplierInvoiceUCRs
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.SequenceNumeric == sequencenumeric
                                                        select a);
-          
-		  
-		  			IQueryable<SupplierInvoiceUCRList> SupplierInvoiceUCRListQuery = GetIqueryableList( SupplierInvoiceUCRQuery);
-			            SupplierInvoiceUCRList SupplierInvoiceUCRList = SupplierInvoiceUCRListQuery.FirstOrDefault();
+
+             
+            IQueryable<SupplierInvoiceUCRList> SupplierInvoiceUCRListQuery = GetIqueryableList( SupplierInvoiceUCRQuery);
+            SupplierInvoiceUCRList SupplierInvoiceUCRList = SupplierInvoiceUCRListQuery.FirstOrDefault();
             return SupplierInvoiceUCRList;
            
         }

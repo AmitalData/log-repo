@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ConsignmentList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ConsignmentList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ConsignmentList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ConsignmentList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Consignment> ConsignmentQuery = (from a in context.Consignments
                                                        where a.DeclarationId == declarationid && a.ConsignmentNumber == consignmentnumber
                                                        select a);
-          
-		  
-		  			IQueryable<ConsignmentList> ConsignmentListQuery = GetIqueryableList( ConsignmentQuery);
-			            ConsignmentList ConsignmentList = ConsignmentListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConsignmentList> ConsignmentListQuery = GetIqueryableList( ConsignmentQuery);
+            ConsignmentList ConsignmentList = ConsignmentListQuery.FirstOrDefault();
             return ConsignmentList;
            
         }

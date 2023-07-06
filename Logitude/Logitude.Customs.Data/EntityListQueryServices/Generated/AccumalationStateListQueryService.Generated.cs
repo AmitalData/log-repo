@@ -44,8 +44,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AccumalationStateList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<AccumalationStateList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<AccumalationStateList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AccumalationStateList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +139,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AccumalationState> AccumalationStateQuery = (from a in context.AccumalationStates
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AccumalationStateList> AccumalationStateListQuery = GetIqueryableList( AccumalationStateQuery);
-			            AccumalationStateList AccumalationStateList = AccumalationStateListQuery.FirstOrDefault();
+
+             
+            IQueryable<AccumalationStateList> AccumalationStateListQuery = GetIqueryableList( AccumalationStateQuery);
+            AccumalationStateList AccumalationStateList = AccumalationStateListQuery.FirstOrDefault();
             return AccumalationStateList;
            
         }

@@ -45,8 +45,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClaimsRelatedEntityList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 					  query2 = filter.GetFilteredQuery<ClaimsRelatedEntityList>(listQueryOperation, query2);
 		
+=======
+           
+            query2 = filter.GetFilteredQuery<ClaimsRelatedEntityList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClaimsRelatedEntityList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +140,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimsRelatedEntity> ClaimsRelatedEntityQuery = (from a in context.ClaimsRelatedEntities
                                                        where a.ClaimId == claimid && a.EntityCounterKey == entitycounterkey
                                                        select a);
-          
-		  
-		  			IQueryable<ClaimsRelatedEntityList> ClaimsRelatedEntityListQuery = GetIqueryableList( ClaimsRelatedEntityQuery);
-			            ClaimsRelatedEntityList ClaimsRelatedEntityList = ClaimsRelatedEntityListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClaimsRelatedEntityList> ClaimsRelatedEntityListQuery = GetIqueryableList( ClaimsRelatedEntityQuery);
+            ClaimsRelatedEntityList ClaimsRelatedEntityList = ClaimsRelatedEntityListQuery.FirstOrDefault();
             return ClaimsRelatedEntityList;
            
         }
