@@ -347,7 +347,7 @@ export class PayablePageComponent {
     // General Invoice
     NewGeneralAPInvoice() {
 
-        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated ) {
+        if (SessionLocator.TenantPM.AccountingActivated) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
                 this.CurrentSession.SessionLocation.viewContainerRef)
 
