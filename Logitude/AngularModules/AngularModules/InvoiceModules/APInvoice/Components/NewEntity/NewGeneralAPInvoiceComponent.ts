@@ -124,6 +124,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
             this.EntityPM = this.myEntityPMService.GetNewEntityPM();
             this.EntityPM.IsGeneralInvoice = true;
             this.AccountingDate = todayDate;
+            this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
             this.EntityPM.MainEntityId = null;
             this.EntityPM.MainEntityReference = null;
             this.EntityPM.HouseNumber = null;
