@@ -464,13 +464,12 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 // Valid Month => (ClosedMonth < month <= OpenMonth)
                 if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
 
-                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
+                    JournalValidator.SetAccountingDateInValid=false;
 
                 } else { // invalid (closed month)
 
                     // push the error to errors list
-                    var msg = TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth");
-                    this.UIProperties.SetValidity(fieldName, this.ObjectTableName, false, msg);
+                    JournalValidator.SetAccountingDateInValid=true;
 
                     this.EntityPM.AccountingDate = value;
 
