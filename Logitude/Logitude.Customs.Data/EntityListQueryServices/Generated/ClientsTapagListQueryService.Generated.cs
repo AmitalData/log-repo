@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClientsTapag> ClientsTapagQuery = (from a in context.ClientsTapags
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<ClientsTapagList> ClientsTapagListQuery = GetIqueryableList( ClientsTapagQuery);
-            ClientsTapagList ClientsTapagList = ClientsTapagListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ClientsTapagList> ClientsTapagListQuery = GetIqueryableList( ClientsTapagQuery);
+			            ClientsTapagList ClientsTapagList = ClientsTapagListQuery.FirstOrDefault();
             return ClientsTapagList;
            
         }

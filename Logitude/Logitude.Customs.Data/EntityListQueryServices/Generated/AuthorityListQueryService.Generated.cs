@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Authority> AuthorityQuery = (from a in context.Authorities
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<AuthorityList> AuthorityListQuery = GetIqueryableList( AuthorityQuery);
-            AuthorityList AuthorityList = AuthorityListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<AuthorityList> AuthorityListQuery = GetIqueryableList( AuthorityQuery);
+			            AuthorityList AuthorityList = AuthorityListQuery.FirstOrDefault();
             return AuthorityList;
            
         }

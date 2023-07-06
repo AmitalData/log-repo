@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SchedulerParam> SchedulerParamQuery = (from a in context.SchedulerParams
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<SchedulerParamList> SchedulerParamListQuery = GetIqueryableList( SchedulerParamQuery);
-            SchedulerParamList SchedulerParamList = SchedulerParamListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<SchedulerParamList> SchedulerParamListQuery = GetIqueryableList( SchedulerParamQuery);
+			            SchedulerParamList SchedulerParamList = SchedulerParamListQuery.FirstOrDefault();
             return SchedulerParamList;
            
         }

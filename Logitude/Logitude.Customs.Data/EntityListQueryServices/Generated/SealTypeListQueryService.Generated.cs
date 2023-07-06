@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SealType> SealTypeQuery = (from a in context.SealTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<SealTypeList> SealTypeListQuery = GetIqueryableList( SealTypeQuery);
-            SealTypeList SealTypeList = SealTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<SealTypeList> SealTypeListQuery = GetIqueryableList( SealTypeQuery);
+			            SealTypeList SealTypeList = SealTypeListQuery.FirstOrDefault();
             return SealTypeList;
            
         }

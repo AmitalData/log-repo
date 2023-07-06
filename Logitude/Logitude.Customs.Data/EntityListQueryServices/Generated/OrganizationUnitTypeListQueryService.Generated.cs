@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<OrganizationUnitType> OrganizationUnitTypeQuery = (from a in context.OrganizationUnitTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<OrganizationUnitTypeList> OrganizationUnitTypeListQuery = GetIqueryableList( OrganizationUnitTypeQuery);
-            OrganizationUnitTypeList OrganizationUnitTypeList = OrganizationUnitTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<OrganizationUnitTypeList> OrganizationUnitTypeListQuery = GetIqueryableList( OrganizationUnitTypeQuery);
+			            OrganizationUnitTypeList OrganizationUnitTypeList = OrganizationUnitTypeListQuery.FirstOrDefault();
             return OrganizationUnitTypeList;
            
         }

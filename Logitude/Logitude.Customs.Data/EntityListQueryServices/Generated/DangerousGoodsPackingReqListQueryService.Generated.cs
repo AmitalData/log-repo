@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DangerousGoodsPackingReq> DangerousGoodsPackingReqQuery = (from a in context.DangerousGoodsPackingReqs
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<DangerousGoodsPackingReqList> DangerousGoodsPackingReqListQuery = GetIqueryableList( DangerousGoodsPackingReqQuery);
-            DangerousGoodsPackingReqList DangerousGoodsPackingReqList = DangerousGoodsPackingReqListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<DangerousGoodsPackingReqList> DangerousGoodsPackingReqListQuery = GetIqueryableList( DangerousGoodsPackingReqQuery);
+			            DangerousGoodsPackingReqList DangerousGoodsPackingReqList = DangerousGoodsPackingReqListQuery.FirstOrDefault();
             return DangerousGoodsPackingReqList;
            
         }

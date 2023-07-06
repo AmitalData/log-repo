@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConstraintApprovalDecision> ConstraintApprovalDecisionQuery = (from a in context.ConstraintApprovalDecisions
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ConstraintApprovalDecisionList> ConstraintApprovalDecisionListQuery = GetIqueryableList( ConstraintApprovalDecisionQuery);
-            ConstraintApprovalDecisionList ConstraintApprovalDecisionList = ConstraintApprovalDecisionListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ConstraintApprovalDecisionList> ConstraintApprovalDecisionListQuery = GetIqueryableList( ConstraintApprovalDecisionQuery);
+			            ConstraintApprovalDecisionList ConstraintApprovalDecisionList = ConstraintApprovalDecisionListQuery.FirstOrDefault();
             return ConstraintApprovalDecisionList;
            
         }

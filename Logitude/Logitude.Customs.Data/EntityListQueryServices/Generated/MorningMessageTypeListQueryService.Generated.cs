@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<MorningMessageType> MorningMessageTypeQuery = (from a in context.MorningMessageTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<MorningMessageTypeList> MorningMessageTypeListQuery = GetIqueryableList( MorningMessageTypeQuery);
-            MorningMessageTypeList MorningMessageTypeList = MorningMessageTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<MorningMessageTypeList> MorningMessageTypeListQuery = GetIqueryableList( MorningMessageTypeQuery);
+			            MorningMessageTypeList MorningMessageTypeList = MorningMessageTypeListQuery.FirstOrDefault();
             return MorningMessageTypeList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TermsOfSaleType> TermsOfSaleTypeQuery = (from a in context.TermsOfSaleTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<TermsOfSaleTypeList> TermsOfSaleTypeListQuery = GetIqueryableList( TermsOfSaleTypeQuery);
-            TermsOfSaleTypeList TermsOfSaleTypeList = TermsOfSaleTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<TermsOfSaleTypeList> TermsOfSaleTypeListQuery = GetIqueryableList( TermsOfSaleTypeQuery);
+			            TermsOfSaleTypeList TermsOfSaleTypeList = TermsOfSaleTypeListQuery.FirstOrDefault();
             return TermsOfSaleTypeList;
            
         }

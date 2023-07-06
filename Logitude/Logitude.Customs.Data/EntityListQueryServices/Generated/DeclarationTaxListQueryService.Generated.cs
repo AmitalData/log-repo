@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationTax> DeclarationTaxQuery = (from a in context.DeclarationTaxes
                                                        where a.DeclarationId == declarationid && a.TaxTypeCode == taxtypecode
                                                        select a);
-
-             
-            IQueryable<DeclarationTaxList> DeclarationTaxListQuery = GetIqueryableList( DeclarationTaxQuery);
-            DeclarationTaxList DeclarationTaxList = DeclarationTaxListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<DeclarationTaxList> DeclarationTaxListQuery = GetIqueryableList( DeclarationTaxQuery);
+			            DeclarationTaxList DeclarationTaxList = DeclarationTaxListQuery.FirstOrDefault();
             return DeclarationTaxList;
            
         }

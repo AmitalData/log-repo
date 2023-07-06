@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SeizureFactorType> SeizureFactorTypeQuery = (from a in context.SeizureFactorTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<SeizureFactorTypeList> SeizureFactorTypeListQuery = GetIqueryableList( SeizureFactorTypeQuery);
-            SeizureFactorTypeList SeizureFactorTypeList = SeizureFactorTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<SeizureFactorTypeList> SeizureFactorTypeListQuery = GetIqueryableList( SeizureFactorTypeQuery);
+			            SeizureFactorTypeList SeizureFactorTypeList = SeizureFactorTypeListQuery.FirstOrDefault();
             return SeizureFactorTypeList;
            
         }

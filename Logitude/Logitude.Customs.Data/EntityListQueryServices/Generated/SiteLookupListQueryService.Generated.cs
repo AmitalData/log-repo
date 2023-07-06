@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SiteLookup> SiteLookupQuery = (from a in context.SiteLookups
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<SiteLookupList> SiteLookupListQuery = GetIqueryableList( SiteLookupQuery);
-            SiteLookupList SiteLookupList = SiteLookupListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<SiteLookupList> SiteLookupListQuery = GetIqueryableList( SiteLookupQuery);
+			            SiteLookupList SiteLookupList = SiteLookupListQuery.FirstOrDefault();
             return SiteLookupList;
            
         }

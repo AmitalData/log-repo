@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DemanderType> DemanderTypeQuery = (from a in context.DemanderTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<DemanderTypeList> DemanderTypeListQuery = GetIqueryableList( DemanderTypeQuery);
-            DemanderTypeList DemanderTypeList = DemanderTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<DemanderTypeList> DemanderTypeListQuery = GetIqueryableList( DemanderTypeQuery);
+			            DemanderTypeList DemanderTypeList = DemanderTypeListQuery.FirstOrDefault();
             return DemanderTypeList;
            
         }

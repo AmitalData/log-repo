@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<MAWBType> MAWBTypeQuery = (from a in context.MAWBTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<MAWBTypeList> MAWBTypeListQuery = GetIqueryableList( MAWBTypeQuery);
-            MAWBTypeList MAWBTypeList = MAWBTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<MAWBTypeList> MAWBTypeListQuery = GetIqueryableList( MAWBTypeQuery);
+			            MAWBTypeList MAWBTypeList = MAWBTypeListQuery.FirstOrDefault();
             return MAWBTypeList;
            
         }

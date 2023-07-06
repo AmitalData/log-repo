@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PendingByKeyword> PendingByKeywordQuery = (from a in context.PendingByKeywords
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<PendingByKeywordList> PendingByKeywordListQuery = GetIqueryableList( PendingByKeywordQuery);
-            PendingByKeywordList PendingByKeywordList = PendingByKeywordListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<PendingByKeywordList> PendingByKeywordListQuery = GetIqueryableList( PendingByKeywordQuery);
+			            PendingByKeywordList PendingByKeywordList = PendingByKeywordListQuery.FirstOrDefault();
             return PendingByKeywordList;
            
         }

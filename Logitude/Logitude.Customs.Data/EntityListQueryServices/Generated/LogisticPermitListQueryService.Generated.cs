@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<LogisticPermit> LogisticPermitQuery = (from a in context.LogisticPermits
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<LogisticPermitList> LogisticPermitListQuery = GetIqueryableList( LogisticPermitQuery);
-            LogisticPermitList LogisticPermitList = LogisticPermitListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<LogisticPermitList> LogisticPermitListQuery = GetIqueryableList( LogisticPermitQuery);
+			            LogisticPermitList LogisticPermitList = LogisticPermitListQuery.FirstOrDefault();
             return LogisticPermitList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CourierCustomStatus> CourierCustomStatusQuery = (from a in context.CourierCustomStatuses
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<CourierCustomStatusList> CourierCustomStatusListQuery = GetIqueryableList( CourierCustomStatusQuery);
-            CourierCustomStatusList CourierCustomStatusList = CourierCustomStatusListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CourierCustomStatusList> CourierCustomStatusListQuery = GetIqueryableList( CourierCustomStatusQuery);
+			            CourierCustomStatusList CourierCustomStatusList = CourierCustomStatusListQuery.FirstOrDefault();
             return CourierCustomStatusList;
            
         }

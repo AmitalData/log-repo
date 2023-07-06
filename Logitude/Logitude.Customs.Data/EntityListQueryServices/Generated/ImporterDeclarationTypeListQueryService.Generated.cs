@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ImporterDeclarationType> ImporterDeclarationTypeQuery = (from a in context.ImporterDeclarationTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ImporterDeclarationTypeList> ImporterDeclarationTypeListQuery = GetIqueryableList( ImporterDeclarationTypeQuery);
-            ImporterDeclarationTypeList ImporterDeclarationTypeList = ImporterDeclarationTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ImporterDeclarationTypeList> ImporterDeclarationTypeListQuery = GetIqueryableList( ImporterDeclarationTypeQuery);
+			            ImporterDeclarationTypeList ImporterDeclarationTypeList = ImporterDeclarationTypeListQuery.FirstOrDefault();
             return ImporterDeclarationTypeList;
            
         }

@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<InternalBorderSiteType> InternalBorderSiteTypeQuery = (from a in context.InternalBorderSiteTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<InternalBorderSiteTypeList> InternalBorderSiteTypeListQuery = GetIqueryableList( InternalBorderSiteTypeQuery);
-            InternalBorderSiteTypeList InternalBorderSiteTypeList = InternalBorderSiteTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<InternalBorderSiteTypeList> InternalBorderSiteTypeListQuery = GetIqueryableList( InternalBorderSiteTypeQuery);
+			            InternalBorderSiteTypeList InternalBorderSiteTypeList = InternalBorderSiteTypeListQuery.FirstOrDefault();
             return InternalBorderSiteTypeList;
            
         }

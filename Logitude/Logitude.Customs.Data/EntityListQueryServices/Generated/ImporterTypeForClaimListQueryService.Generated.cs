@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ImporterTypeForClaim> ImporterTypeForClaimQuery = (from a in context.ImporterTypeForClaims
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<ImporterTypeForClaimList> ImporterTypeForClaimListQuery = GetIqueryableList( ImporterTypeForClaimQuery);
-            ImporterTypeForClaimList ImporterTypeForClaimList = ImporterTypeForClaimListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ImporterTypeForClaimList> ImporterTypeForClaimListQuery = GetIqueryableList( ImporterTypeForClaimQuery);
+			            ImporterTypeForClaimList ImporterTypeForClaimList = ImporterTypeForClaimListQuery.FirstOrDefault();
             return ImporterTypeForClaimList;
            
         }

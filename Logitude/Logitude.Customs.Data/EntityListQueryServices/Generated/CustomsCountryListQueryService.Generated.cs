@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsCountry> CustomsCountryQuery = (from a in context.CustomsCountries
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<CustomsCountryList> CustomsCountryListQuery = GetIqueryableList( CustomsCountryQuery);
-            CustomsCountryList CustomsCountryList = CustomsCountryListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsCountryList> CustomsCountryListQuery = GetIqueryableList( CustomsCountryQuery);
+			            CustomsCountryList CustomsCountryList = CustomsCountryListQuery.FirstOrDefault();
             return CustomsCountryList;
            
         }

@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PaymentOrderConnectionTable> PaymentOrderConnectionTableQuery = (from a in context.PaymentOrderConnectionTables
                                                        where a.PaymentOrderId == paymentorderid && a.ConnectedEntityId == connectedentityid
                                                        select a);
-
-             
-            IQueryable<PaymentOrderConnectionTableList> PaymentOrderConnectionTableListQuery = GetIqueryableList( PaymentOrderConnectionTableQuery);
-            PaymentOrderConnectionTableList PaymentOrderConnectionTableList = PaymentOrderConnectionTableListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<PaymentOrderConnectionTableList> PaymentOrderConnectionTableListQuery = GetIqueryableList( PaymentOrderConnectionTableQuery);
+			            PaymentOrderConnectionTableList PaymentOrderConnectionTableList = PaymentOrderConnectionTableListQuery.FirstOrDefault();
             return PaymentOrderConnectionTableList;
            
         }

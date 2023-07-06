@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClientsPoa> ClientsPoaQuery = (from a in context.ClientsPoas
                                                        where a.Id == id && a.ClientId == clientid
                                                        select a);
-
-             
-            IQueryable<ClientsPoaList> ClientsPoaListQuery = GetIqueryableList( ClientsPoaQuery);
-            ClientsPoaList ClientsPoaList = ClientsPoaListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ClientsPoaList> ClientsPoaListQuery = GetIqueryableList( ClientsPoaQuery);
+			            ClientsPoaList ClientsPoaList = ClientsPoaListQuery.FirstOrDefault();
             return ClientsPoaList;
            
         }

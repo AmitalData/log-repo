@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypeQuery = (from a in context.RegisteredWarehouseSiteTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<RegisteredWarehouseSiteTypeList> RegisteredWarehouseSiteTypeListQuery = GetIqueryableList( RegisteredWarehouseSiteTypeQuery);
-            RegisteredWarehouseSiteTypeList RegisteredWarehouseSiteTypeList = RegisteredWarehouseSiteTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<RegisteredWarehouseSiteTypeList> RegisteredWarehouseSiteTypeListQuery = GetIqueryableList( RegisteredWarehouseSiteTypeQuery);
+			            RegisteredWarehouseSiteTypeList RegisteredWarehouseSiteTypeList = RegisteredWarehouseSiteTypeListQuery.FirstOrDefault();
             return RegisteredWarehouseSiteTypeList;
            
         }

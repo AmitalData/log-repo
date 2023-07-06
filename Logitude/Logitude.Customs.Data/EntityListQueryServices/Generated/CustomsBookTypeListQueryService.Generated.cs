@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsBookType> CustomsBookTypeQuery = (from a in context.CustomsBookTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<CustomsBookTypeList> CustomsBookTypeListQuery = GetIqueryableList( CustomsBookTypeQuery);
-            CustomsBookTypeList CustomsBookTypeList = CustomsBookTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<CustomsBookTypeList> CustomsBookTypeListQuery = GetIqueryableList( CustomsBookTypeQuery);
+			            CustomsBookTypeList CustomsBookTypeList = CustomsBookTypeListQuery.FirstOrDefault();
             return CustomsBookTypeList;
            
         }

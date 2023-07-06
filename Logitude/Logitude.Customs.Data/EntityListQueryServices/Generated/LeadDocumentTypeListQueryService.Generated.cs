@@ -133,10 +133,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<LeadDocumentType> LeadDocumentTypeQuery = (from a in context.LeadDocumentTypes
                                                        where a.Code == code
                                                        select a);
-
-             
-            IQueryable<LeadDocumentTypeList> LeadDocumentTypeListQuery = GetIqueryableList( LeadDocumentTypeQuery);
-            LeadDocumentTypeList LeadDocumentTypeList = LeadDocumentTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<LeadDocumentTypeList> LeadDocumentTypeListQuery = GetIqueryableList( LeadDocumentTypeQuery);
+			            LeadDocumentTypeList LeadDocumentTypeList = LeadDocumentTypeListQuery.FirstOrDefault();
             return LeadDocumentTypeList;
            
         }

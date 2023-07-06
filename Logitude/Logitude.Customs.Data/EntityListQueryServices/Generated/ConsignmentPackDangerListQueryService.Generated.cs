@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConsignmentPackDanger> ConsignmentPackDangerQuery = (from a in context.ConsignmentPackDangers
                                                        where a.DeclarationId == declarationid && a.ConsignmentNumber == consignmentnumber && a.LineNumber == linenumber && a.DangerousLineNo == dangerouslineno
                                                        select a);
-
-             
-            IQueryable<ConsignmentPackDangerList> ConsignmentPackDangerListQuery = GetIqueryableList( ConsignmentPackDangerQuery);
-            ConsignmentPackDangerList ConsignmentPackDangerList = ConsignmentPackDangerListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<ConsignmentPackDangerList> ConsignmentPackDangerListQuery = GetIqueryableList( ConsignmentPackDangerQuery);
+			            ConsignmentPackDangerList ConsignmentPackDangerList = ConsignmentPackDangerListQuery.FirstOrDefault();
             return ConsignmentPackDangerList;
            
         }

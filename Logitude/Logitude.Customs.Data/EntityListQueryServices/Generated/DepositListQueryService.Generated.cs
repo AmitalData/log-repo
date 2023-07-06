@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Deposit> DepositQuery = (from a in context.Deposits
                                                        where a.Id == id
                                                        select a);
-
-             
-            IQueryable<DepositList> DepositListQuery = GetIqueryableList( DepositQuery);
-            DepositList DepositList = DepositListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<DepositList> DepositListQuery = GetIqueryableList( DepositQuery);
+			            DepositList DepositList = DepositListQuery.FirstOrDefault();
             return DepositList;
            
         }

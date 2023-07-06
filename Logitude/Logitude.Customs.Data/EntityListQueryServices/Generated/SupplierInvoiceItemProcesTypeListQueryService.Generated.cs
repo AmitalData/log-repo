@@ -134,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceItemProcesType> SupplierInvoiceItemProcesTypeQuery = (from a in context.SupplierInvoiceItemProcesTypes
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber && a.LineNumber == linenumber
                                                        select a);
-
-             
-            IQueryable<SupplierInvoiceItemProcesTypeList> SupplierInvoiceItemProcesTypeListQuery = GetIqueryableList( SupplierInvoiceItemProcesTypeQuery);
-            SupplierInvoiceItemProcesTypeList SupplierInvoiceItemProcesTypeList = SupplierInvoiceItemProcesTypeListQuery.FirstOrDefault();
+          
+		  
+		  			IQueryable<SupplierInvoiceItemProcesTypeList> SupplierInvoiceItemProcesTypeListQuery = GetIqueryableList( SupplierInvoiceItemProcesTypeQuery);
+			            SupplierInvoiceItemProcesTypeList SupplierInvoiceItemProcesTypeList = SupplierInvoiceItemProcesTypeListQuery.FirstOrDefault();
             return SupplierInvoiceItemProcesTypeList;
            
         }
