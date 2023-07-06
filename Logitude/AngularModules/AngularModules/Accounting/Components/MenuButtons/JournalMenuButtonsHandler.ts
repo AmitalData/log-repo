@@ -208,14 +208,22 @@ export class JournalMenuButtonsHandler {
             case "JournalApprove":
                 {
                     this.EntityPM.StatusCode = "2"; // Approved
+                
+                    this.SaveChenges();    
 
-                    this.EntityPM.UIProperties.SetEnabled("AccountingDate", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Reference1", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Reference2", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Reference3", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Notes", "Journal", false);
-
-                    this.SaveChenges();
+                    this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
+                        if ($event == true) {                           
+                             this.EntityPM.UIProperties.SetEnabled("AccountingDate", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Reference1", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Reference2", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Reference3", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Notes", "Journal", false);
+            
+                        }
+                    });
+                     
+                     
+                   
                     break;
                 }
             case "JournalSaveAsDraft":

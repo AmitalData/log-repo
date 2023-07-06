@@ -1316,7 +1316,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 EntityId = CardId,
                 Tenant = Tenant,
-                UserId = loggedContact.Id,//contact.Id,
+            //    UserId = loggedContact.Id,//contact.Id,
                 ObjectTableName = objectTableName,
                 IsAddedManually = false,
                 EventTypeCode = eventTypeCode,

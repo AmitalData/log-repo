@@ -853,7 +853,7 @@
     OldNames="is_signed"
     Type="bit">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
