@@ -296,7 +296,7 @@ export class ReceivablePageComponent {
     //#region General ARInvoice
     public NewGeneralARInvoice(type: string) {
 
-        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated ) {
+        if (SessionLocator.TenantPM.AccountingActivated ) {
         
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
