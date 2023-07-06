@@ -37,6 +37,9 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
     constructor() {
         super();
          this._entityResourceService.getEntityResourceByTableName("LedgerTransaction", 0).subscribe((response: any) => { this.IsScreenLoaded=true;});
+
+         this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation", 0).subscribe((response: any) => { });
+
     }
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
@@ -74,8 +77,17 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
     public IsExternalReconciledFilter: string = 'open';
     IsExternalReconciledFilterItemClicked(itemValue: string)
     {
+        
         if (this.IsExternalReconciledFilter != itemValue && !this.ExternalReconciliationNumber) {
             this.IsExternalReconciledFilter = itemValue;
+        }
+    }
+    public IsShowCrossYear: string = 'all';
+    IsShowCrossYearFilterItemClicked(itemValue: string)
+    {
+        
+        if (this.IsShowCrossYear != itemValue ) {
+            this.IsShowCrossYear = itemValue;
         }
     }
 
@@ -169,6 +181,8 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         this.queryFilterItems.push(this.GetNewQueryFilterItem("IsExternalReconciled",this.IsExternalReconciledFilter));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("ExternalReconciliationNumber",this.ExternalReconciliationNumber,"int"));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("IncludesTransferGlaccount",this.IncludesTransferGlaccount));
+        this.queryFilterItems.push(this.GetNewQueryFilterItem("CrossYearReconcile",this.IsShowCrossYear));
+
     }
 
     BuildReport(){
