@@ -1310,7 +1310,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         private void CreateTraceEvent(string CardId, string AccountId, int Tenant, string objectTableName, string eventTypeCode)
         {
-            ContactPM loggedContact = new ContactQuery(Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), Tenant);
+           // ContactPM loggedContact = new ContactQuery(Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), Tenant);
 
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {

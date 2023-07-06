@@ -1170,7 +1170,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             ServerSideSortable: true,
             SortByName: 'OriginalAmount',
         });
-       this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount",'Text', TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?'multi':this.originalAmountCurrency) + ')'));
+       this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount",'Decimal', TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?'multi':this.originalAmountCurrency) + ')'));
 
         //this.columns.push({
         //    FieldName: 'OpenAmountCurrencyCode',
@@ -1193,11 +1193,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             ServerSideSortable: true,
             SortByName: 'OpenAmount'
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OpenAmount",'Text', TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?this.TenantPM.CurrencyCode:this.openAmountCurrency) + ')'));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OpenAmount",'Decimal', TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?this.TenantPM.CurrencyCode:this.openAmountCurrency) + ')'));
 
         this.columns.push({
             FieldName: 'Reference1',
-            DataTypeCode: 'String',
+            DataTypeCode: 'String', 
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference1"), // 'Ref. 1',
             Styles: { width: '90px' },
             IsCustomTemplate: true,
