@@ -62,7 +62,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Tsrufa
             var myQueryService = new DeclarationQueryService(_context);
 
             MyGenericResponseObj.Stage = "GetSingle";
-            this._MyDeclarationPM = myQueryService.GetAcceptDeclarationAmendment(this._LogitudeTsrufa.Id, ResolvedTenant());
+            this._MyDeclarationPM = myQueryService.GetAcceptDeclarationAmendmentWithComp(this._LogitudeTsrufa.Id, ResolvedTenant());
             if (this._MyDeclarationPM == null)
             {
                 throw new BusinessErrorException("Id is " + this._LogitudeTsrufa.Id + " but not found");
