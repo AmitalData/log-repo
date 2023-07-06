@@ -450,7 +450,18 @@ namespace <#= querylistservicenamespacestring #>
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<<#= listName #>> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
            
+=======
+			<#+
+             if (iscustoms)
+         {
+            #>
+			iQueryable = ApplyCustomFiltersList(queryOperations, query2<#=tenantParamValue#>);
+			<#+
+         }
+		 #>
+>>>>>>> parent of 094118ae335 (#181601)
             query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))

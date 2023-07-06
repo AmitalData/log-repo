@@ -45,9 +45,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationList> query2 = GetIqueryableList(iQueryable);
+<<<<<<< HEAD
 						query2 = ApplyCustomFiltersList(queryOperations, query2,tenant);
 			query2 = filter.GetFilteredQuery<DeclarationList>(queryOperations, query2);
 			
+=======
+           
+            query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
+
+>>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationList).GetProperty(queryOperations.SortByColumnName);
