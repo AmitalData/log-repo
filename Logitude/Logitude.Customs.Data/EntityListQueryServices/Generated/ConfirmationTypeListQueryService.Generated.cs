@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ConfirmationTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ConfirmationTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ConfirmationTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ConfirmationTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConfirmationType> ConfirmationTypeQuery = (from a in context.ConfirmationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ConfirmationTypeList> ConfirmationTypeListQuery = GetIqueryableList( ConfirmationTypeQuery);
-			            ConfirmationTypeList ConfirmationTypeList = ConfirmationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConfirmationTypeList> ConfirmationTypeListQuery = GetIqueryableList( ConfirmationTypeQuery);
+            ConfirmationTypeList ConfirmationTypeList = ConfirmationTypeListQuery.FirstOrDefault();
             return ConfirmationTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ConfirmationType>(nonListQueryOperation, iQueryable);
 
             IQueryable<ConfirmationTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ConfirmationTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ConfirmationTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

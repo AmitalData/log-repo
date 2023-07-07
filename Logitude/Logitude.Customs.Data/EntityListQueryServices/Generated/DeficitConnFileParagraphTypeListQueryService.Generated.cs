@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeficitConnFileParagraphTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeficitConnFileParagraphTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeficitConnFileParagraphTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeficitConnFileParagraphTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeficitConnFileParagraphType> DeficitConnFileParagraphTypeQuery = (from a in context.DeficitConnFileParagraphTypes
                                                        where a.DeficitId == deficitid && a.DeclarationId == declarationid && a.ParagraphTypeCode == paragraphtypecode
                                                        select a);
-          
-		  
-		  			IQueryable<DeficitConnFileParagraphTypeList> DeficitConnFileParagraphTypeListQuery = GetIqueryableList( DeficitConnFileParagraphTypeQuery);
-			            DeficitConnFileParagraphTypeList DeficitConnFileParagraphTypeList = DeficitConnFileParagraphTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeficitConnFileParagraphTypeList> DeficitConnFileParagraphTypeListQuery = GetIqueryableList( DeficitConnFileParagraphTypeQuery);
+            DeficitConnFileParagraphTypeList DeficitConnFileParagraphTypeList = DeficitConnFileParagraphTypeListQuery.FirstOrDefault();
             return DeficitConnFileParagraphTypeList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DeficitConnFileParagraphType>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeficitConnFileParagraphTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeficitConnFileParagraphTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeficitConnFileParagraphTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

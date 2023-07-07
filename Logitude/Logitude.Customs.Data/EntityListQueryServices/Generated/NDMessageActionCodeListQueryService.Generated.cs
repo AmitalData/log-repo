@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<NDMessageActionCodeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<NDMessageActionCodeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<NDMessageActionCodeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(NDMessageActionCodeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<NDMessageActionCode> NDMessageActionCodeQuery = (from a in context.NDMessageActionCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<NDMessageActionCodeList> NDMessageActionCodeListQuery = GetIqueryableList( NDMessageActionCodeQuery);
-			            NDMessageActionCodeList NDMessageActionCodeList = NDMessageActionCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<NDMessageActionCodeList> NDMessageActionCodeListQuery = GetIqueryableList( NDMessageActionCodeQuery);
+            NDMessageActionCodeList NDMessageActionCodeList = NDMessageActionCodeListQuery.FirstOrDefault();
             return NDMessageActionCodeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<NDMessageActionCode>(nonListQueryOperation, iQueryable);
 
             IQueryable<NDMessageActionCodeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<NDMessageActionCodeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<NDMessageActionCodeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

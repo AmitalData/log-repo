@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DepositEssenceTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DepositEssenceTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DepositEssenceTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DepositEssenceTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DepositEssenceType> DepositEssenceTypeQuery = (from a in context.DepositEssenceTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<DepositEssenceTypeList> DepositEssenceTypeListQuery = GetIqueryableList( DepositEssenceTypeQuery);
-			            DepositEssenceTypeList DepositEssenceTypeList = DepositEssenceTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<DepositEssenceTypeList> DepositEssenceTypeListQuery = GetIqueryableList( DepositEssenceTypeQuery);
+            DepositEssenceTypeList DepositEssenceTypeList = DepositEssenceTypeListQuery.FirstOrDefault();
             return DepositEssenceTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DepositEssenceType>(nonListQueryOperation, iQueryable);
 
             IQueryable<DepositEssenceTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DepositEssenceTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DepositEssenceTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

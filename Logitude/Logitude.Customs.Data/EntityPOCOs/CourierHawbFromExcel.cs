@@ -32,6 +32,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool? NotFound { get; set; }
         [Column("CourierHawb")]
 	    public string CourierHawb { get; set; }
+        [Column("ErrorMessage")]
+	    public string ErrorMessage { get; set; }
     }
 }
 	 

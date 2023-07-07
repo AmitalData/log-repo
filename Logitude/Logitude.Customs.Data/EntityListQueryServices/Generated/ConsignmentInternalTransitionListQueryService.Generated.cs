@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ConsignmentInternalTransitionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ConsignmentInternalTransitionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ConsignmentInternalTransitionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ConsignmentInternalTransitionList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConsignmentInternalTransition> ConsignmentInternalTransitionQuery = (from a in context.ConsignmentInternalTransitions
                                                        where a.DeclarationId == declarationid && a.ConsignmentNumber == consignmentnumber && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<ConsignmentInternalTransitionList> ConsignmentInternalTransitionListQuery = GetIqueryableList( ConsignmentInternalTransitionQuery);
-			            ConsignmentInternalTransitionList ConsignmentInternalTransitionList = ConsignmentInternalTransitionListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConsignmentInternalTransitionList> ConsignmentInternalTransitionListQuery = GetIqueryableList( ConsignmentInternalTransitionQuery);
+            ConsignmentInternalTransitionList ConsignmentInternalTransitionList = ConsignmentInternalTransitionListQuery.FirstOrDefault();
             return ConsignmentInternalTransitionList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ConsignmentInternalTransition>(nonListQueryOperation, iQueryable);
 
             IQueryable<ConsignmentInternalTransitionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ConsignmentInternalTransitionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ConsignmentInternalTransitionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

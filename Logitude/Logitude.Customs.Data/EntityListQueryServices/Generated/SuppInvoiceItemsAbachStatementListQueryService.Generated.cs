@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SuppInvoiceItemsAbachStatementList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<SuppInvoiceItemsAbachStatementList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<SuppInvoiceItemsAbachStatementList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SuppInvoiceItemsAbachStatementList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatementQuery = (from a in context.SuppInvoiceItemsAbachStatement
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber && a.SequenceNumeric == sequencenumeric
                                                        select a);
-          
-		  
-		  			IQueryable<SuppInvoiceItemsAbachStatementList> SuppInvoiceItemsAbachStatementListQuery = GetIqueryableList( SuppInvoiceItemsAbachStatementQuery);
-			            SuppInvoiceItemsAbachStatementList SuppInvoiceItemsAbachStatementList = SuppInvoiceItemsAbachStatementListQuery.FirstOrDefault();
+
+             
+            IQueryable<SuppInvoiceItemsAbachStatementList> SuppInvoiceItemsAbachStatementListQuery = GetIqueryableList( SuppInvoiceItemsAbachStatementQuery);
+            SuppInvoiceItemsAbachStatementList SuppInvoiceItemsAbachStatementList = SuppInvoiceItemsAbachStatementListQuery.FirstOrDefault();
             return SuppInvoiceItemsAbachStatementList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<SuppInvoiceItemsAbachStatement>(nonListQueryOperation, iQueryable);
 
             IQueryable<SuppInvoiceItemsAbachStatementList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<SuppInvoiceItemsAbachStatementList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<SuppInvoiceItemsAbachStatementList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

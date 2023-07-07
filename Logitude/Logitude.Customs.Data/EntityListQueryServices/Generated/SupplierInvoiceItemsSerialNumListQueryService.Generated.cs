@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SupplierInvoiceItemsSerialNumList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<SupplierInvoiceItemsSerialNumList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<SupplierInvoiceItemsSerialNumList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SupplierInvoiceItemsSerialNumList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceItemsSerialNum> SupplierInvoiceItemsSerialNumQuery = (from a in context.SupplierInvoiceItemsSerialNums
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<SupplierInvoiceItemsSerialNumList> SupplierInvoiceItemsSerialNumListQuery = GetIqueryableList( SupplierInvoiceItemsSerialNumQuery);
-			            SupplierInvoiceItemsSerialNumList SupplierInvoiceItemsSerialNumList = SupplierInvoiceItemsSerialNumListQuery.FirstOrDefault();
+
+             
+            IQueryable<SupplierInvoiceItemsSerialNumList> SupplierInvoiceItemsSerialNumListQuery = GetIqueryableList( SupplierInvoiceItemsSerialNumQuery);
+            SupplierInvoiceItemsSerialNumList SupplierInvoiceItemsSerialNumList = SupplierInvoiceItemsSerialNumListQuery.FirstOrDefault();
             return SupplierInvoiceItemsSerialNumList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<SupplierInvoiceItemsSerialNum>(nonListQueryOperation, iQueryable);
 
             IQueryable<SupplierInvoiceItemsSerialNumList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<SupplierInvoiceItemsSerialNumList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<SupplierInvoiceItemsSerialNumList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

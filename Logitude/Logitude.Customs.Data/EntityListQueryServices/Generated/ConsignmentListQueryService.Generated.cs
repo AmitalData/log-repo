@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ConsignmentList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ConsignmentList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ConsignmentList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ConsignmentList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Consignment> ConsignmentQuery = (from a in context.Consignments
                                                        where a.DeclarationId == declarationid && a.ConsignmentNumber == consignmentnumber
                                                        select a);
-          
-		  
-		  			IQueryable<ConsignmentList> ConsignmentListQuery = GetIqueryableList( ConsignmentQuery);
-			            ConsignmentList ConsignmentList = ConsignmentListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConsignmentList> ConsignmentListQuery = GetIqueryableList( ConsignmentQuery);
+            ConsignmentList ConsignmentList = ConsignmentListQuery.FirstOrDefault();
             return ConsignmentList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<Consignment>(nonListQueryOperation, iQueryable);
 
             IQueryable<ConsignmentList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ConsignmentList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ConsignmentList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

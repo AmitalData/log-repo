@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PropertiesDetailsHistoryList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PropertiesDetailsHistoryList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PropertiesDetailsHistoryList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PropertiesDetailsHistoryList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PropertiesDetailsHistory> PropertiesDetailsHistoryQuery = (from a in context.PropertiesDetailsHistorys
                                                        where a.ID == id
                                                        select a);
-          
-		  
-		  			IQueryable<PropertiesDetailsHistoryList> PropertiesDetailsHistoryListQuery = GetIqueryableList( PropertiesDetailsHistoryQuery);
-			            PropertiesDetailsHistoryList PropertiesDetailsHistoryList = PropertiesDetailsHistoryListQuery.FirstOrDefault();
+
+             
+            IQueryable<PropertiesDetailsHistoryList> PropertiesDetailsHistoryListQuery = GetIqueryableList( PropertiesDetailsHistoryQuery);
+            PropertiesDetailsHistoryList PropertiesDetailsHistoryList = PropertiesDetailsHistoryListQuery.FirstOrDefault();
             return PropertiesDetailsHistoryList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PropertiesDetailsHistory>(nonListQueryOperation, iQueryable);
 
             IQueryable<PropertiesDetailsHistoryList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PropertiesDetailsHistoryList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PropertiesDetailsHistoryList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

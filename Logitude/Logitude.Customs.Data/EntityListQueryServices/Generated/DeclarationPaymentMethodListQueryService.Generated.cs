@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationPaymentMethodList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeclarationPaymentMethodList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeclarationPaymentMethodList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationPaymentMethodList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationPaymentMethod> DeclarationPaymentMethodQuery = (from a in context.DeclarationPaymentMethods
                                                        where a.DeclarationId == declarationid && a.Line == line
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationPaymentMethodList> DeclarationPaymentMethodListQuery = GetIqueryableList( DeclarationPaymentMethodQuery);
-			            DeclarationPaymentMethodList DeclarationPaymentMethodList = DeclarationPaymentMethodListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationPaymentMethodList> DeclarationPaymentMethodListQuery = GetIqueryableList( DeclarationPaymentMethodQuery);
+            DeclarationPaymentMethodList DeclarationPaymentMethodList = DeclarationPaymentMethodListQuery.FirstOrDefault();
             return DeclarationPaymentMethodList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DeclarationPaymentMethod>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeclarationPaymentMethodList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeclarationPaymentMethodList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeclarationPaymentMethodList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

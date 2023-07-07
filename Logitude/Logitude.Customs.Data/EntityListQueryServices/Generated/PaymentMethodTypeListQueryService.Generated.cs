@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PaymentMethodTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PaymentMethodTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PaymentMethodTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PaymentMethodTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PaymentMethodType> PaymentMethodTypeQuery = (from a in context.PaymentMethodTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PaymentMethodTypeList> PaymentMethodTypeListQuery = GetIqueryableList( PaymentMethodTypeQuery);
-			            PaymentMethodTypeList PaymentMethodTypeList = PaymentMethodTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PaymentMethodTypeList> PaymentMethodTypeListQuery = GetIqueryableList( PaymentMethodTypeQuery);
+            PaymentMethodTypeList PaymentMethodTypeList = PaymentMethodTypeListQuery.FirstOrDefault();
             return PaymentMethodTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PaymentMethodType>(nonListQueryOperation, iQueryable);
 
             IQueryable<PaymentMethodTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PaymentMethodTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PaymentMethodTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

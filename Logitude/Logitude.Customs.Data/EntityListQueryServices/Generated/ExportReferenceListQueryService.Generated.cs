@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ExportReferenceList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ExportReferenceList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ExportReferenceList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ExportReferenceList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportReference> ExportReferenceQuery = (from a in context.ExportReferences
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ExportReferenceList> ExportReferenceListQuery = GetIqueryableList( ExportReferenceQuery);
-			            ExportReferenceList ExportReferenceList = ExportReferenceListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExportReferenceList> ExportReferenceListQuery = GetIqueryableList( ExportReferenceQuery);
+            ExportReferenceList ExportReferenceList = ExportReferenceListQuery.FirstOrDefault();
             return ExportReferenceList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ExportReference>(nonListQueryOperation, iQueryable);
 
             IQueryable<ExportReferenceList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ExportReferenceList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ExportReferenceList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

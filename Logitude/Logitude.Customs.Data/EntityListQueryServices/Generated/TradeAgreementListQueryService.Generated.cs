@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<TradeAgreementList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<TradeAgreementList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<TradeAgreementList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(TradeAgreementList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TradeAgreement> TradeAgreementQuery = (from a in context.TradeAgreements
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TradeAgreementList> TradeAgreementListQuery = GetIqueryableList( TradeAgreementQuery);
-			            TradeAgreementList TradeAgreementList = TradeAgreementListQuery.FirstOrDefault();
+
+             
+            IQueryable<TradeAgreementList> TradeAgreementListQuery = GetIqueryableList( TradeAgreementQuery);
+            TradeAgreementList TradeAgreementList = TradeAgreementListQuery.FirstOrDefault();
             return TradeAgreementList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<TradeAgreement>(nonListQueryOperation, iQueryable);
 
             IQueryable<TradeAgreementList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<TradeAgreementList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<TradeAgreementList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

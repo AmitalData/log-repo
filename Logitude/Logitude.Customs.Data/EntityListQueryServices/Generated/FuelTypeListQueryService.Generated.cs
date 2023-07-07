@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<FuelTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<FuelTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<FuelTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(FuelTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<FuelType> FuelTypeQuery = (from a in context.FuelTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<FuelTypeList> FuelTypeListQuery = GetIqueryableList( FuelTypeQuery);
-			            FuelTypeList FuelTypeList = FuelTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<FuelTypeList> FuelTypeListQuery = GetIqueryableList( FuelTypeQuery);
+            FuelTypeList FuelTypeList = FuelTypeListQuery.FirstOrDefault();
             return FuelTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<FuelType>(nonListQueryOperation, iQueryable);
 
             IQueryable<FuelTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<FuelTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<FuelTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

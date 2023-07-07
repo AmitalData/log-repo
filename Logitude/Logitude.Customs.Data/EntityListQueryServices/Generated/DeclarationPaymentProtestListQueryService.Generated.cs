@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationPaymentProtestList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeclarationPaymentProtestList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeclarationPaymentProtestList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationPaymentProtestList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationPaymentProtest> DeclarationPaymentProtestQuery = (from a in context.DeclarationPaymentProtests
                                                        where a.DeclarationId == declarationid && a.Line == line
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationPaymentProtestList> DeclarationPaymentProtestListQuery = GetIqueryableList( DeclarationPaymentProtestQuery);
-			            DeclarationPaymentProtestList DeclarationPaymentProtestList = DeclarationPaymentProtestListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationPaymentProtestList> DeclarationPaymentProtestListQuery = GetIqueryableList( DeclarationPaymentProtestQuery);
+            DeclarationPaymentProtestList DeclarationPaymentProtestList = DeclarationPaymentProtestListQuery.FirstOrDefault();
             return DeclarationPaymentProtestList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DeclarationPaymentProtest>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeclarationPaymentProtestList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeclarationPaymentProtestList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeclarationPaymentProtestList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

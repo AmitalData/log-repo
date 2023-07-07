@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<TPGFileTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<TPGFileTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<TPGFileTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(TPGFileTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TPGFileType> TPGFileTypeQuery = (from a in context.TPGFileTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TPGFileTypeList> TPGFileTypeListQuery = GetIqueryableList( TPGFileTypeQuery);
-			            TPGFileTypeList TPGFileTypeList = TPGFileTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<TPGFileTypeList> TPGFileTypeListQuery = GetIqueryableList( TPGFileTypeQuery);
+            TPGFileTypeList TPGFileTypeList = TPGFileTypeListQuery.FirstOrDefault();
             return TPGFileTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<TPGFileType>(nonListQueryOperation, iQueryable);
 
             IQueryable<TPGFileTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<TPGFileTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<TPGFileTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

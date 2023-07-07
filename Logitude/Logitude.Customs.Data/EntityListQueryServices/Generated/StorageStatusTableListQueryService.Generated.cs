@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<StorageStatusTableList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<StorageStatusTableList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<StorageStatusTableList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(StorageStatusTableList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<StorageStatusTable> StorageStatusTableQuery = (from a in context.StorageStatusTables
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<StorageStatusTableList> StorageStatusTableListQuery = GetIqueryableList( StorageStatusTableQuery);
-			            StorageStatusTableList StorageStatusTableList = StorageStatusTableListQuery.FirstOrDefault();
+
+             
+            IQueryable<StorageStatusTableList> StorageStatusTableListQuery = GetIqueryableList( StorageStatusTableQuery);
+            StorageStatusTableList StorageStatusTableList = StorageStatusTableListQuery.FirstOrDefault();
             return StorageStatusTableList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<StorageStatusTable>(nonListQueryOperation, iQueryable);
 
             IQueryable<StorageStatusTableList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<StorageStatusTableList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<StorageStatusTableList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ProceduralFaultInSourceTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ProceduralFaultInSourceTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ProceduralFaultInSourceTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ProceduralFaultInSourceTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ProceduralFaultInSourceType> ProceduralFaultInSourceTypeQuery = (from a in context.ProceduralFaultInSourceTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ProceduralFaultInSourceTypeList> ProceduralFaultInSourceTypeListQuery = GetIqueryableList( ProceduralFaultInSourceTypeQuery);
-			            ProceduralFaultInSourceTypeList ProceduralFaultInSourceTypeList = ProceduralFaultInSourceTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ProceduralFaultInSourceTypeList> ProceduralFaultInSourceTypeListQuery = GetIqueryableList( ProceduralFaultInSourceTypeQuery);
+            ProceduralFaultInSourceTypeList ProceduralFaultInSourceTypeList = ProceduralFaultInSourceTypeListQuery.FirstOrDefault();
             return ProceduralFaultInSourceTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ProceduralFaultInSourceType>(nonListQueryOperation, iQueryable);
 
             IQueryable<ProceduralFaultInSourceTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ProceduralFaultInSourceTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ProceduralFaultInSourceTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

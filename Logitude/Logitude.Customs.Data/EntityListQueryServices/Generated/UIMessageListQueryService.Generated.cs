@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<UIMessageList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<UIMessageList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<UIMessageList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(UIMessageList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<UIMessage> UIMessageQuery = (from a in context.UIMessages
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<UIMessageList> UIMessageListQuery = GetIqueryableList( UIMessageQuery);
-			            UIMessageList UIMessageList = UIMessageListQuery.FirstOrDefault();
+
+             
+            IQueryable<UIMessageList> UIMessageListQuery = GetIqueryableList( UIMessageQuery);
+            UIMessageList UIMessageList = UIMessageListQuery.FirstOrDefault();
             return UIMessageList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<UIMessage>(nonListQueryOperation, iQueryable);
 
             IQueryable<UIMessageList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<UIMessageList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<UIMessageList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

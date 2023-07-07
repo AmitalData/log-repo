@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<InterfaceSendOptionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<InterfaceSendOptionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<InterfaceSendOptionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(InterfaceSendOptionList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<InterfaceSendOption> InterfaceSendOptionQuery = (from a in context.InterfaceSendOptions
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<InterfaceSendOptionList> InterfaceSendOptionListQuery = GetIqueryableList( InterfaceSendOptionQuery);
-			            InterfaceSendOptionList InterfaceSendOptionList = InterfaceSendOptionListQuery.FirstOrDefault();
+
+             
+            IQueryable<InterfaceSendOptionList> InterfaceSendOptionListQuery = GetIqueryableList( InterfaceSendOptionQuery);
+            InterfaceSendOptionList InterfaceSendOptionList = InterfaceSendOptionListQuery.FirstOrDefault();
             return InterfaceSendOptionList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<InterfaceSendOption>(nonListQueryOperation, iQueryable);
 
             IQueryable<InterfaceSendOptionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<InterfaceSendOptionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<InterfaceSendOptionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -8,55 +8,54 @@
 
   <OracleScript>
     <![CDATA[
-CREATE OR REPLACE PROCEDURE usp_UpdateCourierHawbFromExcel (
-    v_Tenant IN NUMBER DEFAULT NULL,
-    v_userid IN VARCHAR DEFAULT NULL,
-    v_courierhawbList IN varchar_TABLE,
-    not_found_declarations OUT SYS_REFCURSOR
+create or replace PROCEDURE usp_UpdateCourierHawbFromExcel (
+v_Tenant IN NUMBER DEFAULT NULL,
+v_userid IN VARCHAR DEFAULT NULL,
+v_courierhawbList IN varchar_TABLE,
+not_found_declarations OUT SYS_REFCURSOR
 )
 IS
-    -- Declare a collection to hold the non-existing strings
-    TYPE not_found_list IS TABLE OF VARCHAR(4000) INDEX BY PLS_INTEGER;
-    non_existing_strings not_found_list;
-    v_dummy VARCHAR2(4000);
-    v_cursor SYS_REFCURSOR; -- Declare a cursor variable
-
-    -- Declare a nested table type to hold the not found strings
-    TYPE string_table IS TABLE OF VARCHAR(4000) INDEX BY PLS_INTEGER;
-    v_not_found_strings string_table := string_table();
+-- Declare a collection to hold the non-existing strings
+TYPE not_found_list IS TABLE OF VARCHAR(4000) INDEX BY PLS_INTEGER;
+non_existing_strings not_found_list;
+v_dummy VARCHAR2(4000);
+v_cursor SYS_REFCURSOR; -- Declare a cursor variable
+-- Declare a nested table type to hold the not found strings
+TYPE string_table IS TABLE OF VARCHAR(4000) INDEX BY PLS_INTEGER;
+v_not_found_strings string_table := string_table();
 BEGIN
-    -- Iterate over the input strings
-      delete from CourierHawbFromExcels where tenant=v_Tenant and createdbyuserid=v_userid ;
-
-    FOR i IN 1..v_courierhawbList.COUNT LOOP
-        -- Check if the string exists in TableA
-        BEGIN
-            SELECT id
-            INTO   v_dummy
-            FROM   declarations
-            WHERE  courierhawb = v_courierhawbList(i);
-
-            -- If the string exists, insert the selected column value into TableB
-            INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid)
-            SELECT v_Tenant, v_userid, id
-            FROM   declarations
-            WHERE  courierhawb = v_courierhawbList(i);
-        EXCEPTION
-            WHEN NO_DATA_FOUND THEN
-                -- If the string doesn't exist, add it to the not found strings collection
-                INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid, NotFound, CourierHawb) 
-                VALUES (v_Tenant, v_userid, i, 1, v_courierhawbList(i));
-        END;
-    END LOOP;
-
-    -- Open the cursor with the not found strings
-    OPEN v_cursor FOR
-        SELECT CourierHawb
-        FROM CourierHawbFromExcels 
-        WHERE CREATEDBYUSERID = v_userid AND NotFound = 1 AND tenant = v_Tenant;
-
-    -- Assign the cursor variable to the output parameter
-    not_found_declarations := v_cursor;
+-- Iterate over the input strings
+delete from CourierHawbFromExcels where notfound=1 ;
+delete from CourierHawbFromExcels where tenant=v_Tenant and createdbyuserid=v_userid ;
+FOR i IN 1..v_courierhawbList.COUNT LOOP
+-- Check if the string exists in TableA
+BEGIN
+SELECT id
+INTO   v_dummy
+FROM   declarations
+WHERE  courierhawb = v_courierhawbList(i);
+-- If the string exists, insert the selected column value into TableB
+INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid)
+SELECT v_Tenant, v_userid, id
+FROM   declarations
+WHERE  courierhawb = v_courierhawbList(i);
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+-- If the string doesn't exist, add it to the not found strings collection
+INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid, NotFound, CourierHawb,ErrorMessage)
+VALUES (v_Tenant, v_userid, i, 1, v_courierhawbList(i),'ש.מ.ב לא אותר במערכת');
+WHEN DUP_VAL_ON_INDEX  THEN 
+INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid, NotFound, CourierHawb,ErrorMessage)
+VALUES (v_Tenant, v_userid, i, 1, v_courierhawbList(i),'ש.מ.ב נקלט ע"י משתמש אחר');
+END;
+END LOOP;
+-- Open the cursor with the not found strings
+OPEN v_cursor FOR
+SELECT *
+FROM CourierHawbFromExcels
+WHERE CREATEDBYUSERID = v_userid AND NotFound = 1 AND tenant = v_Tenant;
+-- Assign the cursor variable to the output parameter
+not_found_declarations := v_cursor;
 END;
     ]]>
   </OracleScript>

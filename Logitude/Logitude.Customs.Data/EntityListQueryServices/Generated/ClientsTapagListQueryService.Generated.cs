@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClientsTapagList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ClientsTapagList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ClientsTapagList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClientsTapagList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClientsTapag> ClientsTapagQuery = (from a in context.ClientsTapags
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ClientsTapagList> ClientsTapagListQuery = GetIqueryableList( ClientsTapagQuery);
-			            ClientsTapagList ClientsTapagList = ClientsTapagListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClientsTapagList> ClientsTapagListQuery = GetIqueryableList( ClientsTapagQuery);
+            ClientsTapagList ClientsTapagList = ClientsTapagListQuery.FirstOrDefault();
             return ClientsTapagList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ClientsTapag>(nonListQueryOperation, iQueryable);
 
             IQueryable<ClientsTapagList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ClientsTapagList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ClientsTapagList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

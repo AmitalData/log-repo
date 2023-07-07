@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsHouseTypeAdditionalList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomsHouseTypeAdditionalList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomsHouseTypeAdditionalList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsHouseTypeAdditionalList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsHouseTypeAdditional> CustomsHouseTypeAdditionalQuery = (from a in context.CustomsHouseTypeAdditionals
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsHouseTypeAdditionalList> CustomsHouseTypeAdditionalListQuery = GetIqueryableList( CustomsHouseTypeAdditionalQuery);
-			            CustomsHouseTypeAdditionalList CustomsHouseTypeAdditionalList = CustomsHouseTypeAdditionalListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsHouseTypeAdditionalList> CustomsHouseTypeAdditionalListQuery = GetIqueryableList( CustomsHouseTypeAdditionalQuery);
+            CustomsHouseTypeAdditionalList CustomsHouseTypeAdditionalList = CustomsHouseTypeAdditionalListQuery.FirstOrDefault();
             return CustomsHouseTypeAdditionalList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsHouseTypeAdditional>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsHouseTypeAdditionalList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomsHouseTypeAdditionalList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomsHouseTypeAdditionalList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

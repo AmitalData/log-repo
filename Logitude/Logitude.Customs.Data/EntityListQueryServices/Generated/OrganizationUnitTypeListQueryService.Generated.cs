@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<OrganizationUnitTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<OrganizationUnitTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<OrganizationUnitTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(OrganizationUnitTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<OrganizationUnitType> OrganizationUnitTypeQuery = (from a in context.OrganizationUnitTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<OrganizationUnitTypeList> OrganizationUnitTypeListQuery = GetIqueryableList( OrganizationUnitTypeQuery);
-			            OrganizationUnitTypeList OrganizationUnitTypeList = OrganizationUnitTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<OrganizationUnitTypeList> OrganizationUnitTypeListQuery = GetIqueryableList( OrganizationUnitTypeQuery);
+            OrganizationUnitTypeList OrganizationUnitTypeList = OrganizationUnitTypeListQuery.FirstOrDefault();
             return OrganizationUnitTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<OrganizationUnitType>(nonListQueryOperation, iQueryable);
 
             IQueryable<OrganizationUnitTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<OrganizationUnitTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<OrganizationUnitTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

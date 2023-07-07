@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CollateralTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CollateralTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CollateralTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CollateralTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CollateralType> CollateralTypeQuery = (from a in context.CollateralTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CollateralTypeList> CollateralTypeListQuery = GetIqueryableList( CollateralTypeQuery);
-			            CollateralTypeList CollateralTypeList = CollateralTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CollateralTypeList> CollateralTypeListQuery = GetIqueryableList( CollateralTypeQuery);
+            CollateralTypeList CollateralTypeList = CollateralTypeListQuery.FirstOrDefault();
             return CollateralTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CollateralType>(nonListQueryOperation, iQueryable);
 
             IQueryable<CollateralTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CollateralTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CollateralTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

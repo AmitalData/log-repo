@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DBMigrationList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DBMigrationList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DBMigrationList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DBMigrationList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DBMigration> DBMigrationQuery = (from a in context.DBMigrations
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<DBMigrationList> DBMigrationListQuery = GetIqueryableList( DBMigrationQuery);
-			            DBMigrationList DBMigrationList = DBMigrationListQuery.FirstOrDefault();
+
+             
+            IQueryable<DBMigrationList> DBMigrationListQuery = GetIqueryableList( DBMigrationQuery);
+            DBMigrationList DBMigrationList = DBMigrationListQuery.FirstOrDefault();
             return DBMigrationList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DBMigration>(nonListQueryOperation, iQueryable);
 
             IQueryable<DBMigrationList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DBMigrationList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DBMigrationList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

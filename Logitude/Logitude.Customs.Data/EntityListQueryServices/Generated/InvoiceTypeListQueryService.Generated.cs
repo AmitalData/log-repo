@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<InvoiceTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<InvoiceTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<InvoiceTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(InvoiceTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<InvoiceType> InvoiceTypeQuery = (from a in context.InvoiceTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<InvoiceTypeList> InvoiceTypeListQuery = GetIqueryableList( InvoiceTypeQuery);
-			            InvoiceTypeList InvoiceTypeList = InvoiceTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<InvoiceTypeList> InvoiceTypeListQuery = GetIqueryableList( InvoiceTypeQuery);
+            InvoiceTypeList InvoiceTypeList = InvoiceTypeListQuery.FirstOrDefault();
             return InvoiceTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<InvoiceType>(nonListQueryOperation, iQueryable);
 
             IQueryable<InvoiceTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<InvoiceTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<InvoiceTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

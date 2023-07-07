@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CargoSplitRequestStatusList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CargoSplitRequestStatusList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CargoSplitRequestStatusList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CargoSplitRequestStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CargoSplitRequestStatus> CargoSplitRequestStatusQuery = (from a in context.CargoSplitRequestStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CargoSplitRequestStatusList> CargoSplitRequestStatusListQuery = GetIqueryableList( CargoSplitRequestStatusQuery);
-			            CargoSplitRequestStatusList CargoSplitRequestStatusList = CargoSplitRequestStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<CargoSplitRequestStatusList> CargoSplitRequestStatusListQuery = GetIqueryableList( CargoSplitRequestStatusQuery);
+            CargoSplitRequestStatusList CargoSplitRequestStatusList = CargoSplitRequestStatusListQuery.FirstOrDefault();
             return CargoSplitRequestStatusList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CargoSplitRequestStatus>(nonListQueryOperation, iQueryable);
 
             IQueryable<CargoSplitRequestStatusList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CargoSplitRequestStatusList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CargoSplitRequestStatusList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

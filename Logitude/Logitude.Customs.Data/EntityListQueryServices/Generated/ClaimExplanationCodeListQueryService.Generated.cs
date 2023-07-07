@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClaimExplanationCodeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ClaimExplanationCodeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ClaimExplanationCodeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClaimExplanationCodeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimExplanationCode> ClaimExplanationCodeQuery = (from a in context.ClaimExplanationCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ClaimExplanationCodeList> ClaimExplanationCodeListQuery = GetIqueryableList( ClaimExplanationCodeQuery);
-			            ClaimExplanationCodeList ClaimExplanationCodeList = ClaimExplanationCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClaimExplanationCodeList> ClaimExplanationCodeListQuery = GetIqueryableList( ClaimExplanationCodeQuery);
+            ClaimExplanationCodeList ClaimExplanationCodeList = ClaimExplanationCodeListQuery.FirstOrDefault();
             return ClaimExplanationCodeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ClaimExplanationCode>(nonListQueryOperation, iQueryable);
 
             IQueryable<ClaimExplanationCodeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ClaimExplanationCodeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ClaimExplanationCodeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

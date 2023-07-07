@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DepositConditionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DepositConditionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DepositConditionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DepositConditionList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DepositCondition> DepositConditionQuery = (from a in context.DepositConditions
                                                        where a.DepositId == depositid && a.DepositConditionCode == depositconditioncode
                                                        select a);
-          
-		  
-		  			IQueryable<DepositConditionList> DepositConditionListQuery = GetIqueryableList( DepositConditionQuery);
-			            DepositConditionList DepositConditionList = DepositConditionListQuery.FirstOrDefault();
+
+             
+            IQueryable<DepositConditionList> DepositConditionListQuery = GetIqueryableList( DepositConditionQuery);
+            DepositConditionList DepositConditionList = DepositConditionListQuery.FirstOrDefault();
             return DepositConditionList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DepositCondition>(nonListQueryOperation, iQueryable);
 
             IQueryable<DepositConditionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DepositConditionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DepositConditionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

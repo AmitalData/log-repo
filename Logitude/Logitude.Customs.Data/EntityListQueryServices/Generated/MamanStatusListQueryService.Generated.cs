@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<MamanStatusList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<MamanStatusList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<MamanStatusList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(MamanStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<MamanStatus> MamanStatusQuery = (from a in context.MamanStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<MamanStatusList> MamanStatusListQuery = GetIqueryableList( MamanStatusQuery);
-			            MamanStatusList MamanStatusList = MamanStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<MamanStatusList> MamanStatusListQuery = GetIqueryableList( MamanStatusQuery);
+            MamanStatusList MamanStatusList = MamanStatusListQuery.FirstOrDefault();
             return MamanStatusList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<MamanStatus>(nonListQueryOperation, iQueryable);
 
             IQueryable<MamanStatusList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<MamanStatusList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<MamanStatusList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AmendmentRequestStatusList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<AmendmentRequestStatusList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<AmendmentRequestStatusList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AmendmentRequestStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmendmentRequestStatus> AmendmentRequestStatusQuery = (from a in context.AmendmentRequestStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AmendmentRequestStatusList> AmendmentRequestStatusListQuery = GetIqueryableList( AmendmentRequestStatusQuery);
-			            AmendmentRequestStatusList AmendmentRequestStatusList = AmendmentRequestStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<AmendmentRequestStatusList> AmendmentRequestStatusListQuery = GetIqueryableList( AmendmentRequestStatusQuery);
+            AmendmentRequestStatusList AmendmentRequestStatusList = AmendmentRequestStatusListQuery.FirstOrDefault();
             return AmendmentRequestStatusList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<AmendmentRequestStatus>(nonListQueryOperation, iQueryable);
 
             IQueryable<AmendmentRequestStatusList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<AmendmentRequestStatusList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<AmendmentRequestStatusList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

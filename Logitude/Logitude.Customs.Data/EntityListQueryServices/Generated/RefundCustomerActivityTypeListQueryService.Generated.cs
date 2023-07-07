@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<RefundCustomerActivityTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<RefundCustomerActivityTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<RefundCustomerActivityTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(RefundCustomerActivityTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<RefundCustomerActivityType> RefundCustomerActivityTypeQuery = (from a in context.RefundCustomerActivityTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<RefundCustomerActivityTypeList> RefundCustomerActivityTypeListQuery = GetIqueryableList( RefundCustomerActivityTypeQuery);
-			            RefundCustomerActivityTypeList RefundCustomerActivityTypeList = RefundCustomerActivityTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<RefundCustomerActivityTypeList> RefundCustomerActivityTypeListQuery = GetIqueryableList( RefundCustomerActivityTypeQuery);
+            RefundCustomerActivityTypeList RefundCustomerActivityTypeList = RefundCustomerActivityTypeListQuery.FirstOrDefault();
             return RefundCustomerActivityTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<RefundCustomerActivityType>(nonListQueryOperation, iQueryable);
 
             IQueryable<RefundCustomerActivityTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<RefundCustomerActivityTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<RefundCustomerActivityTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ImporterPeriodicDeclarStatusList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ImporterPeriodicDeclarStatusList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ImporterPeriodicDeclarStatusList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ImporterPeriodicDeclarStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ImporterPeriodicDeclarStatus> ImporterPeriodicDeclarStatusQuery = (from a in context.ImporterPeriodicDeclarStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ImporterPeriodicDeclarStatusList> ImporterPeriodicDeclarStatusListQuery = GetIqueryableList( ImporterPeriodicDeclarStatusQuery);
-			            ImporterPeriodicDeclarStatusList ImporterPeriodicDeclarStatusList = ImporterPeriodicDeclarStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<ImporterPeriodicDeclarStatusList> ImporterPeriodicDeclarStatusListQuery = GetIqueryableList( ImporterPeriodicDeclarStatusQuery);
+            ImporterPeriodicDeclarStatusList ImporterPeriodicDeclarStatusList = ImporterPeriodicDeclarStatusListQuery.FirstOrDefault();
             return ImporterPeriodicDeclarStatusList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ImporterPeriodicDeclarStatus>(nonListQueryOperation, iQueryable);
 
             IQueryable<ImporterPeriodicDeclarStatusList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ImporterPeriodicDeclarStatusList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ImporterPeriodicDeclarStatusList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

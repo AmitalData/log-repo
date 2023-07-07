@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomDocumentTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomDocumentTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomDocumentTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomDocumentTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomDocumentType> CustomDocumentTypeQuery = (from a in context.CustomDocumentTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomDocumentTypeList> CustomDocumentTypeListQuery = GetIqueryableList( CustomDocumentTypeQuery);
-			            CustomDocumentTypeList CustomDocumentTypeList = CustomDocumentTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomDocumentTypeList> CustomDocumentTypeListQuery = GetIqueryableList( CustomDocumentTypeQuery);
+            CustomDocumentTypeList CustomDocumentTypeList = CustomDocumentTypeListQuery.FirstOrDefault();
             return CustomDocumentTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomDocumentType>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomDocumentTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomDocumentTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomDocumentTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<TransactionNatureTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<TransactionNatureTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<TransactionNatureTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(TransactionNatureTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TransactionNatureType> TransactionNatureTypeQuery = (from a in context.TransactionNatureTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TransactionNatureTypeList> TransactionNatureTypeListQuery = GetIqueryableList( TransactionNatureTypeQuery);
-			            TransactionNatureTypeList TransactionNatureTypeList = TransactionNatureTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<TransactionNatureTypeList> TransactionNatureTypeListQuery = GetIqueryableList( TransactionNatureTypeQuery);
+            TransactionNatureTypeList TransactionNatureTypeList = TransactionNatureTypeListQuery.FirstOrDefault();
             return TransactionNatureTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<TransactionNatureType>(nonListQueryOperation, iQueryable);
 
             IQueryable<TransactionNatureTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<TransactionNatureTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<TransactionNatureTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

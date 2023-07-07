@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsAutonomyKeywordList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomsAutonomyKeywordList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomsAutonomyKeywordList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsAutonomyKeywordList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsAutonomyKeyword> CustomsAutonomyKeywordQuery = (from a in context.CustomsAutonomyKeywords
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsAutonomyKeywordList> CustomsAutonomyKeywordListQuery = GetIqueryableList( CustomsAutonomyKeywordQuery);
-			            CustomsAutonomyKeywordList CustomsAutonomyKeywordList = CustomsAutonomyKeywordListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsAutonomyKeywordList> CustomsAutonomyKeywordListQuery = GetIqueryableList( CustomsAutonomyKeywordQuery);
+            CustomsAutonomyKeywordList CustomsAutonomyKeywordList = CustomsAutonomyKeywordListQuery.FirstOrDefault();
             return CustomsAutonomyKeywordList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsAutonomyKeyword>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsAutonomyKeywordList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomsAutonomyKeywordList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomsAutonomyKeywordList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

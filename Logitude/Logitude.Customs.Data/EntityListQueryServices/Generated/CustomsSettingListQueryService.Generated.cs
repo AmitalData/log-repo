@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsSettingList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomsSettingList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomsSettingList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsSettingList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsSetting> CustomsSettingQuery = (from a in context.CustomsSettings
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsSettingList> CustomsSettingListQuery = GetIqueryableList( CustomsSettingQuery);
-			            CustomsSettingList CustomsSettingList = CustomsSettingListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsSettingList> CustomsSettingListQuery = GetIqueryableList( CustomsSettingQuery);
+            CustomsSettingList CustomsSettingList = CustomsSettingListQuery.FirstOrDefault();
             return CustomsSettingList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsSetting>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsSettingList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomsSettingList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomsSettingList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

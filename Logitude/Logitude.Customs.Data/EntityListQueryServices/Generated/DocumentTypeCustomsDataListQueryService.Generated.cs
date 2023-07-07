@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DocumentTypeCustomsDataList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DocumentTypeCustomsDataList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DocumentTypeCustomsDataList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DocumentTypeCustomsDataList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DocumentTypeCustomsData> DocumentTypeCustomsDataQuery = (from a in context.DocumentTypeCustomsData
                                                        where a.DocumentTypeId == documenttypeid
                                                        select a);
-          
-		  
-		  			IQueryable<DocumentTypeCustomsDataList> DocumentTypeCustomsDataListQuery = GetIqueryableList( DocumentTypeCustomsDataQuery);
-			            DocumentTypeCustomsDataList DocumentTypeCustomsDataList = DocumentTypeCustomsDataListQuery.FirstOrDefault();
+
+             
+            IQueryable<DocumentTypeCustomsDataList> DocumentTypeCustomsDataListQuery = GetIqueryableList( DocumentTypeCustomsDataQuery);
+            DocumentTypeCustomsDataList DocumentTypeCustomsDataList = DocumentTypeCustomsDataListQuery.FirstOrDefault();
             return DocumentTypeCustomsDataList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DocumentTypeCustomsData>(nonListQueryOperation, iQueryable);
 
             IQueryable<DocumentTypeCustomsDataList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DocumentTypeCustomsDataList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DocumentTypeCustomsDataList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<TapagTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<TapagTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<TapagTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(TapagTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TapagType> TapagTypeQuery = (from a in context.TapagTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TapagTypeList> TapagTypeListQuery = GetIqueryableList( TapagTypeQuery);
-			            TapagTypeList TapagTypeList = TapagTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<TapagTypeList> TapagTypeListQuery = GetIqueryableList( TapagTypeQuery);
+            TapagTypeList TapagTypeList = TapagTypeListQuery.FirstOrDefault();
             return TapagTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<TapagType>(nonListQueryOperation, iQueryable);
 
             IQueryable<TapagTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<TapagTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<TapagTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

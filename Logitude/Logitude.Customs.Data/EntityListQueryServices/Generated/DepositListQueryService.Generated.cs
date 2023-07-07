@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DepositList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DepositList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DepositList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DepositList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Deposit> DepositQuery = (from a in context.Deposits
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<DepositList> DepositListQuery = GetIqueryableList( DepositQuery);
-			            DepositList DepositList = DepositListQuery.FirstOrDefault();
+
+             
+            IQueryable<DepositList> DepositListQuery = GetIqueryableList( DepositQuery);
+            DepositList DepositList = DepositListQuery.FirstOrDefault();
             return DepositList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<Deposit>(nonListQueryOperation, iQueryable);
 
             IQueryable<DepositList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DepositList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DepositList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

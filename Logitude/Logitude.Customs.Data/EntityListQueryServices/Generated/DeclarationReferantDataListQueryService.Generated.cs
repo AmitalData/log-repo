@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationReferantDataList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeclarationReferantDataList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeclarationReferantDataList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationReferantDataList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationReferantData> DeclarationReferantDataQuery = (from a in context.DeclarationReferantDatas
                                                        where a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationReferantDataList> DeclarationReferantDataListQuery = GetIqueryableList( DeclarationReferantDataQuery);
-			            DeclarationReferantDataList DeclarationReferantDataList = DeclarationReferantDataListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationReferantDataList> DeclarationReferantDataListQuery = GetIqueryableList( DeclarationReferantDataQuery);
+            DeclarationReferantDataList DeclarationReferantDataList = DeclarationReferantDataListQuery.FirstOrDefault();
             return DeclarationReferantDataList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DeclarationReferantData>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeclarationReferantDataList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeclarationReferantDataList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeclarationReferantDataList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

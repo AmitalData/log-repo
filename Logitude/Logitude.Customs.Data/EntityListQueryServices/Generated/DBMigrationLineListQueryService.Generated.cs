@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DBMigrationLineList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DBMigrationLineList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DBMigrationLineList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DBMigrationLineList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DBMigrationLine> DBMigrationLineQuery = (from a in context.DBMigrationLines
                                                        where a.DBMigrationId == dbmigrationid && a.CounterKey == counterkey
                                                        select a);
-          
-		  
-		  			IQueryable<DBMigrationLineList> DBMigrationLineListQuery = GetIqueryableList( DBMigrationLineQuery);
-			            DBMigrationLineList DBMigrationLineList = DBMigrationLineListQuery.FirstOrDefault();
+
+             
+            IQueryable<DBMigrationLineList> DBMigrationLineListQuery = GetIqueryableList( DBMigrationLineQuery);
+            DBMigrationLineList DBMigrationLineList = DBMigrationLineListQuery.FirstOrDefault();
             return DBMigrationLineList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DBMigrationLine>(nonListQueryOperation, iQueryable);
 
             IQueryable<DBMigrationLineList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DBMigrationLineList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DBMigrationLineList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

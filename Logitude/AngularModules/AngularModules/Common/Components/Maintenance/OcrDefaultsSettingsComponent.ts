@@ -31,6 +31,7 @@ import { SupplierInvoiceService } from 'Customs/Services/Others/SupplierInvoiceS
 import { MultiUpdateOcrParams, SupplierInvioceItemCertificat } from 'Customs/DataContract/RequestParams/MultiUpdateOcrParams';
 import { forEach } from 'cypress/types/lodash';
 import { SupplierInvioceItemCertificatsService } from 'Customs/Services/WebServices/SupplierInvioceItemCertificatsService';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 
 @Component({
     selector: 'OcrDefaultsSettingsComponent',
@@ -57,10 +58,13 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     private buyerRoleCodeChecked: boolean = true
     private partyRelationshipCodeChecked: boolean = true
     private accountTypeCodeChecked: boolean = true
+    FIELD_IS_REQUIERD: string;
 
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
+        this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
         this.CurrentSession.StartBusyIndicator('Loading...');
         this.LoadDefaults();
 
@@ -99,30 +103,30 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         this.ProcessTypeCode = "1100105"
         this.BuyerRoleCode = "9"
     }
-    
+
     Add() {
 
         var item: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(null);
-        item.SequenceNumeric = this.ItemsSource.Collection.length+1;
+        item.SequenceNumeric = this.ItemsSource.Collection.length + 1;
         item.Tenant = this.SupplierInvioceExportDefaultPM.Tenant;
         this.ItemsSource.Insert(new InvoiceItemCertificateLine(item, null));
     }
 
     DeleteButtonClicked(item: any) {
-       var  sequenceNumeric = 1;
-       this.ItemsSource.Remove(item);
-        this.ItemsSource.Collection.forEach((item:InvoiceItemCertificateLine) => {
+        var sequenceNumeric = 1;
+        this.ItemsSource.Remove(item);
+        this.ItemsSource.Collection.forEach((item: InvoiceItemCertificateLine) => {
             item.SequenceNumeric = sequenceNumeric;
             sequenceNumeric++;
         });
-       
+
     }
-   
+
 
 
     get AccountTypeCode() { return this.SupplierInvioceExportDefaultPM?.AccountTypeCode; }
     set AccountTypeCode(value: string) {
-        
+
         if (this.SupplierInvioceExportDefaultPM.AccountTypeCode != value) {
             this.SupplierInvioceExportDefaultPM.AccountTypeCode = this.AccountTypeCodeChecked ? value : "non";
 
@@ -236,6 +240,110 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
 
         }
     }
+    notMandatoryIsNotEmpty: boolean = false;
+
+    Update(multiUpdateOcrParams: MultiUpdateOcrParams) {
+        this.ValidationErrorsList = [];
+        var errors: string[] = [];
+        var isValid = true;
+        var inValid = false;
+        const decPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+        const isExport: boolean = decPM.direction == 'E'
+        for (let item of multiUpdateOcrParams.SupplierInvioceItemCertificats) {
+          
+            if (item.AttachmentTypeCode == null) {
+                //var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+                //var fieldError: string = translatedRequiredError.replace("%FieldName", "AttachmentTypeCode");
+                errors.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.SupplierInvioceItemCertificat.F.AttachmentTypeCode")));
+                isValid = false;
+                break;
+            }
+            else {
+                if (item.AttachmentTypeCode == "1" || item.AttachmentTypeCode == "2") {
+                    if (AppTool.IsNullOrEmpty(item.CertificateNumber) || AppTool.IsNullOrEmpty(item.ReqConfirmationTypeCode) || AppTool.IsNullOrEmpty(item.ResConfirmationTypeCode)) {
+                        isValid = false;
+                        inValid = true;
+                    }
+                    if (!AppTool.IsNullOrEmpty(item.CertificateExemptionTypeCode) || (!isExport && !AppTool.IsNullOrEmpty(item.CustomsAttachmentID))) {
+                        inValid = true;
+                        this.notMandatoryIsNotEmpty = true;
+                    }
+                }
+                else {
+                    if (item.AttachmentTypeCode == "4") {
+                        if (AppTool.IsNullOrEmpty(item.CertificateExemptionTypeCode) || AppTool.IsNullOrEmpty(item.ReqConfirmationTypeCode)) {
+                            isValid = false;
+                            inValid = true;
+                        }
+                        if (!AppTool.IsNullOrEmpty(item.CertificateNumber) || !AppTool.IsNullOrEmpty(item.ResConfirmationTypeCode) || (!isExport && !AppTool.IsNullOrEmpty(item.CustomsAttachmentID))) {
+                            inValid = true;
+                            this.notMandatoryIsNotEmpty = true;
+                        }
+                    }
+                }
+            }
+        }
+        if (inValid) {
+            isValid = false;
+            var confirm = new ConfirmWindow();
+            confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirm.ShowNoButton = true;
+            if (this.notMandatoryIsNotEmpty) {
+                confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CertificateNotMandatoryFields"));
+            }
+            else {
+                confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CertificateMandatoryFields"));
+            }
+            confirm.WindowClosed.subscribe((event: any) => {
+                if (confirm.Yes) {
+                    if (errors.length == 0) {
+                        SessionLocator.SelectedSession.StartBusyIndicator("");
+
+                        this._SupplierInvoiceService.PostMultiUpdateOCR(multiUpdateOcrParams)
+                            .subscribe((res: any) => {
+                                this.CurrentSession.CloseCurrentWindowEmit("update");
+
+                                SessionLocator.SelectedSession.StopBusyIndicator();
+                                var myMessageWindow = new MessageWindow();
+                                myMessageWindow.Show(res.Result);
+                                myMessageWindow.WindowClosed.subscribe(s => {
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+                                });
+                            });
+                    }
+                    else {
+                        this.ValidationErrorsList = errors;
+                    }
+                    confirm.Close();
+                }
+            });
+        }
+        else {
+            if (errors.length == 0) {
+                SessionLocator.SelectedSession.StartBusyIndicator("");
+
+                this._SupplierInvoiceService.PostMultiUpdateOCR(multiUpdateOcrParams)
+                    .subscribe((res: any) => {
+                        this.CurrentSession.CloseCurrentWindowEmit("update");
+
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        var myMessageWindow = new MessageWindow();
+                        myMessageWindow.Show(res.Result);
+                        myMessageWindow.WindowClosed.subscribe(s => {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+                        });
+                    });
+            }
+            else {
+                this.ValidationErrorsList = errors;
+            }
+        }
+        return isValid;
+    }
+
+
 
     _SupplierInvoiceService: SupplierInvoiceService = new SupplierInvoiceService();
 
@@ -265,20 +373,9 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
             currRequestParams.SupplierInvioceItemCertificats.push(supplierInvioceItemCertificat)
 
         });
+        this.Update(currRequestParams)
 
-        SessionLocator.SelectedSession.StartBusyIndicator("");
-        this._SupplierInvoiceService.PostMultiUpdateOCR(currRequestParams)
-            .subscribe((res: any) => {
-                this.CurrentSession.CloseCurrentWindowEmit("update");
 
-                SessionLocator.SelectedSession.StopBusyIndicator();
-                var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
-                myMessageWindow.WindowClosed.subscribe(s => {
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-
-                });
-            });
     }
 
 

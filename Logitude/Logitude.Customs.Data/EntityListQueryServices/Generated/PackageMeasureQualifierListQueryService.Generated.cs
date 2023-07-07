@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PackageMeasureQualifierList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PackageMeasureQualifierList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PackageMeasureQualifierList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PackageMeasureQualifierList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PackageMeasureQualifier> PackageMeasureQualifierQuery = (from a in context.PackageMeasureQualifiers
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PackageMeasureQualifierList> PackageMeasureQualifierListQuery = GetIqueryableList( PackageMeasureQualifierQuery);
-			            PackageMeasureQualifierList PackageMeasureQualifierList = PackageMeasureQualifierListQuery.FirstOrDefault();
+
+             
+            IQueryable<PackageMeasureQualifierList> PackageMeasureQualifierListQuery = GetIqueryableList( PackageMeasureQualifierQuery);
+            PackageMeasureQualifierList PackageMeasureQualifierList = PackageMeasureQualifierListQuery.FirstOrDefault();
             return PackageMeasureQualifierList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PackageMeasureQualifier>(nonListQueryOperation, iQueryable);
 
             IQueryable<PackageMeasureQualifierList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PackageMeasureQualifierList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PackageMeasureQualifierList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

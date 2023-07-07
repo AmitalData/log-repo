@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<NotificationReplyList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<NotificationReplyList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<NotificationReplyList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(NotificationReplyList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<NotificationReply> NotificationReplyQuery = (from a in context.NotificationReplies
                                                        where a.NotificationId == notificationid && a.Line == line
                                                        select a);
-          
-		  
-		  			IQueryable<NotificationReplyList> NotificationReplyListQuery = GetIqueryableList( NotificationReplyQuery);
-			            NotificationReplyList NotificationReplyList = NotificationReplyListQuery.FirstOrDefault();
+
+             
+            IQueryable<NotificationReplyList> NotificationReplyListQuery = GetIqueryableList( NotificationReplyQuery);
+            NotificationReplyList NotificationReplyList = NotificationReplyListQuery.FirstOrDefault();
             return NotificationReplyList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<NotificationReply>(nonListQueryOperation, iQueryable);
 
             IQueryable<NotificationReplyList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<NotificationReplyList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<NotificationReplyList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

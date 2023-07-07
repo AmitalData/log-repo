@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ConstraintApprovalDecisionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ConstraintApprovalDecisionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ConstraintApprovalDecisionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ConstraintApprovalDecisionList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConstraintApprovalDecision> ConstraintApprovalDecisionQuery = (from a in context.ConstraintApprovalDecisions
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ConstraintApprovalDecisionList> ConstraintApprovalDecisionListQuery = GetIqueryableList( ConstraintApprovalDecisionQuery);
-			            ConstraintApprovalDecisionList ConstraintApprovalDecisionList = ConstraintApprovalDecisionListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConstraintApprovalDecisionList> ConstraintApprovalDecisionListQuery = GetIqueryableList( ConstraintApprovalDecisionQuery);
+            ConstraintApprovalDecisionList ConstraintApprovalDecisionList = ConstraintApprovalDecisionListQuery.FirstOrDefault();
             return ConstraintApprovalDecisionList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ConstraintApprovalDecision>(nonListQueryOperation, iQueryable);
 
             IQueryable<ConstraintApprovalDecisionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ConstraintApprovalDecisionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ConstraintApprovalDecisionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

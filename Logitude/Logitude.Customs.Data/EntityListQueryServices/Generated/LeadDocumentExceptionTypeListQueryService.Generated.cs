@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<LeadDocumentExceptionTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<LeadDocumentExceptionTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<LeadDocumentExceptionTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(LeadDocumentExceptionTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<LeadDocumentExceptionType> LeadDocumentExceptionTypeQuery = (from a in context.LeadDocumentExceptionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<LeadDocumentExceptionTypeList> LeadDocumentExceptionTypeListQuery = GetIqueryableList( LeadDocumentExceptionTypeQuery);
-			            LeadDocumentExceptionTypeList LeadDocumentExceptionTypeList = LeadDocumentExceptionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<LeadDocumentExceptionTypeList> LeadDocumentExceptionTypeListQuery = GetIqueryableList( LeadDocumentExceptionTypeQuery);
+            LeadDocumentExceptionTypeList LeadDocumentExceptionTypeList = LeadDocumentExceptionTypeListQuery.FirstOrDefault();
             return LeadDocumentExceptionTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<LeadDocumentExceptionType>(nonListQueryOperation, iQueryable);
 
             IQueryable<LeadDocumentExceptionTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<LeadDocumentExceptionTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<LeadDocumentExceptionTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

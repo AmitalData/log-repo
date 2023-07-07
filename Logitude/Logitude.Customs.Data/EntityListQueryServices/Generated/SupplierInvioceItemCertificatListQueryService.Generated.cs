@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SupplierInvioceItemCertificatList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<SupplierInvioceItemCertificatList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<SupplierInvioceItemCertificatList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SupplierInvioceItemCertificatList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvioceItemCertificat> SupplierInvioceItemCertificatQuery = (from a in context.SupplierInvioceItemCertificats
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.LineNumber == linenumber && a.ItemCertificateCounterKey == itemcertificatecounterkey
                                                        select a);
-          
-		  
-		  			IQueryable<SupplierInvioceItemCertificatList> SupplierInvioceItemCertificatListQuery = GetIqueryableList( SupplierInvioceItemCertificatQuery);
-			            SupplierInvioceItemCertificatList SupplierInvioceItemCertificatList = SupplierInvioceItemCertificatListQuery.FirstOrDefault();
+
+             
+            IQueryable<SupplierInvioceItemCertificatList> SupplierInvioceItemCertificatListQuery = GetIqueryableList( SupplierInvioceItemCertificatQuery);
+            SupplierInvioceItemCertificatList SupplierInvioceItemCertificatList = SupplierInvioceItemCertificatListQuery.FirstOrDefault();
             return SupplierInvioceItemCertificatList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<SupplierInvioceItemCertificat>(nonListQueryOperation, iQueryable);
 
             IQueryable<SupplierInvioceItemCertificatList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<SupplierInvioceItemCertificatList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<SupplierInvioceItemCertificatList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

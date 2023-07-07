@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationConsAcceptanceList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeclarationConsAcceptanceList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeclarationConsAcceptanceList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationConsAcceptanceList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationConsAcceptance> DeclarationConsAcceptanceQuery = (from a in context.DeclarationConsAcceptances
                                                        where a.DeclarationId == declarationid && a.ConsignmentNumber == consignmentnumber && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationConsAcceptanceList> DeclarationConsAcceptanceListQuery = GetIqueryableList( DeclarationConsAcceptanceQuery);
-			            DeclarationConsAcceptanceList DeclarationConsAcceptanceList = DeclarationConsAcceptanceListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationConsAcceptanceList> DeclarationConsAcceptanceListQuery = GetIqueryableList( DeclarationConsAcceptanceQuery);
+            DeclarationConsAcceptanceList DeclarationConsAcceptanceList = DeclarationConsAcceptanceListQuery.FirstOrDefault();
             return DeclarationConsAcceptanceList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DeclarationConsAcceptance>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeclarationConsAcceptanceList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeclarationConsAcceptanceList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeclarationConsAcceptanceList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

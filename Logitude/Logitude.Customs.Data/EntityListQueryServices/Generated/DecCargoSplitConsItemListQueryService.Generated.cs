@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DecCargoSplitConsItemList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DecCargoSplitConsItemList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DecCargoSplitConsItemList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DecCargoSplitConsItemList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DecCargoSplitConsItem> DecCargoSplitConsItemQuery = (from a in context.DecCargoSplitConsItems
                                                        where a.DeclarationCargoSplitId == declarationcargosplitid && a.DecCargoSplitConsLineNo == deccargosplitconslineno && a.ItemLine == itemline
                                                        select a);
-          
-		  
-		  			IQueryable<DecCargoSplitConsItemList> DecCargoSplitConsItemListQuery = GetIqueryableList( DecCargoSplitConsItemQuery);
-			            DecCargoSplitConsItemList DecCargoSplitConsItemList = DecCargoSplitConsItemListQuery.FirstOrDefault();
+
+             
+            IQueryable<DecCargoSplitConsItemList> DecCargoSplitConsItemListQuery = GetIqueryableList( DecCargoSplitConsItemQuery);
+            DecCargoSplitConsItemList DecCargoSplitConsItemList = DecCargoSplitConsItemListQuery.FirstOrDefault();
             return DecCargoSplitConsItemList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DecCargoSplitConsItem>(nonListQueryOperation, iQueryable);
 
             IQueryable<DecCargoSplitConsItemList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DecCargoSplitConsItemList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DecCargoSplitConsItemList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

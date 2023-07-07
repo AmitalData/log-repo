@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsClosedTableList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomsClosedTableList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomsClosedTableList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsClosedTableList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsClosedTable> CustomsClosedTableQuery = (from a in context.CustomsClosedTables
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsClosedTableList> CustomsClosedTableListQuery = GetIqueryableList( CustomsClosedTableQuery);
-			            CustomsClosedTableList CustomsClosedTableList = CustomsClosedTableListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsClosedTableList> CustomsClosedTableListQuery = GetIqueryableList( CustomsClosedTableQuery);
+            CustomsClosedTableList CustomsClosedTableList = CustomsClosedTableListQuery.FirstOrDefault();
             return CustomsClosedTableList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsClosedTable>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsClosedTableList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomsClosedTableList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomsClosedTableList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

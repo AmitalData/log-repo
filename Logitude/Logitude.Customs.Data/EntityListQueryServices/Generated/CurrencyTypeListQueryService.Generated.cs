@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CurrencyTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CurrencyTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CurrencyTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CurrencyTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CurrencyType> CurrencyTypeQuery = (from a in context.CurrencyTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CurrencyTypeList> CurrencyTypeListQuery = GetIqueryableList( CurrencyTypeQuery);
-			            CurrencyTypeList CurrencyTypeList = CurrencyTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CurrencyTypeList> CurrencyTypeListQuery = GetIqueryableList( CurrencyTypeQuery);
+            CurrencyTypeList CurrencyTypeList = CurrencyTypeListQuery.FirstOrDefault();
             return CurrencyTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CurrencyType>(nonListQueryOperation, iQueryable);
 
             IQueryable<CurrencyTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CurrencyTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CurrencyTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

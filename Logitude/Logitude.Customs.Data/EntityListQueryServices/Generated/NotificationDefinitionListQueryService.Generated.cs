@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<NotificationDefinitionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<NotificationDefinitionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<NotificationDefinitionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(NotificationDefinitionList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<NotificationDefinition> NotificationDefinitionQuery = (from a in context.NotificationDefinitions
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<NotificationDefinitionList> NotificationDefinitionListQuery = GetIqueryableList( NotificationDefinitionQuery);
-			            NotificationDefinitionList NotificationDefinitionList = NotificationDefinitionListQuery.FirstOrDefault();
+
+             
+            IQueryable<NotificationDefinitionList> NotificationDefinitionListQuery = GetIqueryableList( NotificationDefinitionQuery);
+            NotificationDefinitionList NotificationDefinitionList = NotificationDefinitionListQuery.FirstOrDefault();
             return NotificationDefinitionList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<NotificationDefinition>(nonListQueryOperation, iQueryable);
 
             IQueryable<NotificationDefinitionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<NotificationDefinitionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<NotificationDefinitionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClientDrivingLicenseTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ClientDrivingLicenseTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ClientDrivingLicenseTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClientDrivingLicenseTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClientDrivingLicenseType> ClientDrivingLicenseTypeQuery = (from a in context.ClientDrivingLicenseTypes
                                                        where a.ClientId == clientid && a.ClientDrivingLicenseLine == clientdrivinglicenseline && a.DriversLicenseTypeCode == driverslicensetypecode
                                                        select a);
-          
-		  
-		  			IQueryable<ClientDrivingLicenseTypeList> ClientDrivingLicenseTypeListQuery = GetIqueryableList( ClientDrivingLicenseTypeQuery);
-			            ClientDrivingLicenseTypeList ClientDrivingLicenseTypeList = ClientDrivingLicenseTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClientDrivingLicenseTypeList> ClientDrivingLicenseTypeListQuery = GetIqueryableList( ClientDrivingLicenseTypeQuery);
+            ClientDrivingLicenseTypeList ClientDrivingLicenseTypeList = ClientDrivingLicenseTypeListQuery.FirstOrDefault();
             return ClientDrivingLicenseTypeList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ClientDrivingLicenseType>(nonListQueryOperation, iQueryable);
 
             IQueryable<ClientDrivingLicenseTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ClientDrivingLicenseTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ClientDrivingLicenseTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

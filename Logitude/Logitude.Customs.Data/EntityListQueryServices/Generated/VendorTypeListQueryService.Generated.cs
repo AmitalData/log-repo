@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<VendorTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<VendorTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<VendorTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(VendorTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VendorType> VendorTypeQuery = (from a in context.VendorTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<VendorTypeList> VendorTypeListQuery = GetIqueryableList( VendorTypeQuery);
-			            VendorTypeList VendorTypeList = VendorTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<VendorTypeList> VendorTypeListQuery = GetIqueryableList( VendorTypeQuery);
+            VendorTypeList VendorTypeList = VendorTypeListQuery.FirstOrDefault();
             return VendorTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<VendorType>(nonListQueryOperation, iQueryable);
 
             IQueryable<VendorTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<VendorTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<VendorTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

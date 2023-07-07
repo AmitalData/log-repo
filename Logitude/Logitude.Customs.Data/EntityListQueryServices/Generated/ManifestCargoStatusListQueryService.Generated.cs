@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ManifestCargoStatusList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ManifestCargoStatusList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ManifestCargoStatusList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ManifestCargoStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ManifestCargoStatus> ManifestCargoStatusQuery = (from a in context.ManifestCargoStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ManifestCargoStatusList> ManifestCargoStatusListQuery = GetIqueryableList( ManifestCargoStatusQuery);
-			            ManifestCargoStatusList ManifestCargoStatusList = ManifestCargoStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<ManifestCargoStatusList> ManifestCargoStatusListQuery = GetIqueryableList( ManifestCargoStatusQuery);
+            ManifestCargoStatusList ManifestCargoStatusList = ManifestCargoStatusListQuery.FirstOrDefault();
             return ManifestCargoStatusList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ManifestCargoStatus>(nonListQueryOperation, iQueryable);
 
             IQueryable<ManifestCargoStatusList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ManifestCargoStatusList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ManifestCargoStatusList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

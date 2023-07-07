@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<NbcDeclarationTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<NbcDeclarationTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<NbcDeclarationTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(NbcDeclarationTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<NbcDeclarationType> NbcDeclarationTypeQuery = (from a in context.NbcDeclarationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<NbcDeclarationTypeList> NbcDeclarationTypeListQuery = GetIqueryableList( NbcDeclarationTypeQuery);
-			            NbcDeclarationTypeList NbcDeclarationTypeList = NbcDeclarationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<NbcDeclarationTypeList> NbcDeclarationTypeListQuery = GetIqueryableList( NbcDeclarationTypeQuery);
+            NbcDeclarationTypeList NbcDeclarationTypeList = NbcDeclarationTypeListQuery.FirstOrDefault();
             return NbcDeclarationTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<NbcDeclarationType>(nonListQueryOperation, iQueryable);
 
             IQueryable<NbcDeclarationTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<NbcDeclarationTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<NbcDeclarationTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

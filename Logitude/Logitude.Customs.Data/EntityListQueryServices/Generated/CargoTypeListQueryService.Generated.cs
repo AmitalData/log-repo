@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CargoTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CargoTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CargoTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CargoTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CargoType> CargoTypeQuery = (from a in context.CargoTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CargoTypeList> CargoTypeListQuery = GetIqueryableList( CargoTypeQuery);
-			            CargoTypeList CargoTypeList = CargoTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CargoTypeList> CargoTypeListQuery = GetIqueryableList( CargoTypeQuery);
+            CargoTypeList CargoTypeList = CargoTypeListQuery.FirstOrDefault();
             return CargoTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CargoType>(nonListQueryOperation, iQueryable);
 
             IQueryable<CargoTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CargoTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CargoTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

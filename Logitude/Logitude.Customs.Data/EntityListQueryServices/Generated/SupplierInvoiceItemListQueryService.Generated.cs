@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SupplierInvoiceItemList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<SupplierInvoiceItemList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<SupplierInvoiceItemList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SupplierInvoiceItemList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceItem> SupplierInvoiceItemQuery = (from a in context.SupplierInvoiceItems
                                                        where a.DeclarationId == declarationid && a.CounterKey == counterkey && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<SupplierInvoiceItemList> SupplierInvoiceItemListQuery = GetIqueryableList( SupplierInvoiceItemQuery);
-			            SupplierInvoiceItemList SupplierInvoiceItemList = SupplierInvoiceItemListQuery.FirstOrDefault();
+
+             
+            IQueryable<SupplierInvoiceItemList> SupplierInvoiceItemListQuery = GetIqueryableList( SupplierInvoiceItemQuery);
+            SupplierInvoiceItemList SupplierInvoiceItemList = SupplierInvoiceItemListQuery.FirstOrDefault();
             return SupplierInvoiceItemList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<SupplierInvoiceItem>(nonListQueryOperation, iQueryable);
 
             IQueryable<SupplierInvoiceItemList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<SupplierInvoiceItemList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<SupplierInvoiceItemList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

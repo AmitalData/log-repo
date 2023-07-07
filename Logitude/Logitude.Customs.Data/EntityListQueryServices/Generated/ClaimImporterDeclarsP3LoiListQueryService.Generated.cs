@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClaimImporterDeclarsP3LoiList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ClaimImporterDeclarsP3LoiList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ClaimImporterDeclarsP3LoiList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClaimImporterDeclarsP3LoiList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimImporterDeclarsP3Loi> ClaimImporterDeclarsP3LoiQuery = (from a in context.ClaimImporterDeclarsP3Lois
                                                        where a.ClaimId == claimid && a.CounterKey == counterkey && a.LineNo == lineno
                                                        select a);
-          
-		  
-		  			IQueryable<ClaimImporterDeclarsP3LoiList> ClaimImporterDeclarsP3LoiListQuery = GetIqueryableList( ClaimImporterDeclarsP3LoiQuery);
-			            ClaimImporterDeclarsP3LoiList ClaimImporterDeclarsP3LoiList = ClaimImporterDeclarsP3LoiListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClaimImporterDeclarsP3LoiList> ClaimImporterDeclarsP3LoiListQuery = GetIqueryableList( ClaimImporterDeclarsP3LoiQuery);
+            ClaimImporterDeclarsP3LoiList ClaimImporterDeclarsP3LoiList = ClaimImporterDeclarsP3LoiListQuery.FirstOrDefault();
             return ClaimImporterDeclarsP3LoiList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ClaimImporterDeclarsP3Loi>(nonListQueryOperation, iQueryable);
 
             IQueryable<ClaimImporterDeclarsP3LoiList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ClaimImporterDeclarsP3LoiList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ClaimImporterDeclarsP3LoiList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

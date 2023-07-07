@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ContainerizationHataraStatusList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ContainerizationHataraStatusList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ContainerizationHataraStatusList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ContainerizationHataraStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ContainerizationHataraStatus> ContainerizationHataraStatusQuery = (from a in context.ContainerizationHataraStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ContainerizationHataraStatusList> ContainerizationHataraStatusListQuery = GetIqueryableList( ContainerizationHataraStatusQuery);
-			            ContainerizationHataraStatusList ContainerizationHataraStatusList = ContainerizationHataraStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<ContainerizationHataraStatusList> ContainerizationHataraStatusListQuery = GetIqueryableList( ContainerizationHataraStatusQuery);
+            ContainerizationHataraStatusList ContainerizationHataraStatusList = ContainerizationHataraStatusListQuery.FirstOrDefault();
             return ContainerizationHataraStatusList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ContainerizationHataraStatus>(nonListQueryOperation, iQueryable);
 
             IQueryable<ContainerizationHataraStatusList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ContainerizationHataraStatusList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ContainerizationHataraStatusList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

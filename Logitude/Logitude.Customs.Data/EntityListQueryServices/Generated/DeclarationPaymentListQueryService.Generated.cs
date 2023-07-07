@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationPaymentList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeclarationPaymentList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeclarationPaymentList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationPaymentList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationPayment> DeclarationPaymentQuery = (from a in context.DeclarationPayments
                                                        where a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationPaymentList> DeclarationPaymentListQuery = GetIqueryableList( DeclarationPaymentQuery);
-			            DeclarationPaymentList DeclarationPaymentList = DeclarationPaymentListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationPaymentList> DeclarationPaymentListQuery = GetIqueryableList( DeclarationPaymentQuery);
+            DeclarationPaymentList DeclarationPaymentList = DeclarationPaymentListQuery.FirstOrDefault();
             return DeclarationPaymentList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DeclarationPayment>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeclarationPaymentList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeclarationPaymentList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeclarationPaymentList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

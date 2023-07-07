@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomDocumentTypeMetaDataList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomDocumentTypeMetaDataList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomDocumentTypeMetaDataList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomDocumentTypeMetaDataList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomDocumentTypeMetaData> CustomDocumentTypeMetaDataQuery = (from a in context.CustomDocumentTypeMetaData
                                                        where a.MetaDataTypeCode == metadatatypecode && a.DocumentTypeCode == documenttypecode
                                                        select a);
-          
-		  
-		  			IQueryable<CustomDocumentTypeMetaDataList> CustomDocumentTypeMetaDataListQuery = GetIqueryableList( CustomDocumentTypeMetaDataQuery);
-			            CustomDocumentTypeMetaDataList CustomDocumentTypeMetaDataList = CustomDocumentTypeMetaDataListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomDocumentTypeMetaDataList> CustomDocumentTypeMetaDataListQuery = GetIqueryableList( CustomDocumentTypeMetaDataQuery);
+            CustomDocumentTypeMetaDataList CustomDocumentTypeMetaDataList = CustomDocumentTypeMetaDataListQuery.FirstOrDefault();
             return CustomDocumentTypeMetaDataList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomDocumentTypeMetaData>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomDocumentTypeMetaDataList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomDocumentTypeMetaDataList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomDocumentTypeMetaDataList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

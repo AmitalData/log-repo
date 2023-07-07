@@ -153,7 +153,29 @@ namespace Logitude.Customs.Data.Repsitories
 
 
         }
-        public List<string> GetPendingByMasterID(int tenant, string CourierMasterId)
+        public List<string> GetPendingByMasterID(int tenant, string CourierMasterId,string userId,Boolean IsWorkSheetFromExcel)
+        {
+            IQueryable<DeclarationCourierStatus> q;
+            if (IsWorkSheetFromExcel)
+            {
+                q = GetByFromExcel(tenant, userId);
+            }
+            else
+            {
+                q = GetBy(tenant, CourierMasterId);
+            }
+            var list = q
+                .Where(r => r.CourierPendingReasonList != null && r.CourierPendingReasonList != "")
+                .Select(r => r.CourierPendingReasonList)
+                .ToList();
+            var myList = list
+                .Select(p => p.Split(',').ToList()).ToList()
+                .SelectMany(l => l)
+                .Distinct()
+                .ToList();
+            return myList;
+        }
+        public List<string> GetPendingFromExcel(int tenant, string CourierMasterId)
         {
             IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);
             var list = q
@@ -180,6 +202,18 @@ namespace Logitude.Customs.Data.Repsitories
             var repoDeclaration = new DeclarationRepository(this.context);
 
             var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in GetAll(tenant)
+                     on dec.DeclarationId equals status.DeclarationId
+                     select status);
+            return q;
+        }
+        private IQueryable<DeclarationCourierStatus> GetByFromExcel(int tenant, string userId)
+        {
+            var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+
+            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
                      join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
                      join status in GetAll(tenant)
                      on dec.DeclarationId equals status.DeclarationId

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<HandingCodeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<HandingCodeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<HandingCodeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(HandingCodeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<HandingCode> HandingCodeQuery = (from a in context.HandingCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<HandingCodeList> HandingCodeListQuery = GetIqueryableList( HandingCodeQuery);
-			            HandingCodeList HandingCodeList = HandingCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<HandingCodeList> HandingCodeListQuery = GetIqueryableList( HandingCodeQuery);
+            HandingCodeList HandingCodeList = HandingCodeListQuery.FirstOrDefault();
             return HandingCodeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<HandingCode>(nonListQueryOperation, iQueryable);
 
             IQueryable<HandingCodeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<HandingCodeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<HandingCodeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

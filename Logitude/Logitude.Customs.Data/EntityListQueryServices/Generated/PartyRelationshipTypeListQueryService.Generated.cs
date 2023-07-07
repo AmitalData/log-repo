@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PartyRelationshipTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PartyRelationshipTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PartyRelationshipTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PartyRelationshipTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PartyRelationshipType> PartyRelationshipTypeQuery = (from a in context.PartyRelationshipTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PartyRelationshipTypeList> PartyRelationshipTypeListQuery = GetIqueryableList( PartyRelationshipTypeQuery);
-			            PartyRelationshipTypeList PartyRelationshipTypeList = PartyRelationshipTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PartyRelationshipTypeList> PartyRelationshipTypeListQuery = GetIqueryableList( PartyRelationshipTypeQuery);
+            PartyRelationshipTypeList PartyRelationshipTypeList = PartyRelationshipTypeListQuery.FirstOrDefault();
             return PartyRelationshipTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PartyRelationshipType>(nonListQueryOperation, iQueryable);
 
             IQueryable<PartyRelationshipTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PartyRelationshipTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PartyRelationshipTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

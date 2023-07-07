@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AmedmentTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<AmedmentTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<AmedmentTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AmedmentTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmedmentType> AmedmentTypeQuery = (from a in context.AmedmentTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AmedmentTypeList> AmedmentTypeListQuery = GetIqueryableList( AmedmentTypeQuery);
-			            AmedmentTypeList AmedmentTypeList = AmedmentTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AmedmentTypeList> AmedmentTypeListQuery = GetIqueryableList( AmedmentTypeQuery);
+            AmedmentTypeList AmedmentTypeList = AmedmentTypeListQuery.FirstOrDefault();
             return AmedmentTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<AmedmentType>(nonListQueryOperation, iQueryable);
 
             IQueryable<AmedmentTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<AmedmentTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<AmedmentTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

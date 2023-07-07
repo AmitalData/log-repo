@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<InterfaceTenantDefinitionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<InterfaceTenantDefinitionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<InterfaceTenantDefinitionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(InterfaceTenantDefinitionList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<InterfaceTenantDefinition> InterfaceTenantDefinitionQuery = (from a in context.InterfaceTenantDefinitions
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<InterfaceTenantDefinitionList> InterfaceTenantDefinitionListQuery = GetIqueryableList( InterfaceTenantDefinitionQuery);
-			            InterfaceTenantDefinitionList InterfaceTenantDefinitionList = InterfaceTenantDefinitionListQuery.FirstOrDefault();
+
+             
+            IQueryable<InterfaceTenantDefinitionList> InterfaceTenantDefinitionListQuery = GetIqueryableList( InterfaceTenantDefinitionQuery);
+            InterfaceTenantDefinitionList InterfaceTenantDefinitionList = InterfaceTenantDefinitionListQuery.FirstOrDefault();
             return InterfaceTenantDefinitionList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<InterfaceTenantDefinition>(nonListQueryOperation, iQueryable);
 
             IQueryable<InterfaceTenantDefinitionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<InterfaceTenantDefinitionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<InterfaceTenantDefinitionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

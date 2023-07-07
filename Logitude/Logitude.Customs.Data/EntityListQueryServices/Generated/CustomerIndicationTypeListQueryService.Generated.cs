@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomerIndicationTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomerIndicationTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomerIndicationTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomerIndicationTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomerIndicationType> CustomerIndicationTypeQuery = (from a in context.CustomerIndicationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomerIndicationTypeList> CustomerIndicationTypeListQuery = GetIqueryableList( CustomerIndicationTypeQuery);
-			            CustomerIndicationTypeList CustomerIndicationTypeList = CustomerIndicationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomerIndicationTypeList> CustomerIndicationTypeListQuery = GetIqueryableList( CustomerIndicationTypeQuery);
+            CustomerIndicationTypeList CustomerIndicationTypeList = CustomerIndicationTypeListQuery.FirstOrDefault();
             return CustomerIndicationTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomerIndicationType>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomerIndicationTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomerIndicationTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomerIndicationTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsRequiredFieldList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomsRequiredFieldList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomsRequiredFieldList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsRequiredFieldList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsRequiredField> CustomsRequiredFieldQuery = (from a in context.CustomsRequiredFields
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsRequiredFieldList> CustomsRequiredFieldListQuery = GetIqueryableList( CustomsRequiredFieldQuery);
-			            CustomsRequiredFieldList CustomsRequiredFieldList = CustomsRequiredFieldListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsRequiredFieldList> CustomsRequiredFieldListQuery = GetIqueryableList( CustomsRequiredFieldQuery);
+            CustomsRequiredFieldList CustomsRequiredFieldList = CustomsRequiredFieldListQuery.FirstOrDefault();
             return CustomsRequiredFieldList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsRequiredField>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsRequiredFieldList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomsRequiredFieldList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomsRequiredFieldList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

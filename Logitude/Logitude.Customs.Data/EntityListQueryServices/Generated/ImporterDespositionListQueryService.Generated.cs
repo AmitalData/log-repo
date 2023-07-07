@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ImporterDespositionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ImporterDespositionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ImporterDespositionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ImporterDespositionList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ImporterDesposition> ImporterDespositionQuery = (from a in context.ImporterDespositions
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ImporterDespositionList> ImporterDespositionListQuery = GetIqueryableList( ImporterDespositionQuery);
-			            ImporterDespositionList ImporterDespositionList = ImporterDespositionListQuery.FirstOrDefault();
+
+             
+            IQueryable<ImporterDespositionList> ImporterDespositionListQuery = GetIqueryableList( ImporterDespositionQuery);
+            ImporterDespositionList ImporterDespositionList = ImporterDespositionListQuery.FirstOrDefault();
             return ImporterDespositionList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ImporterDesposition>(nonListQueryOperation, iQueryable);
 
             IQueryable<ImporterDespositionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ImporterDespositionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ImporterDespositionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

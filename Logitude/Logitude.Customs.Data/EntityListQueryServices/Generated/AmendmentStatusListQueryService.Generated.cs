@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AmendmentStatusList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<AmendmentStatusList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<AmendmentStatusList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AmendmentStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmendmentStatus> AmendmentStatusQuery = (from a in context.AmendmentStatuses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AmendmentStatusList> AmendmentStatusListQuery = GetIqueryableList( AmendmentStatusQuery);
-			            AmendmentStatusList AmendmentStatusList = AmendmentStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<AmendmentStatusList> AmendmentStatusListQuery = GetIqueryableList( AmendmentStatusQuery);
+            AmendmentStatusList AmendmentStatusList = AmendmentStatusListQuery.FirstOrDefault();
             return AmendmentStatusList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<AmendmentStatus>(nonListQueryOperation, iQueryable);
 
             IQueryable<AmendmentStatusList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<AmendmentStatusList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<AmendmentStatusList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

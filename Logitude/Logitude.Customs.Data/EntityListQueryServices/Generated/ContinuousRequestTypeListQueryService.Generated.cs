@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ContinuousRequestTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ContinuousRequestTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ContinuousRequestTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ContinuousRequestTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ContinuousRequestType> ContinuousRequestTypeQuery = (from a in context.ContinuousRequestTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ContinuousRequestTypeList> ContinuousRequestTypeListQuery = GetIqueryableList( ContinuousRequestTypeQuery);
-			            ContinuousRequestTypeList ContinuousRequestTypeList = ContinuousRequestTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ContinuousRequestTypeList> ContinuousRequestTypeListQuery = GetIqueryableList( ContinuousRequestTypeQuery);
+            ContinuousRequestTypeList ContinuousRequestTypeList = ContinuousRequestTypeListQuery.FirstOrDefault();
             return ContinuousRequestTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ContinuousRequestType>(nonListQueryOperation, iQueryable);
 
             IQueryable<ContinuousRequestTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ContinuousRequestTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ContinuousRequestTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

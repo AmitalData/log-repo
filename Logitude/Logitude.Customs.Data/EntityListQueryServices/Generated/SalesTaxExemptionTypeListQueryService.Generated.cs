@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SalesTaxExemptionTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<SalesTaxExemptionTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<SalesTaxExemptionTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SalesTaxExemptionTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SalesTaxExemptionType> SalesTaxExemptionTypeQuery = (from a in context.SalesTaxExemptionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SalesTaxExemptionTypeList> SalesTaxExemptionTypeListQuery = GetIqueryableList( SalesTaxExemptionTypeQuery);
-			            SalesTaxExemptionTypeList SalesTaxExemptionTypeList = SalesTaxExemptionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SalesTaxExemptionTypeList> SalesTaxExemptionTypeListQuery = GetIqueryableList( SalesTaxExemptionTypeQuery);
+            SalesTaxExemptionTypeList SalesTaxExemptionTypeList = SalesTaxExemptionTypeListQuery.FirstOrDefault();
             return SalesTaxExemptionTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<SalesTaxExemptionType>(nonListQueryOperation, iQueryable);
 
             IQueryable<SalesTaxExemptionTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<SalesTaxExemptionTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<SalesTaxExemptionTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

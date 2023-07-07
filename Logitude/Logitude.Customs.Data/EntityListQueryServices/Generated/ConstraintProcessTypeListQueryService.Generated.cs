@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ConstraintProcessTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ConstraintProcessTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ConstraintProcessTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ConstraintProcessTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConstraintProcessType> ConstraintProcessTypeQuery = (from a in context.ConstraintProcessTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ConstraintProcessTypeList> ConstraintProcessTypeListQuery = GetIqueryableList( ConstraintProcessTypeQuery);
-			            ConstraintProcessTypeList ConstraintProcessTypeList = ConstraintProcessTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ConstraintProcessTypeList> ConstraintProcessTypeListQuery = GetIqueryableList( ConstraintProcessTypeQuery);
+            ConstraintProcessTypeList ConstraintProcessTypeList = ConstraintProcessTypeListQuery.FirstOrDefault();
             return ConstraintProcessTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ConstraintProcessType>(nonListQueryOperation, iQueryable);
 
             IQueryable<ConstraintProcessTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ConstraintProcessTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ConstraintProcessTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

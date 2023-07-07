@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClaimEntityList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ClaimEntityList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ClaimEntityList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClaimEntityList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimEntity> ClaimEntityQuery = (from a in context.ClaimEntities
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ClaimEntityList> ClaimEntityListQuery = GetIqueryableList( ClaimEntityQuery);
-			            ClaimEntityList ClaimEntityList = ClaimEntityListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClaimEntityList> ClaimEntityListQuery = GetIqueryableList( ClaimEntityQuery);
+            ClaimEntityList ClaimEntityList = ClaimEntityListQuery.FirstOrDefault();
             return ClaimEntityList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ClaimEntity>(nonListQueryOperation, iQueryable);
 
             IQueryable<ClaimEntityList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ClaimEntityList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ClaimEntityList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

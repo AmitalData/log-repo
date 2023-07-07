@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsTransportModeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomsTransportModeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomsTransportModeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsTransportModeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsTransportMode> CustomsTransportModeQuery = (from a in context.CustomsTransportModes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsTransportModeList> CustomsTransportModeListQuery = GetIqueryableList( CustomsTransportModeQuery);
-			            CustomsTransportModeList CustomsTransportModeList = CustomsTransportModeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsTransportModeList> CustomsTransportModeListQuery = GetIqueryableList( CustomsTransportModeQuery);
+            CustomsTransportModeList CustomsTransportModeList = CustomsTransportModeListQuery.FirstOrDefault();
             return CustomsTransportModeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsTransportMode>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsTransportModeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomsTransportModeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomsTransportModeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

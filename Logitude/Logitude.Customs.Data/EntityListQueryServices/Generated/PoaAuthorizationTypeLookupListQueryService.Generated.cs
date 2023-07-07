@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PoaAuthorizationTypeLookupList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PoaAuthorizationTypeLookupList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PoaAuthorizationTypeLookupList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PoaAuthorizationTypeLookupList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PoaAuthorizationTypeLookup> PoaAuthorizationTypeLookupQuery = (from a in context.PoaAuthorizationTypeLookups
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PoaAuthorizationTypeLookupList> PoaAuthorizationTypeLookupListQuery = GetIqueryableList( PoaAuthorizationTypeLookupQuery);
-			            PoaAuthorizationTypeLookupList PoaAuthorizationTypeLookupList = PoaAuthorizationTypeLookupListQuery.FirstOrDefault();
+
+             
+            IQueryable<PoaAuthorizationTypeLookupList> PoaAuthorizationTypeLookupListQuery = GetIqueryableList( PoaAuthorizationTypeLookupQuery);
+            PoaAuthorizationTypeLookupList PoaAuthorizationTypeLookupList = PoaAuthorizationTypeLookupListQuery.FirstOrDefault();
             return PoaAuthorizationTypeLookupList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PoaAuthorizationTypeLookup>(nonListQueryOperation, iQueryable);
 
             IQueryable<PoaAuthorizationTypeLookupList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PoaAuthorizationTypeLookupList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PoaAuthorizationTypeLookupList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

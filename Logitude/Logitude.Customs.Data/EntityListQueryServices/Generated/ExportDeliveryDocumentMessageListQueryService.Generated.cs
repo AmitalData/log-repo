@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ExportDeliveryDocumentMessageList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ExportDeliveryDocumentMessageList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ExportDeliveryDocumentMessageList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ExportDeliveryDocumentMessageList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportDeliveryDocumentMessage> ExportDeliveryDocumentMessageQuery = (from a in context.ExportDeliveryDocumentMessages
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ExportDeliveryDocumentMessageList> ExportDeliveryDocumentMessageListQuery = GetIqueryableList( ExportDeliveryDocumentMessageQuery);
-			            ExportDeliveryDocumentMessageList ExportDeliveryDocumentMessageList = ExportDeliveryDocumentMessageListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExportDeliveryDocumentMessageList> ExportDeliveryDocumentMessageListQuery = GetIqueryableList( ExportDeliveryDocumentMessageQuery);
+            ExportDeliveryDocumentMessageList ExportDeliveryDocumentMessageList = ExportDeliveryDocumentMessageListQuery.FirstOrDefault();
             return ExportDeliveryDocumentMessageList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ExportDeliveryDocumentMessage>(nonListQueryOperation, iQueryable);
 
             IQueryable<ExportDeliveryDocumentMessageList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ExportDeliveryDocumentMessageList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ExportDeliveryDocumentMessageList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<LastReleaseFromWarehouseList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<LastReleaseFromWarehouseList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<LastReleaseFromWarehouseList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(LastReleaseFromWarehouseList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<LastReleaseFromWarehouse> LastReleaseFromWarehouseQuery = (from a in context.LastReleaseFromWarehouses
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<LastReleaseFromWarehouseList> LastReleaseFromWarehouseListQuery = GetIqueryableList( LastReleaseFromWarehouseQuery);
-			            LastReleaseFromWarehouseList LastReleaseFromWarehouseList = LastReleaseFromWarehouseListQuery.FirstOrDefault();
+
+             
+            IQueryable<LastReleaseFromWarehouseList> LastReleaseFromWarehouseListQuery = GetIqueryableList( LastReleaseFromWarehouseQuery);
+            LastReleaseFromWarehouseList LastReleaseFromWarehouseList = LastReleaseFromWarehouseListQuery.FirstOrDefault();
             return LastReleaseFromWarehouseList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<LastReleaseFromWarehouse>(nonListQueryOperation, iQueryable);
 
             IQueryable<LastReleaseFromWarehouseList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<LastReleaseFromWarehouseList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<LastReleaseFromWarehouseList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

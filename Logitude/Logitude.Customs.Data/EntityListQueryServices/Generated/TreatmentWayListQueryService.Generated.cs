@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<TreatmentWayList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<TreatmentWayList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<TreatmentWayList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(TreatmentWayList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<TreatmentWay> TreatmentWayQuery = (from a in context.TreatmentWays
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<TreatmentWayList> TreatmentWayListQuery = GetIqueryableList( TreatmentWayQuery);
-			            TreatmentWayList TreatmentWayList = TreatmentWayListQuery.FirstOrDefault();
+
+             
+            IQueryable<TreatmentWayList> TreatmentWayListQuery = GetIqueryableList( TreatmentWayQuery);
+            TreatmentWayList TreatmentWayList = TreatmentWayListQuery.FirstOrDefault();
             return TreatmentWayList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<TreatmentWay>(nonListQueryOperation, iQueryable);
 
             IQueryable<TreatmentWayList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<TreatmentWayList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<TreatmentWayList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

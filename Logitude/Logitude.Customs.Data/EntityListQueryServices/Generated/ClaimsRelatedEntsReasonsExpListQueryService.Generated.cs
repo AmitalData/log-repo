@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClaimsRelatedEntsReasonsExpList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ClaimsRelatedEntsReasonsExpList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ClaimsRelatedEntsReasonsExpList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClaimsRelatedEntsReasonsExpList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimsRelatedEntsReasonsExp> ClaimsRelatedEntsReasonsExpQuery = (from a in context.ClaimsRelatedEntsReasonsExps
                                                        where a.ClaimId == claimid && a.CounterKey == counterkey && a.ReasonLineNo == reasonlineno && a.LineNo == lineno
                                                        select a);
-          
-		  
-		  			IQueryable<ClaimsRelatedEntsReasonsExpList> ClaimsRelatedEntsReasonsExpListQuery = GetIqueryableList( ClaimsRelatedEntsReasonsExpQuery);
-			            ClaimsRelatedEntsReasonsExpList ClaimsRelatedEntsReasonsExpList = ClaimsRelatedEntsReasonsExpListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClaimsRelatedEntsReasonsExpList> ClaimsRelatedEntsReasonsExpListQuery = GetIqueryableList( ClaimsRelatedEntsReasonsExpQuery);
+            ClaimsRelatedEntsReasonsExpList ClaimsRelatedEntsReasonsExpList = ClaimsRelatedEntsReasonsExpListQuery.FirstOrDefault();
             return ClaimsRelatedEntsReasonsExpList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ClaimsRelatedEntsReasonsExp>(nonListQueryOperation, iQueryable);
 
             IQueryable<ClaimsRelatedEntsReasonsExpList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ClaimsRelatedEntsReasonsExpList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ClaimsRelatedEntsReasonsExpList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

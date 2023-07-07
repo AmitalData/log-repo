@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AmendRequestRejectReasonTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<AmendRequestRejectReasonTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<AmendRequestRejectReasonTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AmendRequestRejectReasonTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmendRequestRejectReasonType> AmendRequestRejectReasonTypeQuery = (from a in context.AmendRequestRejectReasonTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AmendRequestRejectReasonTypeList> AmendRequestRejectReasonTypeListQuery = GetIqueryableList( AmendRequestRejectReasonTypeQuery);
-			            AmendRequestRejectReasonTypeList AmendRequestRejectReasonTypeList = AmendRequestRejectReasonTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AmendRequestRejectReasonTypeList> AmendRequestRejectReasonTypeListQuery = GetIqueryableList( AmendRequestRejectReasonTypeQuery);
+            AmendRequestRejectReasonTypeList AmendRequestRejectReasonTypeList = AmendRequestRejectReasonTypeListQuery.FirstOrDefault();
             return AmendRequestRejectReasonTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<AmendRequestRejectReasonType>(nonListQueryOperation, iQueryable);
 
             IQueryable<AmendRequestRejectReasonTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<AmendRequestRejectReasonTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<AmendRequestRejectReasonTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

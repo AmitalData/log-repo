@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SealUpdateReasonTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<SealUpdateReasonTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<SealUpdateReasonTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SealUpdateReasonTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SealUpdateReasonType> SealUpdateReasonTypeQuery = (from a in context.SealUpdateReasonTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SealUpdateReasonTypeList> SealUpdateReasonTypeListQuery = GetIqueryableList( SealUpdateReasonTypeQuery);
-			            SealUpdateReasonTypeList SealUpdateReasonTypeList = SealUpdateReasonTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SealUpdateReasonTypeList> SealUpdateReasonTypeListQuery = GetIqueryableList( SealUpdateReasonTypeQuery);
+            SealUpdateReasonTypeList SealUpdateReasonTypeList = SealUpdateReasonTypeListQuery.FirstOrDefault();
             return SealUpdateReasonTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<SealUpdateReasonType>(nonListQueryOperation, iQueryable);
 
             IQueryable<SealUpdateReasonTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<SealUpdateReasonTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<SealUpdateReasonTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClientsAddressCommTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ClientsAddressCommTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ClientsAddressCommTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClientsAddressCommTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClientsAddressCommType> ClientsAddressCommTypeQuery = (from a in context.ClientsAddressCommTypes
                                                        where a.ClientId == clientid && a.AddressId == addressid && a.Line == line
                                                        select a);
-          
-		  
-		  			IQueryable<ClientsAddressCommTypeList> ClientsAddressCommTypeListQuery = GetIqueryableList( ClientsAddressCommTypeQuery);
-			            ClientsAddressCommTypeList ClientsAddressCommTypeList = ClientsAddressCommTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClientsAddressCommTypeList> ClientsAddressCommTypeListQuery = GetIqueryableList( ClientsAddressCommTypeQuery);
+            ClientsAddressCommTypeList ClientsAddressCommTypeList = ClientsAddressCommTypeListQuery.FirstOrDefault();
             return ClientsAddressCommTypeList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ClientsAddressCommType>(nonListQueryOperation, iQueryable);
 
             IQueryable<ClientsAddressCommTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ClientsAddressCommTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ClientsAddressCommTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

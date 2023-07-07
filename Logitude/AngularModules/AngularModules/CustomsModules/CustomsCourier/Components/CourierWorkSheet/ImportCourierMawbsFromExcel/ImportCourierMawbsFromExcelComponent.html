@@ -51,12 +51,22 @@
                     <td colspan="5" style="width: 100% ; height : 100%">
                         <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ErrorsResultList">
-                                <log-column [header]="'ש.מ.ב שלא איתרו'"
+                                <log-column [header]="'ש.מ.ב'"
                                             [width]="'190'" [Alignment]="'Right'">
                                             <ng-template let-item>
                                     <log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
-                                            <span>{{item}}</span>
+                                            <span>{{item.CourierHawb}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
+                                <log-column [header]="'הודעת שגאיה'"
+                                            [width]="'190'" [Alignment]="'Right'">
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.ErrorMessage}}</span>
                                         </div>
                                     </log-cell-template>
                                 </ng-template>

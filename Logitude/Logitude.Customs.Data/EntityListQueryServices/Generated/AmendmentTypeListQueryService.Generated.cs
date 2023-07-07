@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<AmendmentTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<AmendmentTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<AmendmentTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(AmendmentTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<AmendmentType> AmendmentTypeQuery = (from a in context.AmendmentTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<AmendmentTypeList> AmendmentTypeListQuery = GetIqueryableList( AmendmentTypeQuery);
-			            AmendmentTypeList AmendmentTypeList = AmendmentTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<AmendmentTypeList> AmendmentTypeListQuery = GetIqueryableList( AmendmentTypeQuery);
+            AmendmentTypeList AmendmentTypeList = AmendmentTypeListQuery.FirstOrDefault();
             return AmendmentTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<AmendmentType>(nonListQueryOperation, iQueryable);
 
             IQueryable<AmendmentTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<AmendmentTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<AmendmentTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

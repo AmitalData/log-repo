@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CancelRequestRejectReasonTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CancelRequestRejectReasonTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CancelRequestRejectReasonTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CancelRequestRejectReasonTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CancelRequestRejectReasonType> CancelRequestRejectReasonTypeQuery = (from a in context.CancelRequestRejectReasonTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CancelRequestRejectReasonTypeList> CancelRequestRejectReasonTypeListQuery = GetIqueryableList( CancelRequestRejectReasonTypeQuery);
-			            CancelRequestRejectReasonTypeList CancelRequestRejectReasonTypeList = CancelRequestRejectReasonTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CancelRequestRejectReasonTypeList> CancelRequestRejectReasonTypeListQuery = GetIqueryableList( CancelRequestRejectReasonTypeQuery);
+            CancelRequestRejectReasonTypeList CancelRequestRejectReasonTypeList = CancelRequestRejectReasonTypeListQuery.FirstOrDefault();
             return CancelRequestRejectReasonTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CancelRequestRejectReasonType>(nonListQueryOperation, iQueryable);
 
             IQueryable<CancelRequestRejectReasonTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CancelRequestRejectReasonTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CancelRequestRejectReasonTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

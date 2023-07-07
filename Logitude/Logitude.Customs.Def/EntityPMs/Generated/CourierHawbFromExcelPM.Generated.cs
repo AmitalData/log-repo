@@ -135,6 +135,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string errorMessage ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ErrorMessage  
+	   {
+	    
+	     get
+		{
+		   return errorMessage;
+		 }
+		 set
+		 {
+		   if(errorMessage != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ErrorMessage",OldValue=errorMessage,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   errorMessage=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

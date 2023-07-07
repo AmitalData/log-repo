@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ExportLogisticPermitActionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ExportLogisticPermitActionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ExportLogisticPermitActionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ExportLogisticPermitActionList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportLogisticPermitAction> ExportLogisticPermitActionQuery = (from a in context.ExportLogisticPermitActions
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ExportLogisticPermitActionList> ExportLogisticPermitActionListQuery = GetIqueryableList( ExportLogisticPermitActionQuery);
-			            ExportLogisticPermitActionList ExportLogisticPermitActionList = ExportLogisticPermitActionListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExportLogisticPermitActionList> ExportLogisticPermitActionListQuery = GetIqueryableList( ExportLogisticPermitActionQuery);
+            ExportLogisticPermitActionList ExportLogisticPermitActionList = ExportLogisticPermitActionListQuery.FirstOrDefault();
             return ExportLogisticPermitActionList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ExportLogisticPermitAction>(nonListQueryOperation, iQueryable);
 
             IQueryable<ExportLogisticPermitActionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ExportLogisticPermitActionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ExportLogisticPermitActionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

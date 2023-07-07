@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PhysicalCheckOperationList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PhysicalCheckOperationList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PhysicalCheckOperationList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PhysicalCheckOperationList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PhysicalCheckOperation> PhysicalCheckOperationQuery = (from a in context.PhysicalCheckOperations
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PhysicalCheckOperationList> PhysicalCheckOperationListQuery = GetIqueryableList( PhysicalCheckOperationQuery);
-			            PhysicalCheckOperationList PhysicalCheckOperationList = PhysicalCheckOperationListQuery.FirstOrDefault();
+
+             
+            IQueryable<PhysicalCheckOperationList> PhysicalCheckOperationListQuery = GetIqueryableList( PhysicalCheckOperationQuery);
+            PhysicalCheckOperationList PhysicalCheckOperationList = PhysicalCheckOperationListQuery.FirstOrDefault();
             return PhysicalCheckOperationList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PhysicalCheckOperation>(nonListQueryOperation, iQueryable);
 
             IQueryable<PhysicalCheckOperationList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PhysicalCheckOperationList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PhysicalCheckOperationList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

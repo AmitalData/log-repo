@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CollateralRequestStatusList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CollateralRequestStatusList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CollateralRequestStatusList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CollateralRequestStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CollateralRequestStatus> CollateralRequestStatusQuery = (from a in context.CollateralRequestStatus
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CollateralRequestStatusList> CollateralRequestStatusListQuery = GetIqueryableList( CollateralRequestStatusQuery);
-			            CollateralRequestStatusList CollateralRequestStatusList = CollateralRequestStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<CollateralRequestStatusList> CollateralRequestStatusListQuery = GetIqueryableList( CollateralRequestStatusQuery);
+            CollateralRequestStatusList CollateralRequestStatusList = CollateralRequestStatusListQuery.FirstOrDefault();
             return CollateralRequestStatusList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CollateralRequestStatus>(nonListQueryOperation, iQueryable);
 
             IQueryable<CollateralRequestStatusList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CollateralRequestStatusList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CollateralRequestStatusList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

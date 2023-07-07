@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CoolingReportingMethodList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CoolingReportingMethodList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CoolingReportingMethodList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CoolingReportingMethodList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CoolingReportingMethod> CoolingReportingMethodQuery = (from a in context.CoolingReportingMethods
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CoolingReportingMethodList> CoolingReportingMethodListQuery = GetIqueryableList( CoolingReportingMethodQuery);
-			            CoolingReportingMethodList CoolingReportingMethodList = CoolingReportingMethodListQuery.FirstOrDefault();
+
+             
+            IQueryable<CoolingReportingMethodList> CoolingReportingMethodListQuery = GetIqueryableList( CoolingReportingMethodQuery);
+            CoolingReportingMethodList CoolingReportingMethodList = CoolingReportingMethodListQuery.FirstOrDefault();
             return CoolingReportingMethodList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CoolingReportingMethod>(nonListQueryOperation, iQueryable);
 
             IQueryable<CoolingReportingMethodList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CoolingReportingMethodList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CoolingReportingMethodList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

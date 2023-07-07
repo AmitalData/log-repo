@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PaymentOrderConnectionTableList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PaymentOrderConnectionTableList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PaymentOrderConnectionTableList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PaymentOrderConnectionTableList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PaymentOrderConnectionTable> PaymentOrderConnectionTableQuery = (from a in context.PaymentOrderConnectionTables
                                                        where a.PaymentOrderId == paymentorderid && a.ConnectedEntityId == connectedentityid
                                                        select a);
-          
-		  
-		  			IQueryable<PaymentOrderConnectionTableList> PaymentOrderConnectionTableListQuery = GetIqueryableList( PaymentOrderConnectionTableQuery);
-			            PaymentOrderConnectionTableList PaymentOrderConnectionTableList = PaymentOrderConnectionTableListQuery.FirstOrDefault();
+
+             
+            IQueryable<PaymentOrderConnectionTableList> PaymentOrderConnectionTableListQuery = GetIqueryableList( PaymentOrderConnectionTableQuery);
+            PaymentOrderConnectionTableList PaymentOrderConnectionTableList = PaymentOrderConnectionTableListQuery.FirstOrDefault();
             return PaymentOrderConnectionTableList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PaymentOrderConnectionTable>(nonListQueryOperation, iQueryable);
 
             IQueryable<PaymentOrderConnectionTableList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PaymentOrderConnectionTableList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PaymentOrderConnectionTableList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

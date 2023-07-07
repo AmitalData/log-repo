@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SupplierInvoiceItemModVehicleList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<SupplierInvoiceItemModVehicleList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<SupplierInvoiceItemModVehicleList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SupplierInvoiceItemModVehicleList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceItemModVehicle> SupplierInvoiceItemModVehicleQuery = (from a in context.SupplierInvoiceItemModVehicles
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber && a.AdjustmentTypeCode == adjustmenttypecode
                                                        select a);
-          
-		  
-		  			IQueryable<SupplierInvoiceItemModVehicleList> SupplierInvoiceItemModVehicleListQuery = GetIqueryableList( SupplierInvoiceItemModVehicleQuery);
-			            SupplierInvoiceItemModVehicleList SupplierInvoiceItemModVehicleList = SupplierInvoiceItemModVehicleListQuery.FirstOrDefault();
+
+             
+            IQueryable<SupplierInvoiceItemModVehicleList> SupplierInvoiceItemModVehicleListQuery = GetIqueryableList( SupplierInvoiceItemModVehicleQuery);
+            SupplierInvoiceItemModVehicleList SupplierInvoiceItemModVehicleList = SupplierInvoiceItemModVehicleListQuery.FirstOrDefault();
             return SupplierInvoiceItemModVehicleList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<SupplierInvoiceItemModVehicle>(nonListQueryOperation, iQueryable);
 
             IQueryable<SupplierInvoiceItemModVehicleList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<SupplierInvoiceItemModVehicleList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<SupplierInvoiceItemModVehicleList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

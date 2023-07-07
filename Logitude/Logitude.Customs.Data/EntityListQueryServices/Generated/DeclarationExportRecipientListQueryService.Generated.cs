@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationExportRecipientList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeclarationExportRecipientList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeclarationExportRecipientList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationExportRecipientList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationExportRecipient> DeclarationExportRecipientQuery = (from a in context.DeclarationExportRecipients
                                                        where a.DeclarationId == declarationid && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationExportRecipientList> DeclarationExportRecipientListQuery = GetIqueryableList( DeclarationExportRecipientQuery);
-			            DeclarationExportRecipientList DeclarationExportRecipientList = DeclarationExportRecipientListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationExportRecipientList> DeclarationExportRecipientListQuery = GetIqueryableList( DeclarationExportRecipientQuery);
+            DeclarationExportRecipientList DeclarationExportRecipientList = DeclarationExportRecipientListQuery.FirstOrDefault();
             return DeclarationExportRecipientList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DeclarationExportRecipient>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeclarationExportRecipientList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeclarationExportRecipientList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeclarationExportRecipientList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PointerLevelList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PointerLevelList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PointerLevelList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PointerLevelList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PointerLevel> PointerLevelQuery = (from a in context.PointerLevels
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PointerLevelList> PointerLevelListQuery = GetIqueryableList( PointerLevelQuery);
-			            PointerLevelList PointerLevelList = PointerLevelListQuery.FirstOrDefault();
+
+             
+            IQueryable<PointerLevelList> PointerLevelListQuery = GetIqueryableList( PointerLevelQuery);
+            PointerLevelList PointerLevelList = PointerLevelListQuery.FirstOrDefault();
             return PointerLevelList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PointerLevel>(nonListQueryOperation, iQueryable);
 
             IQueryable<PointerLevelList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PointerLevelList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PointerLevelList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

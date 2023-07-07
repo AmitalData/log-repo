@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsVerificationStatusTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomsVerificationStatusTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomsVerificationStatusTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsVerificationStatusTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsVerificationStatusType> CustomsVerificationStatusTypeQuery = (from a in context.CustomsVerificationStatusTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsVerificationStatusTypeList> CustomsVerificationStatusTypeListQuery = GetIqueryableList( CustomsVerificationStatusTypeQuery);
-			            CustomsVerificationStatusTypeList CustomsVerificationStatusTypeList = CustomsVerificationStatusTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsVerificationStatusTypeList> CustomsVerificationStatusTypeListQuery = GetIqueryableList( CustomsVerificationStatusTypeQuery);
+            CustomsVerificationStatusTypeList CustomsVerificationStatusTypeList = CustomsVerificationStatusTypeListQuery.FirstOrDefault();
             return CustomsVerificationStatusTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsVerificationStatusType>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsVerificationStatusTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomsVerificationStatusTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomsVerificationStatusTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

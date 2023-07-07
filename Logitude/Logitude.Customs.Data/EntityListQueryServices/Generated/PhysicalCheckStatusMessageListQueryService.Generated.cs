@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PhysicalCheckStatusMessageList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PhysicalCheckStatusMessageList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PhysicalCheckStatusMessageList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PhysicalCheckStatusMessageList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PhysicalCheckStatusMessage> PhysicalCheckStatusMessageQuery = (from a in context.PhysicalCheckStatusMessages
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PhysicalCheckStatusMessageList> PhysicalCheckStatusMessageListQuery = GetIqueryableList( PhysicalCheckStatusMessageQuery);
-			            PhysicalCheckStatusMessageList PhysicalCheckStatusMessageList = PhysicalCheckStatusMessageListQuery.FirstOrDefault();
+
+             
+            IQueryable<PhysicalCheckStatusMessageList> PhysicalCheckStatusMessageListQuery = GetIqueryableList( PhysicalCheckStatusMessageQuery);
+            PhysicalCheckStatusMessageList PhysicalCheckStatusMessageList = PhysicalCheckStatusMessageListQuery.FirstOrDefault();
             return PhysicalCheckStatusMessageList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PhysicalCheckStatusMessage>(nonListQueryOperation, iQueryable);
 
             IQueryable<PhysicalCheckStatusMessageList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PhysicalCheckStatusMessageList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PhysicalCheckStatusMessageList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

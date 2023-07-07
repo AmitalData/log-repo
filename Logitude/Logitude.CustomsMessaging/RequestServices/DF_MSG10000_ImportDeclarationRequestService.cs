@@ -504,7 +504,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             CreateDeclarationPM(requestParams);
 
             FeatureQuery featureQuery = new FeatureQuery();
-            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
             var feature = features.Features.FirstOrDefault(x => x.Code == "ISEXCLUDEMANIFEST");
             if (feature != null)
             {

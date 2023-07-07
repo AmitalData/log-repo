@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<GatepassReturnCodeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<GatepassReturnCodeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<GatepassReturnCodeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(GatepassReturnCodeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<GatepassReturnCode> GatepassReturnCodeQuery = (from a in context.GatepassReturnCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<GatepassReturnCodeList> GatepassReturnCodeListQuery = GetIqueryableList( GatepassReturnCodeQuery);
-			            GatepassReturnCodeList GatepassReturnCodeList = GatepassReturnCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<GatepassReturnCodeList> GatepassReturnCodeListQuery = GetIqueryableList( GatepassReturnCodeQuery);
+            GatepassReturnCodeList GatepassReturnCodeList = GatepassReturnCodeListQuery.FirstOrDefault();
             return GatepassReturnCodeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<GatepassReturnCode>(nonListQueryOperation, iQueryable);
 
             IQueryable<GatepassReturnCodeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<GatepassReturnCodeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<GatepassReturnCodeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<VehicleTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<VehicleTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<VehicleTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(VehicleTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VehicleType> VehicleTypeQuery = (from a in context.VehicleTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<VehicleTypeList> VehicleTypeListQuery = GetIqueryableList( VehicleTypeQuery);
-			            VehicleTypeList VehicleTypeList = VehicleTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<VehicleTypeList> VehicleTypeListQuery = GetIqueryableList( VehicleTypeQuery);
+            VehicleTypeList VehicleTypeList = VehicleTypeListQuery.FirstOrDefault();
             return VehicleTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<VehicleType>(nonListQueryOperation, iQueryable);
 
             IQueryable<VehicleTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<VehicleTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<VehicleTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

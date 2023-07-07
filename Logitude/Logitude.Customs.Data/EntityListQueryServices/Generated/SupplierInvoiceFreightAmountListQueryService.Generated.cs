@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SupplierInvoiceFreightAmountList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<SupplierInvoiceFreightAmountList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<SupplierInvoiceFreightAmountList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SupplierInvoiceFreightAmountList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceFreightAmount> SupplierInvoiceFreightAmountQuery = (from a in context.SupplierInvoiceFreightAmounts
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.CurrencyTypeCode == currencytypecode
                                                        select a);
-          
-		  
-		  			IQueryable<SupplierInvoiceFreightAmountList> SupplierInvoiceFreightAmountListQuery = GetIqueryableList( SupplierInvoiceFreightAmountQuery);
-			            SupplierInvoiceFreightAmountList SupplierInvoiceFreightAmountList = SupplierInvoiceFreightAmountListQuery.FirstOrDefault();
+
+             
+            IQueryable<SupplierInvoiceFreightAmountList> SupplierInvoiceFreightAmountListQuery = GetIqueryableList( SupplierInvoiceFreightAmountQuery);
+            SupplierInvoiceFreightAmountList SupplierInvoiceFreightAmountList = SupplierInvoiceFreightAmountListQuery.FirstOrDefault();
             return SupplierInvoiceFreightAmountList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<SupplierInvoiceFreightAmount>(nonListQueryOperation, iQueryable);
 
             IQueryable<SupplierInvoiceFreightAmountList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<SupplierInvoiceFreightAmountList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<SupplierInvoiceFreightAmountList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

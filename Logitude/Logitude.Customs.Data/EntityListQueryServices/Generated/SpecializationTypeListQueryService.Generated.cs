@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SpecializationTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<SpecializationTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<SpecializationTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SpecializationTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SpecializationType> SpecializationTypeQuery = (from a in context.SpecializationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SpecializationTypeList> SpecializationTypeListQuery = GetIqueryableList( SpecializationTypeQuery);
-			            SpecializationTypeList SpecializationTypeList = SpecializationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SpecializationTypeList> SpecializationTypeListQuery = GetIqueryableList( SpecializationTypeQuery);
+            SpecializationTypeList SpecializationTypeList = SpecializationTypeListQuery.FirstOrDefault();
             return SpecializationTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<SpecializationType>(nonListQueryOperation, iQueryable);
 
             IQueryable<SpecializationTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<SpecializationTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<SpecializationTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CurrencyTypeTenantList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CurrencyTypeTenantList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CurrencyTypeTenantList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CurrencyTypeTenantList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CurrencyTypeTenant> CurrencyTypeTenantQuery = (from a in context.CurrencyTypeTenants
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CurrencyTypeTenantList> CurrencyTypeTenantListQuery = GetIqueryableList( CurrencyTypeTenantQuery);
-			            CurrencyTypeTenantList CurrencyTypeTenantList = CurrencyTypeTenantListQuery.FirstOrDefault();
+
+             
+            IQueryable<CurrencyTypeTenantList> CurrencyTypeTenantListQuery = GetIqueryableList( CurrencyTypeTenantQuery);
+            CurrencyTypeTenantList CurrencyTypeTenantList = CurrencyTypeTenantListQuery.FirstOrDefault();
             return CurrencyTypeTenantList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CurrencyTypeTenant>(nonListQueryOperation, iQueryable);
 
             IQueryable<CurrencyTypeTenantList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CurrencyTypeTenantList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CurrencyTypeTenantList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

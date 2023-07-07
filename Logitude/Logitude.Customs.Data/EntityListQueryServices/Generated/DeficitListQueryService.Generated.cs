@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeficitList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeficitList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeficitList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeficitList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<Deficit> DeficitQuery = (from a in context.Deficits
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<DeficitList> DeficitListQuery = GetIqueryableList( DeficitQuery);
-			            DeficitList DeficitList = DeficitListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeficitList> DeficitListQuery = GetIqueryableList( DeficitQuery);
+            DeficitList DeficitList = DeficitListQuery.FirstOrDefault();
             return DeficitList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<Deficit>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeficitList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeficitList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeficitList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

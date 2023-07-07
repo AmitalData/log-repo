@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<NotificationTenantDefinitionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<NotificationTenantDefinitionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<NotificationTenantDefinitionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(NotificationTenantDefinitionList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<NotificationTenantDefinition> NotificationTenantDefinitionQuery = (from a in context.NotificationTenantDefinition
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<NotificationTenantDefinitionList> NotificationTenantDefinitionListQuery = GetIqueryableList( NotificationTenantDefinitionQuery);
-			            NotificationTenantDefinitionList NotificationTenantDefinitionList = NotificationTenantDefinitionListQuery.FirstOrDefault();
+
+             
+            IQueryable<NotificationTenantDefinitionList> NotificationTenantDefinitionListQuery = GetIqueryableList( NotificationTenantDefinitionQuery);
+            NotificationTenantDefinitionList NotificationTenantDefinitionList = NotificationTenantDefinitionListQuery.FirstOrDefault();
             return NotificationTenantDefinitionList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<NotificationTenantDefinition>(nonListQueryOperation, iQueryable);
 
             IQueryable<NotificationTenantDefinitionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<NotificationTenantDefinitionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<NotificationTenantDefinitionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ContainerizationStatusCodeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ContainerizationStatusCodeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ContainerizationStatusCodeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ContainerizationStatusCodeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ContainerizationStatusCode> ContainerizationStatusCodeQuery = (from a in context.ContainerizationStatusCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ContainerizationStatusCodeList> ContainerizationStatusCodeListQuery = GetIqueryableList( ContainerizationStatusCodeQuery);
-			            ContainerizationStatusCodeList ContainerizationStatusCodeList = ContainerizationStatusCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ContainerizationStatusCodeList> ContainerizationStatusCodeListQuery = GetIqueryableList( ContainerizationStatusCodeQuery);
+            ContainerizationStatusCodeList ContainerizationStatusCodeList = ContainerizationStatusCodeListQuery.FirstOrDefault();
             return ContainerizationStatusCodeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ContainerizationStatusCode>(nonListQueryOperation, iQueryable);
 
             IQueryable<ContainerizationStatusCodeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ContainerizationStatusCodeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ContainerizationStatusCodeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

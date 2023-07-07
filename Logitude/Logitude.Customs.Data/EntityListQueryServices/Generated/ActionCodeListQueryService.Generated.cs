@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ActionCodeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ActionCodeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ActionCodeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ActionCodeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ActionCode> ActionCodeQuery = (from a in context.ActionCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ActionCodeList> ActionCodeListQuery = GetIqueryableList( ActionCodeQuery);
-			            ActionCodeList ActionCodeList = ActionCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ActionCodeList> ActionCodeListQuery = GetIqueryableList( ActionCodeQuery);
+            ActionCodeList ActionCodeList = ActionCodeListQuery.FirstOrDefault();
             return ActionCodeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ActionCode>(nonListQueryOperation, iQueryable);
 
             IQueryable<ActionCodeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ActionCodeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ActionCodeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

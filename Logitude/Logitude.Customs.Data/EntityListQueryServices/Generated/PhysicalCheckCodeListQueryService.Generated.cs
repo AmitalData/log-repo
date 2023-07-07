@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PhysicalCheckCodeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PhysicalCheckCodeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PhysicalCheckCodeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PhysicalCheckCodeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PhysicalCheckCode> PhysicalCheckCodeQuery = (from a in context.PhysicalCheckCodes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PhysicalCheckCodeList> PhysicalCheckCodeListQuery = GetIqueryableList( PhysicalCheckCodeQuery);
-			            PhysicalCheckCodeList PhysicalCheckCodeList = PhysicalCheckCodeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PhysicalCheckCodeList> PhysicalCheckCodeListQuery = GetIqueryableList( PhysicalCheckCodeQuery);
+            PhysicalCheckCodeList PhysicalCheckCodeList = PhysicalCheckCodeListQuery.FirstOrDefault();
             return PhysicalCheckCodeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PhysicalCheckCode>(nonListQueryOperation, iQueryable);
 
             IQueryable<PhysicalCheckCodeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PhysicalCheckCodeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PhysicalCheckCodeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

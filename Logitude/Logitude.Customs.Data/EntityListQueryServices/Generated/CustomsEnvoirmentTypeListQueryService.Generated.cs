@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsEnvoirmentTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomsEnvoirmentTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomsEnvoirmentTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsEnvoirmentTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsEnvoirmentType> CustomsEnvoirmentTypeQuery = (from a in context.CustomsEnvoirmentTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsEnvoirmentTypeList> CustomsEnvoirmentTypeListQuery = GetIqueryableList( CustomsEnvoirmentTypeQuery);
-			            CustomsEnvoirmentTypeList CustomsEnvoirmentTypeList = CustomsEnvoirmentTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsEnvoirmentTypeList> CustomsEnvoirmentTypeListQuery = GetIqueryableList( CustomsEnvoirmentTypeQuery);
+            CustomsEnvoirmentTypeList CustomsEnvoirmentTypeList = CustomsEnvoirmentTypeListQuery.FirstOrDefault();
             return CustomsEnvoirmentTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsEnvoirmentType>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsEnvoirmentTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomsEnvoirmentTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomsEnvoirmentTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

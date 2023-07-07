@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ClaimsRelatedEntitiesAmountList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ClaimsRelatedEntitiesAmountList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ClaimsRelatedEntitiesAmountList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ClaimsRelatedEntitiesAmountList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ClaimsRelatedEntitiesAmount> ClaimsRelatedEntitiesAmountQuery = (from a in context.ClaimsRelatedEntitiesAmounts
                                                        where a.ClaimId == claimid && a.CounterKey == counterkey && a.LineNo == lineno
                                                        select a);
-          
-		  
-		  			IQueryable<ClaimsRelatedEntitiesAmountList> ClaimsRelatedEntitiesAmountListQuery = GetIqueryableList( ClaimsRelatedEntitiesAmountQuery);
-			            ClaimsRelatedEntitiesAmountList ClaimsRelatedEntitiesAmountList = ClaimsRelatedEntitiesAmountListQuery.FirstOrDefault();
+
+             
+            IQueryable<ClaimsRelatedEntitiesAmountList> ClaimsRelatedEntitiesAmountListQuery = GetIqueryableList( ClaimsRelatedEntitiesAmountQuery);
+            ClaimsRelatedEntitiesAmountList ClaimsRelatedEntitiesAmountList = ClaimsRelatedEntitiesAmountListQuery.FirstOrDefault();
             return ClaimsRelatedEntitiesAmountList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ClaimsRelatedEntitiesAmount>(nonListQueryOperation, iQueryable);
 
             IQueryable<ClaimsRelatedEntitiesAmountList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ClaimsRelatedEntitiesAmountList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ClaimsRelatedEntitiesAmountList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

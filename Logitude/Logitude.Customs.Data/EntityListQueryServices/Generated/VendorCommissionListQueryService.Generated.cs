@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<VendorCommissionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<VendorCommissionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<VendorCommissionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(VendorCommissionList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VendorCommission> VendorCommissionQuery = (from a in context.VendorCommissions
                                                        where a.VendorId == vendorid && a.CustomerId == customerid && a.ModificationsTypeCode == modificationstypecode
                                                        select a);
-          
-		  
-		  			IQueryable<VendorCommissionList> VendorCommissionListQuery = GetIqueryableList( VendorCommissionQuery);
-			            VendorCommissionList VendorCommissionList = VendorCommissionListQuery.FirstOrDefault();
+
+             
+            IQueryable<VendorCommissionList> VendorCommissionListQuery = GetIqueryableList( VendorCommissionQuery);
+            VendorCommissionList VendorCommissionList = VendorCommissionListQuery.FirstOrDefault();
             return VendorCommissionList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<VendorCommission>(nonListQueryOperation, iQueryable);
 
             IQueryable<VendorCommissionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<VendorCommissionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<VendorCommissionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

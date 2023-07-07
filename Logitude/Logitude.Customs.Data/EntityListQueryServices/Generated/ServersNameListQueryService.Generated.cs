@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ServersNameList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ServersNameList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ServersNameList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ServersNameList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ServersName> ServersNameQuery = (from a in context.ServersNames
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ServersNameList> ServersNameListQuery = GetIqueryableList( ServersNameQuery);
-			            ServersNameList ServersNameList = ServersNameListQuery.FirstOrDefault();
+
+             
+            IQueryable<ServersNameList> ServersNameListQuery = GetIqueryableList( ServersNameQuery);
+            ServersNameList ServersNameList = ServersNameListQuery.FirstOrDefault();
             return ServersNameList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ServersName>(nonListQueryOperation, iQueryable);
 
             IQueryable<ServersNameList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ServersNameList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ServersNameList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

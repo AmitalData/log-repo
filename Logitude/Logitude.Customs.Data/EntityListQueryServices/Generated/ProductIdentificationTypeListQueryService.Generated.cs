@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ProductIdentificationTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ProductIdentificationTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ProductIdentificationTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ProductIdentificationTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ProductIdentificationType> ProductIdentificationTypeQuery = (from a in context.ProductIdentificationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ProductIdentificationTypeList> ProductIdentificationTypeListQuery = GetIqueryableList( ProductIdentificationTypeQuery);
-			            ProductIdentificationTypeList ProductIdentificationTypeList = ProductIdentificationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ProductIdentificationTypeList> ProductIdentificationTypeListQuery = GetIqueryableList( ProductIdentificationTypeQuery);
+            ProductIdentificationTypeList ProductIdentificationTypeList = ProductIdentificationTypeListQuery.FirstOrDefault();
             return ProductIdentificationTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ProductIdentificationType>(nonListQueryOperation, iQueryable);
 
             IQueryable<ProductIdentificationTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ProductIdentificationTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ProductIdentificationTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

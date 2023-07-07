@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomBankList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomBankList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomBankList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomBankList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomBank> CustomBankQuery = (from a in context.CustomBanks
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomBankList> CustomBankListQuery = GetIqueryableList( CustomBankQuery);
-			            CustomBankList CustomBankList = CustomBankListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomBankList> CustomBankListQuery = GetIqueryableList( CustomBankQuery);
+            CustomBankList CustomBankList = CustomBankListQuery.FirstOrDefault();
             return CustomBankList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomBank>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomBankList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomBankList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomBankList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

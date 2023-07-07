@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CheckEssenceLookupList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CheckEssenceLookupList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CheckEssenceLookupList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CheckEssenceLookupList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CheckEssenceLookup> CheckEssenceLookupQuery = (from a in context.CheckEssenceLookups
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CheckEssenceLookupList> CheckEssenceLookupListQuery = GetIqueryableList( CheckEssenceLookupQuery);
-			            CheckEssenceLookupList CheckEssenceLookupList = CheckEssenceLookupListQuery.FirstOrDefault();
+
+             
+            IQueryable<CheckEssenceLookupList> CheckEssenceLookupListQuery = GetIqueryableList( CheckEssenceLookupQuery);
+            CheckEssenceLookupList CheckEssenceLookupList = CheckEssenceLookupListQuery.FirstOrDefault();
             return CheckEssenceLookupList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CheckEssenceLookup>(nonListQueryOperation, iQueryable);
 
             IQueryable<CheckEssenceLookupList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CheckEssenceLookupList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CheckEssenceLookupList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

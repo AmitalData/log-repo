@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ItemGovernmentProcedureTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ItemGovernmentProcedureTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ItemGovernmentProcedureTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ItemGovernmentProcedureTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ItemGovernmentProcedureType> ItemGovernmentProcedureTypeQuery = (from a in context.ItemGovernmentProcedureTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<ItemGovernmentProcedureTypeList> ItemGovernmentProcedureTypeListQuery = GetIqueryableList( ItemGovernmentProcedureTypeQuery);
-			            ItemGovernmentProcedureTypeList ItemGovernmentProcedureTypeList = ItemGovernmentProcedureTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<ItemGovernmentProcedureTypeList> ItemGovernmentProcedureTypeListQuery = GetIqueryableList( ItemGovernmentProcedureTypeQuery);
+            ItemGovernmentProcedureTypeList ItemGovernmentProcedureTypeList = ItemGovernmentProcedureTypeListQuery.FirstOrDefault();
             return ItemGovernmentProcedureTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ItemGovernmentProcedureType>(nonListQueryOperation, iQueryable);
 
             IQueryable<ItemGovernmentProcedureTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ItemGovernmentProcedureTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ItemGovernmentProcedureTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PhysicalCheckSearchResultTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PhysicalCheckSearchResultTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PhysicalCheckSearchResultTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PhysicalCheckSearchResultTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PhysicalCheckSearchResultType> PhysicalCheckSearchResultTypeQuery = (from a in context.PhysicalCheckSearchResultTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<PhysicalCheckSearchResultTypeList> PhysicalCheckSearchResultTypeListQuery = GetIqueryableList( PhysicalCheckSearchResultTypeQuery);
-			            PhysicalCheckSearchResultTypeList PhysicalCheckSearchResultTypeList = PhysicalCheckSearchResultTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<PhysicalCheckSearchResultTypeList> PhysicalCheckSearchResultTypeListQuery = GetIqueryableList( PhysicalCheckSearchResultTypeQuery);
+            PhysicalCheckSearchResultTypeList PhysicalCheckSearchResultTypeList = PhysicalCheckSearchResultTypeListQuery.FirstOrDefault();
             return PhysicalCheckSearchResultTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PhysicalCheckSearchResultType>(nonListQueryOperation, iQueryable);
 
             IQueryable<PhysicalCheckSearchResultTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PhysicalCheckSearchResultTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PhysicalCheckSearchResultTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

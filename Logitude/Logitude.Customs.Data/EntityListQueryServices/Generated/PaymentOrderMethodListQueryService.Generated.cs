@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PaymentOrderMethodList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<PaymentOrderMethodList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<PaymentOrderMethodList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PaymentOrderMethodList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<PaymentOrderMethod> PaymentOrderMethodQuery = (from a in context.PaymentOrderMethods
                                                        where a.PaymentOrderId == paymentorderid && a.Line == line
                                                        select a);
-          
-		  
-		  			IQueryable<PaymentOrderMethodList> PaymentOrderMethodListQuery = GetIqueryableList( PaymentOrderMethodQuery);
-			            PaymentOrderMethodList PaymentOrderMethodList = PaymentOrderMethodListQuery.FirstOrDefault();
+
+             
+            IQueryable<PaymentOrderMethodList> PaymentOrderMethodListQuery = GetIqueryableList( PaymentOrderMethodQuery);
+            PaymentOrderMethodList PaymentOrderMethodList = PaymentOrderMethodListQuery.FirstOrDefault();
             return PaymentOrderMethodList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PaymentOrderMethod>(nonListQueryOperation, iQueryable);
 
             IQueryable<PaymentOrderMethodList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PaymentOrderMethodList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PaymentOrderMethodList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

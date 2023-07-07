@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationCourierStatusList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationCourierStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationCourierStatus> DeclarationCourierStatusQuery = (from a in context.DeclarationCourierStatuses
                                                        where a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationCourierStatusList> DeclarationCourierStatusListQuery = GetIqueryableList( DeclarationCourierStatusQuery);
-			            DeclarationCourierStatusList DeclarationCourierStatusList = DeclarationCourierStatusListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationCourierStatusList> DeclarationCourierStatusListQuery = GetIqueryableList( DeclarationCourierStatusQuery);
+            DeclarationCourierStatusList DeclarationCourierStatusList = DeclarationCourierStatusListQuery.FirstOrDefault();
             return DeclarationCourierStatusList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DeclarationCourierStatus>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeclarationCourierStatusList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

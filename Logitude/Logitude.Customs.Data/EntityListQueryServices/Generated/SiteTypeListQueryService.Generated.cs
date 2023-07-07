@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SiteTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<SiteTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<SiteTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SiteTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SiteType> SiteTypeQuery = (from a in context.SiteTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SiteTypeList> SiteTypeListQuery = GetIqueryableList( SiteTypeQuery);
-			            SiteTypeList SiteTypeList = SiteTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SiteTypeList> SiteTypeListQuery = GetIqueryableList( SiteTypeQuery);
+            SiteTypeList SiteTypeList = SiteTypeListQuery.FirstOrDefault();
             return SiteTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<SiteType>(nonListQueryOperation, iQueryable);
 
             IQueryable<SiteTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<SiteTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<SiteTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsDocumentsDefinitionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomsDocumentsDefinitionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomsDocumentsDefinitionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsDocumentsDefinitionList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsDocumentsDefinition> CustomsDocumentsDefinitionQuery = (from a in context.CustomsDocumentsDefinitions
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsDocumentsDefinitionList> CustomsDocumentsDefinitionListQuery = GetIqueryableList( CustomsDocumentsDefinitionQuery);
-			            CustomsDocumentsDefinitionList CustomsDocumentsDefinitionList = CustomsDocumentsDefinitionListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsDocumentsDefinitionList> CustomsDocumentsDefinitionListQuery = GetIqueryableList( CustomsDocumentsDefinitionQuery);
+            CustomsDocumentsDefinitionList CustomsDocumentsDefinitionList = CustomsDocumentsDefinitionListQuery.FirstOrDefault();
             return CustomsDocumentsDefinitionList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsDocumentsDefinition>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsDocumentsDefinitionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomsDocumentsDefinitionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomsDocumentsDefinitionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

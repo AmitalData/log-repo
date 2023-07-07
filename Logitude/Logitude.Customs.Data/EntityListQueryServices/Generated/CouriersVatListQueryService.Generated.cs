@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CouriersVatList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CouriersVatList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CouriersVatList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CouriersVatList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CouriersVat> CouriersVatQuery = (from a in context.CouriersVats
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<CouriersVatList> CouriersVatListQuery = GetIqueryableList( CouriersVatQuery);
-			            CouriersVatList CouriersVatList = CouriersVatListQuery.FirstOrDefault();
+
+             
+            IQueryable<CouriersVatList> CouriersVatListQuery = GetIqueryableList( CouriersVatQuery);
+            CouriersVatList CouriersVatList = CouriersVatListQuery.FirstOrDefault();
             return CouriersVatList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CouriersVat>(nonListQueryOperation, iQueryable);
 
             IQueryable<CouriersVatList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CouriersVatList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CouriersVatList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

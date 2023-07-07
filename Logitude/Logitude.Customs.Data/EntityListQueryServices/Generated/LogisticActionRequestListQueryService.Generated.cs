@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<LogisticActionRequestList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<LogisticActionRequestList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<LogisticActionRequestList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(LogisticActionRequestList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<LogisticActionRequest> LogisticActionRequestQuery = (from a in context.LogisticActionRequests
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<LogisticActionRequestList> LogisticActionRequestListQuery = GetIqueryableList( LogisticActionRequestQuery);
-			            LogisticActionRequestList LogisticActionRequestList = LogisticActionRequestListQuery.FirstOrDefault();
+
+             
+            IQueryable<LogisticActionRequestList> LogisticActionRequestListQuery = GetIqueryableList( LogisticActionRequestQuery);
+            LogisticActionRequestList LogisticActionRequestList = LogisticActionRequestListQuery.FirstOrDefault();
             return LogisticActionRequestList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<LogisticActionRequest>(nonListQueryOperation, iQueryable);
 
             IQueryable<LogisticActionRequestList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<LogisticActionRequestList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<LogisticActionRequestList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

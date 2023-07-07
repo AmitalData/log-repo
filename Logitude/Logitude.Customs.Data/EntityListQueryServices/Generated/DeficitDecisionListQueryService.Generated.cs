@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeficitDecisionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeficitDecisionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeficitDecisionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeficitDecisionList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeficitDecision> DeficitDecisionQuery = (from a in context.DeficitDecisions
                                                        where a.DeficitId == deficitid && a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<DeficitDecisionList> DeficitDecisionListQuery = GetIqueryableList( DeficitDecisionQuery);
-			            DeficitDecisionList DeficitDecisionList = DeficitDecisionListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeficitDecisionList> DeficitDecisionListQuery = GetIqueryableList( DeficitDecisionQuery);
+            DeficitDecisionList DeficitDecisionList = DeficitDecisionListQuery.FirstOrDefault();
             return DeficitDecisionList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DeficitDecision>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeficitDecisionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeficitDecisionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeficitDecisionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

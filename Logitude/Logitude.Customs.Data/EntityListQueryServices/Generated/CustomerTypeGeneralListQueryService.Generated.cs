@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomerTypeGeneralList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomerTypeGeneralList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomerTypeGeneralList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomerTypeGeneralList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomerTypeGeneral> CustomerTypeGeneralQuery = (from a in context.CustomerTypeGenerals
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomerTypeGeneralList> CustomerTypeGeneralListQuery = GetIqueryableList( CustomerTypeGeneralQuery);
-			            CustomerTypeGeneralList CustomerTypeGeneralList = CustomerTypeGeneralListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomerTypeGeneralList> CustomerTypeGeneralListQuery = GetIqueryableList( CustomerTypeGeneralQuery);
+            CustomerTypeGeneralList CustomerTypeGeneralList = CustomerTypeGeneralListQuery.FirstOrDefault();
             return CustomerTypeGeneralList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomerTypeGeneral>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomerTypeGeneralList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomerTypeGeneralList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomerTypeGeneralList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

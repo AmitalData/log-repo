@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<GuaranteeCustomerActivityList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<GuaranteeCustomerActivityList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<GuaranteeCustomerActivityList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(GuaranteeCustomerActivityList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<GuaranteeCustomerActivity> GuaranteeCustomerActivityQuery = (from a in context.GuaranteeCustomerActivities
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<GuaranteeCustomerActivityList> GuaranteeCustomerActivityListQuery = GetIqueryableList( GuaranteeCustomerActivityQuery);
-			            GuaranteeCustomerActivityList GuaranteeCustomerActivityList = GuaranteeCustomerActivityListQuery.FirstOrDefault();
+
+             
+            IQueryable<GuaranteeCustomerActivityList> GuaranteeCustomerActivityListQuery = GetIqueryableList( GuaranteeCustomerActivityQuery);
+            GuaranteeCustomerActivityList GuaranteeCustomerActivityList = GuaranteeCustomerActivityListQuery.FirstOrDefault();
             return GuaranteeCustomerActivityList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<GuaranteeCustomerActivity>(nonListQueryOperation, iQueryable);
 
             IQueryable<GuaranteeCustomerActivityList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<GuaranteeCustomerActivityList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<GuaranteeCustomerActivityList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsCollateralsConditionList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomsCollateralsConditionList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomsCollateralsConditionList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsCollateralsConditionList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsCollateralsCondition> CustomsCollateralsConditionQuery = (from a in context.CustomsCollateralsConditions
                                                        where a.CustomsCollateralId == customscollateralid && a.ConditionCode == conditioncode
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsCollateralsConditionList> CustomsCollateralsConditionListQuery = GetIqueryableList( CustomsCollateralsConditionQuery);
-			            CustomsCollateralsConditionList CustomsCollateralsConditionList = CustomsCollateralsConditionListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsCollateralsConditionList> CustomsCollateralsConditionListQuery = GetIqueryableList( CustomsCollateralsConditionQuery);
+            CustomsCollateralsConditionList CustomsCollateralsConditionList = CustomsCollateralsConditionListQuery.FirstOrDefault();
             return CustomsCollateralsConditionList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsCollateralsCondition>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsCollateralsConditionList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomsCollateralsConditionList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomsCollateralsConditionList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

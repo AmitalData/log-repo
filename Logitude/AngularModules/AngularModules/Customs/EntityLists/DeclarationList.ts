@@ -233,12 +233,10 @@ export class DeclarationList {
 	ShortProcedure: boolean;
 	ExportFlightDate: Date;
 	UNFCourier: boolean;
-
 	MehesFee: number;
 	VATReshimonFee: number;
 	SecurityFee: number;
 	ComputerFee: number;
-
 	
 }
  

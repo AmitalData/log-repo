@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<StorageMessageTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<StorageMessageTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<StorageMessageTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(StorageMessageTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<StorageMessageType> StorageMessageTypeQuery = (from a in context.StorageMessageTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<StorageMessageTypeList> StorageMessageTypeListQuery = GetIqueryableList( StorageMessageTypeQuery);
-			            StorageMessageTypeList StorageMessageTypeList = StorageMessageTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<StorageMessageTypeList> StorageMessageTypeListQuery = GetIqueryableList( StorageMessageTypeQuery);
+            StorageMessageTypeList StorageMessageTypeList = StorageMessageTypeListQuery.FirstOrDefault();
             return StorageMessageTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<StorageMessageType>(nonListQueryOperation, iQueryable);
 
             IQueryable<StorageMessageTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<StorageMessageTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<StorageMessageTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

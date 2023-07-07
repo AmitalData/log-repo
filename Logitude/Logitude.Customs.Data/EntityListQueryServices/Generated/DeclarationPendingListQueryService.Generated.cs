@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationPendingList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeclarationPendingList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeclarationPendingList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationPendingList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationPending> DeclarationPendingQuery = (from a in context.DeclarationPendings
                                                        where a.DeclarationID == declarationid && a.CourierPendingReasonCode == courierpendingreasoncode
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationPendingList> DeclarationPendingListQuery = GetIqueryableList( DeclarationPendingQuery);
-			            DeclarationPendingList DeclarationPendingList = DeclarationPendingListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationPendingList> DeclarationPendingListQuery = GetIqueryableList( DeclarationPendingQuery);
+            DeclarationPendingList DeclarationPendingList = DeclarationPendingListQuery.FirstOrDefault();
             return DeclarationPendingList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DeclarationPending>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeclarationPendingList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeclarationPendingList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeclarationPendingList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

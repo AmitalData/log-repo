@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<SpecialActionDescriptionTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<SpecialActionDescriptionTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<SpecialActionDescriptionTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(SpecialActionDescriptionTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SpecialActionDescriptionType> SpecialActionDescriptionTypeQuery = (from a in context.SpecialActionDescriptionTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<SpecialActionDescriptionTypeList> SpecialActionDescriptionTypeListQuery = GetIqueryableList( SpecialActionDescriptionTypeQuery);
-			            SpecialActionDescriptionTypeList SpecialActionDescriptionTypeList = SpecialActionDescriptionTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<SpecialActionDescriptionTypeList> SpecialActionDescriptionTypeListQuery = GetIqueryableList( SpecialActionDescriptionTypeQuery);
+            SpecialActionDescriptionTypeList SpecialActionDescriptionTypeList = SpecialActionDescriptionTypeListQuery.FirstOrDefault();
             return SpecialActionDescriptionTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<SpecialActionDescriptionType>(nonListQueryOperation, iQueryable);
 
             IQueryable<SpecialActionDescriptionTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<SpecialActionDescriptionTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<SpecialActionDescriptionTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

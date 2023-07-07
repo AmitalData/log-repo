@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ExportDeclarationClosingDataList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ExportDeclarationClosingDataList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ExportDeclarationClosingDataList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ExportDeclarationClosingDataList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ExportDeclarationClosingData> ExportDeclarationClosingDataQuery = (from a in context.ExportDeclarationClosingDatas
                                                        where a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<ExportDeclarationClosingDataList> ExportDeclarationClosingDataListQuery = GetIqueryableList( ExportDeclarationClosingDataQuery);
-			            ExportDeclarationClosingDataList ExportDeclarationClosingDataList = ExportDeclarationClosingDataListQuery.FirstOrDefault();
+
+             
+            IQueryable<ExportDeclarationClosingDataList> ExportDeclarationClosingDataListQuery = GetIqueryableList( ExportDeclarationClosingDataQuery);
+            ExportDeclarationClosingDataList ExportDeclarationClosingDataList = ExportDeclarationClosingDataListQuery.FirstOrDefault();
             return ExportDeclarationClosingDataList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ExportDeclarationClosingData>(nonListQueryOperation, iQueryable);
 
             IQueryable<ExportDeclarationClosingDataList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ExportDeclarationClosingDataList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ExportDeclarationClosingDataList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

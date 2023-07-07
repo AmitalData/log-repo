@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DeclarationStatementTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DeclarationStatementTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DeclarationStatementTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationStatementTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationStatementType> DeclarationStatementTypeQuery = (from a in context.DeclarationStatementTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<DeclarationStatementTypeList> DeclarationStatementTypeListQuery = GetIqueryableList( DeclarationStatementTypeQuery);
-			            DeclarationStatementTypeList DeclarationStatementTypeList = DeclarationStatementTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<DeclarationStatementTypeList> DeclarationStatementTypeListQuery = GetIqueryableList( DeclarationStatementTypeQuery);
+            DeclarationStatementTypeList DeclarationStatementTypeList = DeclarationStatementTypeListQuery.FirstOrDefault();
             return DeclarationStatementTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DeclarationStatementType>(nonListQueryOperation, iQueryable);
 
             IQueryable<DeclarationStatementTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DeclarationStatementTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DeclarationStatementTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

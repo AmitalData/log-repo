@@ -26,7 +26,123 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     public partial class DeclarationListQueryService
     {
 
-         private IQueryable<DeclarationList> GetIqueryableList(IQueryable<Declaration> iQueryable, bool fromGetSingle= false)
+
+#if false
+        private IQueryable<DeclarationList> GetIqueryableList_old(IQueryable<Declaration> iQueryable)
+        {
+            IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry")
+                                                 select new DeclarationList()
+                                                 {
+                                                     Id = a.Id,
+                                                     AgentId = a.AgentId,
+                                                     AutonomyRegionTypeName = a.AutonomyRegionType.EnglishName,
+                                                     CIFValue = a.CIFValue,
+                                                     ConstraintCode = a.ConstraintCode,
+                                                     CreatedByUserId = a.CreatedByUserId,
+                                                     CustomerName = a.CustomerCard.EnglishName,
+                                                     CustomFileNo = a.CustomFileNo,
+                                                     DealValue = a.DealValue,
+                                                     DeclarationDocumentId = a.DeclarationDocumentId,
+                                                     DeclarationNumber = a.DeclarationNumber,
+                                                     DeclarationOfficeCode = a.DeclarationOfficeCode,
+                                                     DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
+                                                     EntitleImporterCountryName = a.EntitleImporterCountry.EnglishName,
+                                                     EntitleImporterId = a.EntitleImporterId,
+                                                     ExternalDeclarationNumber = a.ExternalDeclarationNumber,
+                                                     HatraDate = a.HatraDate,
+                                                     ImporterEntitlementTypeName = a.ImporterEntitlementType.EnglishName,
+
+                                                     ImporterPassCountryName = a.ImporterPassCountry.EnglishName,
+                                                     IsChanged = a.IsChanged,
+                                                     FileState = a.FileState,
+                                                     LoadingFactor = a.LoadingFactor,
+                                                     PaymentDate = a.PaymentDate,
+                                                     ProcedureCurrentName = a.ItemGovernmentProcedureCurrent.EnglishName,
+                                                     TaxationDateTime = a.TaxationDateTime,
+                                                     Tenant = a.Tenant,
+                                                     TotalTax = a.TotalTax,
+                                                     TransferImporterCountryName = a.TransferImporterCountry.EnglishName,
+
+                                                     VersionId = a.VersionId,
+
+                                                     EntitleImporterCountryCode = a.EntitleImporterCountryCode,
+                                                     ImporterPassCountryCode = a.ImporterPassCountryCode,
+                                                     ProcedureCurrentCode = a.ProcedureCurrentCode,
+
+                                                     CustomerId = a.CustomerId,
+                                                     ImporterEntitlementTypeCode = a.ImporterEntitlementTypeCode,
+                                                     TransferImporterCountryCode = a.TransferImporterCountryCode,
+                                                     SearchFields = a.SearchFields,
+                                                     DeclarationOfficeName = a.DeclarationOffice == null ? null : a.DeclarationOffice.EnglishName,
+                                                     DeclarationNumberandVersionId = a.DeclarationNumber + (string.IsNullOrEmpty(a.VersionId) ? "" : " " + a.VersionId),
+
+                                                 });
+
+
+
+            return query;
+        }
+        private IQueryable<DeclarationList> GetIqueryableList(IQueryable<Declaration> iQueryable)
+        {
+            IQueryable<DeclarationList> query = (from a in iQueryable
+                                                 //.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry")
+                                                 select new DeclarationList()
+                                                 {
+                                                     Id = a.Id,
+
+                                                     //  AgentId = a.AgentId,
+                                                     //  AutonomyRegionTypeName = a.AutonomyRegionType.EnglishName,
+                                                     CIFValue = a.CIFValue,
+                                                     ConstraintCode = a.ConstraintCode,
+                                                     CreatedByUserId = a.CreatedByUserId,
+                                                     CustomerName = a.CustomerCard.EnglishName,
+                                                     CustomFileNo = a.CustomFileNo,
+                                                     DealValue = a.DealValue,
+                                                     DeclarationDocumentId = a.DeclarationDocumentId,
+                                                     DeclarationNumber = a.DeclarationNumber,
+                                                     DeclarationOfficeCode = a.DeclarationOfficeCode,
+                                                     DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
+                                                     //  EntitleImporterCountryName = a.EntitleImporterCountry.EnglishName,
+                                                     EntitleImporterId = a.EntitleImporterId,
+                                                     ExternalDeclarationNumber = a.ExternalDeclarationNumber,
+                                                     HatraDate = a.HatraDate,
+                                                     //ImporterEntitlementTypeName = a.ImporterEntitlementType.EnglishName,
+                                                     ImporterId = a.ImporterId,
+                                                     //ImporterPassCountryName = a.ImporterPassCountry.EnglishName,
+                                                     IsChanged = a.IsChanged,
+                                                     FileState = a.FileState,
+                                                     LoadingFactor = a.LoadingFactor,
+                                                     PaymentDate = a.PaymentDate,
+                                                     //ProcedureCurrentName = a.ItemGovernmentProcedureCurrent.EnglishName,
+                                                     TaxationDateTime = a.TaxationDateTime,
+                                                     Tenant = a.Tenant,
+                                                     TotalTax = a.TotalTax,
+                                                     ///TransferImporterCountryName = a.TransferImporterCountry.EnglishName,
+                                                     TransferImporterId = a.TransferImporterId,
+                                                     VersionId = a.VersionId,
+                                                     AutonomyRegionTypeCode = a.AutonomyRegionTypeCode,
+                                                     EntitleImporterCountryCode = a.EntitleImporterCountryCode,
+                                                     ImporterPassCountryCode = a.ImporterPassCountryCode,
+                                                     ProcedureCurrentCode = a.ProcedureCurrentCode,
+                                                     DeclarationDocumentTypeCode = a.DeclarationDocumentTypeCode,
+                                                     CustomerId = a.CustomerId,
+                                                     ImporterEntitlementTypeCode = a.ImporterEntitlementTypeCode,
+                                                     TransferImporterCountryCode = a.TransferImporterCountryCode,
+                                                     SearchFields = a.SearchFields,
+                                                     //DeclarationOfficeName = a.DeclarationOffice == null ? null : a.DeclarationOffice.EnglishName,
+                                                     //DeclarationNumberandVersionId = a.DeclarationNumber + (string.IsNullOrEmpty(a.VersionId) ? "" : " " + a.VersionId),
+
+                                                 });
+
+
+
+            return query;
+        }
+        
+#endif
+
+
+        private IQueryable<DeclarationList> GetIqueryableList(IQueryable<Declaration> iQueryable)
         {
             var arrAmentmentStatus = new string[] { "6", "7", "8", "10" };
 
@@ -45,45 +161,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int tenant = tenant = authToken.Tenant;
 
             bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType == "B";
-            if (!fromGetSingle)
-            {
-                iQueryable = context.Declarations;
-            }
 
- 
+            if (!isCourierEnv)
+            {
                 IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
+                                                     //.Include("CreatedByUser.Contact")
                                                      .Include("Importer").Include("EntitleImporter").Include("TransferImporter").Include("ImporterType").Include("TransferImporterType").Include("EntitleImporterType").Include("StorageStatus").Include("FreightPaymentMethod")
                                                      .Include("CustomsCountry").Include("CustomsShip")
-
-                                                     join cdJoin in context.CourierDeclarations.Include("CourierMaster").Include("Card")
-                                                     .Select(x => new
-                                                     {
-                                                         x.DeclarationId,
-                                                         x.CourierMaster.IntegratorCode,
-                                                         x.CourierMaster.Card.LocalName,
-                                                         x.CourierMaster.MAWB
-                                                     })
-                                                                  on a.Id equals cdJoin.DeclarationId
-                                                                  into cdJoin_
-                                                     from cd in cdJoin_.DefaultIfEmpty()
-
-                                                     join dcsJoin in context.DeclarationCourierStatuses
-
-                                                     .Select(x => new
-                                                     {
-                                                         x.DeclarationId,
-                                                         x.IsClosedForFollowUp,
-                                                         x.FastIndividualProcessCode,
-                                                         x.TotalInvoiceAmountInUSD,
-                                                         x.CourierPendingReasonList,
-                                                         x.IsCourierMissingClassification,
-                                                         x.TerminalReleaseDate
-                                                     })
-                                                                  on a.Id equals dcsJoin.DeclarationId
-                                                                  into dcsJoin_
-                                                     from dcs in dcsJoin_.DefaultIfEmpty()
-
-
                                                      join recConsignment in context.Consignments.Include("CargoType")
                                                      .Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.CargoDescription, x.CargoType.LocalName, x.SecondCargoID, x.ThirdCargoID, x.ManifestNumber })
                                                      on a.Id equals recConsignment.DeclarationId into qjoinConsignments
@@ -111,11 +195,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 on a.AmendmentStatus equals AmendmentRequestStatus.Code
                                                                 into qStatusAmendJoin
                                                      from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
-                                                     join qBDeclarationTaxesByTaxTypeCodeViews in context.DecTaxesByTaxTypeCodeViews on
-                                                                                                         new { DeclarationId = a.Id, Tenant = a.Tenant } equals
-                                                                                                         new { DeclarationId = qBDeclarationTaxesByTaxTypeCodeViews.DeclarationId, Tenant = qBDeclarationTaxesByTaxTypeCodeViews.Tenant }
-                                                                                                         into qBDeclarationTaxesByTaxTypeCodeViewsJoin
-                                                     from MyDeclarationTaxesByTaxTypeCodeViews in qBDeclarationTaxesByTaxTypeCodeViewsJoin.DefaultIfEmpty()
 
                                                      select new DeclarationList()
                                                      {
@@ -126,12 +205,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          CustomFileNo = a.CustomFileNo,
                                                          DealValue = a.DealValue,
                                                          DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : (!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
-                                                         ExportFlightDate = a.ExportFlightDate,
+                                                         ReferentUserName = a.ReferentUser == null ? null : a.ReferentUser.Code,
                                                          EntitleImporterCountryName = a.EntitleImporterCountry.LocalName,
                                                          ExternalDeclarationNumber = a.ExternalDeclarationNumber,
                                                          HatraDate = a.HatraDate,
                                                          ImporterEntitlementTypeName = a.ImporterEntitlementType.LocalName,
-                                                         ReferentUserName = a.ReferentUser == null ? null : a.ReferentUser.Code,
+
                                                          ImporterPassCountryName = a.ImporterPassCountry.LocalName,
                                                          IsChanged = a.IsChanged,
                                                          FileState = a.FileState,
@@ -143,6 +222,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ExportTaxationDateTime = a.TaxationDateTime,
                                                          Tenant = a.Tenant,
                                                          TotalTax = a.TotalTax,
+                                                         ExportFlightDate = a.ExportFlightDate,
                                                          TransferImporterCountryName = a.TransferImporterCountry.LocalName,
                                                          DeclarationVersionId = a.VersionId,
                                                          CreateDateTime = a.CreateDateTime,
@@ -159,8 +239,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          DeclarationOfficeName = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
                                                          DeclarationNumberandVersionId = a.DeclarationNumber + (string.IsNullOrEmpty(a.VersionId) ? "" : " " + a.VersionId),
                                                          AutonomyRegionTypeCode = a.AutonomyRegionTypeCode,
-
-                                                          ReferentUserId = a.ReferentUserId,
                                                          DeclarationStatusTypeName = a.DeclarationStatusType == null ? null : a.DeclarationStatusType.LocalName,
                                                          IsCancelled = a.IsCancelled,
                                                          PlatformFee = a.PlatformFee,
@@ -169,16 +247,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          DeclarationOfficeCode = a.DeclarationOfficeCode,
                                                          DeclarationOfficeNameForExport = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
                                                          ExportDeclarationOfficeCode = a.ExportDeclarationOfficeCode,
-  ExportDeclarationOfficeName = a.ExportDeclarationOffice == null ? null : a.ExportDeclarationOffice.LocalName,
-                                                     ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
- 
+                                                         ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
                                                          DepartmentId = a.DepartmentId,
                                                          DepartmentName = a.Department.LocalName,
                                                          TransportModeName = a.CustomsTransportMode == null ? null : a.CustomsTransportMode.LocalName,
                                                          EntitleImporterCode = a.EntitleImporterCode,
                                                          CreatedByUserName =
+
                                                          a.CreatedByUser.Code,
-                                                         DepositionStatusCode = a.DepositionStatusCode,
                                                          IsHatraDateNull = a.HatraDate == null,
                                                          ImporterAddress = a.ImporterAddress,
                                                          ImporterAddressForExport = a.ImporterAddress,
@@ -197,7 +273,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          IsConvertedDeclaration = a.IsConvertedDeclaration,
                                                          CorrectionsXml = a.CorrectionsXml,
                                                          SignedByUserId = a.SignedByUserId,
-                                                         IsAmendment = a.IsAmendment,
                                                          ImporterCode = a.ImporterCode,
                                                          ExporterImporterCode = a.ImporterCode,
                                                          ImporterNameForExport = a.Importer != null ? a.Importer.FullName : a.ImporterName,
@@ -230,20 +305,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ItemsProcessTypesList = a.ItemsProcessTypesList,
                                                          CourierSuspentionCode = a.CourierSuspentionCode,
                                                          CourierSuspentionName = a.CourierSuspention != null ? a.CourierSuspention.LocalName : null,
+                                                         DepositionStatusCode = a.DepositionStatusCode,
                                                          AmendmentDontDisplayInList = a.AmendmentDontDisplayInList,
-                                                         IsExportClosed= a.IsExportClosed,
-                                                         IsClosedForFollowUp = isCourierEnv && dcs != null && dcs.IsClosedForFollowUp,
-                                                         FastIndividualProcessCode = !isCourierEnv ? "" : dcs != null ? dcs.FastIndividualProcessCode : null,
-                                                         TotalInvoiceAmountInUSD = !isCourierEnv ? 1 : dcs != null ? dcs.TotalInvoiceAmountInUSD : null,
-                                                         IsPending902 = !isCourierEnv ? true : dcs != null ? dcs.CourierPendingReasonList.Contains("902") : false,
-                                                         IsPending900 = !isCourierEnv ? true : dcs != null ? dcs.CourierPendingReasonList.Contains("900") : false,
-                                                         IsPendingNotNull = !isCourierEnv || (dcs != null && dcs.CourierPendingReasonList != null && dcs.CourierPendingReasonList.Length > 0),
-                                                         CourierPendingReasonList = isCourierEnv && dcs != null ? dcs.CourierPendingReasonList : null,
-                                                         IntegratorCode = !isCourierEnv ? "" : cd != null ? cd.IntegratorCode : null,
-                                                         IntegratorName = isCourierEnv && cd != null ? cd.LocalName : null,
-
-                                                         MAWB = isCourierEnv && cd != null ? cd.MAWB : null,
-                                                         IsCourierMissingClassification = !isCourierEnv ? true : dcs != null ? dcs.IsCourierMissingClassification : false,
                                                          CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
                                                          IsPaymentProtested = a.IsPaymentProtested,
                                                          DeclarationNoAmendment = myJoinOriginalDeclaration.DeclarationNumber,
@@ -260,9 +323,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          DestinationCountryCode = a.DestinationCountryCode,
                                                          DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.EnglishName : "",
                                                          LoadingDateTime = a.LoadingDateTime,
- 
                                                          ShipCodeName = a.CustomsShip != null ? a.CustomsShip.EnglishName : "",
-                                                          IsExporterConfirmation = a.IsExporterConfirmation,
+                                                         IsExporterConfirmation = a.IsExporterConfirmation,
                                                          CreateDateForExport = a.CreateDateTime,
                                                          TransportModeForExport = a.TransportModeId,
                                                          CustomFileForExport = a.CustomFileNo,
@@ -270,7 +332,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
                                                          ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
                                                          ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
-                                                         TerminalReleaseDate = !isCourierEnv ? null : dcs != null ? dcs.TerminalReleaseDate : null,
                                                          PhysicalCheck = a.PhysicalCheck,
                                                          PhysicalCheckName = a.PhysicalCheck == null ? "��� �����" : a.PhysicalCheckCode.Name,
                                                          DeclarationTypeCode = a.DeclarationTypeCode,
@@ -282,17 +343,241 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ExportLoadingPortCode = a.ExportLoadingPortCode,
                                                          LoadingPortName = a.ExportLoadingPort.LocalName,
                                                          ExcludeManifest = a.ExcludeManifest,
-                                                         MehesFee = MyDeclarationTaxesByTaxTypeCodeViews.MehesFee,
-                                                         VATReshimonFee = MyDeclarationTaxesByTaxTypeCodeViews.VATReshimonFee,
-                                                         SecurityFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
-                                                         ComputerFee = MyDeclarationTaxesByTaxTypeCodeViews.ComputerFee,
+
+
                                                      });
 
-                return query.Where(x=>x.Tenant==tenant);
+                return query;
+
+            }
 
 
-        
+            else
+            {
+                IQueryable<DeclarationList> query2 = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
+                                     .Include("Importer").Include("ImporterType").Include("FreightPaymentMethod")
+                                     .Include("CustomsCountry")
 
+                                                      join cdJoin in context.CourierDeclarations.Include("CourierMaster").Include("Card")
+                                                      .Select(x => new
+                                                      {
+                                                          x.DeclarationId,
+                                                          x.CourierMaster.IntegratorCode,
+                                                          x.CourierMaster.Card.LocalName,
+                                                          x.CourierMaster.MAWB
+                                                      })
+                                                                   on a.Id equals cdJoin.DeclarationId
+                                                                   into cdJoin_
+                                                      from cd in cdJoin_.DefaultIfEmpty()
+
+                                                      join dcsJoin in context.DeclarationCourierStatuses
+                                                      .Select(x => new
+                                                      {
+                                                          x.DeclarationId,
+                                                          x.IsClosedForFollowUp,
+                                                          x.FastIndividualProcessCode,
+                                                          x.TotalInvoiceAmountInUSD,
+                                                          x.CourierPendingReasonList,
+                                                          x.IsCourierMissingClassification,
+                                                          x.TerminalReleaseDate
+                                                      })
+                                                                   on a.Id equals dcsJoin.DeclarationId
+                                                                   into dcsJoin_
+                                                      from dcs in dcsJoin_.DefaultIfEmpty()
+
+
+                                                      join recConsignment in context.Consignments.Include("CargoType")
+                                                      .Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.CargoDescription, x.CargoType.LocalName, x.SecondCargoID, x.ThirdCargoID, x.ManifestNumber })
+                                                      on a.Id equals recConsignment.DeclarationId into qjoinConsignments
+                                                      from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
+
+                                                      join c in qConsignmentNumber
+                                                      .Select(x => new { x.DeclarationId, x.ConsignmentNumber })
+                                                      on new { myJoinConsignment.DeclarationId, myJoinConsignment.ConsignmentNumber } equals new { c.DeclarationId, c.ConsignmentNumber }
+
+
+                                                      join recOriginalDeclarations in context.Declarations.Where(x => x.IsAmendment != true)
+                                                      .Select(x => new { x.CustomFileNo, x.DeclarationNumber, x.Id })
+                                                      on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
+                                                      into originalDeclarations
+                                                      from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
+
+                                                      join recDisplayDeclarations in context.Declarations.Where(x => x.AmendmentDontDisplayInList != true && !string.IsNullOrEmpty(x.AmendmentOriginalDeclartation))
+                                                     .Select(x => new { x.DeclarationNumber, x.AmendmentOriginalDeclartation })
+                                                     on a.AmendmentOriginalDeclartation equals recDisplayDeclarations.AmendmentOriginalDeclartation
+                                                     into displayDeclarations
+                                                      from myJoinDisplayDeclarations in displayDeclarations.DefaultIfEmpty()
+
+                                                      join AmendmentRequestStatus in context.AmendmentRequestStatuses
+                                                      .Select(x => new { x.Code, x.LocalName })
+                                                                 on a.AmendmentStatus equals AmendmentRequestStatus.Code
+                                                                 into qStatusAmendJoin
+                                                      from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
+
+                                                      join qBDeclarationTaxesByTaxTypeCodeViews in context.DecTaxesByTaxTypeCodeViews on
+                                                      new { DeclarationId = a.Id, Tenant = a.Tenant } equals
+                                                      new { DeclarationId = qBDeclarationTaxesByTaxTypeCodeViews.DeclarationId, Tenant = qBDeclarationTaxesByTaxTypeCodeViews.Tenant }
+                                                      into qBDeclarationTaxesByTaxTypeCodeViewsJoin
+                                                      from MyDeclarationTaxesByTaxTypeCodeViews in qBDeclarationTaxesByTaxTypeCodeViewsJoin.DefaultIfEmpty()
+
+                                                      select new DeclarationList()
+                                                      {
+                                                          Id = a.Id,
+                                                          // AgentId = a.AgentId,
+                                                          AutonomyRegionTypeName = a.AutonomyRegionType.LocalName,
+                                                          CIFValue = a.CIFValue,
+                                                          CustomerName = a.IsCourierDeclaration ? a.ImporterName : (a.CustomerCard.LocalName != null ? a.CustomerCard.LocalName : a.CustomerCard.EnglishName),
+                                                          CustomFileNo = a.CustomFileNo,
+                                                          DealValue = a.DealValue,
+                                                          DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : (!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
+                                                         ExportFlightDate = a.ExportFlightDate,
+
+                                                          ExternalDeclarationNumber = a.ExternalDeclarationNumber,
+                                                          HatraDate = a.HatraDate,
+
+                                                          ImporterPassCountryName = a.ImporterPassCountry.LocalName,
+                                                          IsChanged = a.IsChanged,
+                                                          FileState = a.FileState,
+                                                          LoadingFactor = a.LoadingFactor,
+                                                          PaymentDate = a.PaymentDate,
+                                                          IsSubmitDeclaration = a.IsSubmitDeclaration,
+                                                          ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
+                                                          TaxationDateTime = a.TaxationDateTime,
+                                                          ExportTaxationDateTime = a.TaxationDateTime,
+                                                          Tenant = a.Tenant,
+                                                          TotalTax = a.TotalTax,
+                                                          DeclarationVersionId = a.VersionId,
+                                                          CreateDateTime = a.CreateDateTime,
+                                                          UpdateDateTime = a.UpdateDateTime,
+                                                          ImporterPassCountryCode = a.ImporterPassCountryCode,
+                                                          ProcedureCurrentCode = a.ProcedureCurrentCode,
+                                                          CustomerCode = a.CustomerCard == null ? null : a.CustomerCard.Code,
+                                                          CustomerId = a.CustomerId,
+                                                          SearchFields = a.SearchFields,
+                                                          DeclarationOfficeName = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
+                                                          DeclarationNumberandVersionId = a.DeclarationNumber + (string.IsNullOrEmpty(a.VersionId) ? "" : " " + a.VersionId),
+                                                          AutonomyRegionTypeCode = a.AutonomyRegionTypeCode,
+
+                                                          DeclarationStatusTypeName = a.DeclarationStatusType == null ? null : a.DeclarationStatusType.LocalName,
+                                                          IsCancelled = a.IsCancelled,
+                                                          PlatformFee = a.PlatformFee,
+                                                          StorageSiteCode = a.StorageSiteCode,
+                                                          DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
+                                                          DeclarationOfficeCode = a.DeclarationOfficeCode,
+                                                          DeclarationOfficeNameForExport = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
+                                                          ExportDeclarationOfficeCode = a.ExportDeclarationOfficeCode,
+
+                                                     ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
+ 
+                                                          DepartmentId = a.DepartmentId,
+                                                          DepartmentName = a.Department.LocalName,
+                                                          TransportModeName = a.CustomsTransportMode == null ? null : a.CustomsTransportMode.LocalName,
+                                                          CreatedByUserName =
+
+                                                         a.CreatedByUser.Code,
+                                                          IsHatraDateNull = a.HatraDate == null,
+                                                          ImporterAddress = a.ImporterAddress,
+                                                          ImporterName = a.Importer != null ? a.Importer.FullName : a.ImporterName,
+                                                          EntitleImporterName = a.EntitleImporter.FullName,
+                                                          UserNotes = a.UserNotes,
+                                                          ImporterTypeCode = a.ImporterTypeCode,
+                                                          ImporterTypeName = a.ImporterType != null ? a.ImporterType.LocalName : null,
+                                                          HasConstraint = a.HasConstraint,
+                                                          StorageSiteName = a.StorageSiteName,
+                                                          SignerPersonalId = a.SignerPersonalId,
+                                                          IsConvertedDeclaration = a.IsConvertedDeclaration,
+                                                          CorrectionsXml = a.CorrectionsXml,
+                                                          SignedByUserId = a.SignedByUserId,
+                                                          ImporterCode = a.ImporterCode,
+                                                          ExporterImporterCode = a.ImporterCode,
+                                                          WeightValue = a.WeightValue,
+                                                          WeightValueName = a.FreightPaymentMethod != null ? a.FreightPaymentMethod.LocalName : null,
+                                                          IsCourierDeclaration = a.IsCourierDeclaration,
+                                                          CourierSearchFields = a.CourierSearchFields,
+                                                          CourierHAWB = a.CourierHAWB,
+                                                          CourierCustomStatusCode = a.CourierCustomStatusCode,
+                                                          CourierCustomStatusName = a.CourierCustomStatus != null ? a.CourierCustomStatus.LocalName : null,
+                                                          ManifestCargoStatusCode = a.ManifestCargoStatusCode,
+                                                          ManifestCargoStatusName = a.ManifestCargoStatus != null ? a.ManifestCargoStatus.LocalName : null,
+                                                          CourierSuspentionReasonCode = a.CourierSuspentionReasonCode,
+                                                          CourierSuspentionReasonName = a.AgentTalkBackType != null ? a.AgentTalkBackType.LocalName : null,
+                                                          AcceptanceStatusCode = a.AcceptanceStatusCode,
+                                                          AcceptanceStatusName = a.AcceptanceStatus != null ? a.AcceptanceStatus.LocalName : null,
+                                                          IsClose = a.IsClose,
+                                                          CasualImporterAddress1 = a.CasualImporterAddress1,
+                                                          CasualImporterAddress2 = a.CasualImporterAddress2,
+                                                          CasualImporterCity = a.CasualImporterCity,
+                                                          CasualImporterZipCode = a.CasualImporterZipCode,
+                                                          CasualImporterFax = a.CasualImporterFax,
+                                                          CasualImporterEmail = a.CasualImporterEmail,
+                                                          CasualImporterTel = a.CasualImporterTel,
+                                                          CasualImporterContact = a.CasualImporterContact,
+                                                          CasualSupplierAddress = a.CasualSupplierAddress,
+                                                          CasualSupplierName = a.CasualSupplierName,
+                                                          ItemsProcessTypesList = a.ItemsProcessTypesList,
+                                                          CourierSuspentionCode = a.CourierSuspentionCode,
+                                                          CourierSuspentionName = a.CourierSuspention != null ? a.CourierSuspention.LocalName : null,
+                                                          DepositionStatusCode = a.DepositionStatusCode,
+                                                          AmendmentDontDisplayInList = a.AmendmentDontDisplayInList,
+                                                          IsClosedForFollowUp = isCourierEnv && dcs != null && dcs.IsClosedForFollowUp,
+                                                          FastIndividualProcessCode = !isCourierEnv ? "" : dcs != null ? dcs.FastIndividualProcessCode : null,
+                                                          TotalInvoiceAmountInUSD = !isCourierEnv ? 1 : dcs != null ? dcs.TotalInvoiceAmountInUSD : null,
+                                                          IsPending902 = !isCourierEnv ? true : dcs != null ? dcs.CourierPendingReasonList.Contains("902") : false,
+                                                          IsPending900 = !isCourierEnv ? true : dcs != null ? dcs.CourierPendingReasonList.Contains("900") : false,
+                                                          IsPendingNotNull = !isCourierEnv || (dcs != null && dcs.CourierPendingReasonList != null && dcs.CourierPendingReasonList.Length > 0),
+                                                          CourierPendingReasonList = isCourierEnv && dcs != null ? dcs.CourierPendingReasonList : null,
+                                                          IntegratorCode = !isCourierEnv ? "" : cd != null ? cd.IntegratorCode : null,
+                                                          IntegratorName = isCourierEnv && cd != null ? cd.LocalName : null,
+
+                                                          MAWB = isCourierEnv && cd != null ? cd.MAWB : null,
+                                                          IsCourierMissingClassification = !isCourierEnv ? true : dcs != null ? dcs.IsCourierMissingClassification : false,
+                                                          CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
+                                                          IsPaymentProtested = a.IsPaymentProtested,
+                                                          DeclarationNoAmendment = myJoinOriginalDeclaration.DeclarationNumber,
+                                                          CustomFileAmendment = myJoinOriginalDeclaration.CustomFileNo,
+                                                          AmendmentStatus = a.AmendmentStatus,
+                                                          AmendmentRequestNumber = a.AmendmentRequestNumber,
+                                                          AmendmentCorrectedByUserName = a.AmendmentCorrectedByUser != null ? a.AmendmentCorrectedByUser.Code : null,
+                                                          AmendmentissueDate = a.AmendmentissueDate
+                                                         ,
+                                                          Direction = a.Direction,
+                                                          ExportFile = a.ExportFile,
+                                                          DeclarationDocumentTypeCode = a.DeclarationDocumentTypeCode,
+                                                          AgentRoleCode = a.AgentRoleCode,
+                                                          DestinationCountryCode = a.DestinationCountryCode,
+                                                          DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.EnglishName : "",
+                                                          LoadingDateTime = a.LoadingDateTime,
+ 
+                                                          IsExporterConfirmation = a.IsExporterConfirmation,
+                                                          CreateDateForExport = a.CreateDateTime,
+                                                          TransportModeForExport = a.TransportModeId,
+                                                          CustomFileForExport = a.CustomFileNo,
+                                                          CargoTypeName = myJoinConsignment != null ? myJoinConsignment.LocalName : null,
+                                                          SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
+                                                          ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
+                                                          ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
+                                                          TerminalReleaseDate = !isCourierEnv ? null : dcs != null ? dcs.TerminalReleaseDate : null,
+                                                          PhysicalCheck = a.PhysicalCheck,
+                                                          PhysicalCheckName = a.PhysicalCheck == null ? "��� �����" : a.PhysicalCheckCode.Name,
+                                                          DeclarationTypeCode = a.DeclarationTypeCode,
+
+                                                          DeclarationTypeName = a.DeclarationType.LocalName,
+
+
+                                                          FOBValueNIS = a.FOBValueNIS,
+                                                          FOBValueDollar = a.FOBValueDollar,
+
+                                                          AmendmentStatusName = myJoinAmendmentRequest != null ? myJoinAmendmentRequest.LocalName : null,
+
+                                                          MehesFee = MyDeclarationTaxesByTaxTypeCodeViews.MehesFee,
+                                                          VATReshimonFee = MyDeclarationTaxesByTaxTypeCodeViews.VATReshimonFee,
+                                                          SecurityFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
+                                                          ComputerFee = MyDeclarationTaxesByTaxTypeCodeViews.ComputerFee,
+
+                                                      });
+
+
+                return query2;
 
 
 
@@ -300,66 +585,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         }
 
 
-        private IQueryable<DeclarationList> ApplyCustomFiltersList(QueryOperations queryOperations, IQueryable<DeclarationList> iQueryable, int tenant)
-        {
-            DeclarationCustomFilters filters = new DeclarationCustomFilters();
 
-            iQueryable = filters.GetFilteredQueryList(queryOperations, iQueryable, tenant, context);
-
-            iQueryable = filters.GetFreelancerDeclarationsList(queryOperations, iQueryable, tenant);
-
-            if (queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsAmendment") == null)
-            {
-                iQueryable = iQueryable.Where(x => x.AmendmentDontDisplayInList != true);
-
-            }
-            if (queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsContainerization") != null)
-            {
-                var query1 = (from a in context.Consignments
-                              where a.ExportContainerizationID == null
-                              select a);
-                iQueryable = iQueryable.Where(x => query1.Any(c => c.DeclarationId == x.Id));
-            }
-            if (queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "PhysicalCheck") != null)
-            {
-                var qPhCh = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "PhysicalCheck");
-                string physicalCheck;
-                switch (qPhCh.FieldValue.ToString())
-                {
-                    case "N":
-                        iQueryable = iQueryable.Where(x => x.PhysicalCheck == null);
-                        break;
-                    case "":
-                        iQueryable = iQueryable.Where(x => x.PhysicalCheck == null);
-                        break;
-                    default:
-                        iQueryable = iQueryable.Where(x => x.PhysicalCheck == qPhCh.FieldValue.ToString());
-
-                        physicalCheck = qPhCh.FieldValue.ToString();
-                        break;
-                }
-
-            }
-            //var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "CustomerName");
-
-            //if (filter != null)
-            //{
-            //    iQueryable = iQueryable.Where(x => (x.CustomerCard.LocalName != null ? x.CustomerCard.LocalName : x.CustomerCard.EnglishName).ToLower().StartsWith(filter.FieldValue.ToString().ToLower()));
-            //}
-
-            var filter1 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsConsOfDecEquelsCont");
-            if (filter1 != null)
-            {
-                var query1 = (from a in context.Consignments
-                              where a.ExportContainerizationID == filter1.FieldValue.ToString()
-                              select a).Select(x => x.DeclarationId).ToList();
-
-                iQueryable = iQueryable.Where(x => query1.Contains(x.Id));
-            }
-
-
-            return iQueryable;
-        }
         private IQueryable<Declaration> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Declaration> iQueryable, int tenant)
         {
             DeclarationCustomFilters filters = new DeclarationCustomFilters();
@@ -420,7 +646,27 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             return iQueryable;
         }
+        /*
+        private string getCourierPendingReasonName(DeclarationPM entityPM)
+        {
+            var courierPendingReasonList = entityPM.CourierPendingReasonList;
+            if (!string.IsNullOrWhiteSpace(courierPendingReasonList))
+            {
+                if (courierPendingReasonList.Contains(","))
+                {
+                    courierPendingReasonList = "�����";
+                }
+                else
+                {
+                    CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
+                    CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReasonList, false, false);
+                    courierPendingReasonList = courierPendingReasonPM.LocalName;
+                }
+            }
+            return courierPendingReasonList;
+        }
 
+        */
 
         private string getFastIndividualProcessName(string fastIndividualProcessCode)
         {
@@ -506,8 +752,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
                                                      TaxationDateTime = a.TaxationDateTime,
                                                      CustomerName = a.IsCourierDeclaration ? a.ImporterName : (a.CustomerCard.LocalName != null ? a.CustomerCard.LocalName : a.CustomerCard.EnglishName),
-                                                     CargoTypeCode = myJoinConsignment.CargoTypeCode,
-                                                     AmendmentDontDisplayInList= a.AmendmentDontDisplayInList
+                                                     CargoTypeCode = myJoinConsignment.CargoTypeCode
                                                  });
 
 
@@ -537,8 +782,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, tenant, containerID, CargoTypeCode, ManifestNumber, SecondCargoID, ThirdCargoID);
 
-            query2 = ApplyCustomFiltersList(queryOperations, query2, tenant);
-            query2 = filter.GetFilteredQuery<DeclarationList>(queryOperations, query2);
+            query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {

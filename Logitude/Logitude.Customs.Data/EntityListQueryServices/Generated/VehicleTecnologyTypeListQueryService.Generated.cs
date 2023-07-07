@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<VehicleTecnologyTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<VehicleTecnologyTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<VehicleTecnologyTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(VehicleTecnologyTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VehicleTecnologyType> VehicleTecnologyTypeQuery = (from a in context.VehicleTecnologyTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<VehicleTecnologyTypeList> VehicleTecnologyTypeListQuery = GetIqueryableList( VehicleTecnologyTypeQuery);
-			            VehicleTecnologyTypeList VehicleTecnologyTypeList = VehicleTecnologyTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<VehicleTecnologyTypeList> VehicleTecnologyTypeListQuery = GetIqueryableList( VehicleTecnologyTypeQuery);
+            VehicleTecnologyTypeList VehicleTecnologyTypeList = VehicleTecnologyTypeListQuery.FirstOrDefault();
             return VehicleTecnologyTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<VehicleTecnologyType>(nonListQueryOperation, iQueryable);
 
             IQueryable<VehicleTecnologyTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<VehicleTecnologyTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<VehicleTecnologyTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

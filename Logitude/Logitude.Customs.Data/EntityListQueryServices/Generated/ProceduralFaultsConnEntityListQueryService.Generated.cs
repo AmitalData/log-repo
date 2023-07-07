@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<ProceduralFaultsConnEntityList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<ProceduralFaultsConnEntityList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<ProceduralFaultsConnEntityList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ProceduralFaultsConnEntityList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ProceduralFaultsConnEntity> ProceduralFaultsConnEntityQuery = (from a in context.ProceduralFaultsConnEntities
                                                        where a.Id == id
                                                        select a);
-          
-		  
-		  			IQueryable<ProceduralFaultsConnEntityList> ProceduralFaultsConnEntityListQuery = GetIqueryableList( ProceduralFaultsConnEntityQuery);
-			            ProceduralFaultsConnEntityList ProceduralFaultsConnEntityList = ProceduralFaultsConnEntityListQuery.FirstOrDefault();
+
+             
+            IQueryable<ProceduralFaultsConnEntityList> ProceduralFaultsConnEntityListQuery = GetIqueryableList( ProceduralFaultsConnEntityQuery);
+            ProceduralFaultsConnEntityList ProceduralFaultsConnEntityList = ProceduralFaultsConnEntityListQuery.FirstOrDefault();
             return ProceduralFaultsConnEntityList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<ProceduralFaultsConnEntity>(nonListQueryOperation, iQueryable);
 
             IQueryable<ProceduralFaultsConnEntityList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<ProceduralFaultsConnEntityList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<ProceduralFaultsConnEntityList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

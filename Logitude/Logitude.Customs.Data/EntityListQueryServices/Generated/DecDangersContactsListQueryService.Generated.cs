@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DecDangersContactList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DecDangersContactList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DecDangersContactList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DecDangersContactList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DecDangersContact> DecDangersContactQuery = (from a in context.DecDangersContacts
                                                        where a.DeclarationId == declarationid
                                                        select a);
-          
-		  
-		  			IQueryable<DecDangersContactList> DecDangersContactListQuery = GetIqueryableList( DecDangersContactQuery);
-			            DecDangersContactList DecDangersContactList = DecDangersContactListQuery.FirstOrDefault();
+
+             
+            IQueryable<DecDangersContactList> DecDangersContactListQuery = GetIqueryableList( DecDangersContactQuery);
+            DecDangersContactList DecDangersContactList = DecDangersContactListQuery.FirstOrDefault();
             return DecDangersContactList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DecDangersContact>(nonListQueryOperation, iQueryable);
 
             IQueryable<DecDangersContactList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DecDangersContactList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DecDangersContactList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

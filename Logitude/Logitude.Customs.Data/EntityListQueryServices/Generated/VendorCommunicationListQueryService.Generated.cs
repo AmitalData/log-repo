@@ -45,8 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<VendorCommunicationList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<VendorCommunicationList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<VendorCommunicationList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(VendorCommunicationList).GetProperty(queryOperations.SortByColumnName);
@@ -134,10 +135,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<VendorCommunication> VendorCommunicationQuery = (from a in context.VendorCommunications
                                                        where a.VendorId == vendorid && a.LineNumber == linenumber
                                                        select a);
-          
-		  
-		  			IQueryable<VendorCommunicationList> VendorCommunicationListQuery = GetIqueryableList( VendorCommunicationQuery);
-			            VendorCommunicationList VendorCommunicationList = VendorCommunicationListQuery.FirstOrDefault();
+
+             
+            IQueryable<VendorCommunicationList> VendorCommunicationListQuery = GetIqueryableList( VendorCommunicationQuery);
+            VendorCommunicationList VendorCommunicationList = VendorCommunicationListQuery.FirstOrDefault();
             return VendorCommunicationList;
            
         }
@@ -160,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<VendorCommunication>(nonListQueryOperation, iQueryable);
 
             IQueryable<VendorCommunicationList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<VendorCommunicationList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<VendorCommunicationList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<DebtNotificationTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<DebtNotificationTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<DebtNotificationTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DebtNotificationTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DebtNotificationType> DebtNotificationTypeQuery = (from a in context.DebtNotificationTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<DebtNotificationTypeList> DebtNotificationTypeListQuery = GetIqueryableList( DebtNotificationTypeQuery);
-			            DebtNotificationTypeList DebtNotificationTypeList = DebtNotificationTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<DebtNotificationTypeList> DebtNotificationTypeListQuery = GetIqueryableList( DebtNotificationTypeQuery);
+            DebtNotificationTypeList DebtNotificationTypeList = DebtNotificationTypeListQuery.FirstOrDefault();
             return DebtNotificationTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<DebtNotificationType>(nonListQueryOperation, iQueryable);
 
             IQueryable<DebtNotificationTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<DebtNotificationTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<DebtNotificationTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

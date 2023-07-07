@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CustomsAddressTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CustomsAddressTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CustomsAddressTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CustomsAddressTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsAddressType> CustomsAddressTypeQuery = (from a in context.CustomsAddressTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CustomsAddressTypeList> CustomsAddressTypeListQuery = GetIqueryableList( CustomsAddressTypeQuery);
-			            CustomsAddressTypeList CustomsAddressTypeList = CustomsAddressTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CustomsAddressTypeList> CustomsAddressTypeListQuery = GetIqueryableList( CustomsAddressTypeQuery);
+            CustomsAddressTypeList CustomsAddressTypeList = CustomsAddressTypeListQuery.FirstOrDefault();
             return CustomsAddressTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CustomsAddressType>(nonListQueryOperation, iQueryable);
 
             IQueryable<CustomsAddressTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CustomsAddressTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CustomsAddressTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

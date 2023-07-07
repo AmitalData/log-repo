@@ -44,8 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<CargoIdentifireTypeList> query2 = GetIqueryableList(iQueryable);
-					  query2 = filter.GetFilteredQuery<CargoIdentifireTypeList>(listQueryOperation, query2);
-		
+           
+            query2 = filter.GetFilteredQuery<CargoIdentifireTypeList>(listQueryOperation, query2);
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(CargoIdentifireTypeList).GetProperty(queryOperations.SortByColumnName);
@@ -133,10 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CargoIdentifireType> CargoIdentifireTypeQuery = (from a in context.CargoIdentifireTypes
                                                        where a.Code == code
                                                        select a);
-          
-		  
-		  			IQueryable<CargoIdentifireTypeList> CargoIdentifireTypeListQuery = GetIqueryableList( CargoIdentifireTypeQuery);
-			            CargoIdentifireTypeList CargoIdentifireTypeList = CargoIdentifireTypeListQuery.FirstOrDefault();
+
+             
+            IQueryable<CargoIdentifireTypeList> CargoIdentifireTypeListQuery = GetIqueryableList( CargoIdentifireTypeQuery);
+            CargoIdentifireTypeList CargoIdentifireTypeList = CargoIdentifireTypeListQuery.FirstOrDefault();
             return CargoIdentifireTypeList;
            
         }
@@ -158,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<CargoIdentifireType>(nonListQueryOperation, iQueryable);
 
             IQueryable<CargoIdentifireTypeList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<CargoIdentifireTypeList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<CargoIdentifireTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 
