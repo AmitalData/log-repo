@@ -45,14 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PaymentOrderProtestReasonList> query2 = GetIqueryableList(iQueryable);
-<<<<<<< HEAD
-					  query2 = filter.GetFilteredQuery<PaymentOrderProtestReasonList>(listQueryOperation, query2);
-		
-=======
            
             query2 = filter.GetFilteredQuery<PaymentOrderProtestReasonList>(listQueryOperation, query2);
 
->>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PaymentOrderProtestReasonList).GetProperty(queryOperations.SortByColumnName);
@@ -166,9 +161,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PaymentOrderProtestReason>(nonListQueryOperation, iQueryable);
 
             IQueryable<PaymentOrderProtestReasonList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PaymentOrderProtestReasonList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PaymentOrderProtestReasonList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 

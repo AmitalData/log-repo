@@ -44,14 +44,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<PendingErrorPlaceList> query2 = GetIqueryableList(iQueryable);
-<<<<<<< HEAD
-					  query2 = filter.GetFilteredQuery<PendingErrorPlaceList>(listQueryOperation, query2);
-		
-=======
            
             query2 = filter.GetFilteredQuery<PendingErrorPlaceList>(listQueryOperation, query2);
 
->>>>>>> parent of 094118ae335 (#181601)
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(PendingErrorPlaceList).GetProperty(queryOperations.SortByColumnName);
@@ -164,9 +159,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			iQueryable = filter.GetFilteredQuery<PendingErrorPlace>(nonListQueryOperation, iQueryable);
 
             IQueryable<PendingErrorPlaceList> query2 = GetIqueryableList(iQueryable);
-			
-		    query2 = filter.GetFilteredQuery<PendingErrorPlaceList>(listQueryOperation, query2);
-		            int count = query2.Count();
+
+            query2 = filter.GetFilteredQuery<PendingErrorPlaceList>(listQueryOperation, query2);
+            int count = query2.Count();
             return count;
         }
 
