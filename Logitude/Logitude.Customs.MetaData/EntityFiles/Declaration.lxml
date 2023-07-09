@@ -25158,6 +25158,13 @@
         LocalDefaultText="&quot;הטענת חשבון ספק&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent&quot;" />
+      <MenuItem
+        EventCode="&quot;UpdateMehesAutonmy&quot;"
+        DefaultText="&quot;Update Mehes Autonmy&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="19"
+        LocalDefaultText="&quot;עדכון ספר מכס אוטונומיה&quot;"
+        IsPackagable="true" />
     </MenuButton>
     <MenuButton
       EventCode="&quot;DocumentsPanel&quot;"
