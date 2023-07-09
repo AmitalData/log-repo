@@ -245,7 +245,7 @@ export class ReconciliationDetailsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconciliationLineListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ExcelTransactionAmount",'Number',this.AmountText));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ExcelTransactionAmount",'Decimal',this.AmountText));
 
         this.columns.push({
             FieldName: 'ReconciliationAmount',
@@ -256,7 +256,8 @@ export class ReconciliationDetailsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconciliationLineListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReconciliationAmountWithSign",'Number',TextCodeTranslator.Translate("Accounting.General.O.ReconciliationAmount")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReconciliationAmount",'Decimal',TextCodeTranslator.Translate("Accounting.General.O.ReconciliationAmount")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CurrencySign",'Text',TextCodeTranslator.Translate("ReconciliationLine.O.ReconciliationCurrency")));
 
         this.columns.push({
             FieldName: 'Reference1',
