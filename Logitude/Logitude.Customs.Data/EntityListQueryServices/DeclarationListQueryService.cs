@@ -430,7 +430,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           CustomFileNo = a.CustomFileNo,
                                                           DealValue = a.DealValue,
                                                           DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : (!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
-                                                         ExportFlightDate = a.ExportFlightDate,
+                                                          ExportFlightDate = a.ExportFlightDate,
 
                                                           ExternalDeclarationNumber = a.ExternalDeclarationNumber,
                                                           HatraDate = a.HatraDate,
@@ -467,8 +467,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           DeclarationOfficeNameForExport = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
                                                           ExportDeclarationOfficeCode = a.ExportDeclarationOfficeCode,
 
-                                                     ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
- 
+                                                          ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
+
                                                           DepartmentId = a.DepartmentId,
                                                           DepartmentName = a.Department.LocalName,
                                                           TransportModeName = a.CustomsTransportMode == null ? null : a.CustomsTransportMode.LocalName,
@@ -547,7 +547,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           DestinationCountryCode = a.DestinationCountryCode,
                                                           DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.EnglishName : "",
                                                           LoadingDateTime = a.LoadingDateTime,
- 
+
                                                           IsExporterConfirmation = a.IsExporterConfirmation,
                                                           CreateDateForExport = a.CreateDateTime,
                                                           TransportModeForExport = a.TransportModeId,
@@ -578,7 +578,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
                 return query2;
-
+            }
 
 
 
@@ -646,27 +646,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             return iQueryable;
         }
-        /*
-        private string getCourierPendingReasonName(DeclarationPM entityPM)
-        {
-            var courierPendingReasonList = entityPM.CourierPendingReasonList;
-            if (!string.IsNullOrWhiteSpace(courierPendingReasonList))
-            {
-                if (courierPendingReasonList.Contains(","))
-                {
-                    courierPendingReasonList = "�����";
-                }
-                else
-                {
-                    CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
-                    CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReasonList, false, false);
-                    courierPendingReasonList = courierPendingReasonPM.LocalName;
-                }
-            }
-            return courierPendingReasonList;
-        }
-
-        */
+ 
 
         private string getFastIndividualProcessName(string fastIndividualProcessCode)
         {
