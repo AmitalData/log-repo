@@ -2317,6 +2317,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
+        [HttpGet]
+        public HttpResponseMessage CheckIfError12195ExistInCustomfileno(int tenant, string declarationId, string customFileNo)
+        {
+            try
+            {
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                DeclarationQueryService query = new DeclarationQueryService(customContext);
+                var isErrorExist = query.CheckIfDeclarationHasError12195(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, isErrorExist);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
         //RaiseCLSHWBEvent
 
         [HttpGet]

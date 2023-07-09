@@ -20748,7 +20748,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-   <field
+  <field
     Id="&quot;3b5f80f3-3327-4ed4-b299-8cc8d9a60939&quot;"
     FieldName="&quot;ExcludeManifest&quot;"
     OldNames="ExcludeManifest"
@@ -21130,7 +21130,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-   <field
+  <field
     Id="&quot;244ca06f-30c9-44c7-920d-dafa6894da9a&quot;"
     FieldName="&quot;ShortProcedure&quot;"
     OldNames="ShortProcedure"
@@ -21158,6 +21158,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ShortProcedure&quot;"
     ListPropertyPath="&quot;ShortProcedure&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -21205,7 +21206,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-   <Query
+  <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
     LocalTextCode="&quot;שטרי מטען בלדר פתוחים&quot;"
@@ -24846,6 +24847,13 @@
         LocalDefaultText="&quot;הטענת חשבון ספק&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent&quot;" />
+      <MenuItem
+        EventCode="&quot;UpdateMehesAutonmy&quot;"
+        DefaultText="&quot;Update Mehes Autonmy&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="19"
+        LocalDefaultText="&quot;עדכון ספר מכס אוטונומיה&quot;"
+        IsPackagable="true" />
     </MenuButton>
     <MenuButton
       EventCode="&quot;DocumentsPanel&quot;"

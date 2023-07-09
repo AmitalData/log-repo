@@ -234,7 +234,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             else
                                 button.IsDisabled = true
                         }
-                        else if(this.EntityPM.Direction == "E" && this.EntityPM.AmendmentDontDisplayInList && this.EntityPM.IsExportClosed) button.IsHidden = false;   
+                        else if (this.EntityPM.Direction == "E" && this.EntityPM.AmendmentDontDisplayInList && this.EntityPM.IsExportClosed) button.IsHidden = false;
 
                         else {
                             button.IsHidden = true;
@@ -337,8 +337,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         //if (!declaration.HasDocument)
                         //if (AppTool.IsNullOrEmpty(this.EntityPM.DocumentDeclarationId)) {
                         var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
-                       
-                        if (AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber) || 
+
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber) ||
                             (FeatureLocator.Features.filter(f => (f.Code == "DisabledPrintDecForm") && f.ObjectTableId == table.Id)[0] && this.EntityPM.Direction == "E" && !this.EntityPM.IsExportClosed)) {
                             button.IsDisabled = true;
                         }
@@ -375,7 +375,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             //}
                             button.IsDisabled = false;
                         }
-                        else{
+                        else {
                             button.IsDisabled = true;
                         }
                     }
@@ -426,7 +426,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "ResetDeclarationNumber") {//Eitan H 26/11/17 34387
-                        if (this.IsDisplayOnly || (this.EntityPM.Direction == "E"&&this.EntityPM.IsSubmitDeclaration)) {
+                        if (this.IsDisplayOnly || (this.EntityPM.Direction == "E" && this.EntityPM.IsSubmitDeclaration)) {
                             button.IsDisabled = true;
                             button.IsHidden = false;
                         }
@@ -559,13 +559,13 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
 
                     }
-                    if(button.EventCode == "DeclarationRestore"){
-                        if(this.EntityPM.Direction == "E" && !this.EntityPM.IsSubmitDeclaration) {
+                    if (button.EventCode == "DeclarationRestore") {
+                        if (this.EntityPM.Direction == "E" && !this.EntityPM.IsSubmitDeclaration) {
                             button.IsDisabled = true;
                         }
                     }
                 }
-             
+
                 this.IsDisplayOnlyCheckDone = true;
                 return menuButtons;
             }
@@ -778,6 +778,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.AddNotifications()
                         break;
                     }
+                case "UpdateMehesAutonmy":
+                    {
+                        this.OpenMehesUpdateAutonmyWindow();
+                        break;
+                    }
             }
 
         }
@@ -815,6 +820,26 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         });
     }
 
+    OpenMehesUpdateAutonmyWindow() {
+        var myDeclarationWebService = new DeclarationWebService();
+        myDeclarationWebService
+            .CheckIfError12195ExistInCustomfileno(this.EntityPM.Id,this.EntityPM.Tenant,this.EntityPM.CustomFileNo)
+            .subscribe((myResponse: ServiceResponse) => {
+            });
+        /*var args: any = {
+            Declaration: this.EntityPM,
+        };
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 350;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DeclarationCancellation");
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });*/
+    }
     OpenDeclarationCancellationWindow_() {
         var args: any = {
             Declaration: this.EntityPM,
@@ -1362,7 +1387,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
                     if (this._IsPrintGateIsClosed) {
                         console.log("_IsPrintGateIsClosed:abort()")
-                        return; 
+                        return;
                     }
                     try {
                         this._IsPrintGateIsClosed = true;
@@ -1371,8 +1396,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     } finally {
                         setTimeout(() => { this._IsPrintGateIsClosed = false; }, 2000);
                     }
-                    
-                    
+
+
                 }
             });
     }
