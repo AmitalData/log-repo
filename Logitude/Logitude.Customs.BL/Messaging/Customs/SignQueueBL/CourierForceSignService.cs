@@ -15,7 +15,8 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
     {
         public void ApplyForceSign<TRequestParams>(ref TRequestParams requestParams) where TRequestParams : RequestParamsBase
         {
-
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+.AppendLine("ApplyForceSign");
             var listIn = new List<string>() {
                 "2750",//"2715","2755", "1170"  ,"2340",
                 "UCB1170"
@@ -35,7 +36,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                 return;
             }
 
-
+        
 
             bool isPersonalSign = false;
             bool isMulti_CheckOnly = false;
@@ -54,6 +55,8 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             var signQueueHSMService = new SignQueueHSMService();
             if (!signQueueHSMService.IsHSMSign_IsOn(requestParams.Tenant))
             {
+                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+.AppendLine("!signQueueHSMService.IsHSMSign_IsOn(requestParams.Tenant)");
                 string personId = SignQueue.Instance.GetUserPersonID(requestParams.LoggingUserId, requestParams.Tenant);
 
                 string availableSignServer = null;
@@ -95,12 +98,16 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             }
             else
             {
+                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+.AppendLine("else !signQueueHSMService.IsHSMSign_IsOn(requestParams.Tenant)");
 
                 var hSMSignStationCheckService = new HSMSignStationCheckService();
                 var res = hSMSignStationCheckService.CheckIfHSMIsValid(requestParams.Tenant, isPersonalSign);
                 LogMessagingUtil.Instance.AppendLine($"ApplyForceSign:HSM:Success={res.Success};{res.ErrorMessage};took={sw.Elapsed}");
                 if (!res.Success)
                 {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+.AppendLine("error:"+res.ErrorMessage);
                     throw new CourierForceSignException(res.ErrorMessage);
                 }
                 if (isMulti_CheckOnly)

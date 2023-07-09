@@ -311,7 +311,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
     SessionLocator.SelectedSession.StartBusyIndicatorSaving();
     const msg: string = await this.pendingWebService.postBulkFeeding(null, null, this._CourierWorksheetSharedDataService._SelectedItems.Collection,
-      this.CourierMasterPM.Id, this._CourierWorksheetSharedDataService.connectedSelectAll,
+      this.CourierMasterPM?.Id, this._CourierWorksheetSharedDataService.connectedSelectAll,
       this._CourierWorksheetSharedDataService._UnSelectedItems.Collection, filter, true)
     SessionLocator.SelectedSession.StopBusyIndicator();
 
