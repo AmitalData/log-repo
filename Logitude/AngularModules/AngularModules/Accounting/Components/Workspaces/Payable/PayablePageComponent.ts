@@ -349,6 +349,9 @@ export class PayablePageComponent {
                 if (s) {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
+
+                            entity.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityPM: comp.EntityPM, ObjectTableName: 'APInvoice' });
                         });
