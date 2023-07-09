@@ -2377,7 +2377,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public Boolean CheckIfDeclarationHasError12195(string declarationID, int tenant)
         {
             var errors= this.GetDeclarationErrors(declarationID, tenant, null);
-            return true;
+            if(errors != null && errors.Find(x=>x.ErrorType == "12195") != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

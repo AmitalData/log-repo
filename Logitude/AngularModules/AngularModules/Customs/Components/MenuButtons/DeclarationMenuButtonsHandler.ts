@@ -559,6 +559,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
 
                     }
+                    if (button.EventCode == "UpdateMehesAutonmy") {
+                        button.IsHidden = false;
+                    }
                     if (button.EventCode == "DeclarationRestore") {
                         if (this.EntityPM.Direction == "E" && !this.EntityPM.IsSubmitDeclaration) {
                             button.IsDisabled = true;
@@ -825,6 +828,17 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         myDeclarationWebService
             .CheckIfError12195ExistInCustomfileno(this.EntityPM.Id,this.EntityPM.Tenant,this.EntityPM.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
+                if(myResponse.Result){
+                    
+                    let confirm = new ConfirmWindow();
+                    confirm.WindowClosed.subscribe((event: any) => {
+                        if (confirm.Yes) {
+                            
+                        }
+                    });
+                    confirm.Show("אם לעדכן ספר מכס אוטונומיה לשורות עם שגיאה מס' 12195");
+
+                }
             });
         /*var args: any = {
             Declaration: this.EntityPM,
