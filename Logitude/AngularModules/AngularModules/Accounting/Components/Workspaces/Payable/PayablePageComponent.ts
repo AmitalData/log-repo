@@ -407,7 +407,7 @@ export class PayablePageComponent {
     }
 
     private InitializeProfitCurrency(entityPM: APInvoicePM) {
-        debugger;
+
         if (entityPM.IsMultipleEntities) {
             entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
         }
