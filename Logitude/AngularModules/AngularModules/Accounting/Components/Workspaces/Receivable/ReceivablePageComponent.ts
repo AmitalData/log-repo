@@ -11,6 +11,7 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {LastRate} from "../../../../Common/Services/CurrencyRatesService";
 
 // Services
 import { GLAccountExtendedListService } from '../../../Services/ExtendedLists/GLAccountExtendedListService';
@@ -30,6 +31,9 @@ import { ModulesService } from '../../../Services/ModulesService';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { ARPaymentPM } from 'Invoice/EntityPMs/ARPaymentPM';
 import { ARInvoicePM } from 'Invoice/EntityPMs/ARInvoicePM';
+import {CurrencyList} from "../../../../Common/EntityLists/CurrencyList";
+import {CurrencyListService} from "../../../../Common/Services/StandardLists/CurrencyListService";
+import {InvoiceTool} from "../../../../Invoice/Tools";
 
 
 @Component({
@@ -42,7 +46,8 @@ export class ReceivablePageComponent {
     private _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     private _GLAccountTotalByMonthListService: GLAccountTotalByMonthListService = new GLAccountTotalByMonthListService();
     private _FullAccountingSettingListService: FullAccountingSettingListService = new FullAccountingSettingListService();
-
+    private myCurrencyListService: CurrencyListService = new CurrencyListService();
+    private LastRatesList: LastRate[] = [];
     glAccountSummary: GLAccountSummary = new GLAccountSummary();
 
     //#region Queries + Counts
@@ -297,13 +302,24 @@ export class ReceivablePageComponent {
     public NewGeneralARInvoice(type: string) {
 
         if (SessionLocator.TenantPM.AccountingActivated ) {
-        
+
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
-            
+
                 var todayDate = DateTool.GetCurrentDateAsUtc();
-                
+
                 var entity = new ARInvoicePM();
+
+                entity.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+                this.myCurrencyListService.getSingleFromCache(entity.ProfitCurrencyId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CurrencyList = myResponse.Result;
+                        if (list != null) {
+                            entity.ProfitCurrencyCode = list.Code;
+                        }
+                    }
+                });
+
                 entity.IsGeneralInvoice = true;
                 entity.ARInvoiceTypeCode = type;
                 entity.IssuedByUserId = SessionLocator.LoggedUserId;
@@ -314,15 +330,21 @@ export class ReceivablePageComponent {
                 entity.InvoiceDate = todayDate;
                 entity.LocalCurrencyId = SessionLocator.LocalCurrencyId;
                 entity.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+                entity.Tenant = SessionLocator.TenantPM.Id;
+                entity.ProfitCurrencyExchangeRate = this.GetCurrencyRate(entity.ProfitCurrencyId);
+                entity.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                entity.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
+                InvoiceTool.ComputeARInvoiceDueDate(entity);
+
                 cmpRef.instance.ComponentRef = cmpRef;
-                
+
                 cmpRef.instance.Run({ EntityPM: entity, ObjectTableName: 'ARInvoice' });
             });
 
             return;
 
         }
-        
+
 
         //var str = TextCodeTranslator.Translate("General.O.NewEntity");
         //str = str.replace("%Entity", "General Invoice");
@@ -350,6 +372,25 @@ export class ReceivablePageComponent {
         });
         //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show("./InvoiceModules/ARInvoice/Components/NewEntity/NewGeneralARInvoiceComponent");
+    }
+
+    GetCurrencyRate(currencyId: string) {
+        var myResult: number = null;
+
+        if (!AppTool.IsNullOrEmpty(currencyId)) {
+            if (currencyId == SessionLocator.TenantPM.CurrencyId) {
+                myResult = 1;
+            }
+
+            else {
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
+                if (lastRate != null) {
+                    myResult = lastRate.Rate;
+                }
+            }
+        }
+
+        return myResult;
     }
     //#endregion
 

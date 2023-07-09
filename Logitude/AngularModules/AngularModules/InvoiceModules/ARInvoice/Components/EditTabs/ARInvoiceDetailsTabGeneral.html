@@ -36,6 +36,32 @@
                                     <td style="width: 375px;">
                                         <table>
 
+                                            <!-- PartnerType -->
+                                            <tr class="FormFieldRow" *ngIf="IsAccountingActivated">
+                                                <td style="width:140px;">
+                                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [TextCode]="'ARInvoice.F.PartnerType'"></LogLabel>
+                                                    <!--<label style="padding-left: 10px;">{{'ARInvoice.F.PartnerType' | TextCodeTranslationPipe}}</label>-->
+                                                </td>
+
+                                                <td style="width:230px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <ComboBox [ItemsSource]="InvoicePartners" [Binding]="'Name'" [SelectedItem]="SelectedPartnerType" (SelectedItemChanged)="PartnersTypeSelectionMethod($event)"></ComboBox>
+                                                            </td>
+
+                                                            <td style="width: 36px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
                                             <!-- BillToId -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 135px;">
@@ -48,7 +74,8 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Card'"
-                                                            [DependencyFilter1Value]="BillToDependencyProperty1"
+                                                            [DependencyFilter1Value]="BillToDependencyValue1"
+                                                            [DependencyFilter2Value]="BillToDependencyValue2"
                                                             [DependencyFilter1IsList]="true"
                                                             [DisplayFieldsFromList]="DisplayFieldsFromList"
                                                             [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
@@ -101,7 +128,7 @@
                                                 </td>
                                             </tr>
 
-                                            
+
                                             <!-- BranchId -->
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -121,7 +148,7 @@
                                                     <div></div>
                                                 </td>
                                             </tr>
-                                            
+
                                         </table>
                                     </td>
 
@@ -276,7 +303,7 @@
                                         <IconButton [disabled]="!IsEditingEnabled" [Name]="'Add'" [IsSmall]="true" (click)="AddARInvoiceLineClicked()"></IconButton>
                                     </td>
 
-                                    
+
                                     <td *ngIf="AllowVatTypes" style="width: 300px">
                                         <table>
                                             <tr>
@@ -356,7 +383,7 @@
 
                                                 <td style="min-width: 200px;">{{'ARInvoiceLine.CH.DescriptionListLable' | TextCodeTranslationPipe}}</td>
                                                 <td *ngIf="IsAccountingActivated" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">{{'ARInvoiceLine.F.ReportedinTaxReport' | TextCodeTranslationPipe}}</td>
-                                                
+
                                                 <td *ngIf="IsAccountingActivated" style="width: 200px; min-width: 200px; max-width: 200px; text-align: center;">{{'InterestReport.F.GLAccountLocalName' | TextCodeTranslationPipe}}</td>
                                                 <td *ngIf="IsAccountingActivated" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">{{'InterestReport.F.GLAccountDisplayNumber' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center;">{{'ARInvoiceLine.CH.MeasurementIdListLable' | TextCodeTranslationPipe}}</td>
@@ -399,14 +426,14 @@
                                                             <td *ngIf="IsAccountingActivated" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">
                                                                 {{item.ReportedinTaxReport}}
 
-                                                            </td>     
+                                                            </td>
                                                               <!-- GLAccountLocalName -->
 
                                                               <td *ngIf="IsAccountingActivated" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 200px; min-width: 200px; max-width: 200px; text-align: center;">
                                                                 {{item.GLAccountLocalName}}
                                                             </td>
                                                             <!-- GLAccountDisplayNumber -->
-                                                            
+
                                                             <td *ngIf="IsAccountingActivated" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">
                                                                 {{item.GLAccountDisplayNumber}}
                                                             </td>
