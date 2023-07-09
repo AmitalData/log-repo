@@ -938,6 +938,20 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
+        public Declaration GetDeclarationByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(ExternalEntityReference)) return null;
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return
+                  (
+                  from rec in context.Declarations
+                  where (rec.CustomFileNo == ExternalEntityReference && rec.Tenant == tenant && rec.Direction == "I") || (rec.ExportFile == ExternalEntityReference && rec.Tenant == tenant && rec.Direction == "E")
+                  select rec
+                  )
+                  .FirstOrDefault();
+           
+        }
         public Declaration GetLastDeclarationByDeclarationId(string id, int tenant, bool isExport = false)
         {
             if (String.IsNullOrWhiteSpace(id)) return null;
