@@ -3189,8 +3189,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
 
         var IsAutoInsuranceExportSubmitFeature = FeatureLocator.Features.filter(f => (f.Code == "IsAutoInsuranceExportSubmit") && f.ObjectTableId == table.Id)[0];
-        if (!IsAutoInsuranceExportSubmitFeature) 
-
+       
+        if (AppTool.IsNullOrEmpty(IsAutoInsuranceExportSubmitFeature)) {
+            
         if (!this.EntityPM.IsDirty) return;
 
         if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
@@ -3234,7 +3235,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             unifreightMessageM,
             PossibleOpenInsurance);
 
-
+        }
     }
 
 

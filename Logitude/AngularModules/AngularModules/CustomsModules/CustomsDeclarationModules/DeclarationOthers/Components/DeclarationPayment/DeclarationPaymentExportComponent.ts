@@ -1676,8 +1676,8 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
 
         var IsAutoInsuranceExportSubmitFeature = FeatureLocator.Features.filter(f => (f.Code == "IsAutoInsuranceExportSubmit") && f.ObjectTableId == table.Id)[0];
-        if (!IsAutoInsuranceExportSubmitFeature) return;
-
+        
+        if (AppTool.IsNullOrEmpty(IsAutoInsuranceExportSubmitFeature)) return;
 
         if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
         var msg = new MessageWindow();
