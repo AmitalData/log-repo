@@ -108,7 +108,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
 .AppendLine("if (_SignRecievedModel == null)");
 
-                if (SignQueue.Instance.IsPasiveSignMode() && !IsIneractiveHSM())
+                if (SignQueue.Instance.IsPasiveSignMode() && !IsInteractiveHSM())
                  {
 
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
