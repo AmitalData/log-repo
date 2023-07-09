@@ -55,6 +55,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     QBOAccountingSystemCode = "QBO";
     QBOGlobalAccountingSystemCode = "QBOG";
     public IsUsingVirtuallization: boolean = false;
+    public IsAccountingActivated = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -63,6 +64,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         }
 
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.todayDate = DateTool.GetCurrentDateAsUtc();
@@ -818,6 +820,20 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
     private OnInvoiceDateChangedLoad() {
         this.UpdateData();
+    }
+
+    get AccountingDate() { return this.EntityPM.AccountingDate; }
+    set AccountingDate(value: Date) {
+        if (this.EntityPM.AccountingDate != value) {
+            this.EntityPM.AccountingDate = value;
+            if (value == null) {
+                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
+            }
+            else {
+                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, false);
+            }
+
+        }
     }
 
     get BranchId() { return this.EntityPM.BranchId; }
