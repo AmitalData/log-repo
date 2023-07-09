@@ -104,17 +104,26 @@ namespace Logitude.CustomsMessaging.MessagingServices
             if (_SignRecievedModel == null)
             {
 
+                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+.AppendLine("if (_SignRecievedModel == null)");
+
                 if (SignQueue.Instance.IsPasiveSignMode() && !IsIneractiveHSM())
                 {
 
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+    .AppendLine("if (SignQueue.Instance.IsPasiveSignMode() && !IsIneractiveHSM())");
                     availableSignServer = _CustomsRequestsSheetService.GetAvailableSignServer(out personId, out SignatureBy, out noAvailableSignServerErrorText);
 
                     if (!string.IsNullOrWhiteSpace(availableSignServer))
                     {
 
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+        .AppendLine(" if (!string.IsNullOrWhiteSpace(availableSignServer))");
                         Nullable<CustomsCommandEnum> curComm = null;
                         if (_CustomsStateMachineProcess != null)
                         {
+                            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+        .AppendLine("if (_CustomsStateMachineProcess != null)");
                             curComm = _CustomsStateMachineProcess.CurrentCommand;
                         }
                         _CustomsRequestsSheetService.StartStep(CustomsStepEnum.CustomRequestSign, curComm);
@@ -130,9 +139,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         {
                             throw new Exception("RequestParams.SignType is must !!");
                         }
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+     .AppendLine("isignMethodBy :" + signMethodBy);
                         switch (signMethodBy)
                         {
-
+                          
                             case SignMethodByQueueEnum.HybridDbSignQueue:
 #if false
                                 if (!pmCustomsSetting.IsConnectedToUniFreight)
@@ -176,6 +187,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             else if (_SignRecievedModel != null)
             {
+
+                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+     .AppendLine("else if (_SignRecievedModel != null)");
                 DateTime startAtD = DateTime.MinValue;
                 SignQueue.Instance.GetStartAt(requestParams.Tenant, requestParams.CustomsRequestsSheetId, out startAtD);
                 if (startAtD != DateTime.MinValue)
