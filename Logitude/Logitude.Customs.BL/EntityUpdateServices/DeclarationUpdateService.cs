@@ -65,6 +65,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public string DistributionArea;
         public string LastMileServiceType;
         public string MAWB;
+
+        public bool IsFromApproveAmend;
+
         public bool IsProcedureCurrentCodeChanged { get; set; }
 
         public bool IsFromCustomsFeedback { get; set; }
@@ -704,59 +707,62 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (!string.IsNullOrEmpty(entityPM.ImporterName) && entityPM.ImporterName.Length > 35) entityPM.ImporterName = entityPM.ImporterName.Substring(0, 35);
                 LogPayment("5", entityPM);
 
-                if (entityPM.Direction == "E" && entityPM.TransportModeId == "O")
+                if (!IsFromApproveAmend)
                 {
-
-                    Dictionary<string, List<string>> dicExp = new Dictionary<string, List<string>>();
-                    // check if tabs delete
-                    var deleteConsignment = entityPM?.Consignments.Where(x => x.ChangeSetOp == ChangeSetOperation.Delete && x.ExportStoragesId != null).ToList();
-                    if (deleteConsignment != null)
+                    if (entityPM.Direction == "E" && entityPM.TransportModeId == "O")
                     {
-                        if (deleteConsignment.Any())
 
+                        Dictionary<string, List<string>> dicExp = new Dictionary<string, List<string>>();
+                        // check if tabs delete
+                        var deleteConsignment = entityPM?.Consignments.Where(x => x.ChangeSetOp == ChangeSetOperation.Delete && x.ExportStoragesId != null).ToList();
+                        if (deleteConsignment != null)
                         {
+                            if (deleteConsignment.Any())
 
-                            foreach (var item in deleteConsignment)
                             {
-                                if (!(dicExp.ContainsKey(item.ExportStoragesId)))
-                                    dicExp.Add(item.ExportStoragesId, new List<string>());
-                                dicExp[item.ExportStoragesId].Add(item.ConsignmentNumber.ToString());
+
+                                foreach (var item in deleteConsignment)
+                                {
+                                    if (!(dicExp.ContainsKey(item.ExportStoragesId)))
+                                        dicExp.Add(item.ExportStoragesId, new List<string>());
+                                    dicExp[item.ExportStoragesId].Add(item.ConsignmentNumber.ToString());
+                                }
                             }
                         }
-                    }
-                    // check if comsignment update
-                    DeclarationPM oldDeclaration = new DeclarationQueryService(entityPM.Tenant).GetSingle(entityPM.Id, true, false);
+                        // check if comsignment update
+                        DeclarationPM oldDeclaration = new DeclarationQueryService(entityPM.Tenant).GetSingle(entityPM.Id, true, false);
 
-                    var updateConsignment = oldDeclaration?.Consignments.Where(oldCon => oldCon.ExportStoragesId != null && !entityPM.Consignments.Any(con => oldCon.DeclarationId == con.DeclarationId && oldCon.ManifestNumber == con.ManifestNumber && oldCon.SecondCargoID == con.SecondCargoID && oldCon.ThirdCargoID == con.ThirdCargoID)).ToList();
-                    if (updateConsignment != null)
-                    {
-                        if (updateConsignment.Any())
+                        var updateConsignment = oldDeclaration?.Consignments.Where(oldCon => oldCon.ExportStoragesId != null && !entityPM.Consignments.Any(con => oldCon.DeclarationId == con.DeclarationId && oldCon.ManifestNumber == con.ManifestNumber && oldCon.SecondCargoID == con.SecondCargoID && oldCon.ThirdCargoID == con.ThirdCargoID)).ToList();
+                        if (updateConsignment != null)
                         {
-
-                            foreach (var item in updateConsignment)
+                            if (updateConsignment.Any())
                             {
-                                if (!(dicExp.ContainsKey(item.ExportStoragesId)))
-                                    dicExp.Add(item.ExportStoragesId, new List<string>());
-                                dicExp[item.ExportStoragesId].Add(item.ConsignmentNumber.ToString());
+
+                                foreach (var item in updateConsignment)
+                                {
+                                    if (!(dicExp.ContainsKey(item.ExportStoragesId)))
+                                        dicExp.Add(item.ExportStoragesId, new List<string>());
+                                    dicExp[item.ExportStoragesId].Add(item.ConsignmentNumber.ToString());
+                                }
                             }
                         }
-                    }
-                    foreach (var exportStorageKey in dicExp)
+                        foreach (var exportStorageKey in dicExp)
 
-                    {
-                        ExportStoragePM exportStoragePM = new ExportStorageQueryService(entityPM.Tenant).GetSingle(exportStorageKey.Key, true, false);
-                        if (entityPM.Id != exportStoragePM.DeclarationId) continue;
+                        {
+                            ExportStoragePM exportStoragePM = new ExportStorageQueryService(entityPM.Tenant).GetSingle(exportStorageKey.Key, true, false);
+                            if (entityPM.Id != exportStoragePM.DeclarationId) continue;
 
-                        ConsignmentRepository consignmentRepository = new ConsignmentRepository(entityPM.Tenant);
-                        List<Consignment> consignmentsByExportStorage = consignmentRepository.GetAllByExportStorageID(entityPM.Tenant, exportStorageKey.Key);
-
-
-                        if (consignmentsByExportStorage.Any(cons => cons.DeclarationId != entityPM.Id ||
-                         !exportStorageKey.Value.Contains(cons.ConsignmentNumber.ToString()))) continue;
-
-                        DeleteExportStorage(entityPM.Tenant, exportStorageKey.Key);
+                            ConsignmentRepository consignmentRepository = new ConsignmentRepository(entityPM.Tenant);
+                            List<Consignment> consignmentsByExportStorage = consignmentRepository.GetAllByExportStorageID(entityPM.Tenant, exportStorageKey.Key);
 
 
+                            if (consignmentsByExportStorage.Any(cons => cons.DeclarationId != entityPM.Id ||
+                             !exportStorageKey.Value.Contains(cons.ConsignmentNumber.ToString()))) continue;
+
+                            DeleteExportStorage(entityPM.Tenant, exportStorageKey.Key);
+
+
+                        }
                     }
                 }
                 LogPayment("6", entityPM);
