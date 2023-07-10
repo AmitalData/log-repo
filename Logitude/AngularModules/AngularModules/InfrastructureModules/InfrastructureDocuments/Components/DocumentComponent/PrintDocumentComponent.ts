@@ -688,12 +688,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         if (this.Items) {
             
             var entityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-            if(entityPM.IsFromInterestBatchInvoice) {
+            if((this.ObjectTableName == "ARInvoice") && entityPM.IsFromInterestBatchInvoice) {
                 var originalCopy = this.Items.filter(x => x.IsOriginal == true)[0];
                 if(originalCopy && originalCopy.IsPrintButtonEnabled) {
                     this.Items = this.Items.filter(x => x.IsOriginal == true);
                 }
-
             }
             this.Items = this.Items.sort(d => d.IndexOrder);
         }
