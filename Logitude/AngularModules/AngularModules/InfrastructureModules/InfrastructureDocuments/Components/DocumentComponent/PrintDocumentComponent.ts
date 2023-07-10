@@ -93,6 +93,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     public SelectedAsDefaultBtnVisible: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     private documentsExecutionLogListExtendedService: DocumentsExecutionLogListExtendedService;
+    IsTemplateDisabled: boolean = false;
     constructor(public _documentTypeCustomFieldService: DocumentTypeCustomFieldService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService, public _exportDocumentService: ExportDocumentService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService) {
         super();
 
@@ -690,9 +691,14 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             var entityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
             if((this.ObjectTableName == "ARInvoice") && entityPM.IsFromInterestBatchInvoice) {
                 var originalCopy = this.Items.filter(x => x.IsOriginal == true)[0];
-                if(originalCopy && originalCopy.IsPrintButtonEnabled) {
-                    this.Items = this.Items.filter(x => x.IsOriginal == true);
-                }
+                if(originalCopy) {
+                    if(originalCopy.IsPrintButtonEnabled) {
+                        this.Items = this.Items.filter(x => x.IsOriginal == true);
+                        this.IsTemplateDisabled = false;
+                    } else {
+                        this.IsTemplateDisabled = true;
+                    }
+                } 
             }
             this.Items = this.Items.sort(d => d.IndexOrder);
         }
