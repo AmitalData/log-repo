@@ -31,7 +31,7 @@ export class DownloadManager {
     }
 
 
-    public static DownloadPage(id: string, securityId: string = null, forceDownload: boolean = false) {
+    public static DownloadPage(id: string, securityId: string = null, forceDownload: boolean = false, requestArea: string = null) {
 
         var url: string = !AppTool.IsNullOrEmpty(securityId) ? "securityId=" + securityId: "id=" + id;
         if (!AppTool.IsNullOrEmpty(id) && !AppTool.IsNullOrEmpty(securityId)  ) {
@@ -39,6 +39,9 @@ export class DownloadManager {
         }
         var token = ServiceHelper.GetLDocumentDownloadToken();
         var link = AppTool.GetLogitudeURL() + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + token + "&forceDownload=" + forceDownload;
+        if(requestArea != null) {
+            link += "&requestArea=" + requestArea ;
+        }
         var win = window.open(link, '_blank');
         
         if (win) {
