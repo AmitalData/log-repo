@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL;
+﻿using Intuit.Ipp.Data;
+using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
@@ -20,6 +21,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.AccountingModel.LedgerTransactionService;
@@ -441,7 +443,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             transactionsQuery = FilterTransactionQueryByRefDatePeriod(transactionsQuery);
             transactionsQuery = FilterByOpenAndClosed(transactionsQuery);
-
+            transactionsQuery = FilterByCrossYearReconcile(transactionsQuery);
             return transactionsQuery;
         }
 
@@ -460,6 +462,32 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         }
 
+        private IQueryable<LedgerTransactionList> FilterByCrossYearReconcile(IQueryable<LedgerTransactionList> transactionsQuery)
+        {
+            IQueryable<ExternalReconciliationLine> ExternalReconciliationLines = null;
+            LedgerTransactionListQueryService LedgerTransactionListQueryService = new LedgerTransactionListQueryService(accountingContext);
+            if (this.CrossYearReconcile == "only")
+            {
+                ExternalReconciliationLines = (from a in accountingContext.ExternalReconciliationLines.Include("ExternalReconciliation")
+                                               where a.ExternalReconciliation.CrossYearReconcile == true
+                                               select a);
+            }
+            else if (this.CrossYearReconcile == "without")
+            {
+                ExternalReconciliationLines = (from a in accountingContext.ExternalReconciliationLines.Include("ExternalReconciliation")
+                                               where a.ExternalReconciliation.CrossYearReconcile == false
+                                               select a);
+            }
+            if (ExternalReconciliationLines != null)
+            {
+                var transactionIds = ExternalReconciliationLines.Select(x => x.LedgerTransactionId).ToArray();
+                return transactionsQuery.Where(t => transactionIds.Contains(t.Id));
+            }
+            return transactionsQuery;
+
+        }
+
+
         private IQueryable<LedgerTransactionList> FilterTransactionQueryByRefDatePeriod(IQueryable<LedgerTransactionList> transactionsQuery)
         {
             transactionsQuery = transactionsQuery.Where(transaction => DbFunctions.TruncateTime(transaction.DocumentDate) >= DbFunctions.TruncateTime(RefDateFrom)
@@ -476,6 +504,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             transactionsQuery = FilterTransactionQueryByRefDatePeriod(transactionsQuery);
             transactionsQuery = FilterByOpenAndClosed(transactionsQuery);
+
             transactionsQuery = FilterFullOpenAmountTransactionsOnly(transactionsQuery);
 
             externalTransactions = FilterTransactionQueryByRefDatePeriod(externalTransactions);
@@ -595,18 +624,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 {
                     reconcileExternalPageLines = reconcileExternalPageLines.Where(line => line.ReconcileExternalPage.ObjectTableId == ObjectTableId);
                 }
-                if (CrossYearReconcile == "only")
-                {
-                    reconcileExternalPageLines= (from a in accountingContext.ExternalReconciliationLines where a.ExternalReconciliation.CrossYearReconcile == true && a.Tenant == tenant && a.ExternalPageLineId != null select a.ReconcileExternalPageLine);
-                }
-
-                if(CrossYearReconcile== "without")
-                {
-                    reconcileExternalPageLines = (from a in accountingContext.ExternalReconciliationLines where a.ExternalReconciliation.CrossYearReconcile == false && a.Tenant == tenant && a.ExternalPageLineId != null select a.ReconcileExternalPageLine);
-
-                }
-                if (!string.IsNullOrEmpty(BankAccountId))
-                {
+                 if (!string.IsNullOrEmpty(BankAccountId)){
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                     var bankAccountObjectTable = objectTabelRepository.GetObjectTableByName("BankAccount", tenant, true);
 
