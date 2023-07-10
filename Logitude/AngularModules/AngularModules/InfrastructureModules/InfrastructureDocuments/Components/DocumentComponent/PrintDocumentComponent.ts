@@ -93,6 +93,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     public SelectedAsDefaultBtnVisible: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     private documentsExecutionLogListExtendedService: DocumentsExecutionLogListExtendedService;
+    IsTemplateDisabled: boolean = false;
     constructor(public _documentTypeCustomFieldService: DocumentTypeCustomFieldService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService, public _exportDocumentService: ExportDocumentService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService) {
         super();
 
@@ -523,11 +524,19 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
-                    myResult.filter(d => d.InActive == false).forEach((item) => {
-                        if (item.TemplateType == "P") {
-                            this.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
-                        }
-                    });
+                    // if ((this.ObjectTableName == "ARInvoice") && entityPM.IsFromInterestBatchInvoice && entityPM.IsPrinted == false) {
+                    //     myResult.filter(d => d.InActive == false && d.IsDefault == true).forEach((item) => {
+                    //         if (item.TemplateType == "P") {
+                    //             this.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
+                    //         }
+                    //     });    
+                    // } else {
+                        myResult.filter(d => d.InActive == false).forEach((item) => {
+                            if (item.TemplateType == "P") {
+                                this.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
+                            }
+                        });
+                    // }
 
                     if (!this.IsNoTemplateFound && !this.IsQuotationDocument) {
                         if (this.DocumentTypeTemplateLists.length == 0) {
@@ -678,6 +687,19 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     SortItemSource() {
 
         if (this.Items) {
+            
+            var entityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+            if((this.ObjectTableName == "ARInvoice") && entityPM.IsFromInterestBatchInvoice) {
+                var originalCopy = this.Items.filter(x => x.IsOriginal == true)[0];
+                if(originalCopy) {
+                    if(originalCopy.IsPrintButtonEnabled) {
+                        this.Items = this.Items.filter(x => x.IsOriginal == true);
+                        this.IsTemplateDisabled = false;
+                    } else {
+                        this.IsTemplateDisabled = true;
+                    }
+                } 
+            }
             this.Items = this.Items.sort(d => d.IndexOrder);
         }
     }
@@ -1422,7 +1444,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, docoumentTypeCopyName + " Viewing");
 
-        DownloadManager.DownloadPage(id, this.CurrentDocumentOut.SecurityId);
+        DownloadManager.DownloadPage(id, this.CurrentDocumentOut.SecurityId, false, this.ObjectTableName);
 
     }
 
@@ -1460,7 +1482,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     PrintingFieldsScreenCode: string;
     BuildingDocumentText: string = "Building document...";
     Start(item: DocsOutDataViewModel) {
-
         this.DataContext = item;
         var buildingDocumentText: string = TextCodeTranslator.Translate("Accounting.General.O.BuildingDocument");
 

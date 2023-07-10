@@ -19,13 +19,15 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         private string aRInvoiceId;
         private int tenant;
         private string loggedUserEmail = string.Empty;
-        public ARInvoicePrintDetailsService(int tenant, string aRInvoiceId , string loggedUserEmail)
+        bool _setAsPrintedIfInvoiceFromInterestBatchInvoice = false;
+        public ARInvoicePrintDetailsService(int tenant, string aRInvoiceId , string loggedUserEmail, bool setAsPrintedIfInvoiceFromInterestBatchInvoice = false)
         {
             this.tenant = tenant;
             this.aRInvoiceId = aRInvoiceId;
             this.loggedUserEmail = loggedUserEmail;
             this.invoiceContext = InvoiceContext.GetContext(tenant);
             this.aRInvoiceService = new ARInvoiceService(invoiceContext, tenant, loggedUserEmail);
+            _setAsPrintedIfInvoiceFromInterestBatchInvoice = setAsPrintedIfInvoiceFromInterestBatchInvoice;
         }
 
         public void Update()
@@ -33,7 +35,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             ARInvoicePM aRInvoicePM = GetARInvoicePM();
             if (aRInvoicePM == null) return;
             if (string.IsNullOrEmpty(aRInvoicePM.IssuedByUserId)) return;
-
+            if (_setAsPrintedIfInvoiceFromInterestBatchInvoice && !aRInvoicePM.IsFromInterestBatchInvoice) return;
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
         
@@ -50,7 +52,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         private  bool GetIsPrintedValue(ARInvoicePM aRInvoicePM)
         {
             bool isPrinted = aRInvoicePM.IsPrinted;
-            if (aRInvoicePM.IsFromInterestBatchInvoice == true) return false;
+            if (!_setAsPrintedIfInvoiceFromInterestBatchInvoice && aRInvoicePM.IsFromInterestBatchInvoice == true) return false;
           
             switch (aRInvoicePM.StatusCode)
             {
