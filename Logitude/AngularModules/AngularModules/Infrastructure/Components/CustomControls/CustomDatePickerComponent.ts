@@ -455,7 +455,7 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
                 this.FromDate.setHours(0, 0, 0, 0);
                 this.ToDate = res.To;
                 this.ToDate.setHours(23, 59, 59, 999);
-                this.SelectedItemChanged.emit({ FromDate: this.FromDate, ToDate: this.ToDate, Operation: "Between" });
+                this.EmitBetweenChanges();
                 this.SelectedItem = this.FromDate.getDate() + '/' + (this.FromDate.getMonth() + 1) + '/' + this.FromDate.getFullYear() + "-" + this.ToDate.getDate() + '/' + (this.ToDate.getMonth() + 1) + '/' + this.ToDate.getFullYear();
                 this.Text = this.FromDate.getDate() + '/' + (this.FromDate.getMonth() + 1) + '/' + this.FromDate.getFullYear() + "-" + this.ToDate.getDate() + '/' + (this.ToDate.getMonth() + 1) + '/' + this.ToDate.getFullYear();
                 this.SetDisplayText();
@@ -464,6 +464,28 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         });
         this.CloseMenu = true;
         this.OnLostFocus();
+    }
+
+    private EmitBetweenChanges() {
+        let fromDate = this.CloneDate(this.FromDate);
+        let toDate = this.CloneDate(this.ToDate)
+        fromDate.setHours(this.GetTimezoneOffsetHours(), 0, 0, 0);
+        toDate.setHours(23 + this.GetTimezoneOffsetHours(), 59, 59, 999);
+
+        this.SelectedItemChanged.emit({ FromDate: fromDate, ToDate: toDate, Operation: "Between" });
+    }
+
+    CloneDate(date) {
+        let clonedDate: Date = new Date();
+        clonedDate.setFullYear(date.getFullYear());
+        clonedDate.setMonth(date.getMonth());
+        clonedDate.setDate(date.getDate());
+        clonedDate.setHours(date.getHours());
+        clonedDate.setMinutes(date.getMinutes());
+        clonedDate.setSeconds(date.getSeconds());
+        clonedDate.setMilliseconds(date.getMilliseconds());
+
+        return clonedDate;
     }
 
     OnCalendarClick() {
@@ -486,5 +508,10 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     }
     onMouseOut() {
         this.mouseOver = false;
+    }
+
+    GetTimezoneOffsetHours() {
+        let timezoneOffsetHours = new Date().getTimezoneOffset() / 60;
+        return timezoneOffsetHours * (-1);
     }
 }
