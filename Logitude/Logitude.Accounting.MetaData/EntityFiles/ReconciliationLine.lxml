@@ -42,7 +42,7 @@
   ParentTableName="Reconciliation"
   LocalDefaultText="&quot;שורת התאמה&quot;"
   DefaultText="&quot;Reconciliation Line&quot;"
-  Code="&quot;ee0e&quot;"
+  Code="&quot;1b0a&quot;"
   Name="&quot;ReconciliationLine Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"

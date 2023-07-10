@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationLineUpdateClass
    {  		
-		public const string HashString = "89df867dd5cd3bfb230ec924c120ed8b";
+		public const string HashString = "0b42907ccd291526419cb8fd8463e1e4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -130,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שורת התאמה",
 			      				    DefaultText =  "Reconciliation Line",
-			      				    Code =  "ee0e",
+			      				    Code =  "1b0a",
 			      				    Name =  "ReconciliationLine Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
