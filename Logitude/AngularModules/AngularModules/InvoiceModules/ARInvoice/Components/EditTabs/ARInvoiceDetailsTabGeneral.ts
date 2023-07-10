@@ -106,11 +106,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     PartnersTypeSelectionMethod(selected: InvoicePartnerType) {
         if (this.SelectedPartnerType != selected) {
             this.SelectedPartnerType = selected;
-
-            this.BillToId = null;
-            this.BillToAddressId = null;
-            this.BillToPartnerTypeId = null;
-
+            
             if (selected) {
                 this.EntityPM.BillToPartnerTypeId = selected.PartnerTypeId;
                 this.BillToDependencyValue1 = selected.PartnerTypeId;
