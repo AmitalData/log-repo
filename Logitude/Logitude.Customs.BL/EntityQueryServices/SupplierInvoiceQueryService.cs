@@ -823,12 +823,24 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
                     if (supplierInvioceExportDefault.ProcessTypeCode != "non")
                     {
-                        foreach (var supplierInvoiceItemProcesType in supplierInvoiceItem.SupplierInvoiceItemProcesTypes)
+                        if (supplierInvoiceItem.SupplierInvoiceItemProcesTypes.Count() > 0) {
+                            foreach (var supplierInvoiceItemProcesType in supplierInvoiceItem.SupplierInvoiceItemProcesTypes)
+                            {
+                                supplierInvoiceItemProcesType.ProcessTypeCode = supplierInvioceExportDefault.ProcessTypeCode;
+                                supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Update;
+
+                            }
+                        }
+                        else
                         {
-                            supplierInvoiceItemProcesType.ProcessTypeCode = supplierInvioceExportDefault.ProcessTypeCode;
-                            supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Update;
+                            SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesType=new SupplierInvoiceItemProcesTypePM();
+                            supplierInvoiceItemProcesType.ProcessTypeCode=supplierInvioceExportDefault.ProcessTypeCode;
+                            supplierInvoiceItemProcesType.DeclarationId = supplierInvoiceItem.DeclarationId;
+                            supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Insert;
+
 
                         }
+
                     }
                 }
 
