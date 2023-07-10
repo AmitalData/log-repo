@@ -63,7 +63,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
-        
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.SetIsUsingVirtuallization();
         this.EntityPM = entityArgs.EntityPM;
@@ -544,6 +544,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.BuildSummary();
         }
     }
+
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
+
 
     public SummaryItems: SummaryItem[] = [];
     ComputeTotals() {

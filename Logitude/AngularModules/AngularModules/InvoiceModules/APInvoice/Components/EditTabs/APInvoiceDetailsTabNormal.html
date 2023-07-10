@@ -72,27 +72,6 @@
                                                 </td>
                                             </tr>
 
-                                            <!-- Branch -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'BranchId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="BranchId"
-                                                            [LookUpTableName]="'Branch'">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
-
                                         </table>
                                     </td>
 
@@ -160,6 +139,21 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'VATNumber'" [Text]="VATNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <!-- AccountingDate -->
+                                            <tr *ngIf="IsAccountingActivated" class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="AccountingDate" [InputType]="'date'" [DataContext]="DataContext"></LogDatePicker>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
                                                 </td>
                                             </tr>
 

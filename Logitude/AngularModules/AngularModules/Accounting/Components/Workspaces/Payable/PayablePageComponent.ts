@@ -355,7 +355,8 @@ export class PayablePageComponent {
                     const entity = new APInvoicePM();
                     this.GetCurrenciesExchangeRateByValueDate(entity);
 
-
+                    entity.IsGeneralInvoice = true;
+                    entity.Tenant = SessionLocator.TenantPM.Id;
                     entity.LocalCurrencyId = SessionLocator.LocalCurrencyId;
                     entity.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
                     const additionalFieldsScreenCode = "APInvoice.AdditionalFields";
@@ -406,7 +407,7 @@ export class PayablePageComponent {
     }
 
     private InitializeProfitCurrency(entityPM: APInvoicePM) {
-        debugger;
+
         if (entityPM.IsMultipleEntities) {
             entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
         }

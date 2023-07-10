@@ -65,12 +65,15 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     IsAccountingActivated: boolean = false;
     public AllowVatTypes: boolean = true;
     public IsUsingVirtuallization: boolean = false;
+    public InvoicePartners: InvoicePartnerType[] = [];
+
     constructor(private entityArgs: EntityArgs) {
         super();
        // this.CurrentSession.StartBusyIndicatorLoading();
        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
+        this.BuildPartnersTypes();
         this.IsManifest = this.EntityPM.ARInvoiceTypeCode == "MN" ? true : false;
         this.IsCustomsInvoice = (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") ? true : false;
         this.ObservableItems = new ObservableCollection([]);
@@ -89,6 +92,43 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.IsEditExchangeRateVisible = true;
         }
     }
+
+    BuildPartnersTypes() {
+        this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
+        this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
+    }
+
+
+    public SelectedPartnerType: InvoicePartnerType = null;
+    public BillToDependencyValue1: string;
+    public BillToDependencyValue2: boolean;
+
+    PartnersTypeSelectionMethod(selected: InvoicePartnerType) {
+        if (this.SelectedPartnerType != selected) {
+            this.SelectedPartnerType = selected;
+
+            this.BillToId = null;
+            this.BillToAddressId = null;
+            this.BillToPartnerTypeId = null;
+
+            if (selected) {
+                this.EntityPM.BillToPartnerTypeId = selected.PartnerTypeId;
+                this.BillToDependencyValue1 = selected.PartnerTypeId;
+                this.BillToDependencyValue2 = selected.IsCustomer;
+            }
+
+            this.SetUIProperties();
+        }
+    }
+
+    get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
+    set BillToPartnerTypeId(newValue: string) {
+        if (this.billToPartnerTypeId != newValue) {
+            this.billToPartnerTypeId = newValue;
+        }
+    }
+
+    private billToPartnerTypeId: string;
 
     SetIsUsingVirtuallization() {
         var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
@@ -448,7 +488,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.BillToName = newValue;
         }
     }
-    
+
     get BranchId() { return this.EntityPM.BranchId; }
     set BranchId(value: string) {
         if (this.EntityPM.BranchId != value) {
@@ -1638,7 +1678,7 @@ export class ARInvoiceLineItem extends BaseComponent {
             this.EntityPM.ReportedinTaxReport = newValue;
         }
     }
-    
+
     get GLAccountLocalName() { return this.EntityPM.GLAccountLocalName; }
     set GLAccountLocalName(newValue: string) {
         if (this.EntityPM.GLAccountLocalName != newValue) {
