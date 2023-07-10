@@ -1776,6 +1776,8 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                                 item.Tenant = SessionLocator.Tenant;
                                 item.ModificationCounterKey = modificationCounter;
                                 item.IsDirty = false;
+                                item.CurrencyTypeCode = InsuranceCurrency;
+                                item.Amount = Number(InsuranceAmount);
                                 item.ChangeSetOp = "Insert";
                                 this.SupplierInvoicePM.AddSupplierInvoiceModification(item);
                             }
