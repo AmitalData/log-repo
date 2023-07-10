@@ -837,7 +837,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             supplierInvoiceItemProcesType.ProcessTypeCode=supplierInvioceExportDefault.ProcessTypeCode;
                             supplierInvoiceItemProcesType.DeclarationId = supplierInvoiceItem.DeclarationId;
                             supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Insert;
-
+                            supplierInvoiceItem.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesType);
 
                         }
 
