@@ -2335,6 +2335,22 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
+        [HttpGet]
+        public HttpResponseMessage UpdateSupplierInvoiceItemsWhoHasError12195(int tenant, string declarationId, string customFileNo)
+        {
+            try
+            {
+                var mess = DeclarationUpdateService.UpdateSupplierInvoiceItemsWhoHasError12195(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, mess);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
         //RaiseCLSHWBEvent
 
         [HttpGet]

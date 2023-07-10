@@ -826,14 +826,21 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     OpenMehesUpdateAutonmyWindow() {
         var myDeclarationWebService = new DeclarationWebService();
         myDeclarationWebService
-            .CheckIfError12195ExistInCustomfileno(this.EntityPM.Id,this.EntityPM.Tenant,this.EntityPM.CustomFileNo)
+            .CheckIfError12195ExistInCustomfileno(this.EntityPM.Id, this.EntityPM.Tenant, this.EntityPM.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
-                if(myResponse.Result){
-                    
+                if (myResponse.Result) {
+                    debugger;
                     let confirm = new ConfirmWindow();
                     confirm.WindowClosed.subscribe((event: any) => {
                         if (confirm.Yes) {
-                            
+                            this.CurrentSession.StartBusyIndicatorCreating();
+                            myDeclarationWebService
+                                .UpdateSupplierInvoiceItemsWhoHasError12195(this.EntityPM.Id, this.EntityPM.Tenant, this.EntityPM.CustomFileNo)
+                                .subscribe((myResponse: ServiceResponse) => {
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                    this.CurrentSession.StopBusyIndicator();
+                                    debugger;
+                                });
                         }
                     });
                     confirm.Show("אם לעדכן ספר מכס אוטונומיה לשורות עם שגיאה מס' 12195");

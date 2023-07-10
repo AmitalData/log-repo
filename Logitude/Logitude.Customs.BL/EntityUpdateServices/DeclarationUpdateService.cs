@@ -3762,5 +3762,47 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             return clientId;
         }
+        public static string UpdateSupplierInvoiceItemsWhoHasError12195(string declarationId, int tenant)
+        {
+            try
+            {
+                var customContext = CustomContext.GetContext(tenant);
+                var declarationQuery = new DeclarationQueryService(customContext);
+                DeclarationPM myDeclarationPM = declarationQuery.GetSingle(declarationId, true, false);
+
+                //If the Declaration exists
+                if (myDeclarationPM == null) return null;
+
+                DeclarationQueryService query = new DeclarationQueryService(customContext);
+                var errors12195 = query.GetDeclarationErrors(myDeclarationPM.Id, tenant, null).Where(x => x.ErrorType == "12195").ToList();
+                foreach(var error in errors12195)
+                {
+                    var line = error.Line-1;
+                    var ParentLine = error.ParentLine-1;
+                    if (line >= 0 && ParentLine >=0 && myDeclarationPM.SupplierInvoices.Count > ParentLine)
+                    {
+                        if (myDeclarationPM.SupplierInvoices[ParentLine.Value].SupplierInvoiceItems.Count >= line)
+                        {
+                            myDeclarationPM.SupplierInvoices[ParentLine.Value].SupplierInvoiceItems[line.Value].CustomsBookTypeCode = "3";
+                            myDeclarationPM.SupplierInvoices[ParentLine.Value].SupplierInvoiceItems[line.Value].ChangeSetOp = ChangeSetOperation.Update;
+                            myDeclarationPM.SupplierInvoices[ParentLine.Value].ChangeSetOp = ChangeSetOperation.Update;
+                            myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                        }
+                    }
+                }
+              
+                if (myDeclarationPM.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    DeclarationUpdateService service = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), myDeclarationPM.Tenant);
+                    service.Update(myDeclarationPM, true);
+                }
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+            return null;
+        }
     }
 }
