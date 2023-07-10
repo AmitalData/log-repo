@@ -624,7 +624,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 {
                     reconcileExternalPageLines = reconcileExternalPageLines.Where(line => line.ReconcileExternalPage.ObjectTableId == ObjectTableId);
                 }
-                 if (!string.IsNullOrEmpty(BankAccountId)){
+                if (CrossYearReconcile == "only")
+                {
+                    reconcileExternalPageLines = (from a in accountingContext.ExternalReconciliationLines where a.ExternalReconciliation.CrossYearReconcile == true && a.Tenant == tenant && a.ExternalPageLineId != null select a.ReconcileExternalPageLine);
+                }
+
+                if (CrossYearReconcile == "without")
+                {
+                    reconcileExternalPageLines = (from a in accountingContext.ExternalReconciliationLines where a.ExternalReconciliation.CrossYearReconcile == false && a.Tenant == tenant && a.ExternalPageLineId != null select a.ReconcileExternalPageLine);
+
+                }
+                if (!string.IsNullOrEmpty(BankAccountId)){
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                     var bankAccountObjectTable = objectTabelRepository.GetObjectTableByName("BankAccount", tenant, true);
 
