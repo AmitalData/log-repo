@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationPendingUpdateClass
    {  		
-		public const string HashString = "30a3ecb9d923cfc3daa40f5089c683f2";
+		public const string HashString = "7d434980f42ac770e77f40e8e81b8e63";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "Pending",
 			      				    DefaultText =  "Declaration Pending",
-			      				    Code =  "6b9a",
+			      				    Code =  "44f2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -664,7 +664,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable DeclarationPendingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationPending" && d.Tenant == 0).FirstOrDefault(); 
+
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature DeclarationPendingFeature_Pending900InDetainedOrPhysicalCheck = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Pending900InDetainedOrPhysicalCheck", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationPendingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeclarationPending.Features.Pending900InDetainedOrPhysicalCheck", NameTextCodeDefaultText = @"גביה - בדיקה פיזית/מעוכבים" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationPendingObjectTable);
+
+   
 	    
 		}
 

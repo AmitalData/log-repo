@@ -40,7 +40,7 @@
   ParentTableName="DeclarationCourierStatus"
   LocalDefaultText="&quot;Pending&quot;"
   DefaultText="&quot;Declaration Pending&quot;"
-  Code="&quot;6b9a&quot;"
+  Code="&quot;44f2&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -777,5 +777,15 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;Pending900InDetainedOrPhysicalCheck&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.DeclarationPending.Features.Pending900InDetainedOrPhysicalCheck&quot;"
+      FeatureDefaultText="&quot;גביה - בדיקה פיזית/מעוכבים&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

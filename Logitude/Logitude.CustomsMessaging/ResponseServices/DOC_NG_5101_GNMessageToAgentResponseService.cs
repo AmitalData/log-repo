@@ -33,6 +33,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Server.Tools.Utils;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {  // moran 6.10.14 - Task 8066 -->
@@ -404,6 +405,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             notificationDefinitionCode = null;
                             break;
                         case 7:
+                            this.Pending900(this._MyDeclarationPM, requestParams.LoggingUserId);
                             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                             this._MyDeclarationPM.CourierCustomStatusCode = "2";
                             this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
@@ -470,6 +472,50 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             declarationUpdateService.Update(this._MyDeclarationPM, true);
                             break;
                     }
+
+                    int[] myMsgCode = { 7, 8, 9, 16, 22, 23, 24, 25, 26, 27 };
+                    
+                    FeatureQuery featureQuery = new FeatureQuery();
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "Pending900InDetainedOrPhysicalCheck");
+                        if (feature != null && myMsgCode.Contains(customResponse.MessageToAgent.msgCode))
+                        {
+                            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                            DeclarationCourierStatusPM _MyDeclarationCourierStatusPM = new DeclarationCourierStatusPM();
+                            _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+
+                        var declarationPendingPM_900 = _MyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == _MyDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == "900").FirstOrDefault();
+
+                        if (declarationPendingPM_900 == null)
+                        {
+                            declarationPendingPM_900 = new DeclarationPendingPM();
+                            declarationPendingPM_900.CourierPendingReasonCode = "900";
+                            declarationPendingPM_900.Status = "A";
+                            declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Insert;
+                            _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_900);
+                            
+                            if (declarationPendingPM_900.ChangeSetOp != ChangeSetOperation.None)
+                            {
+                                if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update)
+                                    _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                            if (_MyDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                            {
+                                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                                //_MyDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(myDeclarationPM, _MyDeclarationCourierStatusPM: _MyDeclarationCourierStatusPM);
+                                declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
+                            }
+                        }
+                            
+                        else
+                        {
+                            string xml_status = "new";
+                            this.RaiseEvent(_MyDeclarationPM, "VPE", xml_status);
+                        }
+                        }
+                    
+
+                    
                 }
 
             }
@@ -762,6 +808,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             LogMessagingUtil.Instance.AppendLine("3650 - VendorSearchByCustomsAgent Request Succeeded");
             SendImporterDeclarationRequest(requestParams, importerNumber, vendorCode);
+
+        }
+
+        void Pending900(DeclarationPM declarationPM, string loggingUserId)
+        {
+         
 
         }
     }
