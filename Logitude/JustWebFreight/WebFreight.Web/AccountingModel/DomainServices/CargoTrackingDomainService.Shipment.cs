@@ -57,6 +57,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             customCargoTrackingShipmentList.IsOrder = cargoTrackingShipmentList.EntityType == "O";
             customCargoTrackingShipmentList.HasException = cargoTrackingShipmentList.CurrentMilestoneExceptions != null;
             customCargoTrackingShipmentList.NumberOfPackages = cargoTrackingShipmentList.NumberOfPackages;
+            customCargoTrackingShipmentList.ChargeableWeight= cargoTrackingShipmentList.ChargeableWeight;
             customCargoTrackingShipmentList.Client = GetClientName(cargoTrackingShipmentList);
             return customCargoTrackingShipmentList;
         }
