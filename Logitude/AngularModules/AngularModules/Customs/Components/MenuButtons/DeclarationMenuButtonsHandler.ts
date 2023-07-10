@@ -829,7 +829,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             .CheckIfError12195ExistInCustomfileno(this.EntityPM.Id, this.EntityPM.Tenant, this.EntityPM.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.Result) {
-                    debugger;
                     let confirm = new ConfirmWindow();
                     confirm.WindowClosed.subscribe((event: any) => {
                         if (confirm.Yes) {
