@@ -26,6 +26,7 @@ using Unifreight.Data.AmitalModel.EntityPOCOs;
 using UnifreightIIG.Common.MessageLib.PhysicalCheck190;
 using Logitude.Customs.BL.TraceEvents;
 using Simplog.Data.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -434,6 +435,47 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (myDeclarationPM.IsCourierDeclaration)
                 {
                     SendDeclarationPrint(myDeclarationPM, requestParams);
+
+                    FeatureQuery featureQuery = new FeatureQuery();
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "Pending900InDetainedOrPhysicalCheck");
+
+                    if (NoticeToClient.operationCode == 1 && feature != null)
+                    {
+
+
+                        DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
+                        DeclarationCourierStatusPM _MyDeclarationCourierStatusPM = new DeclarationCourierStatusPM();
+                        _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
+
+                        var declarationPendingPM_900 = _MyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == _MyDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == "900").FirstOrDefault();
+
+                        if (declarationPendingPM_900 == null)
+                        {
+                            declarationPendingPM_900 = new DeclarationPendingPM();
+                            declarationPendingPM_900.CourierPendingReasonCode = "900";
+                            declarationPendingPM_900.Status = "A";
+                            declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Insert;
+                            _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_900);
+                        }
+                        else if (declarationPendingPM_900.Status != "A")
+                        {
+                            declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
+                            declarationPendingPM_900.Status = "A";
+                        }
+                        if (declarationPendingPM_900.ChangeSetOp != ChangeSetOperation.None)
+                        {
+                            if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) 
+                                _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                        if (_MyDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                        {
+                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), myDeclarationPM.Tenant);
+                            //_MyDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(myDeclarationPM, _MyDeclarationCourierStatusPM: _MyDeclarationCourierStatusPM);
+                            declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
+                        }
+                       
+                    }
                 }
 
             }
