@@ -743,7 +743,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          join er in repository.context.EventRemarks on et.Id equals er.EventTypeId into erGroup
                          from er in erGroup.Where(e => e.PartnerTypeId == "CS").DefaultIfEmpty()
                          where te.Deleted == false && et.InActive == false && et.IsCustomerView == true && et.Tenant == tenant && (te.EntityId == ShipmentId|| te.EntityId == forwardingShipmentHeaderId) && et.Code != "EXCE"
-                         orderby te.EventDateTime descending
                          select new Event()
                          {
                              LocalName = et.LocalName,
@@ -752,7 +751,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              IsChoose = er.IsChoose,
                              PartnerTypeId = er.PartnerTypeId,
 							 EntityType = !string.IsNullOrEmpty(forwardingShipmentHeaderId) && ShipmentId == te.EntityId? "C": !string.IsNullOrEmpty(forwardingShipmentHeaderId) && forwardingShipmentHeaderId == te.EntityId ? "F":"",
-						 }).Distinct().ToList();
+						 }).Distinct().OrderByDescending(d=>d.EventDatetime).ToList();
 
             return query;
         }
