@@ -1888,8 +1888,7 @@ After that Remove file  from DCA  .. ");
                         LogMessagingUtil.Instance.AppendLine("end create sign step...");
 
                         createSBQMessage = false;
-                        return true;
-                    }
+                     }
                 }
                 if (createSBQMessage)
                 {
