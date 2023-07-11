@@ -31,7 +31,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ErrorMsg, 
 	         StatusCode, 
 	         OcrId, 
-	         DocId,
+	         DocId, 
+	         Reference,
 	      }
 
 
@@ -48,7 +49,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StatusName, 
 	         StatusCode, 
 	         OcrId, 
-	         DocId,
+	         DocId, 
+	         Reference,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -100,6 +102,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocId))
             {
 				entityPOCO.DocId = entityPM.DocId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference))
+            {
+				entityPOCO.Reference = entityPM.Reference;
 			}
 			}
 
@@ -156,6 +163,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DocId = entityPOCO.DocId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Reference))
+            {
+					entityPM.Reference = entityPOCO.Reference;
+            }
+
 		}
 
 		public void PMToOldPM(OcrDocumentPM entityPM, OcrDocumentPM oldEntityPM)
@@ -205,6 +217,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocId))
             {
                 oldEntityPM.DocId = entityPM.DocId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference))
+            {
+                oldEntityPM.Reference = entityPM.Reference;
             }
 			
 		}

@@ -42,6 +42,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.OcrId).HasColumnName("OcrId").HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.DocId).HasColumnName("DocId").HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.Reference).HasColumnName("Reference").HasMaxLength(30).IsUnicode(false);
         }
     }
 }
