@@ -176,9 +176,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-            if (_MyDeclarationPM.IsCourierDeclaration && this._MyDeclarationPM.PaymentDate.HasValue)
+            if (this._MyDeclarationPM.PaymentDate.HasValue)
             {
-                if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")
+                if (customResponse.Response != null && customResponse.Response.Status != null && (customResponse.Response.Status.NameCode.Value == "13" || customResponse.Response.Status.NameCode.Value == "14") )
                 {
                     // Clear Fields
                     _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
