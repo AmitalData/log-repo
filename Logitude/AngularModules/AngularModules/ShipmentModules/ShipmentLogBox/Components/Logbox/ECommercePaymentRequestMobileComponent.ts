@@ -21,7 +21,7 @@ import { BranchListService } from '../../../../Common/Services/StandardLists/Bra
 import { DepartmentListService } from '../../../../Common/Services/StandardLists/DepartmentListService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
-import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import { ShipmentPMService, UrlAndLogo } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 import { ShipmentAdditionalCloudDataService } from '../../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
 import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { GroupByPipe } from '../../../../Infrastructure/Pipes/GroupByPipe';
@@ -34,6 +34,7 @@ import { CommonDomainService } from '../../../../Common/Services/CommonDomainSer
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 import { DatePipe } from '@angular/common';
+import { TenantManagementPM } from 'Infrastructure/EntityPMs/TenantManagementPM';
 
 
 @Component({    
@@ -63,6 +64,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     RefreshTimer: any;
     private datePipe: DatePipe;
     _ImageLibraryService: ImageLibraryService;
+    tenantManagement: TenantManagementPM;
+    comapnylogoId: string;
+    logoUrl: string;
+
     constructor(private cd: ChangeDetectorRef) {
         super();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
@@ -183,6 +188,8 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
             }
         });
 
+        if(this.dsvStyle)
+            this.initTenantManagements(this.SecurityKey)
     }
 
     MapFieldsFromResponseData(responseResult) {
@@ -391,6 +398,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         //});
 
     }
-
-
+    
+    async initTenantManagements(securityKey: string) {
+        const data: UrlAndLogo = await this._ShipmentPMService.getLogoAndUrlWithoutToken(securityKey)
+        this.comapnylogoId = data.logo;
+        this.logoUrl = data.url;
+    }
 }
