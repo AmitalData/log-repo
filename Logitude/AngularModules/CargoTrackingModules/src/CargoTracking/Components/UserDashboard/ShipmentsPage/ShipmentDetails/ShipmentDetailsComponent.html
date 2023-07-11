@@ -1309,7 +1309,7 @@
                     <table class="row-hover" style="width: 100%;">
                         <tr *ngFor="let item of cargoTrackingShipmentPM.Events">
                             <td style="width: 30px;"><img src="./assets/images/icons/tick.png" alt=""></td>
-                            <td style="width: 300px;">{{item.LocalName}}</td>
+                            <td style="width: 300px;">{{item.LocalName}} <span *ngIf="item.EntityType"> ({{item.EntityType}})</span></td>
                             <td style="width: 300px;">{{item.EventDatetime | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</td>                               
                             <td class="hide-mobile" style="width: calc(100% - 450px);" *ngIf="item.IsChoose && item.PartnerTypeId=='CS'"> 
                                 <custom-label [width]="1100">{{item.Notes}}</custom-label>
@@ -1331,7 +1331,7 @@
                                 <img src="./assets/images/icons/tick.png" alt="">
                                
                                 <span>
-                                    {{item.LocalName}}
+                                    {{item.LocalName}} <span *ngIf="item.EntityType"> ({{item.EntityType}})</span>
                                 </span>
                                 <br>
                             

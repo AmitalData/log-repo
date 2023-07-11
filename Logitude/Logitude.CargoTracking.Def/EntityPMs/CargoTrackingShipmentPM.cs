@@ -214,5 +214,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public string Notes { get; set; }
         public bool? IsChoose { get; set; }
         public string PartnerTypeId { get; set; }
-    }
+		public string EntityType { get; set; }
+		
+	}
 }

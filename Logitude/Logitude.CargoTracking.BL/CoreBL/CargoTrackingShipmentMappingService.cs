@@ -42,7 +42,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             FillDocumentsFilings();
             BuildPartnerCards();
             BuildShipmentMilstones(milestoneDictionary);
-            BuildShipmentEvents(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
+            BuildShipmentEvents(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant, cargoShipmentPM.ForwardingShipmentHeaderId);
             SetMilestonesStatus();
             SetRoutePortsCodes(cargoShipmentPM);
             SetTenantFields();
@@ -58,11 +58,11 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             var cargoTrackingMilestoneBuilder = new CargoTrackingMilestoneBuilder();
             cargoShipmentPM.Milestones = cargoTrackingMilestoneBuilder.BuildShipmentMilstones(cargoShipmentPM, milestoneDictionary);
         }
-        private void BuildShipmentEvents(string entityId,int tenant)
+        private void BuildShipmentEvents(string entityId,int tenant,string forwardingShipmentHeaderId)
         {
 
             var cargoTrackingEventsBuilder = new CargoTrackingEventsBuilder();
-            cargoShipmentPM.Events = cargoTrackingEventsBuilder.BuildShipmentEvents(entityId,tenant);
+            cargoShipmentPM.Events = cargoTrackingEventsBuilder.BuildShipmentEvents(entityId,tenant, forwardingShipmentHeaderId);
         }
   
         private void GetConnectedEntities()

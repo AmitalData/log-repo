@@ -736,13 +736,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  };
             return eventTypes;
         }
-        public List<Event> GetEventByShipment(string ShipmentId, int tenant)
+        public List<Event> GetEventByShipment(string ShipmentId, int tenant, string forwardingShipmentHeaderId)
         {
             var query = (from te in repository.context.TraceEvent
                          join et in repository.context.EventType on te.EventTypeId equals et.Id
                          join er in repository.context.EventRemarks on et.Id equals er.EventTypeId into erGroup
                          from er in erGroup.Where(e => e.PartnerTypeId == "CS").DefaultIfEmpty()
-                         where te.Deleted == false && et.InActive == false && et.IsCustomerView == true && et.Tenant == tenant && te.EntityId == ShipmentId && et.Code != "EXCE"
+                         where te.Deleted == false && et.InActive == false && et.IsCustomerView == true && et.Tenant == tenant && (te.EntityId == ShipmentId|| te.EntityId == forwardingShipmentHeaderId) && et.Code != "EXCE"
                          orderby te.EventDateTime descending
                          select new Event()
                          {
@@ -750,8 +750,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              EventDatetime = te.EventDateTime,
                              Notes = te.Notes,
                              IsChoose = er.IsChoose,
-                             PartnerTypeId = er.PartnerTypeId
-                         }).Distinct().ToList();
+                             PartnerTypeId = er.PartnerTypeId,
+							 EntityType = !string.IsNullOrEmpty(forwardingShipmentHeaderId) && ShipmentId == te.EntityId? "C": !string.IsNullOrEmpty(forwardingShipmentHeaderId) && forwardingShipmentHeaderId == te.EntityId ? "F":"",
+						 }).Distinct().ToList();
 
             return query;
         }
@@ -762,6 +763,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             public string Notes { get; set; }
             public bool? IsChoose { get; set; }
             public string PartnerTypeId { get; set; }
-        }
-    }
+			public string EntityType { get; set; }
+
+		}
+	}
 }

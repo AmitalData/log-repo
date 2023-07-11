@@ -12,11 +12,11 @@ namespace Logitude.CargoTracking.BL.CoreBL
 {
     public class CargoTrackingEventsBuilder
     {
-        public List<Event> BuildShipmentEvents(string entityId, int tenant)
+        public List<Event> BuildShipmentEvents(string entityId, int tenant, string forwardingShipmentHeaderId)
         {
             var eventTypeQuery = new EventTypeQuery();
 
-            var events = eventTypeQuery.GetEventByShipment(entityId, tenant);
+            var events = eventTypeQuery.GetEventByShipment(entityId, tenant, forwardingShipmentHeaderId);
             List<Event> Events = new List<Event>();
             foreach (var e in events)
             {
@@ -26,7 +26,9 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Event.Notes = e.Notes;
                 Event.IsChoose = e.IsChoose;
                 Event.PartnerTypeId = e.PartnerTypeId;
-                Events.Add(Event);
+				Event.EntityType = e.EntityType;
+
+				Events.Add(Event);
             }
             return Events;
         }

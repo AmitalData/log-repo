@@ -472,4 +472,6 @@ export class Events
     public Notes: string;
     public  IsChoose: boolean;
     public  PartnerTypeId: string;
+    public  EntityType: string;
+
 }

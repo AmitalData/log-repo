@@ -180,7 +180,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 cargoTrackingShipmentQueryService.SetMilestonesStatus(shipment, shipmentMilestones);
                 shipment.ChargeableWeightInKG = ShipmentMapping.GetWeightInKG(shipment.ChargeableWeightUnitCode, shipment.ChargeableWeight);
                 var cargoTrackingEventsBuilder = new CargoTrackingEventsBuilder();
-                List<Event> shipmentEvent = cargoTrackingEventsBuilder.BuildShipmentEvents(shipment.EntityId, tenant);
+                List<Event> shipmentEvent = cargoTrackingEventsBuilder.BuildShipmentEvents(shipment.EntityId, tenant, shipment.ForwardingShipmentHeaderId);
                 TenantManagementPM tenantManagment = GetTenantManagement(tenant);
                 shipment.CargoTrackingPublicShowEvents = tenantManagment?.CargoTrackingPublicShowEvents ?? false;
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
