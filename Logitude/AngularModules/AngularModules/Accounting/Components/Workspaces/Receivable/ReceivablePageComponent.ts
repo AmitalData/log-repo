@@ -11,7 +11,7 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {LastRate} from "../../../../Common/Services/CurrencyRatesService";
+import {CurrencyRatesService, LastRate} from "../../../../Common/Services/CurrencyRatesService";
 
 // Services
 import { GLAccountExtendedListService } from '../../../Services/ExtendedLists/GLAccountExtendedListService';
@@ -299,29 +299,53 @@ export class ReceivablePageComponent {
     //#endregion
 
     //#region General ARInvoice
-    public NewGeneralARInvoice(type: string) {
 
-        if (SessionLocator.TenantPM.AccountingActivated ) {
+    private GetCurrenciesExchangeRateByValueDate(entity: ARInvoicePM){
+        var myCurrencyRatesService = new CurrencyRatesService();
+        var loadingDate = DateTool.GetCurrentDateAsUtc();
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        entity.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+
+        myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.LocalCurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.LastRatesList = myResponse.Result;
+                this.InitializeProfitCurrency(entity);
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
+
+    private InitializeProfitCurrency(entityPM: ARInvoicePM) {
+
+        if (AppTool.IsNullOrEmpty(entityPM.ProfitCurrencyId)) {
+            entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        }
+
+        this.myCurrencyListService.getSingleFromCache(entityPM.ProfitCurrencyId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: CurrencyList = myResponse.Result;
+                if (list != null) {
+                    entityPM.ProfitCurrencyCode = list.Code;
+                }
+            }
+        });
+
+        entityPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(entityPM.ProfitCurrencyId);
+        this.OpenEditComponent(entityPM);
+    }
+
+
+    OpenEditComponent(entity: ARInvoicePM)
+    {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
 
                 var todayDate = DateTool.GetCurrentDateAsUtc();
 
-                var entity = new ARInvoicePM();
-
-                entity.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
-                this.myCurrencyListService.getSingleFromCache(entity.ProfitCurrencyId).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: CurrencyList = myResponse.Result;
-                        if (list != null) {
-                            entity.ProfitCurrencyCode = list.Code;
-                        }
-                    }
-                });
-
                 entity.IsGeneralInvoice = true;
-                entity.ARInvoiceTypeCode = type;
                 entity.IssuedByUserId = SessionLocator.LoggedUserId;
                 entity.CreatedByUserId = SessionLocator.LoggedUserId;
                 entity.UpdatedByUserId = SessionLocator.LoggedUserId;
@@ -329,20 +353,27 @@ export class ReceivablePageComponent {
                 entity.UpdateDate = todayDate;
                 entity.InvoiceDate = todayDate;
                 entity.LocalCurrencyId = SessionLocator.LocalCurrencyId;
+
                 entity.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
                 entity.Tenant = SessionLocator.TenantPM.Id;
                 entity.ProfitCurrencyExchangeRate = this.GetCurrencyRate(entity.ProfitCurrencyId);
                 entity.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
                 entity.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
+                entity.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(entity.InvoiceCurrencyId);
                 InvoiceTool.ComputeARInvoiceDueDate(entity);
 
                 cmpRef.instance.ComponentRef = cmpRef;
-
                 cmpRef.instance.Run({ EntityPM: entity, ObjectTableName: 'ARInvoice' });
             });
+    }
 
+    public NewGeneralARInvoice(type: string) {
+
+        if (SessionLocator.TenantPM.AccountingActivated ) {
+            var entity = new ARInvoicePM();
+            entity.ARInvoiceTypeCode = type;
+            this.GetCurrenciesExchangeRateByValueDate(entity);
             return;
-
         }
 
 
