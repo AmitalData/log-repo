@@ -45,6 +45,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DocId { get; set; }
 	      
         public virtual DocumentsFiling DocumentsFiling { get; set; }
+        [Column("Reference")]
+	    public string Reference { get; set; }
     }
 }
 	 

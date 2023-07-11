@@ -36,6 +36,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string OcrId  { get; set; }
        [DataMember]
        public string DocId  { get; set; }
+       [DataMember]
+       public string Reference  { get; set; }
    }
 
 }

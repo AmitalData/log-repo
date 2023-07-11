@@ -79,6 +79,11 @@ export class OcrDocumentPM {
     public set DocId(newValue: string) { if (this.docId != newValue) { this.docId = newValue; this.MarkAsDirty("DocId"); } }
        
 	 
+    private reference: string;
+    public get Reference() { return this.reference; }
+    public set Reference(newValue: string) { if (this.reference != newValue) { this.reference = newValue; this.MarkAsDirty("Reference"); } }
+       
+	 
 
     public OldEntityPM: OcrDocumentPM;
 		

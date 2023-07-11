@@ -19,6 +19,7 @@ export class OcrDocumentList {
 	StatusCode: string;
 	OcrId: string;
 	DocId: string;
+	Reference: string;
 	
 }
  

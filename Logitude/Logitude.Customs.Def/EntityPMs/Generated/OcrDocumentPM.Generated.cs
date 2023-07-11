@@ -273,6 +273,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string reference ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Reference  
+	   {
+	    
+	     get
+		{
+		   return reference;
+		 }
+		 set
+		 {
+		   if(reference != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Reference",OldValue=reference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   reference=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

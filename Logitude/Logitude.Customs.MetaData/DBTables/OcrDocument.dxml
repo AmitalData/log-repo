@@ -75,6 +75,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Reference"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="StatusCode"
     ReferencedTable="OcrStatuses"
