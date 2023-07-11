@@ -125,6 +125,17 @@
 
 
                                                     </tr>
+                                                    <tr *ngIf="isLoad && this.CurrentEntity?.ClientIndications.length > 0">
+                                                        <td class="FieldRow" style="width:150px">           
+                                                                <LogLabel [Text]="'Customs.ClientIndication.O.IndicationExpOrImp' | TextCodeTranslationPipe"
+                                                                [NoObjectField]="true"
+                                                                [DataContext]="DataContext"></LogLabel>
+
+                                                        </td>
+                                                        <td style="width:10px"></td>
+                                                        <td style="width: 25px;"><IconButton *ngIf="!IsDisplayOnly" [IsSmall]="true" [Name]="'flag'" (click)="ShowClientIndication()" [IsIconOnly]="true" style="float:right;"></IconButton></td>
+
+                                                    </tr>
                                                     <tr>
                                                         <td rowspan="2" colspan="3">
                                                             <div

@@ -279,7 +279,10 @@ export class IconButton implements OnInit {
                     this.mySource = "./Images/return.png";
                     break;
                 }
-
+                case "flag": {
+                    this.mySource = "./Images/Followup.png";
+                    break;
+                }
 
             }
 

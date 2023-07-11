@@ -319,6 +319,7 @@
                                         [DataContext]="DataContext"  ></LogLabel>
                                     </td>
                                     <td style="width: 100px;">
+                                       <IconButton *ngIf="_IsIndicationsClientFeature && clientIndications && clientIndications.length > 0" [IsSmall]="true" [Name]="'flag'" (click)="ShowClientIndication($event)" [IsIconOnly]="true" style="float:right;margin-right: -20px;"></IconButton> 
                                         <SearchBox #ImporterSearchBox [ObjectTableName]="'Customs.Client'"
                                                    [IsQuickSearch]="true"
                                                    [DropDownWidth]="143"

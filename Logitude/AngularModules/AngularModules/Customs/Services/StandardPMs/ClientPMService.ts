@@ -29,6 +29,7 @@ import {ClientDrivingLicensePM} from '../../EntityPMs/ClientDrivingLicensePM';
 import {ClientDrivingLicenseTypePM} from '../../EntityPMs/ClientDrivingLicenseTypePM';
 import {ClientsPoaPM} from '../../EntityPMs/ClientsPoaPM';
 import {ClientsTapagPM} from '../../EntityPMs/ClientsTapagPM';
+import {ClientIndicationPM} from '../../EntityPMs/ClientIndicationPM';
 
 @Injectable()
 
@@ -194,6 +195,7 @@ export class ClientPMService {
                this.MapClientDrivingLicenses(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapClientPoas(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapClientsTapags(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapClientIndications(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -248,6 +250,15 @@ export class ClientPMService {
 						
 							 
             entityPM.OldEntityPM.ClientsTapags.push(newClientsTapagPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.ClientIndications = [];
+            for (var item in entityPM.ClientIndications) {
+            var myClientIndicationPM = entityPM.ClientIndications[item];
+            var newClientIndicationPM: ClientIndicationPM = this.clone(myClientIndicationPM);
+						
+							 
+            entityPM.OldEntityPM.ClientIndications.push(newClientIndicationPM);
             }
 			   
 		}
@@ -848,6 +859,98 @@ export class ClientPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.ClientsTapags.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapClientIndications(entityPM: ClientPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClientIndications: ClientIndicationPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClientIndications = entityPM.OldEntityPM.ClientIndications;
+        }
+
+        entityPM.ClientIndications = new Array<ClientIndicationPM>();
+        for (var item in jsonPM.ClientIndications) {
+            var jItem = jsonPM.ClientIndications[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClientIndicationPM: ClientIndicationPM;
+	  
+            if (mapParent) {
+                newClientIndicationPM = new ClientIndicationPM(entityPM);
+            }
+            else
+            {
+                newClientIndicationPM = new ClientIndicationPM(null);
+            }
+ 			newClientIndicationPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClientIndicationPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClientIndicationPM.UniqueKey = Guid.newGuid();
+                newClientIndicationPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClientIndicationPM.OldEntityPM = this.clone(newClientIndicationPM);
+
+				
+            }
+            else {
+                if (newClientIndicationPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClientIndicationPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newClientIndicationPM.ChangeSetOp = "Insert";
+                }
+ 
+                newClientIndicationPM.OldEntityPM = null;
+                newClientIndicationPM.EntityParentPM = null;
+            }
+			 newClientIndicationPM.DisableMarkAsDirty = false;
+			 newClientIndicationPM.IsDirty = false;
+            entityPM.ClientIndications.push(newClientIndicationPM);
+        }
+        if (oldClientIndications) {
+            
+            for (var itemKey in oldClientIndications) {
+                if (entityPM.ClientIndications.filter(p=> p.UniqueKey === oldClientIndications[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClientIndications[itemKey]) {
+                        //oldClientIndications[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClientIndications.push(oldClientIndications[itemKey]);
+						var oldItemJson = oldClientIndications[itemKey];
+                        var deletedPM: ClientIndicationPM = new ClientIndicationPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClientIndications.push(deletedPM);
                     }
                 }
             }

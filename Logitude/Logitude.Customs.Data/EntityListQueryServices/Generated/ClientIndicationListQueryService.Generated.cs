@@ -1,0 +1,173 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityLists;
+
+namespace Logitude.Customs.Data.EntityListQueryServices
+{ 
+
+    public partial class ClientIndicationListQueryService
+    {
+         private ICustomContext context;
+        public ClientIndicationListQueryService(ICustomContext context)
+        {
+            this.context = context;
+        }
+
+        public List<ClientIndicationList> GetList(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<ClientIndication> iQueryable = (from a in context.ClientIndications
+                                              
+                   where a.Tenant == tenant select a);
+            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<ClientIndication>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<ClientIndicationList> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<ClientIndicationList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(ClientIndicationList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> ClientIndicationObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ClientIndication",tenant).ToList();
+
+                ObjectField objectField = (from a in ClientIndicationObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<ClientIndicationList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<ClientIndicationList, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<ClientIndicationList, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<ClientIndicationList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<ClientIndicationList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<ClientIndicationList, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<ClientIndicationList, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderByDescending(d => d.CreateDate);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.OrderByDescending(d => d.CreateDate);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<ClientIndicationList> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public ClientIndicationList GetSingle(string indicationid, string clientid)
+        {
+            IQueryable<ClientIndication> ClientIndicationQuery = (from a in context.ClientIndications
+                                                       where a.IndicationId == indicationid && a.ClientId == clientid
+                                                       select a);
+
+             
+            IQueryable<ClientIndicationList> ClientIndicationListQuery = GetIqueryableList( ClientIndicationQuery);
+            ClientIndicationList ClientIndicationList = ClientIndicationListQuery.FirstOrDefault();
+            return ClientIndicationList;
+           
+        }
+
+        public int GetListCount(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<ClientIndication> iQueryable = (from a in context.ClientIndications 
+                   where a.Tenant == tenant select a);
+
+			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<ClientIndication>(nonListQueryOperation, iQueryable);
+
+            IQueryable<ClientIndicationList> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<ClientIndicationList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+      
+    }
+}
+	 

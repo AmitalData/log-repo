@@ -17,6 +17,7 @@ import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 import { ClientPMService } from 'Customs/Services/StandardPMs/ClientPMService';
 import { ClientsTapagPM } from 'Customs/EntityPMs/ClientsTapagPM';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 
 
 @Component({
@@ -47,29 +48,32 @@ export class ClientEditComponent extends BaseComponent{
 
    ClientsTapagList: ClientsTapag[] = [];
     tapagNumberName = '';
-
-   constructor(
-    public entityArgs: EntityArgs,
+    public isLoad:boolean = false;
+    constructor(
+        public entityArgs: EntityArgs,
     ) {
-       super();
-       this.entityResourceService.getEntityResourceByTableName("Customs.ClientsTapag").subscribe((response: any) => {
-        this.tapagNumberName = 'TapagNumber';
-       });
+        super();
+        this.entityResourceService.getEntityResourceByTableName("Customs.ClientsTapag").subscribe((response: any) => {
+            this.tapagNumberName = 'TapagNumber';
+        });
+        this.entityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
 
-       this.entityArgs.EntityArgEventEmitter.subscribe(
-           theMessage => {
-               if (theMessage == "ReloadEntity") {
-                   this.clientPMService.get(this.CurrentEntity.Id).subscribe((response:any) => {
-                       var result = response.Result;
-                       if (!AppTool.IsNullOrEmpty(result)) {
-                           this.CurrentEntity = result;
-                           this.entityArgs.EntityPM = this.CurrentEntity;
-                       }
-                   });
-               }
-           }
-       );
-   }
+             this.entityArgs.EntityArgEventEmitter.subscribe(
+                 theMessage => {
+                     if (theMessage == "ReloadEntity") {
+                         this.clientPMService.get(this.CurrentEntity.Id).subscribe((response: any) => {
+                             var result = response.Result;
+                             if (!AppTool.IsNullOrEmpty(result)) {
+                                 this.CurrentEntity = result;
+                                 this.entityArgs.EntityPM = this.CurrentEntity;
+                             }
+                         });
+                     }
+                 }
+             );
+             this.isLoad=true;
+        });
+    }
 
    SetWindowArgs(args: any) {
 
@@ -519,6 +523,23 @@ export class ClientEditComponent extends BaseComponent{
 
 
     }
+    ShowClientIndication() {
+       
+        if (this.CurrentEntity.ClientIndications == null || this.CurrentEntity.ClientIndications.length == 0) {
+            return;
+        }
+
+        var windowArgs: any = {};
+        windowArgs.CustomerIndicationList =  this.CurrentEntity.ClientIndications;;
+        windowArgs.IsClientIndication = true
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 470;
+        logitudeWindow.Height = 520;
+        logitudeWindow.IsShowCloseButton = false;
+        logitudeWindow.Title = TextCodeTranslator.Translate("Customs.ClientIndication.O.IndicationClient"); 
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/CustomerIndicationComponent');
+    }
 
 }
 
@@ -613,7 +634,7 @@ export class ClientsTapag extends BaseComponent {
                 this.Parent.BuildClientsTapagList();
             }
         });
-    }
+    }  
 }
 
 

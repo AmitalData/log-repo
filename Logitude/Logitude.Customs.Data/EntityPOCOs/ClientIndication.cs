@@ -1,0 +1,47 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class ClientIndication
+    {
+	 string dbms;
+
+        [Key]
+        [Column("IndicationId")]
+	    public string IndicationId { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [ForeignKey("Client")]
+        [Column("ClientId")]
+	    public string ClientId { get; set; }
+	      
+        public virtual Client Client { get; set; }
+        [ForeignKey("CustomerIndicationType")]
+        [Column("CustomerIndicationTypeID")]
+	    public string CustomerIndicationTypeID { get; set; }
+	      
+        public virtual CustomerIndicationType CustomerIndicationType { get; set; }
+        [Column("IsActive")]
+	    public bool? IsActive { get; set; }
+        [Column("StartDate")]
+	    public DateTime? StartDate { get; set; }
+        [Column("EndDate")]
+	    public DateTime? EndDate { get; set; }
+        [Column("CreateDate")]
+	    public DateTime? CreateDate { get; set; }
+    }
+}
+	 

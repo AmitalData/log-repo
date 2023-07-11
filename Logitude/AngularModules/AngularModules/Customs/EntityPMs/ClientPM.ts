@@ -11,6 +11,7 @@ import {ClientAddressPM} from './ClientAddressPM';
 import {ClientDrivingLicensePM} from './ClientDrivingLicensePM';
 import {ClientsPoaPM} from './ClientsPoaPM';
 import {ClientsTapagPM} from './ClientsTapagPM';
+import {ClientIndicationPM} from './ClientIndicationPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -349,7 +350,41 @@ export class ClientPM {
     public set IsPOAExpireReminderSent(newValue: boolean) { if (this.isPOAExpireReminderSent != newValue) { this.isPOAExpireReminderSent = newValue; this.MarkAsDirty("IsPOAExpireReminderSent"); } }
        
 	 
+     
+	private clientIndications: ClientIndicationPM[];
+    get  ClientIndications() {
+        if (this.clientIndications == null) {
+            this.clientIndications = [];
+        }
 
+        return this.clientIndications;
+    }
+    set  ClientIndications(newValue: ClientIndicationPM[]) {
+        if (this.clientIndications != newValue) {
+            this.clientIndications = newValue;
+        }
+    }
+    public AddClientIndication(item: ClientIndicationPM) {
+        if (item != null) {
+            var index = this. ClientIndications.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. ClientIndications.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveClientIndication(item: ClientIndicationPM) {
+        if (item != null) {
+            var index = this. ClientIndications.indexOf(item);
+            if (index > -1) {
+                this. ClientIndications.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public ClientIndications: Array<ClientIndicationPM>= [];
+ 
     public OldEntityPM: ClientPM;
 		
     public IsDirty: boolean;
