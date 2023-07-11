@@ -516,7 +516,7 @@
                                     </td>
 
                                     <td style="width: 160px;">
-                                        <LogCheckBox [Checked]="IsPreference" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'IsPreference'" [DataContext]="DataContext"></LogCheckBox>
+                                        <LogCheckBox [Checked]="IsPreference" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'IsPreference'" [DataContext]="DataContext" (ValueChanged)="ShowIndication()"></LogCheckBox>
 
                                     </td>
 

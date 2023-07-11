@@ -34,6 +34,7 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 import { DeclarationExportRecipientPM } from '../../../../../Customs/EntityPMs/DeclarationExportRecipientPM';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 import { DeclarationWebService, ExportStorageConnectToDeclaration } from 'Customs/Services/WebServices/DeclarationWebService';
+import { ClientIndicationListService } from 'Customs/Services/StandardLists/ClientIndicationListService';
 
 @Component({
 
@@ -69,7 +70,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     public DeclarationExportRecipientTableName: string = "Customs.DeclarationExportRecipient";
     private CurrentSession = SessionLocator.SelectedSession;
     exportStorageConnectToDeclaration: ExportStorageConnectToDeclaration = null as any;
-
+    clientIndicationListService: ClientIndicationListService = new ClientIndicationListService();
+    clientIndications:any
+    _IsIndicationsClientFeature:boolean = false;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
@@ -83,6 +86,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                                     this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response: any) => {
                                         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
                                             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationExportRecipient").subscribe((response: any) => {
+                                                this.EntityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
+                                                
                                                 this.EntityPM = this.entityArgs.EntityPM;
                                                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                                                 this.Listen();
@@ -118,7 +123,17 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                                                     } else {
                                                         this.CurrentSession.ChangeSessionHeader({ Text: "הצהרות יבוא" });
                                                     }
+                                                    if (!AppTool.IsNullOrEmpty(this.EntityPM.ImporterId)) {               
+                                                        this.getClientIndication();
+                                                     }
+                                                    var table = window.ObjectTables.filter(d => d.Name === 'Customs.ClientIndication')[0];
+                                            
+                                                    var IsIndicationsClientFeature = FeatureLocator.Features.filter(f => (f.Code == "IndicationsClient") && f.ObjectTableId == table.Id)[0];
+                                                    if (IsIndicationsClientFeature) {
+                                                        this._IsIndicationsClientFeature=true
+                                                    }
                                                 }
+                                              });
                                             });
                                         });
                                     });
@@ -801,6 +816,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                         this.CalculatedImporterName = client.FullName;
                     }
 
+                    if (!AppTool.IsNullOrEmpty(this.EntityPM.ImporterId)) {               
+                       this.getClientIndication();
+                    }
+
                     break;
                 }
                 case 'Transfer': {
@@ -1371,7 +1390,46 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
 
     }
+    ShowClientIndication(item) {
 
+
+        if (this.clientIndications == null || this.clientIndications.length == 0) {
+            return;
+        }
+
+        var windowArgs: any = {};
+        windowArgs.CustomerIndicationList =  this.clientIndications;
+        windowArgs.IsClientIndication = true;
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 470;
+        logitudeWindow.Height = 520;
+        logitudeWindow.IsShowCloseButton = false;
+        logitudeWindow.Title =TextCodeTranslator.Translate("Customs.ClientIndication.O.IndicationClient"); 
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/CustomerIndicationComponent');
+
+    }
+    getClientIndication()
+        {
+           
+            let filters = new ApiQueryFilters();
+    
+    
+            filters.PageSize = 200;
+            filters.PageIndex = 0;
+            filters.GetAll = false;
+            filters.GetCount = true;           
+               
+            filters.addAdditionalFilter("ClientId", this.EntityPM.ImporterId , null, null, "Equals", false, false, false, "string", false);
+            filters.addAdditionalFilter("Tenant", this.EntityPM.Tenant, null, null, "Equals", true, false, false, "string");
+           
+    
+            return this.clientIndicationListService.getByFilters(filters)
+                .subscribe(r => {
+                    this.clientIndications=r.Result
+                });
+             
+        }
     SetFieldsDisabled(message: string) {
         if (message == "ok") {
             if (this.Type == "Importer") {

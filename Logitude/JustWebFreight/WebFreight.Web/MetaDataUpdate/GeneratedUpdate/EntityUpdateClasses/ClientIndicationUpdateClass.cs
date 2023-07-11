@@ -1,0 +1,692 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+ 
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.QuoteModel;
+using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.Repositories;
+using WebFreight.Web.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.GlobalModel;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.InfrastructureModel;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using WebFreight.Web.InvoiceModel;
+using WebFreight.Web.MetaDataUpdate.AddClasses;
+using WebFreight.Web.MetaDataUpdate.DetailClasses;
+using WebFreight.Web.QuoteModel;
+using WebFreight.Web.ShipmentsModel;
+using WebFreight.Web.CommonDataModel.DomainServices;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System.Data.Entity.Core.EntityClient;
+using System.Configuration;
+using Simplog.Server.Infrastructure;
+using System.Data.Common;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.BL;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.BL;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.BookingLib.Data.EntityPOCOs;
+using Logitude.BookingLib.BL;
+using Logitude.BookingLib.Data.Repositories;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Social.Data.EntityPOCOs;
+using Logitude.Social.BL;
+using Logitude.Social.Data.Repsitories;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Customs.BL.ClosedTable;
+using Logitude.CRM.BL.CLoseTable;
+using Logitude.BookingLib.BL.CLoseTable;
+using Logitude.WarehouseLib.Data.Repositories;
+using Logitude.WarehouseLib.Data.EntityPOCOs;
+using Logitude.WarehouseLib.BL.CLoseTable;
+using Logitude.TimeManagement.Data.Repositories;
+using Logitude.TimeManagement.Data.EntityPOCOs;
+using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
+
+//using Amital.QuoteOPM.BL.CLoseTable;
+using Amital.QuoteOPM.Data.Repsitories;
+using Amital.QuoteOPM.Data.EntityPOCOs;
+using Amital.QuoteOPM.BL;
+
+
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
+{
+   public class ClientIndicationUpdateClass
+   {  		
+		public const string HashString = "aefc0b9f13c235e0cd3a666512d72a24";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+        {                     
+            
+            AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
+            {
+			
+	             				    ObjectTableName =  "Customs.ClientIndication",
+			      				    IsNew =  true,
+			      				    DBTableName =  "Customs.ClientIndications",
+			      				    ObjectTableSingular =  "ClientIndication",
+			      				    ObjectTablePlural =  "ClientIndications",
+			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  false,
+			      				    IsNewWizard =  false,
+			      				    KeyPropertyPath =  "IndicationId",
+			      				    AutoCompleteSearchWindow =  false,
+			      				    IsClosed =  false,
+			      				    CacheOnClient =  false,
+			      				    EditableFromAutoCompleteWindow =  false,
+			      				    HasCounter =  true,
+			      				    EnableAddFromLOV =  false,
+			      				    IsRestrictable =  false,
+			      				    IsMain =  true,
+			      				    IsAutoComplete =  false,
+			      				    EnableEditFromLOV =  false,
+			      				    SortingByObjectField =  "CreateDate",
+			      				    InActive =  false,
+			      				    IsSaveButtonVisible =  false,
+			      				    IsComposition =  false,
+			      				    EnableSecurity =  true,
+			      				    AllowCustomFields =  false,
+			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "BR",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    LocalDefaultText =  "אינדיקציה ללקוח",
+			      				    DefaultText =  "Client Indication",
+			      				    Code =  "48df",
+			      				    Name =  " Query Group",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Customs",
+			      				    ServerModuleName =  "Customs",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
+			      				    HashString =  ClientIndicationUpdateClass.HashString,
+			                    
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
+		}
+	
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
+	    {
+	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ClientId",
+					  						ObjectTableName =  "Customs.ClientIndication",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ClientId",
+					  						ListPropertyPath =  "ClientId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClientIndication",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ClientId",
+					  						DefaultText =  "Client Id",
+					  						ListFieldLable =  "ClientIdListLable",
+					  						ListLableDefaultText =  "ClientId",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomerIndicationTypeID",
+					  						ObjectTableName =  "Customs.ClientIndication",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CustomerIndicationType",
+					  						MinLength =  0,
+					  						MaxLength =  3,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  3,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomerIndicationTypeID",
+					  						ListPropertyPath =  "CustomerIndicationTypeID",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomerIndicationTypeID",
+					  						DefaultText =  "Customer Indication Type ID",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsActive",
+					  						ObjectTableName =  "Customs.ClientIndication",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsActive",
+					  						ListPropertyPath =  "IsActive",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClientIndication",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsActive",
+					  						DefaultText =  "Is Active",
+					  						FullLocalDefaultText =  "סטטוס",
+					  						ListFieldLable =  "IsActiveListLable",
+					  						ListLableDefaultText =  "Is Active",
+					  						ListLocalDefaultText =  "סטטוס",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StartDate",
+					  						ObjectTableName =  "Customs.ClientIndication",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StartDate",
+					  						ListPropertyPath =  "StartDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClientIndication",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StartDate",
+					  						DefaultText =  "Start Date",
+					  						FullLocalDefaultText =  "מתאריך",
+					  						ListFieldLable =  "StartDateListLable",
+					  						ListLableDefaultText =  "Start Date",
+					  						ListLocalDefaultText =  "מתאריך",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "EndDate",
+					  						ObjectTableName =  "Customs.ClientIndication",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "EndDate",
+					  						ListPropertyPath =  "EndDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClientIndication",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "EndDate",
+					  						DefaultText =  "End Date",
+					  						FullLocalDefaultText =  "עד תאריך",
+					  						ListFieldLable =  "EndDateListLable",
+					  						ListLableDefaultText =  "End Date",
+					  						ListLocalDefaultText =  "עד תאריך",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CreateDate",
+					  						ObjectTableName =  "Customs.ClientIndication",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreateDate",
+					  						ListPropertyPath =  "CreateDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClientIndication",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreateDate",
+					  						DefaultText =  "Create Date",
+					  						FullLocalDefaultText =  "תאריך יצירה",
+					  						ListFieldLable =  "CreateDateListLable",
+					  						ListLableDefaultText =  "Create Date",
+					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomerIndicationTypeName",
+					  						ObjectTableName =  "Customs.ClientIndication",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomerIndicationTypeName",
+					  						ListPropertyPath =  "CustomerIndicationTypeName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClientIndication",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomerIndicationTypeName",
+					  						DefaultText =  "CustomerIndicationTypeName",
+					  						FullLocalDefaultText =  "אינדיקציה",
+					  						ListFieldLable =  "CustomerIndicationTypeNameListLable",
+					  						ListLableDefaultText =  "CustomerIndicationTypeName",
+					  						ListLocalDefaultText =  "אינדיקציה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+	    }
+
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    {    
+	    }
+
+	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
+	    {   
+
+		   ObjectTable ClientIndicationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ClientIndication" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ClientIndicationObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ClientIndication").ToList();
+		       
+	      
+
+	         Screen ClientIndicationCustomsClientIndicationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ClientIndication.HeaderScreen", Name = "Customs.ClientIndicationHeaderScreen", ObjectTableId = ClientIndicationObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ClientIndicationObjectTable.HeaderScreenId = ClientIndicationCustomsClientIndicationHeaderScreenScreen0.Id;
+		    ClientIndicationObjectTable.HeaderScreenCode = ClientIndicationCustomsClientIndicationHeaderScreenScreen0.Code;
+
+	   		  
+
+	    }
+
+	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
+	    {      
+	    } 
+	
+	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+		   ObjectTable ClientIndicationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ClientIndication" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature ClientIndicationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClientIndication.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClientIndicationObjectTable);
+		   Feature ClientIndicationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClientIndication.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClientIndicationObjectTable);
+		   Feature ClientIndicationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClientIndication.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClientIndicationObjectTable);
+		   Feature ClientIndicationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClientIndication.Features.PackageFeature", NameTextCodeDefaultText = "ClientIndication Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClientIndicationObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ClientIndicationFeature_IndicationsClient = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IndicationsClient", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ClientIndication.Features.IndicationsClient", NameTextCodeDefaultText = @"Indications Client" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClientIndicationObjectTable);
+
+   
+	    
+		}
+
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
+	    {   
+			ObjectTable ClientIndicationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ClientIndication" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ClientIndicationObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ClientIndicationObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+	    }
+	
+	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
+	    {  
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ClientIndicationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ClientIndication" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ClientIndicationTextCode_CustomsClientIndicationOIndicationExpOrImp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientIndication.O.IndicationExpOrImp", DefaultText = "IndicationExpOrImp",LocalDefaultText = @"אינדיקצית יצואן/יבואן", ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientIndicationTextCode_CustomsClientIndicationOUpdatDataImpExp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientIndication.O.UpdatDataImpExp", DefaultText = "Exporter data is not updated in the system - additional data must be retrieved for the importer/exporter",LocalDefaultText = @"נתוני יצואן לא מעודכנים במערכת -יש לשלוף נתונים נוספים ליבואן/יצואן", ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientIndicationTextCode_CustomsClientIndicationONotDeclareInCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientIndication.O.NotDeclareInCustoms", DefaultText = "The exporter is not set up for a preferential customs account",LocalDefaultText = @"היצואן לא מוגדר לחשבון העדפה במכס", ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientIndicationTextCode_CustomsClientIndicationODeclareInCustomsExpired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientIndication.O.DeclareInCustomsExpired", DefaultText = "The exporters definition of a preferential account is not valid at customs",LocalDefaultText = @"הגדרת היצואן לחשבון העדפה אינה בתוקף במכס", ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClientIndicationTextCode_CustomsClientIndicationOIndicationClient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientIndication.O.IndicationClient", DefaultText = "Indications for the client",LocalDefaultText = @"אינדיקציות ללקוח", ObjectTableId = ClientIndicationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
+
+   }
+    
+}
+	 

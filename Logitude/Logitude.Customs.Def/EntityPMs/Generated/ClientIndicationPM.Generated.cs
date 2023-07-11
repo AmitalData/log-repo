@@ -1,0 +1,235 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ClientIndicationPM : EntityPM
+   {
+   	  private string indicationId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IndicationId  
+	   {
+	    
+	     get
+		{
+		   return indicationId;
+		 }
+		 set
+		 {
+		   if(indicationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IndicationId",OldValue=indicationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   indicationId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string clientId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClientId  
+	   {
+	    
+	     get
+		{
+		   return clientId;
+		 }
+		 set
+		 {
+		   if(clientId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClientId",OldValue=clientId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   clientId=value;
+		   }
+			
+		 }
+	   }
+	  private string customerIndicationTypeID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerIndicationTypeID  
+	   {
+	    
+	     get
+		{
+		   return customerIndicationTypeID;
+		 }
+		 set
+		 {
+		   if(customerIndicationTypeID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerIndicationTypeID",OldValue=customerIndicationTypeID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerIndicationTypeID=value;
+		   }
+			
+		 }
+	   }
+	  private bool? isActive ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsActive  
+	   {
+	    
+	     get
+		{
+		   return isActive;
+		 }
+		 set
+		 {
+		   if(isActive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsActive",OldValue=isActive,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isActive=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? startDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? StartDate  
+	   {
+	    
+	     get
+		{
+		   return startDate;
+		 }
+		 set
+		 {
+		   if(startDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StartDate",OldValue=startDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   startDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? endDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? EndDate  
+	   {
+	    
+	     get
+		{
+		   return endDate;
+		 }
+		 set
+		 {
+		   if(endDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EndDate",OldValue=endDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   endDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? createDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? CreateDate  
+	   {
+	    
+	     get
+		{
+		   return createDate;
+		 }
+		 set
+		 {
+		   if(createDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   createDate=value;
+		   }
+			
+		 }
+	   }
+	  private string customerIndicationTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerIndicationTypeName  
+	   {
+	    
+	     get
+		{
+		   return customerIndicationTypeName;
+		 }
+		 set
+		 {
+		   if(customerIndicationTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerIndicationTypeName",OldValue=customerIndicationTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerIndicationTypeName=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

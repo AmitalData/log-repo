@@ -74,6 +74,8 @@ import { CustomsItemDetailsQueryRequestParams } from 'Customs/DataContract/Reque
 import { SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParamsBase';
 import { IIGGeneralMessagesService } from 'Customs/Services/WebServices/IIGGeneralMessagesService';
 import { VendorCurrencyService } from 'Customs/Services/WebServices/VendorCurrencyService';
+import { ClientIndicationPM } from 'Customs/EntityPMs/ClientIndicationPM';
+import { ClientIndicationListService } from 'Customs/Services/StandardLists/ClientIndicationListService';
 
 
 @Component({
@@ -147,7 +149,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     old_vendor;
 
     public addedVehicles: any[] = [];
-
+    clientIndicationListService:ClientIndicationListService = new ClientIndicationListService();
+    clientIndicationList:Array<ClientIndicationPM> = new Array<ClientIndicationPM>();
     private CurrentSession = SessionLocator.SelectedSession;
     public tradeAgreementFilter: ApiQueryFilters = null as any;
     public ModificationAndDiscountTypeList = new Map<string, string>();
@@ -220,7 +223,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             });
 
         }
-        this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.subscribe(() => this.GetDifferenceAndTotalForeignCurrency())
+        this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.subscribe(() => this.GetDifferenceAndTotalForeignCurrency())      
     }
 
 
@@ -612,8 +615,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     this.SetDepositionStatus();
                     //this.GetExchagneRates();
 
-
-                });
+                
+              });
             });
         });
 
@@ -3332,10 +3335,69 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         }
 
     }
+   
+    ShowIndication(){
 
+       
+      this.entityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
+         var table = window.ObjectTables.filter(d => d.Name === 'Customs.ClientIndication')[0];
 
+         var IsIndicationsClientFeature = FeatureLocator.Features.filter(f => (f.Code == "IndicationsClient") && f.ObjectTableId == table.Id)[0];
+         if (IsIndicationsClientFeature) {
+            
+            if(this.IsPreference && this.allowExport){
+    
+                if (!AppTool.IsNullOrEmpty(this.declarationPM.ImporterId)) {  
+                    var msg = new MessageWindow();
+                    msg.RTL = true;
+    
+                    let filters = new ApiQueryFilters();
+    
+    
+                    filters.PageSize = 200;
+                    filters.PageIndex = 0;
+                    filters.GetAll = false;
+                    filters.GetCount = true;           
+                       
+                    filters.addAdditionalFilter("ClientId", this.declarationPM.ImporterId , null, null, "Equals", false, false, false, "string", false);
+                    filters.addAdditionalFilter("Tenant", this.declarationPM.Tenant, null, null, "Equals", true, false, false, "string");
+                   
+            
+                    return this.clientIndicationListService.getByFilters(filters)
+                        .subscribe(r => {
+                           this.clientIndicationList=r.Result
+                       
+                           if(this.clientIndicationList.length > 0) {
+                           
+                              if(this.clientIndicationList.filter(x=>x.CustomerIndicationTypeID =="2").length > 0){
+                                  var d=new Date();
+                                  var date=Date.parse(d.toString())                                                              
+                                  var IsExporterExpire=this.clientIndicationList.find(x=>x.CustomerIndicationTypeID =="2"&&Date.parse(x.StartDate.toString())<date&&Date.parse(x.EndDate.toString())>date);
+                                 
+                                  if(!IsExporterExpire){
+                                       msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.DeclareInCustomsExpired"));
+                                  }
+                              }
+                              else{
+                                  msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.NotDeclareInCustoms"));
+    
+                              }
+                           }
+                           else{
+                                 msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.UpdatDataImpExp"));
+    
+                           }
+                        });
+                }
+            
+            }
+        
+   
+         }
+      });
+    }
 
-
+   
     //#endregion
 }
 

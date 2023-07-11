@@ -10,6 +10,7 @@ import { BaseComponent } from '../../../Infrastructure/Components/LogitudeCompon
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
     
@@ -22,6 +23,10 @@ export class CustomerIndicationComponent extends BaseComponent {
     public CustomerIndicationList: ObservableCollection;
     private isControlEnabled: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
+    isLoad:boolean=false;
+    UpdateDate:Date;
+    IsClientIndication:boolean=false;
+    EntityResourceService:EntityResourceService=new EntityResourceService();
     constructor(public entityArgs: EntityArgs) {
         super();
 
@@ -29,7 +34,24 @@ export class CustomerIndicationComponent extends BaseComponent {
     }
 
     SetWindowArgs(args: any) {
-        this.CustomerIndicationList = args.CustomerIndicationList;
+       
+        this.EntityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
+            this.IsClientIndication = args.IsClientIndication
+            if(this.IsClientIndication){
+                          
+                this.CustomerIndicationList.InsertCollection(args.CustomerIndicationList);
+
+                if (args.CustomerIndicationList &&  args.CustomerIndicationList.length>0) {
+                    this.UpdateDate = args.CustomerIndicationList[0].CreateDate;
+                }
+            }
+            else{
+                this.CustomerIndicationList = args.CustomerIndicationList;
+            }
+           
+            this.isLoad = true;
+           
+      });     
     }
 
     public get IsControlEnabled() { return this.isControlEnabled; }
