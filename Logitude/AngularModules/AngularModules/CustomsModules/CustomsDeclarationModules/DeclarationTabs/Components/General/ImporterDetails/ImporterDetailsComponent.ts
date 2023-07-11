@@ -52,8 +52,8 @@ export class ImporterDetailsComponent extends BaseComponent {
 
     public get ImporterTypeCode() { return this.EntityPM.ImporterTypeCode; }
     public set ImporterTypeCode(newValue: string) {
-        this.EntityPM.ImporterTypeCode = newValue;
-        this.EntityPM.ImporterCode = null;
+        this.EntityPM.ImporterTypeCode = newValue;       
+                this.EntityPM.ImporterCode = null; 
       
         this.EntityPM.ImporterPassportNumber = null;
         this.EntityPM.ImporterPassCountryCode = null;
@@ -307,7 +307,7 @@ export class ImporterDetailsComponent extends BaseComponent {
                          if (this.EntityPM.ImporterCode != null || this.EntityPM.ImporterId != null) {
                              this.UIProperties.SetEnabled("ImporterTypeCode", this.ObjectTableName, false);
                          }
-                     }                    
+                     } 
                      break;
                  }
 
@@ -386,7 +386,7 @@ export class ImporterDetailsComponent extends BaseComponent {
     }
 
      SetFieldsEditibility(xxxTypeCode: string, type: string) {
-         
+
          switch (type) {
              case "Importer": {
                  
@@ -402,6 +402,13 @@ export class ImporterDetailsComponent extends BaseComponent {
                          this.UIProperties.SetEnabled("ImporterTypeCode", this.ObjectTableName, false);
                          this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, false);
                          this.UIProperties.SetEnabled("ImporterAddress", this.ObjectTableName, false);
+                         if (this.EntityPM.ImporterTypeCode == "1" && this.EntityPM.Direction =="E" 
+                            && this.EntityPM.ImporterCode != null && /[a-zA-Z]/.test(this.EntityPM.ImporterCode)) 
+                         {
+                                this.UIProperties.SetEnabled("ImporterTypeCode", this.ObjectTableName, true);
+                         }        
+
+                            
 
                      }
                      
@@ -409,7 +416,7 @@ export class ImporterDetailsComponent extends BaseComponent {
                   //   
                      this.UIProperties.SetEnabled("ImporterPassportNumber", this.ObjectTableName, false);
                      this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, false);
-                     if(this.EntityPM.Direction =='E' && this.EntityPM.ShortProcedure && AppTool.IsNullOrEmpty(this.EntityPM.ExporterImporterCode)){
+                     if(this.EntityPM.Direction =='E' && this.EntityPM.ShortProcedure && AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)){
                         this.UIProperties.SetWarning("ImporterName", this.ObjectTableName, true);
                         this.UIProperties.SetWarning("ImporterAddress", this.ObjectTableName, true);
                     }
