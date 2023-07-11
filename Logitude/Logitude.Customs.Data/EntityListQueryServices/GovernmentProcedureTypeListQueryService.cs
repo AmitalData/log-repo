@@ -42,10 +42,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  EnglishName = a.EnglishName,
                                                                  LocalName = a.LocalName,
                                                                  SearchFields = a.SearchFields,
-                                                                 IsImport = s != null ? s.IsImport : false,
+                                                                 IsImport = s != null ? s.IsImport : a.IsImport,
                                                                  Inactive = a.Inactive,
-                                                                 IndexOrder = s != null ? s.IndexOrder : null,
-                                                                 IsExport = s != null ? s.IsExport : null,
+                                                                 IndexOrder = s != null ? s.IndexOrder : a.IndexOrder,
+                                                                 IsExport = s != null ? s.IsExport : a.IsExport,
                                                                  ShortProcedure = a.ShortProcedure,
 
                                                              });

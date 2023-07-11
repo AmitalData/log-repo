@@ -43,13 +43,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                             LocalName = a.LocalName,
                                                             SearchFields = a.SearchFields,
                                                             Inactive = a.Inactive,
-                                                            PointerLevel = s != null ? s.PointerLevel : null,
-                                                            PointerLevelName = s != null ?  (s.Pointer.LocalName != null ? s.Pointer.LocalName : null) : null,
-                                                            AutoSetOriginalDocumentTrue = s != null ? s.AutoSetOriginalDocumentTrue : false,
-                                                            IsCourierManadatory= s != null ? s.IsCourierManadatory : false,
-                                                            IsDiamondManadatory= s != null ? s.IsDiamondManadatory : false,
-                                                            CustomsDocumentUpload = s != null ? s.CustomsDocumentUpload : null,
-                                                            CustomsDocumentUploadName = s != null ? (s.CustomsDocumentUploadT.LocalName != null ? s.CustomsDocumentUploadT.LocalName : null) : null,
+                                                            PointerLevel = s != null ? s.PointerLevel : a.PointerLevel,
+                                                            PointerLevelName = s != null ?  (s.Pointer.LocalName != null ? s.Pointer.LocalName : null) : (a.Pointer.LocalName != null ? a.Pointer.LocalName : null),
+                                                            AutoSetOriginalDocumentTrue = s != null ? s.AutoSetOriginalDocumentTrue : a.AutoSetOriginalDocumentTrue,
+                                                            IsCourierManadatory= s != null ? s.IsCourierManadatory : a.IsCourierManadatory,
+                                                            IsDiamondManadatory= s != null ? s.IsDiamondManadatory : a.IsDiamondManadatory,
+                                                            CustomsDocumentUpload = s != null ? s.CustomsDocumentUpload : a.CustomsDocumentUpload,
+                                                            CustomsDocumentUploadName = s != null ? (s.CustomsDocumentUploadT.LocalName != null ? s.CustomsDocumentUploadT.LocalName : null) : (a.CustomsDocumentUploadT.LocalName != null ? a.CustomsDocumentUploadT.LocalName : null),
                                                         });
 
             return query;
