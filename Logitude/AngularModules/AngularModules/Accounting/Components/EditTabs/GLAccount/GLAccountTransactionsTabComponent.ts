@@ -942,7 +942,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     oldFromDate: Date;
     isValidate: boolean = false;
     validateDates() {
-        if (this.FromDate > this.ToDate) {
+        
+        if (this.FromDate > this.ToDate && !AppTool.IsNullOrEmpty(this.toDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
 
             this.timerToken = setTimeout(() => {
                 this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateGreater"));
