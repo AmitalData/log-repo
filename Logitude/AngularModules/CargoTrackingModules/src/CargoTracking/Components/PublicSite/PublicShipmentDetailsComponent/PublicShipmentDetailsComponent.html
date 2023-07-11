@@ -434,7 +434,7 @@
                         <li *ngFor="let item of Events| StopLoopPipe: showMoreEvents:3">
                             <ng-container>
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
-                                <div class="caption" style="width: 205px;">{{item.LocalName}}</div>
+                                <div class="caption" style="width: 205px;">{{item.LocalName}}<span *ngIf="item.EntityType"> ({{item.EntityType}})</span> </div>
                                 <div class="date" style="width: 130px;">{{item.EventDatetime | date: 'dd/MM/yyyy, HH:mm' |
                                     dateTimeFormat}}</div>
                                 <div class="desc" *ngIf="item.IsChoose && item.PartnerTypeId=='CS'" style="width: calc(100% - 450px); padding: 0;">
