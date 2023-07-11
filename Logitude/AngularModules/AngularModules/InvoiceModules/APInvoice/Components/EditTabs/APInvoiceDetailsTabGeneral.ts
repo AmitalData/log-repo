@@ -191,6 +191,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (!this.IsScreenEnabled) {
             this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AmountInInvoiceCurrency", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, false);
