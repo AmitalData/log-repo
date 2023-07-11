@@ -1703,6 +1703,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                         mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance");
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                         let ApprovalToInsure = ""; ApprovalToInsure = UnifreightMessageM.GetStringValue(mess, "ApprovalToInsure");
                         this.ActivateInsurance(ApprovalToInsure)
                     }
@@ -1735,6 +1736,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
         if (ApprovalToInsure == "Yes") 
         {
+            SessionLocator.SelectedSession.StartBusyIndicatorSaving();
             var msg = new MessageWindow();
             msg.RTL = true;
          
@@ -1745,11 +1747,10 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
                     var IsMatchUnifreightCallbackCommand = (
                         mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                        mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
+                        mess.LogitudeEntityNumber == this.SupplierInvoicePM.DeclarationId &&
                         mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ActivateInsurance");
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
-                        SessionLocator.SelectedSession.StopBusyIndicator();
 
                         let InsuranceAmount = ""; InsuranceAmount = UnifreightMessageM.GetStringValue(mess, "InsuranceAmount");
                         let InsuranceCurrency = ""; InsuranceCurrency = UnifreightMessageM.GetStringValue(mess, "InsuranceCurrency");
@@ -1782,19 +1783,22 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                                 this.SupplierInvoicePM.AddSupplierInvoiceModification(item);
                             }
                              this._SupplierInvoicePMService.update(this.SupplierInvoicePM).subscribe((response: ServiceResponse) => {
-            
+                                SessionLocator.SelectedSession.StopBusyIndicator();
+
                              });    
 
 
                            
                         }
                         else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
+                            SessionLocator.SelectedSession.StopBusyIndicator();
 
                             var InsuranceOpenNum = TextCodeTranslator.Translate("Customs.Declaration.O.InsuranceOpenNum");
                             var CompletedUnifreight = TextCodeTranslator.Translate("Customs.Declaration.O.CompletedUnifreight");
                             msg.Show(InsuranceOpenNum + `' ` + InvoiceNumber + `, ` + CompletedUnifreight);
                         }
                         else {
+                            SessionLocator.SelectedSession.StopBusyIndicator();
 
                             var OpenInsuranceFailed = TextCodeTranslator.Translate("Customs.Declaration.O.OpenInsuranceFailed");
                             msg.Show(OpenInsuranceFailed);
