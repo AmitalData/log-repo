@@ -1579,7 +1579,9 @@ After that Remove file  from DCA  .. ");
             bool explictStopAndWrite = false;
             try
             {
-                    var serverTime = TenantServerConfigration.GetCurrentDateTime(_Tenant);//DateTime.Now;20150909
+                LogMessagingUtil.Instance.AppendLine("EndStepWithoutTransactionScope");
+
+                var serverTime = TenantServerConfigration.GetCurrentDateTime(_Tenant);//DateTime.Now;20150909
                 CommunicationLogStep communicationLogStep = GetCommunicationLogStep();
                 communicationLogStep.Retries++;
                 //communicationLogStep.Status = stepStatusEnum.ToString();
@@ -1766,6 +1768,8 @@ After that Remove file  from DCA  .. ");
                 {
                     if (requestSheetParam != null)
                     {
+                        LogMessagingUtil.Instance.AppendLine(" (requestSheetParam != null)");
+
                         this.UpdateConnectedEntitys(requestSheetParam);
                     }
                     explictStopAndWrite = EndStepWithoutTransactionScope(memstream, stepStatusEnum);
@@ -1788,10 +1792,14 @@ After that Remove file  from DCA  .. ");
                 //return EndStepToContinue(false);
                 if (toContinueNextCommand)
                 {
+                    LogMessagingUtil.Instance.AppendLine("if (toContinueNextCommand)2");
+
                     return true;
                 }
                 if (raiseDifferentWR)
                 {
+                    LogMessagingUtil.Instance.AppendLine("if (raiseDifferentWR)2");
+
                     var raiseDifferentWRexc = new CustomsRequestsSheetDomainModelServiceException(
                 CustomsRequestsSheetDomainModelServiceException.WhereEnum.ReuestSheet,
                 CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue, "EndStep():RequestParams.!SuppressSplitWR but CurrentWR.Value != _StartCustomsCommand ", null);
@@ -1831,6 +1839,8 @@ After that Remove file  from DCA  .. ");
                                 break;
                             case SignMethodByQueueEnum.HSMSignQueue:
                                 {
+                                    LogMessagingUtil.Instance.AppendLine("case SignMethodByQueueEnum.MemorySignQueue:" + signMethodBy);
+
                                     var signQueueHSMDBService = new CreateSignQueueHSMDBService();
                                     signQueueHSMDBService.CreateQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);
                                 }
@@ -1841,6 +1851,7 @@ After that Remove file  from DCA  .. ");
                             case SignMethodByQueueEnum.MemorySignQueue:
                             default:
                                 {
+                                    LogMessagingUtil.Instance.AppendLine("case SignMethodByQueueEnum.MemorySignQueue:" + signMethodBy);
 
                                     var signQueueWebFormUrl = SignQueue.Instance
                                         .GetSignQueueWebFormUrl(
@@ -1871,12 +1882,16 @@ After that Remove file  from DCA  .. ");
                                 }
                                 break;
                         }
-                        
+                        LogMessagingUtil.Instance.AppendLine("end create sign step...");
+
                         createSBQMessage = false;
+                        return true;
                     }
                 }
                 if (createSBQMessage)
                 {
+                    LogMessagingUtil.Instance.AppendLine("if (createSBQMessage)");
+
                     SBQMessageService.CreateBasic<CustomsCommandEnum>(
                             nxtCustomsCommandEnum,
                             this.MyCustomsRequestsSheetPM.Tenant,
