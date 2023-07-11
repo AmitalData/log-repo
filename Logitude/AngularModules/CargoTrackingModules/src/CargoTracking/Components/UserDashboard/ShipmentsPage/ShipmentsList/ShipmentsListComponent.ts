@@ -158,7 +158,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             StartwithoutSpeicalCharCustomers=StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);  
             this.InvitedCustomers=StartwithSpeicalCharCustomers.concat(StartwithoutSpeicalCharCustomers);
             this.FillInvitedCustomersDictionary(this.InvitedCustomers);
-            this.InvitedCustomers.forEach(val => this.tempInvitedCustomers.push(val));
     }
 
     FillInvitedCustomersDictionary(InvitedCustomers: any[]) {
