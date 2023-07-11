@@ -8,7 +8,7 @@ import { Component, Input, AfterViewInit, OnInit, ChangeDetectorRef, EventEmitte
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
 import { ContactPMService } from '../../../Common/Services/StandardPMs/ContactPMService';
 import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
-declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload, ArrayBufferToBase64: any;
+declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload, ArrayBufferToBase64, window: any;
 
 @Component({
 
@@ -18,7 +18,7 @@ declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload, Array
   inputs: ['EntityId', 'ImageId', "EntityName",
   'ImageId', 'WidthImage', 'HeightImage', 'ImageResizeWidth',
    'ImageResizeHeight', 'HideBorder', 'DisplayOnly',
-   'ConversationHeaderId','KeepOriginalSize','Extension', 'ValidWidth', 'ValidHeight','SecondValidWidth','SecondValidHeight'],
+   'ConversationHeaderId','KeepOriginalSize','Extension', 'ValidWidth', 'ValidHeight','SecondValidWidth','SecondValidHeight', 'LinkUrl'],
   providers: [ImageLibraryService],
 })
 
@@ -69,6 +69,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
   IsShowSocialMessageAreaImage3: boolean = true;
   IsShowSocialMessageAreaImage4: boolean = true;
   KeepOriginalSize:boolean=false;
+  LinkUrl: string = '';
 
   @Output() UploadCompleted: EventEmitter<any> = new EventEmitter();
   @Output() ImageDimensionsValid: EventEmitter<any> = new EventEmitter();
@@ -194,7 +195,11 @@ export class ImageComponent implements AfterViewInit, OnInit {
     if (!this.DisplayOnly) {
       document.getElementById(this.ImageFileHtmlId).click();
     }
+  }
 
+  openUrl() {
+    if(this.LinkUrl)
+      window.open(this.LinkUrl);
   }
   
   FileChanged(event: any) {

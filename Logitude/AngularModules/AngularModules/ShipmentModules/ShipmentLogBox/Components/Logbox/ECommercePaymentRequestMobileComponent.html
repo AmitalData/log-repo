@@ -149,7 +149,8 @@
                                                 </td>
                                                 <td style="height: 55px;width:10px;"></td>
                                                 <td style="height: 55px;width:150px">
-                                                    <img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;width:150px" />
+                                                    <ImageComponent *ngIf="comapnylogoId" style="vertical-align:top" [DisplayOnly]="true" [HideBorder]="true" [ImageId]="comapnylogoId"[LinkUrl]='logoUrl'></ImageComponent>
+                                                    <img *ngIf="!comapnylogoId" [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;width:150px" />
                                                 </td>
                                             </tr>
                                         </table>
@@ -299,7 +300,7 @@
                                                             </td>
                                                             <td>
                                                                 <label style="text-decoration: underline;color: lightskyblue;font-size:18px;" (click)="PaymentDetailsClick()">
-                                                                    פירוט עלויות
+                                                                    פירוט {{dsvStyle ? '' : 'עלויות'}}
                                                                 </label>
                                                             </td>
                                                         </tr>
@@ -396,7 +397,7 @@
                                                 <td>
                                                     <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:right;margin-right: 5px;direction: rtl;">
                                                         <LogCheckBox [IsDisabled]="ShowFinalMessage" [Checked]="IsAgreed" (ValueChanged)="IsAggreeChicked($event)" [ObjectFieldName]="'IsAggree'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
-                                                        <label style="margin-right:-10px;font-size:13px;font-family:sans-serif;" class="TextTrimming">אני מאשר\ת את תנאי <span style="color:lightskyblue;text-decoration: underline;font-size:13px;" (click)="ViewAggreement()"> השירות</span> </label><br />
+                                                        <label style="margin-right:-10px;font-size:13px;font-family:sans-serif;" class="TextTrimming">אני מאשר\ת את {{dsvStyle ? 'הסכם' : 'תנאי'}} <span style="color:lightskyblue;text-decoration: underline;font-size:13px;" (click)="ViewAggreement()"> השירות</span> </label><br />
                                                     </div>
                                                 </td>
                                             </tr>
@@ -408,7 +409,28 @@
                                             <tr style="height:24px;">
                                                 <td>
                                                     <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:right;padding-right: 20px;direction: rtl;">
-                                                        <label style="margin-right:-10px;font-size:13px;font-family:sans-serif;" class="TextTrimming">לבירורים בנושא עלויות או כל מידע נוסף אודות המשלוח <a style="color:lightskyblue;font-size:13px;" href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a></label><a *ngIf="ShowWhatsAppIcon" href="https://wa.me\/{{WhatsAppMessagingNumber}}?text=יש לי שאלה לגבי המיסים במשלוח {{Hawb}}" target="_blank"><img style="width:26px; margin-right:22px;" src="./Images/Icons/WhatsApp.png" /></a><br /><!--<span style="text-decoration: underline;color: lightskyblue;">לחץ כםן</span>-->
+                                                        <span *ngIf="!dsvStyle" style="margin-right:-10px;margin-left: 10px;font-size:13px;font-family:sans-serif;" class="TextTrimming">
+                                                            לבירורים בנושא עלויות או כל מידע נוסף אודות המשלוח
+                                                            <a style="color:lightskyblue;font-size:13px;"
+                                                                href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
+                                                        </span>
+                                                        
+                                                        <span *ngIf="dsvStyle" style="font-size:13px;font-family:sans-serif;" class="TextTrimming">
+                                                            <span>לבירורים בנושא עלויות או כל מידע נוסף אודות המשלוח</span>
+                                                            <br>
+                                                            <span>
+                                                                יצירת קשר במייל
+                                                                <a style="color:lightskyblue;font-size:13px;"
+                                                                href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
+                                                                , יצירת קשר ב WhatsApp --> 
+                                                            </span>
+                                                        </span>
+
+                                                        <a *ngIf="ShowWhatsAppIcon"
+                                                            href="https://wa.me\/{{WhatsAppMessagingNumber}}?text=יש לי שאלה לגבי המיסים במשלוח {{Hawb}}" target="_blank">
+                                                            <img style="width:26px;" src="./Images/Icons/WhatsApp.png" />
+                                                        </a>
+                                                        <br /><!--<span style="text-decoration: underline;color: lightskyblue;">לחץ כםן</span>-->
                                                     </div>
                                                 </td>
                                             </tr>
@@ -440,6 +462,18 @@
                                                 <td style="direction:rtl;text-align:center;">
                                                     <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;word-wrap: break-word;white-space: normal;">
                                                         {{FinalMessage}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="comapnylogoId">
+                                                <td style="text-align:center;top: 40px;">
+                                                    <ImageComponent style="width: 200px;display: inline-block;height: 70px;" [DisplayOnly]="true" [HideBorder]="true" [ImageId]="comapnylogoId"[LinkUrl]='logoUrl'></ImageComponent>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="dsvStyle">
+                                                <td style="text-align:center;top: 40px;">
+                                                    <span style="font-size:15px;color:black;font-family:sans-serif;white-space: normal;margin-top: 40px;width: 80%;display: inline-block;">
+                                                        חברת די אס וי שירותי עמילות מכס ביבוא אישי                                           
                                                     </span>
                                                 </td>
                                             </tr>
@@ -552,6 +586,11 @@
                                         <span style="font-family: sans-serif; font-size: 20px;">סה"כ בש"ח</span>
                                         <span style="font-weight: bold; margin-right: 20px; font-family: sans-serif; font-size: 20px;">{{TotalAmount | CustomNumbersPipe:0}}</span>
                                     </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="comapnylogoId">
+                                <td colspan="100%" style="text-align:center;width: 100%;">
+                                        <ImageComponent style="width: 200px;display: inline-block;height: 70px;" [DisplayOnly]="true" [HideBorder]="true" [ImageId]="comapnylogoId"[LinkUrl]='logoUrl'></ImageComponent>
                                 </td>
                             </tr>
                             <tr>

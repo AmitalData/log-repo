@@ -739,6 +739,17 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
+        public HttpResponseMessage GetLogoAndUrlWithoutToken(string securityKey)
+        {
+            int? tenantNumber = new ShipmentQuery(0).GetTenantBySecurityKey(securityKey);
+            if (tenantNumber == null) 
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "tenant not found");
+
+            var tenantManagement = new TenantManagementQuery().GetSinglePM(tenantNumber.Value);
+
+            return Request.CreateResponse(new { url = tenantManagement.LogoURL, logo = tenantManagement.ComapnylogoId });
+        }
+
         private static void AddWhatsAppMessagingPhoneNumberToResponseHeader(int tenant)
         {
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
