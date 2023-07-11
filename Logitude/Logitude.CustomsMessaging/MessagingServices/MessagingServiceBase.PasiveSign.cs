@@ -49,6 +49,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         
         private bool CustomsCommandSign(TCustomsRequest customsRequest)
         {
+            LogMessagingUtil.Instance.AppendLine("CustomsCommandSign");
+
             var toContinueNextCommand = true;
             var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>();
             RequestParams = requestParams;
@@ -74,6 +76,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             byte[] customRequestSignedByteArry = null;
             if (_CustomsRequestsSheetService.StartCustomsRequestStepEnum > CustomsStepEnum.CustomRequestSign)
             {
+                LogMessagingUtil.Instance.AppendLine("if (_CustomsRequestsSheetService.StartCustomsRequestStepEnum > CustomsStepEnum.CustomRequestSign):" + _CustomsRequestsSheetService.StartCustomsRequestStepEnum);
 
                 customRequestSignedByteArry = _CustomsRequestsSheetService.GetCustomsRequestSign();
                 if (customRequestSignedByteArry == null)
@@ -88,6 +91,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     SetRequestSheetContextCurrentX509Certificate(customRequestSignedByteArry);
                     //_CustomRequestSignedByteArry = customRequestSignedByteArry;
+                    
                     return toContinueNextCommand;
                 }
             }
@@ -189,9 +193,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
             else if (_SignRecievedModel != null)
             {
 
-                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-     .AppendLine("else if (_SignRecievedModel != null)");
-                DateTime startAtD = DateTime.MinValue;
+                 Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
+     .AppendLine("else if (_SignRecievedModel != null):" + _SignRecievedModel.CustomsRequestsSheetId);
+
+ 
+
+                 DateTime startAtD = DateTime.MinValue;
                 SignQueue.Instance.GetStartAt(requestParams.Tenant, requestParams.CustomsRequestsSheetId, out startAtD);
                 if (startAtD != DateTime.MinValue)
                 {
@@ -204,6 +211,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ;
                 if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskQueueId))
                 {
+                    LogMessagingUtil.Instance.AppendLine("if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskQueueId))");
+
                     var queueservice = new Server.Tools.QueueService.DbQueueService("How Care ", requestParams.Tenant);
                     if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskMarkAsFailedMessage))
                     {
@@ -315,12 +324,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)
                         {
+                            LogMessagingUtil.Instance.AppendLine("if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)");
+
                             SignQueue.Instance.Remove(requestParams.Tenant, requestParams.CustomsRequestsSheetId);
                         }
                     };
                 }
                 else
                 {
+                    LogMessagingUtil.Instance.AppendLine("Transaction.Current == null ??? can not remove  SignQueue.Instance.Remove !!!");
+
                     throw new Exception("Transaction.Current == null ??? can not remove  SignQueue.Instance.Remove !!!");
                 }
             }
@@ -333,6 +346,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 else
                 {
+                    LogMessagingUtil.Instance.AppendLine("TaskSignIt");
+
                     customRequestSignedByteArry = TaskSignIt(requestParams.Tenant, customsRequest); //no catch exeption -rethrow
                 }
                 
