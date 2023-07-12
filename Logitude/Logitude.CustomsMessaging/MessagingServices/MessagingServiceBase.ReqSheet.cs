@@ -347,6 +347,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private TResponseData SendSheet()
         {
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("SendSheet22::" + Environment.StackTrace);
+
             if (_CustomsRequestsSheetService == null)
             {
                 throw new Exception("SendSheetStateMachine():(_CustomsRequestsSheetService == null)");
