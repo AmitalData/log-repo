@@ -21,6 +21,7 @@ using System.Transactions;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
 using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.BL.CommonDataModel.EntityQueries;
 /*using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;*/
@@ -202,7 +203,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             else
             {
-                if(!string.IsNullOrWhiteSpace(entityPM.ClasifiedRemarks))
+                FeatureQuery featureQuery = new FeatureQuery();
+                var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
+                var feature = features.Features.FirstOrDefault(x => x.Code == "REFERANTWORKSPACE");
+                if (!string.IsNullOrWhiteSpace(entityPM.ClasifiedRemarks)  && feature!=null)
                 {
                     DeclarationReferantDataUpdate(entityPM);
                 }
