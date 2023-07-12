@@ -16,5 +16,7 @@ namespace Logitude.Accounting.BL.DataContract
         public decimal ForeignAmount { get; set; }
         public decimal LocalAmount { get; set; }
         public string CurrencyId { get; set; }
+        public int IT_JlineNumber { get; set; }
+        public int JournalLineNumber { get; set; }
     }
 }

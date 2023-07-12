@@ -369,7 +369,35 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 InterestTransactionUniqueConstraintFields uniqueConstraintFields_current;
 
-                                if ((journalLine.ActionCode == "2" || journalLine.ActionCode == "3") && itLine.CreditAmount != 0m && journalLine.CreditAccountId == itLine.GLAccountId
+                                if (journalLine.Line == itLine.JournalLineNumber && (journalLine.ActionCode == "2" || journalLine.ActionCode == "3") && itLine.CreditAmount != 0m && journalLine.CreditAccountId == itLine.GLAccountId
+                                         && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
+                                //   && (!firstDuplicateFound || journalLine.LocalAmount == itLine.CreditAmount))
+                                {
+                                    uniqueConstraintFields_current = new InterestTransactionUniqueConstraintFields()
+                                    {
+                                        GLAccountId = itLine.GLAccountId,
+                                        Tenant = tenant,
+                                        InterestEntityTypeCode = "3", //(Journal)
+                                        EntityId = journalLine.JournalId,
+                                        OriginalEntityLineNumber = journalLine.Line,
+                                        ForeignAmount = 0m,// itLine.ForeignAmount,
+                                        LocalAmount = 0m,// itLine.LocalAmount,
+                                        CurrencyId = itLine.CurrencyId,
+                                        IT_JlineNumber = itLine.JournalLineNumber,
+                                        JournalLineNumber = journalLine.Line,
+                                    };
+                                    InterestTransactionUniqueConstraintFields x = _itjlCache.FirstOrDefault(f => f.GLAccountId == uniqueConstraintFields_current.GLAccountId && f.Tenant == uniqueConstraintFields_current.Tenant
+                                    && f.InterestEntityTypeCode == uniqueConstraintFields_current.InterestEntityTypeCode && f.OriginalEntityLineNumber == uniqueConstraintFields_current.OriginalEntityLineNumber
+                                    && f.EntityId == uniqueConstraintFields_current.EntityId && f.JournalLineNumber == uniqueConstraintFields_current.JournalLineNumber);
+                                    if (x == null)
+                                    {
+                                        lineFound = true;
+                                        jlPM = journalLine;
+                                        break;
+                                    }
+                                }
+
+                                else if ((journalLine.ActionCode == "2" || journalLine.ActionCode == "3") && itLine.CreditAmount != 0m && journalLine.CreditAccountId == itLine.GLAccountId
                                     && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference))) 
                                  //   && (!firstDuplicateFound || journalLine.LocalAmount == itLine.CreditAmount))
                                 {
@@ -383,11 +411,13 @@ namespace Logitude.Accounting.BL.CoreBL
                                         ForeignAmount = 0m,// itLine.ForeignAmount,
                                         LocalAmount = 0m,// itLine.LocalAmount,
                                         CurrencyId = itLine.CurrencyId,
+                                        IT_JlineNumber = itLine.JournalLineNumber,
+                                        JournalLineNumber = journalLine.Line,
                                     };
-                                    InterestTransactionUniqueConstraintFields x = _itjlCache.FirstOrDefault(f => f.GLAccountId == uniqueConstraintFields_current.GLAccountId && f.Tenant == uniqueConstraintFields_current.Tenant
+                                    InterestTransactionUniqueConstraintFields y = _itjlCache.FirstOrDefault(f => f.GLAccountId == uniqueConstraintFields_current.GLAccountId && f.Tenant == uniqueConstraintFields_current.Tenant
                                     && f.InterestEntityTypeCode == uniqueConstraintFields_current.InterestEntityTypeCode && f.OriginalEntityLineNumber == uniqueConstraintFields_current.OriginalEntityLineNumber
-                                    && f.EntityId == uniqueConstraintFields_current.EntityId);
-                                    if (x == null)
+                                    && f.EntityId == uniqueConstraintFields_current.EntityId && f.JournalLineNumber == uniqueConstraintFields_current.JournalLineNumber);
+                                    if (y == null)
                                     {
                                         lineFound = true;
                                         jlPM = journalLine;
@@ -408,11 +438,13 @@ namespace Logitude.Accounting.BL.CoreBL
                                         ForeignAmount = 0m,// itLine.ForeignAmount,
                                         LocalAmount = 0m,// itLine.LocalAmount,
                                         CurrencyId = itLine.CurrencyId,
+                                        IT_JlineNumber = itLine.JournalLineNumber,
+                                        JournalLineNumber = journalLine.Line,
                                     };
-                                    InterestTransactionUniqueConstraintFields y = _itjlCache.FirstOrDefault(f => f.GLAccountId == uniqueConstraintFields_current.GLAccountId && f.Tenant == uniqueConstraintFields_current.Tenant
+                                    InterestTransactionUniqueConstraintFields z = _itjlCache.FirstOrDefault(f => f.GLAccountId == uniqueConstraintFields_current.GLAccountId && f.Tenant == uniqueConstraintFields_current.Tenant
                                     && f.InterestEntityTypeCode == uniqueConstraintFields_current.InterestEntityTypeCode && f.OriginalEntityLineNumber == uniqueConstraintFields_current.OriginalEntityLineNumber
-                                    && f.EntityId == uniqueConstraintFields_current.EntityId);
-                                    if (y == null)
+                                    && f.EntityId == uniqueConstraintFields_current.EntityId && f.JournalLineNumber == uniqueConstraintFields_current.JournalLineNumber);
+                                    if (z == null)
                                     {
                                         lineFound = true;
                                         jlPM = journalLine;
@@ -448,6 +480,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                     ForeignAmount = itLine.ForeignAmount,
                                     LocalAmount = itLine.LocalAmount,
                                     CurrencyId = itLine.CurrencyId,
+                                    IT_JlineNumber = itLine.JournalLineNumber,
+                                    JournalLineNumber = jlPM.Line,
                                 };
                                 InterestTransactionPM itPM = itQueryService.GetTransactionByUniqueConstraintFields(uniqueConstraintFields);
                                 if (itPM != null)
@@ -730,6 +764,11 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
+
+            if (count > 9)
+            {
+                rec.JournalLineNumber = int.Parse(values[9]);
+            }
 
             return rec;
         }
