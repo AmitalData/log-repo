@@ -241,15 +241,12 @@
                                         <button id="{{'AddInvoiceLine' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled" class="Button" (click)="AddButtonClicked()">{{'APInvoice.B.AddLine' | TextCodeTranslationPipe}}</button>
                                     </td>
 
-                                    <td *ngIf="AllowVatTypes" style="width: 300px">
-                                        <table>
-                                            <tr>
 
                                                 <td>
                                                     <div></div>
                                                 </td>
 
-                                                <td [style.float]="isRTL ? 'left' : 'right'" style="width:285px;">
+                                                <td  *ngIf="AllowVatTypes" [style.float]="isRTL ? 'left' : 'right'" style="width:285px;">
                                                     <table>
                                                         <tr>
                                                             <td style="width: 1px;" class="Label">{{'APInvoice.S.Details.VatType' | TextCodeTranslationPipe}}:</td>
@@ -279,9 +276,6 @@
                                                     </table>
                                                 </td>
 
-                                            </tr>
-                                        </table>
-                                    </td>
 
                                 </tr>
                             </table>
