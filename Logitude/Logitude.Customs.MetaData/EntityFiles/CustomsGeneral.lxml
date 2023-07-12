@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;3225&quot;"
+  Code="&quot;a740&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5294,7 +5294,7 @@
     <TextCode
       Code="&quot;General.MH.CustomsReports&quot;"
       DefaultText="&quot;CustomsReports&quot;"
-      LocalDefaultText="&quot;דוחות&quot;"
+      LocalDefaultText="&quot;דוחות/פעולות&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
     <TextCode
