@@ -116,7 +116,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                                 if(myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                                 {
                                     
-                                    if (this._MyDeclarationPM.IsCourierDeclaration)
+                                    if (this._MyDeclarationPM.IsCourierDeclaration || this._MyDeclarationPM.UNFCourier)
                                     {
                                         var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
                                         updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
@@ -303,7 +303,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             {
                 AppendLogLine($"this._LogitudeDocs.COM_ID is null nothing done ");
             }
-            if (this._MyDeclarationPM.IsCourierDeclaration)
+            if (this._MyDeclarationPM.IsCourierDeclaration || this._MyDeclarationPM.UNFCourier)
             {
                 var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
                 updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);

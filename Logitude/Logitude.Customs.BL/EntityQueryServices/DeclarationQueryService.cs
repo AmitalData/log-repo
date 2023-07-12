@@ -495,6 +495,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
             return repository.GetIdByCustomFileNo(customFileNo, tenant);
         }
+        public string GetIdByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(ExternalEntityReference)) return "";
+            return repository.GetIdByCustomFileNoOrExportFile(ExternalEntityReference, tenant);
+        }
 
         public string GetIdByCustomFileNoAndAmendmentDontDisplayInList(string customFileNo, int tenant , bool AmendmentDontDisplayInList)
         {
