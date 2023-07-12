@@ -30,6 +30,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public Nullable<CustomsCommandEnum> CurrentCustomsCommandWR {get;set;}
         private TResponseData SendSheet(CustomsCommandEnum currentWR)
         {
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("SendSheet33::" + Environment.StackTrace);
+
             if (_CustomsRequestsSheetService == null)
             {
                 throw new Exception("SendSheetStateMachine():(_CustomsRequestsSheetService == null)");

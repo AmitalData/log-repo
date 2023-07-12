@@ -184,12 +184,16 @@ where not exists(select *
 
                         using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
                         {
+                            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("HSM:using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransactio");
+
                             _CustomDBQueueMessage = _CustomDbQueueService.Receive(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
                             scopeRecive.Complete();
                         }
 
                         if (_CustomDBQueueMessage == null || String.IsNullOrWhiteSpace(_CustomDBQueueMessage.MessageId))
                         {
+                            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("if (_CustomDBQueueMessage == null || String.IsNullOrWhiteSpace(_CustomDBQueueMessage.MessageId");
+
                             QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "Sleep...");
                             scope.Complete();
                             Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
@@ -198,6 +202,8 @@ where not exists(select *
 
                         if (_CustomDBQueueMessage.Retries>10)
                         {
+                            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("if (_CustomDBQueueMessage.Retries>10)");
+
                             _CustomDBQueueMessage.SafeComplete();
                             scope.Complete();
                             continue;
@@ -309,6 +315,8 @@ where not exists(select *
                 var responseDataBase = (responseData as Logitude.CustomsMessaging.Common.ResponseData.ResponseDataBase);
                 if (responseDataBase?.HasException == true)
                 {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("(responseDataBase?.HasException == true");
+
                     //stringBuilder.AppendLine($"SendSheet:HandleException:{responseDataBase.UserMessage}");
                     ExceptionHandler.HandleException(new Exception(message: responseDataBase.UserMessage), DateTime.Now, _Tenant, "", "ProccessHSMSign-SignTaskAsDone", "", null);
                 }

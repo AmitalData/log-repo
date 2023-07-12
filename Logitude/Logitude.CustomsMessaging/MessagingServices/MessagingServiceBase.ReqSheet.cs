@@ -280,6 +280,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public object SendSheet(int tenant, string customsRequestsSheetId,
             SendSheetSignModel mySendSheetSignModel = null)
         {
+
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("SendSheet::" + Environment.StackTrace);
+
             //CustomsRequestsSheetService<TRequestParams> customsRequestsSheetService;
             try
             {
@@ -344,6 +347,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private TResponseData SendSheet()
         {
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("SendSheet22::" + Environment.StackTrace);
+
             if (_CustomsRequestsSheetService == null)
             {
                 throw new Exception("SendSheetStateMachine():(_CustomsRequestsSheetService == null)");
