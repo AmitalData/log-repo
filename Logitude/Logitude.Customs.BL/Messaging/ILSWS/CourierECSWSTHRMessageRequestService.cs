@@ -172,6 +172,15 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             {
                 importerVat = myDeclarationPM.ImporterCode;
             }
+
+            if( importerVat.StartsWith("P", StringComparison.OrdinalIgnoreCase)) {
+
+                importerVat = "";
+            }
+
+
+
+
             string SwissportSuspendedCode = "";
             var courierPendingReasonRepository = new CourierPendingReasonRepository(myDeclarationPM.Tenant);
             var courierPendingListWithSwissportSuspendedCode = courierPendingReasonRepository.GetPendingReasonsWithSwissportSuspendedCode(myDeclarationPM.Tenant);
