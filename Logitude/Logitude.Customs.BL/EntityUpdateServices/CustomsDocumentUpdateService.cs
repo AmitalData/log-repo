@@ -717,10 +717,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 if (String.IsNullOrWhiteSpace(declarationId))//move up ??
                 {
-                    if (entityPM.ExternalEntityName == "CFIFILEM" && !string.IsNullOrWhiteSpace(entityPM.ExternalEntityReference))
+                    if ((entityPM.ExternalEntityName == "CFIFILEM" || entityPM.ExternalEntityName == "EFIFILEM") && !string.IsNullOrWhiteSpace(entityPM.ExternalEntityReference))
                     {
                         var declarationQueryService = new DeclarationQueryService(customContext);
-                        declarationId = declarationQueryService.GetIdByCustomFileNo(entityPM.ExternalEntityReference, entityPM.Tenant);
+                        declarationId = declarationQueryService.GetIdByCustomFileNoOrExportFile(entityPM.ExternalEntityReference, entityPM.Tenant);
                     }
                 }
                 //if (String.IsNullOrWhiteSpace(declarationId))
