@@ -206,6 +206,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     House = shipment.House,
                     ChargeableWeightInKG = shipment.ChargeableWeightInKG,
                     ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode,
+                    ChargeableWeight = shipment.ChargeableWeight,
+
                     PackagesQuantity = shipment.PackagesQuantity,
                     CurrentMilestoneDate = shipment.CurrentMilestoneDate,
                     TransportModeId = shipment.TransportModeId,
@@ -714,6 +716,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 House = shipment.House,
                 ChargeableWeightInKG = shipment.ChargeableWeightInKG,
                 ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode,
+                ChargeableWeight = shipment.ChargeableWeight,
+
                 PackagesQuantity = shipment.PackagesQuantity,
                 CurrentMilestoneDate = shipment.CurrentMilestoneDate,
                 TransportModeId = shipment.TransportModeId,
