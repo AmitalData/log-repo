@@ -84,6 +84,27 @@
                                                     <CheckBox [IsChecked]="IsEquipment" (Checked)="IsEquipment = $event"></CheckBox>
                                                 </td>
                                            </tr>
+
+                                            <!-- Branch -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'BranchId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="BranchId"
+                                                            [LookUpTableName]="'Branch'">
+                                                    </LogLov>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
                                         </table>
                                     </td>
 
@@ -174,7 +195,7 @@
                                                     <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="AccountingDate" [InputType]="'date'" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
-                                            
+
                                         </table>
                                     </td>
 
@@ -220,15 +241,12 @@
                                         <button id="{{'AddInvoiceLine' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled" class="Button" (click)="AddButtonClicked()">{{'APInvoice.B.AddLine' | TextCodeTranslationPipe}}</button>
                                     </td>
 
-                                    <td *ngIf="AllowVatTypes" style="width: 300px">
-                                        <table>
-                                            <tr>
-                                                
+
                                                 <td>
                                                     <div></div>
                                                 </td>
 
-                                                <td [style.float]="isRTL ? 'left' : 'right'" style="width:285px;">
+                                                <td  *ngIf="AllowVatTypes" [style.float]="isRTL ? 'left' : 'right'" style="width:285px;">
                                                     <table>
                                                         <tr>
                                                             <td style="width: 1px;" class="Label">{{'APInvoice.S.Details.VatType' | TextCodeTranslationPipe}}:</td>
@@ -257,10 +275,7 @@
                                                         </tr>
                                                     </table>
                                                 </td>
-                                                
-                                            </tr>
-                                        </table>
-                                    </td>
+
 
                                 </tr>
                             </table>
