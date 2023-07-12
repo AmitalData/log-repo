@@ -29,6 +29,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public (byte[], RequestParamsBase) PasiveSignGetBytesToSign(int tenant, string CustomsRequestsSheetId)
         {
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("PasiveSignGetBytesToSign");
 
             TRequestParams defaultRequestParamsFromCustomsResponse = null;
             defaultRequestParamsFromCustomsResponse = new TRequestParams();

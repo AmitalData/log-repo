@@ -752,6 +752,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
         CustomsRequestsSheetDomainModelService(string customsRequestsSheetId, int tenant, OverrideControllerModel debugModel = null,string parentId=null)
             : this(tenant, debugModel)//,requestParams.InterfaceTypeCode )
         {
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("Seed1  ");
 
             try
             {
@@ -877,6 +878,7 @@ CommunicationLogSteps.CommunicationLogId= CommunicationLogs.id
             customsRequestsSheetService = null;
             try
             {
+                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("Seed2");
 
                 Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetService Retrive():customsRequestsSheetId  " + customsRequestsSheetId);
 
