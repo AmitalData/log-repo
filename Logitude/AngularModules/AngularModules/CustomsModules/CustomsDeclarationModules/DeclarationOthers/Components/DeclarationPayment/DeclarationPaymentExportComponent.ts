@@ -1665,7 +1665,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         if (this.DeclarationPM.DeclarationTypeCode == "2") {
             this.declarationMessagesService.PostSendExportPaymentOnly(params)
                 .subscribe(res1 => {
-                    if(!res1.HasError){
+                    if(!res1?.Result?.HasException){
                       this.InspectionRequest();
                     }
                 });

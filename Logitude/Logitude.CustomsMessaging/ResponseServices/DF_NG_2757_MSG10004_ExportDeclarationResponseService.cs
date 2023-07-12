@@ -187,7 +187,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.UserMessage = GetExceptionMsg(customResponse.ResponseContentHeader.Exception[0]);
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
-                this.MyResponseData.HasException = false;
+                this.MyResponseData.HasException = true;
 
                 return;
 
@@ -198,7 +198,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.UserMessage = "Can not find declaration- DeclarationNumber: " + customResponse.Response.Declaration.ID.Value + " ExternalDeclarationNumber: " + customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value;
-                return;
+				this.MyResponseData.HasException = true;
+
+				return;
             }
 
 
@@ -213,7 +215,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.UserMessage = "Can not find declaration" + requestParams.AppicationId;
-                return;
+				this.MyResponseData.HasException = true;
+
+				return;
             }
             setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
             if (this._MyDeclarationPM.PaymentDate.HasValue)
