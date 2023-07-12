@@ -256,7 +256,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IsOrder", 'Text', 'Is Order'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("NumberOfPackages", 'Integer', 'Quantity'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IncotermName", 'Text', 'Incoterm'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ChargeableWeight", 'Double', 'Chargeable Weight'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ChargeableWeight", 'Double', 'Chargeable Weight',100));
 
     }
 
