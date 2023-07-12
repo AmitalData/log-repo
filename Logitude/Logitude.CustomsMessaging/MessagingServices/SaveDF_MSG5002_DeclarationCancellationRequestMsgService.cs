@@ -18,9 +18,9 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
 using UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference;
 using RequestHeader = UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.RequestHeader;
-using ESBRequestSigned = UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.ESBRequestSigned;
 using Logitude.CustomsMessaging.FakeMessagingServices;
 using UnifreightIIG.Common.DeclarationCancellationRequestMsgServiceReference;
+using ESBRequestSigned = UnifreightIIG.Common.DeclarationCancellationRequestMsgServiceReference.ESBRequestSigned;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -120,21 +120,18 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
 
             exceptionMessage = null;
+
             var response = new INF_MSG_Generic();
-
-            // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
-
-
-            //using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
-            //{
-            //    _ResponseHeader = uifreightSdkGateway.GetChannel<IImportDeclarationSign>()
-            //        .ImportDeclarationSign(
-            //        this.RequestsSheetExternalId,
-            //        base.CustomsSetting.CustomsAgentId,
-            //        //new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry ,  },
-            //        ref this._IIGGatewayMoreParams,
-            //        out response);
-            //}
+            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            {
+                _ResponseHeader = uifreightSdkGateway.GetChannel<IDeclarationCancellationRequestMsgOperation>()
+                    .DeclarationCancellationRequestMsgSign(
+                    this.RequestsSheetExternalId,
+                    base.CustomsSetting.CustomsAgentId,
+                    new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry, },
+                    ref this._IIGGatewayMoreParams,
+                    out response);
+            }
 
 
             return response;
