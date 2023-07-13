@@ -203,9 +203,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             else
             {
-                FeatureQuery featureQuery = new FeatureQuery();
+                ICommonDataContext myContext = CommonDataContext.GetContext(entityPM.Tenant);
+                FeatureRepository myFeatureRepository = new FeatureRepository(myContext);
+                FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
                 var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
                 var feature = features.Features.FirstOrDefault(x => x.Code == "REFERANTWORKSPACE");
+
                 if (!string.IsNullOrWhiteSpace(entityPM.ClasifiedRemarks)  && feature!=null)
                 {
                     DeclarationReferantDataUpdate(entityPM);
