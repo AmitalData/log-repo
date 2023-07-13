@@ -24,6 +24,8 @@ using Logitude.Customs.BL.EntityDataMappings;
 using Logitude.BL.Security;
 using System.Data.Entity;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel;
 /*using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;*/
