@@ -307,7 +307,7 @@
                                                                                                     <CheckBox [DataCy]="'Enable Quotes Requests in Shared Logistics'" [IsEnabled]="IsSharedLogisticsActivated" [IsChecked]="IsQuotesRequestActivatedInSharedLogistics" (Checked)="IsQuotesRequestActivatedInSharedLogistics = $event"></CheckBox>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Enable Quotes Requests in Shared Logistics</div>
+                                                                                                    <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Enable Quotes Requests in {{SharedTitleType == 'CargoTracking' ? 'Cargo Tracking' : 'Shared Logistics'}}</div>
                                                                                                 </td>
                                                                                             </tr>
                                             

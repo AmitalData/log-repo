@@ -32,6 +32,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SearchFields { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public DateTime? InvitationDate { get; set; }
+        public DateTime? CargoTrackingInvitationDate { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public bool IsCustomer { get; set; }
@@ -99,7 +100,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("SharedLogisticsInvitationStatusCode")]
         public virtual SharedLogisticsInvitationStatus SharedLogisticsInvitationStatus { get; set; }
         public int? SharedLogisticsInvitationStatusCode { get; set; }
-
+        [ForeignKey("CargoTrackingInvitationStatusCode")]
+        public virtual SharedLogisticsInvitationStatus CargoTrackingInvitationStatus { get; set; }
+        public int? CargoTrackingInvitationStatusCode { get; set; }
         [ForeignKey("CollectorId")]
         public virtual User CollectorUser { get; set; }
         public string CollectorId { get; set; }
