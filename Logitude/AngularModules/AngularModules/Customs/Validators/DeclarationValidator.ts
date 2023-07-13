@@ -608,7 +608,7 @@ export class DeclarationValidator {
         if (this._DeclarationPM != null && this._DeclarationPM.SupplierInvoices.length > 0 && this._DeclarationPM.SupplierInvoices[0].SupplierInvoiceItems.length > 0) {
             var SourceclassificationCode = this._DeclarationPM.SupplierInvoices[0].SupplierInvoiceItems[0].ClassificationCodeSource;
             var classificationCode = this._DeclarationPM.SupplierInvoices[0].SupplierInvoiceItems[0].ClassificationCode;
-            if (SourceclassificationCode != classificationCode) {
+            if (SourceclassificationCode != classificationCode && !AppTool.IsNullOrEmpty(classificationCode)) {
                 if (classificationCode.toString().length > 11) {
                     this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
                 }
