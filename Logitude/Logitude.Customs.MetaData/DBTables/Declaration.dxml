@@ -1104,7 +1104,6 @@
       Nullable="false" />
   </Column>
   <Relation
-
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"

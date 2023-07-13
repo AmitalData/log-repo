@@ -206,6 +206,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          DealValue = a.DealValue,
                                                          DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : (!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
                                                          ReferentUserName = a.ReferentUser == null ? null : a.ReferentUser.Code,
+                                                         ReferentUserId = a.ReferentUserId,
                                                          EntitleImporterCountryName = a.EntitleImporterCountry.LocalName,
                                                          ExternalDeclarationNumber = a.ExternalDeclarationNumber,
                                                          HatraDate = a.HatraDate,

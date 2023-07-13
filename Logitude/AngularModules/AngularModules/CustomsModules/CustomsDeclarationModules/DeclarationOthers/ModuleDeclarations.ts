@@ -17,6 +17,7 @@ import { ExportDeclarationClosingDataComponent } from './Components/CloseDeclara
 import { DeclarationPaymentExportComponent } from './Components/DeclarationPayment/DeclarationPaymentExportComponent';
 import { DeclarationFiltersMenuComponent } from './Components/FiltersMenu/DeclarationFiltersMenuComponent';
 import { ExportStorageDeclerationComponent } from './Components/ExportStorageDecleration/ExportStorageDeclerationComponent';
+import { ExportFilterMenuComponent } from './Components/FiltersMenu/ExportFilterMenuComponent';
 
 
 
@@ -38,6 +39,7 @@ export const Components =
         LoadExcelSupplierInvoicesComponent,
         ExportDeclarationClosingDataComponent,
         DeclarationFiltersMenuComponent,
+        ExportFilterMenuComponent,
         ExportStorageDeclerationComponent
     ];
 
@@ -63,8 +65,9 @@ export class ModuleDeclarations {
             case "LoadExcelSupplierInvoicesComponent": { myResult = LoadExcelSupplierInvoicesComponent; break; }
             case "ExportDeclarationClosingDataComponent": { myResult = ExportDeclarationClosingDataComponent; break; }
             case "DeclarationFiltersMenuComponent": { myResult = DeclarationFiltersMenuComponent; break; }
-
             case "ExportStorageDeclerationComponent": { myResult = ExportStorageDeclerationComponent; break; }
+            case "ExportFilterMenuComponent": { myResult = ExportFilterMenuComponent; break; }
+
         }
 
         return myResult;
