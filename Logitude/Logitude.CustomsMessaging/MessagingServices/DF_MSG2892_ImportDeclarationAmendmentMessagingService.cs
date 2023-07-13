@@ -121,18 +121,18 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var response = new DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg();
 
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
-            
 
-            //using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
-            //{
-            //    _ResponseHeader = uifreightSdkGateway.GetChannel<IImportDeclarationSign>()
-            //        .ImportDeclarationSign(
-            //        this.RequestsSheetExternalId,
-            //        base.CustomsSetting.CustomsAgentId,
-            //        //new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry ,  },
-            //        ref this._IIGGatewayMoreParams,
-            //        out response);
-            //}
+
+            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            {
+                _ResponseHeader = uifreightSdkGateway.GetChannel<IImportDeclarationAmendmentOperation>()
+                    .ImportDeclarationAmendmentSign(
+                    this.RequestsSheetExternalId,
+                    base.CustomsSetting.CustomsAgentId,
+                    new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry ,  },
+                    ref this._IIGGatewayMoreParams,
+                    out response);
+            }
 
 
             return response;
