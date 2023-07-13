@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-		public const string HashString = "c0fe20541ab6a1ad6a468c59a85e8b49";
+		public const string HashString = "690472ce738b58faf6cfcfbce0312aa3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17353,6 +17352,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShortProcedure",
 					  						ListPropertyPath =  "ShortProcedure",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -21338,6 +21338,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOIsSendManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsSendManifest", DefaultText = "This field is intended for situations where it is required to field the statement without declaration data",LocalDefaultText = @"שדה זה מיועד למצבים בהם נדרש לשדה את ההצהרה ללא נתוני מצהר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOManifestwillnotsent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Manifestwillnotsent", DefaultText = "Manifest data will not be sent to customs",LocalDefaultText = @"נתוני מצהר לא ישלחו במסר הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Choose", DefaultText = "Choose",LocalDefaultText = @"בחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOStatusThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StatusThatSelected", DefaultText = "Status that selected",LocalDefaultText = @"סטטוסים שנבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODestantionThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DestantionThatSelected", DefaultText = "Destantion that selected",LocalDefaultText = @"יעדים שנבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterThatSelected", DefaultText = "Importer that selected",LocalDefaultText = @"יצואנים שנבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReferentsThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReferentsThatSelected", DefaultText = "Referents that selected",LocalDefaultText = @"רפרנטים שנבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOexportFilterMenu = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.exportFilterMenu", DefaultText = "Filters for multiple select",LocalDefaultText = @"מסננים לבחירה מרובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

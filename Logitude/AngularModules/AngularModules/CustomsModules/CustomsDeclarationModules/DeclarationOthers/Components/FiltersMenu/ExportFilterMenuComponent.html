@@ -1,0 +1,33 @@
+<ng-container *ngFor="let filter of filters; even as isEven; index as i">
+    <div *ngIf="isEven" class="row">
+        <ng-container [ngTemplateOutlet]="tpl" [ngTemplateOutletContext]="{ filter: filters[i] }"></ng-container>
+        <ng-container *ngIf="i + 1 != filters.length" [ngTemplateOutlet]="tpl" [ngTemplateOutletContext]="{ filter: filters[i+1] }"></ng-container>
+
+    </div>
+</ng-container>
+
+<div class="row-button">
+    <button class="Button" (click)="closeWindow()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+    <button class="RedButton" (click)="addFilters()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+</div>
+
+<ng-template #tpl let-filter="filter">
+    <MultiSelectLOV 
+        [DataContext]="filtersInputs" 
+        [PlaceHolder]="filter.placeHolder"
+        [LayoutDirection]="'rtl'"
+        [LOVListComponentPropName]="filter.dbField" 
+        [ChosenListHeader]="filter.chosenListHeader" 
+        [ButtonAddLabel]="'Customs.Declaration.O.Choose' | TextCodeTranslationPipe">
+        <span class="class-MultiSelectLOV-content">
+            <LogLov 
+                [ObjectFieldName]="filter.dbField" 
+                [ObjectTableName]="'Customs.Declaration'"
+                [DataContext]="this" 
+                [HideColumns]="true" 
+                [LookUpTableName]="filter.lookUpTableName" 
+                [DisplayMemberPath]="filter.lookupDisplayColumn">
+            </LogLov>
+        </span>
+    </MultiSelectLOV>
+</ng-template>

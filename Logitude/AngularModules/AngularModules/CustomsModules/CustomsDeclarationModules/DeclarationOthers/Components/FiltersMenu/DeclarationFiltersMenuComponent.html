@@ -1,5 +1,12 @@
 <table>
     <tr>
+        <td></td>
+        <td *ngIf="isExport" style="width: 140px;">
+            <button class="Button" style="width: 126px;" (click)="openFiltersWindow()">
+                {{titleExportFilterMenu}}
+                <img *ngIf="exportFilterData?.filterActive" width="20" height="20" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
+            </button>
+        </td>
         <td style="width:117px; vertical-align:middle;">
             <ul class="FiltersMenu">
                 <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')"
