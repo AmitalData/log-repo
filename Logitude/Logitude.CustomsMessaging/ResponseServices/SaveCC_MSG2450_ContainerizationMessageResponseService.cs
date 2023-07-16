@@ -65,6 +65,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _ContainerizationPM.ManifestNumber = null;
                     _ContainerizationPM.SecondCargoID = null;
                     _ContainerizationPM.ThirdCargoID = null;
+                    _ContainerizationPM.ExistInCustoms = null;
                     var myConsigmentQueryService = new ConsignmentQueryService(dbContext);
                     var consigmentPMs = myConsigmentQueryService.GetConsigmentByExportContainerizationID(containerizationID, requestParams.Tenant);
                     foreach (var item in consigmentPMs)
@@ -76,7 +77,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
                 else
-                {                   
+                {
+                    if (string.IsNullOrEmpty(_ContainerizationPM.ExistInCustoms)) { 
+                       var containerizationCargoID = (!string.IsNullOrEmpty(_ContainerizationPM.CargoTypeCode) ? (_ContainerizationPM.CargoTypeCode) : "")+ "-" + 
+                           (!string.IsNullOrEmpty(_ContainerizationPM.ManifestNumber) ? (_ContainerizationPM.ManifestNumber ) : "")+ "-" + 
+                           (!string.IsNullOrEmpty(_ContainerizationPM.SecondCargoID) ? (_ContainerizationPM.SecondCargoID ) : "")+ "-" + 
+                           (!string.IsNullOrEmpty(_ContainerizationPM.ThirdCargoID) ? (_ContainerizationPM.ThirdCargoID ) : "");
+                       
+                       _ContainerizationPM.ExistInCustoms = containerizationCargoID;
+                    }
                     _ContainerizationPM.ContainerizationStatus = "1";
                 }
 

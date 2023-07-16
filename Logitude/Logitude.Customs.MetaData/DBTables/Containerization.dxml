@@ -126,6 +126,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExistInCustoms"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ContainerizationStatus"
     ReferencedTable="ContainerizationStatusCodes"

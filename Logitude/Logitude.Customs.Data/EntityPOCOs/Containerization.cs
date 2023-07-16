@@ -70,6 +70,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string TransportModeId { get; set; }
 	      
         public virtual CustomsTransportMode CustomsTransportMode { get; set; }
+        [Column("ExistInCustoms")]
+	    public string ExistInCustoms { get; set; }
     }
 }
 	 

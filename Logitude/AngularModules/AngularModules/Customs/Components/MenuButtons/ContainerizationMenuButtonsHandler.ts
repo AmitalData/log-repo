@@ -303,7 +303,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         return params
     }
     CancelContainerizationMethod() {
-        if (AppTool.IsNullOrEmpty(this.EntityPM.ContainerizationStatus) || this.EntityPM.ContainerizationStatus == "4") {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.ExistInCustoms)) {
 
             if (AppTool.IsNullOrEmpty(this.EntityPM.ConnectedDeclarations))
             {

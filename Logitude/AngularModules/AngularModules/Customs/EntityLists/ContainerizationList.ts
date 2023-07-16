@@ -31,6 +31,7 @@ export class ContainerizationList {
 	SecondCargoID: string;
 	ThirdCargoID: string;
 	ContainerizationCargoID: string;
+	ExistInCustoms: string;
 	
 }
  
