@@ -843,8 +843,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                 });
                         }
                     });
-                    confirm.Show("אם לעדכן ספר מכס אוטונומיה לשורות עם שגיאה מס' 12195");
+                    confirm.Show("האם לעדכן ספר מכס אוטונומיה לשורות עם שגיאה מס' 12195");
 
+                }else{
+                    let window = new MessageWindow();
+                    window.Show("אין פרטי מכס לעדכון");
                 }
             });
         /*var args: any = {
