@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "259e6f6cce8a875ae9f718b52f3f9c95";
+		public const string HashString = "a3ff8c2c06aafe1e3371ee2ba75f5932";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1721,6 +1721,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExistInCustoms",
 					  						ListPropertyPath =  "ExistInCustoms",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2176,6 +2177,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ContainerizationTextCode_CustomsContainerizationOContainerizationChanged = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContainerizationChanged", DefaultText = "Containerization Changed",LocalDefaultText = @"בוצעו שינויים בהמכלה, יש לשדר פעם נוספת", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ContainerizationTextCode_CustomsContainerizationOContainerizationChangedRemainsOneDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContainerizationChangedRemainsOneDec", DefaultText = "Containerization Changed Remains One Declaration",LocalDefaultText = @"לא ניתן להמכיל הצהרה אחת , יש לבצע תיקונים בהצהרה במצב זה", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationODeleteLastDecInCon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.DeleteLastDecInCon", DefaultText = "It is not possible to cancel the last declaration in the container until a cancellation message is sent and a response is received from customs",LocalDefaultText = @"לא ניתן לבטל את ההצהרה האחרונה בהמכלה עד שלא ישלח מסר ביטול ויתקבל מענה מהמכס", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOCancelDecInCon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.CancelDecInCon", DefaultText = "Cancelling declaration in containerization",LocalDefaultText = @"ביטול הצהרה בהמכלה", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
