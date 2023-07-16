@@ -819,6 +819,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 {
                     supplierInvoiceItem.TransactionNatureCode = supplierInvioceExportDefault.TransactionNatureCode!="non"? supplierInvioceExportDefault.TransactionNatureCode: supplierInvoiceItem.TransactionNatureCode;
                     supplierInvoiceItem.ClaimReasonCode = supplierInvioceExportDefault.ClaimReasonCode!="non"? supplierInvioceExportDefault.ClaimReasonCode: supplierInvoiceItem.ClaimReasonCode;
+                    supplierInvoiceItem.ItemAdditionalStatus = supplierInvioceExportDefault.ClaimReasonCode != "non" || supplierInvioceExportDefault.TransactionNatureCode != "non"||supplierInvioceExportDefault.ProcessTypeCode != "non";
+
                     supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
 
                     if (supplierInvioceExportDefault.ProcessTypeCode != "non")

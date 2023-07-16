@@ -32,6 +32,7 @@ import { MultiUpdateOcrParams, SupplierInvioceItemCertificat } from 'Customs/Dat
 import { forEach } from 'cypress/types/lodash';
 import { SupplierInvioceItemCertificatsService } from 'Customs/Services/WebServices/SupplierInvioceItemCertificatsService';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     selector: 'OcrDefaultsSettingsComponent',
@@ -59,6 +60,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     private partyRelationshipCodeChecked: boolean = true
     private accountTypeCodeChecked: boolean = true
     FIELD_IS_REQUIERD: string;
+    public ProcessTypeCodeFilterItems: ApiQueryFilters;
 
     constructor() {
         super();
@@ -66,6 +68,9 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         this.CurrentSession.StartBusyIndicator('Loading...');
+        debugger
+        this.ProcessTypeCodeFilterItems = new ApiQueryFilters();
+       
         this.LoadDefaults();
 
     }
@@ -75,6 +80,9 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
             this.DeclarationPM = args.EntityPM;
             this.SupplierInvoiceComprehensiveUpdate = args.SupplierInvoiceComprehensiveUpdate;
             this.IsFromSupplierInvoice = args.IsFromSupplierInvoice
+        }
+        if (this.DeclarationPM.Direction == "E") {
+            this.ProcessTypeCodeFilterItems.addAdditionalFilter("LeadDocumentTypeID", this.DeclarationPM.DeclarationTypeCode, null, null, "Equals", false, false, false, "string",false,true);
         }
     }
     private LoadDefaults() {
