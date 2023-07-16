@@ -513,7 +513,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     private SaveQueryColumnsChanges(queryColumns: any, Param: any) {
         if (queryColumns == null) return;
-        
+
         if (AppTool.IsNullOrEmpty(queryColumns[0].UserId)) {
             this.InsertQueryColumns(queryColumns, Param);
             return;
@@ -541,7 +541,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
         myGeneralService.setServiceArgs(serviceArgs);
-        myGeneralService.insert(generalEntitiesArgs).subscribe((myResult: any) => {});
+        myGeneralService.insert(generalEntitiesArgs).subscribe((myResult: any) => { });
     }
 
     private UpdateQueryColumns(queryColumns: any, Param: any) {
@@ -563,7 +563,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
         myGeneralService.setServiceArgs(serviceArgs);
-        myGeneralService.update(generalEntitiesArgs).subscribe((myResult: any) => {});
+        myGeneralService.update(generalEntitiesArgs).subscribe((myResult: any) => { });
     }
 
     QueryColumns: QueryColumnPM[] = [];

@@ -2012,7 +2012,7 @@ namespace WebFreight.Web
             return result;
         }
 
-        private UserData ValidateUser(string name, string password, string customData, out string userData, bool isUser, string cardId, string cardType, bool byToken, string via, bool isAngularLogin,string clientType, bool isFromCTool, bool IsFromCargoTracking)
+        private UserData ValidateUser(string name, string password, string customData, out string userData, bool isUser, string cardId, string cardType, bool byToken, string via, bool isAngularLogin, string clientType, bool isFromCTool, bool IsFromCargoTracking)
         {
             ContactPassword contactPassword = null;
             UserData user = null;

@@ -148,14 +148,14 @@ namespace Simplog.Data.CommonDataModel.Mapping
              this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogInvitationStatCode");
                 this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTracInvitationStatCode");
             }
-         //#else
-         else
+            //#else
+            else
          {
              this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogisticsInvitationStatusCode");
                 this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTrackingInvitationStatusCode");
             }
-            
-//#endif
+
+            //#endif
 
             this.HasOptional(t => t.VatType).WithMany().HasForeignKey(d => d.VatTypeId);
             this.HasOptional(t => t.InvoiceCurrency).WithMany().HasForeignKey(d => d.InvoiceCurrencyId);

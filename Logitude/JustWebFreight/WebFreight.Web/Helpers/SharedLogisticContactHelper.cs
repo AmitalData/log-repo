@@ -83,7 +83,6 @@ namespace WebFreight.Web.Helpers
                     card.CargoTrackingInvitationStatusCode = 2;
                     card.CargoTrackingInvitationDate = DateTime.Now;
                 }
-
                 if (!sharedLogisticsContact.IsCargoTrackingInvitation && card.SharedLogisticsInvitationStatusCode != 3)
                 {
                     card.SharedLogisticsInvitationStatusCode = 2;
@@ -336,7 +335,7 @@ namespace WebFreight.Web.Helpers
                     card.CargoTrackingInvitationStatusCode = sharedLogisticsContact.IsCargoTrackingInvitation ? 1 : card.CargoTrackingInvitationStatusCode;
                     card.InvitationDate = null;
                     card.CargoTrackingInvitationDate = null;
-
+                    
                     using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
                     {
                         GlobalContactRepository globalContactRep = new GlobalContactRepository();

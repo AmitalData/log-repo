@@ -243,7 +243,7 @@ export class SharedLogisticsMainComponent implements OnInit {
 
     LoadCardData() {
         let invitationStatusType = this.IsCargoTracking ? "CargoTracking" : "";
-        this._sharedLogisticsService.getSharedLogisticsStatistics(SessionInfo.LoggedUserTenant, invitationStatusType).subscribe((res:any) => {
+        this._sharedLogisticsService.getSharedLogisticsStatistics(SessionInfo.LoggedUserTenant, invitationStatusType).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -427,7 +427,7 @@ export class SharedLogisticsMainComponent implements OnInit {
 
     InviteLinkClick(code: string) {
 
-        var backButtonTitle = this.IsCargoTracking ? "Cargo Tracking"  : (this.IsCtoolSetting ? "Ctool" : "Shared Logistics");
+        var backButtonTitle = this.IsCargoTracking ? "Cargo Tracking" : (this.IsCtoolSetting ? "Ctool" : "Shared Logistics");
         var queryCode = "";
         var displayTitle = "";
         var objectTableName = "";
@@ -478,7 +478,7 @@ export class SharedLogisticsMainComponent implements OnInit {
     CustomersZoomLinkClcik(code: string) {
         this.filterAgrs = new ApiQueryFilters();
         this.SetAddAdditionalFilters();
-        var backButtonTitle = this.IsCargoTracking ? "Cargo Tracking" : (!this.IsCtoolSetting ? "Shared Logistics" :"Ctool");
+        var backButtonTitle = this.IsCargoTracking ? "Cargo Tracking" : (!this.IsCtoolSetting ? "Shared Logistics" : "Ctool");
         var queryCode = this.InviteQueryCode;
         var displayTitle = "";
         var displayObjectTableName = this.DisplayObjectTableInviteName;

@@ -140,7 +140,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CargoTrackingInvitationStatusName { get; set; }
-
+        
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? LastLoginDate { get; set; }
