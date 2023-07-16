@@ -121,9 +121,14 @@ export class ImportCourierMawbsFromExcelComponent
 
     OkButtonClicked() {
         this.ErrorsResultList.Clear();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         this._DeclarationWebService.ImportCourierMawbsFromExcel(this.formData,SessionLocator.LoggedUserId,this.tenant).subscribe((res:string[]) => {
+            if(res == null || res.length == 0){
+                this.CurrentSession.CloseCurrentWindow();
+            }
             this.UploadSuccess = true;
             this.ErrorsResultList.InsertCollection(res);
+            SessionLocator.SelectedSession.StopBusyIndicator();
                // this.ErrorsResultList.InsertCollection(res);
             
         });

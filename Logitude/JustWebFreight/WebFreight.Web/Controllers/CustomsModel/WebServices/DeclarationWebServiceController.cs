@@ -58,6 +58,7 @@ using System.Threading.Tasks;
 using Logitude.Customs.BL.Helpers;
 using Logitude.Customs.Data.EntityPOCOs;
 using System.Data;
+using Org.BouncyCastle.Bcpg.Sig;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -2432,6 +2433,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
                 response.Content.Headers.ContentDisposition.FileName = ExportFromDate.ToString() + " - " + ExportToDate.ToString() + ".xls";
                 return response;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        [HttpGet]
+        public HttpResponseMessage DeleteCourierMawbsFromExcel(string userId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                new CourierHawbFromExcelRepository(authToken.Tenant).DeleteByUserAndTenant(tenant, userId);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+              
             }
             catch (Exception ex)
             {
