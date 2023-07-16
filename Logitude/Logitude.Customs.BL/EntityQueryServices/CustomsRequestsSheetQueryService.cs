@@ -350,6 +350,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8235T", // תיקון שטעון
 "8314",//נתוני פרט מכס
 "8888",// תשובה לנתוני פרט מכס
+"DCAOCR"//פתיחת חשבון יצואן - OCR
             };
 
             //var settingPm = CustomsSettingQueryService.GetSettingByTenant(requestInProgressParams.Tenant);
@@ -496,6 +497,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8235T", // תיקון שטעון
 "8314", // נתוני פרט מכס
 "8888",//תשובה לנתוני פרט מכס
+"DCAOCR"//פתיחת חשבון יצואן - OCR
 };
 
 
