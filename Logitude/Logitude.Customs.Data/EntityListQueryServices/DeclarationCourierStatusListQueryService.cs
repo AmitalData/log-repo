@@ -275,6 +275,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             var CourierHawbsFromExcel = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierHawbsFromExcel").FirstOrDefault();
             if(CourierHawbsFromExcel != null)
             {
+                RequiredFieldErrorsForCourierDeclarationIsValid = true;
                 this.isFilter = CourierHawbsFromExcel.FieldValue.ToString();
                 IQueryable<CourierHawbFromExcel> FromExcelQueryJoin = (from courierhawb in context.CourierHawbFromExcels
                                           where courierhawb.CreatedByUser.Id == this.isFilter && courierhawb.NotFound != true

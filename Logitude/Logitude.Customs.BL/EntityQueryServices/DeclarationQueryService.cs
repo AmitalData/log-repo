@@ -302,6 +302,25 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
         }
+        public DeclarationPM GetSingleByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(ExternalEntityReference)) return null;
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            var declaration = repository.GetDeclarationByCustomFileNoOrExportFile(ExternalEntityReference, tenant);
+
+            if (declaration == null) return null;
+
+
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+
+
+            return declarationPM;
+
+
+
+        }
 
 
         public DeclarationPM GetSingleByDecNoAndVersion(string decNo, string version, int tenant)
@@ -2394,6 +2413,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public string GetDeclaratNumberByCustomFileNo(int tenant, string customFileNo, string direction)
         {
             return this.repository.GetDeclaratNumberByCustomFileNo(tenant, customFileNo, direction);
+        }
+        public Boolean CheckIfDeclarationHasError12195(string declarationID, int tenant)
+        {
+            var errors= this.GetDeclarationErrors(declarationID, tenant, null);
+            return true;
         }
     }
 }
