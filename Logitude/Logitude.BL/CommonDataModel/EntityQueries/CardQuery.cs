@@ -352,8 +352,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CargoTrackingInvitationStatusCode = a.CargoTrackingInvitationStatusCode,
                                   CargoTrackingInvitationStatusName = a.CargoTrackingInvitationStatus != null ? a.CargoTrackingInvitationStatus.Name : null,
                                   SharedLogisticsInvitationStatusName = a.SharedLogisticsInvitationStatus != null ? a.SharedLogisticsInvitationStatus.Name : null,
-                                  CargoTrackingInvitationStatusCode = a.CargoTrackingInvitationStatusCode,
-                                  CargoTrackingInvitationStatusName = a.CargoTrackingInvitationStatus != null ? a.CargoTrackingInvitationStatus.Name : null,
                                   LastLoginDate = a.LastLoginDate,
                                   CollectorId = a.CollectorId,
                                   ClassifierId = a.ClassifierId,
