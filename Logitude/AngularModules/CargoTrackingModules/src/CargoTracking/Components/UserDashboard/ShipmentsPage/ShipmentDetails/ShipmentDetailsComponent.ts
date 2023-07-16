@@ -279,7 +279,18 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     private SetDocumentPDF() {
        
         var DocumentToShow = this.cargoTrackingShipmentPM.DocumentsFilings.filter(x => x.DocumentTypeCode == "MNO");
-
+        this.cargoTrackingShipmentPM.DocumentsFilings=this.cargoTrackingShipmentPM.DocumentsFilings.sort((a, b) => {
+            if (a.CreateDate < b.CreateDate) {
+              return 1; 
+            }
+            if (a.CreateDate > b.CreateDate) {
+              return -1; 
+            }
+            return 0; 
+          });
+          
+          
+          
         if(DocumentToShow==null||DocumentToShow.length==0) {
             this.IsPDF=false;
         }
