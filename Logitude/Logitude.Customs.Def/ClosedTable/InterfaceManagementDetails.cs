@@ -3072,6 +3072,20 @@ namespace Logitude.Customs.Def.ClosedTable
             });
             all.Add(new InterfaceManagementDetails()
             {
+                Code = "DCAOCR",
+                InOut = InOutEnum.I.ToString(),
+                Description = "פתיחת חשבון יצואן - OCR",
+                DcaPrefixName = "DCAOCR_OUT",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //InterfaceType = "C",
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
                 Code = "DCACCFII",
                 InOut = InOutEnum.I.ToString(),
                 Description = "יצירת אישור לפרטי מכס שסומנו",

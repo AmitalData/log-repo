@@ -485,6 +485,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                           DCAInUCBUpdateAllCertificateWithoutResponse_MsgMessagingService>
                           ((new DCAInUCBUpdateAllCertificateWithoutResponse_MsgMessagingService()).MainInterfaceCode);
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                         DCAInUCBUpsertSupplierInvioceByOcr_MsgMessagingService>
+                         ((new DCAInUCBUpsertSupplierInvioceByOcr_MsgMessagingService()).MainInterfaceCode);
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCBStorageSite_MsgMessagingService>
                             ((new DCAInUCBStorageSite_MsgMessagingService()).MainInterfaceCode);
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,

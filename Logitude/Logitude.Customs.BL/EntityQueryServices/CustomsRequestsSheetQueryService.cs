@@ -316,7 +316,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB8250",//,Batch Send 8250 per CourierMasterId
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
 "UCB8212",/// Batch Send Collateral
-"8250",
 "2892",
 "2450",
 "UCBNDCD",///  Send bonded filing
@@ -354,6 +353,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2791",// אחסנה
 "2755E",// הגשה יצוא
 "8250",// סטטוס הצהרה
+"DCAOCR"//פתיחת חשבון יצואן - OCR
             };
 
             //var settingPm = CustomsSettingQueryService.GetSettingByTenant(requestInProgressParams.Tenant);
@@ -501,6 +501,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8314", // נתוני פרט מכס
 "8888",//תשובה לנתוני פרט מכס
 "2791",// אחסנה
+"DCAOCR"//פתיחת חשבון יצואן - OCR
 };
 
 
