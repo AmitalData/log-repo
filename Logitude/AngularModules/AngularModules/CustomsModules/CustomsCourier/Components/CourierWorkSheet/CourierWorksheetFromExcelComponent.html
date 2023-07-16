@@ -183,12 +183,12 @@
                                                     <div class="ToggleButtonMenu"
                                                         style="width:115px; left: 0px; right: initial ;top:22px;text-align:center">
                                                         <button style="text-align:right"
-                                                            (click)="DeclarationsStatusRequestMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.DeclarationStatusRequest'
-                                                            | TextCodeTranslationPipe }}</button>
-                                                        <button style="text-align:right"
                                                             (click)="ImportCourierMawbsFromExcel()"
                                                             [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.ImporterCourierFromExcel'
+                                                            | TextCodeTranslationPipe }}</button>
+                                                        <button style="text-align:right"
+                                                            (click)="DeclarationsStatusRequestMethod()"
+                                                            [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.DeclarationStatusRequest'
                                                             | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right"
                                                             *ngIf="entityPM?.IsCancelled==true"

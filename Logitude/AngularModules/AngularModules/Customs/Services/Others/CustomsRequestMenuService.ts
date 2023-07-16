@@ -29,7 +29,7 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems = [];
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח SLA", "SLAReport", './CustomsModules/CustomsReport/Components/Reports/SLAReportComponent', 400, 300, "1111"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח הפצה", "LastMileReport", './CustomsModules/CustomsReport/Components/Reports/LastMileReportComponent', 500, 300, "1112"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("מסך עבודה מאקסל", "WorkSheetFromExcel", './CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetFromExcelComponent', 1500, 1000, "1113"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("מסך עבודה - הטענת אקסל", "WorkSheetFromExcel", './CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetFromExcelComponent', 1880, 1000, "1113"));
 
     }
     private buildCustomsList() {

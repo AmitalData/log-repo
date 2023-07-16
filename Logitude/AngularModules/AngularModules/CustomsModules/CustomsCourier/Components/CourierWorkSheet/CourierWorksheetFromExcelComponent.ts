@@ -35,6 +35,7 @@ import { PendingRequestParams } from 'Customs/DataContract/RequestParams/Pending
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 import { SendALLDelayFormParams } from '../../../../Customs/DataContract/RequestParams/SendALLDelayFormParams';
 import { InterfaceTenantDefinitionsWebService } from 'Customs/Services/WebServices/InterfaceTenantDefinitionsWebService';
+import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
 
 @Component({
     templateUrl: './CourierWorksheetFromExcelComponent.html',
@@ -113,6 +114,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     isAllowBulkPendind: boolean = false;
     IsILOVLEnabled: boolean = false;
     IsILSWSEnabled: boolean = false;
+    private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
@@ -170,6 +172,11 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             });
     }
     ngOnDestroy() {
+        this._DeclarationWebService.DeleteCourierMawbsFromExcel(SessionLocator.LoggedUserId).subscribe((response: ServiceResponse) => {
+               // this.ErrorsResultList.InsertCollection(res);
+        });
+        
+
 
     }
 

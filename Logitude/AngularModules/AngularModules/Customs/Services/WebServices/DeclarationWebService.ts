@@ -1308,6 +1308,24 @@ export class DeclarationWebService {
             return this._http.post(this._apiUrl + "/ImportCourierMawbsFromExcel/?userid=" + userid+ "&tenant=" + tenant , formData, {headers: authHeader });
 
     }
+    DeleteCourierMawbsFromExcel(userId:string){
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/DeleteCourierMawbsFromExcel/?userId=" + userId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var res = response;
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        }
+        );
+    }
 
     GetDeclarationMamanSpecialAction(declarationId: string, tenant: number, actionCode: string, mamanSpecialActionCode: string) {
         return defer(() => {
