@@ -37,7 +37,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;חשבון&quot;"
   DefaultText="&quot;Supplier Invoice&quot;"
-  Code="&quot;9dd0&quot;"
+  Code="&quot;9a8e&quot;"
   Name="&quot;Customs.SupplierInvoice Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -4929,5 +4929,15 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;EXCOPYFIELDS&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.SupplierInvoice.Features.ISCOPYFIELDS&quot;"
+      FeatureDefaultText="&quot;EX Copy Fields&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

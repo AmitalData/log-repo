@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceUpdateClass
    {  		
-		public const string HashString = "8d9c7208cbe0aab1d06d6273be510857";
+		public const string HashString = "c9862b5b13ff5aee4e459bbdec510e13";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "חשבון",
 			      				    DefaultText =  "Supplier Invoice",
-			      				    Code =  "9dd0",
+			      				    Code =  "9a8e",
 			      				    Name =  "Customs.SupplierInvoice Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -4055,7 +4055,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature SupplierInvoiceFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoice.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceObjectTable);
 		   Feature SupplierInvoiceFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoice.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceObjectTable);
 		   Feature SupplierInvoiceFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoice.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceObjectTable);
-		   Feature SupplierInvoiceFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoice.Features.PackageFeature", NameTextCodeDefaultText = "SupplierInvoice Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceObjectTable);    
+		   Feature SupplierInvoiceFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoice.Features.PackageFeature", NameTextCodeDefaultText = "SupplierInvoice Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature SupplierInvoiceFeature_EXCOPYFIELDS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCOPYFIELDS", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SupplierInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SupplierInvoice.Features.ISCOPYFIELDS", NameTextCodeDefaultText = @"EX Copy Fields" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceObjectTable);
+
+   
 	    
 		}
 
