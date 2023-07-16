@@ -262,17 +262,27 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
 
     ///#region Properties
     DeleteButtonClicked(item) {
-        if (AppTool.IsNullOrEmpty(this.EntityPM.NotConnectedDeclarations)) {
-            this.EntityPM.NotConnectedDeclarations = item.Id;
-        } else {
-            this.EntityPM.NotConnectedDeclarations += "," + item.Id;
+        if(this.EntityPM.ConnectedDeclarations?.split(',')?.length-1 > 1) {
+           if (AppTool.IsNullOrEmpty(this.EntityPM.NotConnectedDeclarations)) {
+               this.EntityPM.NotConnectedDeclarations = item.Id;
+           } else {
+               this.EntityPM.NotConnectedDeclarations += "," + item.Id;
+           }
+           if (this.EntityPM.ConnectedDeclarations.includes(item.Id)) {
+               this.EntityPM.ConnectedDeclarations = this.EntityPM.ConnectedDeclarations.replace(item.Id + ",", "");
+           }
+           this.EntityPM.IsChange = true;
+           this.ContainerizationDeclarationList.Remove(item);
+           this.getRowNumbers();
         }
-        if (this.EntityPM.ConnectedDeclarations.includes(item.Id)) {
-            this.EntityPM.ConnectedDeclarations = this.EntityPM.ConnectedDeclarations.replace(item.Id + ",", "");
+        else {
+            const myConfirmWindow = new ConfirmWindow();
+            myConfirmWindow.Title = TextCodeTranslator.Translate("Customs.Containerization.O.CancelDecInCon");
+            myConfirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            myConfirmWindow.ShowNoButton = false;  
+            myConfirmWindow.Width = 400;
+            myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.Containerization.O.DeleteLastDecInCon"));
         }
-        this.EntityPM.IsChange = true;
-        this.ContainerizationDeclarationList.Remove(item);
-        this.getRowNumbers();
     }
     EditButtonClicked(item) {
 
