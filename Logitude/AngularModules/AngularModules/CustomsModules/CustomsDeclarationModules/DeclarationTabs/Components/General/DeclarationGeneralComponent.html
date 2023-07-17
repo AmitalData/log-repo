@@ -625,7 +625,7 @@
                     <tr style="height: 28px;">
                         <td class="subTitle">{{'Customs.Declaration.O.ConsignmentDetails' | TextCodeTranslationPipe}}
                              <div *ngIf="EntityPM.ExcludeConsignment" style="margin-right: 95px; margin-top: 25px; position: absolute;" class="DisbleBox">{{ 'Customs.Declaration.O.Consignmentwillnotsent' | TextCodeTranslationPipe}}</div>
-                             <div *ngIf="EntityPM.ExcludeManifest" style="margin-right: 95px; margin-top: 3px; position: absolute;" class="DisbleBox">{{ 'Customs.Declaration.O.Manifestwillnotsent' | TextCodeTranslationPipe}}</div>
+                             <div *ngIf="_ShowExcludeManifestFeature && EntityPM.ExcludeManifest" style="margin-right: 95px; margin-top: 3px; position: absolute;" class="DisbleBox">{{ 'Customs.Declaration.O.Manifestwillnotsent' | TextCodeTranslationPipe}}</div>
                         </td>
                         <td *ngIf="IsOceanExport&& IsMoreConsignment1" style="width: 57px; top:10px; left:10px; ">
                             <button class="Button" [disabled]="IsDisplayOnly" (click)="ComprehensiveUpdate()">{{'Customs.Consignment.O.ComprehensiveUpdate' | TextCodeTranslationPipe}}</button>
