@@ -66,9 +66,9 @@
                 </span>
             </MultiSelectLOV>
         </td>
-        <td style="width:20px; vertical-align:middle; font-size:11px; color : #6E7172;">
+        <td  style="width:20px; vertical-align:middle; font-size:11px; color : #6E7172;">
         </td>
-        <td style="width:250px; vertical-align:middle;">
+        <td *ngIf="StatusesFeature" style="width:250px; vertical-align:middle;">
             <MultiSelectLOV [DataContext]="DataContext" [PlaceHolder]="'התרחש סטטוס'" [LayoutDirection]="'rtl'"
                 [LOVListComponentPropName]="'LOVListOccuredStatuses'"
                 (ChosenListItemsChanged)="SelectedValueChangedEmitOccuredStatuses()" [ChosenListHeader]="'סטטוסים שנבחרו'"
@@ -82,9 +82,9 @@
                 </span>
             </MultiSelectLOV>
         </td>
-        <td style="width:20px; vertical-align:middle; font-size:11px; color : #6E7172;">
+        <td *ngIf="StatusesFeature" style="width:20px; vertical-align:middle; font-size:11px; color : #6E7172;">
         </td>
-        <td style="width:250px; vertical-align:middle;">
+        <td *ngIf="StatusesFeature" style="width:250px; vertical-align:middle;">
             <MultiSelectLOV [DataContext]="DataContext" [PlaceHolder]="'לא התרחש סטטוס'" [LayoutDirection]="'rtl'"
                 [LOVListComponentPropName]="'LOVListNotOccuredStatuses'"
                 (ChosenListItemsChanged)="SelectedValueChangedEmitNotOccuredStatuses()" [ChosenListHeader]="'סטטוסים שנבחרו'"
@@ -98,7 +98,7 @@
                 </span>
             </MultiSelectLOV>
         </td>
-        <td style="width:1px; vertical-align:middle; font-size:11px; color : #6E7172;">
+        <td *ngIf="StatusesFeature" style="width:1px; vertical-align:middle; font-size:11px; color : #6E7172;">
         </td>
         <td style="width:117px; vertical-align:middle;">
             <ul class="FiltersMenu">
