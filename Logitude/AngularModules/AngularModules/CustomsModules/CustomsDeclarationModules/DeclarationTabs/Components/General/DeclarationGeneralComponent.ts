@@ -134,9 +134,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                                                     if (IsIndicationsClientFeature) {
                                                         this._IsIndicationsClientFeature=true
                                                     }
-                                                    var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
+                                                    var tableDec = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
 
-                                                    var IsExcludeManifestFeature = FeatureLocator.Features.filter(f => (f.Code == "ISEXCLUDEMANIFEST") && f.ObjectTableId == table.Id)[0];
+                                                    var IsExcludeManifestFeature = FeatureLocator.Features.filter(f => (f.Code == "ISEXCLUDEMANIFEST") && f.ObjectTableId == tableDec.Id)[0];
                                                     if (IsExcludeManifestFeature) {
                                                           this._ShowExcludeManifestFeature= true;
                                                     }
