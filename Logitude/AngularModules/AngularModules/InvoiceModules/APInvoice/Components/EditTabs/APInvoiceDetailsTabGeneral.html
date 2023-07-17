@@ -83,7 +83,28 @@
                                                 <td>
                                                     <CheckBox [IsChecked]="IsEquipment" (Checked)="IsEquipment = $event"></CheckBox>
                                                 </td>
-                                           </tr>
+                                            </tr>
+
+                                            <!-- Branch -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'BranchId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="BranchId"
+                                                            [LookUpTableName]="'Branch'">
+                                                    </LogLov>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
                                         </table>
                                     </td>
 
@@ -174,7 +195,7 @@
                                                     <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="AccountingDate" [InputType]="'date'" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
-                                            
+
                                         </table>
                                     </td>
 
