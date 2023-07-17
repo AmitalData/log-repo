@@ -9109,5 +9109,15 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;DeclarationStatusFilters&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.DeclarationReferantData.Features.DeclarationStatusFilters&quot;"
+      FeatureDefaultText="&quot;סטטוסים ברפרנט&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>
