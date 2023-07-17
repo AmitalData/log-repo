@@ -35,6 +35,7 @@ export class DeclarationReferantDataFiltersMenuComponent
     public DirectionWidth: number = 140;
     public UserFilers: ApiQueryFilters;
     public apiQueryFiltersChanged: boolean = false;
+    public StatusesFeature:boolean=false;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: DeclarationReferantDataFiltersMenuComponent = this;
     public ObjectTableName: string = "Customs.DeclarationReferantData";
@@ -67,6 +68,13 @@ export class DeclarationReferantDataFiltersMenuComponent
         this.FilterChangeSubject.pipe(debounceTime(500)).subscribe((res:any)=>{
             this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
         });
+        debugger;
+
+        var featureDeclarationStatusFilters = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DeclarationStatusFilters");
+        if(featureDeclarationStatusFilters){
+            this.StatusesFeature=true;
+        }
+
     }
 
     public OpenQueryThruWorkSpace: boolean = false;
