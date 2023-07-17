@@ -73,6 +73,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     clientIndicationListService: ClientIndicationListService = new ClientIndicationListService();
     clientIndications:any
     _IsIndicationsClientFeature:boolean = false;
+    _ShowExcludeManifestFeature:boolean = false;
+
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
@@ -131,6 +133,12 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                                                     var IsIndicationsClientFeature = FeatureLocator.Features.filter(f => (f.Code == "IndicationsClient") && f.ObjectTableId == table.Id)[0];
                                                     if (IsIndicationsClientFeature) {
                                                         this._IsIndicationsClientFeature=true
+                                                    }
+                                                    var tableDec = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
+
+                                                    var IsExcludeManifestFeature = FeatureLocator.Features.filter(f => (f.Code == "ISEXCLUDEMANIFEST") && f.ObjectTableId == tableDec.Id)[0];
+                                                    if (IsExcludeManifestFeature) {
+                                                          this._ShowExcludeManifestFeature= true;
                                                     }
                                                 }
                                               });
