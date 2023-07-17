@@ -1287,21 +1287,18 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'AdditionalQuantity'" [ObjectTableName]="ObjectTableName"
+                                            <LogLabel [ObjectFieldName]="'ClassificationTypeCode'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td style="padding-left: 5px;">
-                                            <LogTextBox [ObjectFieldName]="'AdditionalQuantity'" [ObjectTableName]="ObjectTableName"
-                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td>
-                                            <LogLov [ObjectFieldName]="'AdditionalQuantityType'"
+                                        <td colspan="2">
+                                            <LogLov [ObjectFieldName]="'ClassificationTypeCode'"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.MeasurmentUnit'"
-                                                    [HideColumns]="true">
+                                                    [HideColumns]="true"
+                                                    [LookUpTableName]="'Customs.ClassificationType'">
                                             </LogLov>
                                         </td>
+
 
                                         <td><div></div></td>
 
@@ -1338,28 +1335,12 @@
 
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'ClassificationTypeCode'" [ObjectTableName]="ObjectTableName"
-                                                      [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td colspan="2">
-                                            <LogLov [ObjectFieldName]="'ClassificationTypeCode'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [DataContext]="DataContext"
-                                                    [HideColumns]="true"
-                                                    [LookUpTableName]="'Customs.ClassificationType'">
-                                            </LogLov>
-                                        </td>
-
-
-
-                                        <td><div></div></td>
-
+                                       
                                         <td>
                                             <LogLabel [ObjectFieldName]="'PreferenceDocumentNumber'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td>
+                                        <td colspan="2">
                                             <LogTextBox [ObjectFieldName]="'PreferenceDocumentNumber'" [ObjectTableName]="ObjectTableName"
                                                         [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
