@@ -64,8 +64,11 @@ export class CustomerList {
 		MediatorName: string;
 		SharedLogisticsInvitationStatusName: string;
 		SharedLogisticsInvitationStatusCode: number;
+		CargoTrackingInvitationStatusName: string;
+		CargoTrackingInvitationStatusCode: number;
 		LastLoginDate: Date;
 		InvitationDate: Date;
+		CargoTrackingInvitationDate: Date;
 		LeadDescription: string;
 		LastActivityDate: Date;
 		LastActivityTypeName: string;
@@ -147,4 +150,4 @@ export class CustomerList {
 		LastLoginDateViaMobile: Date;
 		EmailForSendingSingArinvoice: string;
 	
-}
+}

@@ -1455,7 +1455,7 @@ namespace WebFreight.Web
 
 
 
-                        user = ValidateUser(email, password, customData, out userData, isUser, cardId, cardType, parameters.ByToken, via, parameters.IsAngularLogin, parameters.ClientType, FromCTool);
+                        user = ValidateUser(email, password, customData, out userData, isUser, cardId, cardType, parameters.ByToken, via, parameters.IsAngularLogin, parameters.ClientType, FromCTool, parameters.IsCargoTracking);
 
 
 
@@ -2012,7 +2012,7 @@ namespace WebFreight.Web
             return result;
         }
 
-        private UserData ValidateUser(string name, string password, string customData, out string userData, bool isUser, string cardId, string cardType, bool byToken, string via, bool isAngularLogin,string clientType, bool isFromCTool)
+        private UserData ValidateUser(string name, string password, string customData, out string userData, bool isUser, string cardId, string cardType, bool byToken, string via, bool isAngularLogin, string clientType, bool isFromCTool, bool IsFromCargoTracking)
         {
             ContactPassword contactPassword = null;
             UserData user = null;
@@ -2302,7 +2302,8 @@ namespace WebFreight.Web
                             if (cardContact != null)
                             {
                                 card = commonDataContext.Cards.Where(d => d.Id == cardId).FirstOrDefault();
-                                card.SharedLogisticsInvitationStatusCode = 3;
+                                card.SharedLogisticsInvitationStatusCode = !IsFromCargoTracking ? 3 : card.SharedLogisticsInvitationStatusCode;
+                                card.CargoTrackingInvitationStatusCode = IsFromCargoTracking ? 3 : card.CargoTrackingInvitationStatusCode;
                                 card.LastLoginDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                                 cardContact.LastLoginDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                                 user.CardId = card.Id;

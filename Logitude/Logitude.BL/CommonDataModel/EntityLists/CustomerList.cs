@@ -178,6 +178,11 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         
         [DataMember]
         public int? SharedLogisticsInvitationStatusCode { get; set; }
+        [DataMember]
+        public string CargoTrackingInvitationStatusName { get; set; }
+        
+        [DataMember]
+        public int? CargoTrackingInvitationStatusCode { get; set; }
 
         [DataMember]
         public DateTime? LastLoginDate { get; set; }
@@ -186,6 +191,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? InvitationDate { get; set; }
 
         [DataMember]
+        public DateTime? CargoTrackingInvitationDate { get; set; }
+        
+        [DataMember] 
         public string LeadDescription { get; set; }
 
         [DataMember]

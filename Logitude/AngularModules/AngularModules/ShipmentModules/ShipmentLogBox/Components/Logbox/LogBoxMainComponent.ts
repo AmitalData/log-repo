@@ -27,6 +27,12 @@ import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/S
 import { CustomerTenantAccessRequestExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 import { AddEditLogboxShipmentService } from '../../Services/AddEditLogboxShipmentService';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { GeneralEntitiesArgs } from '../../../../Infrastructure/DataContracts/GeneralEntitiesArgs';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { GeneralEntitiesService } from '../../../../Infrastructure/Services/StandardPMs/GeneralEntitiesService';
+import { QueryColumnsPMService } from '../../../../Infrastructure/Services/StandardPMs/QueryColumnsPMService';
+declare var window: any;
 
 @Component({
     templateUrl: './LogBoxMainComponent.html',
@@ -70,6 +76,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public isLogbox: boolean = SystemEnvironmentService.IsLogBox();
 
     public HasQueryFiltersHighlightColor: boolean = false;
+    private LogboxShipmentQueryCode: string;
+    private ShipmentObjectTable: any;
+    private logboxShipmentQueryColumnsComputingPartner: LogboxShipmentQueryColumnsComputingPartner<string>;
 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
@@ -494,17 +503,82 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         return queryColum;
     }
 
-    QueryColumns: QueryColumnPM[] = [];
 
-    BuildColumns() {
+    ColumnResisedevent(Param) {
+        ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionLocator.Tenant + "&queryCode=" + this.LogboxShipmentQueryCode + "&objecttableid=" + this.ShipmentObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId + "&getfromsystemlevel=false")
+            .subscribe((response: any) => {
+                this.SaveQueryColumnsChanges(response, Param);
+            });
+    }
+
+    private SaveQueryColumnsChanges(queryColumns: any, Param: any) {
+        if (queryColumns == null) return;
+
+        if (AppTool.IsNullOrEmpty(queryColumns[0].UserId)) {
+            this.InsertQueryColumns(queryColumns, Param);
+            return;
+        }
+
+        this.UpdateQueryColumns(queryColumns, Param);
+    }
+
+
+    private InsertQueryColumns(queryColumns: any, Param: any) {
+        let serviceArgs = new ServiceArgs();
+        serviceArgs.http = ServiceHelper.HttpClient;
+        let generalEntitiesArgs = new GeneralEntitiesArgs();
+        generalEntitiesArgs.QueryColumnsPMs = [];
+        generalEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
+
+        queryColumns.forEach((querycolumn, key) => {
+            if (Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0] && Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0].Width > 0) {
+                querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0].Width;
+            }
+            querycolumn.UserId = SessionInfo.LoggedUserId;
+            querycolumn.Tenant = SessionInfo.LoggedUserTenant;
+            generalEntitiesArgs.QueryColumnsPMs.push(querycolumn);
+        });
+
+        var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
+        myGeneralService.setServiceArgs(serviceArgs);
+        myGeneralService.insert(generalEntitiesArgs).subscribe((myResult: any) => { });
+    }
+
+    private UpdateQueryColumns(queryColumns: any, Param: any) {
+        let serviceArgs = new ServiceArgs();
+        serviceArgs.http = ServiceHelper.HttpClient;
+        let generalEntitiesArgs = new GeneralEntitiesArgs();
+        generalEntitiesArgs.QueryColumnsPMs = [];
+        generalEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
+
+        let myQueryColumnsPMService = new QueryColumnsPMService();
+        myQueryColumnsPMService.setServiceArgs(serviceArgs);
+
+        queryColumns.forEach((querycolumn, key) => {
+            if (Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0] && Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0].Width > 0) {
+                querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0].Width;
+            }
+            generalEntitiesArgs.QueryColumnsPMs.push(querycolumn);
+        });
+
+        var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
+        myGeneralService.setServiceArgs(serviceArgs);
+        myGeneralService.update(generalEntitiesArgs).subscribe((myResult: any) => { });
+    }
+
+    QueryColumns: QueryColumnPM[] = [];
+    BuildColumns(userQueryColumns) {
+        if (userQueryColumns == null) userQueryColumns = [];
         this.QueryColumns = [];
         this.HoverTemplateIndex = 7;
         this.columns = [];
+        let shipmentNumberUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.ShipmentNumber")[0];
+        if (shipmentNumberUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[shipmentNumberUserQueryColumn.ObjectFieldName] = this.SelectedFilter;
         this.columns.push({
             FieldName: this.SelectedFilter,//"ShipmentNumber",
             DataTypeCode: 'String',
             Display: 'Shipment #',
-            Styles: { width: this.RefTemplateWidth },
+            Styles: { width: shipmentNumberUserQueryColumn && shipmentNumberUserQueryColumn.Tenant == SessionLocator.Tenant ? shipmentNumberUserQueryColumn.ColumnWidth + 'px' : this.RefTemplateWidth },
             HtmlListComponentName: 'ReferenceNumberCellDisplayListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/ReferenceNumberCellDisplayListTemplate',
             IsCustomTemplate: true,
@@ -520,11 +594,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.GetQueryColumn(("ShipmentNumber_" + this.SelectedFilter.replace(" ", "")), 'Text', 'Shipment #')
         );
 
+        let shipperUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.Shipper")[0];
+        if (shipperUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[shipperUserQueryColumn.ObjectFieldName] = 'ShipperName';
         this.columns.push({
             FieldName: 'ShipperName',
             DataTypeCode: 'String',
             Display: this.IsExportActivated ? 'Supplier / Consignee' : 'Supplier',
-            Styles: { width: '150px' },
+            Styles: { width: shipperUserQueryColumn && shipperUserQueryColumn.Tenant == SessionLocator.Tenant ? shipperUserQueryColumn.ColumnWidth + 'px' : '150px' },
             HtmlListComponentName: 'SupplierConsigneeListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/SupplierConsigneeListTemplate',
             IsCustomTemplate: true,
@@ -537,16 +613,17 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         );
 
         if (this.IsExportActivated) {
-            this.DisplayAgentColumn();
+            this.DisplayAgentColumn(userQueryColumns);
         }
 
-
+        let logboxTaskUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.LogboxTask")[0];
+        if (logboxTaskUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[logboxTaskUserQueryColumn.ObjectFieldName] = 'Task';
         if (this.SelectedFilter == "Action Required") {
             this.columns.push({
                 FieldName: 'Task',
                 DataTypeCode: 'String',
                 Display: 'Task',
-                Styles: { width: '220px' },
+                Styles: { width: logboxTaskUserQueryColumn && logboxTaskUserQueryColumn.Tenant == SessionLocator.Tenant ? logboxTaskUserQueryColumn.ColumnWidth + 'px' : '220px' },
                 HtmlListComponentName: 'TaskCellDisplayListTemplate',
                 HtmlListComponentUrl: './Shipment/Components/ListTemplates/TaskCellDisplayListTemplate',
                 IsCustomTemplate: true,
@@ -558,11 +635,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.QueryColumns.push(this.GetQueryColumn("Task", 'Text', 'Task'));
         }
         else {
+            let statusNameUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.StatusName")[0];
+            if (statusNameUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[statusNameUserQueryColumn.ObjectFieldName] = 'StatusName';
             this.columns.push({
                 FieldName: 'StatusName',
                 DataTypeCode: 'String',
                 Display: 'Status',
-                Styles: { width: '120px' },
+                Styles: { width: statusNameUserQueryColumn && statusNameUserQueryColumn.Tenant == SessionLocator.Tenant ? statusNameUserQueryColumn.ColumnWidth + 'px' : '120px' },
                 HtmlListComponentName: 'StatusCellDisplayListTemplate',
                 HtmlListComponentUrl: './Shipment/Components/ListTemplates/StatusCellDisplayListTemplate',
                 IsCustomTemplate: true,
@@ -571,12 +650,14 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             });
             this.QueryColumns.push(this.GetQueryColumn("StatusName", 'Text', 'Status'));
 
+            let statusDateUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.StatusDate")[0];
+            if (statusDateUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[statusDateUserQueryColumn.ObjectFieldName] = 'ComputedStatusDate';
             if (this.showComputedStatusDateField()) {
                 this.columns.push({
                     FieldName: 'ComputedStatusDate',
                     DataTypeCode: 'String',
                     Display: 'Status Date',
-                    Styles: { width: '125px' },
+                    Styles: { width: statusDateUserQueryColumn && statusDateUserQueryColumn.Tenant == SessionLocator.Tenant ? statusDateUserQueryColumn.ColumnWidth + 'px' : '125px' },
                     HtmlListComponentName: 'DateCellDisplayListTemplate',
                     HtmlListComponentUrl: './Shipment/Components/ListTemplates/DateCellDisplayListTemplate',
                     IsCustomTemplate: true,
@@ -600,11 +681,14 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //    IsCustomTemplate: true,
         //    ServerSideSortable: true
         //});
+
+        let customerReference1UserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.CustomerReference1")[0];
+        if (customerReference1UserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[customerReference1UserQueryColumn.ObjectFieldName] = 'CustomerReference3';
         this.columns.push({
             FieldName: 'CustomerReference3',
             DataTypeCode: 'String',
             Display: 'Reference #',
-            Styles: { width: '108px' },
+            Styles: { width: customerReference1UserQueryColumn && customerReference1UserQueryColumn.Tenant == SessionLocator.Tenant ? customerReference1UserQueryColumn.ColumnWidth + 'px' : '108px' },
             HtmlListComponentName: 'CustomReferenceListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/CustomReferenceListTemplate',
             IsCustomTemplate: true,
@@ -612,11 +696,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             SortByName: "CustomerReference3"
         });
 
+        let customerReference2UserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.CustomerReference2")[0];
+        if (customerReference2UserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[customerReference2UserQueryColumn.ObjectFieldName] = 'CustomerReference2';
         this.columns.push({
             FieldName: 'CustomerReference2',
             DataTypeCode: 'String',
             Display: 'My Reference',
-            Styles: { width: '108px' },
+            Styles: { width: customerReference2UserQueryColumn && customerReference2UserQueryColumn.Tenant == SessionLocator.Tenant ? customerReference2UserQueryColumn.ColumnWidth + 'px' : '108px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: "CustomerReference2"
@@ -626,11 +712,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.GetQueryColumn("CustomerReference", 'Text', 'Reference #')
         );
 
+        let isOperationalClosedUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.IsOperationalClosed")[0];
+        if (isOperationalClosedUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[isOperationalClosedUserQueryColumn.ObjectFieldName] = 'IsOperationalClosed';
         this.columns.push({
             FieldName: 'IsOperationalClosed',
             DataTypeCode: 'String',
             Display: '',
-            Styles: { width: '73px' },
+            Styles: { width: isOperationalClosedUserQueryColumn && isOperationalClosedUserQueryColumn.Tenant == SessionLocator.Tenant ? isOperationalClosedUserQueryColumn.ColumnWidth + 'px' : '73px' },
             HtmlListComponentName: 'ArchiveListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/ArchiveListTemplate',
             IsCustomTemplate: true,
@@ -642,12 +730,20 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.GetQueryColumn("IsOperationalClosed", 'Boolean', 'Archived')
         );
 
+        let logboxActionButtonUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.LogboxActionButton")[0];
+        if (logboxActionButtonUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[logboxActionButtonUserQueryColumn.ObjectFieldName] = 'ActionButtonsListTemplate';
+        let logboxActionRequiredUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.LogboxActionRequired")[0];
+        if (logboxActionRequiredUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[logboxActionRequiredUserQueryColumn.ObjectFieldName] = 'ActionRequired';
+        let logboxEditButtonUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.LogboxEditButton")[0];
+        if (logboxEditButtonUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[logboxEditButtonUserQueryColumn.ObjectFieldName] = 'EditShipmentButtonListTemplate' + this.SelectedFilter;
+        let logboxRemoveTaskButtonUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.LogboxRemoveTaskButton")[0];
+        if (logboxRemoveTaskButtonUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[logboxRemoveTaskButtonUserQueryColumn.ObjectFieldName] = 'RemoveTasksButtonListTemplate';
         if (this.SelectedFilter == "My Shipments") {
             this.columns.push({
                 FieldName: 'ActionButtonsListTemplate',//'MyShipments',
                 DataTypeCode: 'String',
                 Display: '',
-                Styles: { width: SessionLocator.PrivateLableSettings ? '270px' : '200px' },
+                Styles: { width: logboxActionButtonUserQueryColumn && logboxActionButtonUserQueryColumn.Tenant == SessionLocator.Tenant ? logboxActionButtonUserQueryColumn.ColumnWidth + 'px' : SessionLocator.PrivateLableSettings ? '270px' : '200px' },
                 HtmlListComponentName: 'ActionButtonsListTemplate',
                 HtmlListComponentUrl: './Shipment/Components/ListTemplates/ActionButtonsListTemplate',
                 IsCustomTemplate: true,
@@ -660,7 +756,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 FieldName: 'ActionRequired',
                 DataTypeCode: 'String',
                 Display: '',
-                Styles: { width: '346px' },
+                Styles: { width: logboxActionRequiredUserQueryColumn && logboxActionRequiredUserQueryColumn.Tenant == SessionLocator.Tenant ? logboxActionRequiredUserQueryColumn.ColumnWidth + 'px' : '346px' },
                 HtmlListComponentName: 'ActionButtonsListTemplate',
                 HtmlListComponentUrl: './Shipment/Components/ListTemplates/ApprovePaymentButtonListTemplate',
                 IsCustomTemplate: true,
@@ -674,7 +770,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     FieldName: 'EditShipmentButtonListTemplate' + this.SelectedFilter,//this.SelectedFilter,//'EditShipmentButtonListTemplate',
                     DataTypeCode: 'String',
                     Display: '',
-                    Styles: { width: '100px' },
+                    Styles: { width: logboxEditButtonUserQueryColumn && logboxEditButtonUserQueryColumn.Tenant == SessionLocator.Tenant ? logboxEditButtonUserQueryColumn.ColumnWidth + 'px' : '100px' },
                     HtmlListComponentName: 'ActionButtonsListTemplate',
                     HtmlListComponentUrl: './Shipment/Components/ListTemplates/EditShipmentButtonListTemplate',
                     IsCustomTemplate: true,
@@ -687,7 +783,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     FieldName: 'RemoveTasksButtonListTemplate',
                     DataTypeCode: 'String',
                     Display: '',
-                    Styles: { width: '300px' },
+                    Styles: { width: logboxRemoveTaskButtonUserQueryColumn && logboxRemoveTaskButtonUserQueryColumn.Tenant == SessionLocator.Tenant ? logboxRemoveTaskButtonUserQueryColumn.ColumnWidth + 'px' : '300px' },
                     HtmlListComponentName: 'RemoveTasksButtonListTemplate',
                     HtmlListComponentUrl: './Shipment/Components/ListTemplates/RemoveTasksButtonListTemplate',
                     IsCustomTemplate: true,
@@ -696,12 +792,15 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 });
             }
         }
+
+        let shipperReference1UserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.ShipperReference1")[0];
+        if (shipperReference1UserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[shipperReference1UserQueryColumn.ObjectFieldName] = this.SearchFilter ? this.SearchFilter : '';
         if (this.RequestedDocsLable != "Action Required") {
             this.columns.push({
                 FieldName: this.SearchFilter ? this.SearchFilter : '',
                 DataTypeCode: 'String',
                 Display: '',
-                Styles: { width: '40px' },
+                Styles: { width: shipperReference1UserQueryColumn && shipperReference1UserQueryColumn.Tenant == SessionLocator.Tenant ? shipperReference1UserQueryColumn.ColumnWidth + 'px' : '40px' },
                 HtmlListComponentName: 'DocumentSearchResultListTemplate',
                 HtmlListComponentUrl: './Shipment/Components/ListTemplates/DocumentSearchResultListTemplate',
                 IsCustomTemplate: true,
@@ -712,12 +811,14 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.CustomColumnsReady.emit(this.columns);
     }
 
-    private DisplayAgentColumn() {
+    private DisplayAgentColumn(userQueryColumns) {
+        let privateLabelAgentNameUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.PrivateLabelAgentName")[0];
+        if (privateLabelAgentNameUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[privateLabelAgentNameUserQueryColumn.ObjectFieldName] = 'PrivateLabelAgentName';
         this.columns.push({
             FieldName: 'PrivateLabelAgentName',
             DataTypeCode: 'String',
             Display: 'Agent',
-            Styles: { width: '150px' },
+            Styles: { width: privateLabelAgentNameUserQueryColumn && privateLabelAgentNameUserQueryColumn.Tenant == SessionLocator.Tenant ? privateLabelAgentNameUserQueryColumn.ColumnWidth + 'px' : '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: "PrivateLabelAgentName"
@@ -897,10 +998,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         console.log("LoadImporterShipments");
         this.SelectedRow = null;
         this.ShipmentSelectedEvent.emit(this.SelectedRow);
-        this.BuildColumns();
-        this.LoadQueriesCounts();
-        this.filterAgrs = this.GetApiQueryFilters();
-        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+        ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionLocator.Tenant + "&queryCode=" + this.LogboxShipmentQueryCode + "&objecttableid=" + this.ShipmentObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId + "&getfromsystemlevel=false")
+            .subscribe((response: any) => {
+                this.BuildColumns(response);
+                this.LoadQueriesCounts();
+                this.filterAgrs = this.GetApiQueryFilters();
+                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+            });
     }
 
     GetApiQueryFilters() {
@@ -1111,9 +1215,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     LoadEntityResource(objectTableName: string) {
-
         this.entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response: any) => {
-
+            this.LogboxShipmentQueryCode = "Shipment.LogboxShipments";
+            this.ShipmentObjectTable = window.ObjectTables.filter(f => f.Name === objectTableName)[0];
+            this.logboxShipmentQueryColumnsComputingPartner = {};
         });
     }
 
@@ -1184,4 +1289,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
         });
     }
+}
+
+interface LogboxShipmentQueryColumnsComputingPartner<T> {
+    [key: string]: T;
 }

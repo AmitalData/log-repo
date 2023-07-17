@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "d471153b2ff3c39d9686805820d63d9b";
+		public const string HashString = "547df8a3078a25be2a9fc45d5cbd639d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2321,6 +2321,74 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SharedLogisticsInvitationStatusName",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CargoTrackingInvitationStatusName",
+					  						ObjectTableName =  "Customer",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						DataTemplateName =  "SharedLogisticsInvitationStatusDataTemplate",
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CargoTrackingInvitationStatusName",
+					  						ListPropertyPath =  "CargoTrackingInvitationStatusName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customer",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						Code =  "CargoTrackingInvitationStatusName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CargoTrackingInvitationStatusName",
+					  						DefaultText =  "Cargo Tracking Invitation Status",
+					  						ListFieldLable =  "CargoTrackingInvitationStatusNameListLable",
+					  						ListLableDefaultText =  "Invitation Status",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "CargoTrackingInvitationStatusName",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
@@ -14119,6 +14187,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "CargoTrackingInvitationStatusCode",
+					  						ObjectTableName =  "Customer",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CargoTrackingInvitationStatusCode",
+					  						ListPropertyPath =  "CargoTrackingInvitationStatusCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customer",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CargoTrackingInvitationStatusCode",
+					  						DefaultText =  "CargoTrackingInvitationStatusCode",
+					  						FullLocalDefaultText =  "CargoTrackingInvitationStatusCode",
+					  						ListFieldLable =  "CargoTrackingInvitationStatusCodeListLable",
+					  						ListLableDefaultText =  "CargoTrackingInvitationStatusCode",
+					  						ListLocalDefaultText =  "CargoTrackingInvitationStatusCode",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "LastOpportunitySubject",
 					  						ObjectTableName =  "Customer",
 					  						FieldsDataType =  "nText",
@@ -15319,6 +15451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EmailForSendingSingArinvoice",
 					  						ListPropertyPath =  "EmailForSendingSingArinvoice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -15339,6 +15472,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DefaultText =  "Email For Sending",
 					  						ListFieldLable =  "EmailForSendingSingArinvoiceListLable",
 					  						ListLableDefaultText =  "Email For Sending",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CargoTrackingInvitationDate",
+					  						ObjectTableName =  "Customer",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CargoTrackingInvitationDate",
+					  						ListPropertyPath =  "CargoTrackingInvitationDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customer",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CargoTrackingInvitationDate",
+					  						DefaultText =  "Cargo Tracking Invitation Date",
+					  						ListFieldLable =  "CargoTrackingInvitationDateListLable",
+					  						ListLableDefaultText =  "Cargo Tracking Invitation Date",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15418,6 +15614,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			   TextCode CustomerTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.InactiveCustomers", DefaultText = @"Inactive Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature CustomerFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.InactiveCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.InactiveCustomers", NameTextCodeDefaultText = "Inactive Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode CustomerTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.CargoTrackingCustomers", DefaultText = @"Cargo Tracking Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Q.CargoTrackingCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFeatures.CargoTrackingCustomers", NameTextCodeDefaultText = "Cargo Tracking Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -15698,6 +15898,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 QueryColumn Customer_InactiveCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter Customer_InactiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.InactiveCustomers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query CargoTrackingCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_10.Id, NameTextCodeCode = CustomerTextCode_10.Code, ObjectTableName = "Customer", Code = "Cargo Tracking Customers",  EditWizardName = "SharedLogistics.Views.InviteCustomersControl",
+			   EditWizardComponentPath = "",
+			   QueryGroupCode = "CLNT", IndexOrder = 10, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerFeature_10.Id,FeatureUniqeCode= CustomerFeature_10.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Ascending", Perspective = "Customers" }, addedQueries);
+	
+			 QueryColumn CargoTrackingCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.CargoTrackingInvitationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CargoTrackingCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CargoTrackingCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CargoTrackingCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CargoTrackingCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CargoTrackingCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customer.LastShipmentDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CargoTrackingCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CargoTrackingCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.LastLoginDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CargoTrackingCustomersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customer.LastLoginDateViaPC" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CargoTrackingCustomersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customer.LastLoginDateViaMobile" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter CargoTrackingCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.SharedLogisticsCustomers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

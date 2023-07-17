@@ -291,7 +291,7 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
         this.IsCargoTrackingMenuClicked = args.IsCargoTrackingMenuClicked;
         this.CustomerName = this.CurrentEntity.EnglishName;
         this.CustomerCode = this.CurrentEntity.Code;
-        this.InvitationStatus = this.CurrentEntity.SharedLogisticsInvitationStatusName;
+        this.InvitationStatus = this.IsCargoTrackingMenuClicked ? this.CurrentEntity.CargoTrackingInvitationStatusName : this.CurrentEntity.SharedLogisticsInvitationStatusName;
         this.IsDigitalPortal = args.IsDigitalPortal;
         this.IsLoginToOnlineVisibility = this.IsDigitalPortal && this.CurrentEntity.CustomerStatusCode !== "ACT";
 
