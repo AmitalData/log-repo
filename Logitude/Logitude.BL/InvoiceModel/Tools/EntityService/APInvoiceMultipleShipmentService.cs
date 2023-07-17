@@ -1145,16 +1145,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         entityPM.AmountDue = MethodHelper.Round((entityPM.AmountInInvoiceCurrency.Value - conntectedPaymentAmount), 2);
 
-                        if (conntectedPaymentAmount < entityPM.AmountInInvoiceCurrency)
+                        if (!FeatureToggleHelper.HasFeatureToggle("PSR", entityPM.Tenant))
                         {
-                            entityPM.StatusCode = "PP";
-                            entityPM.IsClosed = false;
-                        }
+                            if (conntectedPaymentAmount < entityPM.AmountInInvoiceCurrency)
+                            {
+                                entityPM.StatusCode = "PP";
+                                entityPM.IsClosed = false;
+                            }
 
-                        else
-                        {
-                            entityPM.StatusCode = "PD";
-                            entityPM.IsClosed = true;
+                            else
+                            {
+                                entityPM.StatusCode = "PD";
+                                entityPM.IsClosed = true;
+                            }
                         }
                     }
                     else
