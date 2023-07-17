@@ -22,6 +22,11 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
+using System.Windows;
+using Logitude.Accounting.Data;
+using Logitude.Server.Tools;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -1504,5 +1509,189 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             }).ToList();
             return invoicePMs;
         }
+
+        public List<APInvoice_LT_DTO> GetAPInvoicesForStatusUpdate(IAccountingContext accContext, ref GetNextAPInvoicesArgs args)
+        {
+            int tenant = args.Tenant;
+            string invoiceNumber = args.InvoiceNumber;
+            string lastCheckedId = args.LastCheckedId;
+            DateTime fromInvoiceDate = args.FromInvoiceDate;
+            DateTime toInvoiceDate = args.ToInvoiceDate;
+
+            IQueryable<APInvoice_LT_DTO> query = null; // returned value 
+
+            IQueryable<APInvoice> invQuery;
+
+            if (!string.IsNullOrWhiteSpace(invoiceNumber))
+            {
+                invQuery = repository.GetAPInvoices(args.Tenant).Where(rec => rec.InternalNumber == invoiceNumber
+                     && (rec.StatusCode == "AD" || rec.StatusCode == "PD" || rec.StatusCode == "PP")); 
+            }
+
+            else if (!string.IsNullOrWhiteSpace(lastCheckedId))
+            {
+                invQuery = repository.GetAPInvoices(args.Tenant).Where(rec => rec.InvoiceDate >= fromInvoiceDate && rec.InvoiceDate <= toInvoiceDate
+                     && String.Compare(rec.Id, lastCheckedId) > 0
+                     && (rec.StatusCode == "AD" || rec.StatusCode == "PD" || rec.StatusCode == "PP")).OrderBy(r => r.Id);
+            }
+
+            else 
+            {
+                invQuery = repository.GetAPInvoices(args.Tenant).Where(rec => rec.InvoiceDate >= fromInvoiceDate && rec.InvoiceDate <= toInvoiceDate
+                     && (rec.StatusCode == "AD" || rec.StatusCode == "PD" || rec.StatusCode == "PP")).OrderBy(r => r.Id);
+            }
+            string long_text = "";
+            bool isInDebuggingMode = false;
+
+            if (invQuery != null)
+            {
+                JournalRepository journalRepository = new JournalRepository(tenant);
+                JournalLineRepository journalLineRepository = new JournalLineRepository(tenant);
+                LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(accContext);
+
+
+                var j_inv_query = from j in journalRepository.GetAll(tenant)
+                               .Where(rec => rec.AccountingEntityCode == CloseTables.AccountingEntityValues.APInvoice
+                               && rec.StatusCode == "2")
+                               join
+                               inv in invQuery on j.AccountingEntityId equals inv.Id
+                               select new J_Inv_DTO()
+                               {
+                                   APInvoiceId = inv.Id,
+                                   APInvoiceStatusCode = inv.StatusCode,
+                                   APInvoiceIsClosed = inv.IsClosed,
+                                   JournalId = j.Id
+                               };
+
+                List<J_Inv_DTO> j_inv_dto_list = null;
+                long_text = "";
+                isInDebuggingMode = false;
+                if (isInDebuggingMode && j_inv_query != null) 
+                {
+                    int ctr = 1;
+                    j_inv_dto_list = j_inv_query.ToList<J_Inv_DTO>();
+                    j_inv_dto_list.ForEach(item => long_text += "#" + ctr++ + "," + item.APInvoiceId + "," + item.APInvoiceIsClosed + "," + item.JournalId + "\n");
+                }
+
+
+                var j_inv_l_query = from jl in journalLineRepository.GetAll(tenant).Where(rec => rec.ActionCode == "1")
+                                  join
+                                  j_inv in j_inv_query on jl.JournalId equals j_inv.JournalId
+                                  select new J_Inv_L_DTO()
+                                  {
+                                      APInvoiceId = j_inv.APInvoiceId,
+                                      APInvoiceStatusCode = j_inv.APInvoiceStatusCode,
+                                      APInvoiceIsClosed = j_inv.APInvoiceIsClosed,
+                                      JournalId = j_inv.JournalId,
+                                      JournalLineNumber = jl.Line,
+                                  };
+                List<J_Inv_L_DTO> j_inv_dto_l_list = null;
+                long_text = "";
+                isInDebuggingMode = false;
+                if (isInDebuggingMode && j_inv_l_query != null)
+                {
+                    int ctr = 1;
+                    j_inv_dto_l_list = j_inv_l_query.ToList<J_Inv_L_DTO>();
+                    j_inv_dto_l_list.ForEach(item => long_text += "#" + ctr++ + "," + item.APInvoiceId + "," + item.APInvoiceIsClosed + "," + item.JournalId + "," + item.JournalLineNumber + "\n");
+                }
+
+                query = from lt in ledgerTransactionRepository.GetAll(tenant)
+                        join
+                        j_inv_l in j_inv_l_query on lt.JournalId equals j_inv_l.JournalId
+                        where lt.JournalLineNumber == j_inv_l.JournalLineNumber 
+                        && ((j_inv_l.APInvoiceStatusCode != "AD" && ((lt.LocalAmountDebit != 0m && lt.OpenAmount == lt.LocalAmountDebit)
+                            || (lt.LocalAmountDebit == 0m && lt.OpenAmount == lt.LocalAmountCredit * -1)))
+                            || (j_inv_l.APInvoiceStatusCode != "PP" && lt.OpenAmount != 0m)
+                            || (j_inv_l.APInvoiceStatusCode != "PD" && lt.OpenAmount == 0m))
+                        select new APInvoice_LT_DTO()
+                        {
+                            APInvoiceId = j_inv_l.APInvoiceId,
+                            APInvoiceStatusCode = j_inv_l.APInvoiceStatusCode,
+                            APInvoiceIsClosed = j_inv_l.APInvoiceIsClosed,
+                            JournalId = j_inv_l.JournalId,
+                            JournalLineNumber = j_inv_l.JournalLineNumber,
+                            LT_Id = lt.Id,
+                            LT_LocalAmountCredit = lt.LocalAmountCredit,
+                            LT_LocalAmountDebit = lt.LocalAmountDebit,
+                            LT_OpenAmount = lt.OpenAmount,
+                        };
+
+
+            }
+
+            List<APInvoice_LT_DTO> ret_list = null;
+            if (query != null)
+                ret_list = query.ToList<APInvoice_LT_DTO>();
+            else
+                ret_list = new List<APInvoice_LT_DTO>();
+            long_text = "";
+            isInDebuggingMode = false;
+            if (isInDebuggingMode)
+            {
+                int ctr = 1;
+                ret_list.ForEach(item => long_text += "#" + ctr++ + "," + item.APInvoiceId + "," + item.APInvoiceIsClosed + "," + item.JournalId + "," + item.JournalLineNumber + "," + item.LT_Id + "," + item.LT_LocalAmountCredit + "," + item.LT_LocalAmountDebit + "," + item.LT_OpenAmount + "\n");
+            }
+
+            return ret_list;
+        }
+
+
+
+        public List<APInvoicePM> GetAllAPInvoicesPMsByIds(List<string> ids, int tenant)
+        {
+            IQueryable<APInvoicePM> invoices = GetAPInvoiceIQueryable();
+
+            List<APInvoicePM> invoicePMs = invoices.Where(d => ids.Contains(d.Id) && d.Tenant == tenant).ToList();
+
+            return invoicePMs;
+        }
+
+
+        private class J_Inv_DTO
+        {
+            public string APInvoiceId { get; set; }
+            public string APInvoiceStatusCode { get; set; }
+            public bool APInvoiceIsClosed { get; set; }
+            public string JournalId { get; set; }
+        }
+
+        private class J_Inv_L_DTO
+        {
+            public string APInvoiceId { get; set; }
+            public string APInvoiceStatusCode { get; set; }
+            public bool APInvoiceIsClosed { get; set; }
+            public string JournalId { get; set; }
+            public int JournalLineNumber { get; set; }
+        }
+
     }
+
+    public class GetNextAPInvoicesArgs
+    {
+        public int Tenant { get; set; }
+        public string InvoiceNumber { get; set; }
+        public string LastCheckedId { get; set; }
+        public DateTime FromInvoiceDate { get; set; }
+        public DateTime ToInvoiceDate { get; set; }
+        public int ThisTimeMadeCount { get; set; }
+        public bool Stop { get; set; }
+
+
+    }
+
+    public class APInvoice_LT_DTO
+    {
+        public string APInvoiceId { get; set; }
+        public string APInvoiceStatusCode { get; set; }
+        public bool APInvoiceIsClosed { get; set; }
+        public string JournalId { get; set; }
+        public int JournalLineNumber { get; set; }
+        public string LT_Id { get; set; }
+        public decimal LT_LocalAmountDebit { get; set; }
+        public decimal LT_LocalAmountCredit { get; set; }
+        public decimal LT_OpenAmount { get; set; }
+    }
+
+
+
 }

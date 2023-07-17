@@ -967,6 +967,11 @@
       SearchFields="&quot;CPI,Centralized POD images when convert to PDF files&quot;"
       Description="&quot;Centralized POD images when convert to PDF files&quot;" />
     <Record
+      SearchFields="&quot;PSR, Payment Status based on Reco&quot;"
+      Code="&quot;PSR&quot;"
+      Description="&quot;Payment Status based on Reco&quot;"
+      Name="&quot; A/P Invoice Payment Status based on Reconciliation&quot;" />
+    <Record
       Code="&quot;RE2&quot;"
       Name="&quot;Reports Execution WR Version 2&quot;"
       SearchFields="&quot;RE2, Reports Execution WR Version 2&quot;"

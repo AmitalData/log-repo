@@ -37,7 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-	<Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -228,6 +228,7 @@
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPageAnalyzer.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPagesExample.cs" />
+    <Compile Include="CoreBL\Batch\BatchAPInvoiceStatusUpdateTask.cs" />
     <Compile Include="CoreBL\Batch\BatchCancelTaxReportTask.cs" />
     <Compile Include="CoreBL\Batch\BatchGLAccountInterestDeactivationBalanceTask.cs" />
     <Compile Include="CoreBL\Batch\BatchYearlyFIXService.cs" />
@@ -862,6 +863,7 @@
     <Compile Include="InterestService\InterestReportService.CS" />
     <Compile Include="TestService\BatchTestService.cs" />
     <Compile Include="Utils\AccountingLogger.cs" />
+    <Compile Include="Utils\APInvoiceStatusUpdateBatch.cs" />
     <Compile Include="Utils\CardGLAccountConnectBatch.cs" />
     <Compile Include="Utils\FutureOpenChequesBatch.cs" />
     <Compile Include="Utils\GLAccountInterestActivationBalanceBatch.cs" />
