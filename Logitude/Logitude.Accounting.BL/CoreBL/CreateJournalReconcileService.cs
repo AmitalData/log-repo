@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -400,8 +401,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 accountingDate = (DateTime)accountDate;
             }
 
-            DateTime due = dueDate ?? accountingDate;
-            DateTime referenceDate = refDate ?? accountingDate;
+            DateTime due = dueDate ?? reconciliationLine.DueDate.GetValueOrDefault();
+            DateTime referenceDate = refDate ?? reconciliationLine.RefDate.GetValueOrDefault() ;
 
             JournalPM journal = new JournalPM()
             {
@@ -464,10 +465,29 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void AddJournalLines(JournalPM journal, ReconciliationLinePM reconciliationLine, string TheAccountId, string adjustAccountId,
             DateTime dueDate, DateTime refDate, string theCurrencyId, RatesTablePM rate, string Ref1, string Ref2, string Ref3, string Remarks) {
-            decimal totForeign = reconciliationLine.ReconciliationAmount / (decimal)rate.Rate.GetValueOrDefault();
+            var qs = new GLAccountQueryService(_AccountingContext);
+            var glPM = qs.GetSingle(TheAccountId, false, false);
+            decimal totForeign;//= reconciliationLine.ReconciliationAmount / (decimal)rate.Rate.GetValueOrDefault();
+            decimal totReconciliationLocalAmount;
+            bool useLocalRecoMethod = (glPM.ReconcileMethodCode == "0");
+            decimal totReconciliationAmountFromUnknownCurrency = reconciliationLine.ReconciliationAmount;
+
+
+            if (useLocalRecoMethod)
+            {
+                totReconciliationLocalAmount = totReconciliationAmountFromUnknownCurrency;
+                totForeign = totReconciliationLocalAmount / (decimal)rate.Rate.GetValueOrDefault();
+            }
+            else
+            {
+                totForeign = totReconciliationAmountFromUnknownCurrency;
+                totReconciliationLocalAmount = totForeign * (decimal)rate.Rate.GetValueOrDefault();
+            }
+
+
             if (reconciliationLine.ReconciliationAmount < 0)///credit //Ohad :
             {
-                decimal reconciliationAmount = -1 * reconciliationLine.ReconciliationAmount;
+                totReconciliationLocalAmount = -1 * totReconciliationLocalAmount;
                 totForeign = -1 * totForeign; //Ohad :
                 journal.JournalLines.Add(new JournalLinePM()
                 {
@@ -477,7 +497,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     AccountingDate = journal.AccountingDate,
                     ActionCode = DebitActionCode,//- Debit
                     DebitAccountId = TheAccountId,
-                    LocalAmount = reconciliationAmount,
+                    LocalAmount = totReconciliationLocalAmount,
                     CurrencyId = theCurrencyId,
                     ForeignAmount = totForeign,
                     DocumentDate = refDate,
@@ -493,7 +513,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     AccountingDate = journal.AccountingDate,
                     ActionCode = CreditActionCode,//- Credit
                     CreditAccountId = adjustAccountId,
-                    LocalAmount = reconciliationAmount,
+                    LocalAmount = totReconciliationLocalAmount,
                     CurrencyId = theCurrencyId,
                     ForeignAmount = totForeign,
                     DocumentDate = refDate,
@@ -512,7 +532,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     AccountingDate = journal.AccountingDate,
                     ActionCode = CreditActionCode,//- Credit 
                     CreditAccountId = TheAccountId,
-                    LocalAmount = reconciliationLine.ReconciliationAmount,
+                    LocalAmount = totReconciliationLocalAmount,
                     CurrencyId = theCurrencyId,
                     ForeignAmount = totForeign,
                     DocumentDate = refDate,
@@ -529,7 +549,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     ActionCode = DebitActionCode,//- Debit
                     DebitAccountId = adjustAccountId,
-                    LocalAmount = reconciliationLine.ReconciliationAmount,
+                    LocalAmount = totReconciliationLocalAmount,
                     CurrencyId = theCurrencyId,
                     ForeignAmount = totForeign,
                     DocumentDate = refDate,
