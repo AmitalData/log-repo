@@ -1305,6 +1305,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
 
                     int rows = command.ExecuteNonQuery();
+                    connection.Close();
                     return rows;
                 }
             }
@@ -1331,7 +1332,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //SubmitCard(cardPM);
             if (!String.IsNullOrEmpty(args.CardId) && !String.IsNullOrEmpty(args.AccountId) && args.Tenant > 0)
             { 
-                int res = Update_ConnectCardToGLAccount(args.CardId, Tenant, args.AccountId, displayNumber); 
+                int res = Update_ConnectCardToGLAccount(args.CardId, args.Tenant, args.AccountId, displayNumber); 
             }
 
 
