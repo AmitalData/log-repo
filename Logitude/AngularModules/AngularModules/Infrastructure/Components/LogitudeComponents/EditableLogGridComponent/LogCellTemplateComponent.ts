@@ -9,7 +9,7 @@ declare var SelectingElement: any;
     selector: 'log-cell-template',
     
     templateUrl: './LogCellTemplateComponent.html',
-    inputs: ['TabIndex', 'IsEnabled', 'CellColor', 'Alignment', 'IsFilled', 'DisableColors', 'IgnoreMods', 'RIndex','IsEditMode']
+    inputs: ['TabIndex', 'IsEnabled', 'CellColor', 'Alignment', 'IsFilled', 'DisableColors', 'IgnoreMods', 'RIndex','IsEditMode','NextMoveWithEnter']
 })
 
 export class LogCellTemplateComponent implements OnDestroy {
@@ -17,6 +17,7 @@ export class LogCellTemplateComponent implements OnDestroy {
     IgnoreMods: boolean = false;
     RIndex: number = -1;
     ObsNewElementInsertedSub: any;
+    NextMoveWithEnter: boolean = false;
     @Output() CellClicked = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(CC: LogColumnComponent, private CD: ChangeDetectorRef) {
@@ -145,7 +146,7 @@ export class LogCellTemplateComponent implements OnDestroy {
             this.tabIndex = value;
         }
     }
-
+   
     private alignment: string = "left";
     get Alignment() { return this.alignment; }
     set Alignment(value: string) {
@@ -274,7 +275,14 @@ export class LogCellTemplateComponent implements OnDestroy {
             this.CurrentSession.CurrentLogGrid = this.ColumnComponent.LogGridId;
             this.CurrentSession.EndOfRowReachedEvent.emit(this.RowIndex + 1);
         }
-        if ($event.keyCode == 13) {
+        if ( this.NextMoveWithEnter == true && $event.keyCode == 13) {
+            var element = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + (this.ColumnComponent.index + 1) + "_" + (this.TempRowIndex));
+            if (element) {
+                element.focus();
+            }
+        }
+        else  if ( this.NextMoveWithEnter != true && $event.keyCode == 13)
+        {
             var element = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex + 1));
             if (element) {
                 element.focus();
