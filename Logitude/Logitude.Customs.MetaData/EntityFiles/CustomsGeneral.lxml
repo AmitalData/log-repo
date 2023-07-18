@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;3dbe&quot;"
+  Code="&quot;4829&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5589,6 +5589,18 @@
       Code="&quot;Customs.General.O.NoRowsSelected&quot;"
       DefaultText="&quot;No Rows Selected&quot;"
       LocalDefaultText="&quot;לא סומנו שורות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportClosindData.O.CheckingAttachmentCertificates&quot;"
+      DefaultText="&quot;Checking the attachment of certificates of origin&quot;"
+      LocalDefaultText="&quot;בדיקת צירוף תעודות מקור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SpecialActivityRequest.F.LoadingDateTimeMandatory&quot;"
+      DefaultText="&quot;Loading Date Time field is mandatory&quot;"
+      LocalDefaultText="&quot;תאריך טעינה הוא שדה חובה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

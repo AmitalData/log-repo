@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "6293d34e2b3c8f82fe82aa287b13c92d";
+		public const string HashString = "5000e99441e9c1e32eb8030e8516448f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "3dbe",
+			      				    Code =  "4829",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2149,6 +2149,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOCopy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Copy", DefaultText = "Copy",LocalDefaultText = @"העתק", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralONoRowsSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NoRowsSelected", DefaultText = "No Rows Selected",LocalDefaultText = @"לא סומנו שורות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsExportClosindDataOCheckingAttachmentCertificates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportClosindData.O.CheckingAttachmentCertificates", DefaultText = "Checking the attachment of certificates of origin",LocalDefaultText = @"בדיקת צירוף תעודות מקור", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsSpecialActivityRequestFLoadingDateTimeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SpecialActivityRequest.F.LoadingDateTimeMandatory", DefaultText = "Loading Date Time field is mandatory",LocalDefaultText = @"תאריך טעינה הוא שדה חובה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
