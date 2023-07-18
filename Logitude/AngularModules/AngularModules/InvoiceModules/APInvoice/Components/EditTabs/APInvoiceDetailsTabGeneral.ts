@@ -192,6 +192,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
 
         else {
+            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AmountInInvoiceCurrency", this.ObjectTableName, true);
