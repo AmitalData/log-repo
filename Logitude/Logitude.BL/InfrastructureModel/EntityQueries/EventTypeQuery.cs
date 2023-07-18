@@ -9,6 +9,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using System.Collections.Generic;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Data.Entity.Core.Objects;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -742,16 +743,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          join et in repository.context.EventType on te.EventTypeId equals et.Id
                          join er in repository.context.EventRemarks on et.Id equals er.EventTypeId into erGroup
                          from er in erGroup.Where(e => e.PartnerTypeId == "CS").DefaultIfEmpty()
-                         where te.Deleted == false && et.InActive == false && et.IsCustomerView == true && et.Tenant == tenant && (te.EntityId == ShipmentId|| te.EntityId == forwardingShipmentHeaderId) && et.Code != "EXCE"
+                         where te.Deleted == false && et.InActive == false && et.IsCustomerView == true && et.Tenant == tenant && (te.EntityId == ShipmentId || te.EntityId == forwardingShipmentHeaderId) && et.Code != "EXCE"
                          select new Event()
                          {
                              LocalName = et.LocalName,
-                             EventDatetime = te.EventDateTime,
-                             Notes = te.Notes,
+							 EventDatetime = EntityFunctions.AddSeconds(te.EventDateTime, -te.EventDateTime.Second),
+							 Notes = te.Notes,
                              IsChoose = er.IsChoose,
                              PartnerTypeId = er.PartnerTypeId,
-							 EntityType = !string.IsNullOrEmpty(forwardingShipmentHeaderId) && ShipmentId == te.EntityId? "C": !string.IsNullOrEmpty(forwardingShipmentHeaderId) && forwardingShipmentHeaderId == te.EntityId ? "F":"",
-						 }).Distinct().OrderByDescending(d=>d.EventDatetime).ToList();
+                             EntityType = !string.IsNullOrEmpty(forwardingShipmentHeaderId) && ShipmentId == te.EntityId ? "C" : !string.IsNullOrEmpty(forwardingShipmentHeaderId) && forwardingShipmentHeaderId == te.EntityId ? "F" : "",
+                         }).Distinct().OrderByDescending(d=>d.EventDatetime).ToList();
 
             return query;
         }
