@@ -18712,7 +18712,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_Pending900InDetainedOrPhysicalCheck = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Pending900InDetainedOrPhysicalCheck", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Pending900InDetainedOrPhysicalCheck", NameTextCodeDefaultText = @"גביה - בתהליך בדיקה פיזית/מעוכבים" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_IsAutoInsuranceExportSubmit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsAutoInsuranceExportSubmit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISDefineToInsureFromSubmit", NameTextCodeDefaultText = @"Automatic insurance in export submission" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
