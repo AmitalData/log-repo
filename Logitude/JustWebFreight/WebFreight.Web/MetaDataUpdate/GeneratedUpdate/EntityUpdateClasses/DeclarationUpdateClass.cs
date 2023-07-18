@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "990d6cdeab9cd66dd6529aed6ff3fc8e";
+		public const string HashString = "8f07c0e1fe7ee83a2a1bce609c499aeb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18712,6 +18712,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_Pending900InDetainedOrPhysicalCheck = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Pending900InDetainedOrPhysicalCheck", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Pending900InDetainedOrPhysicalCheck", NameTextCodeDefaultText = @"גביה - בתהליך בדיקה פיזית/מעוכבים" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
+		   Feature DeclarationFeature_IsAutoInsuranceExportSubmit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsAutoInsuranceExportSubmit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISDefineToInsureFromSubmit", NameTextCodeDefaultText = @"Automatic insurance in export submission" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
    
 	    
 		}
@@ -21666,6 +21668,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOImporterCourierFromExcel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterCourierFromExcel", DefaultText = "Worksheet From Excel",LocalDefaultText = @"הטענת ש.ט.ב מאקסל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationONotCarriedInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NotCarriedInsurance", DefaultText = "nsurance was not carried out due to differences in currency/shipping conditions between the accounts",LocalDefaultText = @"לא בוצע ביטוח בגלל שוני במטבע/תנאי משלוח בין החשבונות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode DeclarationTextCode_CustomsDeclarationOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Choose", DefaultText = "Choose",LocalDefaultText = @"בחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOStatusThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StatusThatSelected", DefaultText = "Status that selected",LocalDefaultText = @"סטטוסים שנבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
