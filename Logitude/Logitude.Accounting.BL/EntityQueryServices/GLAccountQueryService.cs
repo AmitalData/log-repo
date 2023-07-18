@@ -32,6 +32,10 @@ using Simplog.Data.Helpers;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using System.Runtime.Remoting.Contexts;
 using Logitude.BL.Security;
+using Logitude.BL.InvoiceModel.Tools.DataMapping;
+using Logitude.BL.CommonDataModel.Tools.DataMapping;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -1271,27 +1275,72 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return isFullAccountingActivated;
         }
 
+        public static int Update_ConnectCardToGLAccount(string cardId, int tenant, string gLAccountId, string gLAccountDisplayNumber)
+        {
+
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+            using (SqlConnection connection = new SqlConnection(strConnString))
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText =
+                        "UPDATE Cards SET GLAccountId= @V_gLAccountId , GLAccountDisplayNumber= @V_gLAccountDisplayNumber " +
+                        "WHERE Id =@V_cardId and tenant= @V_tenant";
+
+                    command.CommandType = CommandType.Text;
+
+                    command.Parameters.Add("@V_tenant", SqlDbType.Int);
+                    command.Parameters["@V_tenant"].Value = tenant;
+
+                    command.Parameters.Add("@V_cardId", SqlDbType.VarChar);
+                    command.Parameters["@V_cardId"].Value = cardId;
+
+                    command.Parameters.Add("@V_gLAccountId", SqlDbType.VarChar);
+                    command.Parameters["@V_gLAccountId"].Value = gLAccountId;
+
+                    command.Parameters.Add("@V_gLAccountDisplayNumber", SqlDbType.VarChar);
+                    command.Parameters["@V_gLAccountDisplayNumber"].Value = gLAccountDisplayNumber;
+
+
+                    int rows = command.ExecuteNonQuery();
+                    return rows;
+                }
+            }
+        }
+
 
         public void ConnectCardToGLAccount(CardGLAccountConnectionArgs args)
         {
-            CardPM cardPM = GetCardById(args.CardId, args.Tenant);
+          //  CardPM cardPM = GetCardById(args.CardId, args.Tenant);
 
             if (!args.SkipConnectedCardsValidation)
                 CheckConnectCards(args.AccountId, args.CardId, args.Tenant);
 
-            cardPM.GLAccountId = args.AccountId;
-            cardPM.GLAccountDisplayNumber =  GetDisplayNumberByGLAccountId(args.AccountId, args.Tenant);
+         //   cardPM.GLAccountId = args.AccountId;
+         //   cardPM.GLAccountDisplayNumber =  GetDisplayNumberByGLAccountId(args.AccountId, args.Tenant);
+            string displayNumber = GetDisplayNumberByGLAccountId(args.AccountId, args.Tenant);
 
             if (IsFullAccountingActivated(args.Tenant))
             {
                 CreateTraceEvent(args.AccountId, args.AccountId, args.Tenant, "GLAccount", "DSCS");
                 CreateTraceEvent(args.CardId, args.AccountId, args.Tenant, "Customer", "CSCS");
             }
-            
-            SubmitCard(cardPM);
+
+            //SubmitCard(cardPM);
+            if (!String.IsNullOrEmpty(args.CardId) && !String.IsNullOrEmpty(args.AccountId) && args.Tenant > 0)
+            { 
+                int res = Update_ConnectCardToGLAccount(args.CardId, Tenant, args.AccountId, displayNumber); 
+            }
 
 
-
+            //ICommonDataContext context = CommonDataContext.GetContext(args.Tenant);
+            //CardRepository cardRepository = new CardRepository(context);
+            //Card card = null;
+            //CardMapping.MapEntity(cardPM, card, false);
+            //cardRepository.Update(card);
+            //cardRepository.SubmitChanges();
             //if(cardPM.PartnerTypeId == PartnerTypeValues.Vendor)
             //{
             //    cardPM.GLAccountId = accountId;
