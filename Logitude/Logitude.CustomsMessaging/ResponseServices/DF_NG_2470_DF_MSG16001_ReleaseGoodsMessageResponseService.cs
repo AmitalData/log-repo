@@ -105,9 +105,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
                     }
 
-                    if (declarationPM.Direction == "E")
+                    if (declarationPM.Direction == "E") { 
                         declarationPM.ReleaseStatusTypeCode = customResponse.GeneralData?.ReleaseMessageCode.ToString();
-                        
+                        if (declarationPM.IsSubmitDeclaration == false ||declarationPM.IsSubmitDeclaration==null)
+                            declarationPM.IsSubmitDeclaration = true; 
+                    }
+
                     var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
                     CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
                     if (declarationPM.IsAmendment == true && declarationPM.AmendmentOriginalDeclartation != null && _CourierMasterPM == null)
