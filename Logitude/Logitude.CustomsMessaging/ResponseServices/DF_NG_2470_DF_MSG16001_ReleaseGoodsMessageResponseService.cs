@@ -107,7 +107,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (declarationPM.Direction == "E") { 
                         declarationPM.ReleaseStatusTypeCode = customResponse.GeneralData?.ReleaseMessageCode.ToString();
-                        if (declarationPM.IsSubmitDeclaration == false)
+                        if (declarationPM.IsSubmitDeclaration == false ||declarationPM.IsSubmitDeclaration==null)
                             declarationPM.IsSubmitDeclaration = true; 
                     }
 
