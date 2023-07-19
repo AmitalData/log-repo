@@ -16,6 +16,8 @@ using System.Text.RegularExpressions;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
+using System.Diagnostics;
+using Microsoft.ServiceBus;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -47,8 +49,9 @@ namespace Logitude.Accounting.BL.Utils
             return _StatusCode;
         }
 
-        public void RunReconciliationAfterConversion(ReconciliationAfterConversionArg reconciliationAfterConversionArg)
+        public void RunReconciliationAfterConversion(ReconciliationAfterConversionArg reconciliationAfterConversionArg, int timeoutinmin, ref bool retry)
         {
+            var sw = Stopwatch.StartNew();
             int SUB_BATCH_SIZE = 50; // 100;
             string returnedMessage = "";
             int tenant = reconciliationAfterConversionArg.Tenant;
@@ -132,6 +135,12 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         lower = toExt_long;
                     }
+                }
+
+                if (sw.Elapsed.TotalMinutes >= timeoutinmin)
+                {
+                    retry = true;
+                    break;
                 }
             }
             if (batchTaskExecutionPM != null)
