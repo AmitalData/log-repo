@@ -56,6 +56,9 @@ namespace Logitude.CustomsMessaging.RequestServices
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
         public bool IsFromOpenNewAmendment = false;
+        public bool FeatureExcludeManifest = false;
+        public bool IsSendWithManifest = false;
+
         public override void OnRequestFail(GenericRequestParams requestParams)
         {
             if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -386,8 +389,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override DF_MSG10000_ImportDeclaration GetRequest(GenericRequestParams requestParams)
         {
-
-
+         
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
@@ -456,7 +458,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 /// due isAccurate
                 //queryService.GetOnlyParent();//  work with parent only !!!!!  
             }
-
+           
             //#endif
             bool fromMevaker = false;
             if (!string.IsNullOrWhiteSpace(requestParams.UnifreightListOnServerOnly))
@@ -466,6 +468,16 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             var req = new DF_MSG10000_ImportDeclaration();
             CreateDeclarationPM(requestParams);
+
+            FeatureQuery featureQuery = new FeatureQuery();
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
+            var feature = features.Features.FirstOrDefault(x => x.Code == "ISEXCLUDEMANIFEST");
+            if (feature != null)
+            {
+                FeatureExcludeManifest = true;
+            }
+            IsSendWithManifest = (!FeatureExcludeManifest || !this._DeclarationPM.ExcludeManifest);
+
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             if (requestParams.LoggingObjectTableId2 == objectTableIdCourierMaster || fromMevaker)
             {
@@ -2052,7 +2064,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                   {
                       declarationConsignment.UnloadingLocation.ArrivalDateTime = DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value);
                   }*/
-                if (!this._DeclarationPM.ExcludeManifest)
+                if (this.IsSendWithManifest)
                 {
                     declarationConsignment.UnloadingLocation = new DeclarationGoodsShipmentConsignmentUnloadingLocation()
                     {
@@ -2060,7 +2072,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                         ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
                     };
                 }
-				if (!this._DeclarationPM.ExcludeManifest) {
+				if (this.IsSendWithManifest) {
                    declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentConsignmentLoadingLocation()
                    {
                        ID = SetIDTypeValue<LoadingLocationIdentificationIDType>(consignmentPM.LoadingPortCode) // new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
@@ -2078,7 +2090,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationGoodsShipmentConsignmentDMExtensions GetDMExtensionsConsignment(ConsignmentPM consignmentPM)
         {
             var DMExtensions = new DeclarationGoodsShipmentConsignmentDMExtensions();
-            if (!this._DeclarationPM.ExcludeManifest)
+            if (this.IsSendWithManifest)
             {
                 DMExtensions.CargoDescription = new DeclarationGoodsShipmentConsignmentDMExtensionsCargoDescription() { Value = consignmentPM.CargoDescription };
             }
@@ -2092,7 +2104,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = false };
             }
-            if (!this._DeclarationPM.ExcludeManifest)
+            if (this.IsSendWithManifest)
             {
                 DMExtensions.ExportationCountryCode = new DeclarationGoodsShipmentConsignmentDMExtensionsExportationCountryCode() { Value = consignmentPM.OriginCountryCode };
             }
