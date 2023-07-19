@@ -61,7 +61,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
-        
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.SetIsUsingVirtuallization();
         this.EntityPM = entityArgs.EntityPM;
@@ -178,6 +178,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (!this.IsScreenEnabled) {
             this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AmountInInvoiceCurrency", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, false);
@@ -191,6 +192,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
 
         else {
+            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AmountInInvoiceCurrency", this.ObjectTableName, true);
@@ -524,6 +526,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         return myResult;
     }
     private isTotalInLocalCurrency: boolean = false;
+
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
+
     get IsTotalInLocalCurrency() { return this.isTotalInLocalCurrency; }
     set IsTotalInLocalCurrency(value: boolean) {
         if (this.isTotalInLocalCurrency != value) {
