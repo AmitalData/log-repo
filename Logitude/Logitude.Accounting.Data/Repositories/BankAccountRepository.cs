@@ -42,6 +42,18 @@ namespace Logitude.Accounting.Data.Repositories
             return entity;
         }
 
+        public BankAccount GetBankAccountByDisplay(string number, int tenant)
+        {
+            BankAccount entity;
+
+            entity = (from a in context.BankAccounts
+                      join gl in context.GLAccounts on a.GLAccountId equals gl.Id
+                      where gl.DisplayNumber == number && a.Tenant == tenant && gl.Tenant == tenant
+                      select a).FirstOrDefault();
+
+            return entity;
+        }
+
         public BankAccount GetBankAccountByGLAccountId(string accountId, int tenant)
         {
             BankAccount entity;
