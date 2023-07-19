@@ -111,6 +111,7 @@
     <None Include="DBOthers\Views\DecTaxesByTaxTypeCodeViews.dxml" />
     <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
+    <None Include="DBScripts\Post\202307201232_AddCOURIERPENDINGREASONS908.sxml" />
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS900.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS904.sxml" />
