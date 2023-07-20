@@ -175,7 +175,7 @@
   <Column
   Name="UserAcceptSaveID"
   Type="bit">
-    <Constraints 
+    <Constraints
       Nullable="false" />
   </Column>
   <Relation

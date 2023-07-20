@@ -135,7 +135,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
         this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe((myAdditionalResult: any) => {
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity && entity.IsUserIDNumberRequired == false) {
-                var myMessage = AppTool.IsNullOrEmpty(entity.UserIdNumber) ? "לא נדרשת השלמת תעודת זהות למשלוח זה" : "הפרטים נשמרו בהצלחה";
+                var myMessage = AppTool.IsNullOrEmpty(entity.UserIdNumber) ? "לם נדרשת השלמת תעודת זהות למשלוח זה" : "הפרטים נשמרו בהצלחה";
                 if (entity.UserIdNumberUpdateDate != null) {
 
                     //var myDateParts = DateTool.GetDateParts(entity.UserIdNumberUpdateDate);
@@ -164,7 +164,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
 
                     }
                     else {
-                        this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                        this.FinalMessage = "התיק לם קיים בסביבה הזו";
                         this.ShowFinalMessage = true;
                         this.StopBusyIndicator();
                     }
@@ -258,7 +258,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
 
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity.IsUserIDNumberRequired == false) {
-                var myMessage = AppTool.IsNullOrEmpty(this.UserIdNumber) ? "לא נדרשת השלמת תעודת זהות למשלוח זה" : "הפרטים נשמרו בהצלחה";
+                var myMessage = AppTool.IsNullOrEmpty(this.UserIdNumber) ? "לם נדרשת השלמת תעודת זהות למשלוח זה" : "הפרטים נשמרו בהצלחה";
                 if (entity.UserIdNumberUpdateDate != null) {
                     var formatedUpdateDate = this.datePipe.transform(entity.UserIdNumberUpdateDate, 'dd/MM/yyyy');
                     myMessage = myMessage + " " + formatedUpdateDate;

@@ -375,6 +375,8 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             newLine.Reference2 = selectedTransaction.Reference2;
             newLine.Reference3 = selectedTransaction.Reference3;
             newLine.Notes = selectedTransaction.Notes;
+            newLine.dueDate=selectedTransaction.DueDate;
+            newLine.refDate =selectedTransaction.DocumentDate;
             newLine.JournalNumber = selectedTransaction.JournalNumber;
             myReconciliationLines.push(newLine);
         }

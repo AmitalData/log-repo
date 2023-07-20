@@ -469,10 +469,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     {
         if(searchInput) 
         {
-         var size =  this.tempInvitedCustomers.length;
+         var size =  this.InvitedCustomers.length;
          this.InvitedCustomers = [];
          for (let i = 0; i < size; i++) {
-             if (this.tempInvitedCustomers[i].Name.toUpperCase().includes(searchInput.toUpperCase())) {
+             if (this.tempInvitedCustomers[i].Name.toUpperCase().match(searchInput.toUpperCase())) {
                  this.InvitedCustomers.push(this.tempInvitedCustomers[i]);
              }
          }
@@ -494,7 +494,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
          var size =  this.tempMilestonesStatus.length;
          this.MilestonesStatus = [];
          for (let i = 0; i < size; i++) {
-             if (this.tempMilestonesStatus[i].EnglishName.toUpperCase().includes(searchInput.toUpperCase())) {
+             if (this.tempMilestonesStatus[i].EnglishName.toUpperCase().match(searchInput.toUpperCase())) {
                  this.MilestonesStatus.push(this.tempMilestonesStatus[i]);
              }
          }
@@ -516,7 +516,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
          var size =  this.tempShipmentDirectionFilters.length;
          this.ShipmentDirectionFilters = [];
          for (let i = 0; i < size; i++) {
-             if (this.tempShipmentDirectionFilters[i].name.toUpperCase().includes(searchInput.toUpperCase())) {
+             if (this.tempShipmentDirectionFilters[i].name.toUpperCase().match(searchInput.toUpperCase())) {
                  this.ShipmentDirectionFilters.push(this.tempShipmentDirectionFilters[i]);
              }
          }
@@ -538,7 +538,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
          var size =  this.tempShipmentTypeFilters.length;
          this.ShipmentTypeFilters = [];
          for (let i = 0; i < size; i++) {
-             if (this.tempShipmentTypeFilters[i].name.toUpperCase().includes(searchInput.toUpperCase())) {
+             if (this.tempShipmentTypeFilters[i].name.toUpperCase().match(searchInput.toUpperCase())) {
                  this.ShipmentTypeFilters.push(this.tempShipmentTypeFilters[i]);
              }
          }

@@ -41,7 +41,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Tax Report Line&quot;"
-  Code="&quot;7bc0&quot;"
+
+  Code="&quot;ed18&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"

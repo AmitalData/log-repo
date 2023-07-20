@@ -34,6 +34,10 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         {
             ARInvoicePM aRInvoicePM = GetARInvoicePM();
             if (aRInvoicePM == null) return;
+            if (aRInvoicePM.IsPrinted)
+            {
+                return;
+            }
             if (string.IsNullOrEmpty(aRInvoicePM.IssuedByUserId)) return;
             if (_setAsPrintedIfInvoiceFromInterestBatchInvoice && !aRInvoicePM.IsFromInterestBatchInvoice) return;
             using (TransactionScope scope = TransactionFactory.GetTransaction())

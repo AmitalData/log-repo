@@ -543,11 +543,12 @@
             </div>
         </div>
         <ul>
+
             <li>
                 <div class="search-text">
 
                     <input #input type="text"  id="MySearchAdvancedFilters" class="gray" [(ngModel)]="ShipmentSearchInput.SearchText" placeholder="Search advanced Filters..."
-                        formControlName="SearchText" name="SearchText "  (input)="onSearchAdvancedFiltersChange($event.target.value)"  value="{{SearchText}}"/>          
+                        formControlName="SearchText" name="SearchText"  (input)="onSearchAdvancedFiltersChange($event.target.value)"  value="{{SearchText}}"/>          
                 </div>
             </li>
             <li [class.expanded]="isFilter2Expanded">
