@@ -243,7 +243,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         private void AuthorizeUsers(int tenant)
         {
             string email = GetUserEmail();
-            if (!SecurityUtility.IsUser(email, tenant) && !SecurityUtility.CheckIsUserCustomerCare(email))
+            if ((!SecurityUtility.IsUser(email, tenant) || !SecurityUtility.isUserAdmin(email, tenant) )  && !SecurityUtility.CheckIsUserCustomerCare(email)  )
                 throw new AutenticationException("Sorry! this operation is not authorized!");
 
         }
@@ -278,6 +278,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             {
                 if (!shipmentFilters.CustomersIds.Any())
                     AuthorizeUsers(shipmentFilters.Tenant);
+
 
                 AuthorizeTenant(shipmentFilters.Tenant);
                 CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
