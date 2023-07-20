@@ -599,7 +599,7 @@ namespace Logitude.Customs.BL.BL
                     clientFullName = clientId.FullName;
                 }
             }
-            if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 1000 && (string.IsNullOrEmpty(declarationPM.ImporterId) || (!string.IsNullOrEmpty(declarationPM.ImporterId) && clientFullName.Contains("יש לשלוף  לקוח"))))
+            if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD >= 1000 && (string.IsNullOrEmpty(declarationPM.ImporterId) || (!string.IsNullOrEmpty(declarationPM.ImporterId) && clientFullName.Contains("יש לשלוף  לקוח"))))
             {
                 DeclarationPendingPM declarationPendingPM_908 = null;
                 if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
