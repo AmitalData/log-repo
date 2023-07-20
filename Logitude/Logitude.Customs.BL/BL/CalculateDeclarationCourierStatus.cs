@@ -590,7 +590,16 @@ namespace Logitude.Customs.BL.BL
         public void CalcDeclarationPendings908(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
-            if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 1000 && (string.IsNullOrEmpty(declarationPM.ImporterId) || string.IsNullOrEmpty(declarationPM.ImporterCode)))
+            string clientFullName=null;
+            if (!string.IsNullOrEmpty(declarationPM.ImporterId)){
+                ClientQueryService clientQueryService = new ClientQueryService(myDeclarationCourierStatusPM.Tenant);
+                var clientId = clientQueryService.GetSingle(declarationPM.ImporterId,false,false);
+                if(clientId != null)
+                {
+                    clientFullName = clientId.FullName;
+                }
+            }
+            if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 1000 && (string.IsNullOrEmpty(declarationPM.ImporterId) || (!string.IsNullOrEmpty(declarationPM.ImporterId) && clientFullName.Contains("יש לשלוף  לקוח"))))
             {
                 DeclarationPendingPM declarationPendingPM_908 = null;
                 if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
