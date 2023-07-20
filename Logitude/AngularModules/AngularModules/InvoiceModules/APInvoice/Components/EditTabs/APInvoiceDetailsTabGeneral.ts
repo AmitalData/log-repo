@@ -540,12 +540,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     private isTotalInLocalCurrency: boolean = false;
 
-    get BranchId() { return this.EntityPM.BranchId; }
-    set BranchId(value: string) {
-        if (this.EntityPM.BranchId != value) {
-            this.EntityPM.BranchId = value;
-        }
-    }
+    
 
     get IsTotalInLocalCurrency() { return this.isTotalInLocalCurrency; }
     set IsTotalInLocalCurrency(value: boolean) {
