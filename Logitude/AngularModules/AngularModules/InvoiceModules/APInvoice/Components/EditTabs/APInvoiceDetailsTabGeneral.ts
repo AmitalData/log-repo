@@ -205,6 +205,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
 
         else {
+            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AmountInInvoiceCurrency", this.ObjectTableName, true);
@@ -538,6 +539,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         return myResult;
     }
     private isTotalInLocalCurrency: boolean = false;
+
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
+
     get IsTotalInLocalCurrency() { return this.isTotalInLocalCurrency; }
     set IsTotalInLocalCurrency(value: boolean) {
         if (this.isTotalInLocalCurrency != value) {

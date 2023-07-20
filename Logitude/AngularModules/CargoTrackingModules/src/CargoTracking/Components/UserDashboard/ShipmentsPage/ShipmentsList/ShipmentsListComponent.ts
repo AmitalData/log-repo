@@ -139,10 +139,16 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private GetCompanyLoginsFromCache() {
+        
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
         if(SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === false)
         {
             this.GetInvitedCustomers();
+        }
+        else{
+            if(SessionInfo.LoggedUserPM?.UserRoles?.indexOf("Administrator")<0){
+                this.GetInvitedCustomers();
+            }
         }
     }
 
