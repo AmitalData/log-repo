@@ -40,6 +40,7 @@ using System.Configuration;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL.Exceptions;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -378,7 +379,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 var transitions = InitTransition();
 
-                
+
                 var CommandList = new List<CustomsRCmmand>()
                 {
                     new CustomsRCmmand(CustomsCommandEnum.CustomsCommandGetCustomRequestWR, (o) =>{ return CustomsCommandGetCustomRequest(out customsRequest);   }) ,
@@ -549,6 +550,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     responseData = resData;
                 }
             }
+            catch (AnotherThreadHandlingException) { }
             catch (Exception curException)
             {
                 //success = false;
@@ -1023,9 +1025,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 return toContinueNextCommand;
 
             }
+            catch (AnotherThreadHandlingException)
+            {
+                throw;
+            }
             catch (CustomsRequestsSheetDomainModelServiceException)
             {
-
                 throw;
             }
             catch (System.ServiceModel.FaultException<UnifreightIIG.Common.SystemTableServiceReference.ResponseFault> fault)
