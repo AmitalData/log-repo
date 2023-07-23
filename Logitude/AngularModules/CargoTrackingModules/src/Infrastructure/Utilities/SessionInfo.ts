@@ -30,4 +30,6 @@ export class SessionInfo{
     public static LoggedUserPM: any;
     public static LoggedContact: any;
 
+    public static isAdmin: boolean;
+
 }

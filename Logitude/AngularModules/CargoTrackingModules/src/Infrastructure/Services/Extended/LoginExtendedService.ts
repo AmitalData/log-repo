@@ -18,7 +18,10 @@ export class LoginExtendedService {
 		return defer(() => {
 			return this._http.post(this._apiUrl + "Authentication", loginParameters, { headers: authHeaders })
 				.pipe(
+                    
 					map((response: HttpResponse<any>) => {
+                        debugger
+
 						let userData = response;
 
 						return userData;

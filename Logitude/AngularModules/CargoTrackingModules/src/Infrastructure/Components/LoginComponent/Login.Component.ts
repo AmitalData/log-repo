@@ -197,6 +197,7 @@ export class LoginComponent implements OnInit {
             this.ShowbusyIndicator = false;
         }
         else {
+            SessionInfo.isAdmin=userData.isAdmin
             SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
             sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
 
