@@ -293,7 +293,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     //uthorizeUsers(shipmentFilters.Tenant);
                     string email = GetUserEmail();
 
-                    if (!SecurityUtility.CheckIsUserCustomerCare(email))
+                    if (!SecurityUtility.CheckIsUserCustomerCare(email) && !SecurityUtility.isUserAdmin(email, shipmentFilters.Tenant))
                     {
 
                         HttpResponseMessage reponse = Request.CreateResponse(HttpStatusCode.OK, "NoFound");

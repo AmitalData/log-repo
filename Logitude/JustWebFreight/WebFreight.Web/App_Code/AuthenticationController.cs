@@ -1100,6 +1100,17 @@ namespace WebFreight.Web
                         }
 
                     }
+                    ICommonDataContext commonDataContexts = CommonDataContext.GetContext(loginParameters.Tenant);
+
+                    User userLoged = (from a in commonDataContexts.Users
+                                 where a.Id ==data.UserId
+                                 select a).FirstOrDefault();
+                    if (userLoged != null && userLoged.UserRoles.Contains("Administrator"))
+                        data.IsAdmin = true;
+                    else
+                    {
+                        data.IsAdmin = false;
+                    }
                 }
 
                 if (loginParameters.IsMobileLogin && !data.HasError)
@@ -1185,7 +1196,7 @@ namespace WebFreight.Web
                     }
                 }
                 #endregion
-
+                
 
                 if (data.HasError)
                 {
@@ -1225,6 +1236,8 @@ namespace WebFreight.Web
           
 
                 }
+
+
 
                 return data;
             }
