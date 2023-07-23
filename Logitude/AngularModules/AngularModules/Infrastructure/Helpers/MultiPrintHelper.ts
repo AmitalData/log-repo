@@ -1,6 +1,5 @@
 import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { AppTool } from 'Infrastructure/Tools';
-import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 
 export function IsMultiPrintValid(title, rowCount): boolean {
     var messageWindow: MessageWindow = new MessageWindow();
