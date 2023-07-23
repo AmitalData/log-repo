@@ -1330,6 +1330,8 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public Declaration GetDeclarationByDeclarationNum(string decNumber, int tenant)
         {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
             var query = (from a
                         in context.Declarations
                          where a.DeclarationNumber == decNumber && a.Tenant == tenant

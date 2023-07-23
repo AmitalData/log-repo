@@ -2097,6 +2097,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <field
     Id="&quot;f147cbe6-5773-4262-98c4-8ed8a100fc0e&quot;"
     FieldName="&quot;ExistInCustoms&quot;"
@@ -2124,6 +2125,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ExistInCustoms&quot;"
     ListPropertyPath="&quot;ExistInCustoms&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2692,6 +2694,18 @@
       Code="&quot;Customs.Containerization.O.ContainerizationChangedRemainsOneDec&quot;"
       DefaultText="&quot;Containerization Changed Remains One Declaration&quot;"
       LocalDefaultText="&quot;לא ניתן להמכיל הצהרה אחת , יש לבצע תיקונים בהצהרה במצב זה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.DeleteLastDecInCon&quot;"
+      DefaultText="&quot;It is not possible to cancel the last declaration in the container until a cancellation message is sent and a response is received from customs&quot;"
+      LocalDefaultText="&quot;לא ניתן לבטל את ההצהרה האחרונה בהמכלה עד שלא ישלח מסר ביטול ויתקבל מענה מהמכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.CancelDecInCon&quot;"
+      DefaultText="&quot;Cancelling declaration in containerization&quot;"
+      LocalDefaultText="&quot;ביטול הצהרה בהמכלה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

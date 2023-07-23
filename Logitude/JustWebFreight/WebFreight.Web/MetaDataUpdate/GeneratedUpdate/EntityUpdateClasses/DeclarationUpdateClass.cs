@@ -85,8 +85,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "4c4945a818357187c39200268f4177b5";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+
+
+
+
+		public const string HashString = "93c96a07c6d78ee90bea5cf01960b838";
+ 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -17635,6 +17639,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShortProcedure",
+					  						ObjectTableName =  "Customs.Declaration",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShortProcedure",
+					  						ListPropertyPath =  "ShortProcedure",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExportDeclaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShortProcedure",
+					  						DefaultText =  "Short Procedure",
+					  						FullLocalDefaultText =  "מקוצר",
+					  						ListFieldLable =  "ShortProcedureListLable",
+					  						ListLableDefaultText =  "Short Procedure",
+					  						ListLocalDefaultText =  "מקוצר",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -18709,6 +18775,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_SendManifestEvent = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendManifestEvent", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.SendManifest", NameTextCodeDefaultText = @"Send Manifest Event" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_IsAutoInsuranceExportSubmit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsAutoInsuranceExportSubmit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISDefineToInsureFromSubmit", NameTextCodeDefaultText = @"Automatic insurance in export submission" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
+		   Feature DeclarationFeature_SendManifestEvent = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendManifestEvent", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.SendManifest", NameTextCodeDefaultText = @"Send Manifest Event" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   
+           Feature DeclarationFeature_IsAutoInsuranceExportSubmit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsAutoInsuranceExportSubmit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISDefineToInsureFromSubmit", NameTextCodeDefaultText = @"Automatic insurance in export submission" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
@@ -21613,7 +21683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOMustCustomDocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MustCustomDocumentType", DefaultText = "Must Custom Document Type",LocalDefaultText = @"יש לבחור סוג מסמך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOExportDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExportDeclarations", DefaultText = "Export Declarations",LocalDefaultText = @"הצהרות יצוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+  		   TextCode DeclarationTextCode_CustomsDeclarationOExportDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExportDeclarations", DefaultText = "Export Declarations",LocalDefaultText = @"הצהרות יצוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOImportDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImportDeclarations", DefaultText = "Import Declarations",LocalDefaultText = @"הצהרות יבוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -21658,12 +21728,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOSendReplyMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendReplyMessage", DefaultText = "Sending a reply to a message",LocalDefaultText = @"שליחת תשובה להודעה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOIsSendManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsSendManifest", DefaultText = "This field is intended for situations where it is required to field the statement without declaration data",LocalDefaultText = @"את 5 השדות שלהלן אין חובה לשדר למכס ולכן הם לא ישודרו. אם ברצונכם לשדר אותם בכל זאת, אנא הסירו את ה V -  השדות הם: תאריך מזהה מטען, ארץ מוצא, נמל טעינה, תאריך גמר פריקה ותאור הטובין.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOManifestwillnotsent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Manifestwillnotsent", DefaultText = "Manifest data will not be sent to customs",LocalDefaultText = @"נתוני מצהר לא ישלחו במסר הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterCourierFromExcel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterCourierFromExcel", DefaultText = "Worksheet From Excel",LocalDefaultText = @"הטענת ש.ט.ב מאקסל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+  		   TextCode DeclarationTextCode_CustomsDeclarationOImporterCourierFromExcel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterCourierFromExcel", DefaultText = "Worksheet From Excel",LocalDefaultText = @"הטענת ש.ט.ב מאקסל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationONotCarriedInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NotCarriedInsurance", DefaultText = "nsurance was not carried out due to differences in currency/shipping conditions between the accounts",LocalDefaultText = @"לא בוצע ביטוח בגלל שוני במטבע/תנאי משלוח בין החשבונות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 
 
    
 	    

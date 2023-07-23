@@ -143,7 +143,7 @@ export class NewContainerizationComponent extends BaseComponent {
                     this.BuildColumns();
                     this.isLoad = true;
                                    
-                    this.containerizationExtendedListService.ErrorsList=["לא ניתן להמכיל הצהרה לא הוגשה"];
+                    this.containerizationExtendedListService.ErrorsList=["לם ניתן להמכיל הצהרה לם הוגשה"];
                    
                 });
             });
@@ -218,7 +218,7 @@ export class NewContainerizationComponent extends BaseComponent {
         var filters = new ApiQueryFilters;
         var ExportFilter = new FilterItem("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
         filters.AdditionalFilters.push(ExportFilter);
-        var ProcFilter = new FilterItem("ProcedureCurrentName", 'אסמבלי', null, null, "Contains", false, false, false, "string", false);
+        var ProcFilter = new FilterItem("ProcedureCurrentName", 'םסמבלי', null, null, "Contains", false, false, false, "string", false);
         filters.AdditionalFilters.push(ProcFilter);
         filters.addAdditionalFilter("IsContainerization", true, null, null, "Equal", true, false, false, "string");
 
@@ -279,7 +279,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'CreateDateTime',
             DataTypeCode: 'String',
-            Display: "תאריך פתיחת הצהרה",
+            Display: "תםריך פתיחת הצהרה",
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -301,7 +301,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFile',
             DataTypeCode: 'String',
-            Display: "מס' תיק יצוא",
+            Display: "מס' תיק יצום",
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -410,7 +410,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.containerizationExtendedListService.ConnectedDeclarations = this.containerizationExtendedListService.AllDeclarations + this.entityPM.ConnectedDeclarations;
         if(this.containerizationExtendedListService.ConnectedDeclarations=="undefined"||  AppTool.IsNullOrEmpty( this.containerizationExtendedListService.ConnectedDeclarations)){
           
-            this.containerizationExtendedListService.ErrorsList=["לא אותרו הצהרות שניתן להמכיל"];
+            this.containerizationExtendedListService.ErrorsList=["לם םותרו הצהרות שניתן להמכיל"];
             this.containerizationExtendedListService.IsError=true;
             this.containerizationExtendedListService.SelectedDeclarations = false;
         }
@@ -497,7 +497,7 @@ export class NewContainerizationComponent extends BaseComponent {
             ).subscribe(res => {
 
                 if (res.Result.length == 0) {
-                    myConfirmWindow.Show(`שם לב , אין מזהה מטען משותף שמאפשר את ההמכלה של ההצהרה/ות שנבחרה/ו`);
+                    myConfirmWindow.Show(`שם לב , םין מזהה מטען משותף שמםפשר םת ההמכלה של ההצהרה/ות שנבחרה/ו`);
                     myConfirmWindow.IsYesEnabled = false;
                     SessionLocator.SelectedSession.StopBusyIndicator();
                     return;
@@ -547,17 +547,21 @@ export class NewContainerizationComponent extends BaseComponent {
                             this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
 
 
+
                                 if (response.Result.list[0].Id == "1") {
                                     SessionLocator.SelectedSession.StopBusyIndicator();
-                                    myConfirmWindow.Show(`ההמכלה עם מזהי המטען: `+this.entityPM.ExistInCustoms+` קיימת במכס וכל עוד לא בוטלה לא ניתן יהיה להשתמש במונה ההמכלה הספציפי`);
-                                    myConfirmWindow.IsYesEnabled = false;
+                                    myConfirmWindow.Title = "עדכון המכלה מבוטלת";
+                                    myConfirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                    myConfirmWindow.ShowNoButton = false;                             
+                                    myConfirmWindow.Show(`ההמכלה עם מזהי המטען: `+this.entityPM.ExistInCustoms+` קיימת במכס וכל עוד לם בוטלה לם ניתן יהיה להשתמש במונה ההמכלה הספציפי`);
 
                                 }
                                 else if (response.Result.list[0].Id == "0") {
                                         SessionLocator.SelectedSession.StopBusyIndicator();
-                                        myConfirmWindow.Show(`מתוך המכלה מבוטלת ניתן לעדכן המכלה אחת בלבד`);
-                                        myConfirmWindow.IsYesEnabled = false;
-
+                                        myConfirmWindow.Title = "עדכון המכלה מבוטלת";
+                                        myConfirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                        myConfirmWindow.ShowNoButton = false;  
+                                        myConfirmWindow.Show(`מתוך המכלה מבוטלת ניתן לעדכן המכלה םחת בלבד`);
                                 }
                                 else {
                                         let confirmWindow = new ConfirmWindow();

@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "259e6f6cce8a875ae9f718b52f3f9c95";
+
+		public const string HashString = "a3ff8c2c06aafe1e3371ee2ba75f5932";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Logitude.Customs.NewContainerizationControlCommand",
-			      				    LocalDefaultText =  "המכלה",
+			      				    LocalDefaultText =  "×”×ž×›×œ×”",
 			      				    DefaultText =  "Containerization",
 			      				    Code =  "4ba2",
 			      				    Name =  " Query Group",
@@ -191,12 +192,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ...",
-					  						FullLocalDefaultText =  "מספר המכלה/תיק יצוא/מזהה מטען/לקוח",
+					  						FullLocalDefaultText =  "×ž×¡×¤×¨ ×”×ž×›×œ×”/×ª×™×§ ×™×¦×•×�/×ž×–×”×” ×ž×˜×¢×Ÿ/×œ×§×•×—",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
 					  						ShortFieldLable =  "SearchFields",
-					  						ShortFieldLableDefaultText =  "מספר המכלה/תיק יצוא/מזהה מטען/לקוח",
-					  						ShortLocalDefaultText =  "מספר המכלה/תיק יצוא/מזהה מטען/לקוח",
+					  						ShortFieldLableDefaultText =  "×ž×¡×¤×¨ ×”×ž×›×œ×”/×ª×™×§ ×™×¦×•×�/×ž×–×”×” ×ž×˜×¢×Ÿ/×œ×§×•×—",
+					  						ShortLocalDefaultText =  "×ž×¡×¤×¨ ×”×ž×›×œ×”/×ª×™×§ ×™×¦×•×�/×ž×–×”×” ×ž×˜×¢×Ÿ/×œ×§×•×—",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -255,10 +256,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AgentDeclaration",
 					  						DefaultText =  "Agent Declaration",
-					  						FullLocalDefaultText =  "הצהרת סוכן",
+					  						FullLocalDefaultText =  "×”×¦×”×¨×ª ×¡×•×›×Ÿ",
 					  						ListFieldLable =  "AgentDeclarationListLable",
 					  						ListLableDefaultText =  "Agent Declaration",
-					  						ListLocalDefaultText =  "הצהרת סוכן",
+					  						ListLocalDefaultText =  "×”×¦×”×¨×ª ×¡×•×›×Ÿ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -317,10 +318,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerizationDate",
 					  						DefaultText =  "Containerization Date",
-					  						FullLocalDefaultText =  "תאריך פתיחת המכלה",
+					  						FullLocalDefaultText =  "×ª×�×¨×™×š ×¤×ª×™×—×ª ×”×ž×›×œ×”",
 					  						ListFieldLable =  "ContainerizationDateListLable",
 					  						ListLableDefaultText =  "Containerization Date",
-					  						ListLocalDefaultText =  "תאריך פתיחת המכלה",
+					  						ListLocalDefaultText =  "×ª×�×¨×™×š ×¤×ª×™×—×ª ×”×ž×›×œ×”",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -379,10 +380,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerizationNumber",
 					  						DefaultText =  "Containerization Number",
-					  						FullLocalDefaultText =  "מספר המכלה",
+					  						FullLocalDefaultText =  "×ž×¡×¤×¨ ×”×ž×›×œ×”",
 					  						ListFieldLable =  "ContainerizationNumberListLable",
 					  						ListLableDefaultText =  "Containerization Number",
-					  						ListLocalDefaultText =  "מספר המכלה",
+					  						ListLocalDefaultText =  "×ž×¡×¤×¨ ×”×ž×›×œ×”",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -445,10 +446,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerizationStatus",
 					  						DefaultText =  "Containerization Status",
-					  						FullLocalDefaultText =  "קוד סטטוס המכלה",
+					  						FullLocalDefaultText =  "×§×•×“ ×¡×˜×˜×•×¡ ×”×ž×›×œ×”",
 					  						ListFieldLable =  "ContainerizationStatusListLable",
 					  						ListLableDefaultText =  "Containerization Status",
-					  						ListLocalDefaultText =  "קוד סטטוס המכלה",
+					  						ListLocalDefaultText =  "×§×•×“ ×¡×˜×˜×•×¡ ×”×ž×›×œ×”",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -511,10 +512,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HataraStatus",
 					  						DefaultText =  "Hatara Status",
-					  						FullLocalDefaultText =  "קוד סטטוס התרה",
+					  						FullLocalDefaultText =  "×§×•×“ ×¡×˜×˜×•×¡ ×”×ª×¨×”",
 					  						ListFieldLable =  "HataraStatusListLable",
 					  						ListLableDefaultText =  "Hatara Status",
-					  						ListLocalDefaultText =  "קוד סטטוס התרה",
+					  						ListLocalDefaultText =  "×§×•×“ ×¡×˜×˜×•×¡ ×”×ª×¨×”",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -576,7 +577,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Operation Mode",
 					  						ListFieldLable =  "OperationModeListLable",
 					  						ListLableDefaultText =  "Operation Mode",
-					  						ListLocalDefaultText =  "קוד פעולה",
+					  						ListLocalDefaultText =  "×§×•×“ ×¤×¢×•×œ×”",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -636,10 +637,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportFile",
 					  						DefaultText =  "Export File",
-					  						FullLocalDefaultText =  "תיק יצוא",
+					  						FullLocalDefaultText =  "×ª×™×§ ×™×¦×•×�",
 					  						ListFieldLable =  "ExportFileListLable",
 					  						ListLableDefaultText =  "Export File",
-					  						ListLocalDefaultText =  "תיק יצוא",
+					  						ListLocalDefaultText =  "×ª×™×§ ×™×¦×•×�",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -700,10 +701,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeForExport",
 					  						DefaultText =  "Transport Mode",
-					  						FullLocalDefaultText =  "סוג משלוח",
+					  						FullLocalDefaultText =  "×¡×•×’ ×ž×©×œ×•×—",
 					  						ListFieldLable =  "TransportModeForExportListLable",
 					  						ListLableDefaultText =  "Transport Mode",
-					  						ListLocalDefaultText =  "סוג משלוח",
+					  						ListLocalDefaultText =  "×¡×•×’ ×ž×©×œ×•×—",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -763,10 +764,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterName",
 					  						DefaultText =  "Importer Name",
-					  						FullLocalDefaultText =  "לקוח",
+					  						FullLocalDefaultText =  "×œ×§×•×—",
 					  						ListFieldLable =  "ImporterNameListLable",
 					  						ListLableDefaultText =  "Importer Name",
-					  						ListLocalDefaultText =  "לקוח",
+					  						ListLocalDefaultText =  "×œ×§×•×—",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -826,10 +827,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerizationStatusName",
 					  						DefaultText =  "Containerization Status",
-					  						FullLocalDefaultText =  "סטטוס המכלה",
+					  						FullLocalDefaultText =  "×¡×˜×˜×•×¡ ×”×ž×›×œ×”",
 					  						ListFieldLable =  "ContainerizationStatusNameListLable",
 					  						ListLableDefaultText =  "Containerization Status",
-					  						ListLocalDefaultText =  "סטטוס המכלה",
+					  						ListLocalDefaultText =  "×¡×˜×˜×•×¡ ×”×ž×›×œ×”",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -889,10 +890,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HataraStatusName",
 					  						DefaultText =  "Hatara Status",
-					  						FullLocalDefaultText =  "סטטוס התרה",
+					  						FullLocalDefaultText =  "×¡×˜×˜×•×¡ ×”×ª×¨×”",
 					  						ListFieldLable =  "HataraStatusNameListLable",
 					  						ListLableDefaultText =  "Hatara Status",
-					  						ListLocalDefaultText =  "סטטוס התרה",
+					  						ListLocalDefaultText =  "×¡×˜×˜×•×¡ ×”×ª×¨×”",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -951,10 +952,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HataraStatusIsNull",
 					  						DefaultText =  "HataraStatusIsNull",
-					  						FullLocalDefaultText =  "התקבלה התרה",
+					  						FullLocalDefaultText =  "×”×ª×§×‘×œ×” ×”×ª×¨×”",
 					  						ListFieldLable =  "HataraStatusIsNullListLable",
 					  						ListLableDefaultText =  "HataraStatusIsNull",
-					  						ListLocalDefaultText =  "התקבלה התרה",
+					  						ListLocalDefaultText =  "×”×ª×§×‘×œ×” ×”×ª×¨×”",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1127,10 +1128,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsChange",
 					  						DefaultText =  "Is Change",
-					  						FullLocalDefaultText =  "האם יש שינוי בהמכלה",
+					  						FullLocalDefaultText =  "×”×�×� ×™×© ×©×™× ×•×™ ×‘×”×ž×›×œ×”",
 					  						ListFieldLable =  "IsChangeListLable",
 					  						ListLableDefaultText =  "Is Change",
-					  						ListLocalDefaultText =  "האם יש שינוי בהמכלה",
+					  						ListLocalDefaultText =  "×”×�×� ×™×© ×©×™× ×•×™ ×‘×”×ž×›×œ×”",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1245,7 +1246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsMultiCustomers",
 					  						DefaultText =  "Is Multi Customers",
-					  						FullLocalDefaultText =  "לקוח",
+					  						FullLocalDefaultText =  "×œ×§×•×—",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1363,10 +1364,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoTypeCode",
 					  						DefaultText =  "CargoIdentifire Type",
-					  						FullLocalDefaultText =  "סוג מזהה מטען",
+					  						FullLocalDefaultText =  "×¡×•×’ ×ž×–×”×” ×ž×˜×¢×Ÿ",
 					  						ListFieldLable =  "CargoTypeCodeListLable",
 					  						ListLableDefaultText =  "CargoTypeCode",
-					  						ListLocalDefaultText =  "סוג מזהה מטען",
+					  						ListLocalDefaultText =  "×¡×•×’ ×ž×–×”×” ×ž×˜×¢×Ÿ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1426,10 +1427,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManifestNumber",
 					  						DefaultText =  "Manifest Number",
-					  						FullLocalDefaultText =  "מזהה מטען ראשון",
+					  						FullLocalDefaultText =  "×ž×–×”×” ×ž×˜×¢×Ÿ ×¨×�×©×•×Ÿ",
 					  						ListFieldLable =  "ManifestNumberListLable",
 					  						ListLableDefaultText =  "Manifest Number",
-					  						ListLocalDefaultText =  "מזהה מטען ראשון",
+					  						ListLocalDefaultText =  "×ž×–×”×” ×ž×˜×¢×Ÿ ×¨×�×©×•×Ÿ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1489,10 +1490,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SecondCargoID",
 					  						DefaultText =  "Second Cargo ID",
-					  						FullLocalDefaultText =  "מזהה מטען שני",
+					  						FullLocalDefaultText =  "×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™",
 					  						ListFieldLable =  "SecondCargoIDListLable",
 					  						ListLableDefaultText =  "SecondCargoID",
-					  						ListLocalDefaultText =  "מזהה מטען שני",
+					  						ListLocalDefaultText =  "×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1552,10 +1553,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ThirdCargoID",
 					  						DefaultText =  "Third Cargo ID",
-					  						FullLocalDefaultText =  "מזהה מטען שלישי",
+					  						FullLocalDefaultText =  "×ž×–×”×” ×ž×˜×¢×Ÿ ×©×œ×™×©×™",
 					  						ListFieldLable =  "ThirdCargoIDListLable",
 					  						ListLableDefaultText =  "ThirdCargoID",
-					  						ListLocalDefaultText =  "מזהה מטען שלישי",
+					  						ListLocalDefaultText =  "×ž×–×”×” ×ž×˜×¢×Ÿ ×©×œ×™×©×™",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1614,10 +1615,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerizationCargoID",
 					  						DefaultText =  "Containerization Cargo ID",
-					  						FullLocalDefaultText =  "מזהה מטען המכלה",
+					  						FullLocalDefaultText =  "×ž×–×”×” ×ž×˜×¢×Ÿ ×”×ž×›×œ×”",
 					  						ListFieldLable =  "ContainerizationCargoIDListLable",
 					  						ListLableDefaultText =  "Containerization Cargo ID",
-					  						ListLocalDefaultText =  "מזהה מטען המכלה",
+					  						ListLocalDefaultText =  "×ž×–×”×” ×ž×˜×¢×Ÿ ×”×ž×›×œ×”",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1678,10 +1679,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeId",
 					  						DefaultText =  "Transport Mode ",
-					  						FullLocalDefaultText =  "סוג הובלה",
+					  						FullLocalDefaultText =  "×¡×•×’ ×”×•×‘×œ×”",
 					  						ListFieldLable =  "TransportModeIdListLable",
 					  						ListLableDefaultText =  "Transport Mode ",
-					  						ListLocalDefaultText =  "סוג הובלה",
+					  						ListLocalDefaultText =  "×¡×•×’ ×”×•×‘×œ×”",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1697,6 +1698,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
@@ -1721,6 +1723,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExistInCustoms",
 					  						ListPropertyPath =  "ExistInCustoms",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1739,10 +1742,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExistInCustoms",
 					  						DefaultText =  "Exist In Customs",
-					  						FullLocalDefaultText =  "קיים במכס",
+					  						FullLocalDefaultText =  "×§×™×™×� ×‘×ž×›×¡",
 					  						ListFieldLable =  "ExistInCustomsListLable",
 					  						ListLableDefaultText =  "Exist In Customs",
-					  						ListLocalDefaultText =  "קיים במכס",
+					  						ListLocalDefaultText =  "×§×™×™×� ×‘×ž×›×¡",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1783,19 +1786,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ContainerizationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.OpenContainerization", DefaultText = @"Open Containerization",LocalDefaultText = "המכלות פתוחות", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ContainerizationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.OpenContainerization", DefaultText = @"Open Containerization",LocalDefaultText = "×”×ž×›×œ×•×ª ×¤×ª×•×—×•×ª", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ContainerizationFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Q.OpenContainerization", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.OpenContainerization", NameTextCodeDefaultText = "OpenContainerization", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerizationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerizationTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.ContainerizationWithRelease", DefaultText = @"Containerization With Release",LocalDefaultText = "המכלות שהותרו", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ContainerizationTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.ContainerizationWithRelease", DefaultText = @"Containerization With Release",LocalDefaultText = "×”×ž×›×œ×•×ª ×©×”×•×ª×¨×•", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ContainerizationFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Q.ContainerizationWithRelease", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.ContainerizationWithRelease", NameTextCodeDefaultText = "ContainerizationWithRelease", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerizationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerizationTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.CancelledContainerization", DefaultText = @"Cancelled Containerization",LocalDefaultText = "המכלות מבוטלות", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ContainerizationTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.CancelledContainerization", DefaultText = @"Cancelled Containerization",LocalDefaultText = "×”×ž×›×œ×•×ª ×ž×‘×•×˜×œ×•×ª", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ContainerizationFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Q.CancelledContainerization", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.CancelledContainerization", NameTextCodeDefaultText = "CancelledContainerization", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerizationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerizationTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.AllContainerization", DefaultText = @"All Containerization",LocalDefaultText = "כל ההמכלות", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ContainerizationTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Containerization.Q.AllContainerization", DefaultText = @"All Containerization",LocalDefaultText = "×›×œ ×”×”×ž×›×œ×•×ª", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ContainerizationFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Q.AllContainerization", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.AllContainerization", NameTextCodeDefaultText = "AllContainerization", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerizationObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -1957,11 +1960,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable ContainerizationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Containerization" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode ContainerizationGeneralDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.General", DefaultText = "General Details",LocalDefaultText = "כללי", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode ContainerizationGeneralDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.General", DefaultText = "General Details",LocalDefaultText = "×›×œ×œ×™", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ContainerizationGeneralDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Tab.GeneralDetails", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.CNGN", NameTextCodeDefaultText = "General Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
  
                  
-			   TextCode ContainerizationRequestSheetTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.RequestSheet", DefaultText = "Request Sheet",LocalDefaultText = "גליון בקשות", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode ContainerizationRequestSheetTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.RequestSheet", DefaultText = "Request Sheet",LocalDefaultText = "×’×œ×™×•×Ÿ ×‘×§×©×•×ª", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ContainerizationRequestSheetFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization.Tab.RequestSheet", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerizationFeatures.CNRS", NameTextCodeDefaultText = "Request Sheet", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerizationObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -2062,7 +2065,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "control",
 						FeatureId = ContainerizationFeature_MB0.Id,
 						Style = null,
-						LocalDefaultText = "שלח",
+						LocalDefaultText = "×©×œ×—",
 						FeatureUniqeCode = ContainerizationFeature_MB0.FeatureUniqeCode,
 						HtmlComponentPath = "./CustomsModules/CustomsContainerization/Components/SendContainerization/SendContainerization",
 						Width = 0,
@@ -2082,7 +2085,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = "פעולות",
+						LocalDefaultText = "×¤×¢×•×œ×•×ª",
 						FeatureUniqeCode = null,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -2102,7 +2105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  ContainerizationFeature_MB10.Id,
 						Style = null,
-						LocalDefaultText = "הוספת הצהרה",
+						LocalDefaultText = "×”×•×¡×¤×ª ×”×¦×”×¨×”",
                         HtmlComponentPath="./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent",
                         Width=0,
 						FeatureUniqeCode=  ContainerizationFeature_MB10.FeatureUniqeCode,
@@ -2122,7 +2125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  ContainerizationFeature_MB11.Id,
 						Style = null,
-						LocalDefaultText = "ביטול המכלה",
+						LocalDefaultText = "×‘×™×˜×•×œ ×”×ž×›×œ×”",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  ContainerizationFeature_MB11.FeatureUniqeCode,
@@ -2142,7 +2145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  ContainerizationFeature_MB12.Id,
 						Style = null,
-						LocalDefaultText = "סטטוס הצהרות בהמכלה",
+						LocalDefaultText = "×¡×˜×˜×•×¡ ×”×¦×”×¨×•×ª ×‘×”×ž×›×œ×”",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  ContainerizationFeature_MB12.FeatureUniqeCode,
@@ -2157,25 +2160,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable ContainerizationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Containerization" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationTHGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.General", DefaultText = "General",LocalDefaultText = @"כללי", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationTHGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.General", DefaultText = "General",LocalDefaultText = @"×›×œ×œ×™", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationTHRequestSheet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.RequestSheet", DefaultText = "RequestSheet",LocalDefaultText = @"גליון בקשות", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationTHRequestSheet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.TH.RequestSheet", DefaultText = "RequestSheet",LocalDefaultText = @"×’×œ×™×•×Ÿ ×‘×§×©×•×ª", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationORowNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.RowNumber", DefaultText = "RowNumber",LocalDefaultText = @"מס'", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationORowNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.RowNumber", DefaultText = "RowNumber",LocalDefaultText = @"×ž×¡'", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationOExportFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ExportFile", DefaultText = "ExportFile",LocalDefaultText = @"תיק יצוא", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOExportFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ExportFile", DefaultText = "ExportFile",LocalDefaultText = @"×ª×™×§ ×™×¦×•×�", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationOImporterName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ImporterName", DefaultText = "ImporterName",LocalDefaultText = @"לקוח", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOImporterName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ImporterName", DefaultText = "ImporterName",LocalDefaultText = @"×œ×§×•×—", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationOPaymentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.PaymentDate", DefaultText = "PaymentDate",LocalDefaultText = @"הגשה", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOPaymentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.PaymentDate", DefaultText = "PaymentDate",LocalDefaultText = @"×”×’×©×”", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationOCargoTypeName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.CargoTypeName", DefaultText = "CargoTypeName",LocalDefaultText = @"מזהה מטען", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOCargoTypeName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.CargoTypeName", DefaultText = "CargoTypeName",LocalDefaultText = @"×ž×–×”×” ×ž×˜×¢×Ÿ", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationOManifestNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ManifestNumber", DefaultText = "ManifestNumber",LocalDefaultText = @"מזהה מטען ראשון ", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOManifestNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ManifestNumber", DefaultText = "ManifestNumber",LocalDefaultText = @"×ž×–×”×” ×ž×˜×¢×Ÿ ×¨×�×©×•×Ÿ ", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationOContainerizationChanged = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContainerizationChanged", DefaultText = "Containerization Changed",LocalDefaultText = @"בוצעו שינויים בהמכלה, יש לשדר פעם נוספת", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOContainerizationChanged = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContainerizationChanged", DefaultText = "Containerization Changed",LocalDefaultText = @"×‘×•×¦×¢×• ×©×™× ×•×™×™×� ×‘×”×ž×›×œ×”, ×™×© ×œ×©×“×¨ ×¤×¢×� × ×•×¡×¤×ª", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContainerizationTextCode_CustomsContainerizationOContainerizationChangedRemainsOneDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContainerizationChangedRemainsOneDec", DefaultText = "Containerization Changed Remains One Declaration",LocalDefaultText = @"לא ניתן להמכיל הצהרה אחת , יש לבצע תיקונים בהצהרה במצב זה", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOContainerizationChangedRemainsOneDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContainerizationChangedRemainsOneDec", DefaultText = "Containerization Changed Remains One Declaration",LocalDefaultText = @"×œ×� × ×™×ª×Ÿ ×œ×”×ž×›×™×œ ×”×¦×”×¨×” ×�×—×ª , ×™×© ×œ×‘×¦×¢ ×ª×™×§×•× ×™×� ×‘×”×¦×”×¨×” ×‘×ž×¦×‘ ×–×”", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationODeleteLastDecInCon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.DeleteLastDecInCon", DefaultText = "It is not possible to cancel the last declaration in the container until a cancellation message is sent and a response is received from customs",LocalDefaultText = @"×œ×� × ×™×ª×Ÿ ×œ×‘×˜×œ ×�×ª ×”×”×¦×”×¨×” ×”×�×—×¨×•× ×” ×‘×”×ž×›×œ×” ×¢×“ ×©×œ×� ×™×©×œ×— ×ž×¡×¨ ×‘×™×˜×•×œ ×•×™×ª×§×‘×œ ×ž×¢× ×” ×ž×”×ž×›×¡", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOCancelDecInCon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.CancelDecInCon", DefaultText = "Cancelling declaration in containerization",LocalDefaultText = @"×‘×™×˜×•×œ ×”×¦×”×¨×” ×‘×”×ž×›×œ×”", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
