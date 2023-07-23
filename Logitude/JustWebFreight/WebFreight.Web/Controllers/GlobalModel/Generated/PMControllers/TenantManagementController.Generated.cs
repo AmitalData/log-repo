@@ -71,7 +71,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
 
                 if (isAuthentication)
                 {
-                    SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
+                   // SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
                     TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
                     TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(id);
                     PerformanceLogger.AddServerExecutionTimeHeader(logKey);
