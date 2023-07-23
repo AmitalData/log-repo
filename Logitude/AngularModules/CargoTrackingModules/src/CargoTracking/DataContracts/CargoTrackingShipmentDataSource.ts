@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {CargoTrackingSearchService} from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import {ShipmentsListComponent} from '../Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
 import {CargoTrackingShipmentSearchInput} from './CargoTrackingShipmentFilters';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 export class ShipmentDataSource extends DataSource<any | undefined> {
     private pageSize = 50;
@@ -92,20 +93,25 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
     
         this.ShipmentSearchService.GetUserShipmentsCustomers(tenant)
             .subscribe((Response: any) => {
-                this.parent.InvitedCustomers = Response
-                .map(d => (
-                    {
-                        IsSelected: false,
-                        CardId : d.Id,
-                        Name: d.Name,
-                    }
-                ));
-                let StartwithSpeicalCharCustomers = this.parent.InvitedCustomers.filter(a => this.CheckSpeicalChar(a.Name.replace(/ /g, ""))); 
-                let StartwithoutSpeicalCharCustomers = this.parent.InvitedCustomers.filter(a => !this.CheckSpeicalChar(a.Name.replace(/ /g, "")));   
-                StartwithSpeicalCharCustomers=StartwithSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);
-                StartwithoutSpeicalCharCustomers=StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);  
-                this.parent.InvitedCustomers=StartwithSpeicalCharCustomers.concat(StartwithoutSpeicalCharCustomers);
-                this.parent.FillInvitedCustomersDictionary(this.parent.InvitedCustomers);
+                 this.parent.InvitedCustomers = Response;
+                // .map(d => (
+                //     {
+                //         IsSelected: false,
+                //         CardId : d.Id,
+                //         Name: d.Name,
+                //     }
+                // ));
+                // let StartwithSpeicalCharCustomers = this.parent.InvitedCustomers.filter(a => this.CheckSpeicalChar(a.Name.replace(/ /g, ""))); 
+                // let StartwithoutSpeicalCharCustomers = this.parent.InvitedCustomers.filter(a => !this.CheckSpeicalChar(a.Name.replace(/ /g, "")));   
+                // StartwithSpeicalCharCustomers=StartwithSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);
+                // StartwithoutSpeicalCharCustomers=StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);  
+                // this.parent.InvitedCustomers=StartwithSpeicalCharCustomers.concat(StartwithoutSpeicalCharCustomers);
+                debugger
+                if(!SessionInfo.IsAdmin){
+
+                    this.parent.GetInvitedCustomers();
+                }
+              //  this.parent.FillInvitedCustomersDictionary(this.parent.InvitedCustomers);
                 this.ChangeDetector.detectChanges();
             }, error => {
                 this.parent.ShipmentsLoadingError = error.statusText;
