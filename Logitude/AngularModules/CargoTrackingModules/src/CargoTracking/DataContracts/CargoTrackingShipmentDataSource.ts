@@ -129,8 +129,14 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
 
         this.ShipmentSearchService.GetUserShipments(this.ShipmentsFilters)
             .subscribe((shipmentsResponse: any) => {
+                if(shipmentsResponse=="NoFound"){
+                    this.parent.noResult=true; 
+                    this.ChangeDetector.detectChanges();
+                 }
+                 else{
                 this.parent.ShipmentsLoadingError = '';
                 this.HandleShipmentsResponse(page, shipmentsResponse);
+                 }
             }, error => {
                 this.parent.ShipmentsLoadingError = error.statusText;
                 console.error(error);

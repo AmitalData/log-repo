@@ -277,8 +277,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 if (!shipmentFilters.CustomersIds.Any())
-                    AuthorizeUsers(shipmentFilters.Tenant);
+                {
+                    //uthorizeUsers(shipmentFilters.Tenant);
+                    string email = GetUserEmail();
 
+                    if (!SecurityUtility.CheckIsUserCustomerCare(email))
+                    {
+
+                        HttpResponseMessage reponse = Request.CreateResponse(HttpStatusCode.OK, "NoFound");
+
+                        return reponse;
+                    }
+                }
 
                 AuthorizeTenant(shipmentFilters.Tenant);
                 CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
