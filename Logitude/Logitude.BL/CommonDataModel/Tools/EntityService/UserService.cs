@@ -909,11 +909,22 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (contacttenant != null)
             {
-                List<ContactTenantRole> contactTenantRoles = (from a in this.objectContext.ContactTenantRoles
-                                                              where a.ContactTenantId == contacttenant.Id && a.Tenant == tenant
-                                                              select a).ToList();
+                var query = (from a in this.objectContext.ContactTenantRoles
+                             where a.ContactTenantId == contacttenant.Id && a.Tenant == tenant
+                             select a);
 
-                foreach (ContactTenantRole contacttenantrole in contactTenantRoles)
+
+
+                   List<ContactTenantRolePM> ContactTenantRole= query.Select(e => new ContactTenantRolePM()
+                             {
+                                 Tenant = e.Tenant,
+                                 ContactTenantId = e.ContactTenantId,
+                                 RoleId = e.RoleId,
+                                 Id = e.Id
+
+                             }).ToList();
+
+                foreach (ContactTenantRolePM contacttenantrole in ContactTenantRole)
                 {
                     Role role = this.objectContext.Roles.Where(a => a.Id == contacttenantrole.RoleId && (a.Tenant == tenant || a.Tenant == 0)).FirstOrDefault();
 
