@@ -1332,7 +1332,7 @@ namespace WebFreight.Web.Security
         {
             string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
             UserRepository userRepository = new UserRepository(tenant);
-            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, true);
+            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, false);
             if(loggedUser!=null) {
                 if (loggedUser.UserRoles.Contains("Administrator"))
                 {

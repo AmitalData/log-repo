@@ -192,11 +192,13 @@ export class LoginComponent implements OnInit {
         this.errorMessage = "";
         let tenantList = userData.CompanyLogins;
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
+        
         if(!LogInToTenant) {
             this.errorMessage = "Login failed! unauthorized user.";
             this.ShowbusyIndicator = false;
         }
         else {
+            SessionInfo.IsAdmin=userData.IsAdmin
             SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
             sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
 
@@ -247,6 +249,7 @@ export class LoginComponent implements OnInit {
         SessionInfo.LoggedUserTenant = userData.CurrentTenant;
         SessionInfo.Token = userData.Token;
         SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
+
     }
 
     private RouteToMainPage(){
