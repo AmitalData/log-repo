@@ -1035,7 +1035,12 @@ export class ListComponent implements OnInit, AfterViewInit {
         else return false;
     }
     private IsMultiPrintFeatureOn(): boolean {
-        return (this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "Shipment") && FeatureLocator.HasFeaturePermession("General", "MultiPrint");
+         if (this.ObjectTableName == "ARInvoice" ) {
+             return true;
+         }
+         else {
+             return ((this.ObjectTableName == "Shipment") && FeatureLocator.HasFeaturePermession("General", "MultiPrint"));
+         }
     }
 
     MutliUpdate() {
@@ -1783,7 +1788,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         //if (filters == null) {
         //    filters = new ApiQueryFilters();
         //}
-        
+
         if (this.listArgs.DefaultFilterItems && this.listArgs.DefaultFilterItems.length > 0) {
             this.listArgs.DefaultFilterItems.forEach((filter) => {
                 MyFilters.AdditionalFilters.push(filter)
@@ -2431,7 +2436,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         this.RowClicked.emit($event);
                     }
                     else if (myObjectTableName == "Task") {
-                        
+
                     }
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                         var customFile = "";
@@ -2498,7 +2503,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 //  if (SessionLocator.LoggedUserPM.Email == "mohammad@fnarsoft.com") {
                                 this.DestroyMe = true;
                                 //}
-                    
+
                             });
                             */
 

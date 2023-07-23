@@ -9,19 +9,8 @@ export function IsMultiPrintValid(title, rowCount): boolean {
         messageWindow.Show("Sorry! You can’t perform the batch print process. The number of " + title + " in the view can't be 0");
         return false;
     }
-    if(SessionLocator.TenantPM.AccountingActivated)
-    {
-        if (title == 'ARInvoices' && rowCount > 100) {
-            messageWindow.Show("Sorry! You can’t perform the batch print process. The number of " + title + " in the view mustn't exceed 100");
-            return false;
-        }
-    
-        else if (title != 'ARInvoices' && rowCount > 50) {
-            messageWindow.Show("Sorry! You can’t perform the batch print process. The number of " + title + " in the view mustn't exceed 50");
-            return false;
-        }
-    }
-    else if (rowCount > 50) {
+
+    if (rowCount > 50) {
         messageWindow.Show("Sorry! You can’t perform the batch print process. The number of " + title + " in the view mustn't exceed 50");
         return false;
     }
