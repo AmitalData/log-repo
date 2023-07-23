@@ -63,212 +63,9 @@ namespace WebFreight.Web
                     Debug.WriteLine(key + " :" + Request.Headers[key]);
                 }
                 string data = getData(Request.InputStream);
-                if (!string.IsNullOrEmpty(data))
-                {
-                    //request_type
-                    XmlDocument xmldoc = new XmlDocument();
-                    xmldoc.LoadXml(data);
-                    //string ReqType = "c_id";
-                    //XmlNodeList Type = xmldoc.GetElementsByTagName("request_type");
-                    //foreach (XmlNode item in Type)
-                    //{
-                    //    ReqType = item.InnerText;
-                    //}
-                    XmlNodeList eventList = xmldoc.GetElementsByTagName("event");
-                    foreach (XmlNode item in eventList)
-                    {
-                        foreach (XmlNode item1 in item.ChildNodes)
-                        {
-                            if (item1.Name == "code" && item1.InnerText == "999")
-                            {
-                                return;
-                            }
-                        }
-                    }
+                AnalyzeContainerStatus(data);
 
-                    //////////////////////// Old Logic ///////////////////////////////////////////
-                   
-                    XmlNodeList nodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
-                    string Id = string.Empty;
-                    //foreach (XmlNode item in nodeList)
-                    //{
-                    if (nodeList[0] != null)
-                    {
-                        Id = nodeList[0].InnerText;
-                    }
-
-                    //} 
-                    OceanInsightsRequestQuery query = new OceanInsightsRequestQuery(0);
-                    var TempRecs = query.GetAllByOceanInsightsId(Id);
-                    if (TempRecs == null || TempRecs.Count == 0)
-                    {
-                        string ContainerNo = "";
-                        string ScacCode = "";
-                        string BLNumber = "";
-                        XmlNodeList requestkeynodeList = xmldoc.GetElementsByTagName("container_number");
-                        foreach (XmlNode item in requestkeynodeList)
-                        {
-                            ContainerNo = item.InnerText;
-                        }
-                        XmlNodeList blnumbernodeList = xmldoc.GetElementsByTagName("bl_number");
-                        if (blnumbernodeList != null)
-                        {
-                            foreach (XmlNode item in blnumbernodeList)
-                            {
-                                BLNumber = item.InnerText;
-                            }
-                        }
-                        XmlNodeList carrierscacnodeList = xmldoc.GetElementsByTagName("carrier_scac");
-                        foreach (XmlNode item in carrierscacnodeList)
-                        {
-                            ScacCode = item.InnerText;
-                        }
-                        var TempRec = new OceanInsightsRequestPM();
-                        IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
-                        OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, 0);
-                        TempRec.ContainerNumber = ContainerNo;
-                        TempRec.SCACCode = ScacCode;
-                        TempRec.Tenant = 0;
-                        TempRec.OceanInsigntId = Id;
-                        TempRec.BLNumber = BLNumber;
-                        TempRec.Type = string.IsNullOrEmpty(TempRec.BLNumber) ? "c_id" : "m_bl";
-                        TempRec.FromPushPage = true;
-                        service.Create(TempRec);
-                        TempRecs.Add(TempRec);
-                    }
-                    try
-                    {
-                        //////////////////////// New Logic ///////////////////////////////////////////
-                        int MyTenant = 0;
-                        if (TempRecs != null && TempRecs.Count > 0)
-                        {
-                            MyTenant = TempRecs.FirstOrDefault().Tenant;
-                        }
-                        string OIId = string.Empty;
-                        string ContainerNo = string.Empty;
-                        XmlNodeList MynodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
-
-                        if (MynodeList[0] != null)
-                        {
-                            OIId = MynodeList[0].InnerText;
-                        }
-
-                        XmlNodeList MyContainerList = xmldoc.GetElementsByTagName("container_number");
-
-                        if (MyContainerList[0] != null)
-                        {
-                            ContainerNo = MyContainerList[0].InnerText;
-                        }
-
-                        OceanInsightsRequestsCountQuery Newquery = new OceanInsightsRequestsCountQuery(0);
-                        var OIRCount = Newquery.GetSinglePMByOceanInsightsByContainerNoOceanInsigntId(ContainerNo, OIId);
-                        if (OIRCount == null)
-                        {
-
-                            //string ScacCode = "";
-                            string BLNumber = "";
-                            //XmlNodeList requestkeynodeList = xmldoc.GetElementsByTagName("container_number");
-                            //foreach (XmlNode item in requestkeynodeList)
-                            //{
-                            //    ContainerNo = item.InnerText;
-                            //}
-                            XmlNodeList blnumbernodeList = xmldoc.GetElementsByTagName("bl_number");
-                            if (blnumbernodeList != null)
-                            {
-                                foreach (XmlNode item in blnumbernodeList)
-                                {
-                                    BLNumber = item.InnerText;
-                                }
-                            }
-                            //XmlNodeList carrierscacnodeList = xmldoc.GetElementsByTagName("carrier_scac");
-                            //foreach (XmlNode item in carrierscacnodeList)
-                            //{
-                            //    ScacCode = item.InnerText;
-                            //}
-                            var TempRequestsCount = new OceanInsightsRequestsCountPM();
-                            IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
-                            OceanInsightsRequestsCountService service = new OceanInsightsRequestsCountService(objectContext, 0);
-                            TempRequestsCount.ContainerNumber = ContainerNo;
-                            TempRequestsCount.Tenant = MyTenant;
-                            TempRequestsCount.OceanInsigntId = OIId;
-                            TempRequestsCount.BLNumber = BLNumber;
-                            TempRequestsCount.Type = string.IsNullOrEmpty(TempRequestsCount.BLNumber) ? "c_id" : "m_bl";
-                            TempRequestsCount.CreateDate = DateTime.Now;
-                            service.Create(TempRequestsCount);
-                            OIRCount = TempRequestsCount;
-                            //TempRecs.Add(TempRec);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
-                    /////////////////////////////////////////////////////////////
-                    foreach (var TempRec in TempRecs)
-                    {
-                        if (TempRec.Type == "m_bl")
-                        {
-                            XmlNodeList containershipments = xmldoc.GetElementsByTagName("shipment");
-                            foreach (XmlNode item in containershipments)
-                            {
-                                string newId = "";
-                                string newcontainernumber = "";
-                                string newblnumber = "";
-                                string newcarrierscac = "";
-                                foreach (XmlNode item1 in item.ChildNodes)
-                                {
-                                    if (item1.Name == "shipmentsubscription_id")
-                                    {
-                                        newId = item1.InnerText;
-                                    }
-                                    else if (item1.Name == "container_number")
-                                    {
-                                        newcontainernumber = item1.InnerText;
-                                    }
-                                    else if (item1.Name == "bl_number")
-                                    {
-                                        newblnumber = item1.InnerText;
-                                    }
-                                    else if (item1.Name == "carrier_scac")
-                                    {
-                                        newcarrierscac = item1.InnerText;
-                                    }
-
-                                }
-                                //if (!string.IsNullOrEmpty(newId))
-                                //{
-                                    var TempReq = query.GetSinglePMByOceanInsightsId(Id);
-                                    if (TempReq != null)
-                                    {
-                                        UpdateStatus(TempRec, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
-                                    }
-                                    else
-                                    {
-                                        TempReq = new OceanInsightsRequestPM();
-                                        IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
-                                        OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, 0);
-                                        TempReq.ContainerNumber = newcontainernumber;
-                                        //TempReq.ContainerNumber = newblnumber;
-                                        TempReq.SCACCode = newcarrierscac;
-                                        TempReq.Tenant = TempRec.Tenant;
-                                        TempReq.OceanInsigntId = Id;
-                                        TempReq.Type = "BLS";
-                                        TempReq.BLNumber = newblnumber;
-                                        TempReq.FromPushPage = true;
-                                        service.Create(TempReq);
-                                        UpdateStatus(TempReq, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
-                                    }
-                                //}
-                            }
-                        }
-                        if (TempRec != null)
-                        {
-                            UpdateStatus(TempRec, data, TempRec.ContainerNumber);
-                        }
-                    } 
-                    
-                }
-            }
+			}
             catch (Exception ex)
             {
 
@@ -289,7 +86,240 @@ namespace WebFreight.Web
             }
 
         }
+        public void AnalyzeContainerStatus(string data)
+        {
+			int tenant = 0;
+			string ComId = "";
+			string ComStatusCode = "";
+			try
+			{
+			
+				if (!string.IsNullOrEmpty(data))
+				{
+					//request_type
+					XmlDocument xmldoc = new XmlDocument();
+					xmldoc.LoadXml(data);
+					//string ReqType = "c_id";
+					//XmlNodeList Type = xmldoc.GetElementsByTagName("request_type");
+					//foreach (XmlNode item in Type)
+					//{
+					//    ReqType = item.InnerText;
+					//}
+					XmlNodeList eventList = xmldoc.GetElementsByTagName("event");
+					foreach (XmlNode item in eventList)
+					{
+						foreach (XmlNode item1 in item.ChildNodes)
+						{
+							if (item1.Name == "code" && item1.InnerText == "999")
+							{
+								return;
+							}
+						}
+					}
 
+					//////////////////////// Old Logic ///////////////////////////////////////////
+
+					XmlNodeList nodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
+					string Id = string.Empty;
+					//foreach (XmlNode item in nodeList)
+					//{
+					if (nodeList[0] != null)
+					{
+						Id = nodeList[0].InnerText;
+					}
+
+					//} 
+					OceanInsightsRequestQuery query = new OceanInsightsRequestQuery(0);
+					var TempRecs = query.GetAllByOceanInsightsId(Id);
+					if (TempRecs == null || TempRecs.Count == 0)
+					{
+						string ContainerNo = "";
+						string ScacCode = "";
+						string BLNumber = "";
+						XmlNodeList requestkeynodeList = xmldoc.GetElementsByTagName("container_number");
+						foreach (XmlNode item in requestkeynodeList)
+						{
+							ContainerNo = item.InnerText;
+						}
+						XmlNodeList blnumbernodeList = xmldoc.GetElementsByTagName("bl_number");
+						if (blnumbernodeList != null)
+						{
+							foreach (XmlNode item in blnumbernodeList)
+							{
+								BLNumber = item.InnerText;
+							}
+						}
+						XmlNodeList carrierscacnodeList = xmldoc.GetElementsByTagName("carrier_scac");
+						foreach (XmlNode item in carrierscacnodeList)
+						{
+							ScacCode = item.InnerText;
+						}
+						var TempRec = new OceanInsightsRequestPM();
+						IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
+						OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, 0);
+						TempRec.ContainerNumber = ContainerNo;
+						TempRec.SCACCode = ScacCode;
+						TempRec.Tenant = 0;
+						TempRec.OceanInsigntId = Id;
+						TempRec.BLNumber = BLNumber;
+						TempRec.Type = string.IsNullOrEmpty(TempRec.BLNumber) ? "c_id" : "m_bl";
+						TempRec.FromPushPage = true;
+						service.Create(TempRec);
+						TempRecs.Add(TempRec);
+					}
+					try
+					{
+						//////////////////////// New Logic ///////////////////////////////////////////
+						int MyTenant = 0;
+						if (TempRecs != null && TempRecs.Count > 0)
+						{
+							MyTenant = TempRecs.FirstOrDefault().Tenant;
+						}
+						string OIId = string.Empty;
+						string ContainerNo = string.Empty;
+						XmlNodeList MynodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
+
+						if (MynodeList[0] != null)
+						{
+							OIId = MynodeList[0].InnerText;
+						}
+
+						XmlNodeList MyContainerList = xmldoc.GetElementsByTagName("container_number");
+
+						if (MyContainerList[0] != null)
+						{
+							ContainerNo = MyContainerList[0].InnerText;
+						}
+
+						OceanInsightsRequestsCountQuery Newquery = new OceanInsightsRequestsCountQuery(0);
+						var OIRCount = Newquery.GetSinglePMByOceanInsightsByContainerNoOceanInsigntId(ContainerNo, OIId);
+						if (OIRCount == null)
+						{
+
+							//string ScacCode = "";
+							string BLNumber = "";
+							//XmlNodeList requestkeynodeList = xmldoc.GetElementsByTagName("container_number");
+							//foreach (XmlNode item in requestkeynodeList)
+							//{
+							//    ContainerNo = item.InnerText;
+							//}
+							XmlNodeList blnumbernodeList = xmldoc.GetElementsByTagName("bl_number");
+							if (blnumbernodeList != null)
+							{
+								foreach (XmlNode item in blnumbernodeList)
+								{
+									BLNumber = item.InnerText;
+								}
+							}
+							//XmlNodeList carrierscacnodeList = xmldoc.GetElementsByTagName("carrier_scac");
+							//foreach (XmlNode item in carrierscacnodeList)
+							//{
+							//    ScacCode = item.InnerText;
+							//}
+							var TempRequestsCount = new OceanInsightsRequestsCountPM();
+							IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
+							OceanInsightsRequestsCountService service = new OceanInsightsRequestsCountService(objectContext, 0);
+							TempRequestsCount.ContainerNumber = ContainerNo;
+							TempRequestsCount.Tenant = MyTenant;
+							TempRequestsCount.OceanInsigntId = OIId;
+							TempRequestsCount.BLNumber = BLNumber;
+							TempRequestsCount.Type = string.IsNullOrEmpty(TempRequestsCount.BLNumber) ? "c_id" : "m_bl";
+							TempRequestsCount.CreateDate = DateTime.Now;
+							service.Create(TempRequestsCount);
+							OIRCount = TempRequestsCount;
+							//TempRecs.Add(TempRec);
+						}
+					}
+					catch (Exception ex)
+					{
+
+					}
+					/////////////////////////////////////////////////////////////
+					foreach (var TempRec in TempRecs)
+					{
+						if (TempRec.Type == "m_bl")
+						{
+							XmlNodeList containershipments = xmldoc.GetElementsByTagName("shipment");
+							foreach (XmlNode item in containershipments)
+							{
+								string newId = "";
+								string newcontainernumber = "";
+								string newblnumber = "";
+								string newcarrierscac = "";
+								foreach (XmlNode item1 in item.ChildNodes)
+								{
+									if (item1.Name == "shipmentsubscription_id")
+									{
+										newId = item1.InnerText;
+									}
+									else if (item1.Name == "container_number")
+									{
+										newcontainernumber = item1.InnerText;
+									}
+									else if (item1.Name == "bl_number")
+									{
+										newblnumber = item1.InnerText;
+									}
+									else if (item1.Name == "carrier_scac")
+									{
+										newcarrierscac = item1.InnerText;
+									}
+
+								}
+								//if (!string.IsNullOrEmpty(newId))
+								//{
+								var TempReq = query.GetSinglePMByOceanInsightsId(Id);
+								if (TempReq != null)
+								{
+									UpdateStatus(TempRec, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
+								}
+								else
+								{
+									TempReq = new OceanInsightsRequestPM();
+									IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
+									OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, 0);
+									TempReq.ContainerNumber = newcontainernumber;
+									//TempReq.ContainerNumber = newblnumber;
+									TempReq.SCACCode = newcarrierscac;
+									TempReq.Tenant = TempRec.Tenant;
+									TempReq.OceanInsigntId = Id;
+									TempReq.Type = "BLS";
+									TempReq.BLNumber = newblnumber;
+									TempReq.FromPushPage = true;
+									service.Create(TempReq);
+									UpdateStatus(TempReq, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
+								}
+								//}
+							}
+						}
+						if (TempRec != null)
+						{
+							UpdateStatus(TempRec, data, TempRec.ContainerNumber);
+						}
+					}
+
+				}
+			}
+			catch (Exception ex)
+			{
+
+				string errorMessage = ex.Message;
+				if (ex.InnerException != null)
+				{
+
+					errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+
+				}
+				if (!string.IsNullOrEmpty(ex.StackTrace))
+				{
+					errorMessage += Environment.NewLine + ex.StackTrace;
+				}
+				AzureLog.SaveLogsInStorage("Container Push error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorMessage, errorMessage, 0, null, null, null);
+				Communications.UpdateCommunicationLogStatus(ComId, tenant, null, ComStatusCode, "Exception occured while adding adding status " + DateTime.Now.ToString(), errorMessage);
+				//throw (ex);
+			}
+		}
+        
         private void UpdateStatus(OceanInsightsRequestPM TempRec, string data, string Reference)
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction())
