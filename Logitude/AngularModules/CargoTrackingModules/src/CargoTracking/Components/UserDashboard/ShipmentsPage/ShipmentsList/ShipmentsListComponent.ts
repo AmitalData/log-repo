@@ -737,8 +737,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private filterWithAllCustomersWhenCustomersNotSelected() {
+        
         let filter = Object.assign({}, this.ShipmentSearchInput);
-        filter.CustomersIds = filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds;
+        if(!SessionInfo.IsAdmin) {filter.CustomersIds =filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds};
         return filter;
     }
 
