@@ -71,15 +71,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public bool ToUpdateWithPaymentDate { get; set; }
         protected override void OnCreating(DeclarationPM entityPM, EntityPM entityParentPM)
         {
-            if (entityPM.IsDiamondDeclaration || entityPM.IsCourierDeclaration)
+
+            CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
+             if (!CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight)
             {
-                DeclarationCounterQueryService declarationCounterQueryService = new DeclarationCounterQueryService(entityPM.Tenant);
-                var declarationCounter = declarationCounterQueryService.GetSingleByCustomFileNo(entityPM.CustomFileNo, entityPM.Tenant);
-                if (declarationCounter != null)
-                    entityPM.Id = declarationCounter.DeclarationId;
+                if (entityPM.IsDiamondDeclaration || entityPM.IsCourierDeclaration)
+                {
+                    DeclarationCounterQueryService declarationCounterQueryService = new DeclarationCounterQueryService(entityPM.Tenant);
+                    var declarationCounter = declarationCounterQueryService.GetSingleByCustomFileNo(entityPM.CustomFileNo, entityPM.Tenant);
+                    if (declarationCounter != null)
+                        entityPM.Id = declarationCounter.DeclarationId;
+                }
             }
             if (string.IsNullOrEmpty(entityPM.Id))
                 entityPM.Id = IdCounter.GetNumber("Customs.Declaration", entityPM.Tenant);
+
             if (entityPM.CreateDateTime == null)
             {
                 entityPM.CreateDateTime = DateTime.Now;
