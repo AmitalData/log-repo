@@ -147,7 +147,14 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             
             if(entity.BankAccountNumber != null)
             {
-              entity.BankAccountId=  GetBankAccountIdByNumber(entity.BankAccountNumber, entity.Tenant);
+                if (entity.AccountingPaymentMethodCode == "BT")
+                {
+                    entity.BankAccountId = GetBankAccountIdByDisplay(entity.BankAccountNumber, entity.Tenant);
+                }
+                else
+                {
+                    entity.BankAccountId = GetBankAccountIdByNumber(entity.BankAccountNumber, entity.Tenant);
+                }
             }
              if( entity.AccountingPaymentMethodCode =="BT" && entity.ARPaymentBankTranfers?.Count > 0)
             {
@@ -249,6 +256,22 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
             }
         }
+
+        private string GetBankAccountIdByDisplay(string number, int tenant)
+        {
+            IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
+            BankAccountPM bankAccount = bankAccountQuery.GetBankAccountByDisplay(number, tenant);
+            if (bankAccount != null)
+            {
+                return bankAccount.Id;
+            }
+            else
+            {
+                throw new ApplicationException("Bank account with display number " + number + " doesn't exist");
+
+            }
+        }
+
 
         public ARPaymentPM MapAPPaymentChequeFieldsToARPayment(ARPayment payment , ARPaymentPM paymentPM)
         {
