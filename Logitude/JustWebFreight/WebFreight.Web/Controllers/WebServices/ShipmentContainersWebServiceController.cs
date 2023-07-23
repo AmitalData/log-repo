@@ -39,6 +39,9 @@ using ContainerOISimulator;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.Tools.ContainerTracking;
 using Logitude.BL.ShipmentsModel.APIDataContract;
+using System.Globalization;
+using System.Configuration;
+using Logitude.XSD.Simulators;
 
 namespace WebFreight.Web.Controllers.WebServices
 {
@@ -48,7 +51,26 @@ namespace WebFreight.Web.Controllers.WebServices
 
         public HttpResponseMessage PostOceanInsightSimulator(ShipmentContainerSimulator simulator)
         {
-            try
+			DateTime stopLogAt = DateTime.MinValue;
+			try
+			{
+				string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230718T104900.LogUntilDateyyyyMMdd"];
+				if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+				{
+					stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+														"yyyyMMdd",
+														CultureInfo.InvariantCulture,
+														DateTimeStyles.None);
+				}
+				var logData = Newtonsoft.Json.JsonConvert.SerializeObject(simulator);
+				LogitudeSettings.HandleLogMe("SUCSSED PostOceanInsightSimulator: " + logData, false, "ShipmentContainerSimulator", stopLogAt);
+			}
+			catch (Exception ex)
+			{
+				LogitudeSettings.HandleLogMe("FAIELD PostOceanInsightSimulator: " + ex.Message?.ToString(), false, "ShipmentContainerSimulator", stopLogAt);
+
+			}
+			try
             {
                 ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
                 if (simulator.IsFromContainer)
@@ -69,7 +91,26 @@ namespace WebFreight.Web.Controllers.WebServices
         }
         public HttpResponseMessage PostGeneralContainerStatus(GeneralContainerTrackingArgs containerTrackingArgs)
         {
-            try
+			DateTime stopLogAt = DateTime.MinValue;
+			try
+			{
+				string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230718T104900.LogUntilDateyyyyMMdd"];
+				if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+				{
+					stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+														"yyyyMMdd",
+														CultureInfo.InvariantCulture,
+														DateTimeStyles.None);
+				}
+				var logData = Newtonsoft.Json.JsonConvert.SerializeObject(containerTrackingArgs);
+				LogitudeSettings.HandleLogMe("SUCSSED PostGeneralContainerStatus: " + logData, false, "GeneralContainerTrackingArgs", stopLogAt);
+			}
+			catch (Exception ex)
+			{
+				LogitudeSettings.HandleLogMe("FAIELD PostGeneralContainerStatus: " + ex.Message?.ToString(), false, "GeneralContainerTrackingArgs", stopLogAt);
+
+			}
+			try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);

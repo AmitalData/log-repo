@@ -18,6 +18,11 @@ import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {ModulesService} from '../../../Services/ModulesService';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
+import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
+import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
+import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
+import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
 
 @Component({
 
@@ -49,9 +54,13 @@ export class PayablePageComponent {
 
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    private LastRatesList: LastRate[] = [];
+    private myCurrencyListService: CurrencyListService;
+
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
+        this.myCurrencyListService = new CurrencyListService();
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("APPayment").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("APInvoice").subscribe((response: any) => { });
@@ -337,6 +346,27 @@ export class PayablePageComponent {
 
     // General Invoice
     NewGeneralAPInvoice() {
+
+        if (SessionLocator.TenantPM.AccountingActivated) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
+                this.CurrentSession.SessionLocation.viewContainerRef)
+
+                .then(cmpRef => {
+                    const entity = new APInvoicePM();
+                    this.GetCurrenciesExchangeRateByValueDate(entity);
+
+                    entity.IsGeneralInvoice = true;
+                    entity.Tenant = SessionLocator.TenantPM.Id;
+                    entity.LocalCurrencyId = SessionLocator.LocalCurrencyId;
+                    entity.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+                    const additionalFieldsScreenCode = "APInvoice.AdditionalFields";
+
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: "", EntityPM: entity, ObjectTableName: 'APInvoice' });
+                });
+            return;
+        }
+
         var str = TextCodeTranslator.Translate("Accounting.General.O.NewGeneralInvoice");
         var windowTitle = str;
         var logWindow = new LogitudeWindow();
@@ -359,5 +389,64 @@ export class PayablePageComponent {
             });
         });
         logWindow.Show("./InvoiceModules/APInvoice/Components/NewEntity/NewGeneralAPInvoiceComponent");
+    }
+
+    private GetCurrenciesExchangeRateByValueDate(entity: APInvoicePM){
+        var myCurrencyRatesService = new CurrencyRatesService();
+        var myCommonDomainService = new CommonDomainService();
+
+        var loadingDate = DateTool.GetCurrentDateAsUtc();
+
+        myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.LocalCurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.LastRatesList = myResponse.Result;
+                this.InitializeProfitCurrency(entity);
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
+
+    private InitializeProfitCurrency(entityPM: APInvoicePM) {
+
+        if (entityPM.IsMultipleEntities) {
+            entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        }
+
+        else if (AppTool.IsNullOrEmpty(entityPM.ProfitCurrencyId)) {
+            entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        }
+
+        this.myCurrencyListService.getSingleFromCache(entityPM.ProfitCurrencyId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: CurrencyList = myResponse.Result;
+                if (list != null) {
+                    entityPM.ProfitCurrencyCode = list.Code;
+                }
+            }
+        });
+
+        entityPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(entityPM.ProfitCurrencyId);
+    }
+
+    GetCurrencyRate(currencyId: string) {
+        var myResult: number = null;
+
+        if (!AppTool.IsNullOrEmpty(currencyId)) {
+            if (currencyId == SessionLocator.TenantPM.CurrencyId) {
+                myResult = 1;
+            }
+
+            else {
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
+                if (lastRate != null) {
+                    myResult = lastRate.Rate;
+                }
+            }
+        }
+
+        return myResult;
     }
 }

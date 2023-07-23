@@ -41,6 +41,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private lastUpdatedByText = TextCodeTranslator.Translate("TaxReportLine.O.LastUpdatedBy");
     private onText = TextCodeTranslator.Translate("TaxReportLine.O.On");
+   
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -142,9 +143,12 @@ export class EditTaxReportLineComponent extends BaseComponent {
     //#endregion
     IsReferenceEditable: boolean = false;
     SetUIProperties() {
+       
         this.UIProperties.SetEnabled("LineTypeCode", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("PreviousReference", this.ObjectTableName, false);
         this.SetEnabledForReferenceField();
+        
+        
         if (this.TaxReportLinePM.OutputOrInput == "O") {
             if (this.TaxReportLinePM.StatusCode == "7") {
                 this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, true);
@@ -171,6 +175,15 @@ export class EditTaxReportLineComponent extends BaseComponent {
         if (this.LineTypeCode == "I" || this.LineTypeCode == "S") {
             this.UIProperties.SetEnabled("LineTypeCode", this.ObjectTableName, true);
             if (this.LineTypeCode != "I") { this.Reference = this.TaxReportLinePM.OriginalReference; }
+        }
+        if(this.TaxReportLinePM.IsExternalLine){
+
+            this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("LineTypeCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Reference", this.ObjectTableName, false);
+
+
         }
 
     }

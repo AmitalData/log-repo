@@ -127,11 +127,13 @@ namespace WebFreight.Web.App_Code
                              RankName = customer.RankName,
                              TeamName = customer.TeamName,
                              SharedLogisticsInvitationStatusName = customer.SharedLogisticsInvitationStatusName,
+                             CargoTrackingInvitationStatusName = customer.CargoTrackingInvitationStatusName,
                              LastLoginDate = customer.LastLoginDate,
                              LastLoginDateViaPC = customer.LastLoginDateViaPC,
                              LastLoginDateViaMobile = customer.LastLoginDateViaMobile,
                              InvitationDate = customer.InvitationDate,
-                          
+                             CargoTrackingInvitationDate = customer.CargoTrackingInvitationDate,
+
                              ClassifierName = customer.ClassifierName,
                              CollectorName = customer.CollectorName,
                              //ClassifierName = TenantContext.Current.ContactContext.UserLists.Where(d => d.Id == ClassifierId).FirstOrDefault().EnglishName;

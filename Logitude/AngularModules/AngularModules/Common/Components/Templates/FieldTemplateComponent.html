@@ -33,7 +33,7 @@
                     </tr>
                 </table>
 
-                <div *ngIf="(ObjectTableName == 'Customer' || ObjectTableName == 'Card') && FieldName == 'SharedLogisticsInvitationStatusName'">
+                <div *ngIf="(ObjectTableName == 'Customer' || ObjectTableName == 'Card') && (FieldName == 'SharedLogisticsInvitationStatusName' || FieldName == 'CargoTrackingInvitationStatusName')">
                     <span [ngStyle]="{color: SharedLogisticsInvitationStatusColor}">{{FieldValue}}</span>
                 </div>
 

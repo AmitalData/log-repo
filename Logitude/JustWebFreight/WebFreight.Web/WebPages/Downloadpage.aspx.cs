@@ -31,6 +31,8 @@ using ICSharpCode.SharpZipLib.Core;
 using System.Net;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using Logitude.BL.DataContracts;
+using WebFreight.Web.Helpers.WorkerRole.DocsOut;
 
 namespace WebFreight.Web.WebPages
 {
@@ -175,6 +177,10 @@ namespace WebFreight.Web.WebPages
                                     documentExtension = document.Extension;
                                     CustomName = document.CalculatedFileName;
                                     filename = document.Id;
+                                    
+                                    if (requestArea == "ARInvoice") {
+                                        SetInterestReportInvoiceAsPrinted(securityId, document);
+                                    }
                                 }
                                 else isValid = false;
                             }
@@ -589,6 +595,27 @@ ExceptionInErrorLog.ToString()
                 //AzureLog.SaveLogsInStorage(ErrorMessage, "E", 0, User.Identity.Name, User.Identity.Name);
             }
 
+        }
+
+        private void SetInterestReportInvoiceAsPrinted(string securityKey, Document document)
+        {
+            DocumentsFilingRepository documentRepository = new DocumentsFilingRepository((int)tenant);
+            DocumentsFiling documentFiling = null;
+
+            if (!string.IsNullOrWhiteSpace(securityKey))
+            {
+                string encodedSecurityId = System.Net.WebUtility.UrlEncode(securityKey);
+                documentFiling = documentRepository.GetSingleDocumentFilingBySecurityId(encodedSecurityId, (int)tenant);
+            }
+            else
+            {
+                documentFiling = documentRepository.GetSingleDocumentFilingByDocumentId(document.Id, (int)tenant);
+            }
+            if(documentFiling != null)
+            {
+                ARInvoicePrintDetailsService aRInvoicePrintDetailsService = new ARInvoicePrintDetailsService((int)tenant, documentFiling.EntityId, email, true);
+                aRInvoicePrintDetailsService.Update();
+            }
         }
 
         private void CheckDocumentViewAccessForCargoTracking(string documentId, string requestArea, string securityKey = null)

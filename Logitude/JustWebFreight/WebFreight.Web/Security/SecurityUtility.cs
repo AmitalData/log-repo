@@ -24,6 +24,7 @@ using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.Resolvers;
 using WebFreight.Web.Helpers;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace WebFreight.Web.Security
 {
@@ -1324,6 +1325,21 @@ namespace WebFreight.Web.Security
             if(contact != null)
                 return contact.IsUser;
 
+            return false;
+
+        }
+        public static bool isUserAdmin(string email, int tenant)
+        {
+            string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+            UserRepository userRepository = new UserRepository(tenant);
+            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, true);
+            if(loggedUser!=null) {
+                if (loggedUser.UserRoles.Contains("Administrator"))
+                {
+                    return true;
+                }
+            }
+           
             return false;
 
         }

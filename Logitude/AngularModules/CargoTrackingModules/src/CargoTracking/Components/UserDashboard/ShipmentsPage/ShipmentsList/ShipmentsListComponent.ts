@@ -88,6 +88,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     MasterOrHouseLabel: string = "";
     EntityType_Customs = "C";
     isMobileView: boolean;
+    tempInvitedCustomers: any[] = [];
+    tempMilestonesStatus: any[] = [];
+    tempShipmentDirectionFilters: any[] = [];
+    tempShipmentTypeFilters: any[] = [];
+    MilestonesStatusNoResult: boolean;
+    ShipmentDirectionFiltersNoResult: boolean;
+    ShipmentTypeFiltersNoResult: boolean;
+    InvitedCustomersNoResult: boolean;
+    SearchText: any="";
 
     get tenant() {
         return CargoTrackingBrandingData.Tenant;
@@ -125,11 +134,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private GetCompanyLoginsFromCache() {
+        
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
-        if(SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === false)
-        {
-            this.GetInvitedCustomers();
-        }
+        this.GetInvitedCustomers();
+        // if(SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === false)
+        // {
+           
+        // }
     }
 
     private GetInvitedCustomers() {
@@ -155,6 +166,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         InvitedCustomers.forEach(element => {
             this.InvitedCustomersDictionary[element.CardId] = element;
         });
+        this.InvitedCustomers.forEach(val => this.tempInvitedCustomers.push(val));
     }
     private CheckSpeicalChar(s : string){  
         var format = /^[A-Za-z0-9]/;
@@ -171,7 +183,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.getPreviousScroll();
         this.GetCompanyLoginsFromCache();
         this.fillFeltersDictionary();
-        this.setViews();
+        this.setViews(); 
     }
 
     OnRouteChanged(event) {
@@ -438,6 +450,103 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         if (shipmentCardsContainer) {
             shipmentCardsContainer.scrollTop = 0;
         }
+
+    }
+
+    onSearchAdvancedFiltersChange(searchInput){
+        this.onSearchInvitedCustomersChange(searchInput);
+        this.onSearchMilestonesStatusChange(searchInput);
+        this.onSearchShipmentDirectionFiltersChange(searchInput);
+        this.onSearchShipmentTypeFiltersChange(searchInput);
+        this.SearchText=searchInput;
+    }
+    onSearchInvitedCustomersChange(searchInput)
+    {
+        if(searchInput) 
+        {
+         var size =  this.InvitedCustomers.length;
+         this.InvitedCustomers = [];
+         for (let i = 0; i < size; i++) {
+             if (this.tempInvitedCustomers[i].Name.toUpperCase().match(searchInput.toUpperCase())) {
+                 this.InvitedCustomers.push(this.tempInvitedCustomers[i]);
+             }
+         }
+         this.InvitedCustomersNoResult=false;
+         if(this.InvitedCustomers.length===0)
+         this.InvitedCustomersNoResult=true;
+        }
+        else
+        {
+         this.InvitedCustomers = [];
+         this.tempInvitedCustomers.forEach(val => this.InvitedCustomers.push(val));
+         this.InvitedCustomersNoResult=false;
+        }
+    }
+    onSearchMilestonesStatusChange(searchInput)
+    {
+        if(searchInput) 
+        {
+         var size =  this.tempMilestonesStatus.length;
+         this.MilestonesStatus = [];
+         for (let i = 0; i < size; i++) {
+             if (this.tempMilestonesStatus[i].EnglishName.toUpperCase().match(searchInput.toUpperCase())) {
+                 this.MilestonesStatus.push(this.tempMilestonesStatus[i]);
+             }
+         }
+         this.MilestonesStatusNoResult=false;
+         if(this.MilestonesStatus.length===0)
+         this.MilestonesStatusNoResult=true;
+        }
+        else
+        {
+         this.MilestonesStatus = [];
+         this.tempMilestonesStatus.forEach(val => this.MilestonesStatus.push(val));
+         this.MilestonesStatusNoResult=false;
+        }
+    }
+    onSearchShipmentDirectionFiltersChange(searchInput)
+    {
+        if(searchInput) 
+        {
+         var size =  this.tempShipmentDirectionFilters.length;
+         this.ShipmentDirectionFilters = [];
+         for (let i = 0; i < size; i++) {
+             if (this.tempShipmentDirectionFilters[i].name.toUpperCase().match(searchInput.toUpperCase())) {
+                 this.ShipmentDirectionFilters.push(this.tempShipmentDirectionFilters[i]);
+             }
+         }
+         this.ShipmentDirectionFiltersNoResult=false;
+         if(this.ShipmentDirectionFilters.length===0)
+         this.ShipmentDirectionFiltersNoResult=true;
+        }
+        else
+        {
+         this.ShipmentDirectionFilters = [];
+         this.tempShipmentDirectionFilters.forEach(val => this.ShipmentDirectionFilters.push(val));
+         this.ShipmentDirectionFiltersNoResult=false;
+        }
+    }
+    onSearchShipmentTypeFiltersChange(searchInput)
+    {
+        if(searchInput) 
+        {
+         var size =  this.tempShipmentTypeFilters.length;
+         this.ShipmentTypeFilters = [];
+         for (let i = 0; i < size; i++) {
+             if (this.tempShipmentTypeFilters[i].name.toUpperCase().match(searchInput.toUpperCase())) {
+                 this.ShipmentTypeFilters.push(this.tempShipmentTypeFilters[i]);
+             }
+         }
+         this.ShipmentTypeFiltersNoResult=false;
+         if(this.ShipmentTypeFilters.length===0)
+         this.ShipmentTypeFiltersNoResult=true;
+        }
+        else
+        {
+         this.ShipmentTypeFilters = [];
+         this.tempShipmentTypeFilters.forEach(val => this.ShipmentTypeFilters.push(val));
+         this.ShipmentTypeFiltersNoResult=false;
+        }
     }
 
     private SetDefaultBackgroundColor() {
@@ -559,8 +668,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.milestonesService.getAll(this.tenant)
             .subscribe((milestones: any) => {
                 this.MilestonesStatus = milestones;
+                this.tempMilestonesStatus = milestones;
                 this.FillMilestoneDictionary(milestones);
-            });
+            }); 
     }
 
     FillMilestoneDictionary(milestones: any[]) {
@@ -632,6 +742,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
 
     private InitiateShipmentDataSource() {
+        
         let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
         this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
         let s = SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0];
@@ -818,7 +929,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShipmentTypeFilters.forEach(element => {
             this.ShipmentShipmentTypeFiltersDictionary[element.Code] = element;
         });
-
+        this.ShipmentDirectionFilters.forEach(val => this.tempShipmentDirectionFilters.push(val));
+        this.ShipmentTypeFilters.forEach(val => this.tempShipmentTypeFilters.push(val));
 
     }
 

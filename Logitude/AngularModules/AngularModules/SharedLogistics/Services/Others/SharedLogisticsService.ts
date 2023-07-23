@@ -15,9 +15,9 @@ export class SharedLogisticsService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SharedLogistics';
     }
 
-    getSharedLogisticsStatistics(tenant: number) {
+    getSharedLogisticsStatistics(tenant: number, invitationStatusType: string) {
 
-        return this._http.get(this._apiUrl + '/getSharedLogisticsStatistics/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/getSharedLogisticsStatistics/?' + 'tenant=' + tenant + '&invitationStatusType=' + invitationStatusType, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
