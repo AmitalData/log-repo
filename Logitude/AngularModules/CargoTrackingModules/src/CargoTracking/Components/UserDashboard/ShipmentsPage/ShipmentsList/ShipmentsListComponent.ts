@@ -141,15 +141,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     private GetCompanyLoginsFromCache() {
         
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
-        if(!SessionInfo.isAdmin)
+        if(!SessionInfo.IsAdmin)
         {
         this.GetInvitedCustomers();
         }
        
     }
 
-
-    private GetInvitedCustomers() {
+    GetInvitedCustomers() {
+        
         console.log('SessionInfo.LoggedUserCompanyLogins', SessionInfo.LoggedUserCompanyLogins);
         this.InvitedCustomers = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
@@ -220,6 +220,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         if (this.ShipmentSearchInput.CustomersIds.length > 0) {
             this.filterAgrs.addAdditionalFilter("CustomersIds", this.ShipmentSearchInput.CustomersIds.join("_"), null, null, "Equals", false, false, false, "string");
         } else if (this.InvitedCustomers.length > 0) {
+           
             this.filterAgrs.addAdditionalFilter("CustomersIds", this.InvitedCustomers.map(d => d.CardId).join("_"), null, null, "Equals", false, false, false, "string");
         }
 
@@ -469,7 +470,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.SearchText=searchInput;
     }
     onSearchInvitedCustomersChange(searchInput)
-    {
+    {        
         if(searchInput) 
         {
          var size =  this.InvitedCustomers.length;
@@ -743,7 +744,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     private async filterWithAllCustomersWhenCustomersNotSelected() {
         let filter: CargoTrackingShipmentSearchInput = Object.assign({}, this.ShipmentSearchInput);
-        filter.CustomersIds = filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds;        
+        if(!SessionInfo.IsAdmin) {filter.CustomersIds =filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds};
         filter.FromDate = await this.getFromDate();
 
         return filter;
@@ -1088,6 +1089,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShipmentsLoadingError: string;
 
     OpenAdvancedFiltersSidebar() {
+        
         this.sharedService.updateValue(true);
     }
 

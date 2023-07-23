@@ -1103,7 +1103,7 @@ namespace WebFreight.Web
                     ICommonDataContext commonDataContexts = CommonDataContext.GetContext(loginParameters.Tenant);
 
                     User userLoged = (from a in commonDataContexts.Users
-                                 where a.Id ==data.UserId
+                                 where a.Contact.Email == loginParameters.Email
                                  select a).FirstOrDefault();
                     if (userLoged != null && userLoged.UserRoles.Contains("Administrator"))
                         data.IsAdmin = true;
