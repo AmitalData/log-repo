@@ -114,23 +114,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
         protected override DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg CallWSSigned( 
             byte[] customRequestSignedByteArry, AmendmentRequestParams requestParams, out string exceptionMessage)
         {
-
             exceptionMessage = null;
+
             var response = new DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg();
-
-            // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
-            
-
-            //using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
-            //{
-            //    _ResponseHeader = uifreightSdkGateway.GetChannel<IImportDeclarationSign>()
-            //        .ImportDeclarationSign(
-            //        this.RequestsSheetExternalId,
-            //        base.CustomsSetting.CustomsAgentId,
-            //        //new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry ,  },
-            //        ref this._IIGGatewayMoreParams,
-            //        out response);
-            //}
+            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            {
+                _ResponseHeader = uifreightSdkGateway.GetChannel<UnifreightIIG.Common.TheGateway.IExportDeclarationAmendmentRequestMsgRequestOperation>()
+                    .ExportDeclarationAmendmentRequestMsgRequestSign(
+                    this.RequestsSheetExternalId,
+                    base.CustomsSetting.CustomsAgentId,
+                    new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry ,  },
+                    ref this._IIGGatewayMoreParams,
+                    out response);
+            }
 
 
             return response;

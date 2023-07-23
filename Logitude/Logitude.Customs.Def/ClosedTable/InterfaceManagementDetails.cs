@@ -2131,7 +2131,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "2892",
                 //   NeedSignature = false,
-                //     SignatureTypeCode = "C"
+                SignatureTypeCode = "C"
             });
             all.Add(new InterfaceManagementDetails()
             {
@@ -2147,7 +2147,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "8237",
                 //   NeedSignature = false,
-                //     SignatureTypeCode = "C"
+                SignatureTypeCode = "C",
             });
             all.Add(new InterfaceManagementDetails()
             {
@@ -2161,6 +2161,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "8237T",
+                SignatureTypeCode = "C",
+
             });
             all.Add(new InterfaceManagementDetails()
             {
@@ -2176,7 +2178,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "5002",
                 //   NeedSignature = false,
-                //     SignatureTypeCode = "C"
+                SignatureTypeCode = "C"
             });
             all.Add(new InterfaceManagementDetails()
             {
