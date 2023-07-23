@@ -143,10 +143,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
         if(!SessionInfo.isAdmin)
         {
-            this.GetInvitedCustomers();
+        this.GetInvitedCustomers();
         }
        
     }
+
 
     private GetInvitedCustomers() {
         console.log('SessionInfo.LoggedUserCompanyLogins', SessionInfo.LoggedUserCompanyLogins);
