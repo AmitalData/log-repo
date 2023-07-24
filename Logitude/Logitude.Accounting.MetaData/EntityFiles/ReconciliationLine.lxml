@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +42,7 @@
   ParentTableName="Reconciliation"
   LocalDefaultText="&quot;שורת התאמה&quot;"
   DefaultText="&quot;Reconciliation Line&quot;"
-  Code="&quot;fd02&quot;"
+  Code="&quot;ccfe&quot;"
   Name="&quot;ReconciliationLine Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -54,6 +57,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;323a&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -2544,6 +2548,13 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;ReconciliationLine.O.ReconciliationCurrency&quot;"
+      DefaultText="&quot;Reconciliation Currency&quot;"
+      LocalDefaultText="&quot;מטבע התאמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
