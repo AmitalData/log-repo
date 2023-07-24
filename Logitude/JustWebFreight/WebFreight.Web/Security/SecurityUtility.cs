@@ -1330,10 +1330,9 @@ namespace WebFreight.Web.Security
         }
         public static bool isUserAdmin(string email, int tenant)
         {
-            string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
             UserRepository userRepository = new UserRepository(tenant);
             User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, false);
-            if(loggedUser!=null) {
+            if(loggedUser!=null && loggedUser.UserRoles!=null) {
                 if (loggedUser.UserRoles.Contains("Administrator"))
                 {
                     return true;

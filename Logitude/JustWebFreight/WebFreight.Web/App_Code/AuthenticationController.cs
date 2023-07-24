@@ -54,6 +54,7 @@ using WebFreight.Web.Helpers.DataProviderHelpers;
 using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 using WebFreight.Web.Helpers.MixPanel;
 using System.Data;
+using WebFreight.Web.CustomersHTML;
 
 namespace WebFreight.Web
 {
@@ -1100,17 +1101,7 @@ namespace WebFreight.Web
                         }
 
                     }
-                    ICommonDataContext commonDataContexts = CommonDataContext.GetContext(loginParameters.Tenant);
-
-                    User userLoged = (from a in commonDataContexts.Users
-                                 where a.Contact.Email == loginParameters.Email
-                                 select a).FirstOrDefault();
-                    if (userLoged != null && userLoged.UserRoles.Contains("Administrator"))
-                        data.IsAdmin = true;
-                    else
-                    {
-                        data.IsAdmin = false;
-                    }
+                    
                 }
 
                 if (loginParameters.IsMobileLogin && !data.HasError)
@@ -1399,7 +1390,7 @@ namespace WebFreight.Web
                 string cardType = parameters.CardType;
 
                 string userData = string.Empty;
-
+                bool customerCare;
                 string computerId = Guid.NewGuid().ToString("N");
                 IGlobalContext globalContext = GlobalContext.GetContext();
                 ContactPassword contactPassword = null;
@@ -1415,7 +1406,7 @@ namespace WebFreight.Web
                 if (!user.InValidCaptcha)
                 {
                     user = null;
-                    bool customerCare = false;
+                     customerCare = false;
                     bool distributor = false;
                     User logitudeUser = null;
                     GlobalContact contact = globalContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.Email.ToLower() == parameters.Email.ToLower()).FirstOrDefault(); //mohammad
@@ -1599,6 +1590,7 @@ namespace WebFreight.Web
                     }
 
                     user.HtmlVersion = GetHtmlVersion();
+                    user.IsAdmin = SecurityUtility.isUserAdmin(email, tenant) || customerCare;
                 }
 
                 int executionTime = (int)((DateTime.Now.Ticks - DateBeforePostLoginData.Ticks) / TimeSpan.TicksPerMillisecond);
@@ -1612,6 +1604,7 @@ namespace WebFreight.Web
                 //        Thread.Sleep(sleepTime);
                 //    }
                 //}
+               
                 AuthenticationMixPanelService.CreateLoginEventForMixPanel(parameters, tenant);
 
                 return user;

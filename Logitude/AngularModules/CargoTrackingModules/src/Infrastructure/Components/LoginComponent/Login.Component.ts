@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
     }
 
     private GetcargoTrackingData(baseUrl:string) {
+        
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
         this.cargoTrackingBrandingDataExtendedService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => {
             if(response.Result){
@@ -102,6 +103,7 @@ export class LoginComponent implements OnInit {
     }
 
     public LogInClicked() {
+        
         this.clearRouteReuseStrategy();
 
         this.ShowbusyIndicator = true;
@@ -126,6 +128,7 @@ export class LoginComponent implements OnInit {
         };
 
         this.loginExtendedService.PostUserValidation(LoginParams).subscribe((userData: any) => {
+            
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 this.LoginFailed(userData);
                 this.ShowbusyIndicator = false;
@@ -189,6 +192,7 @@ export class LoginComponent implements OnInit {
     }
 
     private Login(LoginParams: any, userData: any) {
+        
         this.errorMessage = "";
         let tenantList = userData.CompanyLogins;
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
@@ -198,12 +202,13 @@ export class LoginComponent implements OnInit {
             this.ShowbusyIndicator = false;
         }
         else {
-            SessionInfo.IsAdmin=userData.IsAdmin
+            
             SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
             sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
 
             this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
                 this.ShowbusyIndicator = false;
+                SessionInfo.IsAdmin=userData.IsAdmin;
                 if (userData) {
                     this.FillSessionInfoData(userData);
                     this.RouteToMainPage();
