@@ -1798,6 +1798,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     itemPM.IncotermCode = this.EntityPM.IncotermCode;
                     itemPM.InvoiceCurrencyTypeCode = this.EntityPM.InvoiceCurrencyTypeCode;
                     itemPM.DutyRegimeProtocolCode = this.EntityPM.DutyRegimeProtocolCode;
+                    itemPM.PreferenceDocumentTypeCode = this.EntityPM.PreferenceDocumentTypeCode;                  
                 }
             }
         itemPM.DeclarationId = this.declarationPM.Id;
@@ -1859,7 +1860,12 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                          newItem.LineNumber = line;
                          newItem.CounterKey = itemPM.InvoiceCounterKey;
                          newItem.SequenceNumeric = sequence;
-                         newItem.Tenant = this.OldEntityPM.Tenant;
+                            newItem.Tenant = this.OldEntityPM.Tenant;
+                         
+                         if (IsCopyfieldsFeature) {
+                            newItem.DutyRegimeProtocolCode = item.DutyRegimeProtocolCode;
+                            newItem.TradeAgreementCode = item.TradeAgreementCode;        
+                         }
                          this.EntityPM.AddSupplierInvoiceItem(newItem);
                          line += 1;
                          sequence += 1;
