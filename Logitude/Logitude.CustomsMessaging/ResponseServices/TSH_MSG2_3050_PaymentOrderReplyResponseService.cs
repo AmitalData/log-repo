@@ -255,7 +255,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (tapagConnectionTable != null && tapagConnectionTable.Count > 0 & tapagConnectionTable[0].DeclarationId != null)
                     {
-                        DeclarationPM myDeclarationPM = myDeclarationQueryService.GetSingle(tapagConnectionTable[0].DeclarationId, false, false);
+                        DeclarationPM myDeclarationPM = myDeclarationQueryService.GetAcceptDeclarationAmendment(tapagConnectionTable[0].DeclarationId, requestParams.Tenant);
                         if (myDeclarationPM != null && !string.IsNullOrWhiteSpace(myDeclarationPM.DeclarationNumber))
                         {
                             firstDeclaratioNumber = myDeclarationPM.DeclarationNumber;
@@ -281,7 +281,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _PaymentOrderPM.CustomsRequestsDeclarationId = new List<string>();
                     foreach (var declarationId in declarationIdList)
                     {
-                        _DeclarationPM = myDeclarationQueryService.GetSingle(declarationId, false, false);
+                        _DeclarationPM = myDeclarationQueryService.GetAcceptDeclarationAmendment(declarationId, requestParams.Tenant);
                         if (_DeclarationPM != null)
                         {
                             _PaymentOrderPM.CustomerId = _DeclarationPM.CustomerId;
