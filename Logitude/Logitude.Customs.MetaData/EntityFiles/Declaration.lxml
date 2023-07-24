@@ -21455,7 +21455,6 @@
     PMPropertyPath="&quot;ComputerFee&quot;"
     ListPropertyPath="&quot;ComputerFee&quot;"
     DisplayInLookUpIndex="0"
-
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -27884,15 +27883,6 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.Pending900InDetainedOrPhysicalCheck&quot;"
       FeatureDefaultText="&quot;גביה - בתהליך בדיקה פיזית/מעוכבים&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;IsAutoInsuranceExportSubmit&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Customs.Declaration.Features.ISDefineToInsureFromSubmit&quot;"
-      FeatureDefaultText="&quot;Automatic insurance in export submission&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
