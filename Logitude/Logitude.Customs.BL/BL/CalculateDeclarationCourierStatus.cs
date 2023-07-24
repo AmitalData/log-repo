@@ -17,6 +17,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Server.Tools.Helpers;
+using System.Text.RegularExpressions;
 
 namespace Logitude.Customs.BL.BL
 {
@@ -573,6 +574,10 @@ namespace Logitude.Customs.BL.BL
                 //LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
             }
         }
+        public string DeleteSpaces(string inputString)
+        {
+            return Regex.Replace(inputString, @"\s+", "");
+        }
         public void CalcDeclarationPendings908(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
@@ -580,12 +585,12 @@ namespace Logitude.Customs.BL.BL
             if (!string.IsNullOrEmpty(declarationPM.ImporterId)){
                 ClientQueryService clientQueryService = new ClientQueryService(myDeclarationCourierStatusPM.Tenant);
                 var clientId = clientQueryService.GetSingle(declarationPM.ImporterId,false,false);
-                if(clientId != null)
+                if(clientId != null && !string.IsNullOrWhiteSpace(clientId.FullName))
                 {
-                    clientFullName = clientId.FullName;
+                    clientFullName = DeleteSpaces(clientId.FullName);
                 }
             }
-            if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD >= 1000 && (string.IsNullOrEmpty(declarationPM.ImporterId) || (!string.IsNullOrEmpty(declarationPM.ImporterId) && clientFullName.Contains("יש לשלוף  לקוח"))))
+            if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD >= 1000 && (string.IsNullOrEmpty(declarationPM.ImporterId) || (!string.IsNullOrEmpty(declarationPM.ImporterId) && clientFullName.Contains("ישלשלוףלקוח"))))
             {
                 DeclarationPendingPM declarationPendingPM_908 = null;
                 if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
