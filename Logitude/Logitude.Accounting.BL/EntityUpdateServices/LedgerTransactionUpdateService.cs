@@ -44,7 +44,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var journal = journalQueryService.GetSingle(entityPM.JournalId, false, false);
             if (journal != null)
             {
-                if (journal.TypeCode == "12")
+                if (journal.AccountingEntityCode == "12")
                 {
                     entityPM.Reference2 = journal.JournalNumber;
                 }
