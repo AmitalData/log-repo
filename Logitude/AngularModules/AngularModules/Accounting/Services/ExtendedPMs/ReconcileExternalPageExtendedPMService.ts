@@ -284,18 +284,14 @@ export class ReconcileExternalPageExtendedPMService {
         }
     }
 
-    ImportReconcileExternalPageLineFromExcel(fileUpload: any,bankCodeId:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+    ImportReconcileExternalPageLineFromExcel(formData: FormData,bankCodeId:string,tenant:number,reconcileExternalPageId:string,line:number) {
+        var authHeader = new HttpHeaders();
+        authHeader.append('Token', SessionInfo.Token);
         authHeader.append('Content-Type', 'application/json');
-        return this.httpClient.post(this._apiUrl + "/ImportReconcileExternalPageLineFromExcel?"+ 'bankCodeId=' + bankCodeId
-            , JSON.stringify(fileUpload), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
-                var result = response;
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
-                pmresponse.Result = result;
-                return pmresponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+
+        return this.httpClient.post(this._apiUrl + "/ImportReconcileExternalPageLineFromExcel/?bankCodeId=" + bankCodeId+ "&tenant=" + tenant+"&reconcileExternalPageId=" + reconcileExternalPageId+"&line=" + line, formData, {headers: authHeader });
     }
 
     public clone(jsonPM: any) {

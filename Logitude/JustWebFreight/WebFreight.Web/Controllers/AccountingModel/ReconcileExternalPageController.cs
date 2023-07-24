@@ -53,6 +53,10 @@ using Syncfusion.XlsIO;
 using System.Globalization;
 using Microsoft.Owin;
 using Logitude.Accounting.Data.Repositories;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using NPOI.HSSF.UserModel;
+using IWorkbook = NPOI.SS.UserModel.IWorkbook;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -461,24 +465,46 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
            return reconcileExternalPageQueryService.GetSingle(id, false, false);
 
         }
-        [ActionName(name: "ImportReconcileExternalPageLineFromExcel")]
-        public HttpResponseMessage ImportReconcileExternalPageLineFromExcel(ReconcileExternalPageLineParameters filter, string bankCodeId)
+        [HttpPost]
+        public async Task<HttpResponseMessage> ImportReconcileExternalPageLineFromExcel(string bankCodeId, int tenant, string reconcileExternalPageId, int line)
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 List<ReconcileExternalPageLinePM> list = new List<ReconcileExternalPageLinePM>();
-                byte[] fileData = Convert.FromBase64String(filter.FileData);
-                System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
-                ExcelEngine excelEngine = new ExcelEngine();
-                IApplication application = excelEngine.Excel;
-                IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
-                IWorksheet sheet = workbook.Worksheets[0];
-                List<ExcelReconcileExternalPageLine> myResult = this.BuildReconcileExternalPageLineFromExcelLines(sheet, authToken.Tenant, bankCodeId);
-                filter.RowsCount = sheet.UsedRange.Rows.Count() - 1;
-                filter.ExcelReconcileExternalPageLines = myResult;
+                ReconcileExternalPageLineParameters filter = new ReconcileExternalPageLineParameters();
+                if (!Request.Content.IsMimeMultipartContent())
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid request format");
+                }
 
+                var provider = new MultipartMemoryStreamProvider();
+                await Request.Content.ReadAsMultipartAsync(provider);
+
+                foreach (var file in provider.Contents)
+                {
+                    var fileName = file.Headers.ContentDisposition.FileName.Trim('\"');
+
+                    using (var stream = await file.ReadAsStreamAsync())
+                    {
+                        IWorkbook workbook;
+                        if (fileName.EndsWith(".xlsx"))
+                        {
+                            workbook = new XSSFWorkbook(stream);
+                        }
+                        else if (fileName.EndsWith(".xls"))
+                        {
+                            workbook = new HSSFWorkbook(stream);
+                        }
+                        else
+                        {
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, "Unsupported file format");
+                        }
+
+                        var sheet = workbook.GetSheetAt(0); // Assuming the first sheet
+                        List<ReconcileExternalPageLinePM> myResult = this.BuildReconcileExternalPageLineFromExcelLines(sheet, tenant, bankCodeId, reconcileExternalPageId,line);
+                        filter.ExcelReconcileExternalPageLines = myResult;
+                    }
+                }
                 return Request.CreateResponse(HttpStatusCode.OK, filter);
             }
             catch (Exception ex)
@@ -486,9 +512,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private List<ExcelReconcileExternalPageLine> BuildReconcileExternalPageLineFromExcelLines(IWorksheet sheet,int tenant, string bankCodeId)
+        private List<ReconcileExternalPageLinePM> BuildReconcileExternalPageLineFromExcelLines(ISheet sheet,int tenant, string bankCodeId, string reconcileExternalPageId, int line)
         {
-            List<ExcelReconcileExternalPageLine> myResult = new List<ExcelReconcileExternalPageLine>();
+            List<ReconcileExternalPageLinePM> myResult = new List<ReconcileExternalPageLinePM>();
             var bankCodeRepository = new BankCodeRepository(tenant);
             var bankcodePM = bankCodeRepository.GetSingle(bankCodeId, tenant);
             string format = "M/d/yyyy h:mm:ss tt";
@@ -497,47 +523,53 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 format = bankcodePM.DateFormat;
             }
 
-            foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
+            for (var row = 1; row <= sheet.LastRowNum; row++)
             {
-                String[] rowData = new String[sheet.Columns.Count()];
-                ExcelReconcileExternalPageLine excelReconcileExternalPageLine = new ExcelReconcileExternalPageLine();
-
-                for (int i = 0; i < sheet.Columns.Count(); i++)
+                //String[] rowData = new String[sheet.Columns.Count()];
+                ReconcileExternalPageLinePM excelReconcileExternalPageLine = new ReconcileExternalPageLinePM();
+                excelReconcileExternalPageLine.ReconcileExternalPageId = reconcileExternalPageId;
+                excelReconcileExternalPageLine.Tenant = tenant;
+                excelReconcileExternalPageLine.ReconcileExternalPageId = "new";
+                excelReconcileExternalPageLine.IsReconciled = false;
+                excelReconcileExternalPageLine.LineNumber = line++;
+                var cell = sheet.GetRow(row)?.GetCell(0);
+                if (cell != null && cell.CellType == CellType.String)
                 {
-                    rowData[i] = row.Cells[i].Value2.ToString();
+                    DateTime.TryParseExact(cell.StringCellValue, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime referenceDate);
+                    excelReconcileExternalPageLine.ReferenceDate = referenceDate;
                 }
-
-                if (rowData.Length > 0)
+                cell = sheet.GetRow(row)?.GetCell(1);
+                if (cell != null && cell.CellType == CellType.String)
                 {
-                    int ArrayIndex = 0;
-                   
-                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
-                    {
-                        DateTime.TryParseExact(rowData[ArrayIndex],format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime referenceDate);
-                        excelReconcileExternalPageLine.ReferenceDate = referenceDate;
-                    }
-                    ArrayIndex++;
-                    if (ArrayIndex < rowData.Length &&  !string.IsNullOrEmpty(rowData[ArrayIndex]))
-                    {
-                        decimal.TryParse(rowData[ArrayIndex], out decimal debitAmount);
-                        excelReconcileExternalPageLine.DebitAmount = debitAmount;
-                    }
-                    ArrayIndex++;
-                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
-                    {
-                        decimal.TryParse(rowData[ArrayIndex], out decimal CreditAmount);
-                        excelReconcileExternalPageLine.CreditAmount = CreditAmount;
-                    }
-                    ArrayIndex++;
-                    if (ArrayIndex < rowData.Length && !string.IsNullOrEmpty(rowData[ArrayIndex]))
-                    {
-                        excelReconcileExternalPageLine.Reference = rowData[ArrayIndex];
-                    }
-                    ArrayIndex++;
-                    if (ArrayIndex < rowData.Length && rowData.Length > 4 && !string.IsNullOrEmpty(rowData[ArrayIndex]))
-                    {
-                        excelReconcileExternalPageLine.Notes = rowData[ArrayIndex];
-                    }
+                    decimal.TryParse(cell.StringCellValue, out decimal debitAmount);
+                    excelReconcileExternalPageLine.DebitAmount = debitAmount;
+                }
+                else if (cell != null && cell.CellType == CellType.Numeric)
+                {
+                    decimal.TryParse(cell.NumericCellValue.ToString(), out decimal debitAmount);
+                    excelReconcileExternalPageLine.CreditAmount = debitAmount;
+                }
+                cell = sheet.GetRow(row)?.GetCell(2);
+                if (cell != null && cell.CellType == CellType.String)
+                {
+                    decimal.TryParse(cell.StringCellValue, out decimal CreditAmount);
+                    excelReconcileExternalPageLine.CreditAmount = CreditAmount;
+                }
+                else if (cell != null && cell.CellType == CellType.Numeric)
+                {
+                    decimal.TryParse(cell.NumericCellValue.ToString(), out decimal CreditAmount);
+                    excelReconcileExternalPageLine.CreditAmount = CreditAmount;
+                }
+                cell = sheet.GetRow(row)?.GetCell(3);
+                if (cell != null && cell.CellType == CellType.String)
+                {
+                    excelReconcileExternalPageLine.Reference = cell.StringCellValue;
+                }
+                cell = sheet.GetRow(row)?.GetCell(4);
+                if (cell != null && cell.CellType == CellType.String)
+                {
+                    excelReconcileExternalPageLine.Notes = cell.StringCellValue;
+
                 }
                 myResult.Add(excelReconcileExternalPageLine);
             }
@@ -551,7 +583,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         public string FileName { get; set; }
         public string FileExtension { get; set; }
         public int RowsCount { get; set; }
-        public List<ExcelReconcileExternalPageLine> ExcelReconcileExternalPageLines { get; set; }
+        public List<ReconcileExternalPageLinePM> ExcelReconcileExternalPageLines { get; set; }
     }
     public class ExcelReconcileExternalPageLine
     {
