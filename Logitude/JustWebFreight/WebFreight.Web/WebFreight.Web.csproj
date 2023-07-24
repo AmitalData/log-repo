@@ -754,9 +754,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />
-    <Reference Include="WWApi">
-      <HintPath>..\..\..\..\WindWard\dotnet-ofv\WWApi\bin\Debug\WWApi.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountingModel\DomainServices\TaxDeductionReportDomainService.cs" />
@@ -8066,6 +8063,10 @@
     <ProjectReference Include="..\..\Unifreight.Data\Unifreight.Data.csproj">
       <Project>{40f07800-11e8-4fba-9fc2-fd6c8d11e3ef}</Project>
       <Name>Unifreight.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WWApi\WWApi.csproj">
+      <Project>{97dc0030-ff94-4879-9e2a-efccc541d914}</Project>
+      <Name>WWApi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
