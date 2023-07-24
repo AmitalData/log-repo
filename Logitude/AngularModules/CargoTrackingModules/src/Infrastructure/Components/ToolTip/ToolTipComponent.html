@@ -6,7 +6,7 @@
 
 
     <!-- *ngIf="showPopup" -->
-    <ng-template
+    <ng-template  *ngIf="isHasMore"
         cdkConnectedOverlay
         [cdkConnectedOverlayPanelClass]="'tooltip-popup'"
         [cdkConnectedOverlayOrigin]="trigger"

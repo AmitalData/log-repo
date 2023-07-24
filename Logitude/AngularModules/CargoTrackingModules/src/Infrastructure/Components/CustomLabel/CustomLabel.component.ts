@@ -1,6 +1,20 @@
-import { Component, ContentChild, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ContentChild, Directive, ElementRef, HostListener, Input, OnInit, ViewChild, TemplateRef, ContentChildren, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageWindowComponent } from '../MessageWindow/MessageWindowComponent';
+
+@Directive({
+    selector: '[appLabelUtilContent]'
+})
+export class LabelUtilContentDirective {
+    constructor(public templateRef: TemplateRef<unknown>) {}
+}
+
+@Directive({
+    selector: '[appLabelUtilElement]'
+})
+export class LabelUtilElementDirective {
+    constructor(public elementRef: ElementRef) {}
+}
 
 @Component({
     selector: 'custom-label',
@@ -8,6 +22,9 @@ import { MessageWindowComponent } from '../MessageWindow/MessageWindowComponent'
     styleUrls: ['./CustomLabel.component.css']
 })
 export class CustomLabelComponent implements OnInit {
+    @ViewChild(LabelUtilContentDirective) myContent!: LabelUtilContentDirective;
+    @ViewChild(LabelUtilElementDirective) myElement!: LabelUtilElementDirective;
+
     @ViewChild('container', { static: true }) container: ElementRef;
     @ViewChild('content', { static: true }) content: ElementRef;
     @Input('width') width: number;
@@ -16,15 +33,25 @@ export class CustomLabelComponent implements OnInit {
     availableWidth: number;
     iconSize = 10;
     iconMargin = 4;
-    constructor(public dialog: MatDialog) { }
+    isMobile = false;
+    constructor(public dialog: MatDialog,private cdr: ChangeDetectorRef) { }
 
     ngOnInit() {
-
+        this.isMobile= ( window.innerWidth <= 479 ) 
     }
-    ngAfterContentInit(): void {
-        if (!this.originText)
-            this.originText = this.content.nativeElement.innerText;
-        this.checkText();
+   
+    ngAfterViewChecked(){
+        
+        this.cdr.detectChanges();
+     }
+    ngAfterViewInit() {
+        
+        setTimeout(() => {
+             if (!this.originText)
+            this.originText = this.myContent.templateRef.elementRef.nativeElement.parentElement.innerText;
+            this.checkText(); 
+        }, 1);
+            
     }
 
     checkText() {
@@ -32,7 +59,7 @@ export class CustomLabelComponent implements OnInit {
         if (!this.checkOverflow())
             return;
         this.isHasMore = true;
-        this.content.nativeElement.innerHTML = this.getSliceFromText();
+        this.myElement.elementRef.nativeElement.innerHTML= this.getSliceFromText();
     }
     getAvailableWidth(): number {
         if (this.width)
@@ -44,13 +71,13 @@ export class CustomLabelComponent implements OnInit {
         return this.originText.slice(0, fitSize - 1);
     }
     getFitSize(text: string): number {
-        var textWidth = this.content.nativeElement.offsetWidth;
+        var textWidth = this.myContent.templateRef.elementRef.nativeElement.parentElement.offsetWidth;
         var newWidth = this.availableWidth - this.iconSize - this.iconMargin - this.iconMargin;
         return (text.length * newWidth) / textWidth;
     }
 
     checkOverflow() {
-        if (this.content.nativeElement.offsetWidth <= 0)
+        if (this.myContent.templateRef.elementRef.nativeElement.parentElement.offsetWidth <= 0)
             return false;
         return this.availableWidth < this.container.nativeElement.parentElement.offsetWidth;
     }
