@@ -66,51 +66,53 @@ namespace Logitude.Accounting.BL.CoreBL
         private static Object thisLock = new Object();
         public RecoCallback CreateReconciliation(ReconciliationPM reconciliationPM)
         {
-            //lock (thisLock)
-            //{
-                // changeset
-                if (reconciliationPM.ChangeSetOp != ChangeSetOperation.Insert)
-                {
-                    throw new ApplicationException("Meanwhile Only Insert Enable ");
-                }
-                reconciliationPM.ChangeSetOp = ChangeSetOperation.Insert;
-                foreach (var item in reconciliationPM.ReconciliationLines)
-                {
-                    item.ChangeSetOp = ChangeSetOperation.Insert;
-                }
+            // changeset
+            if (reconciliationPM.ChangeSetOp != ChangeSetOperation.Insert)
+            {
+                throw new ApplicationException("Meanwhile Only Insert Enable ");
+            }
+            reconciliationPM.ChangeSetOp = ChangeSetOperation.Insert;
+            foreach (var item in reconciliationPM.ReconciliationLines)
+            {
+                item.ChangeSetOp = ChangeSetOperation.Insert;
+            }
 
-                RecoCallback recoCallBack = new RecoCallback();
-                using (TransactionScope scope = TransactionFactory.GetNewReadUncommittedTransaction())
+            RecoCallback recoCallBack = new RecoCallback();
+            using (TransactionScope scope = TransactionFactory.GetNewReadUncommittedTransaction())
+            {
+                var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
+                if (ledgerTransactionReconciled) 
                 {
-                    var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
-                    if (ledgerTransactionReconciled) 
-                    {
-                        throw new ApplicationException("Some ledger transactions already being reconciled.");
-                    }
+                    throw new ApplicationException("Some ledger transactions already being reconciled.");
                 }
+            }
             
-                List<LedgerTransactionPM> recoTransactions = GetReconcileTransactions(reconciliationPM);
-                bool hasTwoPaymentsOnly = (recoTransactions.Count(d => d.SourceTypeCode == AccountingEntities.ARPayment) == 2) && recoTransactions.TrueForAll(d => d.SourceTypeCode == AccountingEntities.ARPayment);
-                bool hasMultipleARPayments = CheckIfHasMultiplePayment(reconciliationPM, recoTransactions);
-                if (hasMultipleARPayments == true)
-                {
-                    MultipleARPaymentReconciliationSplitter splitter = new MultipleARPaymentReconciliationSplitter(reconciliationPM);
+            List<LedgerTransactionPM> recoTransactions = GetReconcileTransactions(reconciliationPM);
+            bool hasTwoPaymentsOnly = (recoTransactions.Count(d => d.SourceTypeCode == AccountingEntities.ARPayment) == 2) && recoTransactions.TrueForAll(d => d.SourceTypeCode == AccountingEntities.ARPayment);
+            bool hasMultipleARPayments = CheckIfHasMultiplePayment(reconciliationPM, recoTransactions);
+            if (reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber == 0) && reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber != 0) && hasMultipleARPayments)
+            {
+                recoCallBack = SplitAndSubmitReconciliationByGroupNumberNonZero(reconciliationPM, hasMultipleARPayments);
+            }
+            else if (hasMultipleARPayments != true)
+            {
+                recoCallBack = SplitAndSubmitReconciliationByGroupNumber(reconciliationPM);
+            }
+            else
+            {
+                MultipleARPaymentReconciliationSplitter splitter = new MultipleARPaymentReconciliationSplitter(reconciliationPM);
 
 
-                    List<ReconciliationPM> paymentReconciliations = splitter.SplitReconciliationByPayment();
+                List<ReconciliationPM> paymentReconciliations = splitter.SplitReconciliationByPayment();
 
 
 
-                    SubmitReconciliations(reconciliationPM.Tenant, paymentReconciliations);
-                    recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = paymentReconciliations.Count };
+                SubmitReconciliations(reconciliationPM.Tenant, paymentReconciliations);
+                recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = paymentReconciliations.Count };
 
-                }
-                else
-                {
-                    recoCallBack = SplitAndSubmitReconciliationByGroupNumber(reconciliationPM);
-                }
+            }
 
-                var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
+            var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
                 var repoLedger = new LedgerTransactionRepository(accountingContext as IAccountingContext);
                 repoLedger.ResetDraftOpenReconciliation(reconciliationPM.AccountId, reconciliationPM.Tenant);
 
@@ -181,6 +183,64 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return recoCallBack;
         }
+
+
+
+        private RecoCallback SplitAndSubmitReconciliationByGroupNumberNonZero(ReconciliationPM reconciliationPM, bool hasMultipleARPayments)
+        {
+            bool updateGLAccountAgingDataUsingWR = FeatureToggleHelper.HasFeatureToggle("UAD", reconciliationPM.Tenant);
+            var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
+            RecoCallback recoCallBack;
+            ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), reconciliationPM.Tenant);
+            service.updateGLAccountAgingDataUsingWR = updateGLAccountAgingDataUsingWR;
+            int groupsCount = reconciliationPM.ReconciliationLines.Where(d => d.GroupNumber != 0).GroupBy(d => d.GroupNumber).Count();
+            if (groupsCount > 0)
+            {
+                List<ReconciliationPM> recoPMs = SplitReconciliationByGroupNonZero(reconciliationPM);
+                foreach (ReconciliationPM recoPM in recoPMs)
+                {
+                    service.Update(recoPM, true);
+                }
+
+                recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = recoPMs.Count };
+
+
+                if (hasMultipleARPayments)
+                {
+                    MultipleARPaymentReconciliationSplitter splitter = new MultipleARPaymentReconciliationSplitter(reconciliationPM);
+
+
+                    List<ReconciliationPM> paymentReconciliations = splitter.SplitReconciliationByPaymentZeroGroup();
+
+
+
+                    SubmitReconciliations(reconciliationPM.Tenant, paymentReconciliations);
+                    recoCallBack.splittedRecoCount += paymentReconciliations.Count;
+                }
+                if (updateGLAccountAgingDataUsingWR)
+                {
+                    WriteEntityPMOnCommunicationLog(recoPMs, reconciliationPM.Tenant);
+                }
+
+            }
+            else
+            {
+                // should not get there
+                service.Update(reconciliationPM, true);
+                if (updateGLAccountAgingDataUsingWR)
+                {
+                    WriteEntityPMOnCommunicationLog(new List<ReconciliationPM>
+                    {
+                       reconciliationPM
+                    }, reconciliationPM.Tenant);
+                }
+                recoCallBack = new RecoCallback(reconciliationPM);
+
+            }
+
+            return recoCallBack;
+        }
+
 
         private void WriteEntityPMOnCommunicationLog(List<ReconciliationPM> reconciliations, int tenant)
         {
@@ -271,6 +331,46 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
+        private List<ReconciliationPM> SplitReconciliationByGroupNonZero(ReconciliationPM originalRecoPM)
+        {
+            List<ReconciliationPM> recoPMs = new List<ReconciliationPM>();
+
+            List<IGrouping<int, ReconciliationLinePM>> groups = originalRecoPM.ReconciliationLines.Where(d => d.GroupNumber != 0).GroupBy(d => d.GroupNumber).ToList();
+
+            foreach (IGrouping<int, ReconciliationLinePM> group in groups)
+            {
+                //header
+                ReconciliationPM recoPM = new ReconciliationPM()
+                {
+                    Tenant = originalRecoPM.Tenant,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+
+                    AccountId = originalRecoPM.AccountId,
+                    CreatedByUserId = originalRecoPM.CreatedByUserId,
+                    Number = originalRecoPM.Number,
+                    CreateDate = originalRecoPM.CreateDate,
+                    SearchFields = originalRecoPM.SearchFields,
+                    IsCancelled = originalRecoPM.IsCancelled,
+                    CurrencyCode = originalRecoPM.CurrencyCode,
+                    AccountName = originalRecoPM.AccountName,
+                    AccountNumber = originalRecoPM.AccountNumber,
+                    CreatedByUserName = originalRecoPM.CreatedByUserName,
+                };
+
+                //lines
+                List<ReconciliationLinePM> groupLines = group.ToList();
+                foreach (ReconciliationLinePM line in groupLines)
+                {
+                    line.ChangeSetOp = ChangeSetOperation.Insert;
+                    recoPM.ReconciliationLines.Add(line);
+                }
+
+                //add to list
+                recoPMs.Add(recoPM);
+            }
+
+            return recoPMs;
+        }
 
     }
 
