@@ -13,6 +13,7 @@ export class ToolTipComponent implements OnInit
     showPopup = false;
     @Input() ShowHeader: boolean = false;
     @Input() Title;
+    @Input() isHasMore: boolean = true;
 
     constructor(private changeDetector: ChangeDetectorRef) { }
 
