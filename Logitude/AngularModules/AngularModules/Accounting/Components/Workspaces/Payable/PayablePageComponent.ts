@@ -359,6 +359,8 @@ export class PayablePageComponent {
                     entity.Tenant = SessionLocator.TenantPM.Id;
                     entity.LocalCurrencyId = SessionLocator.LocalCurrencyId;
                     entity.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+                    entity.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+
                     const additionalFieldsScreenCode = "APInvoice.AdditionalFields";
 
                     cmpRef.instance.ComponentRef = cmpRef;
