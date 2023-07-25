@@ -10,7 +10,8 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
+    using static System.Net.Mime.MediaTypeNames;
+using Logitude.Infrastructure.Data.Repsitories;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -30,11 +31,16 @@ namespace Logitude.Customs.Data.Repsitories
                 return new List<string>();
             }
             // split the input "keyword"
-            keyWord= keyWord.ToLower();
+            keyWord = keyWord.ToLower();
             keyWord = keyWord.Replace('\n', ' ');
             var splittedkeyWord = keyWord;
-            char[] BAD_CHARS = new char[] { '!', '@', '#', '$', '%', '_', ')', '(', '-', '*', '&', '^', '~', '.', '"', ';', '\'', '\\', '/', '<', '>', '{', '}', '[', ']', '\n' };
-            splittedkeyWord = string.Concat(splittedkeyWord.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
+            FeatureToggleRepository featureToggleRepository = new FeatureToggleRepository(tenant);
+            var RemoveBadChars=featureToggleRepository.HasFeatureToggle("RBC", tenant);
+            if (RemoveBadChars)
+            {
+                char[] BAD_CHARS = new char[] { '!', '@', '#', '$', '%', '_', ')', '(', '-', '*', '&', '^', '~', '.', '"', ';', '\'', '\\', '/', '<', '>', '{', '}', '[', ']', '\n' };
+                splittedkeyWord = string.Concat(splittedkeyWord.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
+            }
             List<string> keyWordSplittedIntoList = splittedkeyWord.Split(' ').ToList();
 
             List<string> pendingReasonCodeList = new List<string>();
@@ -50,12 +56,11 @@ namespace Logitude.Customs.Data.Repsitories
                 {
                     if (!string.IsNullOrWhiteSpace(r.KeywordsList))
                     {
-                        var keyword = string.Concat(r.KeywordsList.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
                         if (r.SearchType != "2")
                         {
-                            if (keyword.ToLower().Equals(word))
+                            if (r.KeywordsList.ToLower().Equals(word))
                             {
-                                if (r.ExceptKeywords == null || !keyword.Contains(r.ExceptKeywords.ToLower()))
+                                if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords.ToLower()))
                                 {
                                     pendingByKeyword.Add(r);
                                 }
@@ -73,34 +78,33 @@ namespace Logitude.Customs.Data.Repsitories
             }
 
 
-             
-                pendingByKeyword = new List<PendingByKeyword>();
-                PendingByKeywords.ForEach(r =>
+
+            pendingByKeyword = new List<PendingByKeyword>();
+            PendingByKeywords.ForEach(r =>
+            {
+                if (!string.IsNullOrWhiteSpace(r.KeywordsList))
                 {
-                    if (!string.IsNullOrWhiteSpace(r.KeywordsList))
+                    if (r.SearchType == "2")
                     {
-                        var keyword = string.Concat(r.KeywordsList.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
-                        if (r.SearchType == "2")
+                        if (splittedkeyWord.Contains(r.KeywordsList.ToLower()))
                         {
-                            if (splittedkeyWord.Contains(keyword.ToLower()))
+                            if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords.ToLower()))
                             {
-                                if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords.ToLower()))
-                                {
-                                    pendingByKeyword.Add(r);
-                                }
+                                pendingByKeyword.Add(r);
                             }
                         }
-                       
-
                     }
-                });
 
-                 var courierPendingReasonCodes2 = pendingByKeyword.Where(r => !String.IsNullOrWhiteSpace(r.CourierPendingReasonCode)).Select(r => r.CourierPendingReasonCode).ToHashSet();
-                if (courierPendingReasonCodes2.Count > 0)
-                {
-                    pendingReasonCodeList.AddRange(courierPendingReasonCodes2);
+
                 }
-            
+            });
+
+            var courierPendingReasonCodes2 = pendingByKeyword.Where(r => !String.IsNullOrWhiteSpace(r.CourierPendingReasonCode)).Select(r => r.CourierPendingReasonCode).ToHashSet();
+            if (courierPendingReasonCodes2.Count > 0)
+            {
+                pendingReasonCodeList.AddRange(courierPendingReasonCodes2);
+            }
+
 
             return pendingReasonCodeList;
 
