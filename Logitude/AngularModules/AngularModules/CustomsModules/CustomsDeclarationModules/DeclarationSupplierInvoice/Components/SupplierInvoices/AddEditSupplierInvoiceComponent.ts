@@ -1864,6 +1864,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                          
                          if (IsCopyfieldsFeature) {
                             newItem.DutyRegimeProtocolCode = item.DutyRegimeProtocolCode;
+                            newItem.DutyRegimeProtocolLocalName = item.DutyRegimeProtocolLocalName;
                             newItem.TradeAgreementCode = item.TradeAgreementCode;        
                          }
                          this.EntityPM.AddSupplierInvoiceItem(newItem);
