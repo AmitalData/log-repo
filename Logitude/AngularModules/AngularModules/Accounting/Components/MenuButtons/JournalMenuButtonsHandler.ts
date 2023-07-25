@@ -208,7 +208,9 @@ export class JournalMenuButtonsHandler {
             case "JournalApprove":
                 {
                     this.EntityPM.StatusCode = "2"; // Approved
-                
+                    this.EntityPM.JournalLines?.forEach(x=>x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000)));
+
+                    
                     this.SaveChenges();    
 
                     this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
