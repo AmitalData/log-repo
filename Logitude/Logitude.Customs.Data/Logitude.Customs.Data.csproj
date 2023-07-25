@@ -3300,6 +3300,10 @@
     <Content Include="StoredProcedures\updateSupplierInvoiceItemsSequence.sql" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{B02E4D92-9226-4F3F-990F-66C7F66E9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
