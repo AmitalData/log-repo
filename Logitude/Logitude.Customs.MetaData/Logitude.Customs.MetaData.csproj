@@ -633,6 +633,7 @@
     <None Include="EntityFiles\CustomerIdentificationType.lxml" />
     <None Include="EntityFiles\CargoType.lxml" />
     <None Include="EntityFiles\DeliveryType.lxml" />
+    <None Include="EntityFiles\SupplierInvioceExportDefault.lxml" />
     <None Include="EntityFiles\SupplierPartyType.lxml" />
     <None Include="EntityFiles\ExportDeliveryDocumentMessage.lxml" />
     <None Include="EntityFiles\SecurityClearenceTypeCode.lxml" />

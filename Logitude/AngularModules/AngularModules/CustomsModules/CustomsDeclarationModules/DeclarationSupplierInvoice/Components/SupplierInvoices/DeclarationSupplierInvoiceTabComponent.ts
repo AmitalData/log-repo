@@ -28,6 +28,8 @@ import { SupplierInvoiceService } from '../../../../../Customs/Services/Others/S
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { ImageParameter } from '../../../../../Infrastructure/DataContracts/ImageParameter';
 import { Guid } from '../../../../../Infrastructure/Utilities/Guid';
+import { List } from 'Infrastructure/DataContracts/Dashboard/List';
+import { forEach } from 'cypress/types/lodash';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -52,12 +54,16 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService;
     customsDocumentPointerService: CustomsDocumentPointerService;
     supplierInvoicePMService: SupplierInvoicePMService;
+
+    
     public ItemsSource: ObservableCollection;
     public Invoices: SupplierInvoicePM[];
     public InvoiceItems: ObservableCollection;
     public itemsList: SupplierInvoiceItemPM[];
     public IsVisible = false;
     public MultiUpdate = false;
+    public IsOcr = false;
+
     private _entityListService: EntityListService;
     public IsDisplayOnly: boolean = false;
     public ShowStorageStatusMessage: boolean = false;
@@ -84,6 +90,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             //this.ObjectTableName = this.entityArgs.ObjectTableName;
             //this.getSupplierInvoices();
             
+            
         //});
     }
 
@@ -104,6 +111,10 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                         var multiUpdateFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "MultiUpdate");
                         if (multiUpdateFeature) {
                             this.MultiUpdate = true;
+                        }
+                        var isOcrFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
+                        if (isOcrFeature) {
+                            this.IsOcr = true;
                         }
      
 
@@ -145,6 +156,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     
     public CurrentEditComponentId: string;
     private Listen() {
+        
         if (this.CurrentSession.CurrentEditComponent != null) {
 
             this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
@@ -260,7 +272,6 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     }
 
     getSupplierInvoices() {
-
         //this.ItemsSource.Clear();
         this.Invoices = this.EntityPM.SupplierInvoices;
         this.ItemsSource.InsertCollection(this.Invoices, true);
@@ -359,6 +370,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
       //          filters.addAdditionalFilter("CounterKey", null, null, null, "Equals", false, false, false, "number");
 
             }
+            
             return this._entityListService.getExtendedByFilters("Customs.SupplierInvoiceItem", filters);//this.ledgerTransactionListExtendedService.getByFilters(filters);
 
            
@@ -368,6 +380,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     filterAgrs: ApiQueryFilters; 
 
     private timerToken: any;
+
+     
     IsPrimarySupplierInvoiceChecked(checked: boolean, item: SupplierInvoicePM) {
    
         if (!checked) {
@@ -402,6 +416,50 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         }
         
     }
+
+    public  SupplierInvoiceComprehensiveUpdate:SupplierInvoicePM[]=[];
+    IsComprehensiveUpdateChecked(checked: boolean, item: SupplierInvoicePM){
+        
+        if(checked){
+            this.SupplierInvoiceComprehensiveUpdate.push(item);
+        }
+        else{
+            this.SupplierInvoiceComprehensiveUpdate= this.SupplierInvoiceComprehensiveUpdate.filter(i=>i.InvoiceNumber!==item.InvoiceNumber);
+        }
+    }
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+    OpenOcrDefult(){
+        
+        this.DataSource;
+        this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceExportDefault", 0).subscribe((response: any) => {
+            var windowTitle = TextCodeTranslator.Translate("Customs.Consignment.O.ComprehensiveUpdate");
+            var logWindow = new LogitudeWindow();
+            var args: any = {
+                EntityPM: this.EntityPM,
+                IsFromSupplierInvoice : true,
+                SupplierInvoiceComprehensiveUpdate:this.SupplierInvoiceComprehensiveUpdate
+            };
+            logWindow.WindowArgs = args;
+            logWindow.Width = 800;
+            logWindow.Height = 500;
+            logWindow.Title = windowTitle;
+            logWindow.IsShowCloseButton = true;
+            logWindow.WindowArgs=args;
+            logWindow.Show('./Common/Components/Maintenance/OcrDefaultsSettingsComponent');
+            logWindow.WindowClosed.subscribe((event: any) => {
+                if(event=="update"){
+                    this.RefreshEntity();
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.SupplierInvoiceComprehensiveUpdate=  [];      
+                }
+              
+                this.CD.reattach();
+                
+               
+            });
+        });
+    }
+
 
     EditButtonClicked(item: SupplierInvoicePM) {
 
@@ -438,6 +496,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                     var declaration = response.Result;
                     this.CurrentSession.StopBusyIndicator();
                     if (!AppTool.IsNullOrEmpty(declaration)) {
+
                         if (!AppTool.IsNullOrEmpty(item)) {
                             this.EditInvoice(item);
 
@@ -462,7 +521,6 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         var supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
 
         this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, item.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "parent").subscribe((response:any) => {
-
                 var windowArgs: any = {};
                 windowArgs.EntityPM = response.Result;
                 windowArgs.declarationPM = this.EntityPM;
@@ -501,6 +559,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                 this.CD.detach();
                 logWindow.WindowClosed.subscribe((event: any) => {
                     if (event != 'cancel') {
+                        this.SupplierInvoiceComprehensiveUpdate=  []; 
 
                         this.RefreshEntity();
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;

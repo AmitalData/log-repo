@@ -1035,13 +1035,16 @@
     <Compile Include="Controllers\CustomsModel\Extended\CustomsRequestsSheetViewsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\DecCargoSplitConExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\SupplierInvioceExportDefaultExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CountryCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationFollowUpViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\OcrDocumentViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\OcrStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SupplierInvioceExportDefaultViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\VendorCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CountryCurrencyController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\OcrDocumentController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SupplierInvioceExportDefaultController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\VendorCurrencyController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ServersNamesController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ExportDeclarationClosingDatasController.cs" />
@@ -3369,6 +3372,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\StatusFieldTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\StorageStatusTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\StuffingSiteTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SupplierInvioceExportDefaultUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SupplierPartyTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SupportMailboxUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffLinesContainersPriceUpdateClass.cs" />

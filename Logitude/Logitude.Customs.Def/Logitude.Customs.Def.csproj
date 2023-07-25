@@ -143,6 +143,7 @@
     <Compile Include="EntityPMs\Generated\StatusFieldTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\StuffingSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SuppInvoiceItemsAbachStatementPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvioceExportDefaultPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsPricePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoicePaymentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoiceUCRPM.Generated.cs" />

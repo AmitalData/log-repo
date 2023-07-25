@@ -9,12 +9,17 @@ import {SupplierInvoicePM} from '../../EntityPMs/SupplierInvoicePM';
 
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { SendMultiUpdateRequestParams } from '../../DataContract/RequestParams/SendMultiUpdateRequestParams';
+import { MultiUpdateOcrParams } from 'Customs/DataContract/RequestParams/MultiUpdateOcrParams';
+import { isDebuggerStatement } from 'typescript';
+import { SupplierInvoicePMService } from '../StandardPMs/SupplierInvoicePMService';
 
 @Injectable()
 
 export class SupplierInvoiceService {
     private _http: HttpClient
     private _apiUrl: string;
+    public SupplierInvoicePMService: SupplierInvoicePMService=new SupplierInvoicePMService()
+
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarationSupplierInvoices';
@@ -67,6 +72,7 @@ export class SupplierInvoiceService {
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
+           
 
             return this._http.post(
                 this._apiUrl + '/PostSendMultiUpdate/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
@@ -107,6 +113,34 @@ export class SupplierInvoiceService {
                     serviceResponse.Result = response;
                     return serviceResponse;
                 }), catchError(ServiceHelper.HandleServiceError));
+
+        });
+    }
+
+    PostMultiUpdateOCR(requestParams: MultiUpdateOcrParams) {
+
+        
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.put(
+                this._apiUrl + "/PutMultiUpdateOCR/"
+                , 
+                JSON.stringify(requestParams),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
+
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+            ;
 
         });
     }

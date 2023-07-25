@@ -738,6 +738,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SuppInvoiceItemsAbachStatementMap());
 	
+            modelBuilder.Configurations.Add(new SupplierInvioceExportDefaultMap());
+	
             modelBuilder.Configurations.Add(new SupplierInvioceItemCertificatMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceMap());
@@ -3366,6 +3368,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatement 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupplierInvioceExportDefault> SupplierInvioceExportDefaults 
 	 {
 	      get; set;
 	 

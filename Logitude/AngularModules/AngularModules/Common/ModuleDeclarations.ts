@@ -60,6 +60,7 @@ import { EnglishNameListHeaderTemplate } from './Components/Templates/ListHeader
 import { CityNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CityNameListHeaderTemplate';
 import { CodeListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CodeListHeaderTemplate';
 import { StartWorkingListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/StartWorkingListHeaderTemplate';
+import { OcrDefaultsSettingsComponent } from './Components/Maintenance/OcrDefaultsSettingsComponent';
 
 export const Components =
     [
@@ -87,6 +88,7 @@ export const Components =
         NewBusinessUnitComponent,
         BusinessUnitGeneralTabComponent,
         CustomerActivationSettingsComponent,
+        OcrDefaultsSettingsComponent,
         VATSettingsComponent,
         AccountingTabComponent,
         AccountingTab_ChargesType,
@@ -154,6 +156,8 @@ export class ModuleDeclarations {
             case "NewVatTypePercentageComponent": { myResult = NewVatTypePercentageComponent; break; }
             case "CreditLimitSettingsComponent": { myResult = CreditLimitSettingsComponent; break; }
             case "CustomerActivationSettingsComponent": { myResult = CustomerActivationSettingsComponent; break }
+            case "OcrDefaultsSettingsComponent": { myResult = OcrDefaultsSettingsComponent; break }
+
             case "VATSettingsComponent": { myResult = VATSettingsComponent; break }
             case "CompetitorComponent": { myResult = CompetitorComponent; break }
             case "CreditLimitSettingsComponent": { myResult = CreditLimitSettingsComponent; break; }

@@ -1,0 +1,200 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class SupplierInvioceExportDefaultDataMapping: IMapping<SupplierInvioceExportDefaultPM, SupplierInvioceExportDefault>,IMappingEncodeBase64NVARCHARFields<SupplierInvioceExportDefaultPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         AccountTypeCode, 
+	         PartyRelationshipCode, 
+	         BuyerRoleCode, 
+	         ProcessTypeCode, 
+	         TransactionNatureCode, 
+	         ClaimReasonCode,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         AccountTypeCode, 
+	         PartyRelationshipCode, 
+	         BuyerRoleCode, 
+	         ProcessTypeCode, 
+	         TransactionNatureCode, 
+	         ClaimReasonCode,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(SupplierInvioceExportDefaultPM entityPM, SupplierInvioceExportDefault entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountTypeCode))
+            {
+				entityPOCO.AccountTypeCode = entityPM.AccountTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PartyRelationshipCode))
+            {
+				entityPOCO.PartyRelationshipCode = entityPM.PartyRelationshipCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BuyerRoleCode))
+            {
+				entityPOCO.BuyerRoleCode = entityPM.BuyerRoleCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProcessTypeCode))
+            {
+				entityPOCO.ProcessTypeCode = entityPM.ProcessTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransactionNatureCode))
+            {
+				entityPOCO.TransactionNatureCode = entityPM.TransactionNatureCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimReasonCode))
+            {
+				entityPOCO.ClaimReasonCode = entityPM.ClaimReasonCode;
+			}
+			}
+
+		public void POCOToPM(SupplierInvioceExportDefaultPM entityPM, SupplierInvioceExportDefault entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AccountTypeCode))
+            {
+					entityPM.AccountTypeCode = entityPOCO.AccountTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PartyRelationshipCode))
+            {
+					entityPM.PartyRelationshipCode = entityPOCO.PartyRelationshipCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BuyerRoleCode))
+            {
+					entityPM.BuyerRoleCode = entityPOCO.BuyerRoleCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProcessTypeCode))
+            {
+					entityPM.ProcessTypeCode = entityPOCO.ProcessTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransactionNatureCode))
+            {
+					entityPM.TransactionNatureCode = entityPOCO.TransactionNatureCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClaimReasonCode))
+            {
+					entityPM.ClaimReasonCode = entityPOCO.ClaimReasonCode;
+            }
+
+		}
+
+		public void PMToOldPM(SupplierInvioceExportDefaultPM entityPM, SupplierInvioceExportDefaultPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountTypeCode))
+            {
+                oldEntityPM.AccountTypeCode = entityPM.AccountTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PartyRelationshipCode))
+            {
+                oldEntityPM.PartyRelationshipCode = entityPM.PartyRelationshipCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BuyerRoleCode))
+            {
+                oldEntityPM.BuyerRoleCode = entityPM.BuyerRoleCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProcessTypeCode))
+            {
+                oldEntityPM.ProcessTypeCode = entityPM.ProcessTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransactionNatureCode))
+            {
+                oldEntityPM.TransactionNatureCode = entityPM.TransactionNatureCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimReasonCode))
+            {
+                oldEntityPM.ClaimReasonCode = entityPM.ClaimReasonCode;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(SupplierInvioceExportDefaultPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

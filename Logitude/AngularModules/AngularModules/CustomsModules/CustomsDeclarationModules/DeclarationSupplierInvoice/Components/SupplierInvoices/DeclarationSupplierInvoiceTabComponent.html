@@ -313,7 +313,12 @@
                                 </div>
                             </div>
                         </td>
-                        
+                        <td *ngIf="IsOcr" style="height: 20px;padding: 5px;padding-bottom: 0px;width: 80px;">
+                            <div>
+                                <button  [disabled]="IsDisplayOnly || SupplierInvoiceComprehensiveUpdate.length < 1" class="Button" (click)="OpenOcrDefult()" style="width: 80px; margin-right: 15px; display: inline-block;">עדכון גורף</button>
+                                <input     style="display:none;width:65px" class="upload" />
+                            </div>                                        
+                        </td>
                         <td *ngIf="showUploadInvoicesFromCsvBtn" style="height: 20px;padding: 5px;padding-bottom: 0px;width: 150px;">
                             <div>
                                 <button *ngIf="showUploadInvoicesFromCsvBtn" [disabled]="IsDisplayOnly || ItemsSource.Length < 1" class="Button" (click)="OpenUpLoadFile()" style="width: 140px; margin-right: 15px; display: inline-block;">טעינת חשבונות יצואן מאקסל</button>
@@ -492,6 +497,18 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
+                                    <log-column *ngIf="IsOcr" [header]="'Customs.Consignment.O.ComprehensiveUpdate' | TextCodeTranslationPipe" [binding]="'BuyerRoleName'" [width]="'60'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="padding-top: 1px; width: 18px; height:20px;vertical-align:central;PADDING-RIGHT:20PX">
+                                                    <LogCheckBox  [ObjectTableName]="'Customs.SupplierInvoice'"
+                                                     [DataContext]="item" [HideColumns]="true" (ValueChanged)="IsComprehensiveUpdateChecked($event,item)"
+                                                    ></LogCheckBox>
+                                                </div>
+
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
                                     <log-column [width]="'55'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
@@ -513,7 +530,7 @@
                                         </ng-template>
                                     </log-column>
 
-                                    <log-column [width]="'20'" [Editable]="true" [Alignment]="'right'">
+                                    <log-column *ngIf="EntityPM.Direction != 'E'" [width]="'20'" [Editable]="true" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="padding-top: 1px; width: 18px; height:20px;float:left;vertical-align:central">

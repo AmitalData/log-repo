@@ -489,14 +489,14 @@ export class MaintenanceComponent {
 
             if (FeatureLocator.HasFeaturePermession("Customs.Client", "AUTHORIZAT")) {
                 this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
-                var item = new MenusTablePM();
-                item.CategoryTypeCode = "CSM";
-                item.Icon = "Table"
-                item.Code = "SAL"; 
-                item.TranslatedName=TextCodeTranslator.Translate("Customs.Client.AuthorizationLetters")
-                item.ObjectTableName = "Customs.Client";
-                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
-                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+                    var item = new MenusTablePM();
+                    item.CategoryTypeCode = "CSM";
+                    item.Icon = "Table"
+                    item.Code = "SAL";
+                    item.TranslatedName = TextCodeTranslator.Translate("Customs.Client.AuthorizationLetters")
+                    item.ObjectTableName = "Customs.Client";
+                    item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
+                    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 });
             }
             this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
@@ -505,6 +505,18 @@ export class MaintenanceComponent {
                 item.Icon = "Table"
                 item.Code = "SAC";
                 item.TranslatedName = "שליפת לקוח ברצף"
+                item.ObjectTableName = "Customs.Client";
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            });
+        }
+        if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR")) {
+            this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CSM";
+                item.Icon = "Table"
+                item.Code = "DOCR";
+                item.TranslatedName = "ברירות מחדל OCR - יצוא"
                 item.ObjectTableName = "Customs.Client";
                 item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
@@ -532,7 +544,7 @@ export class MaintenanceComponent {
                     item.TranslatedName = TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ExportRequiredFields")
                     item.ObjectTableName = "Customs.CustomsRequiredField";
                     item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0].Id
-                    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item)); 
+                    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 }
 
             });
@@ -780,6 +792,7 @@ export class MaintenanceComponent {
     }
 
     ItemClicked(item: MaintenanceMenuItem) {
+
         if (item) {
             switch (item.Code) {
                 case "DFES": {
@@ -1274,7 +1287,6 @@ export class MaintenanceComponent {
                 }
                 case "EXPR": {
                     var logitudeWindow = new LogitudeWindow();
-                    debugger;
                     logitudeWindow.Title = TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ExportRequiredFields");
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 525;
@@ -1538,7 +1550,7 @@ export class MaintenanceComponent {
                             messageWindow.Show("Logged User Is not Customer Care ");
                             return;
                         }
-                        let msg =TextCodeTranslator.Translate("Customs.Client.IsSelectAuthorizationLetters")
+                        let msg = TextCodeTranslator.Translate("Customs.Client.IsSelectAuthorizationLetters")
                         let confirmWindow = new ConfirmWindow();
                         confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.SelectAuthorizationLetters");
                         confirmWindow.Width = 350;
@@ -1551,11 +1563,11 @@ export class MaintenanceComponent {
                             if (confirmWindow.Yes) {
 
                                 var servicelink = './Customs/CustomsGeneralRequests/Components/RecallClientsForCutoms';
-                               
+
 
                                 SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                                     service.SendRecallMessageConcurrencyGuidToServer();
-                                });                   
+                                });
                             }
                         });
                         break;
@@ -1591,6 +1603,21 @@ export class MaintenanceComponent {
                                     service.SendRecallMessageToServer(true);
                                 });
                             }
+                        });
+                        break;
+                    }
+
+
+                case "DOCR":
+                    {
+                        this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceExportDefault", 0).subscribe((response: any) => {
+                            var windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvioceExportDefault.O.OCRDefaults");
+                            var logWindow = new LogitudeWindow();
+                            logWindow.Width = 800;
+                            logWindow.Height = 500;
+                            logWindow.Title = windowTitle;
+                            logWindow.IsShowCloseButton = true;
+                            logWindow.Show('./Common/Components/Maintenance/OcrDefaultsSettingsComponent');
                         });
                         break;
                     }

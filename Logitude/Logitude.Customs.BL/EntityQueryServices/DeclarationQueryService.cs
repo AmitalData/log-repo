@@ -37,6 +37,9 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.LogitudeClient.DeclarationErrorPointer;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.BL.Security;
+using Logitude.BL.CommonDataModel.EntityQueries;
+//using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -68,6 +71,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 {
                     supplierInvoiceService.OnlyParentItem = true;
                 }
+                //FeatureQuery featureQuery = new FeatureQuery();
+                //var features = featureQuery.GetAllowedFeaturesForLoggedUser(Logitude.Server.Tools.Helpers.AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
+                //var featureOcr = features.Features.FirstOrDefault(x => x.Code == "OCR");
+                //if (featureOcr != null)
+                //{
+                //    LoadSupplierInvoicesWithItems = true;
+                //}
+                //var flag = SecurityUtility.CheckContactFeature();
                 entityPM.SupplierInvoices = supplierInvoiceService.GetSupplierInvoicesForDeclaration(declarationKeys.Id, entityPM.Tenant,
 
                     LoadSupplierInvoicesWithItems || entityPM.IsCourierDeclaration // courier small entity - for Classification !!//Task 40622: מסך סיווג מתוך מסך עבודה - חלק מרכזי

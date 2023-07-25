@@ -1,0 +1,210 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class SupplierInvioceExportDefaultPM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string accountTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountTypeCode  
+	   {
+	    
+	     get
+		{
+		   return accountTypeCode;
+		 }
+		 set
+		 {
+		   if(accountTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountTypeCode",OldValue=accountTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   accountTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string partyRelationshipCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartyRelationshipCode  
+	   {
+	    
+	     get
+		{
+		   return partyRelationshipCode;
+		 }
+		 set
+		 {
+		   if(partyRelationshipCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartyRelationshipCode",OldValue=partyRelationshipCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   partyRelationshipCode=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerRoleCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerRoleCode  
+	   {
+	    
+	     get
+		{
+		   return buyerRoleCode;
+		 }
+		 set
+		 {
+		   if(buyerRoleCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerRoleCode",OldValue=buyerRoleCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerRoleCode=value;
+		   }
+			
+		 }
+	   }
+	  private string processTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProcessTypeCode  
+	   {
+	    
+	     get
+		{
+		   return processTypeCode;
+		 }
+		 set
+		 {
+		   if(processTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProcessTypeCode",OldValue=processTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   processTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string transactionNatureCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransactionNatureCode  
+	   {
+	    
+	     get
+		{
+		   return transactionNatureCode;
+		 }
+		 set
+		 {
+		   if(transactionNatureCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransactionNatureCode",OldValue=transactionNatureCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transactionNatureCode=value;
+		   }
+			
+		 }
+	   }
+	  private string claimReasonCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimReasonCode  
+	   {
+	    
+	     get
+		{
+		   return claimReasonCode;
+		 }
+		 set
+		 {
+		   if(claimReasonCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimReasonCode",OldValue=claimReasonCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimReasonCode=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

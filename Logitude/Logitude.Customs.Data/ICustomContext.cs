@@ -352,6 +352,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<StuffingSiteType> StuffingSiteTypes { get; }
 		 IDbSet<SubCountry> SubCountries { get; }
 		 IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatement { get; }
+		 IDbSet<SupplierInvioceExportDefault> SupplierInvioceExportDefaults { get; }
 		 IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats { get; }
 		 IDbSet<SupplierInvoice> SupplierInvoices { get; }
 		 IDbSet<SupplierInvoiceFreightAmount> SupplierInvoiceFreightAmounts { get; }
