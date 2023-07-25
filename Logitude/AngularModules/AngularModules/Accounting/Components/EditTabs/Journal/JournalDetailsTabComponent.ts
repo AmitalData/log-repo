@@ -130,7 +130,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.JournalLines = new ObservableCollection([]);
-
+      
         this.EntityPM = entityArgs.EntityPM;
 
         this.CheckFeatures();
@@ -545,8 +545,10 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
 
     }
-    private ValidateDates(value:Date, fieldName:string) {
+    private async ValidateDates(value:Date, fieldName:string) {
         if (fieldName == "AccountingDate") {
+            this.AccountingPeriods=null;
+            await this.GetAccountingPeriods();
             var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
             if (accountingPeriod) {
 
@@ -713,7 +715,7 @@ getHeaderCurrency(CurrencyId:string){
             }
         });
 
-        this.GetAccountingPeriods();
+        //this.GetAccountingPeriods();
         // Current Accouting Period
         //var periodTypeCode = "1" // 1-Regular
         //this.accountingPeriodListService.getByYear(new Date().getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
@@ -757,18 +759,25 @@ getHeaderCurrency(CurrencyId:string){
         this.difference = Math.abs(this.debitTotal - this.creditTotal);
     }
 
-    GetAccountingPeriods() {
-        var filters = new ApiQueryFilters(true);
-        filters.addAdditionalFilter("PeriodTypeCode", "1", null, null, "Equals", false, false, false, "string"); // 1-Regular
-
-        this._AccountingPeriodListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.AccountingPeriods = myResponse.Result;
-                    console.log(">>Accounting Periods: ", myResponse.Result);
+    async GetAccountingPeriods() {
+          
+            var filters = new ApiQueryFilters(true);
+            filters.addAdditionalFilter("PeriodTypeCode", "1", null, null, "Equals", false, false, false, "string"); // 1-Regular   
+             
+        const res = await new Promise<boolean>((resolve, reject) => {   
+            
+            this._AccountingPeriodListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.AccountingPeriods = myResponse.Result;
+                        console.log(">>Accounting Periods: ", myResponse.Result);
+                        resolve(true);
+                    }
                 }
-            }
-        });
+            });
+        })
+       return res;
+
     }
 
     header_year: number;
