@@ -50,11 +50,12 @@ namespace Logitude.Customs.Data.Repsitories
                 {
                     if (!string.IsNullOrWhiteSpace(r.KeywordsList))
                     {
+                        var keyword = string.Concat(r.KeywordsList.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
                         if (r.SearchType != "2")
                         {
-                            if (r.KeywordsList.ToLower().Equals(word))
+                            if (keyword.ToLower().Equals(word))
                             {
-                                if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords.ToLower()))
+                                if (r.ExceptKeywords == null || !keyword.Contains(r.ExceptKeywords.ToLower()))
                                 {
                                     pendingByKeyword.Add(r);
                                 }
@@ -78,9 +79,10 @@ namespace Logitude.Customs.Data.Repsitories
                 {
                     if (!string.IsNullOrWhiteSpace(r.KeywordsList))
                     {
+                        var keyword = string.Concat(r.KeywordsList.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
                         if (r.SearchType == "2")
                         {
-                            if (splittedkeyWord.Contains(r.KeywordsList.ToLower()))
+                            if (splittedkeyWord.Contains(keyword.ToLower()))
                             {
                                 if (r.ExceptKeywords == null || !keyWord.Contains(r.ExceptKeywords.ToLower()))
                                 {
