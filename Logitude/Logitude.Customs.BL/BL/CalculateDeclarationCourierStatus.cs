@@ -361,6 +361,11 @@ namespace Logitude.Customs.BL.BL
             if (errorsForDeclaration != null && errorsForDeclaration.RequiredFields != null && errorsForDeclaration.RequiredFields.Count() > 0)
             {
                 LogMessagingUtil.Instance.AppendLine("RequiredFields missed, CourierDeclarationStatusCode = M");
+                foreach (var field in errorsForDeclaration.RequiredFields)
+                {
+                    LogMessagingUtil.Instance.AppendLine("RequiredFields missed :" + field.FieldName);
+                }
+
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
             else if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 150 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
