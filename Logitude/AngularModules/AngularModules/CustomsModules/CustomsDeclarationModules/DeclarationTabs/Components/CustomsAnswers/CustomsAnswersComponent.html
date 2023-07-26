@@ -329,7 +329,7 @@
 
                                             <span>
                                                 <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
-                                                    <img src="./Images/LogBox/DSV/Tab_Logo_Original.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                    <img [src]="src" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
                                                 </button>
                                             </span>
 
@@ -628,11 +628,11 @@
                                             [width]="'160'" [Alignment]="'right'" [binding]="'DepositionStatusCode'">
                                     <ng-template let-item>
 <log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" *ngIf="item.ErrorType=='4589'">
+                                        <div style="text-align: right;"  *ngIf="item.ErrorType=='4589'" >
 
                                             <span>
-                                                <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
-                                                    <img src="./Images/LogBox/DSV/Tab_Logo_Original.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'"  (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img [src]="src" style="margin-right: -4px; margin-top: 1px"/>  משימה ליבואן
                                                 </button>
                                             </span>
 
@@ -656,7 +656,7 @@
                         </td>
                     </tr>
 
-
+                   
                     <tr>
                         <td colspan="3"></td>
                     </tr>

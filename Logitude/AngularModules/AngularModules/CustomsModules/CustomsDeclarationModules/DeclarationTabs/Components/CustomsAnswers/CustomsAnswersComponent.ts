@@ -19,6 +19,7 @@ import {DeclarationEventManager} from '../../../../../Customs/Utilities/Declarat
 import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {ConstraintApprovalRequestParams} from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
+declare var UploadLogoFile, HideImage , SetImage, ArrayBufferToBase64: any;
 
 // Send Request
 import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
@@ -29,10 +30,13 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { Guid } from 'Infrastructure/Utilities/Guid';
+import { ImageLibraryService } from 'Common/Services/Others/ImageLibraryService';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
  
 @Component({    
     templateUrl: './CustomsAnswersComponent.html',
-    providers: [DeclarationExtendedListService],
+    providers: [DeclarationExtendedListService,ImageLibraryService],
     selector:"CustomsAnswer"
 })
 
@@ -47,6 +51,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     public DisplayOnlyMessage: string = "";
     public IsDescriptionVisible: boolean = false;
     ResponseData: INF_MSG_GenericResponseData;
+    SmalllogoHtmlId: string = Guid.newGuid();
 
     Errorslist: ObservableCollection = new ObservableCollection([]);
     Warninglist: ObservableCollection = new ObservableCollection([]);
@@ -75,7 +80,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
     private declarationPMService: DeclarationPMService = new DeclarationPMService;
-
+    src:string="";
     //#region TextCodes translations
     textcode_CollateralRequest: string           ;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
     textcode_RequestedAmount: string             ;
@@ -88,15 +93,16 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     //#endregion
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
+    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,public _imageLibraryService: ImageLibraryService) {
         super();
-        
+       
         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationConstraint").subscribe((response:any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
                     this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
                         this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
+                           
                             this.EntityPM = this.entityArgs.EntityPM;
                             this.IsCourierDeclaration = this.EntityPM.IsCourierDeclaration;
                             //this.DepositionStatusCode = this.EntityPM.DepositionStatusCode;
@@ -138,11 +144,34 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     }
 
-    ngAfterViewInit() {
+     ngAfterViewInit() {
+        
+        this.LoadLogo()
         this.SetFilter();
+      
     }
 
-    SetFilter() {
+
+    LoadLogo(){
+       
+        this._imageLibraryService.DownloadFile("minilogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            
+            this.CurrentSession.StopBusyIndicator();
+
+            if (!pmResponse.HasError) {
+                var result = pmResponse.Result;
+                
+                if (result) {
+                    this.src=result;
+                } 
+
+            } 
+          
+        });
+      
+    }
+     SetFilter() {
         var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
         if (myDeclarationEditComponentController.CustomsAnswersShowManifest) {
             this.CourierFilterSelectedValue = 'Manifest';
@@ -158,7 +187,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         }
     }
 
-    private Listen() {
+    private   Listen() {
+        
         if (this.CurrentSession.CurrentEditComponent != null) {
 
             this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
@@ -193,6 +223,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                 })
             );
         }
+        
     }
 
     SetScreenFieldsEditability() {
@@ -631,6 +662,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
 
     GetResourceForTableName(tableName: string, errors: DeclarationErrorView[]) {
+        
         // var tableName = tables.pop();
         if (tableName == 'Customs.SupplierInvioceItemsCertificate') {
             tableName = 'Customs.SupplierInvioceItemCertificat';
@@ -1197,6 +1229,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                             }
                             myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
                                 .subscribe((res:any) => {
+                                    
                                     if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
                                         this.IsDepositionStatusCodeButton = true;
                                         this.IsDepositionStatusCodeSendDigital = true;
