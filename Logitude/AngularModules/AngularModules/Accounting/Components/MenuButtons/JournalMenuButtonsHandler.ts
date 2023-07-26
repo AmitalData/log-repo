@@ -232,6 +232,7 @@ export class JournalMenuButtonsHandler {
                 {
                     this.EntityPM.StatusCode = "0"; // Draft
                     this.EntityPM.IsDirty = true;
+                    this.EntityPM.JournalLines?.forEach(x=>x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000)));
                     this.SaveChenges();
                     break;
                 }
