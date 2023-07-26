@@ -38,6 +38,7 @@ import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GL
 import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+declare var window: any;
 
 @Component({
 
@@ -62,20 +63,24 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
     IsAccountingActivated: boolean = false;
+    public AllowVatTypes: boolean = true;
     public IsUsingVirtuallization: boolean = false;
+    public InvoicePartners: InvoicePartnerType[] = [];
+
     constructor(private entityArgs: EntityArgs) {
         super();
-       // this.CurrentSession.StartBusyIndicatorLoading();
-       this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        // this.CurrentSession.StartBusyIndicatorLoading();
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
+        this.BuildPartnersTypes();
         this.IsManifest = this.EntityPM.ARInvoiceTypeCode == "MN" ? true : false;
         this.IsCustomsInvoice = (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") ? true : false;
         this.ObservableItems = new ObservableCollection([]);
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ShowLocal=  !SessionLocator.LoggedUserPM.DontShowLocal;
 
-
+        this.CheckFeatures();
         this.InitializeBillToLov();
         this.InitializeServices();
         this.InitializeComponent();
@@ -87,6 +92,39 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.IsEditExchangeRateVisible = true;
         }
     }
+
+    BuildPartnersTypes() {
+        this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
+        this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
+    }
+
+
+    public SelectedPartnerType: InvoicePartnerType = null;
+    public BillToDependencyValue1: string;
+    public BillToDependencyValue2: boolean;
+
+    PartnersTypeSelectionMethod(selected: InvoicePartnerType) {
+        if (this.SelectedPartnerType != selected) {
+            this.SelectedPartnerType = selected;
+
+            if (selected) {
+                this.EntityPM.BillToPartnerTypeId = selected.PartnerTypeId;
+                this.BillToDependencyValue1 = selected.PartnerTypeId;
+                this.BillToDependencyValue2 = selected.IsCustomer;
+            }
+
+            this.SetUIProperties();
+        }
+    }
+
+    get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
+    set BillToPartnerTypeId(newValue: string) {
+        if (this.billToPartnerTypeId != newValue) {
+            this.billToPartnerTypeId = newValue;
+        }
+    }
+
+    private billToPartnerTypeId: string;
 
     SetIsUsingVirtuallization() {
         var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
@@ -149,6 +187,16 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.SetGridColumns();
         this.ComputeRelativeRateDate();
         this.BillToDependencyProperty1 = InvoiceTool.GetBillToPartnerTypes();
+    }
+
+
+    CheckFeatures() {
+
+        var table = window.ObjectTables.filter(d => d.Name === 'ARInvoice')[0];
+        var hideVatTypesFeature = FeatureLocator.Features.filter(f => (f.Code == "HideVatTypes") && f.ObjectTableId == table.Id)[0];
+        if (hideVatTypesFeature) {
+            this.AllowVatTypes = false;
+        }
     }
 
     public LocalAmountHeader: string = null;
@@ -437,6 +485,12 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
 
     get BillToLocalName() { return this.EntityPM.BillToLocalName; }
     set BillToLocalName(newValue: string) {
@@ -1620,7 +1674,7 @@ export class ARInvoiceLineItem extends BaseComponent {
             this.EntityPM.ReportedinTaxReport = newValue;
         }
     }
-    
+
     get GLAccountLocalName() { return this.EntityPM.GLAccountLocalName; }
     set GLAccountLocalName(newValue: string) {
         if (this.EntityPM.GLAccountLocalName != newValue) {
