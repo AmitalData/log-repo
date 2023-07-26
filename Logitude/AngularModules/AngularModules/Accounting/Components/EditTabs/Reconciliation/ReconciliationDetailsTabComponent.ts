@@ -71,11 +71,6 @@ export class ReconciliationDetailsTabComponent extends BaseComponent implements 
     constructor(private entityArgs: EntityArgs) {
         super();
 
-        this.entityResourceService.getEntityResourceByTableName("ReconciliationLine").subscribe(() => {  
-            this.BuildColumns();
-            this.reconciliationInit = true
-
-        });
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
@@ -87,8 +82,9 @@ export class ReconciliationDetailsTabComponent extends BaseComponent implements 
     }
 
     ngOnInit() {
-        // this.BuildColumns();
-        this.ReloadData();
+             this.BuildColumns();
+            this.ReloadData();
+       
     }
 
     //#region Properties
@@ -265,7 +261,7 @@ export class ReconciliationDetailsTabComponent extends BaseComponent implements 
             IsCustomTemplate: true
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReconciliationAmount",'Decimal',TextCodeTranslator.Translate("Accounting.General.O.ReconciliationAmount")));
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CurrencySign",'Text',TextCodeTranslator.Translate("ReconciliationLine.O.ReconciliationCurrency")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CurrencySign", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.CurrencyId")));
 
         this.columns.push({
             FieldName: 'Reference1',
