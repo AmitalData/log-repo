@@ -307,7 +307,7 @@ namespace TrackedShipmentsAPI.Services
                             ""container_type_str"": """",
                             ""shipmentsubscription_status_verbose"": """",
                             ""shipmentsubscription_on_hold"": """",
-                            ""shipmentsubscription_id"": ""{data?.shipment?.identifiers?.trackedShipmentId ?? ""}"",
+                            ""shipmentsubscription_id"": ""{data?.metadata?.jobNumber}"",
                             ""lifecycle_status_verbose"": """",
                             ""carrier_name"": ""{data?.shipment?.identifiers?.carrier?.name ?? ""}"",
                             ""carrier_scac"": ""{data?.shipment?.identifiers?.carrier?.SCAC ?? ""}"",

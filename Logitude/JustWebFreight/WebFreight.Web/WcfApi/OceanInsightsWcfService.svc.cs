@@ -2,6 +2,7 @@
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.XSD.Simulators;
 using Microsoft.VisualStudio.OLE.Interop;
@@ -44,7 +45,7 @@ namespace WebFreight.Web.WcfApi
         {
 			try
 			{
-				string data = "Tenant: " + Tenant.ToString() + "ScacCode" + ScacCode?.ToString() + "ReferenceNo" + ReferenceNo?.ToString() + "Type" + Type?.ToString();
+				string data = "Tenant: " + Tenant.ToString() + "ScacCode: " + ScacCode?.ToString() + "ReferenceNo: " + ReferenceNo?.ToString() + "Type: " + Type?.ToString();
 				WriteLogMe("Insert: " + data,null , "UpsertTrackedShipments");
 				return UnitedRequest(Tenant, ScacCode, ReferenceNo, Type)?.Result;
 			}
@@ -293,8 +294,6 @@ namespace WebFreight.Web.WcfApi
 				{
 
 					IShipmentsContext objectContext = ShipmentsContext.GetContext(WWtenant);
-					OceanInsightsRequestRepository oceanInsightsRequestRepository = new OceanInsightsRequestRepository(objectContext);
-
 
 					if (string.IsNullOrEmpty(ScacCode))
 					{
@@ -322,26 +321,31 @@ namespace WebFreight.Web.WcfApi
 						{
 							OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, WWtenant);
 						}
-					}					
-
-					var WWResult = await UpsertTrackedShipments(ScacCode, ReferenceNo, Type);
-
-					string Result = WWResult.v_result;
-					string Status = WWResult.status;
-					string Errors = WWResult.err_message;
-
-					if (!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors))
-					{
-						response.HasError = true;
-						response.ErrorMessage = Errors;
-						return response;
 					}
-					else
+					string Result = "";
+					string Status = "";
+					string Errors = "";
+					string Id = "";
+					if (OceanInsightsRequestPm == null)
 					{
-						string Id = Result;
-						OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, WWtenant);
-						if (OceanInsightsRequestPm == null)
+						string JobNumber = GetJobNumber(WWtenant, ScacCode, ReferenceNo, Type);
+						var WWResult = await UpsertTrackedShipments(ScacCode, ReferenceNo, Type, JobNumber);
+
+						 Result = WWResult.v_result;
+						 Status = WWResult.status;
+						 Errors = WWResult.err_message;
+
+						if (!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors))
 						{
+							response.HasError = true;
+							response.ErrorMessage = Errors;
+							return response;
+						}
+						else
+						{
+							 Id = Result;
+							OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, WWtenant);
+							
 							OceanInsightsRequestPm = new OceanInsightsRequestPM();
 
 
@@ -358,17 +362,35 @@ namespace WebFreight.Web.WcfApi
 							OceanInsightsRequestPm.OceanInsigntId = Id;
 							OceanInsightsRequestPm.Type = Type;
 
-							service.Create(OceanInsightsRequestPm);
+							service.Create(OceanInsightsRequestPm);								
+						}
+					}					
+					if (string.IsNullOrEmpty(OceanInsightsRequestPm.OceanInsigntId))
+					{
+						string JobNumber = GetJobNumber(WWtenant, ScacCode, ReferenceNo, Type);
+						var WWResult = await UpsertTrackedShipments(ScacCode, ReferenceNo, Type, JobNumber);
+
+						Result = WWResult.v_result;
+						Status = WWResult.status;
+						Errors = WWResult.err_message;
+
+						if (!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors))
+						{
+							response.HasError = true;
+							response.ErrorMessage = Errors;
+							return response;
 						}
 						else
 						{
+							 Id = Result;
+							OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, WWtenant);
 							OceanInsightsRequestPm.OceanInsigntId = Id;
 
 							service.Update(OceanInsightsRequestPm);
-						}
+						}					
 					}
-								
-					response.Result = OceanInsightsRequestPm.OceanInsigntId;
+					
+                    response.Result = OceanInsightsRequestPm.OceanInsigntId;
 					scope.Complete();
 					//scope.Dispose();
 					
@@ -419,7 +441,44 @@ namespace WebFreight.Web.WcfApi
 
 			public string err_message { get; set; }	
 		}
-		private async Task<Result> UpsertTrackedShipments(string carrierSCAC, string ReferenceNo, string Type)
+		private string GetJobNumber(int WWtenant, string ScacCode, string ReferenceNo, string Type)
+		{
+			string JobNumber = "";
+			try
+			{
+				OceanInsightsRequestQuery query = new OceanInsightsRequestQuery(WWtenant);
+				OceanInsightsRequestPM OceanInsightsRequestPm;// = new OceanInsightsRequestPM();
+				if (Type == "c_id")
+				{
+					OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNo(ScacCode, ReferenceNo);
+				}
+				else
+				{
+					OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByCareierScacBLNo(ScacCode, ReferenceNo);
+					if (OceanInsightsRequestPm == null)
+					{
+						OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNo(ScacCode, ReferenceNo);
+					}
+				}
+				int num = 0;
+				if (OceanInsightsRequestPm != null && int.TryParse(OceanInsightsRequestPm.OceanInsigntId, out num) && num < 0)
+				{
+					JobNumber = OceanInsightsRequestPm.OceanInsigntId;
+				}
+				else
+				{
+					JobNumber = "-" + CodeCounter.GetNumber("OceanInsightsRequest", 0).ToString();
+				}
+				return JobNumber;
+
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("jobNumber is empty");
+			}
+		}
+
+		private async Task<Result> UpsertTrackedShipments(string carrierSCAC, string ReferenceNo, string Type, string JobNumber)
 		{
 			Result Result=new Result();
 		
@@ -449,7 +508,7 @@ namespace WebFreight.Web.WcfApi
 				}
 				trackedShipmentModel.scac = carrierSCAC;
 				trackedShipmentModel.carrierBookingReference = "";
-                trackedShipmentModel.metadata.jobNumber = "";// OceanInsightsRequestPM?.Id;
+                trackedShipmentModel.metadata.jobNumber = JobNumber;
 				shipments.Add(trackedShipmentModel);
 
 				List<Dictionary<string, object>> shipmentDictionaries = shipments.Select(shipment => new Dictionary<string, object>
@@ -469,7 +528,7 @@ namespace WebFreight.Web.WcfApi
 				dynamic data = JObject.Parse(result);
 				WriteLogMe("UpsertTrackedShipments AFTER POST: ", data, "UpsertTrackedShipments");
 
-				Result.v_result = data?.data?.upsertTrackedShipments[0]?.id;
+				Result.v_result = data?.data?.upsertTrackedShipments[0]?.metadata?.jobNumber;
                 return Result;
 			}
 			catch (WebException ex)
