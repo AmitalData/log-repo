@@ -27,6 +27,8 @@ export class UploadLogoComponent implements AfterViewInit {
     MobilelogoHtmlId: string = Guid.newGuid();
     logoHtmlId: string = Guid.newGuid();
     SmalllogoHtmlId: string = Guid.newGuid();
+    miniLogoHtmlId: string = Guid.newGuid();
+
     MobileLogoFileHtmlId: string = Guid.NewRandomString();
     SharedLogisticsLogoFileHtmlId: string = Guid.NewRandomString();
 
@@ -120,6 +122,25 @@ export class UploadLogoComponent implements AfterViewInit {
                     } else HideImage(this.SmalllogoHtmlId);
 
                 } else HideImage(this.SmalllogoHtmlId);
+              
+                    this._imageLibraryService.DownloadFile("minilogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+                        var pmResponse: ServiceResponse = res;
+                        
+                        this.CurrentSession.StopBusyIndicator();
+            
+                        if (!pmResponse.HasError) {
+                            var result = pmResponse.Result;
+                            if (result) {
+                                SetImage(this.miniLogoHtmlId, result, false);
+                            } else HideImage(this.miniLogoHtmlId);
+        
+                        } else HideImage(this.miniLogoHtmlId);
+                      
+                      
+                    });
+                  
+               
+
 
             });
 
@@ -135,6 +156,7 @@ export class UploadLogoComponent implements AfterViewInit {
 
 
     UploadogoFile(event: any) {
+
 
         var file: any = UploadLogoFile(this.LogoFileHtmlId);
         if (file && (file.type == "image/jpeg" || file.type == "image/jpg")) {
@@ -248,6 +270,7 @@ export class UploadLogoComponent implements AfterViewInit {
 
 
     SendBlockToServer(data: any, filename, widht: number, height: number, extension: string) {
+        
         var filter = new ImageParameter();
         filter.Base64String = data;
         filter.FileName = filename;
@@ -268,12 +291,13 @@ export class UploadLogoComponent implements AfterViewInit {
 
                     if (filename == "logo") {
                         this.SendBlockToServer(filter.Base64String, "smalllogo", 150, 150, "jpg");
+                        this.SendBlockToServer(filter.Base64String, "minilogo", 30, 15, "jpg");
                     }
                     else {
 
                         this.IsShowMessageComplate = true;
                         this.IsShowProgressLoading = false;
-                        if (filename == "logo" || filename == "smalllogo") {
+                        if (filename == "logo" || filename == "smalllogo" ||filename=="minilogo") {
                             this.LoadLogo(true);
                         }
                         else if (filename == "verysmalllogo" ) {
