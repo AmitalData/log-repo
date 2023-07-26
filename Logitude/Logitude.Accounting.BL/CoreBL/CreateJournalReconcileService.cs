@@ -295,7 +295,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 long minTotalMinutes = 5;
                                 if (timeElapsed.TotalMinutes < minTotalMinutes)
                                 {
-                                    throw new ApplicationException("There is already journal reconciliation has been created");
+                                    throw new ApplicationException("ישנן תנועות שסומנו ונמצאות בתהליך התאמה על ידי משתמש או סשן אחר, יש לבצע רענון לצאת ממסך התאמות ללא שמירת השורות ולהיכנס מחדש.");
                                 }
 
                             }
@@ -318,7 +318,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         .GetJournalReconcilesForJournalsWithoutLedgers(listJournalReconciles.Select(x => x.LedgerTransactionId).ToList(), journal.Tenant);
                     if (journalReconciles.Where(x=>x.JournalId != journal.Id).Any())
                     {
-                        throw new ApplicationException("There is already journal reconciliation has been created.");
+                        throw new ApplicationException("ישנן תנועות שסומנו ונמצאות בתהליך התאמה על ידי משתמש או סשן אחר, יש לבצע רענון לצאת ממסך התאמות ללא שמירת השורות ולהיכנס מחדש.");
                     }
 
                     scope.Complete();
@@ -386,8 +386,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         .GetJournalReconcilesForJournalsWithoutLedgers(journal.JournalReconciles.Select(x => x.LedgerTransactionId).ToList(), tenant);
                         if (journalReconciles.Where(x => x.JournalId != journal.Id).Any())
                         {
-                            throw new ApplicationException("There is already journal reconciliation has been created.");
-                        }
+                                throw new ApplicationException("ישנן תנועות שסומנו ונמצאות בתהליך התאמה על ידי משתמש או סשן אחר, יש לבצע רענון לצאת ממסך התאמות ללא שמירת השורות ולהיכנס מחדש.");
+                            }
                         }
                     });
                     scope.Complete();
