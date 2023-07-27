@@ -2043,7 +2043,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
     ImportCourierMawbsFromExcel() {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "הטענת םקסל למסך עבודה";
+        logitudeWindow.Title = "הטענת אקסל למסך עבודה";
         logitudeWindow.ShowCloseButton = true;
         logitudeWindow.Height = 600;
         logitudeWindow.Width = 700;
