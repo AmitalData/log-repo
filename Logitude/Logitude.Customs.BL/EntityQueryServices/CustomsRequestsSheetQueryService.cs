@@ -632,7 +632,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var q =
                 from rs in
                     this.repository.GetAll(tenant)
-                    .Where(rec => rec.RequestStatusCode.Equals(stage))
+                    .Where(rec => rec.RequestStatusCode.Equals(stage) && !rec.IsHSM)
                 select rs;
 
             var pocoList = q.ToList();
