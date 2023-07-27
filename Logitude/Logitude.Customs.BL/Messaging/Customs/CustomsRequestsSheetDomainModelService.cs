@@ -2395,7 +2395,9 @@ After that Remove file  from DCA  .. ");
                 RequestStatusEnum = SheetStatusEnum.Created,
                 RequestComminicationId = _CommunicationLog.Id,
                 //CustomFileNo = GetCustomFileNo(RequestParams)
-                TenantPriority= tenantPriority
+                TenantPriority = tenantPriority,
+                IsHSM = requestParams.SignMethodByQueue == SignMethodByQueueEnum.HSMSignQueue.ToString() ? true:false
+
             };
 
             MyCustomsRequestsSheetPM.Id = RequestParams.PBId;//GUID 

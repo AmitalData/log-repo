@@ -64,6 +64,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.AnalyzeDcaAggregateKey).HasColumnName("AnalyzeDcaAggregateKey").HasMaxLength(128).IsUnicode(false);
 
             this.Property(t => t.TenantPriority).HasColumnName("TenantPriority");
+
+            this.Property(t => t.IsHSM).HasColumnName("IsHSM");
         }
     }
 }

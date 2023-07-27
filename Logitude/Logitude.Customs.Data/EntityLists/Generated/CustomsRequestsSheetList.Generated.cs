@@ -64,6 +64,8 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? FutureSendDateTime  { get; set; }
        [DataMember]
        public int? TenantPriority  { get; set; }
+       [DataMember]
+       public bool IsHSM  { get; set; }
    }
 
 }

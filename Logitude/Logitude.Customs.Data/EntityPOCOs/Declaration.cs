@@ -473,6 +473,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool ExcludeManifest { get; set; }
         [Column("ForwarderFiles")]
 	    public string ForwarderFiles { get; set; }
+
         [Column("ShortProcedure")]
 	    public bool ShortProcedure { get; set; }
         [Column("ExportFlightDate")]
@@ -480,5 +481,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("UNFCourier")]
 	    public bool UNFCourier { get; set; }
     }
+
 }
 	 
