@@ -26673,7 +26673,7 @@
     <TextCode
       Code="&quot;Customs.Declaration.O.ImporterCourierFromExcel&quot;"
       DefaultText="&quot;Worksheet From Excel&quot;"
-      LocalDefaultText="&quot;הטענת ש.ט.ב מאקסל&quot;"
+      LocalDefaultText="&quot;הטענת ש.מ.ב מאקסל&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
