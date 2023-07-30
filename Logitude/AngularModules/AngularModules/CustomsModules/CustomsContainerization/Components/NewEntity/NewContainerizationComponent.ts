@@ -142,8 +142,8 @@ export class NewContainerizationComponent extends BaseComponent {
                     }
                     this.BuildColumns();
                     this.isLoad = true;
-                                   
-                    this.containerizationExtendedListService.ErrorsList=["לא ניתן להמכיל הצהרה לא הוגשה"];
+                   
+                    this.containerizationExtendedListService.ErrorsList=[TextCodeTranslator.Translate('Customs.Containerization.O.CantContNotSubmit')];
                    
                 });
             });
@@ -218,7 +218,7 @@ export class NewContainerizationComponent extends BaseComponent {
         var filters = new ApiQueryFilters;
         var ExportFilter = new FilterItem("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
         filters.AdditionalFilters.push(ExportFilter);
-        var ProcFilter = new FilterItem("ProcedureCurrentName", 'אסמבלי', null, null, "Contains", false, false, false, "string", false);
+        var ProcFilter = new FilterItem("ProcedureCurrentName",TextCodeTranslator.Translate('Customs.Containerization.O.Assembly'), null, null, "Contains", false, false, false, "string", false);
         filters.AdditionalFilters.push(ProcFilter);
         filters.addAdditionalFilter("IsContainerization", true, null, null, "Equal", true, false, false, "string");
 
@@ -279,7 +279,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'CreateDateTime',
             DataTypeCode: 'String',
-            Display: "תאריך פתיחת הצהרה",
+            Display: TextCodeTranslator.Translate('Customs.Containerization.O.CreateDateDec'),
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -301,7 +301,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFile',
             DataTypeCode: 'String',
-            Display: "מס' תיק יצוא",
+            Display:TextCodeTranslator.Translate('Customs.Containerization.O.ExportFileNum'),
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -325,7 +325,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'CustomFileNo',
             DataTypeCode: 'String',
-            Display: "תיק מכס",
+            Display:TextCodeTranslator.Translate('Customs.Containerization.O.CustomFileNo'),
             Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -346,7 +346,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ManifestNumber',
             DataTypeCode: 'String',
-            Display: "מזהה מטען 1",
+            Display:TextCodeTranslator.Translate('Customs.Containerization.O.ManifestNumber'),
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -356,7 +356,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'SecondCargoID',
             DataTypeCode: 'String',
-            Display: "מזהה מטען 2",
+            Display: TextCodeTranslator.Translate('Customs.Containerization.O.SecondCargoID'),
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -366,7 +366,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ThirdCargoID',
             DataTypeCode: 'String',
-            Display: "מזהה מטען 3",
+            Display:TextCodeTranslator.Translate('Customs.Containerization.O.ThirdCargoID') ,
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -390,7 +390,7 @@ export class NewContainerizationComponent extends BaseComponent {
 
             FieldName: 'IsSubmitDeclaration',
             DataTypeCode: 'String',//'Number',
-            Display: "הגשה",
+            Display: TextCodeTranslator.Translate('Customs.Containerization.O.PaymentDate'),
             Styles: { width: '50px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
@@ -409,8 +409,8 @@ export class NewContainerizationComponent extends BaseComponent {
         this.containerizationExtendedListService.SelectedDeclarations = true;
         this.containerizationExtendedListService.ConnectedDeclarations = this.containerizationExtendedListService.AllDeclarations + this.entityPM.ConnectedDeclarations;
         if(this.containerizationExtendedListService.ConnectedDeclarations=="undefined"||  AppTool.IsNullOrEmpty( this.containerizationExtendedListService.ConnectedDeclarations)){
-          
-            this.containerizationExtendedListService.ErrorsList=["לא אותרו הצהרות שניתן להמכיל"];
+            
+            this.containerizationExtendedListService.ErrorsList=[TextCodeTranslator.Translate('Customs.Containerization.O.NotFoundDecCont')];
             this.containerizationExtendedListService.IsError=true;
             this.containerizationExtendedListService.SelectedDeclarations = false;
         }
@@ -486,8 +486,8 @@ export class NewContainerizationComponent extends BaseComponent {
         var containerizationIdList = "";
         const ArrayDeclartiosId = this.containerizationExtendedListService.ConnectedDeclarations.split(',')
         const myConfirmWindow = new ConfirmWindow();
-        myConfirmWindow.YesButtonText = "המשך"
-        myConfirmWindow.NoButtonText = "חזור"
+        myConfirmWindow.YesButtonText = TextCodeTranslator.Translate('Customs.Containerization.O.Continue');
+        myConfirmWindow.NoButtonText = TextCodeTranslator.Translate('Customs.Containerization.O.Back');
         myConfirmWindow.Width = 400;
 
         if (this.entityPM.Id != null && this.entityPM.ContainerizationStatus != "3") {
@@ -497,7 +497,7 @@ export class NewContainerizationComponent extends BaseComponent {
             ).subscribe(res => {
 
                 if (res.Result.length == 0) {
-                    myConfirmWindow.Show(`שם לב , אין מזהה מטען משותף שמאפשר את ההמכלה של ההצהרה/ות שנבחרה/ו`);
+                    myConfirmWindow.Show(TextCodeTranslator.Translate('Customs.Containerization.O.NoteNoCommon'));
                     myConfirmWindow.IsYesEnabled = false;
                     SessionLocator.SelectedSession.StopBusyIndicator();
                     return;
@@ -530,7 +530,7 @@ export class NewContainerizationComponent extends BaseComponent {
                 logitudeWindow.Height = 200;
                 logitudeWindow.Width = 250;
                 logitudeWindow.ShowCloseButton = true;
-                logitudeWindow.Title = "הצהרת סוכן";
+                logitudeWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.AgentStatement');
 
 
                 logitudeWindow.WindowArgs = windowArgs;
@@ -550,22 +550,22 @@ export class NewContainerizationComponent extends BaseComponent {
 
                                 if (response.Result.list[0].Id == "1") {
                                     SessionLocator.SelectedSession.StopBusyIndicator();
-                                    myConfirmWindow.Title = "עדכון המכלה מבוטלת";
+                                    myConfirmWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.ContUpdateCancel');
                                     myConfirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                                     myConfirmWindow.ShowNoButton = false;                             
-                                    myConfirmWindow.Show(`ההמכלה עם מזהי המטען: `+this.entityPM.ExistInCustoms+` קיימת במכס וכל עוד לא בוטלה לא ניתן יהיה להשתמש במונה ההמכלה הספציפי`);
-
+                                    myConfirmWindow.Show(TextCodeTranslator.Translate('Customs.Containerization.O.ContWith')+`: ` + this.entityPM.ExistInCustoms + TextCodeTranslator.Translate('Customs.Containerization.O.ExistsInCustoms'));
+                                     
                                 }
                                 else if (response.Result.list[0].Id == "0") {
                                         SessionLocator.SelectedSession.StopBusyIndicator();
-                                        myConfirmWindow.Title = "עדכון המכלה מבוטלת";
+                                        myConfirmWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.ContUpdateCancel');
                                         myConfirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                                         myConfirmWindow.ShowNoButton = false;  
-                                        myConfirmWindow.Show(`מתוך המכלה מבוטלת ניתן לעדכן המכלה אחת בלבד`);
+                                        myConfirmWindow.Show(TextCodeTranslator.Translate('Customs.Containerization.O.UpdateOnlyOne'));
                                 }
                                 else {
                                         let confirmWindow = new ConfirmWindow();
-                                        confirmWindow.Title = "המכלות שנוצרו";
+                                        confirmWindow.Title = TextCodeTranslator.Translate('Customs.Containerization.O.ContainersFormed');
                                         confirmWindow.Width = 350;
                                         confirmWindow.Height = 200;
                                         confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");

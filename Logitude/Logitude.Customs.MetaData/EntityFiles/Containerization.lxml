@@ -2097,7 +2097,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;f147cbe6-5773-4262-98c4-8ed8a100fc0e&quot;"
     FieldName="&quot;ExistInCustoms&quot;"
@@ -2706,6 +2705,114 @@
       Code="&quot;Customs.Containerization.O.CancelDecInCon&quot;"
       DefaultText="&quot;Cancelling declaration in containerization&quot;"
       LocalDefaultText="&quot;ביטול הצהרה בהמכלה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.CantContNotSubmit&quot;"
+      DefaultText="&quot;Unsubmitted statement cannot be contained&quot;"
+      LocalDefaultText="&quot;לא ניתן להמכיל הצהרה לא הוגשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.CreateDateDec&quot;"
+      DefaultText="&quot;Create Date Declaration&quot;"
+      LocalDefaultText="&quot;תאריך פתיחת הצהרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ExportFileNum&quot;"
+      DefaultText="&quot;ExportFileNum&quot;"
+      LocalDefaultText="&quot;מס' תיק יצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.CustomFileNo&quot;"
+      DefaultText="&quot;CustomFileNo&quot;"
+      LocalDefaultText="&quot;תיק מכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ManifestNumber&quot;"
+      DefaultText="&quot;ManifestNumber&quot;"
+      LocalDefaultText="&quot;מזהה מטען 1&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.SecondCargoID&quot;"
+      DefaultText="&quot;SecondCargoID&quot;"
+      LocalDefaultText="&quot;מזהה מטען 2&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ThirdCargoID&quot;"
+      DefaultText="&quot;ThirdCargoID&quot;"
+      LocalDefaultText="&quot;מזהה מטען 3&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.NotFoundDecCont&quot;"
+      DefaultText="&quot;No statements were found that could be contained&quot;"
+      LocalDefaultText="&quot;לא אותרו הצהרות שניתן להמכיל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.Continue&quot;"
+      DefaultText="&quot;Continue&quot;"
+      LocalDefaultText="&quot;המשך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.Back&quot;"
+      DefaultText="&quot;Back&quot;"
+      LocalDefaultText="&quot;חזור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.NoteNoCommon&quot;"
+      DefaultText="&quot;Note, there is no common payload identifier that allows the container of the selected statement&quot;"
+      LocalDefaultText="&quot;שים לב , אין מזהה מטען משותף שמאפשר את ההמכלה של ההצהרה/ות שנבחרה/ו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.AgentStatement&quot;"
+      DefaultText="&quot;Agent statement&quot;"
+      LocalDefaultText="&quot;הצהרת סוכן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ContUpdateCancel&quot;"
+      DefaultText="&quot;The container update is canceled&quot;"
+      LocalDefaultText="&quot;עדכון המכלה מבוטלת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ContWith&quot;"
+      DefaultText="&quot;The container with the cargo identifiers&quot;"
+      LocalDefaultText="&quot;ההמכלה עם מזהי המטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ExistsInCustoms&quot;"
+      DefaultText="&quot;exists in customs and as long as it is not canceled it will not be possible to use the specific container counter&quot;"
+      LocalDefaultText="&quot; קיימת במכס וכל עוד לא בוטלה לא ניתן יהיה להשתמש במונה ההמכלה הספציפי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.UpdateOnlyOne&quot;"
+      DefaultText="&quot;Out of a canceled container, only one container can be updated&quot;"
+      LocalDefaultText="&quot;מתוך המכלה מבוטלת ניתן לעדכן המכלה אחת בלבד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.Assembly&quot;"
+      DefaultText="&quot;Assembly&quot;"
+      LocalDefaultText="&quot;אסמבלי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Containerization.O.ContainersFormed&quot;"
+      DefaultText="&quot;The containers formed&quot;"
+      LocalDefaultText="&quot;המכלות שנוצרו&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
