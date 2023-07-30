@@ -284,7 +284,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (listJournalReconciles.Any(x => x.LedgerTransactionId == item.TransactionId && x.ReconciliationAmount == item.ReconciliationAmount))
                         {
-                            throw new ApplicationException("There is already journal reconciliation has been created");
+
+                            ReconciliationQueryService recoQueryService = new ReconciliationQueryService(accountingContext);
+
+                            ReconciliationPM reco = recoQueryService.GetSingle(item.ReconciliationId, false, false);
+                            if (reco != null)
+                            {
+                                TimeSpan timeElapsed = DateTime.Now - reco.CreateDate;
+                                long minTotalMinutes = 5;
+                                if (timeElapsed.TotalMinutes < minTotalMinutes)
+                                {
+                                    throw new ApplicationException("There is already journal reconciliation has been created");
+                                }
+
+                            }
+
                         }
                     }
                     journal.JournalReconciles.AddRange(listJournalReconciles);
