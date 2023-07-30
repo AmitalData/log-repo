@@ -66,6 +66,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public AllowVatTypes: boolean = true;
     public IsUsingVirtuallization: boolean = false;
     public InvoicePartners: InvoicePartnerType[] = [];
+    public PartnerTypeComboBoxIsDisabled:boolean = true;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -276,10 +277,12 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
         this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, this.IsDatesFieldEnabledWhileCrediting || isEditingEnabled);
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, isEditingEnabled);
+        this.PartnerTypeComboBoxIsDisabled = !isEditingEnabled;
 
         // Generated General Tab
         if (this.EntityPM != null) {
@@ -289,7 +292,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.UIProperties.SetEnabled("HouseNumber", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("MasterNumber", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("CustomerRef", this.ObjectTableName, isEditingEnabled);
-            this.EntityPM.UIProperties.SetEnabled("BranchId", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("SATPaymentMethodCode", this.ObjectTableName, isEditingEnabled);
         }
 

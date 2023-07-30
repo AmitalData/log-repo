@@ -47,7 +47,7 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <ComboBox [ItemsSource]="InvoicePartners" [Binding]="'Name'" [SelectedItem]="SelectedPartnerType" (SelectedItemChanged)="PartnersTypeSelectionMethod($event)"></ComboBox>
+                                                                <ComboBox [IsDisabled]="PartnerTypeComboBoxIsDisabled" [ItemsSource]="InvoicePartners" [Binding]="'Name'" [SelectedItem]="SelectedPartnerType" (SelectedItemChanged)="PartnersTypeSelectionMethod($event)"></ComboBox>
                                                             </td>
 
                                                             <td style="width: 36px;">
