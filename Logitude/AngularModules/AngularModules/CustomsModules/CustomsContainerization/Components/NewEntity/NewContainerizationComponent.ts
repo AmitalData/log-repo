@@ -547,6 +547,7 @@ export class NewContainerizationComponent extends BaseComponent {
                             this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
 
 
+
                                 if (response.Result.list[0].Id == "1") {
                                     SessionLocator.SelectedSession.StopBusyIndicator();
                                     myConfirmWindow.Title = "עדכון המכלה מבוטלת";

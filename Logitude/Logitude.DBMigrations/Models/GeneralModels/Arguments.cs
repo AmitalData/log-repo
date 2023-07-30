@@ -23,7 +23,7 @@ namespace Logitude.DBMigrations.Models
         public const string DEV = "-dev";
         public const string SCRIPTS = "-scripts";
         public const string EXCLUDEINDEX = "-excludeindex";
-        public const string EXCLUDCONSTRAINT = "-excludeconstraint";
+        public const string INCLUDECONSTRAINTDROP = "-includeconstraintdrop";
 
     }
 }

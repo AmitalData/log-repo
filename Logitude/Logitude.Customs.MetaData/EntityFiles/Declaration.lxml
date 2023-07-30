@@ -20975,7 +20975,7 @@
     OldNames="ShortProcedure"
     IsNew="true"
     IsChecked="true"
-    IsDeleted="false"
+    IsDeleted="true"
     ObjectTableName="&quot;Customs.Declaration&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"

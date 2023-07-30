@@ -161,7 +161,7 @@ namespace Logitude.DBMigrations.Models
                 {
                     foreach (var uniqueConstraint in CurrentTable.UniqueConstraints)
                     {
-                        if (!IsUniqueConstraintInDXMLTable(uniqueConstraint) && (!ToolArguments.IsArgumentProvided(Arguments.EXCLUDCONSTRAINT)))
+                        if (!IsUniqueConstraintInDXMLTable(uniqueConstraint) && (ToolArguments.IsArgumentProvided(Arguments.INCLUDECONSTRAINTDROP)))
                         {
                             tableUniqueConstraintsScript += GetDropUniqueConstraintScript(uniqueConstraint);
                         }

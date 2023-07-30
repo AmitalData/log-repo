@@ -583,9 +583,11 @@ export class CustomsDocumentTicketViewModel {
 
             });
         }
-        else{
+        else {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+
             if (isDifferentData && this.customsDocumentsTicketPM.CustomsDocumentPointers.length == 1) {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+               // SessionLocator.SelectedSession.StopBusyIndicator();
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Width = 400;
                 confirmWindow.Height = 200;

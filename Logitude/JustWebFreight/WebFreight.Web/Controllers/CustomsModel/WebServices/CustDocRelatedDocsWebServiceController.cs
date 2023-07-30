@@ -62,7 +62,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 List<DocumentsFilingPM> documentFilings = null;
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(authToken.Tenant);
                 CFICONNQueryService queryService = null;
-                if (declarationType != "E" && CustomsSettingQueryService.GetSettingByTenant(authToken.Tenant).IsConnectedToUniFreight)
+                bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(authToken.Tenant).IsConnectedToUniFreight;
+                if (declarationType != "E" && isConnectedToUniFreight)
                 {
                     queryService = new CFICONNQueryService(AmitalContext.GetContext(authToken.Tenant));
                 }
@@ -100,11 +101,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         }
                         else
                         {
-                            if (files != null)
+                        if (!isConnectedToUniFreight)
+                        {
+                          if (files != null)
                                 externalEntityReferences = files.Split(',').ToList();
-                            //externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
+                        }
+                        else
+                        {                           
+                            externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
 
                         }
+ 
+                    }
 
                         documentFilings = documentsFilingQuery.GetDocumentsFilingsByRferenceForRelatedDocuments(authToken.Tenant, externalEntityReferences);
 
@@ -116,10 +124,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
                             if (declarationType != "E")
-                            {
-                                //externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
-                                if (files != null)
-                                    externalEntityReferences = files.Split(',').ToList();
+                    {
+                        if (isConnectedToUniFreight)
+                            externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
+                            else {
+                                    if (files != null)
+                                        externalEntityReferences = files.Split(',').ToList();
+                                }
+                    
                             }
                             else {
                               externalEntityReferences = new List<string> { ExportFile, referenceNumber };
