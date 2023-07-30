@@ -26,7 +26,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="JsonData"
+    Name="JsonUrl"
+    OldNames="JsonData"
     Type="varchar"
     Size="500">
     <Constraints
@@ -79,6 +80,13 @@
     Name="Reference"
     Type="varchar"
     Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="JsonData"
+    Type="nvarchar"
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
