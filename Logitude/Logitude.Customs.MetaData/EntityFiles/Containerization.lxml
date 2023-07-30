@@ -2732,8 +2732,8 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.Containerization.O.ManifestNumber&quot;"
-      DefaultText="&quot;ManifestNumber&quot;"
+      Code="&quot;Customs.Containerization.O.ManifestNumberOne&quot;"
+      DefaultText="&quot;ManifestNumber One&quot;"
       LocalDefaultText="&quot;מזהה מטען 1&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />

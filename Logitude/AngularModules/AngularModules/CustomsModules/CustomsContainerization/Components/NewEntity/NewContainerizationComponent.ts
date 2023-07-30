@@ -346,7 +346,7 @@ export class NewContainerizationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ManifestNumber',
             DataTypeCode: 'String',
-            Display:TextCodeTranslator.Translate('Customs.Containerization.O.ManifestNumber'),
+            Display:TextCodeTranslator.Translate('Customs.Containerization.O.ManifestNumberOne'),
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
