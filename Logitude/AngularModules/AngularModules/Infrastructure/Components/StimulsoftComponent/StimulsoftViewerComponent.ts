@@ -26,6 +26,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ReportsTemplatePM } from '../../../Common/EntityPMs/ReportsTemplatePM';
 import { SchedulerReportMessageTemplateService } from './Services/SchedulerReportMessageTemplateService';
+import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
 
 @Component({
 
@@ -712,9 +713,9 @@ export class StimulsoftViewerComponent implements OnInit {
         attachmentsList.push(attachment);
         var subject: string = this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Title : "Report";
         var entityId: string = this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Report ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Id : "" : "";
-
+        var reportFliter:ReportFliter = this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent?.ReportFliter : null;
         if (!this.EmailSender || (this.EmailSender && !this.EmailSender.LoadingSendingComponent)) {
-            this.EmailSender = new GeneralEmailSender("Report", "", entityId, "StimualReport", null, null, "", subject, attachmentsList);
+            this.EmailSender = new GeneralEmailSender("Report", "", entityId, "StimualReport", null, null, "", subject, attachmentsList,null,this.EntityPM, null,null,null,null,null,reportFliter);
             this.EmailSender.PartnersObslist = this.StimulsoftArgData.PartnersObslist;
             this.EmailSender.SendMessage(this.StimulsoftArgData.ReportFilterConmponent.GLAccountId);
         }

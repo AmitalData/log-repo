@@ -1,4 +1,6 @@
-﻿using Simplog.Server.Infrastructure.DataContracts;
+﻿using Logitude.CustomsMessaging.Common.RequestParams;
+using Newtonsoft.Json;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +34,37 @@ namespace WebFreight.Web.Helpers
         public bool DisablePreview { get; set; }
         public bool IsSchedulerReport { get; set; }
         public bool SendIfEmpty{ get; set; }
-
+        public string FieldDataType { get; set; }
+        public string InvoiceType { get; set; }
+        public string Level { get; set; }
 
     }
+    public class ReportTemplateEditorHtmlDataParams
+    {
+        [JsonProperty("ReportsTemplateId")]
+        public string ReportsTemplateId { get; set; }
+
+        [JsonProperty("Version")]
+        public int? Version { get; set; }
+
+        [JsonProperty("UserId")]
+        public string UserId { get; set; }
+
+        [JsonProperty("Subject")]
+        public string Subject { get; set; }
+
+        [JsonProperty("From")]
+        public string From { get; set; }
+
+        [JsonProperty("ReplyTo")]
+        public string ReplyTo { get; set; }
+
+        [JsonProperty("Cc")]
+        public string Cc { get; set; }
+
+        [JsonProperty("ReportFilter")]
+        public ReportFliter ReportFilter { get; set; } // Note the correct property name
+    }
+  //  public class ReportFliter
+
 }

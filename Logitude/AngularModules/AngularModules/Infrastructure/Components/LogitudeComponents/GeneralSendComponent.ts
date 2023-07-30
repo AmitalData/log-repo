@@ -1,41 +1,42 @@
-import {Component, OnInit, ChangeDetectorRef, AfterViewInit, EventEmitter, Output}  from '@angular/core';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {SessionInfo} from '../../Utilities/SessionInfo';
-import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
-import {SendHtmlDocumentFilter} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/SendHtmlDocumentFilter';
-import {FroalaEditorSetting} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/FroalaEditorSetting';
-import {DocumentOutPMService} from '../../../Common/Services/ExtendedPMs/DocumentOutPMService';
-import {DocumentOutCopyViewModel} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentOutCopyViewModel';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {DocumentTypeListExtendedService} from '../../../Common/Services/ExtendedLists/DocumentTypeListExtendedService';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {AttachmentsList} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/AttachmentsList';
-import {DocumentsFilingExtendedPMService} from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
-import {EntityPartner} from '../../../Infrastructure/DataContracts/EntityPartner';
-import {HtmlEditorService} from '../../../Common/Services/DocumentServices/HtmlEditorService';
-import {DocumentTypeList} from '../../../Common/EntityLists/DocumentTypeList'
-import {DocumentsFilingPM} from '../../../Common/EntityPMs/DocumentsFilingPM';
-import {DocumentOutPM} from '../../../Common/EntityPMs/DocumentOutPM';
-import {DocumentTypePM} from '../../../Common/EntityPMs/DocumentTypePM';
-import {AttachmentDocment} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/AttachmentDocment';
-import {DocumentExtendedService} from '../../../Common/Services/ExtendedPMs/DocumentExtendedService';
-import {DocumentPM} from '../../../Common/EntityPMs/DocumentPM';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { Component, OnInit, ChangeDetectorRef, AfterViewInit, EventEmitter, Output } from '@angular/core';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { SessionInfo } from '../../Utilities/SessionInfo';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { SendHtmlDocumentFilter } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/SendHtmlDocumentFilter';
+import { FroalaEditorSetting } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/FroalaEditorSetting';
+import { DocumentOutPMService } from '../../../Common/Services/ExtendedPMs/DocumentOutPMService';
+import { DocumentOutCopyViewModel } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentOutCopyViewModel';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { DocumentTypeListExtendedService } from '../../../Common/Services/ExtendedLists/DocumentTypeListExtendedService';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { AttachmentsList } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/AttachmentsList';
+import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { EntityPartner } from '../../../Infrastructure/DataContracts/EntityPartner';
+import { HtmlEditorService } from '../../../Common/Services/DocumentServices/HtmlEditorService';
+import { DocumentTypeList } from '../../../Common/EntityLists/DocumentTypeList'
+import { DocumentsFilingPM } from '../../../Common/EntityPMs/DocumentsFilingPM';
+import { DocumentOutPM } from '../../../Common/EntityPMs/DocumentOutPM';
+import { DocumentTypePM } from '../../../Common/EntityPMs/DocumentTypePM';
+import { AttachmentDocment } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/AttachmentDocment';
+import { DocumentExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentExtendedService';
+import { DocumentPM } from '../../../Common/EntityPMs/DocumentPM';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 declare var System: any;
 declare var window: any;
 declare var htmlComponentProparitiesTrue, htmlComponentProparitiesFalse: any;
-import {ReportPMService} from '../../../Common/Services/StandardPMs/ReportPMService';
-import {ReportsTemplatePMService} from '../../../Common/Services/StandardPMs/ReportsTemplatePMService';
-import {ReportsTemplatePMExtendedService} from '../../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
+import { ReportPMService } from '../../../Common/Services/StandardPMs/ReportPMService';
+import { ReportsTemplatePMService } from '../../../Common/Services/StandardPMs/ReportsTemplatePMService';
+import { ReportTemplateEditorHtmlDataParams, ReportsTemplatePMExtendedService } from '../../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
+import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
 
 @Component({
 
     selector: 'GeneralSendControl',
     templateUrl: './GeneralSendComponent.html',
-    providers: [ DocumentOutPMService, DocumentTypeListExtendedService, HtmlEditorService, DocumentsFilingExtendedPMService, DocumentExtendedService],
+    providers: [DocumentOutPMService, DocumentTypeListExtendedService, HtmlEditorService, DocumentsFilingExtendedPMService, DocumentExtendedService],
 
 })
 
@@ -100,7 +101,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
     AllReportTemplates: TemplateClassData[];
     IsShowTemplateArea: boolean = false;
     EntityPM: any;
-
+    reportFliter: ReportFliter;
 
 
     reportPMService: ReportPMService;
@@ -110,7 +111,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
     IsCheckedInActive: boolean = false;
     AttrTitleShowTemplateList: string = "Expand";
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor( public _documentOutPMService: DocumentOutPMService, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentExtendedService: DocumentExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService, public _htmlEditorService: HtmlEditorService,  private cd: ChangeDetectorRef) {
+    constructor(public _documentOutPMService: DocumentOutPMService, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentExtendedService: DocumentExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService, public _htmlEditorService: HtmlEditorService, private cd: ChangeDetectorRef) {
 
         this.AttachmentListId = Guid.newGuid();
         this.AttachmentsLists = new Array<AttachmentsList>();
@@ -251,7 +252,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         }
 
 
-        this._htmlEditorService.sendDocumentHtml(filter).subscribe((res:any) => {
+        this._htmlEditorService.sendDocumentHtml(filter).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.froalaEditorSetting.froalaEditorComponent.DestroyfroalaEditor();
@@ -279,7 +280,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         this.IsEnableLinkDocOout = false;
         if (!this.DocTypeLists) {
 
-            this._documentTypeListExtendedService.getDocumentTypesListByObjectTableAndTenant(SessionInfo.LoggedUserTenant, this.ObjectTableId).subscribe((res:any) => {
+            this._documentTypeListExtendedService.getDocumentTypesListByObjectTableAndTenant(SessionInfo.LoggedUserTenant, this.ObjectTableId).subscribe((res: any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -311,7 +312,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         this.DocumentCopiesList = new Array<DocumentOutCopyViewModel>();
 
         this.DocumentOutLists = new Array<DocumentOutPM>();
-        this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -320,7 +321,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
                     this.DocumentOutLists.forEach((documentout) => {
                         if (documentout.DocumentOutCopies) {
                             documentout.DocumentOutCopies.forEach((copy) => {
-                                this.currentDocTypeList = this.DocTypeLists.filter(d=> d.Id == documentout.DocumentTypeId)[0];
+                                this.currentDocTypeList = this.DocTypeLists.filter(d => d.Id == documentout.DocumentTypeId)[0];
                                 if (this.currentDocTypeList && this.currentDocTypeList.IsDocumentOneTimePrintLimited == false && this.currentDocTypeList.LimitedPrintCopyId != copy.DocumentTypeCopyId && copy.LastPrintedByUserId == null) {
                                     this.DocumentCopiesList.push(new DocumentOutCopyViewModel(copy));
                                 }
@@ -407,7 +408,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
             item.ShowRemoveLink = true;
             var attachmentsLists = this.AttachmentsLists;
             if (!attachmentsLists) attachmentsLists = new Array<AttachmentsList>();
-            attachmentsLists = attachmentsLists.filter(d=> d.Id != item.Id);
+            attachmentsLists = attachmentsLists.filter(d => d.Id != item.Id);
             attachmentsLists.push(item);
             this.BliudAttachmentList(attachmentsLists);
 
@@ -424,7 +425,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
 
         this.IsEnableLinkDocIn = false;
 
-        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, this.ObjectTableId, "I", SessionInfo.LoggedUserTenant, true).subscribe((res:any) => {
+        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, this.ObjectTableId, "I", SessionInfo.LoggedUserTenant, true).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -496,7 +497,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         if (attachmentsLists.length > 0) {
 
             attachmentsLists.forEach((item) => {
-                var attach = this.AttachmentsLists.filter(d=> d.Id == item.Id)[0]
+                var attach = this.AttachmentsLists.filter(d => d.Id == item.Id)[0]
                 if (attach == null) {
 
                     this.AttachmentsLists.push(item);
@@ -652,7 +653,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         var att = new AttachmentDocment(item.DocumentTypeCopyNameWithDocumentTypeName, item.FileSize, item.Id, this.order++);
 
 
-        this._documentExtendedService.GetDocumentById(item.Id, item.Tenant).subscribe((res:any) => {
+        this._documentExtendedService.GetDocumentById(item.Id, item.Tenant).subscribe((res: any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -661,7 +662,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
                     this.documentPM = myResult;
                     att.FileSize = this.documentPM.FileSize;
                     att.FileName = !AppTool.IsNullOrEmpty(this.documentPM.CalculatedFileName) ? this.documentPM.CalculatedFileName : this.documentPM.FileName
-                    this.CreateAttachment(att,  this.documentPM, item.ShowRemoveLink, this);
+                    this.CreateAttachment(att, this.documentPM, item.ShowRemoveLink, this);
                 }
 
             }
@@ -696,7 +697,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
 
             SendControl.RemoveHeightAttachmentsListsFromWindow(SendControl);
 
-            SendControl.AttachmentsLists = SendControl.AttachmentsLists.filter(d=> d.Id != a.id);
+            SendControl.AttachmentsLists = SendControl.AttachmentsLists.filter(d => d.Id != a.id);
             if (SendControl.AttachmentsLists != null && SendControl.AttachmentsLists.length > 0) {
                 htmlComponentProparitiesTrue(a);
 
@@ -788,7 +789,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         if (!this.IsOpenWidnow) {
             this.IsOpenWidnow = true;
             if (!this.PartnersObslist) {
-                this._documentOutPMService.GetEntityPartners(this.EntityId, this.ObjecttableName,'','',this.GlAccountId).subscribe((res:any) => {
+                this._documentOutPMService.GetEntityPartners(this.EntityId, this.ObjecttableName, '', '', this.GlAccountId).subscribe((res: any) => {
                     var pmResponse: ServiceResponse = res;
 
                     if (!pmResponse.HasError) {
@@ -923,6 +924,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         this.froalaEditorSetting.PageType = "Send";
         this.froalaEditorSetting.Id = Guid.newGuid();
         this.froalaEditorSetting.Height = this.WindowHeight - 203;
+        this.reportFliter = args.reportFilter;
 
         if (this.EntityReference == "StimualReport") {
 
@@ -938,7 +940,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
             this.IsShowTemplateArea = true;
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-            this.reportPMService.get(this.EntityId).subscribe((res:any) => {
+            this.reportPMService.get(this.EntityId).subscribe((res: any) => {
                 var pmResponse: ServiceResponse = res;
                 this.CurrentSession.StopBusyIndicator();
                 if (!pmResponse.HasError) {
@@ -985,13 +987,13 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         }
     }
 
-    LoadHtmlTemplateData(id: string , version:number) {
+    LoadHtmlTemplateData(id: string, version: number) {
 
 
         if (this.SelectedTemplate != null && this.SelectedTemplate.IsLoad) {
             this.froalaEditorSetting.froalaEditorComponent.SetHtml(this.SelectedTemplate.HtmlData);
 
-            this.From =  !AppTool.IsNullOrEmpty(this.SelectedTemplate.From) ? this.SelectedTemplate.From : "";
+            this.From = !AppTool.IsNullOrEmpty(this.SelectedTemplate.From) ? this.SelectedTemplate.From : "";
             this.ReplyTo = !AppTool.IsNullOrEmpty(this.SelectedTemplate.ReplyTo) ? this.SelectedTemplate.ReplyTo : "";
             this.Cc = !AppTool.IsNullOrEmpty(this.SelectedTemplate.Cc) ? this.SelectedTemplate.Cc : "";
             this.Subject = !AppTool.IsNullOrEmpty(this.SelectedTemplate.Subject) ? this.SelectedTemplate.Subject : "";
@@ -1007,9 +1009,18 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
             this.ReplyTo = !AppTool.IsNullOrEmpty(this.SelectedTemplate.EntityPM.ReplyTo) ? this.SelectedTemplate.EntityPM.ReplyTo : "";
             this.Cc = !AppTool.IsNullOrEmpty(this.SelectedTemplate.EntityPM.CC) ? this.SelectedTemplate.EntityPM.CC : "";
             this.Subject = !AppTool.IsNullOrEmpty(this.SelectedTemplate.EntityPM.Subject) ? this.SelectedTemplate.EntityPM.Subject : "";
+            debugger;
 
-
-            this.reportsTemplatePMExtendedService.GetReportTemplateEditorHtmlData(id, version, SessionInfo.LoggedUserId, this.Subject, this.From, this.ReplyTo, this.Cc).subscribe((res:any) => {
+            var params = new ReportTemplateEditorHtmlDataParams();
+            params.ReportsTemplateId = id;
+            params.Version = version;
+            params.UserId = SessionInfo.LoggedUserId;
+            params.Subject = this.Subject;
+            params.From = this.From;
+            params.ReplyTo = this.ReplyTo;
+            params.Cc = this.Cc;
+            params.ReportFilter = this.reportFliter;
+            this.reportsTemplatePMExtendedService.PostReportTemplateEditorHtmlData(params).subscribe((res: any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -1017,7 +1028,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
                     if (myResult) {
 
                         this.From = this.SelectedTemplate.From = !AppTool.IsNullOrEmpty(myResult.From) ? myResult.From : "";
-                        this.ReplyTo = this.SelectedTemplate.ReplyTo =!AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
+                        this.ReplyTo = this.SelectedTemplate.ReplyTo = !AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
                         this.Cc = this.SelectedTemplate.Cc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
                         if (!AppTool.IsNullOrEmpty(this.Cc)) this.AddCcClick();
 
@@ -1025,7 +1036,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
                             this.Subject = this.SelectedTemplate.Subject = myResult.Subject;
                         }
                         else {
-                            this.Subject = this.SelectedTemplate.Subject= this.SelectedTemplate.Description;
+                            this.Subject = this.SelectedTemplate.Subject = this.SelectedTemplate.Description;
                         }
 
                         this.froalaEditorSetting.froalaEditorComponent.SetHtml(myResult.Htmlstring);
@@ -1053,7 +1064,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         this.SelectId = selectId;
         this.ReportTemplates = new Array<TemplateClassData>();
         this.AllReportTemplates = new Array<TemplateClassData>();
-        this.reportsTemplatePMExtendedService.GetReportsTemplatePMsByReportId(this.EntityPM.Id , "M").subscribe((res: any) => {
+        this.reportsTemplatePMExtendedService.GetReportsTemplatePMsByReportId(this.EntityPM.Id, "M").subscribe((res: any) => {
 
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -1117,7 +1128,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
                     this.UpdateReportTemplatePM(item.EntityPM);
                 }
                 else {
-                    this.reportsTemplatePMService.get(selectitem.Id).subscribe((res:any) => {
+                    this.reportsTemplatePMService.get(selectitem.Id).subscribe((res: any) => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
                             var myResult = pmResponse.Result;
@@ -1227,7 +1238,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
     UpdateReportPM() {
         this.CurrentSession.StartBusyIndicatorSaving();
 
-        this.reportPMService.update(this.EntityPM).subscribe((res:any) => {
+        this.reportPMService.update(this.EntityPM).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
@@ -1240,10 +1251,10 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         });
     }
 
-    UpdateReportTemplatePM(item:any) {
+    UpdateReportTemplatePM(item: any) {
         this.CurrentSession.StartBusyIndicatorSaving();
 
-        this.reportsTemplatePMService.update(item).subscribe((res:any) => {
+        this.reportsTemplatePMService.update(item).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
@@ -1266,7 +1277,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
         logWindow.Height = 500;
-        logWindow.Title =  "New Message Template";
+        logWindow.Title = "New Message Template";
         logWindow.WindowArgs = windowArgs;
 
         logWindow.Show("./Report/Components/NewReportsTemplateComponent");
@@ -1278,7 +1289,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
 
 
     BuildViewModel(item: any) {
-        return  new TemplateClassData(item, this.EntityPM);
+        return new TemplateClassData(item, this.EntityPM);
     }
 
 }
@@ -1348,7 +1359,7 @@ export class TemplateClassData {
         return isDefault;
     }
 
-    constructor(public entityPM: any , report:any) {
+    constructor(public entityPM: any, report: any) {
         this.ReportPM = report;
         this.EntityPM = entityPM;
         this.Id = entityPM.Id;
