@@ -752,17 +752,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountLedgerTransactionCheque.cs" />
     <Compile Include="AccountingModel\DomainServices\TaxDeductionReportDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\OpenFormatReportDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <!-- <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" /> -->
-
-
-
     <Compile Include="Controllers\AccountingModel\CopyFromTenant0ExtendedController.cs" />
-
-
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CopyFromTenant0ViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\CopyFromTenant0Controller.Generated.cs" />
