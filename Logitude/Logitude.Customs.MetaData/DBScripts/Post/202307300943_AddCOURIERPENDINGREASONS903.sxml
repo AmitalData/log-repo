@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs" Pre="true">
-  <Sql Version="6">
+  <Sql Version="7">
 
     <![CDATA[
     INSERT INTO Customs.COURIERPENDINGREASONS (CODE,LOCALNAME,SEARCHFIELDS,ENGLISHNAME,INACTIVE,ERRORPLACE,TENANT,UNIFREIGHTSTATUSCODE,ID) 
@@ -10,7 +10,6 @@ WHERE NOT EXISTS (
   FROM Customs.COURIERPENDINGREASONS
   WHERE CODE = '903'
 );
-commit;
      ]]>
   </Sql>
 
