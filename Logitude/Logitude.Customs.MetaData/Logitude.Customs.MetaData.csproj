@@ -112,9 +112,6 @@
     <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
     <None Include="DBScripts\Post\202307201232_AddCOURIERPENDINGREASONS908.sxml" />
-    <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS900.sxml" />
-    <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS904.sxml" />
-    <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS902.sxml" />
     <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS907.sxml" />
     <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS905.sxml" />
     <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS906.sxml" />
