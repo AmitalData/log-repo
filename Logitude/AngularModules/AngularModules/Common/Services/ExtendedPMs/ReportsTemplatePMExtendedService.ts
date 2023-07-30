@@ -82,10 +82,9 @@ export class ReportsTemplatePMExtendedService {
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-            var params = JSON.stringify(reportParams);
             return this._http.post(
                 this._apiUrl + '/PostReportTemplateEditorHtmlData/',
-                JSON.stringify(params),
+                JSON.stringify(reportParams),
                 ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     serviceResponse.Result = res;
                     return serviceResponse;
