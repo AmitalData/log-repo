@@ -75,6 +75,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
             this._DeclarationCourierStatusPMService.get(this.decPM.Id).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     this.DeclarationCourierStatus.IsCourierMissingClassification = (response.Result as DeclarationCourierStatusPM).IsCourierMissingClassification;
+                    this.DeclarationCourierStatus.CourierDeclarationStatusCode= (response.Result as DeclarationCourierStatusPM).CourierDeclarationStatusCode;
                     this.OkButtonClicked();
                 }
             });
