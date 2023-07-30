@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="7">
+
+    <![CDATA[
+    INSERT INTO Customs.COURIERPENDINGREASONS (CODE,LOCALNAME,SEARCHFIELDS,ENGLISHNAME,INACTIVE,ERRORPLACE,TENANT,UNIFREIGHTSTATUSCODE,ID) 
+SELECT '903','מספר טלפון לא תקין','Invalid phone number,מספר טלפון לא תקין,903','Invalid phone number',0,'1','1', NULL,'903'
+WHERE NOT EXISTS (
+  SELECT *
+  FROM Customs.COURIERPENDINGREASONS
+  WHERE CODE = '903'
+);
+     ]]>
+  </Sql>
+
+  <Oracle Version="6">
+    <![CDATA[
+
+INSERT INTO COURIERPENDINGREASONS (CODE,LOCALNAME,SEARCHFIELDS,ENGLISHNAME,INACTIVE,ERRORPLACE,TENANT,UNIFREIGHTSTATUSCODE,ID) 
+SELECT '903','Invalid phone number','Invalid phone number,903','Invalid phone number',0,'1', '1', NULL,'903'
+FROM dual
+WHERE NOT EXISTS (
+  SELECT *
+  FROM COURIERPENDINGREASONS
+  WHERE CODE = '903'
+);
+
+
+
+commit;
+
+    ]]>
+  </Oracle>
+</Script>

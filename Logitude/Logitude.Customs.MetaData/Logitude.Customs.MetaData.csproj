@@ -111,6 +111,14 @@
     <None Include="DBOthers\Views\DecTaxesByTaxTypeCodeViews.dxml" />
     <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
+    <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS907.sxml" />
+    <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS905.sxml" />
+    <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS906.sxml" />
+    <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS904.sxml" />
+    <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS902.sxml" />
+    <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS901.sxml" />
+    <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS900.sxml" />
+    <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS903.sxml" />
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
     <None Include="DBScripts\Post\202305241701_JobDeleteOldLocks.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
