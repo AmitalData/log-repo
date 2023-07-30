@@ -1,16 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs" Pre="true">
-  <Sql Version="6">
+  <Sql Version="7">
 
     <![CDATA[
     INSERT INTO Customs.COURIERPENDINGREASONS (CODE, LOCALNAME, SEARCHFIELDS, ENGLISHNAME, INACTIVE, ERRORPLACE, TENANT, UNIFREIGHTSTATUSCODE, ID) 
-SELECT   '901', 'אוטונומיה', 'Autonomy,אוטונומיה,901','Autonomy', 0, 1,1, NULL, '901
+SELECT   '901', 'אוטונומיה', 'Autonomy,אוטונומיה,901','Autonomy', 0, 1,1, NULL, '901'
 WHERE NOT EXISTS (
   SELECT *
   FROM Customs.COURIERPENDINGREASONS
   WHERE CODE = '901'
 );
-commit;
      ]]>
   </Sql>
 
