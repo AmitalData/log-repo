@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef,ElementRef,ViewChild, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -68,6 +68,7 @@ export class AddEditRecoExPageComponent extends BaseComponent {
     CreditAmountColHeader: string;
     DebitAmountColHeader: string;
     PageLinesList: ObservableCollection;
+    tempPageLinesList: ObservableCollection;
     public isRTL: boolean = false;
     public TotalSum: number = 0.0;
     public Difference: number = 0.0;
@@ -76,6 +77,10 @@ export class AddEditRecoExPageComponent extends BaseComponent {
     EditWindowToolTip: string = null;
     IsRestoreButtonEnabled: boolean;
     UploadButtonIsEnabled: boolean = true;
+    FileName: string;
+    FileExtension: string;
+    FileData: number;
+    SelectedRow: PageLineModel;
 
 
 
@@ -659,6 +664,25 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         }
     }
 
+
+    formData: FormData = new FormData();
+    UploadFile(event: any) {
+        const fileList: FileList = event.target.files;
+        if (fileList.length > 0) {
+          const file: File = fileList[0];
+          this.FileName = file.name.replace("." + this.FileExtension, "");
+          this.UploadButtonIsEnabled = false;
+          this.formData.append('file', file, file.name);
+          this.SendExcelToServer();
+        }
+    }
+
+    myInputVariable: ElementRef;
+    @ViewChild('myInput', { static: false }) myInput!: ElementRef;
+    openFileUploader() {
+        this.myInput.nativeElement.click();
+    }
+
     public partnersUploadExcelParameter: PartnersUploadExcelParameter;
     ConvertArrayBufferToBase64(file: any, viewmodel: any) {
         return new Promise((resolve, reject) => {
@@ -686,12 +710,17 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         });
     }
 
-    SendExcelToServer(filters: ReconcileExternalPageLineParameters) {
+    SendExcelToServer() {
+        var line = 0;
+        if (this.ReconcileExternalPagePM.ReconcileExternalPageLines.length > 0) {
+            var line = this.ReconcileExternalPagePM.ReconcileExternalPageLines.reduce(function (prev, current) { return (prev.LineNumber > current.LineNumber) ? prev : current }).LineNumber;
+        }
+        line++;
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromExcel(filters,this.EntityPM.bankId).subscribe((response: ServiceResponse) => {
+        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromExcel(this.formData,this.EntityPM.bankId,this.EntityPM.tenant,this.ReconcileExternalPagePM?.Id,line).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                filters = response.Result;
-                this.FillReconcileExternalPageLines(filters);
+                //filters = response.Result;
+                this.FillReconcileExternalPageLines(response);
                 this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
@@ -703,35 +732,37 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         });
     }
 
-    FillReconcileExternalPageLines(filters: ReconcileExternalPageLineParameters) {
-        var line = 0;
-        if (this.ReconcileExternalPagePM.ReconcileExternalPageLines.length > 0) {
-            var line = this.ReconcileExternalPagePM.ReconcileExternalPageLines.reduce(function (prev, current) { return (prev.LineNumber > current.LineNumber) ? prev : current }).LineNumber;
-        }
-        line++; // last no.
+    FillReconcileExternalPageLines(filters: any) {
+        // last no.
+        this.tempPageLinesList = new ObservableCollection([]);
+
         if (filters.ExcelReconcileExternalPageLines.length > 0) {
             this.ReconcileExternalPagePM.EntryTypeCode = "2";
             filters.ExcelReconcileExternalPageLines.forEach(element => {
-                var pageLine: ReconcileExternalPageLinePM = new ReconcileExternalPageLinePM(this.ReconcileExternalPagePM);
-                pageLine.Tenant = SessionLocator.Tenant;
-                pageLine.ReconcileExternalPageId = this.isNewEntity ? "new" : this.ReconcileExternalPagePM.Id;
-                var datemomentobject = moment.utc(element.ReferenceDate, "YYYY-MM-DD")
-                pageLine.ReferenceDate = datemomentobject.toDate();
-                pageLine.DebitAmount = element.DebitAmount;
-                pageLine.CreditAmount = element.CreditAmount;
-                pageLine.Reference = element.Reference;
-                pageLine.Notes = element.Notes;
-                pageLine.LineNumber = line++;
-                pageLine.IsReconciled = false;
-                this.ReconcileExternalPagePM.AddReconcileExternalPageLine(pageLine);
-                var item = new PageLineModel(pageLine, this);
-                this.PageLinesList.Insert(item);
+                this.ReconcileExternalPagePM.AddReconcileExternalPageLine(element);
+                var item = new PageLineModel(element, this);
+                this.tempPageLinesList.Insert(item);
             });
             if (this.PageLinesList.Length == 0) {
                 this.UploadButtonIsEnabled = true
             }
+            this.PageLinesList.InsertCollection(this.tempPageLinesList.Collection);
             this.CalculateTotals();
+            this.SelectInvoiceItemMethod(null)
         }
+    }
+
+    public SelectInvoiceItemMethod(res) {
+        var item: PageLineModel = this.PageLinesList.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
+        //this.SelectedRow = item;
+        this.OnSelectedItemChanged(item); // set this.SelectedRow
+        var index = this.PageLinesList.Collection.indexOf(item);
+        //this.ChangeScrollPosition.emit({ RowIndex: index });
+
+    }
+
+    OnSelectedItemChanged(selectedRow: PageLineModel) {
+        this.SelectedRow = selectedRow;
     }
 
     AddButtonClicked() {
