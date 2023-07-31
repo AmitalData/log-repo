@@ -1170,7 +1170,6 @@
     <Compile Include="EntityQueryServices\GovernmentProcedureTypeTenantQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvioceExportDefaultQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientIndicationQueryService.Generated.cs" />
-
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />
@@ -1181,7 +1180,6 @@
     <Compile Include="EntityQueryServices\Generated\UIMessageTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OcrDocumentQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OcrStatusQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\SupplierInvioceExportDefaultQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VendorCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StatusCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SchedulerParamQueryService.cs" />
@@ -1737,7 +1735,6 @@
     <Compile Include="EntityUpdateServices\Generated\DefaultTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DefaultValueUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvioceExportDefaultUpdateService.cs" />
-
     <Compile Include="EntityUpdateServices\VendorCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationFollowUpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\VendorCurrencyUpdateService.Generated.cs" />
