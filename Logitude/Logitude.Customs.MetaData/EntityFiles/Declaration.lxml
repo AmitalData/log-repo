@@ -27516,12 +27516,6 @@
       LocalDefaultText="&quot;לא בוצע ביטוח בגלל שוני במטבע/תנאי משלוח בין החשבונות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.Declaration.O.ImporterCourierFromExcel&quot;"
-      DefaultText="&quot;Worksheet From Excel&quot;"
-      LocalDefaultText="&quot;הטענת ש.מ.ב מאקסל&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
