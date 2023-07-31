@@ -20,6 +20,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPMToPOCO(OcrDocumentPM entityPM, OcrDocument entityPOCO)
         {
             //throw new NotImplementedException();
+
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Id))
+            {
+                entityPOCO.Id = entityPM.Id;
+            }
         }
 
         public void CustomPOCOToPM(OcrDocumentPM entityPM, OcrDocument entityPOCO)

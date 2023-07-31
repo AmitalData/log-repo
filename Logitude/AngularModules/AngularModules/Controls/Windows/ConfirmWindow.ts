@@ -19,6 +19,7 @@ export class ConfirmWindow {
     public CancelButtonText: string;
     public IsOverAll: boolean = false;
     public ShowWarningImage: boolean = false;
+    public ShowInfoImage: boolean = false;
     public ShowErorImage: boolean = false;
     LayoutDirection: string = 'ltr';
     @Output() WindowClosed = new EventEmitter();
@@ -109,6 +110,7 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
     public CancelButtonText: string = "Cancel";
     public IsOverAll: boolean = false;
     public ShowWarningImage: boolean = false;
+    public ShowInfoImage: boolean = false;
     public ShowErorImage: boolean = false;
     LayoutDirection: string = 'ltr';
     public ShowCheckBox: boolean = false;
@@ -143,6 +145,8 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
         this.YesButtonText = myWindow.YesButtonText;
         this.IsOverAll = myWindow.IsOverAll;
         this.ShowWarningImage = myWindow.ShowWarningImage;
+        this.ShowInfoImage = myWindow.ShowInfoImage;
+
         this.ShowErorImage = myWindow.ShowErorImage;
         this.ShowCheckBox = myWindow.ShowCheckBox;
         this.IsYesEnabled = myWindow.IsYesEnabled;

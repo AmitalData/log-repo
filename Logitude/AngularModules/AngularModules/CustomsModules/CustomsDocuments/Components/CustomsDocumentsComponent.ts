@@ -34,6 +34,8 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { CustomsDocumentsTicketPMService } from 'Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
 import { CustomDocumentTypeMetaDataList } from 'Customs/EntityLists/CustomDocumentTypeMetaDataList';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { OcrDocumentExtendedListService } from 'Customs/Services/ExtendedLists/OcrDocumentExtendedListService';
+import { TruckerList } from 'Common/EntityLists/TruckerList';
 
 @Component({
 
@@ -135,7 +137,7 @@ export class CustomsDocumentsComponent
 
         if (this.EntityPM.Direction == 'E') {
             this.customs = "תיק מכס";
-            this.forwarding = "תיק יצוא";
+            this.forwarding = "תיק יצום";
 
             this.DocumentFilterSelectedValue = "all";
             this.IsClose = IsClose;
@@ -328,8 +330,9 @@ export class CustomsDocumentsComponent
         console.log(this.CustomsDocumentsTicketViewModels);
         this.SetFilterCounts();
         if (selectedDocId) {
+            debugger
             var ticket: CustomsDocumentTicketViewModel = this.CustomsDocumentsTicketViewModels.filter(d => d.Id == selectedDocId)[0];
-            this.EditCustomsDocumentsTicket(ticket);
+            this.EditCustomsDocumentsTicket(ticket); 
             this.SelectedDocumentId = null;
         }
     }
@@ -608,6 +611,7 @@ export class CustomsDocumentsComponent
     }
 
     EditCustomsDocumentsTicket(customsDocumentsTicket: CustomsDocumentTicketViewModel) {
+        debugger
         if (!customsDocumentsTicket.PreventEdit) {
             if (customsDocumentsTicket.DocumentsFilingId) {
                 this.CurrentSession.StartBusyIndicatorLoading();
@@ -616,10 +620,48 @@ export class CustomsDocumentsComponent
                     var isThereRequests = response.Result.IsDisplayOnly;
                     var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
                     customsDocumentPMService.get(documentsFilingId).subscribe((resp: ServiceResponse) => {
+                        debugger
                         this.CurrentSession.StopBusyIndicator();
                         if (!resp.HasError) {
                             var customsDoc = resp.Result;
-                            this.ApplyEditCustomsDocumentTicket(isThereRequests, customsDocumentsTicket.customsDocumentsTicketPM, customsDoc);
+                            debugger
+                            if(CustomsDocumentTicketViewModel.IsOcrDocument){
+
+                                debugger
+                                // var ocrDocumentExtendedListService = new OcrDocumentExtendedListService();
+                                // ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, customsDoc.DocumentsFilingId).subscribe((response: ServiceResponse) => {
+                                    
+                                //    if(!response.HasError || (response.Result != null && response.Result.statuscode =="2"))//סטטוס התקבל
+                                //    {
+                                //        debugger
+                                       this.UpsertSupplierInvioceByOcr(customsDoc.DocumentsFilingId,isThereRequests, customsDocumentsTicket.customsDocumentsTicketPM, customsDoc);
+                       
+                                       
+                                //    }
+                                //   else if(response.Result.statuscode =="1")//סטטוס נשלח , טרם הסתיים
+                                //    {
+                                    //    SessionLocator.SelectedSession.StopBusyIndicator();
+                                    //    var messageWindow = new MessageWindow();
+                                    //    messageWindow.RTL=true;
+                                    //    messageWindow.ShowWarningIcon=true;
+                                       
+                                    //    messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                    //    messageWindow.Show("טרם הסתיים תהליך OCR");        
+                                    //    messageWindow.WindowClosed.subscribe((event: any) => messageWindow.Close());
+                            //            return
+                            //       }
+                       
+                       
+                                    
+                            //    });
+
+
+                            }
+                            else{
+
+                                this.ApplyEditCustomsDocumentTicket(isThereRequests, customsDocumentsTicket.customsDocumentsTicketPM, customsDoc);
+
+                            }
                         }
                     });
 
@@ -627,6 +669,8 @@ export class CustomsDocumentsComponent
             }
             else {
                 this.CurrentSession.StopBusyIndicator();
+                debugger
+
                 this.ApplyEditCustomsDocumentTicket(false, customsDocumentsTicket.customsDocumentsTicketPM, null);
             }
         }
@@ -634,6 +678,7 @@ export class CustomsDocumentsComponent
     }
 
     ApplyEditCustomsDocumentTicket(isThereRequests: boolean, customsDocumentsTicket: CustomsDocumentsTicketPM, customsDocument: CustomsDocumentPM) {
+        debugger
         if (this.CurrentSession.CurrentEditComponent) {
             if (this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
                 this.CurrentSession.CurrentEditComponent.SaveChanges();
@@ -650,6 +695,9 @@ export class CustomsDocumentsComponent
                 windowArgs.IsNewState = false;
             }
         }
+       
+        
+       
         windowArgs.ClosingData=this.ClosingData;
         windowArgs.CustomsDocument = customsDocument;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly && isThereRequests;
@@ -674,6 +722,45 @@ export class CustomsDocumentsComponent
 
         logWindow.Show('./CustomsModules/CustomsDocuments/Components/AddEditCustomsDocumentComponent');
     }
+
+    UpsertSupplierInvioceByOcr(documentFilingId : string, isThereRequests: boolean, customsDocumentsTicket: CustomsDocumentsTicketPM, customsDocument: CustomsDocumentPM) {
+        debugger
+
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        this.custDocRelatedDocsWebService.UpdateSupplierInvioceByOcr(this.EntityPM.Id, documentFilingId).subscribe((response: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (response.HasError) {
+                let messageWindow = new MessageWindow();
+                messageWindow.Show(response.ErrorsArray[0]); 
+            }
+            else {
+               
+
+
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.ShowNoButton = false;
+                confirmWindow.ShowInfoImage = true;
+                confirmWindow.Title = TextCodeTranslator.Translate(response.Result);
+                confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                confirmWindow.Show(response.Result);
+
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                    
+                        this.ApplyEditCustomsDocumentTicket(isThereRequests, customsDocumentsTicket, customsDocument);
+
+                     
+                    
+                    }
+
+                });
+
+            }
+            //this.RefreshEntity();
+        });
+    }
+
+   
 
     private IsCustomDocumentItemEnabled(documentStatusCode: string) {
         var MyEditControlViewModelController = this.CurrentSession.CurrentEditComponent.EditComponentController;
@@ -701,6 +788,8 @@ export class CustomsDocumentsComponent
                     relatedDocumentViewModel.CustomDocument = resp.Result;
                     if (relatedDocumentViewModel.CustomDocument) {
                         this.CurrentSession.StopBusyIndicator();
+                        debugger
+
                         this.ApplyEditCustomsDocumentTicket(false, null, relatedDocumentViewModel.CustomDocument);
                     }
                     else {
@@ -727,6 +816,8 @@ export class CustomsDocumentsComponent
                         customsDocumentPMService.insert(customsDocumentPM).subscribe((resp: ServiceResponse) => {
                             if (!resp.HasError) {
                                 this.CurrentSession.StopBusyIndicator();
+                                debugger
+
                                 this.ApplyEditCustomsDocumentTicket(false, null, relatedDocumentViewModel.CustomDocument);
                             }
                             else {
@@ -792,6 +883,7 @@ export class CustomsDocumentsComponent
         if (customsDocumentsTicket.ApprovedImageVisibility || customsDocumentsTicket.DeniedImageVisibility) {
         } else {
             if (!customsDocumentsTicket.HaveCustomAnswer) {
+                debugger
                 this.EditCustomsDocumentsTicket(customsDocumentsTicket);
                 return;
             }
@@ -893,7 +985,7 @@ export class CustomsDocumentsComponent
     confirmCheckOrginalDocWindow() {
         var myConfirmWindow = new ConfirmWindow();
         myConfirmWindow.Width = 400;
-        myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CheckOrginalDoc") || 'האם לסמן מסמך מקורי');
+        myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CheckOrginalDoc") || 'הםם לסמן מסמך מקורי');
 
         return new Promise<boolean>((resolve, reject) =>
             myConfirmWindow.WindowClosed.subscribe(event =>
@@ -907,7 +999,7 @@ export class CustomsDocumentsComponent
         if (documnetUpload.length === 0) {
 
             const msg: MessageWindow = new MessageWindow();
-            msg.Show('אין מסמכים לשליחה למכס');
+            msg.Show('םין מסמכים לשליחה למכס');
             await new Promise<void>(resolve => msg.WindowClosed.subscribe(() => resolve()));
             return;
         }
@@ -919,7 +1011,7 @@ export class CustomsDocumentsComponent
 
         if (documnetUpload.length !== this.CustomsDocumentsTicketViewModels.filter(x => !AppTool.IsNullOrEmpty(x.DocumentsFilingId) && AppTool.IsNullOrEmpty(x.CustomsDocId)).length) {
             const msg: MessageWindow = new MessageWindow();
-            msg.Show(TextCodeTranslator.Translate("Customs.Declaration.O.HaveMandatory") || 'יש מסמכים עם חוסר בנתוני Metadata ולכן מסמכים אילו לא יעלו למכס');
+            msg.Show(TextCodeTranslator.Translate("Customs.Declaration.O.HaveMandatory") || 'יש מסמכים עם חוסר בנתוני Metadata ולכן מסמכים םילו לם יעלו למכס');
             await new Promise<void>(resolve => msg.WindowClosed.subscribe(() => resolve()));
         }
 

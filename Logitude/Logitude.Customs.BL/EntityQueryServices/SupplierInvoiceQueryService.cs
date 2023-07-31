@@ -308,6 +308,26 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return supplierInvoicePMs.OrderBy(d=>d.SequenceNumeric).ToList();
         }
 
+        public SupplierInvoicePM GetInvoicesForDeclarationByInvoiceNum(string declarationId, string invoiceNumber, int tenant,  bool getComposition = false)
+        {
+            SupplierInvoice supplierInvoice = repository.GetInvoicesForDeclarationByInvoiceNum(declarationId,invoiceNumber, tenant);
+
+            if (supplierInvoice == null) { return null; }
+            SupplierInvoiceDataMapping mappings = new SupplierInvoiceDataMapping();
+
+                SupplierInvoicePM invoicePM = new SupplierInvoicePM();
+
+                mappings.CustomPOCOToPM(invoicePM, supplierInvoice);
+                mappings.POCOToPM(invoicePM, supplierInvoice);
+                if (getComposition)
+                {
+                    GetComposition(new SupplierInvoiceKeys() { DeclarationId = invoicePM.DeclarationId, InvoiceCounterKey = invoicePM.InvoiceCounterKey }, invoicePM);
+                }
+                
+            
+            return invoicePM;
+        }
+
 
         public IQueryable<SupplierInvoicePM> GetSupplierInvoicesQueryForDeclaration(string declarationId, int tenant, bool getComposition = false)
         {
@@ -754,6 +774,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.DoesAnyInvoiceHasFreight(declarationId, tenant);
         }
+
+        //public SupplierInvoicePM GetInvoicesForDeclarationByInvoiceNum(string declarationId, string invoiceNumber, int tenant)
+        //{
+            
+        //    SupplierInvoice invoice = repository.GetInvoicesForDeclarationByInvoiceNum(declarationId, invoiceNumber, tenant);
+        //    if(invoice == null) { return null; }
+        //    SupplierInvoiceDataMapping mappings = new SupplierInvoiceDataMapping();
+        //    SupplierInvoicePM invoicePM = new SupplierInvoicePM();
+        //    mappings.CustomPOCOToPM(invoicePM, invoice);
+        //    mappings.POCOToPM(invoicePM, invoice);
+
+        //    return invoicePM;
+        //}
 
         public List<SupplierInvoicePM> GetSupplierInvoicesForDeclarationWithFreightsOnly(string declarationId, int tenant)
         {

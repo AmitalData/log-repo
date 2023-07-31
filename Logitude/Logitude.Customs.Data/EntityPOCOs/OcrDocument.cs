@@ -25,8 +25,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("Process")]
 	    public string Process { get; set; }
-        [Column("JsonData")]
-	    public string JsonData { get; set; }
+        [Column("JsonUrl")]
+	    public string JsonUrl { get; set; }
         [Column("Score")]
 	    public decimal? Score { get; set; }
         [Column("JsonTif")]
@@ -47,6 +47,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual DocumentsFiling DocumentsFiling { get; set; }
         [Column("Reference")]
 	    public string Reference { get; set; }
+        [Column("JsonData")]
+	    public string JsonData { get; set; }
     }
 }
 	 

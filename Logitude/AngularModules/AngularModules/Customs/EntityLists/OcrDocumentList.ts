@@ -11,7 +11,7 @@ export class OcrDocumentList {
 	Id: string;
 	Tenant: number;
 	Process: string;
-	JsonData: string;
+	JsonUrl: string;
 	Score: number;
 	JsonTif: string;
 	ErrorMsg: string;
@@ -20,6 +20,7 @@ export class OcrDocumentList {
 	OcrId: string;
 	DocId: string;
 	Reference: string;
+	JsonData: string;
 	
 }
  

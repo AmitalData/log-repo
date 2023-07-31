@@ -620,6 +620,7 @@
     <Compile Include="EntityLists\Generated\UIMessageTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OcrDocumentList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OcrStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VendorCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\DeclarationReferantDataList.cs" />
     <Compile Include="EntityLists\Generated\StatusCodeList.Generated.cs" />

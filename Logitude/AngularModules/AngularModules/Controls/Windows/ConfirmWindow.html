@@ -101,9 +101,10 @@
                             <tr>
                                 <td style="width: 70px; position: relative;">
                                     <!--<img class="LeftCenter" style="width: 70px; height: 70px;" src="./Images/ConfirmIcon.png" />-->
-                                    <div   *ngIf="!ShowWarningImage && !ShowErorImage" [className]="LayoutDirection == 'rtl' ? 'RightCenter ConfirmIcon' : 'LeftCenter ConfirmIcon'">?</div>
+                                    <div   *ngIf="!ShowWarningImage && !ShowErorImage && !ShowInfoImage" [className]="LayoutDirection == 'rtl' ? 'RightCenter ConfirmIcon' : 'LeftCenter ConfirmIcon'">?</div>
                                     <img  *ngIf="ShowWarningImage" style="width:70px;height:70px" src="./Images/SimplogIcons/Warning.png" />
                                     <img  *ngIf="!ShowWarningImage && ShowErorImage" style="width:70px;height:70px" src="./Images/ErrorIcon.png" />
+                                    <img  *ngIf="ShowInfoImage" style="width:70px;height:70px" src="./Images/InfoIcon.png" />
                                 </td>
 
                                 <td style="width: 10px;">

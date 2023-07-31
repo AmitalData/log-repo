@@ -37,7 +37,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Ocr Document&quot;"
-  Code="&quot;ac34&quot;"
+
+  Code="&quot;e0d9&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -403,7 +404,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="3"
+    NumberOfDigits="4"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
@@ -1037,6 +1038,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <Screen
     Name="&quot;Customs.OcrDocumentHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.OcrDocument&quot;"

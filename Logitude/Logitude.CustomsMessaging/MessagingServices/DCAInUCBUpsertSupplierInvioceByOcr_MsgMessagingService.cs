@@ -117,7 +117,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }, xmlESBResponseXmlClass);
 
                     trans.Complete();
-                    return "תהליך יתעדכן ברקע";
+                    return "תהליך OCR יתעדכן ברקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
                 {
