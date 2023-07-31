@@ -394,8 +394,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         Tenant = dcs.Tenant,
 
                     } into t2
-                    select new DeclarationCourierStatusList
-                    {
+                select new DeclarationCourierStatusList
+                {
                         Tenant = t2.Key.Tenant,
                         CourierMasterId = t2.Key.CourierMasterId,
                         DeclarationId = t2.Key.DeclarationId,
