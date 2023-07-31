@@ -467,7 +467,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 entityPM.UpdateDateTime = DateTime.Now;
 
-                if (entityPM.MarkAsChanged && entityPM.ChangeSetOp == ChangeSetOperation.Update && !string.IsNullOrEmpty(this.EntityChangeFieldXml))
+                if (entityPM.MarkAsChanged && entityPM.ChangeSetOp == ChangeSetOperation.Update && !string.IsNullOrEmpty(this.EntityChangeFieldXml) && entityPM.IsCourierDeclaration)
                 {
                     DateTime stopLogAt = new DateTime(2025, 06, 01);
                     LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
@@ -501,6 +501,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 break;
                             }
                         }
+                    }
+                }
+                else if (entityPM.MarkAsChanged && !entityPM.IsCourierDeclaration)
+                {
+                    if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+                    {
+                        entityPM.IsChanged = true;
                     }
                 }
                 ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
@@ -1535,6 +1542,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating, entityPM.IsCourierDeclaration = true");
                     var context = CustomContext.GetContext(entityPM.Tenant);
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    //if(entity)
                     DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(entityPM); 
                     if (IsFromU2L)
                     {
