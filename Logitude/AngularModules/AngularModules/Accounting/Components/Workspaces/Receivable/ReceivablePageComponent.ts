@@ -1,7 +1,7 @@
 declare var makeAmBarChart;
 declare var window: any;
 import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -11,6 +11,7 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {CurrencyRatesService, LastRate} from "../../../../Common/Services/CurrencyRatesService";
 
 // Services
 import { GLAccountExtendedListService } from '../../../Services/ExtendedLists/GLAccountExtendedListService';
@@ -28,6 +29,11 @@ import { PeriodM } from '../../../DataContracts/PeriodM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ModulesService } from '../../../Services/ModulesService';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import { ARPaymentPM } from 'Invoice/EntityPMs/ARPaymentPM';
+import { ARInvoicePM } from 'Invoice/EntityPMs/ARInvoicePM';
+import {CurrencyList} from "../../../../Common/EntityLists/CurrencyList";
+import {CurrencyListService} from "../../../../Common/Services/StandardLists/CurrencyListService";
+import {InvoiceTool} from "../../../../Invoice/Tools";
 
 
 @Component({
@@ -40,7 +46,8 @@ export class ReceivablePageComponent {
     private _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     private _GLAccountTotalByMonthListService: GLAccountTotalByMonthListService = new GLAccountTotalByMonthListService();
     private _FullAccountingSettingListService: FullAccountingSettingListService = new FullAccountingSettingListService();
-
+    private myCurrencyListService: CurrencyListService = new CurrencyListService();
+    private LastRatesList: LastRate[] = [];
     glAccountSummary: GLAccountSummary = new GLAccountSummary();
 
     //#region Queries + Counts
@@ -143,41 +150,41 @@ export class ReceivablePageComponent {
                 // ActiveCustomersGLAccounts
                 // InactiveCustomersGLAccount
                 case "MyCustomersAsCollectors":
-                    {
-                        displayTitle = "My Customers (As Collectors)";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.Collectors");
+                {
+                    displayTitle = "My Customers (As Collectors)";
+                    displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.Collectors");
 
-                        break;
-                    }
+                    break;
+                }
 
                 case "DebetorsCustomers":
-                    {
-                        displayTitle = "Debtors Customers";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.debetors");
+                {
+                    displayTitle = "Debtors Customers";
+                    displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.debetors");
 
-                        break;
-                    }
+                    break;
+                }
                 case "ActiveCustomersGLAccounts":
-                    {
-                        displayTitle = "Active Customers";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.ActiveCustomers");
+                {
+                    displayTitle = "Active Customers";
+                    displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.ActiveCustomers");
 
-                        break;
-                    }
+                    break;
+                }
                 case "InactiveCustomersGLAccount":
-                    {
-                        displayTitle = "Inactive Customers";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.InactiveCustomers");
+                {
+                    displayTitle = "Inactive Customers";
+                    displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.InactiveCustomers");
 
-                        break;
-                    }
+                    break;
+                }
                 case "All Customers":
-                    {
-                        displayTitle = "All Customers";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.AllCustomers");
+                {
+                    displayTitle = "All Customers";
+                    displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.AllCustomers");
 
-                        break;
-                    }
+                    break;
+                }
 
 
 
@@ -207,23 +214,33 @@ export class ReceivablePageComponent {
 
     //#region ARPayments
     NewARPaymentMethod() {
-         var FinalText = TextCodeTranslator.Translate("ARPayment.O.New");
+        var FinalText = TextCodeTranslator.Translate("ARPayment.O.New");
+        if (SessionLocator.TenantPM.AccountingActivated)
+        {
+            var entity = new ARPaymentPM();
+            entity.IsFullAccounting = true;
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: "", EntityPM: entity, ObjectTableName: 'ARPayment' });
+                });
+        }
+        else
+        {
 
-        // var FinalText = this.getAutoNewName();
-
-
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = FinalText;
-        logWindow.Width = 900;
-        logWindow.Height = 570;
-        logWindow.Show("./InvoiceModules/ARPayment/Components/NewEntity/NewARPaymentComponent");
-        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
-        //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-        //    .then(cmpRef => {
-        //        cmpRef.instance.ComponentRef = cmpRef;
-        //        cmpRef.instance.Run({ EntityId: "", EntityPM: new ARPaymentPM(), ObjectTableName: 'ARPayment' });
-        //    });
-
+            // var FinalText = this.getAutoNewName();
+            var logWindow = new LogitudeWindow();
+            logWindow.Title = FinalText;
+            logWindow.Width = 900;
+            logWindow.Height = 570;
+            logWindow.Show("./InvoiceModules/ARPayment/Components/NewEntity/NewARPaymentComponent");
+            logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+            //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            //    .then(cmpRef => {
+            //        cmpRef.instance.ComponentRef = cmpRef;
+            //        cmpRef.instance.Run({ EntityId: "", EntityPM: new ARPaymentPM(), ObjectTableName: 'ARPayment' });
+            //    });
+        }
     }
     filterAgrs: ApiQueryFilters;
     private getAutoNewName() {
@@ -282,7 +299,84 @@ export class ReceivablePageComponent {
     //#endregion
 
     //#region General ARInvoice
+
+    private GetCurrenciesExchangeRateByValueDate(entity: ARInvoicePM){
+        var myCurrencyRatesService = new CurrencyRatesService();
+        var loadingDate = DateTool.GetCurrentDateAsUtc();
+
+        entity.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+
+        myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.LocalCurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.LastRatesList = myResponse.Result;
+                this.InitializeProfitCurrency(entity);
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
+
+    private InitializeProfitCurrency(entityPM: ARInvoicePM) {
+
+        if (AppTool.IsNullOrEmpty(entityPM.ProfitCurrencyId)) {
+            entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        }
+
+        this.myCurrencyListService.getSingleFromCache(entityPM.ProfitCurrencyId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: CurrencyList = myResponse.Result;
+                if (list != null) {
+                    entityPM.ProfitCurrencyCode = list.Code;
+                }
+            }
+        });
+
+        entityPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(entityPM.ProfitCurrencyId);
+        this.OpenEditComponent(entityPM);
+    }
+
+
+    OpenEditComponent(entity: ARInvoicePM)
+    {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+
+                var todayDate = DateTool.GetCurrentDateAsUtc();
+
+                entity.IsGeneralInvoice = true;
+                entity.IssuedByUserId = SessionLocator.LoggedUserId;
+                entity.CreatedByUserId = SessionLocator.LoggedUserId;
+                entity.UpdatedByUserId = SessionLocator.LoggedUserId;
+                entity.CreateDate = todayDate;
+                entity.UpdateDate = todayDate;
+                entity.InvoiceDate = todayDate;
+                entity.LocalCurrencyId = SessionLocator.LocalCurrencyId;
+
+                entity.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+                entity.Tenant = SessionLocator.TenantPM.Id;
+                entity.ProfitCurrencyExchangeRate = this.GetCurrencyRate(entity.ProfitCurrencyId);
+                entity.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                entity.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
+                entity.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(entity.InvoiceCurrencyId);
+                InvoiceTool.ComputeARInvoiceDueDate(entity);
+
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityPM: entity, ObjectTableName: 'ARInvoice' });
+            });
+    }
+
     public NewGeneralARInvoice(type: string) {
+
+        if (SessionLocator.TenantPM.AccountingActivated ) {
+            var entity = new ARInvoicePM();
+            entity.ARInvoiceTypeCode = type;
+            this.GetCurrenciesExchangeRateByValueDate(entity);
+            return;
+        }
+
+
         //var str = TextCodeTranslator.Translate("General.O.NewEntity");
         //str = str.replace("%Entity", "General Invoice");
         var str_NewGeneralInvoice = TextCodeTranslator.Translate("Accounting.General.O.NewGeneralInvoice");
@@ -309,6 +403,25 @@ export class ReceivablePageComponent {
         });
         //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show("./InvoiceModules/ARInvoice/Components/NewEntity/NewGeneralARInvoiceComponent");
+    }
+
+    GetCurrencyRate(currencyId: string) {
+        var myResult: number = null;
+
+        if (!AppTool.IsNullOrEmpty(currencyId)) {
+            if (currencyId == SessionLocator.TenantPM.CurrencyId) {
+                myResult = 1;
+            }
+
+            else {
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
+                if (lastRate != null) {
+                    myResult = lastRate.Rate;
+                }
+            }
+        }
+
+        return myResult;
     }
     //#endregion
 
@@ -607,7 +720,7 @@ export class ReceivablePageComponent {
 
         this.DeptorsFiltersList =
             [{ EnglishName: 'Accounting Balance', LocalName: TextCodeTranslator.Translate("Accounting.General.O.AccountingBalance") },
-            { EnglishName: 'Balance Due', LocalName: TextCodeTranslator.Translate("Accounting.General.O.BalanceDue") }];
+                { EnglishName: 'Balance Due', LocalName: TextCodeTranslator.Translate("Accounting.General.O.BalanceDue") }];
 
         this.SelectedDeptorsFilter = this.DeptorsFiltersList[1];
     }
