@@ -15,10 +15,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnCreating(OcrDocumentPM entityPM, EntityPM entityParentPM)
         {
-            entityPM.Id = IdCounter.GetNumber("Customs.OcrDocument", entityPM.Tenant);
-            entityPM.StatusCode = "2";
-            entityPM.DocId = "2ge3ij8+oekr5l98owspsa00000000";
-            entityPM.Tenant = 1;
+            entityPM.Id = IdCounter.GetNumber("Customs.OcrDocument", entityPM.Tenant);  
 
         }
         protected override void OnUpdating(OcrDocumentPM entityPM)
