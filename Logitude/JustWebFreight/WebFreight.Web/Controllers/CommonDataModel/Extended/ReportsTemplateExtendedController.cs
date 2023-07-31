@@ -325,7 +325,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 reslutFilter.ReplyTo = replyTo;
                 reslutFilter.Cc = cc;
 
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, "hello");
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, reslutFilter);
 
                 return reponseMessage;
             }
