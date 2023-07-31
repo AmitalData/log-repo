@@ -17,6 +17,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Server.Tools.Helpers;
+using System.Text.RegularExpressions;
 
 namespace Logitude.Customs.BL.BL
 {
@@ -144,7 +145,7 @@ namespace Logitude.Customs.BL.BL
                 CalcDeclarationPendings902(myDeclarationCourierStatusPM);
 
                     CalcDeclarationPendings906(myDeclarationCourierStatusPM);
-
+                CalcDeclarationPendings908(myDeclarationCourierStatusPM);
 
 
                 var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
@@ -587,6 +588,61 @@ namespace Logitude.Customs.BL.BL
                 //LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
             }
         }
+        public string DeleteSpaces(string inputString)
+        {
+            return Regex.Replace(inputString, @"\s+", "");
+        }
+        public void CalcDeclarationPendings908(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
+            string clientFullName=null;
+            if (!string.IsNullOrEmpty(declarationPM.ImporterId)){
+                ClientQueryService clientQueryService = new ClientQueryService(myDeclarationCourierStatusPM.Tenant);
+                var clientId = clientQueryService.GetSingle(declarationPM.ImporterId,false,false);
+                if(clientId != null && !string.IsNullOrWhiteSpace(clientId.FullName))
+                {
+                    clientFullName = DeleteSpaces(clientId.FullName);
+                }
+            }
+            if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD >= 1000 && (string.IsNullOrEmpty(declarationPM.ImporterId) || (!string.IsNullOrEmpty(declarationPM.ImporterId) && clientFullName.Contains("ישלשלוףלקוח"))))
+            {
+                DeclarationPendingPM declarationPendingPM_908 = null;
+                if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+                {
+                    declarationPendingPM_908 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "908").FirstOrDefault();
+                }
+                CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
+                Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("908", myDeclarationCourierStatusPM.Tenant);
+                if (isActive)
+                {
+                    if (declarationPendingPM_908 == null)
+                    {
+
+                        declarationPendingPM_908 = new DeclarationPendingPM();
+                        declarationPendingPM_908.CourierPendingReasonCode = "908";
+                        declarationPendingPM_908.Status = "A";
+                        declarationPendingPM_908.ChangeSetOp = ChangeSetOperation.Insert;
+                        myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_908);
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+
+                    else if (declarationPendingPM_908.Status != "A")
+                    {
+                        declarationPendingPM_908.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationPendingPM_908.Status = "A";
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+                }
+
+
+            }
+        }
 
         public void CalcDeclarationPendings906(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
@@ -880,8 +936,8 @@ namespace Logitude.Customs.BL.BL
                 return;
             }
 
-           SupplierInvoiceItemRepository supplierInvoiceItemRepository = new SupplierInvoiceItemRepository(declarationPM.Tenant);
-            List<SupplierInvoiceItem> listConPackages = supplierInvoiceItemRepository.GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(declarationPM.Id,declarationPM.Tenant );
+            SupplierInvoiceItemRepository supplierInvoiceItemRepository = new SupplierInvoiceItemRepository(declarationPM.Tenant);
+            List<SupplierInvoiceItem> listConPackages = supplierInvoiceItemRepository.GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(declarationPM.Id, declarationPM.Tenant);
 
             var sumInvoiceQuantity = listConPackages.Sum(c => c.InvoiceQuantity);
 
@@ -921,10 +977,11 @@ namespace Logitude.Customs.BL.BL
                 }
 
             }
-           
-           
+
+
 
         }
+
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID)
         {
             AmitalContext amitalContext = AmitalContext.GetContext(declarationPM.Tenant);
