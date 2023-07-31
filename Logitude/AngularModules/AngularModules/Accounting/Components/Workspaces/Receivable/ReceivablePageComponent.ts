@@ -283,6 +283,16 @@ export class ReceivablePageComponent {
 
     //#region General ARInvoice
     public NewGeneralARInvoice(type: string) {
+
+        if (SessionLocator.TenantPM.AccountingActivated ) {
+            var entity = new ARInvoicePM();
+            entity.ARInvoiceTypeCode = type;
+            entity.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
+            this.GetCurrenciesExchangeRateByValueDate(entity);
+            return;
+        }
+
+
         //var str = TextCodeTranslator.Translate("General.O.NewEntity");
         //str = str.replace("%Entity", "General Invoice");
         var str_NewGeneralInvoice = TextCodeTranslator.Translate("Accounting.General.O.NewGeneralInvoice");
@@ -309,6 +319,25 @@ export class ReceivablePageComponent {
         });
         //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show("./InvoiceModules/ARInvoice/Components/NewEntity/NewGeneralARInvoiceComponent");
+    }
+
+    GetCurrencyRate(currencyId: string) {
+        var myResult: number = null;
+
+        if (!AppTool.IsNullOrEmpty(currencyId)) {
+            if (currencyId == SessionLocator.TenantPM.CurrencyId) {
+                myResult = 1;
+            }
+
+            else {
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
+                if (lastRate != null) {
+                    myResult = lastRate.Rate;
+                }
+            }
+        }
+
+        return myResult;
     }
     //#endregion
 
