@@ -2280,7 +2280,6 @@
     <Compile Include="EntityUpdateServices\VehicleSafetyAccessoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\VehicleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\VendorCommunicationUpdateService.cs" />
-    <Compile Include="Exceptions\AnotherThreadHandlingException.cs" />
     <Compile Include="Helpers\CustomsStoredProcedures.cs" />
     <Compile Include="Helpers\LOGISUPPACC.cs" />
     <Compile Include="Messaging\Amital\AmitalRestrictOwnerService.cs" />
