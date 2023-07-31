@@ -304,5 +304,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             return repository.GetReportCodeById(id, tenant);
         }
+
     }
 }
