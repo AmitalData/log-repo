@@ -300,6 +300,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                                                      DPArchiveShipmentArrivalFilter= a.DPArchiveShipmentArrivalFilter, 
                                                      DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+                                                     CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
+                                                     CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -518,7 +520,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                                                   DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
                                                   DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
-
+                                                  CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
+                                                  CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
 
                                               }).FirstOrDefault();
 
@@ -728,7 +731,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                         DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
                         DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
-
+                        CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
+                        CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -884,7 +888,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     DPArchiveShipmentArrivalFilter = entity.DPArchiveShipmentArrivalFilter,
                     DPArchiveShipmentDepartFilter = entity.DPArchiveShipmentDepartFilter,
                     DigitalPortalMobTotalLastMonth = entity.DigitalPortalMobTotalLastMonth,
-                    ShowMoneyOrder = entity.ShowMoneyOrder
+                    ShowMoneyOrder = entity.ShowMoneyOrder,
+                    CargoTrackingPublicShowEvents = entity.CargoTrackingPublicShowEvents,
+                    CargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents,
                 };
             }
 
@@ -1040,6 +1046,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                        DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
                        DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+                       CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
+                       CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                    };
         }
 
@@ -1335,6 +1343,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
                                              DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
                                              DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+                                             CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
+                                             CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
 
                                          }).FirstOrDefault();
 

@@ -318,6 +318,10 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string IncotermName  { get; set; }
        [DataMember]
        public bool ShowMoneyOrder  { get; set; }
+       [DataMember]
+       public bool CargoTrackingPrivateShowEvents  { get; set; }
+       [DataMember]
+       public bool CargoTrackingPublicShowEvents  { get; set; }
    }
 
 }

@@ -1081,6 +1081,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CargoTrackingPublicShowEvents"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CargoTrackingPrivateShowEvents"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

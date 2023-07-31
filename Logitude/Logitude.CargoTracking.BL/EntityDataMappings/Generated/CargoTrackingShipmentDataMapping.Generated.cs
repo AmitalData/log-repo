@@ -290,7 +290,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ChargeableWeight, 
 	         ChargeableWeightUnitCode, 
 	         IncotermName, 
-	         ShowMoneyOrder,
+	         ShowMoneyOrder, 
+	         CargoTrackingPrivateShowEvents, 
+	         CargoTrackingPublicShowEvents,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

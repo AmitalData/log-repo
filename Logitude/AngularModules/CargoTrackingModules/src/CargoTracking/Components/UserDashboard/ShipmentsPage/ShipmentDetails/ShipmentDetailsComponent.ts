@@ -108,6 +108,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     noShipmentFound: boolean = false;
     approvalMessage: string;
     PartnersPanel: string = "PartnersPanel";
+    EventsPanel: string = "EventsPanel";
     MaxHeightForPartnersPanel: number = 600;
     MaxNumberOfCarachterForMobile: number = 15;
     MobileReferencesViewCount = 1;
@@ -156,7 +157,10 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     get IsOrderShipment() {
         return this.cargoTrackingShipmentPM.EntityType == orderShipmentTypeCode;
     }
-
+    get ShowEventPanel() {
+        return this.cargoTrackingShipmentPM.CargoTrackingPrivateShowEvents;
+    }
+    
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private cargoTrackingShipmentService: CargoTrackingShipmentService,
@@ -247,7 +251,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     }
 
     private InitializeComponent(result: any) {
-        this.cargoTrackingShipmentPM = result;    
+        this.cargoTrackingShipmentPM = result; 
         this.BuildShipmentReferences();
 
         this.SetCustomsOrForwarderFields();
@@ -871,7 +875,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
         var panelElement = document.getElementById(panelName) as HTMLElement;
         if (panelElement) {
             panelElement.scrollIntoView();
-            if ((panelName == this.PartnersPanel && panelElement.clientHeight > this.MaxHeightForPartnersPanel) || panelName != this.PartnersPanel)
+            if ((panelName == this.PartnersPanel && panelElement.clientHeight > this.MaxHeightForPartnersPanel&&!this.ShowEventPanel) || (panelName != this.EventsPanel&&this.ShowEventPanel)||(panelName != this.PartnersPanel&&!this.ShowEventPanel) )
                 document.getElementsByTagName('html')[0].scrollTop -= 113;
 
         }

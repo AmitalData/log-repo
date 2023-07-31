@@ -421,7 +421,28 @@
                             <div></div>
                         </td>
                     </tr>
+                    <!-- Show Events – Public / Private -->
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'CargoTrackingPrivateShowEvents'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="text-align:left">
+                            <CheckBox [IsEnabled]="ActivatePrivateSite" (Checked)="CargoTrackingPrivateShowEventsChange($event)" [IsChecked]="CargoTrackingPrivateShowEvents"></CheckBox>
+                        </td>
+                        <td style="width:0px;">
+                            <LogLabel [ObjectFieldName]="'CargoTrackingPublicShowEvents'" [ObjectTableName]="'TenantManagement'"  [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="text-align:left">
+                            <CheckBox [IsEnabled]="true" (Checked)="CargoTrackingPublicShowEventsChange($event)" [IsChecked]="CargoTrackingPublicShowEvents"></CheckBox>
+                        </td>
 
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
                     <!-- Activated for Declaration Approval -->
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px">

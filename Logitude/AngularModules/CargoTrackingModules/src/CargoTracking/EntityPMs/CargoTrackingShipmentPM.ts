@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class CargoTrackingShipmentPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -727,6 +727,16 @@ export class CargoTrackingShipmentPM {
     private showMoneyOrder: boolean;
     public get ShowMoneyOrder() { return this.showMoneyOrder; }
     public set ShowMoneyOrder(newValue: boolean) { if (this.showMoneyOrder != newValue) { this.showMoneyOrder = newValue; this.MarkAsDirty("ShowMoneyOrder"); } }
+       
+	 
+    private cargoTrackingPrivateShowEvents: boolean;
+    public get CargoTrackingPrivateShowEvents() { return this.cargoTrackingPrivateShowEvents; }
+    public set CargoTrackingPrivateShowEvents(newValue: boolean) { if (this.cargoTrackingPrivateShowEvents != newValue) { this.cargoTrackingPrivateShowEvents = newValue; this.MarkAsDirty("CargoTrackingPrivateShowEvents"); } }
+       
+	 
+    private cargoTrackingPublicShowEvents: boolean;
+    public get CargoTrackingPublicShowEvents() { return this.cargoTrackingPublicShowEvents; }
+    public set CargoTrackingPublicShowEvents(newValue: boolean) { if (this.cargoTrackingPublicShowEvents != newValue) { this.cargoTrackingPublicShowEvents = newValue; this.MarkAsDirty("CargoTrackingPublicShowEvents"); } }
        
 	 
 

@@ -378,6 +378,24 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
 
         }
     }
+    get CargoTrackingPublicShowEvents() {
+        return this.EntityPM.CargoTrackingPublicShowEvents;
+    }
+    set CargoTrackingPublicShowEvents(value: boolean) {
+        if (this.EntityPM.CargoTrackingPublicShowEvents != value) {
+            this.EntityPM.CargoTrackingPublicShowEvents = value;
+
+        }
+    }
+    get CargoTrackingPrivateShowEvents() {
+        return this.EntityPM.CargoTrackingPrivateShowEvents;
+    }
+    set CargoTrackingPrivateShowEvents(value: boolean) {
+        if (this.EntityPM.CargoTrackingPrivateShowEvents != value) {
+            this.EntityPM.CargoTrackingPrivateShowEvents = value;
+
+        }
+    }
     get DeclarationMessage() {
         return this.EntityPM.DeclarationMessage;
     }
@@ -500,6 +518,12 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     }
     ShowMoneyOrderChange(value: any) {
         this.EntityPM.ShowMoneyOrder = value;
+    }
+    CargoTrackingPublicShowEventsChange(value: any) {
+        this.EntityPM.CargoTrackingPublicShowEvents = value;
+    }
+    CargoTrackingPrivateShowEventsChange(value: any) {
+        this.EntityPM.CargoTrackingPrivateShowEvents = value;
     }
     SetUIPropertiesEnabled(value: boolean) {
 

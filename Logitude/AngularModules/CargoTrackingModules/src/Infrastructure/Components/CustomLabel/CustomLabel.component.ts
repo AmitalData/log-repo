@@ -68,7 +68,7 @@ export class CustomLabelComponent implements OnInit {
     }
     getSliceFromText(): any {
         var fitSize = this.getFitSize(this.originText)
-        return this.originText.slice(0, fitSize - 1);
+        return this.originText.slice(0, fitSize - 1)+ "...";
     }
     getFitSize(text: string): number {
         var textWidth = this.myContent.templateRef.elementRef.nativeElement.parentElement.offsetWidth;

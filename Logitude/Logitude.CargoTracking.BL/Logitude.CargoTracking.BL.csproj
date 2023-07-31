@@ -143,6 +143,7 @@
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingMilestoneStruct.Generated.cs" />
     <Compile Include="CoreBL\Batch\BatchUpdateShipmentsForCargoIncremental.cs" />
     <Compile Include="CoreBL\Batch\BuildCargoTrackingShipments.cs" />
+    <Compile Include="CoreBL\CargoTrackingEventsBuilder.cs" />
     <Compile Include="CoreBL\CargoTrackingMilestoneBuilder.cs" />
     <Compile Include="CoreBL\CargoTrackingUsersShipmentService.cs" />
     <Compile Include="CoreBL\UpdateShipmetsBatchArgs.cs" />

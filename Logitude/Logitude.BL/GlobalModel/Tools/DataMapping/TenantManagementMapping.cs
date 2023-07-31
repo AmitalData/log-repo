@@ -180,7 +180,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.DPArchiveShipmentCreateFilter  = entityPM.DPArchiveShipmentCreateFilter;
             entityPOCO.DPArchiveShipmentArrivalFilter = entityPM.DPArchiveShipmentArrivalFilter;
             entityPOCO.DPArchiveShipmentDepartFilter =  entityPM.DPArchiveShipmentDepartFilter;
-
+            entityPOCO.CargoTrackingPublicShowEvents = entityPM.CargoTrackingPublicShowEvents;
+            entityPOCO.CargoTrackingPrivateShowEvents = entityPM.CargoTrackingPrivateShowEvents;
 
             string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())

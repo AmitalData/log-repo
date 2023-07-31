@@ -100,5 +100,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         public string ChildEntityId { get; set; }
         public string ChildObjectTableId { get; set; }
+        public string EntityStatusCode { get; set; }
+        public string EntityStatusName { get; set; }
+        
     }
 }

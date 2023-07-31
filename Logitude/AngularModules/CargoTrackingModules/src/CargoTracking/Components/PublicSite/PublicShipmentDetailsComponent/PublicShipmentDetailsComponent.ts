@@ -260,6 +260,7 @@ export class PublicShipmentDetailsComponent implements OnInit
                     this.DileveredIconColor = "#B5B5B5";
                 }
                 this.SetMilestonesFields(result);
+                this.SetEventsFields(result);
 
             }
             this.SetShipmentDetails();
@@ -367,18 +368,26 @@ export class PublicShipmentDetailsComponent implements OnInit
             this.MilstonesExist = true;
         }
     }
-
+    SetEventsFields(result: CargoTrackingShipmentWithMilestones)
+    {        
+        this.Events = result?.Events;
+        this.IsShowEvents = result?.ShipmentList?.CargoTrackingPublicShowEvents;
+    }
+  
     public ShipmentWithMilestones: any;
     public AllMilestoneFields: Milestone[];
     public CompletedMilestoneFields: Milestone[] = [];
     public FuturesMilestoneFields: Milestone[] = [];
     public CurrentMilestoneField: Milestone = new Milestone();
+    public Events: Events [] = [];
 
 
     ShipmentReferences: string[] = [];
     IsLoadingReferences = false;
     showMoreReferences: boolean  = false;
     showMoreContainers: boolean  = false;
+    showMoreEvents: boolean  = false;
+    IsShowEvents: boolean  = false;
 
     GetPublicShipmentReferences()
     {
@@ -453,5 +462,16 @@ export class CargoTrackingShipmentWithMilestones
 {
     public Milestones: Milestone[];
     public ShipmentList: CargoTrackingShipmentList;
+    public Events: Events[];
+
+}
+export class Events
+{
+    public LocalName: string;
+    public EventDatetime: Date;
+    public Notes: string;
+    public  IsChoose: boolean;
+    public  PartnerTypeId: string;
+    public  EntityType: string;
 
 }

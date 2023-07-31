@@ -42,6 +42,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             FillDocumentsFilings();
             BuildPartnerCards();
             BuildShipmentMilstones(milestoneDictionary);
+            BuildShipmentEvents(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant, cargoShipmentPM.ForwardingShipmentHeaderId);
             SetMilestonesStatus();
             SetRoutePortsCodes(cargoShipmentPM);
             SetTenantFields();
@@ -57,7 +58,13 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             var cargoTrackingMilestoneBuilder = new CargoTrackingMilestoneBuilder();
             cargoShipmentPM.Milestones = cargoTrackingMilestoneBuilder.BuildShipmentMilstones(cargoShipmentPM, milestoneDictionary);
         }
+        private void BuildShipmentEvents(string entityId,int tenant,string forwardingShipmentHeaderId)
+        {
 
+            var cargoTrackingEventsBuilder = new CargoTrackingEventsBuilder();
+            cargoShipmentPM.Events = cargoTrackingEventsBuilder.BuildShipmentEvents(entityId,tenant, forwardingShipmentHeaderId);
+        }
+  
         private void GetConnectedEntities()
         {
             GetShipmentOrder();
@@ -214,8 +221,9 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         {
             TenantManagementPM tenantManagment = GetTenantManagement(cargoShipmentPM.Tenant);
             cargoShipmentPM.ActivatedForDeclarationApprove = tenantManagment?.ActivatedforDeclarationApprove ?? false;
-            cargoShipmentPM.ShowMoneyOrder = tenantManagment?.ShowMoneyOrder ?? false;
+            cargoShipmentPM.ShowMoneyOrder = tenantManagment?.ShowMoneyOrder ?? false;         
             cargoShipmentPM.TenantDeclarationMessage = tenantManagment?.DeclarationMessage;
+            cargoShipmentPM.CargoTrackingPrivateShowEvents = tenantManagment?.CargoTrackingPrivateShowEvents ?? false;
         }
 
         private void SetSharedLogisticsSettings()

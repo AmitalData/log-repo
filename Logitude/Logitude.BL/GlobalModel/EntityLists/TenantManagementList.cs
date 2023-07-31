@@ -183,5 +183,8 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int? DPArchiveShipmentArrivalFilter { get; set; }
         public int? DPArchiveShipmentDepartFilter { get; set; }
         public bool ShowMoneyOrder { get; set; }
+        public bool CargoTrackingPublicShowEvents { get; set; }
+        public bool CargoTrackingPrivateShowEvents { get; set; }
+
     }
 }

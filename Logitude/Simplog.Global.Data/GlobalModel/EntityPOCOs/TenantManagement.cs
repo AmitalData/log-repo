@@ -142,6 +142,9 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public int AgentSharedLogisticsStatisticsLastWeek { get; set; }
         public int AgentSharedLogisticsStatisticsLastMonth { get; set; }
         public bool ShowMoneyOrder { get; set; }
+        public bool CargoTrackingPublicShowEvents { get; set; }
+        public bool CargoTrackingPrivateShowEvents { get; set; }
+
 
 
         [ForeignKey("RecurringPeriodCode")]

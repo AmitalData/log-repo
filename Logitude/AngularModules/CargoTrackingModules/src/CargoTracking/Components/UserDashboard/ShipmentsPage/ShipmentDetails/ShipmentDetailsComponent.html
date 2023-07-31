@@ -369,6 +369,11 @@
                         (click)="PanelsNavigatorClicked('PartnersPanel')">
                         Partners
                     </button>
+                     <!-- EventsPanel -->
+                     <button *ngIf="!ShowShipmentAsDeclaration&&ShowEventPanel" [class.active]="selectedNavButton=='EventsPanel'"
+                     (click)="PanelsNavigatorClicked('EventsPanel')">
+                     Events
+                 </button>
                 </div>
             </div>
 
@@ -1292,7 +1297,58 @@
                 </div>
 
             </panel>
+             <!-- Events -->
+             <panel *ngIf="!ShowShipmentAsDeclaration&&ShowEventPanel" style="order: 8;" [Title]="'Events'" [Name]="'EventsPanel'"           
+             [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.Events?.length === 0">
+            
+             <div body>
+                 <div class="no-data-available" *ngIf="cargoTrackingShipmentPM.Events?.length == 0" style="margin-top:10px">
+                    No Events defined for this shipment
+                 </div>
+                 <div *ngIf="cargoTrackingShipmentPM.Events?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 10px);">
+                    <table class="row-hover" style="width: 100%;">
+                        <tr *ngFor="let item of cargoTrackingShipmentPM.Events">
+                            <td style="width: 30px;"><img src="./assets/images/icons/tick.png" alt=""></td>
+                            <td style="width: 300px;">{{item.LocalName}} <span *ngIf="item.EntityType"> ({{item.EntityType}})</span></td>
+                            <td style="width: 300px;">{{item.EventDatetime | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</td>                               
+                            <td class="hide-mobile" style="width: calc(100% - 450px);" *ngIf="item.IsChoose && item.PartnerTypeId=='CS'"> 
+                                <custom-label [width]="1100">{{item.Notes}}</custom-label>
+                            </td>
+                           
+                        </tr>
+                    </table>
+                </div>
+                <div class="hide-mobile hide-tablet" style="clear: both;"></div>
 
+               
+           
+                <div class="mobile-only tablet-only card document-mobile-card"
+                    *ngFor="let item of cargoTrackingShipmentPM.Events">
+                    <div class="details-section">
+                       
+                        <div class="row">
+                            <div class="col-50">
+                                <img src="./assets/images/icons/tick.png" alt="">
+                               
+                                <span>
+                                    {{item.LocalName}} <span *ngIf="item.EntityType"> ({{item.EntityType}})</span>
+                                </span>
+                                <br>
+                            
+                            </div>
+                            <div class="col-50">
+                                <span>
+                                    {{ item.EventDatetime | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}
+                                </span>
+                                <br>
+                                <custom-label [width]="100">{{item.Notes}}</custom-label>
+                                </div>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+            </panel>
             <br>
 
         </div>

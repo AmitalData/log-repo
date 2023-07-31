@@ -46,6 +46,8 @@ using System.Collections.Specialized;
 using System.Collections;
 using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -177,12 +179,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 List<Milestone> shipmentMilestones = cargoTrackingMilestoneBuilder.BuildShipmentMilstones(shipment, milestone);
                 cargoTrackingShipmentQueryService.SetMilestonesStatus(shipment, shipmentMilestones);
                 shipment.ChargeableWeightInKG = ShipmentMapping.GetWeightInKG(shipment.ChargeableWeightUnitCode, shipment.ChargeableWeight);
-
+                var cargoTrackingEventsBuilder = new CargoTrackingEventsBuilder();
+                List<Event> shipmentEvent = cargoTrackingEventsBuilder.BuildShipmentEvents(shipment.EntityId, tenant, shipment.ForwardingShipmentHeaderId);
+                TenantManagementPM tenantManagment = GetTenantManagement(tenant);
+                shipment.CargoTrackingPublicShowEvents = tenantManagment?.CargoTrackingPublicShowEvents ?? false;
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
                 {
                     ShipmentList = shipment,
                     Milestones = shipmentMilestones,
-
+                    Events = shipmentEvent
+                   
                 };
 
                 CreateZoomEventForMixPanel(tenant, shipment, true);
@@ -195,6 +201,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+        public TenantManagementPM GetTenantManagement(int tenant)
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            var tenantManagment = tenantManagementQuery.GetTenantManagementPM(tenant);
+            return tenantManagment;
         }
 
         [HttpGet] // for private needs auth.
