@@ -26,6 +26,12 @@ namespace Logitude.Customs.Data.Repsitories
                    where a.Tenant == tenant  && a.CreatedByUserId == userId && a.NotFound != true
                    select a;
         }
+        public void DeleteByUserAndTenant(int tenant, string userId)
+        {
+            (context as DbContextBase)
+               .DeleteWhere<CourierHawbFromExcel>(rec => rec.Tenant == tenant && rec.CreatedByUserId == userId);
+
+        }
     }
 
 }

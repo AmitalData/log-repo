@@ -560,6 +560,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
 
                     }
+                    if (button.EventCode == "UpdateMehesAutonmy") {
+                        button.IsHidden = false;
+                    }
                     if (button.EventCode == "DeclarationRestore") {
                         if (this.EntityPM.Direction == "E" && !this.EntityPM.IsSubmitDeclaration) {
                             button.IsDisabled = true;
@@ -824,8 +827,28 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     OpenMehesUpdateAutonmyWindow() {
         var myDeclarationWebService = new DeclarationWebService();
         myDeclarationWebService
-            .CheckIfError12195ExistInCustomfileno(this.EntityPM.Id,this.EntityPM.Tenant,this.EntityPM.CustomFileNo)
+            .CheckIfError12195ExistInCustomfileno(this.EntityPM.Id, this.EntityPM.Tenant, this.EntityPM.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
+                if (myResponse.Result) {
+                    let confirm = new ConfirmWindow();
+                    confirm.WindowClosed.subscribe((event: any) => {
+                        if (confirm.Yes) {
+                            this.CurrentSession.StartBusyIndicatorCreating();
+                            myDeclarationWebService
+                                .UpdateSupplierInvoiceItemsWhoHasError12195(this.EntityPM.Id, this.EntityPM.Tenant, this.EntityPM.CustomFileNo)
+                                .subscribe((myResponse: ServiceResponse) => {
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                    this.CurrentSession.StopBusyIndicator();
+                                    debugger;
+                                });
+                        }
+                    });
+                    confirm.Show("האם לעדכן ספר מכס אוטונומיה לשורות עם שגיאה מס' 12195");
+
+                }else{
+                    let window = new MessageWindow();
+                    window.Show("אין פרטי מכס לעדכון");
+                }
             });
         /*var args: any = {
             Declaration: this.EntityPM,

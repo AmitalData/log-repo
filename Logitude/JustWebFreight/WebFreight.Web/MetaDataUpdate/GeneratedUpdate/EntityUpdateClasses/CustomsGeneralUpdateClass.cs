@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "ed122913e8fcdf4af231dbe9826ae909";
+
+		public const string HashString = "a2fa577d443989d38235d9246d8d8e5d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "3225",
+			      				    Code =  "a740",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2050,7 +2051,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOExportTaxationDateTimeNT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ExportTaxationDateTimeNT", DefaultText = "Taxes date is different from today , continue ?",LocalDefaultText = @"תאריך חישוב שונה מהיום , האם לעדכן לתאריך של היום?", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsGeneralTextCode_GeneralMHCustomsReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CustomsReports", DefaultText = "CustomsReports",LocalDefaultText = @"דוחות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsGeneralTextCode_GeneralMHCustomsReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CustomsReports", DefaultText = "CustomsReports",LocalDefaultText = @"דוחות/פעולות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.From", DefaultText = "From",LocalDefaultText = @"מ", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2189,6 +2190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOCanotSendReceivedClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CanotSendReceivedClaim", DefaultText = "In this claim it is not possible to send, because all the claim files have been updated and received a claim file in customs",LocalDefaultText = @"בתביעה זו לא ניתן לבצע שליחה, כיוון שכל תיקי התביעה עודכנו וקיבלו תיק תביעה במכס", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOWorkSheetFromExcel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.WorkSheetFromExcel", DefaultText = "Worksheet From Excel",LocalDefaultText = @"מסך עבודה מאקסל", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
    
 	    

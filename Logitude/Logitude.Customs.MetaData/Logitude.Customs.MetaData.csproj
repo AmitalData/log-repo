@@ -119,6 +119,7 @@
     <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS901.sxml" />
     <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS900.sxml" />
     <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS903.sxml" />
+    <None Include="DBScripts\Post\202307201232_AddCOURIERPENDINGREASONS908.sxml" />
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
     <None Include="DBScripts\Post\202305241701_JobDeleteOldLocks.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />

@@ -1171,6 +1171,7 @@
     <Compile Include="EntityQueryServices\SupplierInvioceExportDefaultQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientIndicationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CourierHawbFromExcelQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DefaultValueQueryService.Generated.cs" />

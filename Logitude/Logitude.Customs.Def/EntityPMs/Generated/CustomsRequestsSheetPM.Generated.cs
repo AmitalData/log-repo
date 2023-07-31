@@ -595,6 +595,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isHSM ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsHSM  
+	   {
+	    
+	     get
+		{
+		   return isHSM;
+		 }
+		 set
+		 {
+		   if(isHSM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHSM",OldValue=isHSM,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isHSM=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -1954,7 +1954,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     public MyScrollTop: number = 0;
     OnRowSelected(event) {
-        debugger;
         this.MyScrollTop = event.scrollTop;
         if (this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction) {
             this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = false;
@@ -1971,7 +1970,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     preventSelect: boolean = false;
     OnRowSelectedBL(event) {
-        debugger;
         if (this.preventSelect) {
             return;
         }

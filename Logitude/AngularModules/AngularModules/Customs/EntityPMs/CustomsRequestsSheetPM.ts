@@ -149,6 +149,11 @@ export class CustomsRequestsSheetPM {
     public set TenantPriority(newValue: number) { if (this.tenantPriority != newValue) { this.tenantPriority = newValue; this.MarkAsDirty("TenantPriority"); } }
        
 	 
+    private isHSM: boolean;
+    public get IsHSM() { return this.isHSM; }
+    public set IsHSM(newValue: boolean) { if (this.isHSM != newValue) { this.isHSM = newValue; this.MarkAsDirty("IsHSM"); } }
+       
+	 
 
     public OldEntityPM: CustomsRequestsSheetPM;
 		

@@ -378,8 +378,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     }
                                 }
 
+								float DecVersionId = 0;
+                                float ResVersionId = 0;
+								float.TryParse(declarationPM.VersionId, out DecVersionId);
+                                float.TryParse(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, out ResVersionId);
 
-                                if (!string.IsNullOrEmpty(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode) && (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "13" || declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "14"))
+								if (!string.IsNullOrEmpty(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode) && (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "13" || declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "14") && (ResVersionId >= DecVersionId))
                                 {
 
                                     if (declarationPM.PaymentDate.HasValue && !declarationPM.HatraDate.HasValue)
