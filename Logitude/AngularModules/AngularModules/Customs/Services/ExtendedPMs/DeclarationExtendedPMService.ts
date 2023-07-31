@@ -785,7 +785,6 @@ export class DeclarationExtendedPMService {
         }
     }
     MapSupplierInvoiceModifications(entityPM: SupplierInvoicePM, jsonPM: any, mapParent: boolean = true) {
-        debugger;
         var oldSupplierInvoiceModifications: SupplierInvoiceModificationPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
             oldSupplierInvoiceModifications = entityPM.OldEntityPM.SupplierInvoiceModifications;

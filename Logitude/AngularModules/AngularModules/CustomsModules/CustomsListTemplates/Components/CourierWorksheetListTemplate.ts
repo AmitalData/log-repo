@@ -367,7 +367,6 @@ export class CourierWorksheetListTemplate {
     }
     PrepareSplitButtonMenuFilterSub(): Observable<boolean> {
 
-        debugger;
         return new Observable(subscriber => {
             this._IsSplitButtonMenuFilterReady = false;
             this.IsWebAPICourierGWMessageECTHRDataMamanEnable = false;
@@ -421,7 +420,6 @@ export class CourierWorksheetListTemplate {
     }
 
     ButtonClick(event) {
-        debugger;
         this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = true;
 
         //event.stopPropagation();

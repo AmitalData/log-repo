@@ -1897,7 +1897,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
     public MyScrollTop: number = 0;
     OnRowSelected(event) {
-        debugger;
         this.MyScrollTop = event.scrollTop;
         if (this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction) {
             this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = false;
@@ -1914,7 +1913,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
     preventSelect: boolean = false;
     OnRowSelectedBL(event) {
-        debugger;
         if (this.preventSelect) {
             return;
         }
