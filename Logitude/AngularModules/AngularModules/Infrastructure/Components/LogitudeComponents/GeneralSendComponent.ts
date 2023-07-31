@@ -1009,7 +1009,6 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
             this.ReplyTo = !AppTool.IsNullOrEmpty(this.SelectedTemplate.EntityPM.ReplyTo) ? this.SelectedTemplate.EntityPM.ReplyTo : "";
             this.Cc = !AppTool.IsNullOrEmpty(this.SelectedTemplate.EntityPM.CC) ? this.SelectedTemplate.EntityPM.CC : "";
             this.Subject = !AppTool.IsNullOrEmpty(this.SelectedTemplate.EntityPM.Subject) ? this.SelectedTemplate.EntityPM.Subject : "";
-            debugger;
 
             var params = new ReportTemplateEditorHtmlDataParams();
             params.ReportsTemplateId = id;

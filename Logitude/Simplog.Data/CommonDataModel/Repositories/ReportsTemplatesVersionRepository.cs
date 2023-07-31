@@ -121,18 +121,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
             return result;
         }
-        public string GetReportIdByReportTemplateIdAndVersion(string templateId, int version, int tenant)
-        {
-            string result = "";
-            ReportsTemplatesVersion templateVersion = (from a in context.ReportsTemplatesVersions
-                                                       where a.Tenant == tenant && a.TemplateId == templateId && a.Version == version
-                                                       select a).FirstOrDefault();
-            if (templateVersion != null)
-            {
-                result = templateVersion.ReportId;
-            }
-            return result;
-        }
 
 
 

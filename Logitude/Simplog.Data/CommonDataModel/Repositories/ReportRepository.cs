@@ -137,10 +137,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from f in context.Reports where f.Id == id && f.Tenant == tenant select f.Code).FirstOrDefault();
         }
-        public Report GetReportById(string id, int tenant)
-        {
-            return (from f in context.Reports where f.Id == id && f.Tenant == tenant select f).FirstOrDefault();
-        }
 
         public IQueryable<Report> GetReportsExceptTenant0()
         {
