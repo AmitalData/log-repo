@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
 
-		public const string HashString = "93c96a07c6d78ee90bea5cf01960b838";
+		public const string HashString = "977781e8b2a4f9160a2cab0b63ee0134";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17355,6 +17355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShortProcedure",
 					  						ListPropertyPath =  "ShortProcedure",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -19989,6 +19990,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              			   Feature DeclarationFeature_MB615 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorageDecleration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.ExportStorageDecleration", NameTextCodeDefaultText = "Export Storage Decleration", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB616 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Sending Initiated Message", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.SendingInitiatedMessage", NameTextCodeDefaultText = "SendingInitiatedMessage", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB617 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LoadExcelSupplierInvoices", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.LoadExcelSupplierInvoices", NameTextCodeDefaultText = "Load Excel SupplierInvoices", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB618 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UpdateMehesAutonmy", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.UpdateMehesAutonmy", NameTextCodeDefaultText = "Update Mehes Autonmy", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
                    
     
 			   Feature DeclarationFeature_MB7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSPANEL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DocumentsPanel", NameTextCodeDefaultText = "Declaration Documents Panel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
@@ -20582,6 +20584,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                         HtmlComponentPath="./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent",
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB617.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton DeclarationMenuButton618 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "UpdateMehesAutonmy",
+						Index = 19, 
+						IsActive = true,
+						LabelTextCodeCode = "Declaration.B.UpdateMehesAutonmy",
+						LabelTextCodeDefaultText = "Update Mehes Autonmy",
+						Tenant = 0,
+						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
+						ParentMenuButtonId = DeclarationMenuButton6.Id,
+						ObjectTableId = DeclarationObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  DeclarationFeature_MB618.Id,
+						Style = null,
+						LocalDefaultText = "עדכון ספר מכס אוטונומיה",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  DeclarationFeature_MB618.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	          
    
