@@ -492,22 +492,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             declarationPendingPM_900.CourierPendingReasonCode = "900";
                             declarationPendingPM_900.Status = "A";
                             declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Insert;
-                            _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_900);
+                            _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_900); 
                             
-                            if (declarationPendingPM_900.ChangeSetOp != ChangeSetOperation.None)
-                            {
-                                if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update)
-                                    _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                            }
-                            if (_MyDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
-                            {
-                                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                                //_MyDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(myDeclarationPM, _MyDeclarationCourierStatusPM: _MyDeclarationCourierStatusPM);
-                                declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
-                            }
                         }
-                            
-                        else
+                        else if(declarationPendingPM_900.Status != "A")
+                        {
+                            declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
+                            declarationPendingPM_900.Status = "A";
+                        }
+
+                        if (declarationPendingPM_900.ChangeSetOp != ChangeSetOperation.None)
+                        {
+                            if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update)
+                                _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                        if (_MyDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                        {
+                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                            //_MyDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(myDeclarationPM, _MyDeclarationCourierStatusPM: _MyDeclarationCourierStatusPM);
+                            declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
+                        }
+
+                        else if(declarationPendingPM_900 != null)
                         {
                             string xml_status = "new";
                             this.RaiseEvent(_MyDeclarationPM, "VPE", xml_status);
