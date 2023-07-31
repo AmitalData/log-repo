@@ -61,7 +61,9 @@ namespace WebFreight.Web.WcfApi
 		{
 			try
 			{
-				var WWtenant = ConfigurationManager.AppSettings["WindWardTenant"];
+				string WindWardSettings = LogitudeSettings.WindWardSettings;
+				var WindWardSettingsArray = WindWardSettings?.Split(',');
+				var WWtenant = WindWardSettingsArray[3];
 				if (!string.IsNullOrEmpty(WWtenant))
 				{
 					WriteLogMe("UnitedRequest Insert WindWard: "+ WWtenant, null, "UpsertTrackedShipments");

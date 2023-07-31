@@ -567,9 +567,11 @@ namespace WebFreight.Web
             LogitudeSettings.WorkflowStorageAccountName = setting.WorkflowStorageAccountName;
             LogitudeSettings.WorkflowStorageAccountKey = setting.WorkflowStorageAccountKey;
             LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
-        }
+			LogitudeSettings.WindWardSettings = setting.WindWardSettings;
 
-        private void StartSignalRTopicThread()
+		}
+
+		private void StartSignalRTopicThread()
         {
             TopicDescription signalRTopic;
             if (!StorageAcountDetails.NameSpaceManager.TopicExists(StorageAcountDetails.SignalRHubTopicName))
