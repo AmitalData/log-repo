@@ -323,7 +323,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return q;
         }
 
-        private IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations, int tenant)
+        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations, int tenant)
         {
             IQueryable<DeclarationCourierStatus> iQueryable = (from a in context.DeclarationCourierStatuses
                                                                where a.Tenant == tenant
