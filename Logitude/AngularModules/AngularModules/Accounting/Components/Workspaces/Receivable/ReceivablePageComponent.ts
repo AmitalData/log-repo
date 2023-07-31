@@ -372,6 +372,7 @@ export class ReceivablePageComponent {
         if (SessionLocator.TenantPM.AccountingActivated ) {
             var entity = new ARInvoicePM();
             entity.ARInvoiceTypeCode = type;
+            entity.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
             this.GetCurrenciesExchangeRateByValueDate(entity);
             return;
         }
