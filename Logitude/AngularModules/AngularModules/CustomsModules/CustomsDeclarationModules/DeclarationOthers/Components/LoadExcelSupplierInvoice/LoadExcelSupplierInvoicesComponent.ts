@@ -135,7 +135,6 @@ export class LoadExcelSupplierInvoicesComponent extends BaseComponent {
 
     IncreaseProgressBar(ProgressBarValue: number)
     {
-        debugger;
         var elem = document.getElementById("myBar") as HTMLProgressElement;
         if (ProgressBarValue == 100) {
             elem.value = ProgressBarValue;

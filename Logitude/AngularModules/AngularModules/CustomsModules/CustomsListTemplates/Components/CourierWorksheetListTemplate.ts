@@ -727,7 +727,7 @@ export class CourierWorksheetListTemplate {
         this.CD.detectChanges();
     }
 
-
+  
     CourierPendingReasonCommand(event, declarationId, mode) {
         this.ButtonClick(event);
 

@@ -3,7 +3,7 @@
 *  GetDeclarationErrors, constraints , ....
 */
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, Observable, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -1288,6 +1288,36 @@ export class DeclarationWebService {
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
             return this._http.get(this._apiUrl + "/GetDeclarationExportStoragesByDeclarationIdAndExportFile/?declarationId=" + declarationId +"&exportFile=" + exportFile+ "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var res = response;
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        }
+        );
+    }
+    ImportCourierMawbsFromExcel(formData: FormData,userid:string,tenant:number) {
+        
+
+            var authHeader = new HttpHeaders();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.post(this._apiUrl + "/ImportCourierMawbsFromExcel/?userid=" + userid+ "&tenant=" + tenant , formData, {headers: authHeader });
+
+    }
+    DeleteCourierMawbsFromExcel(userId:string){
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/DeleteCourierMawbsFromExcel/?userId=" + userId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var res = response;
                 serviceResponse.Result = res;

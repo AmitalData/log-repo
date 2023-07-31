@@ -35,6 +35,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   DataContext: BulkFeedPendingComponent = this;
   ObjectTableName: string = "Customs.DeclarationCourierStatus";
   CourierMasterPM: CourierMasterPM = null as any;
+  IsWorkSheetFromExcel:boolean=false;
   _SelectedTotalInvoiceValue: string = 'A';
   _SelectedFastIndividualProcessValue: string = 'A';
   _SelectedMissedDocsValue: string = 'A';
@@ -115,7 +116,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
   GetPending() {
     SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-    this._CourierMasterService.GetPending(this.CourierMasterPM.Id)
+    this._CourierMasterService.GetPending(this.CourierMasterPM?.Id,this.IsWorkSheetFromExcel)
       .subscribe((resu: any) => {
         SessionLocator.SelectedSession.StopBusyIndicator();
         var list: string[];
@@ -166,9 +167,10 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
     }
 
-
-
-    filters.addAdditionalFilter("CourierMasterId", this.CourierMasterPM.Id, null, null, "Equals", true, true, false, "string");
+    if(this.IsWorkSheetFromExcel){
+      filters.addAdditionalFilter("CourierHawbsFromExcel", SessionLocator.LoggedUserId, null, null, "Equal", true, false, false, "string");
+    }
+    filters.addAdditionalFilter("CourierMasterId", this.CourierMasterPM?.Id, null, null, "Equals", false, true, false, "string");
     filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
     filters.addAdditionalFilter("pendingView", SessionLocator.Tenant, null, null, "Equals", true, false, false, "number");
 
@@ -277,7 +279,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
     var windowArgs: any = {
       // Declaration: this.EntityPM,
     };
-    windowArgs.courierMasterId = this.CourierMasterPM.Id;
+    windowArgs.courierMasterId = this.CourierMasterPM?.Id;
     windowArgs.declarationIdsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
     windowArgs.allWithoutdeclarationIdsList = this._CourierWorksheetSharedDataService._UnSelectedItems.Collection;
     windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
@@ -309,7 +311,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
     SessionLocator.SelectedSession.StartBusyIndicatorSaving();
     const msg: string = await this.pendingWebService.postBulkFeeding(null, null, this._CourierWorksheetSharedDataService._SelectedItems.Collection,
-      this.CourierMasterPM.Id, this._CourierWorksheetSharedDataService.connectedSelectAll,
+      this.CourierMasterPM?.Id, this._CourierWorksheetSharedDataService.connectedSelectAll,
       this._CourierWorksheetSharedDataService._UnSelectedItems.Collection, filter, true)
     SessionLocator.SelectedSession.StopBusyIndicator();
 
@@ -327,7 +329,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
     var logitudeWindow = new LogitudeWindow();
     var windowArgs: any = {};
-    windowArgs.courierMasterId = this.CourierMasterPM.Id;
+    windowArgs.courierMasterId = this.CourierMasterPM?.Id;
+    windowArgs.IsWorkSheetFromExcel=this.IsWorkSheetFromExcel;
     windowArgs.declarationIdsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
     windowArgs.allWithoutdeclarationIdsList = this._CourierWorksheetSharedDataService._UnSelectedItems.Collection;
     windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
@@ -438,6 +441,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
     }
   SetWindowArgs(args: any) {
     this.CourierMasterPM = args?.CourierMasterPM;
+    this.IsWorkSheetFromExcel  = args?.IsWorkSheetFromExcel;
     this.GetPending();
   }
 

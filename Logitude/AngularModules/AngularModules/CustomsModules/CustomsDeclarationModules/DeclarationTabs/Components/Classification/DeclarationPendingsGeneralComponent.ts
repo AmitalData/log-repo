@@ -190,7 +190,6 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
     hasRequest: boolean;
     notMandatoryIsNotEmpty: boolean = false;
     OkButtonClicked() {
-         debugger;
         this.ValidationErrorsList = [];
         var errors: string[] = [];
         this.isValid = true;
@@ -243,7 +242,6 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                     if (errors.length == 0) {
                         var isSave = 1;
                         if (isSave == 1) {
-                            debugger;
                             SessionLocator.SelectedSession.StartBusyIndicatorSaving();
                             this._DeclarationCourierStatusPMService.update(this.DeclarationCourierStatus).subscribe((response: ServiceResponse) => {
                                 //this.DeclarationPendingsList.forEach((declarationPendingPM: DeclarationPendingPM) => {

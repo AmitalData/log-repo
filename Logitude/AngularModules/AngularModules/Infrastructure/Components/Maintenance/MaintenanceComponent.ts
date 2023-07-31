@@ -1274,7 +1274,6 @@ export class MaintenanceComponent {
                 }
                 case "EXPR": {
                     var logitudeWindow = new LogitudeWindow();
-                    debugger;
                     logitudeWindow.Title = TextCodeTranslator.Translate("Customs.CustomsRequiredField.O.ExportRequiredFields");
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 525;

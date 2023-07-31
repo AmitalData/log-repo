@@ -200,6 +200,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string NotApprovedPendingList  { get; set; }
        [DataMember]
        public string StorageSiteStatusCodeText  { get; set; }
+       [DataMember]
+       public string IntegratorName  { get; set; }
    }
 
 }

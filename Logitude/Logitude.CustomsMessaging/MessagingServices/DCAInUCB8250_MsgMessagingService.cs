@@ -79,7 +79,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string testerSendOption)
+        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string testerSendOption,Boolean IsWorkSheetFromExcel)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var objectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -141,6 +141,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = LoggingUserId,
                 tenant = tenant,
                 MyMoreParams = "",
+                IsWorkSheetFromExcel = IsWorkSheetFromExcel,
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
@@ -220,6 +221,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
         public string MyMoreParams { get; set; }
+        public bool IsWorkSheetFromExcel { get; set; }
+
         public List<string> ServerSplitDeclarationsList { get; set; }
         public string TesterSendOption { get;  set; }
 

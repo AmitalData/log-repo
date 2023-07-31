@@ -144,6 +144,7 @@
     <Compile Include="EntityKeys\CourierCustomStatusKeys.cs" />
     <Compile Include="EntityKeys\CourierDeclarationKeys.cs" />
     <Compile Include="EntityKeys\CourierDeclarationStatusKeys.cs" />
+    <Compile Include="EntityKeys\CourierHawbFromExcelKeys.cs" />
     <Compile Include="EntityKeys\CourierManifestStatusKeys.cs" />
     <Compile Include="EntityKeys\CourierMasterKeys.cs" />
     <Compile Include="EntityKeys\CourierPaymentStatusKeys.cs" />
@@ -297,6 +298,7 @@
     <Compile Include="EntityListQueryServices\CourierCustomStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierDeclarationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierDeclarationStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CourierHawbFromExcelListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierManifestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierMasterListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierPaymentStatusListQueryService.cs" />
@@ -390,6 +392,7 @@
     <Compile Include="EntityListQueryServices\Generated\CourierCustomStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierDeclarationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierDeclarationStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CourierHawbFromExcelListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierManifestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierMasterListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierPaymentStatusListQueryService.Generated.cs" />
@@ -561,6 +564,7 @@
     <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
     <Compile Include="EntityLists\Generated\ClientIndicationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CountryCurrencyList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CourierHawbFromExcelList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VendorCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\JoinCustomsItemList.cs" />
     <Compile Include="EntityLists\CustomsPartnersItemList.cs" />
@@ -756,6 +760,7 @@
     <Compile Include="EntityMapping\CourierCustomStatusMap.cs" />
     <Compile Include="EntityMapping\CourierDeclarationMap.cs" />
     <Compile Include="EntityMapping\CourierDeclarationStatusMap.cs" />
+    <Compile Include="EntityMapping\CourierHawbFromExcelMap.cs" />
     <Compile Include="EntityMapping\CourierManifestStatusMap.cs" />
     <Compile Include="EntityMapping\CourierMasterMap.cs" />
     <Compile Include="EntityMapping\CourierPaymentStatusMap.cs" />
@@ -909,6 +914,7 @@
     <Compile Include="EntityPOCOs\CourierCustomStatus.cs" />
     <Compile Include="EntityPOCOs\CourierDeclaration.cs" />
     <Compile Include="EntityPOCOs\CourierDeclarationStatus.cs" />
+    <Compile Include="EntityPOCOs\CourierHawbFromExcel.cs" />
     <Compile Include="EntityPOCOs\CourierManifestStatus.cs" />
     <Compile Include="EntityPOCOs\CourierMaster.cs" />
     <Compile Include="EntityPOCOs\CourierPaymentStatus.cs" />
@@ -1063,6 +1069,7 @@
     <Compile Include="Repsitories\CourierCustomStatusRepository.cs" />
     <Compile Include="Repsitories\CourierDeclarationRepository.cs" />
     <Compile Include="Repsitories\CourierDeclarationStatusRepository.cs" />
+    <Compile Include="Repsitories\CourierHawbFromExcelRepository.cs" />
     <Compile Include="Repsitories\CourierManifestStatusRepository.cs" />
     <Compile Include="Repsitories\CourierMasterRepository.cs" />
     <Compile Include="Repsitories\CourierPaymentStatusRepository.cs" />
@@ -1156,6 +1163,7 @@
     <Compile Include="Repsitories\Generated\CourierCustomStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierDeclarationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierDeclarationStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CourierHawbFromExcelRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierManifestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierMasterRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierPaymentStatusRepository.Generated.cs" />

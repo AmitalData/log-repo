@@ -86,7 +86,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
      
 
-        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string master,string InternalBankId, List<string> DeclarationsList = null)
+        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string master,string InternalBankId, Boolean IsWorkSheetFromExcel, List<string> DeclarationsList = null)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
@@ -113,6 +113,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 InternalBankId= InternalBankId,
                 LoggingUserId = LoggingUserId,
                 master = master,
+                IsWorkSheetFromExcel = IsWorkSheetFromExcel,
                 tenant = tenant,
                 ClientFilterDeclarationsList = DeclarationsList,
                 MyMoreParams = "",
@@ -210,8 +211,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
         public string master { get; set; }
-
-
+        public bool IsWorkSheetFromExcel { get; set; }
         public string MyMoreParams { get; set; }
         public string InternalBankId { get; set; }
         public List<string> ClientFilterDeclarationsList { get; set; }

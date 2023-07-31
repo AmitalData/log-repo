@@ -51,6 +51,14 @@ using Newtonsoft.Json;
 using Logitude.Customs.BL.BL;
 using WebFreight.Web.CustomWebServices.BL.XLSReports;
 using System.Net.Http.Headers;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using NPOI.HSSF.UserModel;
+using System.Threading.Tasks;
+using Logitude.Customs.BL.Helpers;
+using Logitude.Customs.Data.EntityPOCOs;
+using System.Data;
+using Org.BouncyCastle.Bcpg.Sig;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -2455,7 +2463,95 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        [HttpGet]
+        public HttpResponseMessage DeleteCourierMawbsFromExcel(string userId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                new CourierHawbFromExcelRepository(authToken.Tenant).DeleteByUserAndTenant(tenant, userId);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+              
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        [HttpPost]
+        public async Task<HttpResponseMessage> ImportCourierMawbsFromExcel(string userid,int tenant)
+        {
+            try
+            {
+                if (!Request. Content.IsMimeMultipartContent())
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid request format");
+                }
 
+                var provider = new MultipartMemoryStreamProvider();
+                await Request.Content.ReadAsMultipartAsync(provider);
+
+                foreach (var file in provider.Contents)
+                {
+                    var fileName = file.Headers.ContentDisposition.FileName.Trim('\"');
+
+                    using (var stream = await file.ReadAsStreamAsync())
+                    {
+                        IWorkbook workbook;
+                        if (fileName.EndsWith(".xlsx"))
+                        {
+                            workbook = new XSSFWorkbook(stream);
+                        }
+                        else if (fileName.EndsWith(".xls"))
+                        {
+                            workbook = new HSSFWorkbook(stream);
+                        }
+                        else
+                        {
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, "Unsupported file format");
+                        }
+
+                        var sheet = workbook.GetSheetAt(0); // Assuming the first sheet
+
+                        var values = new List<string>();
+                        for (var row = 0; row <= sheet.LastRowNum; row++)
+                        {
+                            var cell = sheet.GetRow(row)?.GetCell(0);
+                            if (cell != null && cell.CellType == CellType.String)
+                            {
+                                var cellValue = cell.StringCellValue;
+                                if (!string.IsNullOrEmpty(cellValue))
+                                {
+                                    values.Add(cellValue);
+                                }
+                            }
+                            if (cell != null && cell.CellType == CellType.Numeric)
+                            {
+                                var cellValue = cell.NumericCellValue;
+                                values.Add(cellValue.ToString());
+                            }
+                        }
+                        var errorWithMawbs=new List<CourierHawbFromExcel>();
+                        CustomsStoredProcedures.UpdateCourierHawbFromExcel(tenant, userid, values, out errorWithMawbs);
+
+                        if (values.Count > 0)
+                        {
+                            var firstValue = values[0];
+                            return Request.CreateResponse(HttpStatusCode.OK, errorWithMawbs);
+                        }
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.NoContent, "No strings found in the uploaded Excel file.");
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
     internal class CustomsPartnersItemCRList

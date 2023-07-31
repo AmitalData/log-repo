@@ -6,4 +6,5 @@ export class SendPayReadyLowRequestParams extends GenericRequestParams {
     public HAWB: string;
     public InternalBankId: string;
     public Declarations: string[];
+    public IsWorkSheetFromExcel:boolean;
 }

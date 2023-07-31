@@ -103,6 +103,7 @@
     <None Include="DBOthers\Procedures\Usp_DeleteComLogSteps.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteQueMessMoreDet.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteCommLogs.dxml" />
+    <None Include="DBOthers\Procedures\usp_UpdateCourierHawbFromExcel.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePrio2.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
@@ -201,6 +202,7 @@
     <None Include="DBScripts\Pre\20220905_UpdateDeclarationPhysicalCheck.sxml" />
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_Global.sxml" />
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_MAIN.sxml" />
+    <None Include="DBScripts\Pre\20230310_CreateTypeVarcharTable.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
@@ -295,6 +297,7 @@
     <None Include="DBTables\CourierCustomStatus.dxml" />
     <None Include="DBTables\CourierDeclaration.dxml" />
     <None Include="DBTables\CourierDeclarationStatus.dxml" />
+    <None Include="DBTables\CourierHawbFromExcel.dxml" />
     <None Include="DBTables\CourierManifestStatus.dxml" />
     <None Include="DBTables\CourierMaster.dxml" />
     <None Include="DBTables\CourierPaymentStatus.dxml" />
@@ -586,6 +589,7 @@
     <None Include="EntityFiles\CountryCurrency.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\ClientsTapag.lxml" />
+    <None Include="EntityFiles\CourierHawbFromExcel.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />
     <None Include="EntityFiles\SignStation.lxml" />

@@ -1,0 +1,39 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CourierHawbFromExcel
+    {
+	 string dbms;
+
+           [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("CreatedByUser")]
+        [Column("CreatedByUserId")]
+	    public string CreatedByUserId { get; set; }
+	      
+        public virtual User CreatedByUser { get; set; }
+     [Key]
+        [Column("DeclarationId")]
+	    public string DeclarationId { get; set; }
+        [Column("NotFound")]
+	    public bool? NotFound { get; set; }
+        [Column("CourierHawb")]
+	    public string CourierHawb { get; set; }
+        [Column("ErrorMessage")]
+	    public string ErrorMessage { get; set; }
+    }
+}
+	 

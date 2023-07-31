@@ -10,6 +10,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Data.Entity;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -53,12 +54,57 @@ namespace Logitude.Customs.Data.Repsitories
             return pocos;
 
         }
+        public List<DeclarationCourierStatus> GetFromExcelCourierDeclarationStatusCode(
+                 int tenant, string userId, string CourierDeclarationStatusCode,
+                 string SelectedBOLValue,
+                 string SelectedStatusValue,
+                 string SelectedTotalInvoiceValue,
+                 string SelectedFastIndividualProcessValue,
+                 string SelectedCustomStatusValue,
+                 string SelectedFinalReleaseValue
+                 )
+        {
+            var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+
+            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in GetAll(tenant).Where(r => r.CourierDeclarationStatusCode == CourierDeclarationStatusCode)
+                     on dec.DeclarationId equals status.DeclarationId
+                     orderby rDec.CourierHAWB ascending
+                     select status);
+
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
+
+            var pocos = q.ToList();
+
+            return pocos;
+
+        }
         public List<DeclarationCourierStatus> GetByMasterIDCourierPaymentStatusCode(int tenant, string CourierMasterId,
             string CourierPaymentStatusCode, string HighLowValue)
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
             var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in GetAll(tenant)
+                     .Where(r => r.CourierPaymentStatusCode == CourierPaymentStatusCode)
+                     .Where(r => r.HighLowValue == HighLowValue)
+                     on dec.DeclarationId equals status.DeclarationId
+                     orderby rDec.CourierHAWB ascending
+                     select status);
+            var pocos = q.ToList();
+            return pocos;
+
+
+        }
+        public List<DeclarationCourierStatus> GetFromExcelCourierPaymentStatusCode(int tenant, string userId,
+           string CourierPaymentStatusCode, string HighLowValue)
+        {
+            var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
                      join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
                      join status in GetAll(tenant)
                      .Where(r => r.CourierPaymentStatusCode == CourierPaymentStatusCode)
@@ -89,7 +135,47 @@ namespace Logitude.Customs.Data.Repsitories
 
 
         }
-        public List<string> GetPendingByMasterID(int tenant, string CourierMasterId)
+        public List<DeclarationCourierStatus> GeCourierManifestStatusCodeFromExcel(int tenant,string userId, string CourierManifestStatusCode
+            , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue
+            )
+        {
+            var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in GetAll(tenant).Where(r => r.CourierManifestStatusCode == CourierManifestStatusCode && r.Declaration.HatraDate == null)
+                     on dec.DeclarationId equals status.DeclarationId
+                     orderby rDec.CourierHAWB ascending
+                     select status);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
+            var pocos = q.ToList();
+            return pocos;
+
+
+        }
+        public List<string> GetPendingByMasterID(int tenant, string CourierMasterId,string userId,Boolean IsWorkSheetFromExcel)
+        {
+            IQueryable<DeclarationCourierStatus> q;
+            if (IsWorkSheetFromExcel)
+            {
+                q = GetByFromExcel(tenant, userId);
+            }
+            else
+            {
+                q = GetBy(tenant, CourierMasterId);
+            }
+            var list = q
+                .Where(r => r.CourierPendingReasonList != null && r.CourierPendingReasonList != "")
+                .Select(r => r.CourierPendingReasonList)
+                .ToList();
+            var myList = list
+                .Select(p => p.Split(',').ToList()).ToList()
+                .SelectMany(l => l)
+                .Distinct()
+                .ToList();
+            return myList;
+        }
+        public List<string> GetPendingFromExcel(int tenant, string CourierMasterId)
         {
             IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);
             var list = q
@@ -122,6 +208,18 @@ namespace Logitude.Customs.Data.Repsitories
                      select status);
             return q;
         }
+        private IQueryable<DeclarationCourierStatus> GetByFromExcel(int tenant, string userId)
+        {
+            var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+
+            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in GetAll(tenant)
+                     on dec.DeclarationId equals status.DeclarationId
+                     select status);
+            return q;
+        }
 
         public List<string> GetByMasterIDDeclarationList(int tenant, string CourierMasterId, out string MAWB)
         {
@@ -137,6 +235,19 @@ namespace Logitude.Customs.Data.Repsitories
             MAWB = repoCourierMaster.GetSingle(CourierMasterId, tenant)?.MAWB;
             return q.ToList();
         }
+        public List<string> GetFromExcelDeclarationList(int tenant, string userId)
+        {
+            var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+            var repoCourierMaster = new CourierMasterRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+
+            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in GetAll(tenant) on dec.DeclarationId equals status.DeclarationId
+                     where rDec.DeclarationNumber != null
+                     select status.DeclarationId);
+            return q.ToList();
+        }
 
         public List<DeclarationCourierStatus> GetByMasterIDCourierDocumentStatus(int tenant, string CourierMasterId, string DocumentStatusCode
     , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue)
@@ -144,6 +255,24 @@ namespace Logitude.Customs.Data.Repsitories
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
             var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in GetAll(tenant).Where(r => r.DocumentStatusCode == DocumentStatusCode)
+                     on dec.DeclarationId equals status.DeclarationId
+                     orderby rDec.CourierHAWB ascending
+                     select status);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
+            var pocos = q.ToList();
+
+            return pocos;
+
+        }
+
+        public List<DeclarationCourierStatus> GetFromExcelCourierDocumentStatus(int tenant, string userId, string DocumentStatusCode
+   , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue)
+        {
+            var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
                      join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
                      join status in GetAll(tenant).Where(r => r.DocumentStatusCode == DocumentStatusCode)
                      on dec.DeclarationId equals status.DeclarationId

@@ -101,6 +101,7 @@ export class DeclarationCourierStatusList {
 	CasualImporterTel: string;
 	NotApprovedPendingList: string;
 	StorageSiteStatusCodeText: string;
+	IntegratorName: string;
 	
 }
  

@@ -49,7 +49,6 @@ export class Export2ExcelControl {
     ExportExcelArgs: any;
     WebFreightDomainService: WebFreightDomainService;
     SetWindowArgs(args: any) {
-        debugger;
         this.QueryType = args.QueryType ? args.QueryType : "";
         this.queryName = args.QueryName;
         this.ExportExcelArgs = args.ExportExcelArgs;

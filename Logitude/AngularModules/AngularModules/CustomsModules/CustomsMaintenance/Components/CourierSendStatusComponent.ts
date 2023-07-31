@@ -70,7 +70,7 @@ export class CourierSendStatusComponent extends BaseComponent {
 
         //http://192.116.221.103:584/Courier58/api/CourierMaster/GetSendALLDeclarationsStatusRequest?CourierMasterId=1-490
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this._CourierMasterId, this.SelectedSendOption.Key)
+        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this._CourierMasterId, this.SelectedSendOption.Key,false)
             .subscribe((res:any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();

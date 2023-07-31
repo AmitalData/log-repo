@@ -424,6 +424,7 @@
     <Compile Include="EntityDataMappings\CourierCustomStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CourierDeclarationDataMapping.cs" />
     <Compile Include="EntityDataMappings\CourierDeclarationStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CourierHawbFromExcelDataMapping.cs" />
     <Compile Include="EntityDataMappings\CourierManifestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CourierMasterDataMapping.cs" />
     <Compile Include="EntityDataMappings\CourierPaymentStatusDataMapping.cs" />
@@ -640,6 +641,7 @@
     <Compile Include="EntityDataMappings\Generated\CourierCustomStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CourierDeclarationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CourierDeclarationStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CourierHawbFromExcelDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CourierManifestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CourierMasterDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CourierPaymentStatusDataMapping.Generated.cs" />
@@ -1129,6 +1131,7 @@
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientIndicationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CourierHawbFromExcelQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VendorCurrencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SchedulerParamQueryService.cs" />
@@ -1657,6 +1660,7 @@
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsItemDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClientIndicationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CourierHawbFromExcelUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />

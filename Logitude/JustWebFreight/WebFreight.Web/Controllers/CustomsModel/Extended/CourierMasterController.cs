@@ -84,7 +84,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetExportCourierMaster2Excel(string CourierMasterId, int tenant)
+        public HttpResponseMessage GetExportCourierMaster2Excel(string CourierMasterId, int tenant,string userId,bool IsWorkSheetFromExcel)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
                 var o = new CourierMasterWSheetExport();
-                var result = o.ExportReport(CourierMasterId, tenant);
+                var result = o.ExportReport(CourierMasterId, tenant,userId, IsWorkSheetFromExcel);
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
                 response.Content = new StreamContent(new MemoryStream(result));
@@ -164,7 +164,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
 
-        public HttpResponseMessage GetPending(string CourierMasterId)
+        public HttpResponseMessage GetPending(string CourierMasterId,Boolean IsWorkSheetFromExcel)
         {
             try
             {
@@ -174,7 +174,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(MyContext);
-                List<string> result = declarationCourierStatusRepository.GetPendingByMasterID(authToken.Tenant, CourierMasterId);
+                string loggingUserId = AuthenticationUtil.ResolveUserId(authToken.Tenant);
+                List<string> result = declarationCourierStatusRepository.GetPendingByMasterID(authToken.Tenant, CourierMasterId, loggingUserId, IsWorkSheetFromExcel);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -184,7 +185,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetStatistic(string CourierMasterId)
+        public HttpResponseMessage GetStatistic(string CourierMasterId,Boolean IsWorkSheetFromExcel,string userId)
         {
             try
             {
@@ -192,13 +193,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
+                //string user=authToken.
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(customContext);
                 var keyValuePairList = new List<KeyValuePair<string, int>>();
-                courierMasterQueryService.GetStatistic(CourierMasterId, tenant, out keyValuePairList);
+                courierMasterQueryService.GetStatistic(CourierMasterId, tenant, out keyValuePairList, IsWorkSheetFromExcel, userId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, keyValuePairList);
             }
@@ -335,7 +337,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSendPayReadyLow2755(string CourierMasterId, string HAWB, string InternalBankId)
+        public HttpResponseMessage GetSendPayReadyLow2755(string CourierMasterId, string HAWB, string InternalBankId, Boolean IsWorkSheetFromExcel)
         {
             try
             {
@@ -344,11 +346,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new
                     DCAInUCB2755_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, HAWB, InternalBankId);
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, HAWB, InternalBankId, IsWorkSheetFromExcel);
 
                 return Request.CreateResponse(HttpStatusCode.OK,
 
@@ -371,10 +374,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB2755_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData.CourierMasterId, requestParamsData.HAWB, requestParamsData.InternalBankId, requestParamsData.Declarations);
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, requestParamsData.CourierMasterId, requestParamsData.HAWB, requestParamsData.InternalBankId, requestParamsData.IsWorkSheetFromExcel, requestParamsData.Declarations);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
@@ -522,7 +526,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId, string testerSendOption)
+        public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId, string testerSendOption, Boolean IsWorkSheetFromExcel)
         {
             try
             {
@@ -540,7 +544,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
                 var messagingService = new DCAInUCB8250_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, testerSendOption);
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, testerSendOption, IsWorkSheetFromExcel);
 
 
                /* var declarationsText = string.Join(",", declarations);

@@ -53,9 +53,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
-            var objectTableId =
-    //ObjectTableRepository.GetObjectTableByName("Customs.CustomsClosedTable");
-    ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableId =ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
             //var qs = new DeclarationCourierStatusQueryService(context);
@@ -139,28 +137,51 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
         }
 
-      
 
-            private static List<DeclarationCourierStatus> GetByMasterIDCourierManifestStatusCode(DCAInUCB1170WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository qs)
+
+        private static List<DeclarationCourierStatus> GetByMasterIDCourierManifestStatusCode(DCAInUCB1170WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository qs)
         {
-            List<DeclarationCourierStatus> listPM = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
+            List<DeclarationCourierStatus> listPM;
+            if (customResponse.IsWorkSheetFromExcel)
+            {
+                listPM = qs.GeCourierManifestStatusCodeFromExcel(requestParams.Tenant, requestParams.LoggingUserId, "R",
                customResponse.SelectedBOLValue,
                customResponse.SelectedStatusValue,
                customResponse.SelectedTotalInvoiceValue,
                customResponse.SelectedFastIndividualProcessValue,
                customResponse.SelectedCustomStatusValue,
                customResponse.SelectedFinalReleaseValue);
-            if (customResponse.CourierDeclarationStatusCode == "RV")
-            {
-                var listPM2 = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
-                customResponse.SelectedStatusValue,
-                customResponse.SelectedTotalInvoiceValue,
-                customResponse.SelectedFastIndividualProcessValue,
-                customResponse.SelectedCustomStatusValue,
-                customResponse.SelectedFinalReleaseValue);
-                listPM = listPM.Concat(listPM2).ToList();
+                if (customResponse.CourierDeclarationStatusCode == "RV")
+                {
+                    var listPM2 = qs.GeCourierManifestStatusCodeFromExcel(requestParams.Tenant, requestParams.LoggingUserId, "V", customResponse.SelectedBOLValue,
+                    customResponse.SelectedStatusValue,
+                    customResponse.SelectedTotalInvoiceValue,
+                    customResponse.SelectedFastIndividualProcessValue,
+                    customResponse.SelectedCustomStatusValue,
+                    customResponse.SelectedFinalReleaseValue);
+                    listPM = listPM.Concat(listPM2).ToList();
+                }
             }
-
+            else
+            {
+                listPM = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
+             customResponse.SelectedBOLValue,
+             customResponse.SelectedStatusValue,
+             customResponse.SelectedTotalInvoiceValue,
+             customResponse.SelectedFastIndividualProcessValue,
+             customResponse.SelectedCustomStatusValue,
+             customResponse.SelectedFinalReleaseValue);
+                if (customResponse.CourierDeclarationStatusCode == "RV")
+                {
+                    var listPM2 = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
+                    customResponse.SelectedStatusValue,
+                    customResponse.SelectedTotalInvoiceValue,
+                    customResponse.SelectedFastIndividualProcessValue,
+                    customResponse.SelectedCustomStatusValue,
+                    customResponse.SelectedFinalReleaseValue);
+                    listPM = listPM.Concat(listPM2).ToList();
+                }
+            }
             return listPM;
         }
 

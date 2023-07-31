@@ -740,7 +740,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     RefreshStatistic() {
         // SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetStatistic(this.entityPM.Id)
+        this._CourierMasterService.GetStatistic(this.entityPM.Id,false ,SessionLocator.LoggedUserId)
             .subscribe((res: any) => {
                 //    this.currentSession.StopBusyIndicator();
                 var list: KeyValuePair[];
@@ -2127,7 +2127,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     DeclarationsStatusRequestMethod() {
 
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id)
+        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id,null,false)
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
@@ -2187,6 +2187,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.HAWB = this.entityPM.HAWB;
+
 
 
         this._CourierMasterService.PostSendALLTerminal(currRequestParams)
@@ -2447,7 +2448,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
         //communicationLogStepListService.GetExportExcelByRequestId("8305", this.MyLastCustomsRequestSheetId, SessionLocator.Tenant);
         //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
-        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM.Id + '&tenant=' + this.entityPM.Tenant.toString();
+        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM?.Id + '&tenant=' + SessionLocator.Tenant.toString()+ '&userId=' + SessionLocator.LoggedUserId +  '&IsWorkSheetFromExcel=' + false;
 
 
         window.open(url);

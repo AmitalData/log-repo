@@ -1,5 +1,6 @@
 ﻿using Devart.Data.Oracle;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -813,7 +814,6 @@ AS */
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
-                    cn.Close();
                 }
             }
         }
@@ -909,6 +909,78 @@ AS */
                     cn.Close();
                 }
             }
+
+        }
+        public static void UpdateCourierHawbFromExcel(int tenant, string userid, List<string> courierhawbsList, out List<CourierHawbFromExcel> notFoundDeclarations)
+        {
+            string strConnString = GetConnection(tenant);
+
+
+            using (Devart.Data.Oracle.OracleConnection cn = new Devart.Data.Oracle.OracleConnection(strConnString))
+            {
+                // Open the connection
+                cn.Open();
+                notFoundDeclarations = new List<CourierHawbFromExcel>();
+                try
+                {
+                    using (Devart.Data.Oracle.OracleCommand command = new Devart.Data.Oracle.OracleCommand("usp_UpdateCourierHawbFromExcel", cn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Add the input parameters
+                        OracleParameter parameter1 = new OracleParameter("v_Tenant", OracleDbType.Integer);
+                        OracleParameter parameter2 = new OracleParameter("v_userid", OracleDbType.VarChar);
+
+                        parameter1.Direction = ParameterDirection.Input;
+                        parameter2.Direction = ParameterDirection.Input;
+
+
+                        parameter1.Value = tenant;
+                        parameter2.Value = userid;
+
+                        command.Parameters.Add(parameter1);
+                        command.Parameters.Add(parameter2);
+
+
+
+                        //input list
+                        OracleParameter stringsParam = command.Parameters.Add("v_courierhawbList", OracleDbType.Array);
+                        stringsParam.Direction = ParameterDirection.Input;
+                        OracleArray array = new OracleArray("VARCHAR_TABLE", cn, courierhawbsList);
+                        stringsParam.Value = array;
+
+
+
+                        // Add the output parameter for not_found_declarations
+                        Devart.Data.Oracle.OracleParameter notFoundDeclarationsParam = command.Parameters.Add("not_found_declarations", Devart.Data.Oracle.OracleDbType.Cursor);
+                        notFoundDeclarationsParam.Direction = ParameterDirection.Output;
+
+                        command.ExecuteNonQuery();
+
+                        // Read the output cursor into a DataTable
+                        using (Devart.Data.Oracle.OracleDataReader reader = ((Devart.Data.Oracle.OracleCursor)notFoundDeclarationsParam.Value).GetDataReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var courierHawbFromExcel = new CourierHawbFromExcel();
+                                courierHawbFromExcel.DeclarationId = reader.GetString(2);
+                                courierHawbFromExcel.CourierHawb=(reader.GetString(4));
+                                courierHawbFromExcel.ErrorMessage = (reader.GetString(5));
+                                notFoundDeclarations.Add(courierHawbFromExcel);
+                            }
+                        }
+                    }
+                }
+                catch (OracleException ex)
+                {
+
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+
 
         }
 

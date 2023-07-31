@@ -6,6 +6,7 @@ export class SendALLCorrectRequestParams extends GenericRequestParams {
     public HAWB: string;
     public CourierDeclarationStatusCode: string;
     public Declarations: string[];
+    public IsWorkSheetFromExcel:boolean;
 
     public SelectedBOLValue: string;
     public SelectedStatusValue: string;

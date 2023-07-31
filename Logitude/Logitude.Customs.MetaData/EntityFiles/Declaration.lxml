@@ -27067,6 +27067,12 @@
       LocalDefaultText="&quot;לא בוצע ביטוח בגלל שוני במטבע/תנאי משלוח בין החשבונות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ImporterCourierFromExcel&quot;"
+      DefaultText="&quot;Worksheet From Excel&quot;"
+      LocalDefaultText="&quot;הטענת ש.מ.ב מאקסל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -27371,6 +27377,34 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.ISDefineToInsureFromSubmit&quot;"
       FeatureDefaultText="&quot;Automatic insurance in export submission&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SlaReport&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.SlaReport&quot;"
+      FeatureDefaultText="&quot;דוח SLA&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false"
+      ToggleCode="&quot;&quot;" />
+    <Feature
+      Code="&quot;LastMileReport&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.LastMileReport&quot;"
+      FeatureDefaultText="&quot;דוח הפצה&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;WorkSheetFromExcel&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.WorkSheetFromExcel&quot;"
+      FeatureDefaultText="&quot;מסך עבודה-הטענת אקסל&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

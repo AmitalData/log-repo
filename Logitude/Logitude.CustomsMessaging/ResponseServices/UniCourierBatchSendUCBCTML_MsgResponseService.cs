@@ -97,7 +97,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
-                    listKeyValuePair = qs.GetByMasterIDStorageSiteCode(requestParams.Tenant, requestParams.AppicationId, port2SendList);
+                    if (customResponse.IsWorkSheetFromExcel)
+                    {
+                        listKeyValuePair = qs.GetFromExcelStorageSiteCode(requestParams.Tenant, requestParams.LoggingUserId, port2SendList);
+                    }
+                    else
+                    {
+                        listKeyValuePair = qs.GetByMasterIDStorageSiteCode(requestParams.Tenant, requestParams.AppicationId, port2SendList);
+                    }
 
                 }
 

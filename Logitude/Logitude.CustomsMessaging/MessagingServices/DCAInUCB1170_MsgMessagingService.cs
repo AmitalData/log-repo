@@ -52,7 +52,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingEnabled = true,
                 InterfaceTypeCode = this.MainInterfaceCode,
                 MainInterfaceCode = this.MainInterfaceCode,
-
+                
 
                 LoggingObjectTableId = objectTableId,
                 LoggingEntityId = customsResponse.CourierMasterId,
@@ -99,10 +99,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
             CourierMasterUpdateService service = new CourierMasterUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
 
 
-            var master =  courierMasterQueryService.GetSingle(requestParamsData.CourierMasterId, false, false);
-            master.IsAutomaticManifestSent = true;
-            master.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-            service.Update(master,true);
+            if (!requestParamsData.IsWorkSheetFromExcel)
+            {
+                var master = courierMasterQueryService.GetSingle(requestParamsData.CourierMasterId, false, false);
+                master.IsAutomaticManifestSent = true;
+                master.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                service.Update(master, true);
+            }
 
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
@@ -141,7 +144,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SelectedCustomStatusValue = requestParamsData.SelectedCustomStatusValue,
                 SelectedFinalReleaseValue= requestParamsData.SelectedFinalReleaseValue,
                 ClientFilterDeclarationsList = requestParamsData.Declarations,
-
+                IsWorkSheetFromExcel = requestParamsData.IsWorkSheetFromExcel,
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
@@ -246,7 +249,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public List<string> ServerSplitDeclarationsList { get; set; }
         public string MyMoreParams { get; set; }
 
-
+        public bool IsWorkSheetFromExcel { get; set; }  
         public string SelectedBOLValue { get; set; }
         public string SelectedStatusValue { get; set; }
         public string SelectedAvailableValue { get; set; }
