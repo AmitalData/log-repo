@@ -146,6 +146,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsHSM"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="RequestStatusCode"
     ReferencedTable="CustomsRequestsSheetStatuses"
@@ -167,5 +173,5 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Index
-     Columns="Tenant,RequestStatusCode,RequestCreateDate" />
+    Columns="Tenant,RequestStatusCode,RequestCreateDate" />
 </Table>

@@ -73,6 +73,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string AnalyzeDcaAggregateKey { get; set; }
         [Column("TenantPriority")]
 	    public int? TenantPriority { get; set; }
+        [Column("IsHSM")]
+	    public bool IsHSM { get; set; }
     }
 }
 	 

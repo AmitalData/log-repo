@@ -33,6 +33,7 @@ export class CustomsRequestsSheetList {
 	AnalyzeDcaAggregateKey: string;
 	FutureSendDateTime: Date;
 	TenantPriority: number;
+	IsHSM: boolean;
 	
 }
  
