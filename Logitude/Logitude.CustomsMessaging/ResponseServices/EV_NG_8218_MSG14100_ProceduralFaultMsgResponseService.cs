@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.Fault;
+using Logitude.Server.Tools;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -99,15 +100,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                                 myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(conectedEntityItem.entityIdKey1, requestParams.Tenant);
                             }
-                            if (myDeclarationPM != null && !string.IsNullOrWhiteSpace(myDeclarationPM.Id))
-                            {
-                                this._MyProceduralFaultPM.DeclarationId = myDeclarationPM.Id;
-                                this._MyProceduralFaultPM.CustomFileNo = myDeclarationPM.CustomFileNo;
-                                this._MyProceduralFaultPM.DeclarationNumber = myDeclarationPM.DeclarationNumber;
-                                this._MyProceduralFaultPM.SignedByUserId = myDeclarationPM.SignedByUserId;
 
-                                //Event data initialization
-                                myInsertEventContextTagModel.EventCode = "LIK";
+                        if (myDeclarationPM != null && !string.IsNullOrWhiteSpace(myDeclarationPM.Id))
+                        {
+                            this._MyProceduralFaultPM.DeclarationId = myDeclarationPM.Id;
+                            this._MyProceduralFaultPM.CustomFileNo = myDeclarationPM.CustomFileNo;
+                            this._MyProceduralFaultPM.DeclarationNumber = myDeclarationPM.DeclarationNumber;
+                            if (myDeclarationPM.IsAmendment==true)
+                            {
+                                var declarationQueryService = new DeclarationQueryService(myDeclarationPM.Tenant);
+                                var entityPMOrg = declarationQueryService.GetSingle(myDeclarationPM.AmendmentOriginalDeclartation, true, false);
+                                this._MyProceduralFaultPM.SignedByUserId= entityPMOrg.SignedByUserId;
+                            }
+                            else {
+                                this._MyProceduralFaultPM.SignedByUserId = myDeclarationPM.SignedByUserId;
+                            }
+
+                            //Event data initialization
+                            myInsertEventContextTagModel.EventCode = "LIK";
                                 myInsertEventContextTagModel.EventRemarks = "New ProceduralFault";
                                 if (this._MyProceduralFaultPM.ChangeSetOp == ChangeSetOperation.Update)
                                 {
