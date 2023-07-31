@@ -27,6 +27,7 @@ import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
 import { DocumentTypeCustomsDataPMService } from '../../../Customs/Services/StandardPMs/DocumentTypeCustomsDataPMService';
 import { CustomDocumentNewVersionService } from "../services/CustomDocumentNewVersion.service";
 import { SessionComponent } from "Infrastructure/Components/Session/SessionComponent";
+import { OcrDocumentExtendedListService } from "Customs/Services/ExtendedLists/OcrDocumentExtendedListService";
 
 export class CustomsDocumentTicketViewModel {
 
@@ -87,7 +88,8 @@ export class CustomsDocumentTicketViewModel {
         }
     }
 
-
+   
+    public static  IsOcrDocument : boolean = false;
     public FromCompanyDocumentType2Add: boolean = false;
 
     public get CustomDocumentTypeMetaDataLists() { return this.customDocumentTypeMetaDataLists };
@@ -123,6 +125,7 @@ export class CustomsDocumentTicketViewModel {
     _SInvoiceNumber: string = null;
     _IsClassified: boolean = false;
     private EntityResourceService: EntityResourceService;
+
     private readonly customDocumentNewVersionService: CustomDocumentNewVersionService = new CustomDocumentNewVersionService();
     //*****************************************//
     constructor(
@@ -543,6 +546,9 @@ export class CustomsDocumentTicketViewModel {
 
     }
    async StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel: RelatedDocumentViewModel) {
+
+    debugger
+        CustomsDocumentTicketViewModel.IsOcrDocument = false;
         const isConnectTicket: boolean = await this.GetDocConnectTicket(relatedDocumentViewModel.CustomDocument.DocumentsFilingId)
 
         if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode != this.customsDocumentsTicketPM.DocumentTypeCode&&isConnectTicket){
@@ -605,12 +611,42 @@ export class CustomsDocumentTicketViewModel {
                 });
             }
             else {
+ 
+
+                debugger
+        var ocrDocumentExtendedListService = new OcrDocumentExtendedListService();
+         ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, relatedDocumentViewModel.CustomDocument.DocumentsFilingId).subscribe((response: ServiceResponse) => {
+            if(response.Result && response.Result.StatusCode == "1")//סטטוס נשלח , טרם הסתיים
+            {
+                   SessionLocator.SelectedSession.StopBusyIndicator();
+                   var messageWindow = new MessageWindow();
+                   messageWindow.RTL=true;
+                   messageWindow.ShowWarningIcon=true;
+                   
+                   messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                   messageWindow.Show("טרם הסתיים תהליך OCR");        
+                   messageWindow.WindowClosed.subscribe((event: any) => messageWindow.Close());
+                    return
+           }
+           if(response.Result && response.Result.StatusCode == "2"){
+                CustomsDocumentTicketViewModel.IsOcrDocument = true;
                 this.ProcessConnectDocument(relatedDocumentViewModel);
+           }
+            else{
+                this.ProcessConnectDocument(relatedDocumentViewModel);
+            }
+
+
+             
+        });
+               
             }
         }
 
        
     }
+
+   
 
     private SaveGeneratedPointer(relatedDocumentViewModel: RelatedDocumentViewModel = null) {
         var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
@@ -763,6 +799,7 @@ export class CustomsDocumentTicketViewModel {
 
 
     async ProcessConnectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {   
+        debugger;
         if (relatedDocumentViewModel == null || await this.checkFileBiggerFrom200MB(relatedDocumentViewModel)) return;
 
         if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == null)
@@ -864,64 +901,74 @@ export class CustomsDocumentTicketViewModel {
     }
 
     private connectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {
-        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
-        this.customsDocumentMetaDataValuePMs = relatedDocumentViewModel.CustomDocument.CustomsDocumentMetaDataValues;
+        debugger
 
-        //CustomsDocumentsTicketId adjustment mohammad 18.10.14
-        this.customsDocumentsTicketPM.DocumentsFilingId = relatedDocumentViewModel.documentsFilingPM.Id;
-        this.customsDocumentsTicketPM.Name = relatedDocumentViewModel.documentsFilingPM.DocumentTypeName;
-        this.customsDocumentsTicketPM.Extension = relatedDocumentViewModel.documentsFilingPM.FileExtension;
-        this.customsDocumentsTicketPM.FileSize = relatedDocumentViewModel.documentsFilingPM.FileSize;
-        this.customsDocumentsTicketPM.IsMetaDataReady = relatedDocumentViewModel.CustomDocument.IsMetaDataReady;
-
-
-        /// <---field to refresh Screen
-        this.customsDocumentsTicketPM.DocumentStatusName = relatedDocumentViewModel.CustomDocument.DocumentStatusName;
-        this.customsDocumentsTicketPM.DocumentStatusCode = relatedDocumentViewModel.CustomDocument.DocumentStatusCode;
-        this.customsDocumentsTicketPM.CustomsDocId = relatedDocumentViewModel.CustomDocument.CustomsDocId;
-        this.customsDocumentsTicketPM.ExternalAttachmentId = relatedDocumentViewModel.CustomDocument.ExternalAttachmentId;
-        if (this.EntityPM.Direction == "E") {
-            this.GeneratecustomsDocumentMetaDataValues();
-        }
-
-        if (this.isNew) {
-
-            this.SaveGeneratedPointer(relatedDocumentViewModel);
-        }
-        else {
-            var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
-            customsDocumentsTicketPMService.update(this.customsDocumentsTicketPM).subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    relatedDocumentViewModel.IsConnected = true;
-                    relatedDocumentViewModel.CustomDocument.IsPartOfDeclaration = true;
-                    this.SetSavedMetaData(relatedDocumentViewModel);
-                }
-                else {
-                    SessionLocator.SelectedSession.StopBusyIndicator();
-                    if (SessionLocator.SelectedSession.CurrentEditComponent) {
-                        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+        
+            SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+            this.customsDocumentMetaDataValuePMs = relatedDocumentViewModel.CustomDocument.CustomsDocumentMetaDataValues;
+    
+            //CustomsDocumentsTicketId adjustment mohammad 18.10.14
+            this.customsDocumentsTicketPM.DocumentsFilingId = relatedDocumentViewModel.documentsFilingPM.Id;
+            this.customsDocumentsTicketPM.Name = relatedDocumentViewModel.documentsFilingPM.DocumentTypeName;
+            this.customsDocumentsTicketPM.Extension = relatedDocumentViewModel.documentsFilingPM.FileExtension;
+            this.customsDocumentsTicketPM.FileSize = relatedDocumentViewModel.documentsFilingPM.FileSize;
+            this.customsDocumentsTicketPM.IsMetaDataReady = relatedDocumentViewModel.CustomDocument.IsMetaDataReady;
+    
+    
+            /// <---field to refresh Screen
+            this.customsDocumentsTicketPM.DocumentStatusName = relatedDocumentViewModel.CustomDocument.DocumentStatusName;
+            this.customsDocumentsTicketPM.DocumentStatusCode = relatedDocumentViewModel.CustomDocument.DocumentStatusCode;
+            this.customsDocumentsTicketPM.CustomsDocId = relatedDocumentViewModel.CustomDocument.CustomsDocId;
+            this.customsDocumentsTicketPM.ExternalAttachmentId = relatedDocumentViewModel.CustomDocument.ExternalAttachmentId;
+            if (this.EntityPM.Direction == "E") {
+                this.GeneratecustomsDocumentMetaDataValues();
+            }
+    
+            if (this.isNew) {
+    
+                this.SaveGeneratedPointer(relatedDocumentViewModel);
+            }
+            else {
+                var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
+                customsDocumentsTicketPMService.update(this.customsDocumentsTicketPM).subscribe((response: ServiceResponse) => {
+                    if (!response.HasError) {
+                        relatedDocumentViewModel.IsConnected = true;
+                        relatedDocumentViewModel.CustomDocument.IsPartOfDeclaration = true;
+                        this.SetSavedMetaData(relatedDocumentViewModel);
                     }
                     else {
-                        var messageWindow = new MessageWindow();
-                        messageWindow.Width = 400;
-                        messageWindow.Height = 200;
-                        messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                        if (response.ErrorsArray && response.ErrorsArray.length > 0) {
-                            messageWindow.Show(response.ErrorsArray[0]);
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        if (SessionLocator.SelectedSession.CurrentEditComponent) {
+                            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
                         }
                         else {
-                            messageWindow.Show("Server Error");
+                            var messageWindow = new MessageWindow();
+                            messageWindow.Width = 400;
+                            messageWindow.Height = 200;
+                            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                            if (response.ErrorsArray && response.ErrorsArray.length > 0) {
+                                messageWindow.Show(response.ErrorsArray[0]);
+                            }
+                            else {
+                                messageWindow.Show("Server Error");
+                            }
+                            messageWindow.WindowClosed.subscribe((event: any) => {
+    
+                                messageWindow.Close();
+    
+                            });
                         }
-                        messageWindow.WindowClosed.subscribe((event: any) => {
-
-                            messageWindow.Close();
-
-                        });
                     }
-                }
+            
+                                    
+       
             });
 
-        }
+            }
+        
+    
+    
+        
     }
 
     private cnotConnectDiffrentTypeDocumentMessage() {

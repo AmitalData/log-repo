@@ -36,6 +36,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Logitude.CustomsMessaging.MessagingServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -166,5 +167,31 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        [HttpGet]
+        public HttpResponseMessage UpsertSupplierInvioceByOcr(string declarationId, string documentsFilingId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+               
+
+                var messagingService = new DCAInUCBUpsertSupplierInvioceByOcr_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, declarationId, documentsFilingId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }

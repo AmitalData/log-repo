@@ -68,6 +68,24 @@ export class CustDocRelatedDocsWebService {
         });
     }
 
+    UpdateSupplierInvioceByOcr(declarationId: string, documentsFilingId: string) {
+        debugger
+       
+        return defer(() => {
+
+            return this._http.get(this._apiUrl + '/UpsertSupplierInvioceByOcr?' + 'declarationId=' + declarationId + '&documentsFilingId=' + documentsFilingId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        debugger
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+
+
+        });
+
+
+    }
+
     MapJsonToEntityPMs(jsonPM: any) {
         var entityPM: DocumentsFilingPM;
         entityPM = new DocumentsFilingPM();

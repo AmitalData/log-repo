@@ -1458,6 +1458,7 @@
     <Compile Include="EntityQueryServices\SupplierInvoiceItemVehicleQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceModificationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeficitDecisionQueryService.cs" />
+    <Compile Include="EntityQueryServices\OcrDocumentQueryService.cs" />
     <Compile Include="EntityQueryServices\UIMessageQueryService.cs" />
     <Compile Include="EntityQueryServices\ValidCustomsItemQueryService.cs" />
     <Compile Include="EntityQueryServices\GuaranteeConditionQueryService.cs" />

@@ -89,25 +89,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string jsonData ;
+	  private string jsonUrl ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string JsonData  
+       public string JsonUrl  
 	   {
 	    
 	     get
 		{
-		   return jsonData;
+		   return jsonUrl;
 		 }
 		 set
 		 {
-		   if(jsonData != value)
+		   if(jsonUrl != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JsonData",OldValue=jsonData,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JsonUrl",OldValue=jsonUrl,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   jsonData=value;
+		   jsonUrl=value;
 		   }
 			
 		 }
@@ -292,6 +292,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Reference",OldValue=reference,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   reference=value;
+		   }
+			
+		 }
+	   }
+	  private string jsonData ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string JsonData  
+	   {
+	    
+	     get
+		{
+		   return jsonData;
+		 }
+		 set
+		 {
+		   if(jsonData != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JsonData",OldValue=jsonData,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   jsonData=value;
 		   }
 			
 		 }

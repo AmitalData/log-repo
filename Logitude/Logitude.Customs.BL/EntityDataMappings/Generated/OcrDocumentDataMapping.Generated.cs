@@ -25,14 +25,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         Process, 
-	         JsonData, 
+	         JsonUrl, 
 	         Score, 
 	         JsonTif, 
 	         ErrorMsg, 
 	         StatusCode, 
 	         OcrId, 
 	         DocId, 
-	         Reference,
+	         Reference, 
+	         JsonData,
 	      }
 
 
@@ -42,7 +43,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         Process, 
-	         JsonData, 
+	         JsonUrl, 
 	         Score, 
 	         JsonTif, 
 	         ErrorMsg, 
@@ -50,7 +51,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StatusCode, 
 	         OcrId, 
 	         DocId, 
-	         Reference,
+	         Reference, 
+	         JsonData,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -69,9 +71,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.Process = entityPM.Process;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JsonData))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JsonUrl))
             {
-				entityPOCO.JsonData = entityPM.JsonData;
+				entityPOCO.JsonUrl = entityPM.JsonUrl;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Score))
@@ -108,6 +110,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 				entityPOCO.Reference = entityPM.Reference;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JsonData))
+            {
+				entityPOCO.JsonData = entityPM.JsonData;
+			}
 			}
 
 		public void POCOToPM(OcrDocumentPM entityPM, OcrDocument entityPOCO)
@@ -128,9 +135,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Process = entityPOCO.Process;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JsonData))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JsonUrl))
             {
-					entityPM.JsonData = entityPOCO.JsonData;
+					entityPM.JsonUrl = entityPOCO.JsonUrl;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Score))
@@ -168,6 +175,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Reference = entityPOCO.Reference;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JsonData))
+            {
+					entityPM.JsonData = entityPOCO.JsonData;
+            }
+
 		}
 
 		public void PMToOldPM(OcrDocumentPM entityPM, OcrDocumentPM oldEntityPM)
@@ -184,9 +196,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.Process = entityPM.Process;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JsonData))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JsonUrl))
             {
-                oldEntityPM.JsonData = entityPM.JsonData;
+                oldEntityPM.JsonUrl = entityPM.JsonUrl;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Score))
@@ -224,6 +236,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.Reference = entityPM.Reference;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JsonData))
+            {
+                oldEntityPM.JsonData = entityPM.JsonData;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(OcrDocumentPM entityPM)
@@ -232,6 +249,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.JsonData)) //T4 find type == nText 
+            {
+                entityPM.JsonData = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.JsonData));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

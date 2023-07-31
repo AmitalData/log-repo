@@ -36,7 +36,7 @@
   <Column
     Name="Score"
     Type="decimal"
-    Precision="3"
+    Precision="4"
     Scale="2">
     <Constraints
       Nullable="true" />

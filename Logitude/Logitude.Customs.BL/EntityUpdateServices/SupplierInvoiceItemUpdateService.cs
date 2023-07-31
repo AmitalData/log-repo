@@ -487,10 +487,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             (Repository as Logitude.Customs.Data.Repsitories.SupplierInvoiceItemRepository).FastDeleteMulti(entityKeyFields);
         }
-
-        public void DeclarationSupplierInvoiceItemsParentsFastDeleteComposition(Logitude.Customs.Data.EntityKeys.SupplierInvoiceKeys entityKeyFields, ICustomContext dbContext, int tenant)
+   
+        public void DeclarationSupplierInvoiceItemsParentsFastDeleteComposition(Logitude.Customs.Data.EntityKeys.SupplierInvoiceKeys entityKeyFields, ICustomContext dbContext, int tenant, bool isParent = true)
         {
-            List<int> supplierInvoiceItemsParentsLines = GetSupplierInvoiceItemsParents(entityKeyFields.DeclarationId, entityKeyFields.InvoiceCounterKey, dbContext);
+
+            List<int> supplierInvoiceItemsParentsLines = GetSupplierInvoiceItemsParents(entityKeyFields.DeclarationId, entityKeyFields.InvoiceCounterKey, dbContext, isParent);
             if (supplierInvoiceItemsParentsLines == null || supplierInvoiceItemsParentsLines.Count() < 1) return;
             var mySupplierInvoiceItemsConDeclarUpdateService = new SupplierInvoiceItemsConDeclarUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
             mySupplierInvoiceItemsConDeclarUpdateService.FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
@@ -548,12 +549,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             (Repository as Logitude.Customs.Data.Repsitories.SupplierInvoiceItemRepository).FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
         }
 
-        public List<int> GetSupplierInvoiceItemsParents(string declarationId, int invoiceCounterKey, ICustomContext dbContext)
+        public List<int> GetSupplierInvoiceItemsParents(string declarationId, int invoiceCounterKey, ICustomContext dbContext, bool isParent)
         {
             return (from a in dbContext.SupplierInvoiceItems
-                    where a.DeclarationId == declarationId && a.CounterKey == invoiceCounterKey && a.IsParent == true
+                    where a.DeclarationId == declarationId && a.CounterKey == invoiceCounterKey && a.IsParent == isParent
                     select a.LineNumber).ToList();
         }
+
 
     }
 }

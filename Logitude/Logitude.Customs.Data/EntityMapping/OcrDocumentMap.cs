@@ -29,9 +29,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Process).HasColumnName("Process").HasMaxLength(5).IsUnicode(false);
 
-            this.Property(t => t.JsonData).HasColumnName("JsonData").HasMaxLength(500).IsUnicode(false);
+            this.Property(t => t.JsonUrl).HasColumnName("JsonUrl").HasMaxLength(500).IsUnicode(false);
 
-            this.Property(t => t.Score).HasColumnName("Score").HasPrecision(3, 2);
+            this.Property(t => t.Score).HasColumnName("Score").HasPrecision(4, 2);
 
             this.Property(t => t.JsonTif).HasColumnName("JsonTif").HasMaxLength(500).IsUnicode(false);
 
@@ -44,6 +44,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DocId).HasColumnName("DocId").HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.Reference).HasColumnName("Reference").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.JsonData).HasColumnName("JsonData").IsMaxLength().IsUnicode(true);
         }
     }
 }

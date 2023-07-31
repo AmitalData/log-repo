@@ -39,9 +39,9 @@ export class OcrDocumentPM {
     public set Process(newValue: string) { if (this.process != newValue) { this.process = newValue; this.MarkAsDirty("Process"); } }
        
 	 
-    private jsonData: string;
-    public get JsonData() { return this.jsonData; }
-    public set JsonData(newValue: string) { if (this.jsonData != newValue) { this.jsonData = newValue; this.MarkAsDirty("JsonData"); } }
+    private jsonUrl: string;
+    public get JsonUrl() { return this.jsonUrl; }
+    public set JsonUrl(newValue: string) { if (this.jsonUrl != newValue) { this.jsonUrl = newValue; this.MarkAsDirty("JsonUrl"); } }
        
 	 
     private score: number;
@@ -82,6 +82,11 @@ export class OcrDocumentPM {
     private reference: string;
     public get Reference() { return this.reference; }
     public set Reference(newValue: string) { if (this.reference != newValue) { this.reference = newValue; this.MarkAsDirty("Reference"); } }
+       
+	 
+    private jsonData: string;
+    public get JsonData() { return this.jsonData; }
+    public set JsonData(newValue: string) { if (this.jsonData != newValue) { this.jsonData = newValue; this.MarkAsDirty("JsonData"); } }
        
 	 
 

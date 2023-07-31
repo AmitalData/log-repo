@@ -10,6 +10,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -113,7 +114,7 @@ namespace Logitude.Customs.Data.Repsitories
                 .DeleteWhere<SupplierInvoiceItem>(rec => rec.DeclarationId == entityKeyFields.Id);
         }
 
-        
+      
         public void GetWeeklyStatistic(int tenant, out int totDeclarationAbove10Items, out int totDeclarationAbove500Items)
         {
             totDeclarationAbove10Items = totDeclarationAbove500Items = -1;
