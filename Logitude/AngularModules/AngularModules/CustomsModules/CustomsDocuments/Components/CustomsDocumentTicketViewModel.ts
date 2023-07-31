@@ -547,7 +547,6 @@ export class CustomsDocumentTicketViewModel {
     }
    async StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel: RelatedDocumentViewModel) {
 
-    debugger
         CustomsDocumentTicketViewModel.IsOcrDocument = false;
         const isConnectTicket: boolean = await this.GetDocConnectTicket(relatedDocumentViewModel.CustomDocument.DocumentsFilingId)
 
@@ -615,9 +614,8 @@ export class CustomsDocumentTicketViewModel {
             else {
  
 
-                debugger
-        var ocrDocumentExtendedListService = new OcrDocumentExtendedListService();
-         ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, relatedDocumentViewModel.CustomDocument.DocumentsFilingId).subscribe((response: ServiceResponse) => {
+            var ocrDocumentExtendedListService = new OcrDocumentExtendedListService();
+            ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, relatedDocumentViewModel.CustomDocument.DocumentsFilingId).subscribe((response: ServiceResponse) => {
             if(response.Result && response.Result.StatusCode == "1")//סטטוס נשלח , טרם הסתיים
             {
                    SessionLocator.SelectedSession.StopBusyIndicator();
@@ -629,11 +627,11 @@ export class CustomsDocumentTicketViewModel {
                    messageWindow.Show("טרם הסתיים תהליך OCR");        
                    messageWindow.WindowClosed.subscribe((event: any) => messageWindow.Close());
                     return
-           }
-           if(response.Result && response.Result.StatusCode == "2"){
+            }
+            if(response.Result && response.Result.StatusCode == "2"){
                 CustomsDocumentTicketViewModel.IsOcrDocument = true;
                 this.ProcessConnectDocument(relatedDocumentViewModel);
-           }
+            }
             else{
                 this.ProcessConnectDocument(relatedDocumentViewModel);
             }
@@ -647,8 +645,6 @@ export class CustomsDocumentTicketViewModel {
 
        
     }
-
-   
 
     private SaveGeneratedPointer(relatedDocumentViewModel: RelatedDocumentViewModel = null) {
         var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
@@ -801,7 +797,6 @@ export class CustomsDocumentTicketViewModel {
 
 
     async ProcessConnectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {   
-        debugger;
         if (relatedDocumentViewModel == null || await this.checkFileBiggerFrom200MB(relatedDocumentViewModel)) return;
 
         if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == null)
@@ -902,10 +897,7 @@ export class CustomsDocumentTicketViewModel {
         return confirmWindow.Yes;
     }
 
-    private connectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {
-        debugger
-
-        
+    private connectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {       
             SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
             this.customsDocumentMetaDataValuePMs = relatedDocumentViewModel.CustomDocument.CustomsDocumentMetaDataValues;
     
@@ -960,17 +952,10 @@ export class CustomsDocumentTicketViewModel {
     
                             });
                         }
-                    }
-            
-                                    
-       
+                    }     
             });
 
-            }
-        
-    
-    
-        
+            }      
     }
 
     private cnotConnectDiffrentTypeDocumentMessage() {

@@ -77,34 +77,7 @@ namespace Logitude.Server.Tools.StorageService
         }
 
 
-        public string DownloadJsonFileFromZip1(string fileName)
-        {
-            Stream stream = this.DownloadToStreamAsync(fileName);
-
-            using (ZipArchive archive = new ZipArchive(stream, ZipArchiveMode.Read))
-            {
-                // Assuming there's only one JSON file in the ZIP archive, you can retrieve it as follows:
-                ZipArchiveEntry jsonEntry = archive.Entries.FirstOrDefault(e => Path.GetExtension(e.Name) == ".json");
-                if (jsonEntry != null)
-                {
-                    using (Stream jsonStream = jsonEntry.Open())
-                    using (StreamReader reader = new StreamReader(jsonStream))
-                    {
-                        string jsonContent = reader.ReadToEnd();
-
-                        // Process the JSON content as needed
-                        return jsonContent;
-                    }
-                }
-                else
-                {
-                    return null;
-                }
-            }
-
-
-        }
-
+        
 
         public IEnumerable<ZipArchiveEntry> DownloadAndExtractZipFile(string fileName)
         {

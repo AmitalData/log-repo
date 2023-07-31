@@ -330,7 +330,6 @@ export class CustomsDocumentsComponent
         console.log(this.CustomsDocumentsTicketViewModels);
         this.SetFilterCounts();
         if (selectedDocId) {
-            debugger
             var ticket: CustomsDocumentTicketViewModel = this.CustomsDocumentsTicketViewModels.filter(d => d.Id == selectedDocId)[0];
             this.EditCustomsDocumentsTicket(ticket); 
             this.SelectedDocumentId = null;
@@ -611,7 +610,6 @@ export class CustomsDocumentsComponent
     }
 
     EditCustomsDocumentsTicket(customsDocumentsTicket: CustomsDocumentTicketViewModel) {
-        debugger
         if (!customsDocumentsTicket.PreventEdit) {
             if (customsDocumentsTicket.DocumentsFilingId) {
                 this.CurrentSession.StartBusyIndicatorLoading();
@@ -620,42 +618,13 @@ export class CustomsDocumentsComponent
                     var isThereRequests = response.Result.IsDisplayOnly;
                     var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
                     customsDocumentPMService.get(documentsFilingId).subscribe((resp: ServiceResponse) => {
-                        debugger
                         this.CurrentSession.StopBusyIndicator();
                         if (!resp.HasError) {
                             var customsDoc = resp.Result;
-                            debugger
                             if(CustomsDocumentTicketViewModel.IsOcrDocument){
 
-                                debugger
-                                // var ocrDocumentExtendedListService = new OcrDocumentExtendedListService();
-                                // ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, customsDoc.DocumentsFilingId).subscribe((response: ServiceResponse) => {
-                                    
-                                //    if(!response.HasError || (response.Result != null && response.Result.statuscode =="2"))//סטטוס התקבל
-                                //    {
-                                //        debugger
-                                       this.UpsertSupplierInvioceByOcr(customsDoc.DocumentsFilingId,isThereRequests, customsDocumentsTicket.customsDocumentsTicketPM, customsDoc);
-                       
-                                       
-                                //    }
-                                //   else if(response.Result.statuscode =="1")//סטטוס נשלח , טרם הסתיים
-                                //    {
-                                    //    SessionLocator.SelectedSession.StopBusyIndicator();
-                                    //    var messageWindow = new MessageWindow();
-                                    //    messageWindow.RTL=true;
-                                    //    messageWindow.ShowWarningIcon=true;
-                                       
-                                    //    messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                                    //    messageWindow.Show("טרם הסתיים תהליך OCR");        
-                                    //    messageWindow.WindowClosed.subscribe((event: any) => messageWindow.Close());
-                            //            return
-                            //       }
-                       
-                       
-                                    
-                            //    });
-
-
+                                this.UpsertSupplierInvioceByOcr(customsDoc.DocumentsFilingId, isThereRequests, customsDocumentsTicket.customsDocumentsTicketPM, customsDoc);
+                                
                             }
                             else{
 
@@ -669,8 +638,6 @@ export class CustomsDocumentsComponent
             }
             else {
                 this.CurrentSession.StopBusyIndicator();
-                debugger
-
                 this.ApplyEditCustomsDocumentTicket(false, customsDocumentsTicket.customsDocumentsTicketPM, null);
             }
         }
@@ -678,7 +645,6 @@ export class CustomsDocumentsComponent
     }
 
     ApplyEditCustomsDocumentTicket(isThereRequests: boolean, customsDocumentsTicket: CustomsDocumentsTicketPM, customsDocument: CustomsDocumentPM) {
-        debugger
         if (this.CurrentSession.CurrentEditComponent) {
             if (this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
                 this.CurrentSession.CurrentEditComponent.SaveChanges();
@@ -694,10 +660,7 @@ export class CustomsDocumentsComponent
             else {
                 windowArgs.IsNewState = false;
             }
-        }
-       
-        
-       
+        }          
         windowArgs.ClosingData=this.ClosingData;
         windowArgs.CustomsDocument = customsDocument;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly && isThereRequests;
@@ -724,7 +687,6 @@ export class CustomsDocumentsComponent
     }
 
     UpsertSupplierInvioceByOcr(documentFilingId : string, isThereRequests: boolean, customsDocumentsTicket: CustomsDocumentsTicketPM, customsDocument: CustomsDocumentPM) {
-        debugger
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
         this.custDocRelatedDocsWebService.UpdateSupplierInvioceByOcr(this.EntityPM.Id, documentFilingId).subscribe((response: ServiceResponse) => {
@@ -735,8 +697,6 @@ export class CustomsDocumentsComponent
             }
             else {
                
-
-
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.ShowNoButton = false;
                 confirmWindow.ShowInfoImage = true;
@@ -749,18 +709,14 @@ export class CustomsDocumentsComponent
                     
                         this.ApplyEditCustomsDocumentTicket(isThereRequests, customsDocumentsTicket, customsDocument);
 
-                     
-                    
                     }
 
                 });
 
             }
-            //this.RefreshEntity();
+            
         });
     }
-
-   
 
     private IsCustomDocumentItemEnabled(documentStatusCode: string) {
         var MyEditControlViewModelController = this.CurrentSession.CurrentEditComponent.EditComponentController;
@@ -788,8 +744,6 @@ export class CustomsDocumentsComponent
                     relatedDocumentViewModel.CustomDocument = resp.Result;
                     if (relatedDocumentViewModel.CustomDocument) {
                         this.CurrentSession.StopBusyIndicator();
-                        debugger
-
                         this.ApplyEditCustomsDocumentTicket(false, null, relatedDocumentViewModel.CustomDocument);
                     }
                     else {
@@ -816,8 +770,6 @@ export class CustomsDocumentsComponent
                         customsDocumentPMService.insert(customsDocumentPM).subscribe((resp: ServiceResponse) => {
                             if (!resp.HasError) {
                                 this.CurrentSession.StopBusyIndicator();
-                                debugger
-
                                 this.ApplyEditCustomsDocumentTicket(false, null, relatedDocumentViewModel.CustomDocument);
                             }
                             else {
@@ -883,7 +835,6 @@ export class CustomsDocumentsComponent
         if (customsDocumentsTicket.ApprovedImageVisibility || customsDocumentsTicket.DeniedImageVisibility) {
         } else {
             if (!customsDocumentsTicket.HaveCustomAnswer) {
-                debugger
                 this.EditCustomsDocumentsTicket(customsDocumentsTicket);
                 return;
             }
