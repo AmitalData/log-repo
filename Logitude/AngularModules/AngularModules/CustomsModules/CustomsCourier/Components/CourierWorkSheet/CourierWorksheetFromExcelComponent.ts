@@ -2264,9 +2264,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
     }
 
-    OpenCourierMaster(text: string) {
-    }
-
     OpenCourierMaster(text:string){
 
     }
