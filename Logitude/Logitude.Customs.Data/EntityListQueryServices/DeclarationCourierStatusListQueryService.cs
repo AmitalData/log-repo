@@ -512,7 +512,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return count;
         }
 
-        private IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkQuery(QueryOperations queryOperations, int tenant)
+        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkQuery(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
 
