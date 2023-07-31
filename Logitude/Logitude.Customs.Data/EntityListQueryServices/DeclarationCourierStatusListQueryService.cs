@@ -323,7 +323,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return q;
         }
 
-        private IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations)
+        private IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations, int tenant)
         {
             IQueryable<DeclarationCourierStatus> iQueryable = (from a in context.DeclarationCourierStatuses
                                                                where a.Tenant == tenant
@@ -391,11 +391,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         CourierPendingReasonList = dcs.CourierPendingReasonList,
                         CourierPendingReasonName = dpj.CourierPendingReason.LocalName != null ? dpj.CourierPendingReason.LocalName : null,
                         MissedDocumentStatusCode = dcs.MissedDocumentStatusCode,
+                        Tenant = dcs.Tenant,
 
                     } into t2
-                    select new DeclarationCourierStatusList
-                    {
-                        CourierMasterId = t2.Key.CourierMasterId,
+                select new DeclarationCourierStatusList
+                {
+                    CourierMasterId = t2.Key.CourierMasterId,
                         DeclarationId = t2.Key.DeclarationId,
                         CourierHawb = t2.Key.CourierHawb,
                         ImporterCode = t2.Key.ImporterCode,
@@ -415,7 +416,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     });
 
 
-            q1 = q1.OrderBy(x => x.DeclarationId);
+            q1 = q1.OrderBy(x => x.DeclarationId).Where(x => x.Tenant == tenant);
 
             return q1;
         }
@@ -528,7 +529,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             iQueryable = filter.GetFilteredQuery<DeclarationCourierStatus>(nonListQueryOperation, iQueryable);
 
-            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations);
+            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations, tenant);
 
             var cargoDescriptionF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CargoDescription").FirstOrDefault();
             if (cargoDescriptionF != null && !string.IsNullOrEmpty(cargoDescriptionF.FieldValue?.ToString()))
