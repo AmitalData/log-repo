@@ -75,9 +75,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     if (filterVlaue == "customs" )
                     {
 
-                        if (referenceNumber != null)
+                    List<string> externalEntityReferences = null;
+                    if (declarationType == "E")
+                    {
+                        externalEntityReferences = new List<string> { referenceNumber };
+
+                    }
+                    if (referenceNumber != null)
                         {
-                            documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, null, authToken.Tenant);
+                            documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, externalEntityReferences, authToken.Tenant);
                         }
                         else
                         {
@@ -112,7 +118,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                              externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
                          }
                          else {
-                              externalEntityReferences = new List<string> { ExportFile };
+                              externalEntityReferences = new List<string> { ExportFile, referenceNumber };
                          }
                   
                         if (referenceNumber != null)
