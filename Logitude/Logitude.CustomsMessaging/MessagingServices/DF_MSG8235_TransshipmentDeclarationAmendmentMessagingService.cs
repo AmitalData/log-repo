@@ -82,6 +82,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             exceptionMessage = null;
             var response = new DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg();
+            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            {
+                _ResponseHeader = uifreightSdkGateway.GetChannel<UnifreightIIG.Common.TheGateway.ITransshipmenDeclarationAmendmentRequestMsgRequestOperation>()
+                    .TransshipmenDeclarationAmendmentRequestMsgRequestSign(
+                    this.RequestsSheetExternalId,
+                    base.CustomsSetting.CustomsAgentId,
+                    new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry, },
+                    ref this._IIGGatewayMoreParams,
+                    out response);
+            }
 
             return response;
         }
