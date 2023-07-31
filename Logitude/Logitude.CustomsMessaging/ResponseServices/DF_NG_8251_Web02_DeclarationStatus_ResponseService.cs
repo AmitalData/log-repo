@@ -383,7 +383,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 								float.TryParse(declarationPM.VersionId, out DecVersionId);
                                 float.TryParse(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, out ResVersionId);
 
-								if (!string.IsNullOrEmpty(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode) && (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "13" || declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "14") && (ResVersionId > DecVersionId))
+								if (!string.IsNullOrEmpty(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode) && (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "13" || declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "14") && (ResVersionId >= DecVersionId))
                                 {
 
                                     if (declarationPM.PaymentDate.HasValue && !declarationPM.HatraDate.HasValue)
