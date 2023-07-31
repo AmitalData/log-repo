@@ -11,6 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Microsoft.Extensions.Caching.Memory;
 using System.Configuration;
+using Newtonsoft.Json.Linq;
+using Simplog.Server.Infrastructure;
 
 namespace TrackedShipmentsAPI.Services
 {
@@ -26,10 +28,13 @@ namespace TrackedShipmentsAPI.Services
 
         private Dictionary<string, string> GetCredentials()
         {
-            // TODO: Implement the method logic
-            //throw new NotImplementedException("Method GetCredentials not implemented yet.");
-            string clientId = ConfigurationManager.AppSettings["WindWardClientId"];//"amital";
-			string clientSecret = ConfigurationManager.AppSettings["WindWardClientSecret"];//"7e2bb304182d0c2d6ddbc7d7e6fb57e6ed6d7439a41deb47";
+			// TODO: Implement the method logic
+			//throw new NotImplementedException("Method GetCredentials not implemented yet.");
+            string WindWardSettings = LogitudeSettings.WindWardSettings;
+            var WindWardSettingsArray= WindWardSettings?.Split(',');
+
+			string clientId = WindWardSettingsArray[0];//"amital";
+			string clientSecret = WindWardSettingsArray[1]; ;//"7e2bb304182d0c2d6ddbc7d7e6fb57e6ed6d7439a41deb47";
 			return new Dictionary<string, string>
             {
                 { "clientId", clientId },

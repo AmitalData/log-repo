@@ -577,5 +577,12 @@
     <Constraints
       Nullable="false" />
   </Column>
-	
+  <Column
+   Name="WindWardSettings"
+   Type="varchar"
+   Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  
 </Table>
