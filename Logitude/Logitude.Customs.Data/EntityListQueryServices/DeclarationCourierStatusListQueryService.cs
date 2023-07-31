@@ -396,7 +396,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     } into t2
                 select new DeclarationCourierStatusList
                 {
-                    CourierMasterId = t2.Key.CourierMasterId,
+                        Tenant = t2.Key.Tenant,
+                        CourierMasterId = t2.Key.CourierMasterId,
                         DeclarationId = t2.Key.DeclarationId,
                         CourierHawb = t2.Key.CourierHawb,
                         ImporterCode = t2.Key.ImporterCode,
@@ -512,7 +513,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return count;
         }
 
-        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkQuery(QueryOperations queryOperations, int tenant)
+        private IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkQuery(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
 
