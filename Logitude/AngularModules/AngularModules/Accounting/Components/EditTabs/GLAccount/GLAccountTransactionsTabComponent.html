@@ -1,7 +1,7 @@
 <style>
     .tab-footer {
         background: #f7f7f7;
-        height: 28px;
+        height: auto;
         border-radius: 7px;
         border-bottom-left-radius: unset;
         margin-right: -1px;
@@ -324,14 +324,14 @@
 </style>
 <style>
     .flex-container {
-        height: calc(100% - 130px);
+        height: calc(100% - 80px);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
 
     .flex-container__extended {
-        height: calc(100% - 162px);
+        height: calc(100% - 112px);
     }
 
     .flex-container>div {
@@ -524,7 +524,14 @@
                                                                 </ComboBox>
                                                             </div>
                                                         </td>
-
+                                                        <td style="width: 50px;"
+                                                            [style.text-align]="isRTL ? 'right' : 'left'"
+                                                            *ngIf="filterSelectedValue != 'filter_Tax'">
+                                                            {{
+                                                            'Accounting.General.O.Datefrom'
+                                                            | TextCodeTranslationPipe
+                                                            }}
+                                                        </td>
                                                         <td style="width: 90px;"
                                                             *ngIf="filterSelectedValue != 'filter_Tax'">
                                                             <LogDatePicker [ObjectFieldName]="'FromDate'"
@@ -664,13 +671,17 @@
 
                                             </tr>
 
+
                                             <!-- Date 2 -->
                                             <tr *ngIf="ShowSecondDateFilter" class="FormFieldRow">
                                                 <td>
                                                     <table style="table-layout: fixed;">
-                                                        <td style="width:10px"></td>
-                                                        <td style="width: 80px;"
+                                                        <td style="width:528px;padding-top:12px;"
                                                             [style.text-align]="isRTL ? 'right' : 'left'">
+
+                                                        </td>
+                                                        <td style="width:30px;">
+                                                            <div></div>
                                                         </td>
 
                                                         <td [style.width.px]="DateFilterWidth">
@@ -700,10 +711,17 @@
                                                                 </li>
                                                             </ul>
                                                         </td>
-                                                        <td style="width:15px;">
+                                                        <td style="width:16px;">
                                                             <div></div>
                                                         </td>
 
+                                                        <td style="width: 50px;"
+                                                            [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            {{
+                                                            'Accounting.General.O.Datefrom'
+                                                            | TextCodeTranslationPipe
+                                                            }}
+                                                        </td>
                                                         <td style="width: 90px;">
                                                             <LogDatePicker [ObjectFieldName]="'FromDate2'"
                                                                 [ObjectTableName]="ObjectTableName"
@@ -711,7 +729,6 @@
                                                                 [DataContext]="DataContext" [HideColumns]="true"
                                                                 [SelectedDateValue]="FromDate"></LogDatePicker>
                                                         </td>
-
 
                                                         <td style="width:15px;">
                                                             <div></div>
@@ -735,15 +752,28 @@
                                                                     (click)="ResetAdditionalDateFilter()"></IconButton>
                                                             </div>
                                                         </td>
-                                                        <td>
-                                                            <div></div>
+
+                                                        <td style="width:150px">
+                                                            <div [style.float]="isRTL ? 'left' : 'right'"
+                                                                style="width: 200px;padding: 0 5px;">
+
+                                                            </div>
+
+
+                                                            <div [style.float]="isRTL ? 'left' : 'right'">
+
+                                                            </div>
+
+
+                                                            <div [style.float]="isRTL ? 'left' : 'right'">
+
+                                                            </div>
+
                                                         </td>
                                                     </table>
                                                 </td>
 
                                             </tr>
-
-
 
                                         </table>
                                 </tr>
@@ -836,7 +866,7 @@
                         {{'Accounting.General.O.TotalInLocalCurrency' | TextCodeTranslationPipe}}
                     </span>
                     <span class="">
-                        <span >
+                        <span>
                             <!-- Basel syas: the total is equal to close amount -->
                             <span style="font-size: 15px; color:#21a373;direction: ltr;"
                                 [class.red]="LTBSummery.EndBalanceLocal<=0"
@@ -858,24 +888,22 @@
                     </span>
                 </span>
             </span>
-     
-            <span style=" overflow: auto;"
-                *ngIf="TenantCurrency != EntityPM.CurrencyCode">
+
+            <span style=" overflow: auto;" *ngIf="TenantCurrency != EntityPM.CurrencyCode">
                 <span class="footer-title">
                     {{'Accounting.General.O.TotalInCurrencies' | TextCodeTranslationPipe}}
                 </span>
-                <span 
-                    *ngFor="let currency of LTBSummery.EndBalanceForeignList; let i=index;">
+                <span *ngFor="let currency of LTBSummery.EndBalanceForeignList; let i=index;">
 
-                    <span *ngIf="i>0" style="border-left: 1px solid #c1c1c1;  "
-                       ></span>
+                    <span *ngIf="i>0" style="border-left: 1px solid #c1c1c1;  "></span>
 
-                    <span >
+                    <span style="border: 2px solid #babbbd;
+                    padding: 3px;
+                    margin: 10px;">
                         <span>
                             <span
                                 style="font-size: 13px; color:#707070; padding-right: 5px; ">{{currency.CurrencyCode}}</span>
-                            <span style="font-size: 13px; color:#21a373;"
-                                [class.red]="currency.BalanceForeign<=0">
+                            <span style="font-size: 13px; color:#21a373;" [class.red]="currency.BalanceForeign<=0">
                                 {{currency.BalanceForeign | NumbersPipe:'N2'}}
                                 <!--{{currency.CurrencySign}}-->
                             </span>
@@ -884,8 +912,7 @@
                         <span>
                             <span
                                 style="font-size: 13px; color:#707070; padding-right: 5px;padding-left: 15px">{{TenantCurrency}}</span>
-                            <span style="font-size: 13px; color:#21a373;"
-                                [class.red]="currency.BalanceForeign<=0">
+                            <span style="font-size: 13px; color:#21a373;" [class.red]="currency.BalanceForeign<=0">
                                 {{currency.BalanceLocal | NumbersPipe:'N2'}}
                                 <!-- -oldway=>{{CalculateLocalAmount(currency.CurrencyId , currency.BalanceForeign) | NumbersPipe:'N2'}} -->
                                 <!--{{TenantCurrencySign}}-->
