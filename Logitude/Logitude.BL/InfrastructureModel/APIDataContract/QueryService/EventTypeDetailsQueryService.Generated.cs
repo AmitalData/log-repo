@@ -69,9 +69,10 @@ using Simplog.Data.InfrastructureModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.EventTypeCode = MyEntityPM.Code;
 				   temp.EventTypeName = MyEntityPM.EnglishName; 
+			   	   temp.LocalName= MyEntityPM.LocalName;
 
-			  
-				   if(MyEntityPM.EntityStatusId != null)
+
+                   if (MyEntityPM.EntityStatusId != null)
 				   {
 					   EntityStatusQueryService EntityStatusService0 = new EntityStatusQueryService(Tenant);
 					   					   temp.EventTypeStatusEntity = EntityStatusService0.GetEntityStatusById(MyEntityPM.EntityStatusId,Tenant,ComputingPartnerName); 
