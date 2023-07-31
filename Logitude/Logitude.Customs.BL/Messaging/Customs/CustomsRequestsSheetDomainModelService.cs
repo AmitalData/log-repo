@@ -3,7 +3,6 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.BL.Exceptions;
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 using Logitude.Customs.Data;
@@ -1365,8 +1364,11 @@ After that Remove file  from DCA  .. ");
                 {
                     var mess = "another thread is handling , try later ";
                     LogMessagingUtil.Instance.AppendLine(mess);
-                    LogitudeSettings.HandleLogMe("another thread is handling " + _MyCustomsRequestsSheetPM?.Id, false, "Thread_conflit", new DateTime(2023, 7, 20));
-                    throw new AnotherThreadHandlingException();
+                    var featureAvoidConcurency = false;
+                    if (featureAvoidConcurency)
+                    {
+                        throw new Exception(mess);
+                    }
                 }
                 //communicationLogStep.Status = stepStatusEnum.ToString();
                 communicationLogStep.StartDate = _StartStepAt;
