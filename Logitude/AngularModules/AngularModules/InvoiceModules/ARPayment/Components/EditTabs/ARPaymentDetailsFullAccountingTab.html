@@ -151,7 +151,8 @@
                                 <tr>
                                     <td style="width:360px;">
                                         <table>
-                                             <!-- PartnerTypes Filter -->
+
+                                            <!-- PartnerTypes Filter -->
                                             <tr  class="customtrclass">
                                                 <td style="width:120px; height: 25px; padding-left: 10px; ">
                                                     {{ 'ARInvoice.F.PartnerType' | TextCodeTranslationPipe }}
@@ -159,10 +160,10 @@
 
                                                 <td style="width:230px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
                                                     <ComboBox [ItemsSource]="PartnerTypes"
-                                                                [Binding]="'Name'"
-                                                                [SelectedItem]="SelectedPartnerType"
-                                                                (SelectedItemChanged)="SelectedPartnerType = $event"
-                                                                [IsDisabled]="DisabledPartnerTypes"></ComboBox>
+                                                              [Binding]="'Name'"
+                                                              [SelectedItem]="SelectedPartnerType"
+                                                              (SelectedItemChanged)="SelectedPartnerType = $event"
+                                                              [IsDisabled]="DisabledPartnerTypes"></ComboBox>
 
                                                 </td>
 
@@ -171,6 +172,7 @@
                                                 </td>
 
                                             </tr>
+
                                             <!-- BillToId -->
                                             <tr class="customtrclass">
                                                 <td style="width:120px; height:25px; ">
@@ -705,7 +707,7 @@
                                                                 <!-- [style.float]="isRTL ? 'left' : 'right'" -->
                                                                 <div *ngIf="EntityPM.StatusCode =='DR' && (EntityPM.ARPaymentBankTranfers.length === 0 || EntityPM.ARPaymentBankTranfers.length === 1)">
                                                                     <IconButton [ngStyle]="{'position': (isRTL) ? 'relative' : 'initial', 'left': (isRTL) ? '35px' : '0px'}"
-                                                                        [Name]="'Add'" [IsSmall]="true" (click)="AddBankTransfersButtonClicked()"></IconButton>
+                                                                                [Name]="'Add'" [IsSmall]="true" (click)="AddBankTransfersButtonClicked()"></IconButton>
                                                                     <div [ngStyle]="{'margin-left': '30px', 'position': (isRTL) ? 'relative' : 'initial', 'right': (isRTL) ? '30px' : '0px'}">
                                                                         <HelpIcon [Header]="'ARPayment.M.BankTransfers' | TextCodeTranslationPipe" [Text]="'ARPayment.M.AddBankTransfersHint' | TextCodeTranslationPipe"></HelpIcon>
                                                                     </div>
@@ -750,7 +752,7 @@
                                     <td style="width: 1px; padding-left: 5px;">
                                         ({{TransactionsList?.Length}})
                                     </td>
-                                <!--    <td> <span class="HiddenBtn" (click)="GetData()">R</span></td>-->
+                                    <!--    <td> <span class="HiddenBtn" (click)="GetData()">R</span></td>-->
                                     <td width="5px"></td>
                                     <!-- <td *ngIf="isMultipleCheques " style="width:20px">
                                         <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPayment.O.CantPerformReconciliation' | TextCodeTranslationPipe}}" />
@@ -986,7 +988,7 @@
                                                 <td style="vertical-align: middle;" class="arp-footer">
                                                     <div float-start class="amount-div">
                                                         <div class="amount">{{PaymenyAmount | NumbersPipe:'N2'
-                                                }}</div>
+                                                            }}</div>
                                                         <div class="label">
                                                             {{'Accounting.O.ARP.PaymentAmount' | TextCodeTranslationPipe}}
                                                         </div>
@@ -1103,7 +1105,7 @@
                                     <tr style="height: 1px;">
                                         <td>
                                             <LogLabel [ObjectFieldName]="'PrintNotes'"
-                                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                      [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                             </LogLabel>
                                         </td>
                                     </tr>
@@ -1112,8 +1114,8 @@
                                         <td>
                                             <div>
                                                 <LogTextBox [ObjectFieldName]="'PrintNotes'" [Text]="PrintNotes"
-                                                    [InputType]="'ntext'" [ObjectTableName]="ObjectTableName"
-                                                    [DataContext]="DataContext" [IsMultiline]="true" [RowsCount]="2">
+                                                            [InputType]="'ntext'" [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext" [IsMultiline]="true" [RowsCount]="2">
                                                 </LogTextBox>
                                             </div>
                                         </td>

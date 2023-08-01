@@ -177,7 +177,32 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             SubmitInterestReportLinesByDate(interestReportLinesByDatePMs);
             SubmitChangesToInterestReport();
         }
+        private void validateInterestReportClosingBalance(List<InterestReportLinesByDatePM> interestReportLinesByDatePMs)
+        {
+            var totalInterestTransactionsLocalAmount = interestTransactionPMs.Sum(x => x.LocalAmount);
+            var interestReportLinesByDateTotalLocalAmount = interestReportLinesByDatePMs.Sum(x => x.TotalAmount);
 
+            var totalInterestTransactionsLocalAmountWithOpenBalance = interestReportPM.OpenBalance + totalInterestTransactionsLocalAmount;
+            var interestReportLinesByDateTotalLocalAmountWithOpenBalance = interestReportPM.OpenBalance + interestReportLinesByDateTotalLocalAmount;
+            if (interestReportPM.CloseBalance == null)
+            {
+                return;
+            }
+
+            if (totalInterestTransactionsLocalAmountWithOpenBalance != interestReportPM.CloseBalance)
+            {
+                SetInterestReportStatusFailed();
+                throw new ApplicationException("Interest report open balance and total transaction details in all lines of the report doesn't match the closing " +
+                    "balance (" + interestReportPM.OpenBalance + " " + totalInterestTransactionsLocalAmount + ") != " + interestReportPM.CloseBalance);
+            }
+
+            if (interestReportLinesByDateTotalLocalAmountWithOpenBalance != interestReportPM.CloseBalance)
+            {
+                SetInterestReportStatusFailed();
+                throw new ApplicationException("Interest report open balance and interest report lines by date total amounts of the report doesn't match the closing " +
+                    "balance (" + interestReportPM.OpenBalance + " " + interestReportLinesByDateTotalLocalAmount + ") != " + interestReportPM.CloseBalance);
+            }
+        }
         private void validateInterestReportClosingBalance(List<InterestReportLinesByDatePM> interestReportLinesByDatePMs) {
             var totalInterestTransactionsLocalAmount = interestTransactionPMs.Sum(x => x.LocalAmount);
             var interestReportLinesByDateTotalLocalAmount = interestReportLinesByDatePMs.Sum(x => x.TotalAmount);

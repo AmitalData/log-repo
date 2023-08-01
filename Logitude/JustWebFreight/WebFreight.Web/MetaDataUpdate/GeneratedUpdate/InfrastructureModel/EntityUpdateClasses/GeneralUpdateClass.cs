@@ -85,8 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "32f8070091837ac70586ef90dcb9d2f6";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+		public const string HashString = "31e80700919d7ac70586ef70dcb9d2f6";
+        public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -1571,9 +1571,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOFullAccounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.FullAccounting", DefaultText = "Full Accounting",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralODefaultVATTypeMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.DefaultVATTypeMissing", DefaultText = "Default VAT Type is missing in the Full Accounting Settings",LocalDefaultText = @"אין הגדרת סוג מעמ דיפולטיבי בטבלת Full Accounting Settings", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+           TextCode GeneralTextCode_AccountingGeneralODefaultVATTypeMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.DefaultVATTypeMissing", DefaultText = "Default VAT Type is missing in the Full Accounting Settings", LocalDefaultText = @"אין הגדרת סוג מעמ דיפולטיבי בטבלת Full Accounting Settings", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOOldValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OldValue", DefaultText = "Old value: ",LocalDefaultText = @", ערך קודם: ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+           TextCode GeneralTextCode_AccountingGeneralOOldValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OldValue", DefaultText = "Old value: ",LocalDefaultText = @", ערך קודם: ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralONewValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewValue", DefaultText = ", New value: ",LocalDefaultText = @", ערך חדש: ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

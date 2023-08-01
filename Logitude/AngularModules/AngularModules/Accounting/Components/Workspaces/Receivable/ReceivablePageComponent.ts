@@ -150,41 +150,41 @@ export class ReceivablePageComponent {
                 // ActiveCustomersGLAccounts
                 // InactiveCustomersGLAccount
                 case "MyCustomersAsCollectors":
-                    {
-                        displayTitle = "My Customers (As Collectors)";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.Collectors");
+                {
+                    displayTitle = "My Customers (As Collectors)";
+                    displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.Collectors");
 
-                        break;
-                    }
+                    break;
+                }
 
                 case "DebetorsCustomers":
-                    {
-                        displayTitle = "Debtors Customers";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.debetors");
+                {
+                    displayTitle = "Debtors Customers";
+                    displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.debetors");
 
-                        break;
-                    }
+                    break;
+                }
                 case "ActiveCustomersGLAccounts":
-                    {
-                        displayTitle = "Active Customers";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.ActiveCustomers");
+                {
+                    displayTitle = "Active Customers";
+                    displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.ActiveCustomers");
 
-                        break;
-                    }
+                    break;
+                }
                 case "InactiveCustomersGLAccount":
-                    {
-                        displayTitle = "Inactive Customers";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.InactiveCustomers");
+                {
+                    displayTitle = "Inactive Customers";
+                    displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.InactiveCustomers");
 
-                        break;
-                    }
+                    break;
+                }
                 case "All Customers":
-                    {
-                        displayTitle = "All Customers";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.AllCustomers");
+                {
+                    displayTitle = "All Customers";
+                    displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.AllCustomers");
 
-                        break;
-                    }
+                    break;
+                }
 
 
 
@@ -214,7 +214,8 @@ export class ReceivablePageComponent {
 
     //#region ARPayments
     NewARPaymentMethod() {
-         var FinalText = TextCodeTranslator.Translate("ARPayment.O.New");
+        var FinalText = TextCodeTranslator.Translate("ARPayment.O.New");
+
         if (SessionLocator.TenantPM.AccountingActivated)
          {
             var entity = new ARPaymentPM();
@@ -228,19 +229,21 @@ export class ReceivablePageComponent {
          else
          {
 
-        // var FinalText = this.getAutoNewName();
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = FinalText;
-        logWindow.Width = 900;
-        logWindow.Height = 570;
-        logWindow.Show("./InvoiceModules/ARPayment/Components/NewEntity/NewARPaymentComponent");
-        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
-        //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-        //    .then(cmpRef => {
-        //        cmpRef.instance.ComponentRef = cmpRef;
-        //        cmpRef.instance.Run({ EntityId: "", EntityPM: new ARPaymentPM(), ObjectTableName: 'ARPayment' });
-        //    });
+
+            // var FinalText = this.getAutoNewName();
+            var logWindow = new LogitudeWindow();
+            logWindow.Title = FinalText;
+            logWindow.Width = 900;
+            logWindow.Height = 570;
+            logWindow.Show("./InvoiceModules/ARPayment/Components/NewEntity/NewARPaymentComponent");
+            logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+            //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            //    .then(cmpRef => {
+            //        cmpRef.instance.ComponentRef = cmpRef;
+            //        cmpRef.instance.Run({ EntityId: "", EntityPM: new ARPaymentPM(), ObjectTableName: 'ARPayment' });
+            //    });
          }
+
     }
     filterAgrs: ApiQueryFilters;
     private getAutoNewName() {
@@ -376,6 +379,7 @@ export class ReceivablePageComponent {
             this.GetCurrenciesExchangeRateByValueDate(entity);
             return;
         }
+
 
 
         //var str = TextCodeTranslator.Translate("General.O.NewEntity");
@@ -721,7 +725,7 @@ export class ReceivablePageComponent {
 
         this.DeptorsFiltersList =
             [{ EnglishName: 'Accounting Balance', LocalName: TextCodeTranslator.Translate("Accounting.General.O.AccountingBalance") },
-            { EnglishName: 'Balance Due', LocalName: TextCodeTranslator.Translate("Accounting.General.O.BalanceDue") }];
+                { EnglishName: 'Balance Due', LocalName: TextCodeTranslator.Translate("Accounting.General.O.BalanceDue") }];
 
         this.SelectedDeptorsFilter = this.DeptorsFiltersList[1];
     }
