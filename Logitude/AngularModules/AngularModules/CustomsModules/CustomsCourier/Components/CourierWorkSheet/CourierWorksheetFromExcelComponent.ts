@@ -2047,7 +2047,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         logitudeWindow.Width = 700;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/ImportCourierMawbsFromExcel/ImportCourierMawbsFromExcelComponent')
         logitudeWindow.WindowClosed.subscribe((event: any) => {
-            this.CourierHawbsFromExcelUploaded = this.CourierHawbsFromExcelUploaded;
+            this.CourierHawbsFromExcelUploaded = true;
             this.RefreshButtonClicked();
         });
 
