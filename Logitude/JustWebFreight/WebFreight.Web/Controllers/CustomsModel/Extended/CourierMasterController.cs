@@ -337,7 +337,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSendPayReadyLow2755(string CourierMasterId, string HAWB, string InternalBankId, Boolean IsWorkSheetFromExcel)
+        public HttpResponseMessage GetSendPayReadyLow2755(string CourierMasterId, string HAWB, string InternalBankId, Boolean IsWorkSheetFromExcel,)
         {
             try
             {
@@ -526,7 +526,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId, string testerSendOption, Boolean IsWorkSheetFromExcel)
+        public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId, string testerSendOption, Boolean IsWorkSheetFromExcel,string workSheetLoggedUser)
         {
             try
             {
@@ -544,7 +544,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
                 var messagingService = new DCAInUCB8250_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, testerSendOption, IsWorkSheetFromExcel);
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, testerSendOption, IsWorkSheetFromExcel, workSheetLoggedUser);
 
 
                /* var declarationsText = string.Join(",", declarations);

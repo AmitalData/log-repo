@@ -78,7 +78,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 string MAWB = "";
                 List<string> listPoco;
                 if (customResponse.IsWorkSheetFromExcel) {
-                    listPoco = repo.GetFromExcelDeclarationList(requestParams.Tenant, requestParams.LoggingUserId);
+                    listPoco = repo.GetFromExcelDeclarationList(requestParams.Tenant, customResponse.WorkSheeetLogUser);
                 }
                 else
                 {

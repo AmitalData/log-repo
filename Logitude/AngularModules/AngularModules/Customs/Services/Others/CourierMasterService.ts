@@ -576,7 +576,7 @@ export class CourierMasterService {
 
     }
 
-    GetSendALLDeclarationsStatusRequest(CourierMasterId, testerSendOption: string = null,IsWorkSheetFromExcel:boolean) {
+    GetSendALLDeclarationsStatusRequest(CourierMasterId, testerSendOption: string = null,IsWorkSheetFromExcel:boolean,userId:string=null) {
         let sTesterSendOption = '';
         if (!AppTool.IsNullOrEmpty(testerSendOption)){
             sTesterSendOption =   testerSendOption
@@ -586,7 +586,7 @@ export class CourierMasterService {
         var callTime = new Date();
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId +
-                '&testerSendOption=' +  sTesterSendOption+ '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                '&testerSendOption=' +  sTesterSendOption+ '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel+ '&workSheetLoggedUser=' + userId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var messString = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
