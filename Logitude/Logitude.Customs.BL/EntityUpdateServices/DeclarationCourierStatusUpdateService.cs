@@ -37,6 +37,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public string DistributionArea;
         public string LastMileServiceType;
         public string MAWB;
+        public string ImporterCode;
 
         protected override void OnCreating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
@@ -393,6 +394,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             LogMessagingUtil.Instance.AppendLine("CalculateDeclarationCourierStatus()");
             CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(declarationPM);
+            calculateDeclarationCourierStatus.ImporterCode = ImporterCode; 
             return calculateDeclarationCourierStatus.CalcAll(_MyDeclarationCourierStatusPM);
 
             if (declarationPM.IsCourierDeclaration)
@@ -479,19 +481,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                         else
                         {
-                            switch (declarationPM.DeclarationStatusTypeCode)
-                            {
-                                case "12":
-                                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
-                                    break;
-                                case "11":
-                                case "13":
-                                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "V";
-                                    break;
-                                default:
-                                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "";
-                                    break;
-                            }
+                         
+                                switch (declarationPM.DeclarationStatusTypeCode)
+                                {
+                                    case "12":
+                                        myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
+                                        break;
+                                    case "11":
+                                    case "13":
+                                        myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "V";
+                                        break;
+                                    default:
+                                        myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "";
+                                        break;
+                                }
+                           
                         }
                     }
                 }
