@@ -118,10 +118,12 @@ namespace TestTenantConfiguration
             LogitudeSettings.DropboxAppSecret = setting.DropboxAppSecret;
             LogitudeSettings.OceanInsightsToken = setting.OceanInsightsToken;
             LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
-        }
+			LogitudeSettings.WindWardSettings = setting.WindWardSettings;
 
-        #region Setup before creating tenant
-        private void TenantEmailTextBox_TextChanged(object sender, EventArgs e)
+		}
+
+		#region Setup before creating tenant
+		private void TenantEmailTextBox_TextChanged(object sender, EventArgs e)
         {
             if (TenantEmailTextBox.Text != null)
             {
