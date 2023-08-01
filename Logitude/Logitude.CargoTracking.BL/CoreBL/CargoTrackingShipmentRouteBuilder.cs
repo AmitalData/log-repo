@@ -278,7 +278,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             {
                 TransportModeCode = WarehouseTransportMode,
                 Description = shipmentPM.WarehouseLegRemarks ?? "WarehouseLeg",
-                FromPortLabel = shipmentPM.WarehouseLegTerminalCode,
+                FromPortLabel = shipmentPM.WarehouseLegWarehouseName,
             };
 
             SetWarehouseLegDirections(shipmentPM, step);

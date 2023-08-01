@@ -491,12 +491,13 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? ManifestLastSharingDate { get; set; }
         //public string MainCarriageFinalDestinationPortId { get; set; }
         public string MainCarriageFinalDestinationPortCode { get; set; }
-        //public string MainCarriageFinalDestinationPortName { get; set; }
-        //public string MainCarriageFinalDestinationCountryCode { get; set; }
-        //public string MainCarriageFinalDestinationCountryName { get; set; }
+		//public string MainCarriageFinalDestinationPortName { get; set; }
+		//public string MainCarriageFinalDestinationCountryCode { get; set; }
+		//public string MainCarriageFinalDestinationCountryName { get; set; }
 
-        #region WarehouseLeg
-        public string WarehouseLegWarehouseId { get; set; }
+		#region WarehouseLeg
+		public string WarehouseLegWarehouseName { get; set; }
+		public string WarehouseLegWarehouseId { get; set; }
         public string WarehouseLegAddressId { get; set; }
         public string WarehouseLegTerminalCode { get; set; }
         public DateTime? WarehouseLegExpectedEntryDate { get; set; }
