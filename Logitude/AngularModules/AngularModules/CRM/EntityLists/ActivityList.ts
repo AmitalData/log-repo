@@ -101,6 +101,7 @@ export class ActivityList {
 	TeamName: string;
 	LeadSourceId: string;
 	LeadSourceName: string;
+	CustomerCode: string;
 	
 }
  
