@@ -1659,7 +1659,7 @@ namespace WebFreight.Web.Helpers
 
             return entityName;
         }
-        public StiReport GetStimulReportByReportFilter(ReportFliter reportFilter)
+        public StiReport GetStimulReportByReportFilter(ReportFliter reportFilter,Boolean getStimulReportForMail=false)
         {
             AdvancedDateResolver advancedDateResolver = new AdvancedDateResolver();
             List<QueryFilterItem> reportFilterItems = advancedDateResolver.ResolveDateValues(reportFilter.QueryFilterItemLists);
@@ -1669,7 +1669,7 @@ namespace WebFreight.Web.Helpers
             if (reportFilter != null)
             {
                 ReportHelper reportHelper = new ReportHelper();
-                stiReport = reportHelper.GetStimulReportByReportFilter(reportFilter);
+                stiReport = reportHelper.GetStimulReportByReportFilter(reportFilter, getStimulReportForMail);
             }
             return stiReport;
         }

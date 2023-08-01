@@ -309,8 +309,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     {
                         html = System.Text.Encoding.UTF8.GetString(fileData);
                     }
+                    Boolean getStimulReportForMail = true;
                     HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-                    StiReport stiReport = htmlEditorHelper.GetStimulReportByReportFilter(reportTemplateEditorParams.ReportFilter);
+                    StiReport stiReport = htmlEditorHelper.GetStimulReportByReportFilter(reportTemplateEditorParams.ReportFilter, getStimulReportForMail);
 
                     object dataProvider = GetDataProviderFromStiReport(stiReport);
                     string dataProviderName = GetDataProviderNameFromStiReport(stiReport);
