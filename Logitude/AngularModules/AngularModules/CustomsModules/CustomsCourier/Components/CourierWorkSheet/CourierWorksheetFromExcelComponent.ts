@@ -511,6 +511,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
         currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
+        currRequestParams.IsWorkSheetFromExcel= this.CourierHawbsFromExcelUploaded;
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
             .subscribe((res: any) => {
@@ -2030,7 +2031,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     DeclarationsStatusRequestMethod() {
 
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM?.Id, null, true)
+        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM?.Id, null, true,SessionLocator.LoggedUserId)
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
@@ -2047,7 +2048,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         logitudeWindow.Width = 700;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/ImportCourierMawbsFromExcel/ImportCourierMawbsFromExcelComponent')
         logitudeWindow.WindowClosed.subscribe((event: any) => {
-            this.CourierHawbsFromExcelUploaded = this.CourierHawbsFromExcelUploaded;
+            debugger;
+            this.CourierHawbsFromExcelUploaded = true;
             this.RefreshButtonClicked();
         });
 

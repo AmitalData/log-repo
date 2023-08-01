@@ -79,7 +79,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string testerSendOption,Boolean IsWorkSheetFromExcel)
+        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string testerSendOption,Boolean IsWorkSheetFromExcel,string workSheetLoggedUser)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var objectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -137,8 +137,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var myDCAInUCB8250WithResponseContentHeader = new DCAInUCB8250WithResponseContentHeader()
             {
                 CourierMasterId = CourierMasterId,
-                TesterSendOption= testerSendOption,
+                TesterSendOption = testerSendOption,
                 LoggingUserId = LoggingUserId,
+                WorkSheeetLogUser = workSheetLoggedUser,
                 tenant = tenant,
                 MyMoreParams = "",
                 IsWorkSheetFromExcel = IsWorkSheetFromExcel,
@@ -222,6 +223,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string CourierMasterId { get; set; }
         public string MyMoreParams { get; set; }
         public bool IsWorkSheetFromExcel { get; set; }
+        public string WorkSheeetLogUser { get; set; }
 
         public List<string> ServerSplitDeclarationsList { get; set; }
         public string TesterSendOption { get;  set; }

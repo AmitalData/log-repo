@@ -235,13 +235,13 @@ namespace Logitude.Customs.Data.Repsitories
             MAWB = repoCourierMaster.GetSingle(CourierMasterId, tenant)?.MAWB;
             return q.ToList();
         }
-        public List<string> GetFromExcelDeclarationList(int tenant, string userId)
+        public List<string> GetFromExcelDeclarationList(int tenant, string WorkSheeetLogUser)
         {
             var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
             var repoCourierMaster = new CourierMasterRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
 
-            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
+            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, WorkSheeetLogUser)
                      join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
                      join status in GetAll(tenant) on dec.DeclarationId equals status.DeclarationId
                      where rDec.DeclarationNumber != null
