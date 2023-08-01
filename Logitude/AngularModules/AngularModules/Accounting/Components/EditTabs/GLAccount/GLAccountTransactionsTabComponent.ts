@@ -150,10 +150,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     public DateFilterWidth: number;
     SetDateFilterWidth() {
         if (this.DisplayTaxReportFilter) {
-            this.DateFilterWidth = this.isRTL ? 330 : 400;
+            this.DateFilterWidth = this.isRTL ? 270 : 340;
         }
         else {
-            this.DateFilterWidth= 330;
+            this.DateFilterWidth= 270;
         }
 
     }
