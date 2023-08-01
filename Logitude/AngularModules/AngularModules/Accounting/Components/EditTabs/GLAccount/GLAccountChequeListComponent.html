@@ -5,8 +5,15 @@
         <td>
             <div class="TableHolder">     
                 <table>
-                    <tr style="position:absolute;bottom:100%;left:97%;">
-                        <div><IconButton [IsEnabled]="IsExcelEnabled" [IsSmall]="true"  [Name]="'excel'"  (click)="ExportToExcelClick()" ></IconButton></div>
+                    <tr [style.text-align]="isRTL ? 'right' : 'left'">
+                        <td  [style.bottom]="isRTL ? '10px' : '10px'"
+                             [style.right]="isRTL ? '80px' : '10px'"
+                             [style.left]="isRTL ? '0px' : '98%'">
+                            
+                            <IconButton [IsEnabled]="IsExcelEnabled" [IsSmall]="true"  [Name]="'excel'"  (click)="ExportToExcelClick()" ></IconButton>
+
+                        </td>
+
                     </tr>
 
                     <!-- Transactions Grid -->
