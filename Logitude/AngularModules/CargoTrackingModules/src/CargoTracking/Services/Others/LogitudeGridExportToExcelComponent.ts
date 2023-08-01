@@ -125,13 +125,15 @@ export class LogitudeGridExportToExcelService {
     GetQueryColumn(
         fieldName: string,
         dataTypeCode: string,
-        displayText: string
+        displayText: string,
+        columnWidth:number=0
     ) {
         var queryColum: QueryColumnPM = new QueryColumnPM();
         queryColum.ObjectFieldDataTypeCode = dataTypeCode;
         queryColum.ObjectFieldName = fieldName;
         queryColum.DisplayText = displayText;
         queryColum.ObjectFieldListLabelTextCodeCode = fieldName;
+        queryColum.ColumnWidth=columnWidth;
         return queryColum;
     }
 }
