@@ -14,7 +14,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
     {
         public List<Event> BuildShipmentEvents(string entityId, int tenant, string forwardingShipmentHeaderId)
         {
-            var eventTypeQuery = new EventTypeQuery();
+            var eventTypeQuery = new EventTypeQuery(tenant);
 
             var events = eventTypeQuery.GetEventByShipment(entityId, tenant, forwardingShipmentHeaderId);
             List<Event> Events = new List<Event>();
