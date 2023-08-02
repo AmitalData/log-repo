@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "a3ff8c2c06aafe1e3371ee2ba75f5932";
+		public const string HashString = "7ff73ef1fd402541a07e46b9aa63124a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2181,6 +2181,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ContainerizationTextCode_CustomsContainerizationODeleteLastDecInCon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.DeleteLastDecInCon", DefaultText = "It is not possible to cancel the last declaration in the container until a cancellation message is sent and a response is received from customs",LocalDefaultText = @"לא ניתן לבטל את ההצהרה האחרונה בהמכלה עד שלא ישלח מסר ביטול ויתקבל מענה מהמכס", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ContainerizationTextCode_CustomsContainerizationOCancelDecInCon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.CancelDecInCon", DefaultText = "Cancelling declaration in containerization",LocalDefaultText = @"ביטול הצהרה בהמכלה", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOCantContNotSubmit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.CantContNotSubmit", DefaultText = "Unsubmitted statement cannot be contained",LocalDefaultText = @"לא ניתן להמכיל הצהרה לא הוגשה", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOCreateDateDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.CreateDateDec", DefaultText = "Create Date Declaration",LocalDefaultText = @"תאריך פתיחת הצהרה", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOExportFileNum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ExportFileNum", DefaultText = "ExportFileNum",LocalDefaultText = @"מס' תיק יצוא", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOCustomFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.CustomFileNo", DefaultText = "CustomFileNo",LocalDefaultText = @"תיק מכס", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOManifestNumberOne = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ManifestNumberOne", DefaultText = "ManifestNumber One",LocalDefaultText = @"מזהה מטען 1", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOSecondCargoID = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.SecondCargoID", DefaultText = "SecondCargoID",LocalDefaultText = @"מזהה מטען 2", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOThirdCargoID = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ThirdCargoID", DefaultText = "ThirdCargoID",LocalDefaultText = @"מזהה מטען 3", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationONotFoundDecCont = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.NotFoundDecCont", DefaultText = "No statements were found that could be contained",LocalDefaultText = @"לא אותרו הצהרות שניתן להמכיל", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.Continue", DefaultText = "Continue",LocalDefaultText = @"המשך", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOBack = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.Back", DefaultText = "Back",LocalDefaultText = @"חזור", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationONoteNoCommon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.NoteNoCommon", DefaultText = "Note, there is no common payload identifier that allows the container of the selected statement",LocalDefaultText = @"שים לב , אין מזהה מטען משותף שמאפשר את ההמכלה של ההצהרה/ות שנבחרה/ו", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOAgentStatement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.AgentStatement", DefaultText = "Agent statement",LocalDefaultText = @"הצהרת סוכן", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOContUpdateCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContUpdateCancel", DefaultText = "The container update is canceled",LocalDefaultText = @"עדכון המכלה מבוטלת", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOContWith = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContWith", DefaultText = "The container with the cargo identifiers",LocalDefaultText = @"ההמכלה עם מזהי המטען", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOExistsInCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ExistsInCustoms", DefaultText = "exists in customs and as long as it is not canceled it will not be possible to use the specific container counter",LocalDefaultText = @" קיימת במכס וכל עוד לא בוטלה לא ניתן יהיה להשתמש במונה ההמכלה הספציפי", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOUpdateOnlyOne = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.UpdateOnlyOne", DefaultText = "Out of a canceled container, only one container can be updated",LocalDefaultText = @"מתוך המכלה מבוטלת ניתן לעדכן המכלה אחת בלבד", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOAssembly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.Assembly", DefaultText = "Assembly",LocalDefaultText = @"אסמבלי", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContainerizationTextCode_CustomsContainerizationOContainersFormed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Containerization.O.ContainersFormed", DefaultText = "The containers formed",LocalDefaultText = @"המכלות שנוצרו", ObjectTableId = ContainerizationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
