@@ -337,7 +337,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSendPayReadyLow2755(string CourierMasterId, string HAWB, string InternalBankId, Boolean IsWorkSheetFromExcel,)
+        public HttpResponseMessage GetSendPayReadyLow2755(string CourierMasterId, string HAWB, string InternalBankId, bool IsWorkSheetFromExcel)
         {
             try
             {
