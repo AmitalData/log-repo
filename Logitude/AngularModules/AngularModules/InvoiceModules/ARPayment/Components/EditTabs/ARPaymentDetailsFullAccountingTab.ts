@@ -1204,7 +1204,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public get SelectedPartnerType() : PartnerTypeList {
 		return this._SelectedPartnerType;
     }
-    }
 
     public set SelectedPartnerType(type : PartnerTypeList) {
         this._SelectedPartnerType = type;

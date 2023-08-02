@@ -119,30 +119,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
-    BuildPartnersTypes() {
-        this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
-        this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
-    }
-
-
-    public SelectedPartnerType: InvoicePartnerType = null;
-    public BillToDependencyValue1: string;
-    public BillToDependencyValue2: boolean;
-
-    PartnersTypeSelectionMethod(selected: InvoicePartnerType) {
-        if (this.SelectedPartnerType != selected) {
-            this.SelectedPartnerType = selected;
-
-            if (selected) {
-                this.EntityPM.BillToPartnerTypeId = selected.PartnerTypeId;
-                this.BillToDependencyValue1 = selected.PartnerTypeId;
-                this.BillToDependencyValue2 = selected.IsCustomer;
-            }
-
-            this.SetUIProperties();
-        }
-    }
-
     get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
     set BillToPartnerTypeId(newValue: string) {
         if (this.billToPartnerTypeId != newValue) {
