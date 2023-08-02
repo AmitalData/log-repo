@@ -19,11 +19,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class ActivityPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -582,6 +582,11 @@ export class ActivityPM {
     private leadSourceName: string;
     public get LeadSourceName() { return this.leadSourceName; }
     public set LeadSourceName(newValue: string) { if (this.leadSourceName != newValue) { this.leadSourceName = newValue; this.MarkAsDirty("LeadSourceName"); } }
+       
+	 
+    private customerCode: string;
+    public get CustomerCode() { return this.customerCode; }
+    public set CustomerCode(newValue: string) { if (this.customerCode != newValue) { this.customerCode = newValue; this.MarkAsDirty("CustomerCode"); } }
        
 	 
 

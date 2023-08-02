@@ -200,6 +200,8 @@ namespace Logitude.CRM.Data.EntityLists
        public string LeadSourceId  { get; set; }
        [DataMember]
        public string LeadSourceName  { get; set; }
+       [DataMember]
+       public string CustomerCode  { get; set; }
    }
 
 }

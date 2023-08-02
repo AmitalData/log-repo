@@ -182,7 +182,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         TeamId, 
 	         ShipmentId, 
 	         LeadSourceId, 
-	         LeadSourceName,
+	         LeadSourceName, 
+	         CustomerCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

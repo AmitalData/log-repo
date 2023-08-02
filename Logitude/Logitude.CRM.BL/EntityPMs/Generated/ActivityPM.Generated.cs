@@ -2179,7 +2179,30 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
-   }
+	  private string customerCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerCode  
+	   {
+	    
+	     get
+		{
+		   return customerCode;
+		 }
+		 set
+		 {
+		   if(customerCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerCode",OldValue=customerCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerCode=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

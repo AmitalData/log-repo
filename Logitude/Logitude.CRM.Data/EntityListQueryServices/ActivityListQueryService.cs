@@ -87,6 +87,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                   CommunicationLogId = a.CommunicationLogId,
                                                   SenderEmail = a.SenderEmail,
                                                   CustomerName = a.Customer == null ? "" : a.Customer.EnglishName,
+                                                  CustomerCode = a.Customer == null ? "" : a.Customer.Code,
                                                   OwnerId = a.OwnerId,
                                                   CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
                                                   CreatedByUserId = a.CreatedByUserId,
