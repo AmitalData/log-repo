@@ -477,7 +477,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB2715_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData.LoggingUserId:null, requestParamsData);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
