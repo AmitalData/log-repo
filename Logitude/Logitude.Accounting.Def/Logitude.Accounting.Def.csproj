@@ -74,6 +74,7 @@
     <Compile Include="EntityPMs\Generated\AccountingIntegrityCheckPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingNotePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingPeriodPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoicesSignedStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentChequePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentChequeStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentsJournalPM.Generated.cs" />
