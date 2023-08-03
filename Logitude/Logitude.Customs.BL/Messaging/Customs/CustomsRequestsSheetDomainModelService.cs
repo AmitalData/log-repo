@@ -493,7 +493,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId);
                 if (availableSignServer != null)
                 {
-                    if (signMethodByQueueEnum != SignMethodByQueueEnum.HSMSignQueue)
+                    if (signMethodByQueueEnum == SignMethodByQueueEnum.HybridDbSignQueue)
                     {
                         RequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
                         RequestParams.RequestVIAChangeDue = ("בקשה מחוייבת חתימה ולכן תשודר ברקע");
