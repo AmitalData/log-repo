@@ -345,6 +345,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     SendALLCorrectManifest(courierDeclarationStatusCode: string) {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
+
         if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -403,6 +405,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     SendReadyLOWPAYToBatch() {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
 
         if (this._PAYReadyNotFastindividual == 0) {
             var myMessageWindow = new MessageWindow();
@@ -470,6 +473,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     SendALLCorrectDec(courierDeclarationStatusCode: string) {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
 
         if (this._ReadyDECToBatchSend == 0 && courierDeclarationStatusCode == "R") {
             var myMessageWindow = new MessageWindow();
@@ -626,6 +630,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                     }
                 });
         }
+
 
     }
 
@@ -1744,6 +1749,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     GetPending() {
+
         this._PendingCodes.length = 0;
         this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
         if (this.HasRequiresApprovalFeature) {
@@ -2025,6 +2031,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     ImportCourierMawbsFromExcel() {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
+
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "הטענת אקסל למסך עבודה";
         logitudeWindow.ShowCloseButton = true;
@@ -2032,7 +2040,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         logitudeWindow.Width = 700;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/ImportCourierMawbsFromExcel/ImportCourierMawbsFromExcelComponent')
         logitudeWindow.WindowClosed.subscribe((event: any) => {
-            debugger;
             this.CourierHawbsFromExcelUploaded = true;
             this.RefreshButtonClicked();
         });
@@ -2041,6 +2048,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
 
     SendALLTerminal() {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -2242,13 +2250,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     _CourierMasterPMService: CourierMasterPMService = new CourierMasterPMService();
 
     Export2Excel() {
-        //this._IsDisableToggle = !this._IsDisableToggle;
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
 
-
-
-
-        //communicationLogStepListService.GetExportExcelByRequestId("8305", this.MyLastCustomsRequestSheetId, SessionLocator.Tenant);
-        //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
         var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM?.Id + '&tenant=' + SessionLocator.Tenant.toString() + '&userId=' + SessionLocator.LoggedUserId + '&IsWorkSheetFromExcel=' + this.CourierHawbsFromExcelUploaded;
 
 
@@ -2413,6 +2416,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
 
     openBulkFeedPending() {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
+
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 1600;
         logitudeWindow.Height = 800;
