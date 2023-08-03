@@ -250,17 +250,36 @@
                         <td style="width: 200px;">
                             <div></div>
                         </td>
-                        <td>
+                        <td *ngIf="IsSecurityLevelVisible" style="width: 210px">
                             <table>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
                                 <!-- SecurityLevel -->
-                                <tr class="FormFieldRow" *ngIf="IsSecurityLevelVisible">
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <div></div>
+                                    </td>
                                     <td>
                                         <LogLabel [ObjectFieldName]="'SecurityLevel'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
 
                                     <td style="top:10px;">
-                                        <div style="width:110px">
+                                        <div style="width:90px">
                                             <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1" [max]="UserSecurityLevel" [allowNull]="true"></NumberInput>
                                         </div>
                                     </td>
