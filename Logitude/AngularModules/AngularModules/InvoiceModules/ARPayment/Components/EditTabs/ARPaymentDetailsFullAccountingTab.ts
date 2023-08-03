@@ -2230,6 +2230,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.AmountInPaymentCurrency = value;
             }
             this.chequeAmount = value;
+
+            if(value==null){
+                this.UIProperties.SetRequired("AmountInPaymentCurrency", this.ObjectTableName, true);
+            }
+            else
+            {
+                this.UIProperties.SetRequired("AmountInPaymentCurrency", this.ObjectTableName, false);
+            }
+
             if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
                 this.UpdateChequeAmountFieldForPaymentCheque();
             }
