@@ -110,17 +110,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void AfterUpdating(ARPaymentChequePM chequePM, EntityPM entityParentPM)
         {
-            bool isAccountingActivated = CheckIfAccountingIsActivated(chequePM.Tenant);
-            if (isAccountingActivated)
-            {
-                ARPayment payment = GetPayment(chequePM.Tenant, chequePM.PaymentId);
-                if (payment != null)
-                {
-                    GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(chequePM.Tenant);
-                    chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(payment.BillToId);
-                }
+            //bool isAccountingActivated = CheckIfAccountingIsActivated(chequePM.Tenant);
+            //if (isAccountingActivated)
+            //{
+            //    ARPayment payment = GetPayment(chequePM.Tenant, chequePM.PaymentId);
+            //    if (payment != null)
+            //    {
+            //        GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(chequePM.Tenant);
+            //        chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(payment.BillToId);
+            //    }
            
-            }
+            //}
         }
 
         private static ARPayment GetPayment(int tenant, string paymentId)
