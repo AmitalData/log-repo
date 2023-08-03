@@ -387,7 +387,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
         currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
-
+        currRequestParams.IsWorkSheetFromExcel = true;
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe((res: any) => {
@@ -526,7 +526,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     SendALLSVG(isAll: boolean) {
-        if ((this._SVGTotal == 0 && !isAll) || !this.CourierHawbsFromExcelUploaded) {
+        if ((this._SVGTotal == 0 && !isAll)) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
@@ -1750,7 +1750,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             this._PendingCodes.push({ 'Key': "NotApproved", 'Value': TextCodeTranslator.Translate("Customs.CourierPendingReason.O.NotApprovedPending") });
         }
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetPending(this.entityPM?.Id)
+        this._CourierMasterService.GetPending(this.entityPM?.Id, true)
             .subscribe((resu: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var list: string[];
@@ -2168,6 +2168,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM?.Id;
         currRequestParams.MAWB = this.entityPM?.MAWB;
+        currRequestParams.IsWorkSheetFromExcel = true;
+
         let text = "נא אשר מחיקת קוד עיכוב";
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
@@ -2178,6 +2180,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         } else {
             currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
         }
+
+        currRequestParams
         //currRequestParams.PendingCode=this.SelectedPendingCodeFilter.Key;
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show(text);
@@ -2220,6 +2224,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM?.Id;
         currRequestParams.MAWB = this.entityPM?.MAWB;
+        currRequestParams.IsWorkSheetFromExcel = true;
+
         let text = "האם לאשר את כל Pending שלא אושרו בטיסה";
 
         var confirmWindow = new ConfirmWindow();

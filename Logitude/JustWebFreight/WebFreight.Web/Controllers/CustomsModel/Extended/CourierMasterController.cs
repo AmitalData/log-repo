@@ -164,7 +164,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
 
-        public HttpResponseMessage GetPending(string CourierMasterId,Boolean IsWorkSheetFromExcel)
+        public HttpResponseMessage GetPending(string CourierMasterId,bool IsWorkSheetFromExcel, string UserId=null)
         {
             try
             {
@@ -174,7 +174,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(MyContext);
-                string loggingUserId = AuthenticationUtil.ResolveUserId(authToken.Tenant);
+                string loggingUserId = !string.IsNullOrEmpty(UserId)? UserId: AuthenticationUtil.ResolveUserId(authToken.Tenant);
                 List<string> result = declarationCourierStatusRepository.GetPendingByMasterID(authToken.Tenant, CourierMasterId, loggingUserId, IsWorkSheetFromExcel);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -258,7 +258,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB1170_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel?requestParamsData.LoggingUserId:null, requestParamsData);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
@@ -304,7 +304,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCBClosePending_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel?requestParamsData.LoggingUserId:null, requestParamsData);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
@@ -326,7 +326,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCAApproveAllPending_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData.LoggingUserId:null, requestParamsData);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
@@ -337,7 +337,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSendPayReadyLow2755(string CourierMasterId, string HAWB, string InternalBankId, bool IsWorkSheetFromExcel)
+        public HttpResponseMessage GetSendPayReadyLow2755(string CourierMasterId, string HAWB, string InternalBankId, bool IsWorkSheetFromExcel, string UserId=null)
         {
             try
             {
@@ -346,12 +346,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
+               string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new
                     DCAInUCB2755_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, HAWB, InternalBankId, IsWorkSheetFromExcel);
+                var sts = messagingService.CreateCRS(tenant, UserId, CourierMasterId, HAWB, InternalBankId, IsWorkSheetFromExcel);
 
                 return Request.CreateResponse(HttpStatusCode.OK,
 
@@ -431,7 +431,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB2750_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData.LoggingUserId:null, requestParamsData);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
@@ -454,7 +454,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
                 var messagingService = new DCAInUCBCTML_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData .LoggingUserId: null, requestParamsData);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
