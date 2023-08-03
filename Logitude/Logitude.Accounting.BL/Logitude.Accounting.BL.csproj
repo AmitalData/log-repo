@@ -170,6 +170,7 @@
     <Compile Include="APIDataContract\ReconcileMethod.Generated.cs" />
     <Compile Include="APIDataContract\RevenueExpenseType.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AccountingEntityDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ARInvoicesSignedStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ARPaymentChequeStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AutomaticExternalReconcileMethodDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AutomaticReconcileDetails.Generated.cs" />
@@ -420,6 +421,7 @@
     <Compile Include="EntityDataMappings\AccountingIntegrityCheckDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingNoteDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingPeriodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ARInvoicesSignedStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentChequeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentChequeStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentsJournalDataMapping.cs" />
@@ -456,6 +458,7 @@
     <Compile Include="EntityDataMappings\Generated\AccountingIntegrityCheckDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AccountingNoteDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AccountingPeriodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ARInvoicesSignedStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentChequeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentChequeStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentsJournalDataMapping.Generated.cs" />
@@ -647,6 +650,7 @@
     <Compile Include="EntityQueryServices\Generated\AccountingEntityJournalQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingIntegrityCheckQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingNoteQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARInvoicesSignedStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ARPaymentChequeStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ARPaymentsJournalQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AutomaticExternalReconcileMethodQueryService.Generated.cs" />
@@ -761,6 +765,7 @@
     <Compile Include="EntityUpdateServices\CalculatedChartsOfAccountUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CopyFromTenant0Service.cs" />
     <Compile Include="EntityUpdateServices\Generated\AccountingEntityJournalUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARInvoicesSignedStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ARPaymentsJournalUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CalculatedChartsLineTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CalculatedChartsOfAccountsLineUpdateService.Generated.cs" />

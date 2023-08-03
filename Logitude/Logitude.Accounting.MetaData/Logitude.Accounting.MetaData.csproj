@@ -152,6 +152,7 @@
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />
     <None Include="DBTables\AccountingNote.dxml" />
     <None Include="DBTables\AccountingPeriod.dxml" />
+    <None Include="DBTables\ARInvoicesSignedStatus.dxml" />
     <None Include="DBTables\ARPaymentCheque.dxml" />
     <None Include="DBTables\ARPaymentChequeStatus.dxml" />
     <None Include="DBTables\ARPaymentsJournal.dxml" />
@@ -245,6 +246,7 @@
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
     <None Include="EntityFiles\AccountingEntityJournal.lxml" />
     <None Include="EntityFiles\AccountingNote.lxml" />
+    <None Include="EntityFiles\ARInvoicesSignedStatus.lxml" />
     <None Include="EntityFiles\ARPaymentsJournal.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ARInvoicesSignedStatuses"
+  Schema="dbo"
+  DBType="Main"
+  Module="Accounting">
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+</Table>

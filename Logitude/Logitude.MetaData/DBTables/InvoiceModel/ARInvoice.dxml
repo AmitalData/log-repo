@@ -851,7 +851,7 @@
   <Column
     Name="IsSigned"
     OldNames="is_signed"
-    Type="bit">
+    Type="varchar">
     <Constraints
       Nullable="true" />
   </Column>
@@ -999,6 +999,11 @@
     ForeignKeyColumn="DocumentTemplateId"
     ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="IsSigned"
+    ReferencedTable="ARInvoicesSignedStatuses"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InvoiceDate" />

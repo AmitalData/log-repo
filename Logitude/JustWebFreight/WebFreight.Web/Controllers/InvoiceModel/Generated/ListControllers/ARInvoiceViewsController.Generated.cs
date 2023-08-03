@@ -157,7 +157,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 };
 
 				List<ObjectField> ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice",tenant);
-                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+               List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
                     object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);

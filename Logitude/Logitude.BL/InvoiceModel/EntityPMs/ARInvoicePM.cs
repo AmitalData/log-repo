@@ -64,6 +64,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string PrintByUserName { get; set; }
         public string IssuedByUserId { get; set; }
 
+        public string IsSigned { get; set; }
+
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InvoiceCurrencyId { get; set; }
         public string InvoiceCurrencyCode { get; set; }
