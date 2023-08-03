@@ -323,7 +323,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return q;
         }
 
-        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations , int tenant)
+        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations, int tenant)
         {
             IQueryable<DeclarationCourierStatus> iQueryable = (from a in context.DeclarationCourierStatuses
                                                                where a.Tenant == tenant
@@ -394,8 +394,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         Tenant = dcs.Tenant,
 
                     } into t2
-                    select new DeclarationCourierStatusList
-                    {
+                select new DeclarationCourierStatusList
+                {
                         Tenant = t2.Key.Tenant,
                         CourierMasterId = t2.Key.CourierMasterId,
                         DeclarationId = t2.Key.DeclarationId,
