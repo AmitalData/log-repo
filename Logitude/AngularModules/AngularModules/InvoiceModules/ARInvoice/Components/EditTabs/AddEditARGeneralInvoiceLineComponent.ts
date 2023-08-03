@@ -124,8 +124,9 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
         if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.ReceivableCreditGLAccountId)) {
             errors.push(TextCodeTranslator.Translate("ARInvoice.M.NoGLAccount"));
         }
+        debugger;
 
-        if (this.DataContext.fatherComponent.glaccount != null && this.DataContext.fatherComponent.glaccount.IsVATExempt == false && this.DataContext.VatPercentage > 0) {
+        if (this.DataContext.fatherComponent.glaccount != null && this.DataContext.fatherComponent.glaccount.IsVATExempt == true && this.DataContext.VatPercentage > 0) {
             errors.push("The partner is VAT exempt");
         }
 
