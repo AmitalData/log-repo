@@ -373,31 +373,10 @@
     ForeignKeyColumn="DocumentId"
     ReferencedTable="Documents"
     ReferencedColumn="Id"
-    Ignore="true"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="DocumentTypeId"
-    ReferencedTable="DocumentTypes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ObjectTableId"
-    ReferencedTable="ObjectTables"
-    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ChildObjectTableId"
     ReferencedTable="ObjectTables"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CreatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="OwnerId"
-    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -435,6 +414,26 @@
     ReferencedTable="Departments"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DocumentTypeId"
+    ReferencedTable="DocumentTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OwnerId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="EntityId" />
   <Index
@@ -449,31 +448,10 @@
     Columns="EntityId,ChildEntityId" />
   <Index
     Columns="ChildEntityId" />
-  
-  
-  <!--
-  Unnecessary Index On Columns DUE IS FOREIGN KEY
   <Index
-   Columns="DocumentId" />-->
-
-  
-  
-  <!--
-  Unnecessary Index On Columns DUE IS FOREIGN KEY
+    Columns="Tenant,DocumentId" />
   <Index
-   Columns="DocumentId" />-->
-
+    Columns="SearchFields" />
   <Index
-Columns="Tenant,DocumentId" />
-
-
-	<Index
-	Columns="SearchFields" />
-
-	<Index
-  Columns="Tenant,ExternalEntityReference,ExternalEntityName" />
-
-
-
-
+    Columns="Tenant,ExternalEntityReference,ExternalEntityName" />
 </Table>
