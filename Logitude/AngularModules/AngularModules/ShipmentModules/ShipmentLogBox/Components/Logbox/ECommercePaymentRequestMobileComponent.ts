@@ -65,8 +65,8 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     private datePipe: DatePipe;
     _ImageLibraryService: ImageLibraryService;
     tenantManagement: TenantManagementPM;
-    comapnylogoId: string;
-    logoUrl: string;
+    logoImg: string = '';
+    logoUrl: string = '';
 
     constructor(private cd: ChangeDetectorRef) {
         super();
@@ -401,7 +401,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     
     async initTenantManagements(securityKey: string) {
         const data: UrlAndLogo = await this._ShipmentPMService.getLogoAndUrlWithoutToken(securityKey)
-        this.comapnylogoId = data.logo;
+        this.logoImg = data.logo;
         this.logoUrl = data.url;
+    }
+
+    openLogoUrl() {
+        if(this.logoUrl)
+            window.open(this.logoUrl)
     }
 }
