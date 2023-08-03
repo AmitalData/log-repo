@@ -29,6 +29,10 @@ using Logitude.Server.Tools;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.InvoiceModel.Tools.DataMapping;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.Helpers;
+using System.Data.SqlClient;
+using System.Data;
+
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -72,10 +76,7 @@ namespace Logitude.Accounting.BL.Utils
 
                 IAccountingContext accContext = AccountingContext.GetContext(tenant); 
                 IInvoiceContext invContext = InvoiceContext.GetContext(tenant);
-                CardQuery cardQueryService = new CardQuery(tenant);
-                GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(accContext);
                 string lastCheckedId = "";
-                int thisTimeMadeCount = 0;
                 _retry = true;
                 while (_retry)
                 {
@@ -130,58 +131,69 @@ namespace Logitude.Accounting.BL.Utils
             List<APInvoice_LT_DTO> aPInvoice_LT_list = aPInvoiceQuery.GetAPInvoicesForStatusUpdate(accContext, ref args);
             if (aPInvoice_LT_list != null && aPInvoice_LT_list.Count > 0)
             {
-                Action<IEnumerable<APInvoice_LT_DTO>> ProcessOneBatch =    oneBatch => ProcessOneBatchImpl(oneBatch, aPInvoiceRepository, tenant, invContext);
+                Action<IEnumerable<APInvoice_LT_DTO>> ProcessOneBatch =    oneBatch => ProcessOneBatchImpl(oneBatch, tenant);
 
                 APInvoiceStatusUpdater.ProcessInBatches<APInvoice_LT_DTO>(aPInvoice_LT_list, 100, ProcessOneBatch, ref _retry);
+            }
+            if (sw.Elapsed.TotalMinutes > timeoutinmin)
+            {
+                string errorText = $"Timeout -Operate the method again ";
+                _badList.Add(errorText);
+                _retry = true;
+
             }
 
         }
 
-        private void ProcessOneBatchImpl(IEnumerable<APInvoice_LT_DTO> aPInvoice_LT_list, APInvoiceRepository aPInvoiceRepository, int tenant, IInvoiceContext invContext)
+        private void ProcessOneBatchImpl(IEnumerable<APInvoice_LT_DTO> aPInvoice_LT_list, int tenant)
         {
 
-            List<string> aPInvoiceIdList = aPInvoice_LT_list.Select(aplt => aplt.APInvoiceId).ToList(); 
-            APInvoiceQuery query = new APInvoiceQuery(aPInvoiceRepository);
-            List<APInvoicePM> PMs = query.GetAllAPInvoicesPMsByIds(aPInvoiceIdList, tenant);
-            if (PMs != null && PMs.Count > 0)
-            {
-                foreach (var aPInvoicePM in PMs)
+         //   List<string> aPInvoiceIdList = aPInvoice_LT_list.Select(aplt => aplt.APInvoiceId).ToList(); 
+         //   APInvoiceQuery query = new APInvoiceQuery(aPInvoiceRepository);
+         //   List<APInvoicePM> PMs = query.GetAllAPInvoicesPMsByIds(aPInvoiceIdList, tenant);
+        //    if (PMs != null && PMs.Count > 0)
+        //    {
+            //  foreach (var aPInvoicePM in PMs)
+                foreach (var one_item in aPInvoice_LT_list)
                 {
                     try
                     {
 
-                        bool toUpdate = false;
-                        APInvoice_LT_DTO one_item = aPInvoice_LT_list.Where(item => item.APInvoiceId == aPInvoicePM.Id).FirstOrDefault();
+                        //APInvoice_LT_DTO one_item = aPInvoice_LT_list.Where(item => item.APInvoiceId == aPInvoicePM.Id).FirstOrDefault();
                         if (one_item != null)
                         {
+                            bool toUpdate = false;
+                            string newStatusCode = "";
+                            bool newIsClosed = false; 
                             if (one_item.APInvoiceStatusCode != "AD" && ((one_item.LT_LocalAmountDebit != 0m && one_item.LT_OpenAmount == one_item.LT_LocalAmountDebit)
                                                             || (one_item.LT_LocalAmountDebit == 0m && one_item.LT_OpenAmount == one_item.LT_LocalAmountCredit * -1)))
                             {
-                                aPInvoicePM.StatusCode = "AD";
-                                aPInvoicePM.IsClosed = false;
+                                newStatusCode = "AD";
+                                newIsClosed = false;
                                 toUpdate = true;
                             }
 
                             else if (one_item.APInvoiceStatusCode != "PP" && one_item.LT_OpenAmount != 0m)
                             {
-                                aPInvoicePM.StatusCode = "PP";
-                                aPInvoicePM.IsClosed = false;
+                                newStatusCode = "PP";
+                                newIsClosed = false;
                                 toUpdate = true;
                             }
                             else if (one_item.APInvoiceStatusCode != "PD" && one_item.LT_OpenAmount == 0m)
                             {
-                                aPInvoicePM.StatusCode = "PD";
-                                aPInvoicePM.IsClosed = true;
+                                newStatusCode = "PD";
+                                newIsClosed = true;
                                 toUpdate = true;
                             }
                             if (toUpdate)
                             {
-                                APInvoice poco = new APInvoice();
-                                APInvoiceMapping aPInvoiceMapping = new APInvoiceMapping();
-                                APInvoiceMapping.MapEntity(aPInvoicePM, poco, false);
+                                //APInvoice poco = new APInvoice();
+                                //APInvoiceMapping aPInvoiceMapping = new APInvoiceMapping();
+                                //APInvoiceMapping.MapEntity(aPInvoicePM, poco, false);
 
-                                aPInvoiceRepository.Update(poco);
-                                aPInvoiceRepository.SubmitChanges();
+                                //aPInvoiceRepository.Update(poco);
+                                //aPInvoiceRepository.SubmitChanges();
+                                Update_APInvoiceStatusCode(one_item.APInvoiceId, tenant, newStatusCode, newIsClosed);
                             }
                         }
                     }
@@ -195,10 +207,45 @@ namespace Logitude.Accounting.BL.Utils
                         _badList.Add(errorText);
                     }
                 }
-            }
+       //     }
         }
 
-       
+        private static int Update_APInvoiceStatusCode(string aPInvoiceId, int tenant, string newStatusCode, bool newIsClosed)
+        {
+
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+            using (SqlConnection connection = new SqlConnection(strConnString))
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText =
+                        "UPDATE APInvoices SET StatusCode= @V_StatusCode , IsClosed= @V_IsClosed " +
+                        "WHERE Id =@V_Id and tenant= @V_tenant";
+
+                    command.CommandType = CommandType.Text;
+
+                    command.Parameters.Add("@V_tenant", SqlDbType.Int);
+                    command.Parameters["@V_tenant"].Value = tenant;
+
+                    command.Parameters.Add("@V_Id", SqlDbType.VarChar);
+                    command.Parameters["@V_Id"].Value = aPInvoiceId;
+
+                    command.Parameters.Add("@V_StatusCode", SqlDbType.VarChar);
+                    command.Parameters["@V_StatusCode"].Value = newStatusCode;
+
+                    command.Parameters.Add("@V_IsClosed", SqlDbType.Bit);
+                    command.Parameters["@V_IsClosed"].Value = newIsClosed;
+
+
+                    int rows = command.ExecuteNonQuery();
+                    connection.Close();
+                    return rows;
+                }
+            }
+
+        }
 
         private BatchTaskExecutionUpdateService GetBatchTaskUpdateServiceInstance(int tenant)
         {

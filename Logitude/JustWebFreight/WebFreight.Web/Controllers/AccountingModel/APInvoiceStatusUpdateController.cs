@@ -54,6 +54,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         new APInvoiceStatusUpdateArg()
                         {
                             Tenant = tenant,
+                            InvoiceNumber = args.InvoiceNumber,
+                            FromInvoiceDate = args.FromInvoiceDate,
+                            ToInvoiceDate = args.ToInvoiceDate,
                         }, tenant, subj, false);
 
 
@@ -66,6 +69,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     APInvoiceStatusUpdateArg aPInvoiceStatusUpdateArg = new APInvoiceStatusUpdateArg()
                     {
                         Tenant = tenant,
+                        InvoiceNumber = args.InvoiceNumber,
+                        FromInvoiceDate = args.FromInvoiceDate,
+                        ToInvoiceDate = args.ToInvoiceDate,
                     };
                     aPInvoiceStatusUpdateBatch.RunAPInvoiceStatusUpdate(aPInvoiceStatusUpdateArg);
                     string responseText = aPInvoiceStatusUpdateBatch.ResponseText();
