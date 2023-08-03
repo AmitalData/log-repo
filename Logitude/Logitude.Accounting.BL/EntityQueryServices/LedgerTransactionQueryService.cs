@@ -902,17 +902,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return invoicesTransactions;
         }
 
-        public decimal GetTotalOpenChequesLocalAmount(string accountId) {
+        public decimal? GetTotalOpenChequesLocalAmount(string accountId) {
             var journallines = from jl in context.JournalLines
                                join j in context.Journals on jl.JournalId equals j.Id
                                join arpch in context.ARPaymentCheques on j.AccountingEntityId equals arpch.PaymentId
                                where j.AccountingEntityCode == "3" && jl.ActionCode == "1" && j.IsLedgerCreated == true
                                && jl.CreditAccountId == accountId
                                select jl;
-
-            return journallines.Sum(x => x.LocalAmount);
+            return ((decimal?)(journallines).Distinct().Sum(s => (decimal?)s.LocalAmount)).GetValueOrDefault();
         }
-        public decimal GetTotFutureOpenChequesLocalAmount(string accountId, DateTime endOfTodayDate)
+        public decimal? GetTotFutureOpenChequesLocalAmount(string accountId, DateTime endOfTodayDate)
         {
             var journallines = from jl in context.JournalLines
                                join j in context.Journals on jl.JournalId equals j.Id
@@ -921,7 +920,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                && jl.CreditAccountId == accountId && jl.DueDate > endOfTodayDate
                                select jl;
 
-            return journallines.Sum(x => x.LocalAmount);
+            return ((decimal?)(journallines).Distinct().Sum(s => (decimal?)s.LocalAmount)).GetValueOrDefault();
         }
 
         public IQueryable<LedgerTransactionPM> GetTransactionsJoinedWithJounrals()
