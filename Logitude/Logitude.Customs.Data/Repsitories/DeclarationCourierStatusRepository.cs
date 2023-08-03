@@ -196,7 +196,7 @@ namespace Logitude.Customs.Data.Repsitories
             var pocos = q.ToList();
             return pocos;
         }
-        private IQueryable<DeclarationCourierStatus> GetBy(int tenant, string CourierMasterId)
+        public IQueryable<DeclarationCourierStatus> GetBy(int tenant, string CourierMasterId)
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
@@ -208,7 +208,7 @@ namespace Logitude.Customs.Data.Repsitories
                      select status);
             return q;
         }
-        private IQueryable<DeclarationCourierStatus> GetByFromExcel(int tenant, string userId)
+        public IQueryable<DeclarationCourierStatus> GetByFromExcel(int tenant, string userId)
         {
             var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);

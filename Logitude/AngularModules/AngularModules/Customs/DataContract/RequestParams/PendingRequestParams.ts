@@ -6,5 +6,8 @@ export class PendingRequestParams extends GenericRequestParams {
     public CourierMasterId: string;
     public MAWB: string;
     public PendingCode: string[];
-    public DeclarationsList:string[];
+    public DeclarationsList: string[];
+    public IsWorkSheetFromExcel: boolean;
+
+
 }
