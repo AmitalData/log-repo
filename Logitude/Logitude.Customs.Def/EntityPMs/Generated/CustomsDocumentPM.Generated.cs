@@ -791,6 +791,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal ocrScore ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal OcrScore  
+	   {
+	    
+	     get
+		{
+		   return ocrScore;
+		 }
+		 set
+		 {
+		   if(ocrScore != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrScore",OldValue=ocrScore,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   ocrScore=value;
+		   }
+			
+		 }
+	   }
+	  private string ocrStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OcrStatusCode  
+	   {
+	    
+	     get
+		{
+		   return ocrStatusCode;
+		 }
+		 set
+		 {
+		   if(ocrStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrStatusCode",OldValue=ocrStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ocrStatusCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

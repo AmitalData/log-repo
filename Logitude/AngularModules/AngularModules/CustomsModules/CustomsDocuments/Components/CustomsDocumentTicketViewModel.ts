@@ -89,7 +89,7 @@ export class CustomsDocumentTicketViewModel {
     }
 
    
-    public static  IsOcrDocument : boolean = false;
+    public static IsOcrDocument : boolean = false;
     public FromCompanyDocumentType2Add: boolean = false;
 
     public get CustomDocumentTypeMetaDataLists() { return this.customDocumentTypeMetaDataLists };
@@ -546,7 +546,6 @@ export class CustomsDocumentTicketViewModel {
 
     }
    async StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel: RelatedDocumentViewModel) {
-
         CustomsDocumentTicketViewModel.IsOcrDocument = false;
         const isConnectTicket: boolean = await this.GetDocConnectTicket(relatedDocumentViewModel.CustomDocument.DocumentsFilingId)
 
@@ -612,33 +611,53 @@ export class CustomsDocumentTicketViewModel {
                 });
             }
             else {
- 
 
-            var ocrDocumentExtendedListService = new OcrDocumentExtendedListService();
-            ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, relatedDocumentViewModel.CustomDocument.DocumentsFilingId).subscribe((response: ServiceResponse) => {
-            if(response.Result && response.Result.StatusCode == "1")//סטטוס נשלח , טרם הסתיים
-            {
-                   SessionLocator.SelectedSession.StopBusyIndicator();
-                   var messageWindow = new MessageWindow();
-                   messageWindow.RTL=true;
-                   messageWindow.ShowWarningIcon=true;
-                   
-                   messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                   messageWindow.Show("טרם הסתיים תהליך OCR");        
-                   messageWindow.WindowClosed.subscribe((event: any) => messageWindow.Close());
+
+                if(relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode == "1" || relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode == "3")// סטטוס נכשל או סטטוס נשלח , טרם הסתיים
+                {
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    var messageWindow = new MessageWindow();
+                    messageWindow.RTL=true;
+                    messageWindow.ShowWarningIcon=true;
+                               
+                    messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                    messageWindow.Show(relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode == "1"? "טרם הסתיים תהליך OCR" : "תהליך OCR נכשל");        
+                    messageWindow.WindowClosed.subscribe((event: any) => messageWindow.Close());
                     return
-            }
-            if(response.Result && response.Result.StatusCode == "2"){
-                CustomsDocumentTicketViewModel.IsOcrDocument = true;
+                }
+
+                if(relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode == "2")
+                {
+                    CustomsDocumentTicketViewModel.IsOcrDocument = true;
+                }
+                
                 this.ProcessConnectDocument(relatedDocumentViewModel);
-            }
-            else{
-                this.ProcessConnectDocument(relatedDocumentViewModel);
-            }
+
+        //     var ocrDocumentExtendedListService = new OcrDocumentExtendedListService();
+        //     ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, relatedDocumentViewModel.CustomDocument.DocumentsFilingId).subscribe((response: ServiceResponse) => {
+        //     if(response.Result && response.Result.StatusCode == "1")//סטטוס נשלח , טרם הסתיים
+        //     {
+        //            SessionLocator.SelectedSession.StopBusyIndicator();
+        //            var messageWindow = new MessageWindow();
+        //            messageWindow.RTL=true;
+        //            messageWindow.ShowWarningIcon=true;
+                   
+        //            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        //            messageWindow.Show("טרם הסתיים תהליך OCR");        
+        //            messageWindow.WindowClosed.subscribe((event: any) => messageWindow.Close());
+        //             return
+        //     }
+        //     if(response.Result && response.Result.StatusCode == "2"){
+        //         CustomsDocumentTicketViewModel.IsOcrDocument = true;
+        //         this.ProcessConnectDocument(relatedDocumentViewModel);
+        //     }
+        //     else{
+        //         this.ProcessConnectDocument(relatedDocumentViewModel);
+        //     }
 
 
              
-        });
+        // });
                
             }
         }

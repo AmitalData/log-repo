@@ -281,6 +281,7 @@ export class CustomsDocumentsComponent
             customsDocTickets = customsDocTickets.substr(1, customsDocTickets.length - 1);
 
             custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
+                
                 this.MetadataValues = response2.Result;
 
                 this.GetRelatedDocuments();
@@ -294,6 +295,7 @@ export class CustomsDocumentsComponent
     }
 
     FillCustomsDocumentsTickets(tickets: CustomsDocumentsTicketPM[], selectedDocId: string = null, reload = false) {
+        
         if (this.CustomsDocumentsTicketViewModels == null) {
             this.CustomsDocumentsTicketViewModels = [];
         }
@@ -337,6 +339,7 @@ export class CustomsDocumentsComponent
     }
 
     GetRelatedDocuments() {
+        
         if (this.iCustomsDocumentsController.IsRelatedDocumentsVisible()) {
             this.RelatedDocuments = [];
             this.customsDocumentsDataProvider.GetCustomsDocumentsRelatedDocuments(this.DocumentFilterSelectedValue).subscribe((response: ServiceResponse) => {
@@ -610,6 +613,7 @@ export class CustomsDocumentsComponent
     }
 
     EditCustomsDocumentsTicket(customsDocumentsTicket: CustomsDocumentTicketViewModel) {
+        
         if (!customsDocumentsTicket.PreventEdit) {
             if (customsDocumentsTicket.DocumentsFilingId) {
                 this.CurrentSession.StartBusyIndicatorLoading();
@@ -624,7 +628,7 @@ export class CustomsDocumentsComponent
                             if(CustomsDocumentTicketViewModel.IsOcrDocument){
 
                                 this.UpsertSupplierInvioceByOcr(customsDoc.DocumentsFilingId, isThereRequests, customsDocumentsTicket.customsDocumentsTicketPM, customsDoc);
-                                
+                                CustomsDocumentTicketViewModel.IsOcrDocument = false;
                             }
                             else{
 
