@@ -1797,23 +1797,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             this.RefreshList();
         }
     }
-    /*
-    _PendingCodesFilter: KeyValuePair;
-    get _SelectedHOLDValue() {
-        if (this._PendingFilter == "A" && this._PendingCodes != null) {
-            this._PendingCodesFilter = this._PendingCodes[0];
-        } else {
-            if (this._PendingCodes!= null)this._PendingCodesFilter = this._PendingCodes.find(r => r.Key == this._PendingFilter);
-        }
-        return this._PendingCodesFilter;
-    }
-    set _SelectedHOLDValue(value) {
-        if (this._PendingCodesFilter != value) {
-            this._PendingCodesFilter = value;
-            if (this._PendingCodesFilter != null)this._PendingFilter = this._PendingCodesFilter.Key;
-        }
-    }
-    */
+
     _SelectedPendingCodeFilter: KeyValuePair;
     get SelectedPendingCodeFilter() {
         if (this.PendingFilter == "A" && this._PendingCodes != null) {

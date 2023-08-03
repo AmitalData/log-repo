@@ -96,6 +96,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 MAWB = myPendingRequestParams.MAWB,
                 tenant = tenant,
                 MyMoreParams = "",
+                IsWorkSheetFromExcel = myPendingRequestParams.IsWorkSheetFromExcel,
                 declarationList = myPendingRequestParams.DeclarationsList,
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
