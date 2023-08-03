@@ -157,12 +157,9 @@
 
                                                 </td>
                                                 <td style="height: 55px;width:10px;"></td>
-                                                <td style="height: 55px;width:150px">
-                                                    <ImageComponent *ngIf="comapnylogoId" style="vertical-align:top"
-                                                        [DisplayOnly]="true" [HideBorder]="true"
-                                                        [ImageId]="comapnylogoId" [LinkUrl]='logoUrl'></ImageComponent>
-                                                    <img *ngIf="!comapnylogoId" [attr.src]="CompanyLogo"
-                                                        style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;width:150px" />
+                                                <td style="height: 55px;width:150px">                                                    
+                                                    <img [attr.src]="logoImg || CompanyLogo"
+                                                        style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;width:150px" (click)="openLogoUrl()" />
                                                 </td>
                                             </tr>
                                         </table>
@@ -515,7 +512,7 @@
                                                 <td style="height: 22px;width:40%;">
                                                     <div style="vertical-align:middle;text-align:center;">
                                                         <div [class.Disable]="IsAgreed == false" (click)="OnPayClick()"
-                                                            style="width:225px;height:35px;background-color:cornflowerblue;display:inline-block;font-size:13px;padding-top:5px;border:1px solid cornflowerblue;border-radius:9px;">
+                                                            style="width:225px;height:35px;background-color:cornflowerblue;display:inline-block;font-size:13px;padding-top:5px;border:1px solid cornflowerblue;border-radius:9px;margin-top: 10px;">
                                                             <span style="text-align:center;font-size:13px;">
                                                                 <a
                                                                     style="color:white;font-size:18px;font-family: sans-serif;">לתשלום
@@ -538,16 +535,11 @@
                                                     </span>
                                                 </td>
                                             </tr>
-                                            <tr *ngIf="comapnylogoId">
-                                                <td style="text-align:center;top: 40px;">
-                                                    <ImageComponent
-                                                        style="width: 200px;display: inline-block;height: 70px;"
-                                                        [DisplayOnly]="true" [HideBorder]="true"
-                                                        [ImageId]="comapnylogoId" [LinkUrl]='logoUrl'></ImageComponent>
-                                                </td>
-                                            </tr>
                                             <tr *ngIf="dsvStyle">
-                                                <td style="text-align:center;top: 20px;" colspan="2">
+                                                <td style="text-align:center;top: 10px;" colspan="2">
+                                                    <div>
+                                                        <img [attr.src]="logoImg" style="height:55px;width:150px" (click)="openLogoUrl()" />
+                                                    </div>
                                                     <span
                                                         style="font-size:11px;color:black;font-family:sans-serif;white-space: normal;display: inline-block;margin: 0 2px;">
                                                         חברת DSV הינה חברת שילוח בין לאומי השלישית בגודלה בעולם.
@@ -558,7 +550,6 @@
                                                         אינטרנט שונים בינהם עבור עליאקספרס, ועוד.
                                                         <br><br>לינק לאתר האינטרנט: <a style="font-size: 11px;"
                                                             href="https://il.dsv.com/about-dsv/israel-dsv/">https://il.dsv.com/about-dsv/israel-dsv/</a>
-
                                                     </span>
                                                 </td>
                                             </tr>
@@ -685,17 +676,13 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr *ngIf="comapnylogoId">
-                                <td colspan="100%" style="text-align:center;width: 100%;">
-                                    <ImageComponent style="width: 200px;display: inline-block;height: 70px;"
-                                        [DisplayOnly]="true" [HideBorder]="true" [ImageId]="comapnylogoId"
-                                        [LinkUrl]='logoUrl'></ImageComponent>
-                                </td>
-                            </tr>
                             <tr *ngIf="dsvStyle">
                                 <td style="text-align:center;top: 20px;" colspan="2">
+                                    <div>
+                                        <img [attr.src]="logoImg" style="height:55px;width:150px" (click)="openLogoUrl()" />
+                                    </div>
                                     <span
-                                        style="font-size:11px;color:black;font-family:sans-serif;white-space: normal;display: inline-block;margin: 0 2px;">
+                                        style="font-size:11px;color:black;font-family:sans-serif;white-space: normal;display: inline-block;margin: 10px 2px;">
                                         חברת DSV הינה חברת שילוח בין לאומי השלישית בגודלה בעולם.
                                         <br>החברה מציעה פתרונות לניהול שרשרת האספקה בלמעלה מ-80 מדינות.
                                         <br>חברת DSV ישראל מובילה בענף שילוח בינלאומי והעמילות מעל 50 שנה.
@@ -703,7 +690,6 @@
                                         בינהם עבור עליאקספרס, ועוד.
                                         <br><br>לינק לאתר האינטרנט: <a style="font-size: 11px;"
                                             href="https://il.dsv.com/about-dsv/israel-dsv/">https://il.dsv.com/about-dsv/israel-dsv/</a>
-
                                     </span>
                                 </td>
                             </tr>

@@ -41,6 +41,8 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Marvin.JsonPatch;
 using Marvin.JsonPatch.Exceptions;
+using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
+using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 {
@@ -741,13 +743,15 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
         public HttpResponseMessage GetLogoAndUrlWithoutToken(string securityKey)
         {
-            int? tenantNumber = new ShipmentQuery(0).GetTenantBySecurityKey(securityKey);
-            if (tenantNumber == null) 
+            int? tenant = new ShipmentQuery(0).GetTenantBySecurityKey(securityKey);
+            if (tenant == null) 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "tenant not found");
 
-            var tenantManagement = new TenantManagementQuery().GetSinglePM(tenantNumber.Value);
+            var tenantManagement = new TenantManagementQuery().GetSinglePM(tenant.Value);
+            byte[] filedata = new Uploader().DownloadFile(tenantManagement.ComapnylogoId, "jpg", "images", tenant.Value);
+            string logo = "data:image/jpg;base64," + Convert.ToBase64String(filedata);
 
-            return Request.CreateResponse(new { url = tenantManagement.LogoURL, logo = tenantManagement.ComapnylogoId });
+            return Request.CreateResponse(new { url = tenantManagement.LogoURL, logo = logo });
         }
 
         private static void AddWhatsAppMessagingPhoneNumberToResponseHeader(int tenant)
