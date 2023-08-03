@@ -22,5 +22,11 @@ namespace Logitude.Customs.BL.EntityQueryServiceExt
             CustomsDocumentQueryService query = new CustomsDocumentQueryService(tenant);
             return query.GetSingle(id, getComposition, getFromCache);
         }
+
+        public CustomsDocumentPM GetSingleByDocFileId(string id,  int tenant)
+        {
+            CustomsDocumentQueryService query = new CustomsDocumentQueryService(tenant);
+            return query.GetSingleByDocFileId(id, tenant);
+        }
     }
 }

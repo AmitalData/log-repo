@@ -15,6 +15,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Customs.Data.Repsitories;
 using Simplog.Server.Infrastructure;
 using Unifreight.Data.AmitalModel.Repsitories;
+using Logitude.Customs.BL.EntityDataMappings;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -347,6 +348,38 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DocumentsFilingId = DocumentsFilingId
             };
         }
+
+        public CustomsDocumentPM GetSingleByDocFileId(string docFileId, int tenant)
+        {
+            var query =
+                  (from rec in context.CustomsDocuments
+                   join o in context.OcrDocuments on rec.DocumentsFilingId equals o.DocId into ocrDocs
+                   from o in ocrDocs.DefaultIfEmpty()
+                   where rec.DocumentsFilingId == docFileId && rec.Tenant == tenant
+                   select new CustomsDocumentPM()
+                   {
+                       DocumentsFilingId = rec.DocumentsFilingId,
+                       Tenant = rec.Tenant,
+                       CustomsDocId = rec.CustomsDocId,
+                       DocumentStatusCode = rec.DocumentStatusCode,
+                       DocumentRemarks = rec.DocumentRemarks,
+                       DocumentTypeCode = rec.DocumentTypeCode,
+                       IsMetaDataReady = rec.IsMetaDataReady,
+                       CustomRecievedDate = rec.CustomRecievedDate,
+                       DocumentVersion = rec.DocumentVersion,
+                       ExternalAttachmentId = rec.ExternalAttachmentId,
+                       IsPartOfDeclaration = rec.IsPartOfDeclaration,
+                       OcrStatusCode = o != null ? o.StatusCode : null,
+                       OcrScore = o != null ? (decimal)o.Score : -1, 
+
+                   });
+
+
+
+            return query.FirstOrDefault();
+
+        }
+
         public class ResultByDocumentType
         {
             public string DocumentsFilingId { get; set; }

@@ -219,6 +219,16 @@ export class CustomsDocumentPM {
     public set ParentRequestId(newValue: string) { if (this.parentRequestId != newValue) { this.parentRequestId = newValue; this.MarkAsDirty("ParentRequestId"); } }
        
 	 
+    private ocrScore: number;
+    public get OcrScore() { return this.ocrScore; }
+    public set OcrScore(newValue: number) { if (this.ocrScore != newValue) { this.ocrScore = newValue; this.MarkAsDirty("OcrScore"); } }
+       
+	 
+    private ocrStatusCode: string;
+    public get OcrStatusCode() { return this.ocrStatusCode; }
+    public set OcrStatusCode(newValue: string) { if (this.ocrStatusCode != newValue) { this.ocrStatusCode = newValue; this.MarkAsDirty("OcrStatusCode"); } }
+       
+	 
 
     public OldEntityPM: CustomsDocumentPM;
 		

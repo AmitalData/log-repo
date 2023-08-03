@@ -576,8 +576,15 @@ export class DocumentsFilingPM {
     private backedupExternally: boolean;
     public get BackedupExternally() { return this.backedupExternally; }
     public set BackedupExternally(newValue: boolean) { if (this.backedupExternally != newValue) { this.backedupExternally = newValue; this.MarkAsDirty("BackedupExternally"); } }
-       
-	 
+    
+    private ocrStatusCode: string;
+    public get OcrStatusCode() { return this.ocrStatusCode; }
+    public set OcrStatusCode(newValue: string) { if (this.ocrStatusCode != newValue) { this.ocrStatusCode = newValue; this.MarkAsDirty("OcrStatusCode"); } } 
+     
+	private ocrScore: number;
+    public get OcrScore() { return this.ocrScore; }
+    public set OcrScore(newValue: number) { if (this.ocrScore != newValue) { this.ocrScore = newValue; this.MarkAsDirty("OcrScore"); } } 
+      
 
     public OldEntityPM: DocumentsFilingPM;
 		
@@ -605,4 +612,4 @@ export class DocumentsFilingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

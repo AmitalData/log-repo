@@ -38,6 +38,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string DocumentTypeName  { get; set; }
        [DataMember]
        public bool IsPartOfDeclaration  { get; set; }
+       [DataMember]
+       public decimal OcrScore  { get; set; }
+       [DataMember]
+       public string OcrStatusCode  { get; set; }
    }
 
 }

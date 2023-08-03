@@ -113,7 +113,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             this.MyResponseData.Succeeded = true;
                             this.MyResponseData.HasException = false;
-                            this.MyResponseData.UserMessage = "חשבון יצואן נפתח בהצלחה";
+                            this.MyResponseData.UserMessage = "חשבון יצואן עודכן בהצלחה";
                         }
                         catch (System.Exception ex)
                         {
