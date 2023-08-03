@@ -14,4 +14,7 @@ export class SendUnCorrectDocumentsRequestParams extends GenericRequestParams {
     public SelectedCustomStatusValue: string;
     public IsCreateNewDocumentVersion: boolean;
     public SelectedFinalReleaseValue: string;
+    public IsWorkSheetFromExcel: boolean;
+
+
 }

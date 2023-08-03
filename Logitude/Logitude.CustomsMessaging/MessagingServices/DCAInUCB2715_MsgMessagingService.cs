@@ -51,7 +51,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingObjectTableId = objectTableId,
                 LoggingEntityId = customsResponse.CourierMasterId,
                 LoggingEntityReference = customsResponse.master,
-
+                
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" שידור מסמכים שגויים " + customsResponse.master + " "
             };
@@ -108,6 +108,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SelectedCustomStatusValue = mySendUnCorrectDocumentsRequestParams.SelectedCustomStatusValue,
                 IsCreateNewDocumentVersion = mySendUnCorrectDocumentsRequestParams.IsCreateNewDocumentVersion,
                 SelectedFinalReleaseValue = mySendUnCorrectDocumentsRequestParams.SelectedFinalReleaseValue,
+                IsWorkSheetFromExcel= mySendUnCorrectDocumentsRequestParams.IsWorkSheetFromExcel,
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
