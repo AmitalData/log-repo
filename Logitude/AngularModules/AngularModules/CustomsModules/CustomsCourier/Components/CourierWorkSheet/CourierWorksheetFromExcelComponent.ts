@@ -2194,7 +2194,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
     }
     ApproveAllPendingMethod() {
-        debugger;
         if (this.IsDisplayOnly) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
