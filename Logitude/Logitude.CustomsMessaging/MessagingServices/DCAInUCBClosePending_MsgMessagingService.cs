@@ -104,6 +104,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 MyMoreParams = "",
                 declarationList = mySendClosePendingRequestParams.DeclarationsList,
                 FilteredRequest = mySendClosePendingRequestParams.DeclarationsList != null,
+                IsWorkSheetFromExcel = mySendClosePendingRequestParams.IsWorkSheetFromExcel,
+
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
