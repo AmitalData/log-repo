@@ -333,19 +333,26 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             return null;
         }
-
+        //
         private void CalculateTotalFutureOpenChequesForCreditGlAccount(List<LedgerTransactionPM> ledgerTrasnctions)
         {
-            foreach (var trasnction in ledgerTrasnctions.Where(trasnction => trasnction.DueDate > GetCurrentDate(_Tenant)
-                            && trasnction.LocalAmountCredit != 0))
+
+            if (_JournalPM.AccountingEntityCode == "3")
             {
-                var card = GetBillToByGLAccountId(_Tenant, trasnction.AccountId);
-                if (card != null)
-                {
-                    GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(_Tenant);
-                    chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(card.Id);
-                }
+                ARPaymentQuery arPaymentQuery = new ARPaymentQuery(_Tenant);
+                var arPayment = arPaymentQuery.GetSingleARPayment(_JournalPM.AccountingEntityId, _Tenant);
+                GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(_Tenant);
+                chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(arPayment.BillToId);
             }
+            //foreach (var trasnction in ledgerTrasnctions.Where(trasnction => trasnction.LocalAmountCredit != 0))
+            //{
+            //    var card = GetBillToByGLAccountId(_Tenant, trasnction.AccountId);
+            //    if (card != null)
+            //    {
+            //        GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(_Tenant);
+            //        chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(card.Id);
+            //    }
+            //}
         }
         private Card GetBillToByGLAccountId(int tenant, string glAccountId)
         {

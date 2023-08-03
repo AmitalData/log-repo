@@ -31,7 +31,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         LocalAmount = a.LocalAmount ,
                         ValueDate = a.ValueDate,
                         ChequeNumber = a.ChequeNumber,
-                        PaymentId = a.PaymentId
+                        PaymentId = a.PaymentId,
+                        CurrencyId = a.CurrencyId,
+
                     }).ToList();
 
 
