@@ -2,11 +2,11 @@
     <div *ngIf="isEven" class="row">
         <ng-container [ngTemplateOutlet]="tpl" [ngTemplateOutletContext]="{ filter: filters[i] }"></ng-container>
         <ng-container *ngIf="i + 1 != filters.length" [ngTemplateOutlet]="tpl" [ngTemplateOutletContext]="{ filter: filters[i+1] }"></ng-container>
-
     </div>
 </ng-container>
 
 <div class="row-button">
+    <button class="Button" (click)="cleanFliter()">{{'General.B.Clear' | TextCodeTranslationPipe}}</button>
     <button class="Button" (click)="closeWindow()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
     <button class="RedButton" (click)="addFilters()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
 </div>

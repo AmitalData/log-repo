@@ -65,6 +65,10 @@ export class ExportFilterMenuComponent extends BaseComponent {
         this.filtersInputs = filtersInputs;
     }
 
+    cleanFliter() {
+        this.filtersInputs = this.filters.map(x => x.dbField).reduce((a, v) => ({ ...a, [v]: []}), {}) 
+    }
+
     closeWindow(value?: any) {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit(value);
     }
