@@ -27555,7 +27555,7 @@
     <TextCode
       Code="&quot;Customs.Declaration.O.exportFilterMenu&quot;"
       DefaultText="&quot;Filters for multiple select&quot;"
-      LocalDefaultText="&quot;מסננים לבחירה מרובה&quot;"
+      LocalDefaultText="&quot;סינון מתקדם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
