@@ -288,6 +288,7 @@
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsGeneralComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\MultiUpdateDecComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\bulk-feed-pending\BulkFeedPendingComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetFromExcelComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetNGComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWSData.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetStorageSiteCodeComponent.html" />
@@ -484,6 +485,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\MultiUpdateDecComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\bulk-feed-pending\BulkFeedPendingComponent.spec.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\bulk-feed-pending\BulkFeedPendingComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetFromExcelComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetNGComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />

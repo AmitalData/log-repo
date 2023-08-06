@@ -60,7 +60,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
-                    DeclarationIdList = qs.GetByMasterID_DeclarationIdList(requestParams.Tenant, requestParams.AppicationId);
+                    DeclarationIdList = qs.GetByMasterID_DeclarationIdList(requestParams.Tenant, requestParams.AppicationId, customResponse.IsWorkSheetFromExcel,requestParams.LoggingUserId);
                 }
                 DeclarationIdList.ChunkBy(50).ForEach(list50 =>
                 {

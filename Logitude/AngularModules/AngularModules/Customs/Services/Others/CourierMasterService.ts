@@ -18,6 +18,7 @@ import { PendingRequestParams } from 'Customs/DataContract/RequestParams/Pending
 import { SendALLDelayFormParams } from '../../DataContract/RequestParams/SendALLDelayFormParams';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 
 
 @Injectable()
@@ -306,7 +307,7 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendPayReadyLow2755?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&InternalBankId=' + InternalBankId+ '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetSendPayReadyLow2755?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&InternalBankId=' + InternalBankId + '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel + '&UserId=' + SessionLocator.LoggedUserId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var messString = response;
                 
 
@@ -576,7 +577,7 @@ export class CourierMasterService {
 
     }
 
-    GetSendALLDeclarationsStatusRequest(CourierMasterId, testerSendOption: string = null,IsWorkSheetFromExcel:boolean) {
+    GetSendALLDeclarationsStatusRequest(CourierMasterId, testerSendOption: string = null,IsWorkSheetFromExcel:boolean,userId:string=null) {
         let sTesterSendOption = '';
         if (!AppTool.IsNullOrEmpty(testerSendOption)){
             sTesterSendOption =   testerSendOption
@@ -586,7 +587,7 @@ export class CourierMasterService {
         var callTime = new Date();
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId +
-                '&testerSendOption=' +  sTesterSendOption+ '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                '&testerSendOption=' +  sTesterSendOption+ '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel+ '&workSheetLoggedUser=' + userId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var messString = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -686,7 +687,7 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetPending?' + 'CourierMasterId=' + CourierMasterId+ '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetPending?' + 'CourierMasterId=' + CourierMasterId + '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel + '&UserId=' + SessionLocator.LoggedUserId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var KeyValuePairList = response;
 
                 var serviceResponse: ServiceResponse;

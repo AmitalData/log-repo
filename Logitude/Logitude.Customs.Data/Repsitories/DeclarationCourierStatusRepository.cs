@@ -196,7 +196,7 @@ namespace Logitude.Customs.Data.Repsitories
             var pocos = q.ToList();
             return pocos;
         }
-        private IQueryable<DeclarationCourierStatus> GetBy(int tenant, string CourierMasterId)
+        public IQueryable<DeclarationCourierStatus> GetBy(int tenant, string CourierMasterId)
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
@@ -208,7 +208,7 @@ namespace Logitude.Customs.Data.Repsitories
                      select status);
             return q;
         }
-        private IQueryable<DeclarationCourierStatus> GetByFromExcel(int tenant, string userId)
+        public IQueryable<DeclarationCourierStatus> GetByFromExcel(int tenant, string userId)
         {
             var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
@@ -235,13 +235,13 @@ namespace Logitude.Customs.Data.Repsitories
             MAWB = repoCourierMaster.GetSingle(CourierMasterId, tenant)?.MAWB;
             return q.ToList();
         }
-        public List<string> GetFromExcelDeclarationList(int tenant, string userId)
+        public List<string> GetFromExcelDeclarationList(int tenant, string WorkSheeetLogUser)
         {
             var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
             var repoCourierMaster = new CourierMasterRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
 
-            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
+            var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, WorkSheeetLogUser)
                      join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
                      join status in GetAll(tenant) on dec.DeclarationId equals status.DeclarationId
                      where rDec.DeclarationNumber != null

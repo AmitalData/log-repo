@@ -12,6 +12,8 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string MAWB { get; set; }
         public string[] PendingCode { get; set; }
         public string[] DeclarationsList { get; set; }
+        public bool IsWorkSheetFromExcel { get; set; }
+
     }
 }
 

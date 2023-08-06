@@ -32,176 +32,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             base.GetComposition(entityKeys, entityPM);
         }
 
-#if false
-          public List<DeclarationCourierStatusPM> GetByMasterIDCourierDeclarationStatusCode(
-            int tenant, string CourierMasterId, string CourierDeclarationStatusCode,
-            string SelectedBOLValue,
-            string SelectedStatusValue,
-            string SelectedTotalInvoiceValue,
-            string SelectedFastIndividualProcessValue,
-            string SelectedCustomStatusValue
-            )
-        {
-            var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
-            var repoDeclaration = new DeclarationRepository(this.context);
-
-            var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
-                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
-                     join status in repository.GetAll(tenant).Where(r => r.CourierDeclarationStatusCode == CourierDeclarationStatusCode)
-                     on dec.DeclarationId equals status.DeclarationId
-                     orderby rDec.CourierHAWB ascending
-                     select status);
-
-            q = repository.MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, q);
-
-            var pocos = q.ToList();
-            return pocos.Select(r => this.GetEntityPM(r)).ToList();
-
-
-        }
-
-
-        private static IQueryable<DeclarationCourierStatus> MoreFilter(string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, IQueryable<DeclarationCourierStatus> q)
-        {
-            switch (SelectedBOLValue)
-            {
-                case "L":
-                case "H":
-                    {
-                        q = q.Where(r => r.HighLowValue == SelectedBOLValue);
-                        break;
-                    }
-            }
-            switch (SelectedStatusValue)
-            {
-                case "O":
-                    {
-                        q = q.Where(r => r.IsClosedForFollowUp == false);
-
-                        break;
-                    }
-                case "C":
-                    {
-                        q = q.Where(r => r.IsClosedForFollowUp == true);
-                        break;
-                    }
-            }
-
-            switch (SelectedTotalInvoiceValue)
-            {
-                case "75":
-                    {
-                        q = q.Where(r => r.TotalInvoiceAmountInUSD <= 75);
-
-                        break;
-                    }
-                case "500":
-                    {
-                        q = q.Where(r => r.TotalInvoiceAmountInUSD > 75 && r.TotalInvoiceAmountInUSD <= 500);
-                        break;
-                    }
-                case "1000":
-                    {
-                        q = q.Where(r => r.TotalInvoiceAmountInUSD > 500 && r.TotalInvoiceAmountInUSD <= 1000);
-
-                        break;
-                    }
-            }
-
-            switch (SelectedFastIndividualProcessValue)
-            {
-                case "F":
-                case "I":
-                    {
-                        q = q.Where(r => r.FastIndividualProcessCode == SelectedFastIndividualProcessValue);
-                        break;
-                    }
-            }
-
-            switch (SelectedCustomStatusValue)
-            {
-                case "H":
-                    {
-                        q = q.Where(r => r.Declaration.CourierCustomStatusCode == "1");
-
-                        break;
-                    }
-                case "S":
-                    {
-                        q = q.Where(r => r.Declaration.CourierCustomStatusCode == "2");
-                        break;
-                    }
-            }
-            return q;
-        }
-
-
-
-         public List<DeclarationCourierStatusPM> GetByMasterIDCourierManifestStatusCode(int tenant, string CourierMasterId, string CourierManifestStatusCode
-            , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue
-            )
-        {
-            var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
-            var repoDeclaration = new DeclarationRepository(this.context);
-            var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
-                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
-                     join status in repository.GetAll(tenant).Where(r => r.CourierManifestStatusCode == CourierManifestStatusCode)
-                     on dec.DeclarationId equals status.DeclarationId
-                     orderby rDec.CourierHAWB ascending
-                     select status);
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue , q);
-            var pocos = q.ToList();
-            return pocos.Select(r => this.GetEntityPM(r)).ToList();
-
-
-        }
-         public List<DeclarationCourierStatusPM> GetByMasterIDCourierDocumentStatus(int tenant, string CourierMasterId, string DocumentStatusCode
-            , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue)
-        {
-            var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
-            var repoDeclaration = new DeclarationRepository(this.context);
-            var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
-                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
-                     join status in repository.GetAll(tenant).Where(r => r.DocumentStatusCode == DocumentStatusCode)
-                     on dec.DeclarationId equals status.DeclarationId
-                     orderby rDec.CourierHAWB ascending
-                     select status);
-            q = repository.MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, q);
-            var pocos = q.ToList();
-            return pocos.Select(r => this.GetEntityPM(r)).ToList();
-
-
-        }
-
-
-
-             public List<DeclarationCourierStatusPM> GetByMasterIDCourierPaymentStatusCode(int tenant, string CourierMasterId, 
-                 string CourierPaymentStatusCode,string HighLowValue)
-        {
-            var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
-            var repoDeclaration = new DeclarationRepository(this.context);
-            var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
-                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
-                     join status in repository.GetAll(tenant)
-                     .Where(r => r.CourierPaymentStatusCode == CourierPaymentStatusCode)
-                     .Where(r => r.HighLowValue == HighLowValue)
-                     on dec.DeclarationId equals status.DeclarationId
-                     orderby rDec.CourierHAWB ascending
-                     select status);
-            var pocos = q.ToList();
-            return pocos.Select(r => this.GetEntityPM(r)).ToList();
-
-
-        }
-
-        public List<DeclarationCourierStatusPM> GetByMasterIDDeclarationCourierStatus(int tenant, string CourierMasterId)
-        {
-            IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);
-            var pocos = q.ToList();
-            return pocos.Select(r => this.GetEntityPM(r)).ToList();
-        }
-#endif
-
 
  
 
@@ -236,10 +66,24 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
 
-        public List<string> GetByMasterID_DeclarationIdList(int tenant, string CourierMasterId)
+        public List<string> GetByMasterID_DeclarationIdList(int tenant, string CourierMasterId, bool IsWorkSheetFromExcel=false,string userId=null)
         {
+            var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(context);
+
+            IQueryable<DeclarationCourierStatus> q = null;
+
+            if (IsWorkSheetFromExcel)
+            {
+                 q = declarationCourierStatusRepository.GetByFromExcel(tenant, userId);
+            }
+            else
+            {
+                 q = declarationCourierStatusRepository.GetBy(tenant, CourierMasterId);
+            }
+
+
             //List<string> declarationIdList = new List<string>();
-            IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);
+           // IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);
             return q.Select(r => r.DeclarationId).ToList();
         }
         public List<DeclarationDataForSlaReport> GetDeclarationDataForSlaReportByMasterId(int tenant, string CourierMasterId)

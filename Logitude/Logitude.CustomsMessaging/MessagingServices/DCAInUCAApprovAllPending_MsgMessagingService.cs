@@ -96,6 +96,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 MAWB = myPendingRequestParams.MAWB,
                 tenant = tenant,
                 MyMoreParams = "",
+                IsWorkSheetFromExcel = myPendingRequestParams.IsWorkSheetFromExcel,
                 declarationList = myPendingRequestParams.DeclarationsList,
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
@@ -171,6 +172,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public int tenant { get; set; }
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
+        public bool IsWorkSheetFromExcel { get; set; }
         public string MAWB { get; set; }
         public string[] declarationList { get; set; }
         public string MyMoreParams { get; set; }
