@@ -110,7 +110,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         }
         private void BuildShipmentRoute()
         {
-            CargoTrackingShipmentRouteBuilder routeBuilder = new CargoTrackingShipmentRouteBuilder(shipmentOrderPM, shipmentPM);
+            CargoTrackingShipmentRouteBuilder routeBuilder = new CargoTrackingShipmentRouteBuilder(shipmentOrderPM, shipmentPM, forwardingShipmentPM);
             cargoShipmentPM.RoutingSteps = routeBuilder.BuildRoute();
         }
         private void FillShipmentPackages()
