@@ -1169,8 +1169,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             supplierInvoiceItemsConDeclarPM.Tenant = tenant;
                             if (previousDocument.DMExtensions != null)
                             {
-                                supplierInvoiceItemsConDeclarPM.QuantityTypeCode = previousDocument.DMExtensions.QuantityQuantity.unitCode.ToString();
-                                supplierInvoiceItemsConDeclarPM.Quantity = previousDocument.DMExtensions.QuantityQuantity.Value;
+                                supplierInvoiceItemsConDeclarPM.QuantityTypeCode = previousDocument.DMExtensions.QuantityQuantity?.unitCode.ToString();
+                                supplierInvoiceItemsConDeclarPM.Quantity = previousDocument.DMExtensions.QuantityQuantity?.Value;
                                 supplierInvoiceItemsConDeclarPM.InvoiceNumber = ((int?)previousDocument.DMExtensions.SequenceNumeric);
                             }
                             supplierInvoiceItemPM.SupplierInvoiceItemsConDeclars.Add(supplierInvoiceItemsConDeclarPM);
