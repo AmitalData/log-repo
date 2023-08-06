@@ -67,8 +67,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
             catch (Exception ex)
             {
                 var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                APIHelper.AddCommunicationLog("F", paymentPM, apiExceptionResult.Exception, "ARPayment", null, "ARPayment API");
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                APIHelper.AddCommunicationLog("F", paymentPM, apiExceptionResult.Exception + ex.StackTrace , "ARPayment", null, "ARPayment API");
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception+";" + ex.StackTrace);
             }
         }
 
