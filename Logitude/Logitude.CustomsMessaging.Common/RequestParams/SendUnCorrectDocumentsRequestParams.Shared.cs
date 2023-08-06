@@ -20,5 +20,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string SelectedCustomStatusValue { get; set; }
         public bool IsCreateNewDocumentVersion { get; set; }
         public string SelectedFinalReleaseValue { get; set; }
+        public bool IsWorkSheetFromExcel { get; set; }
+
     }
 }

@@ -104,6 +104,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 MyMoreParams = "",
                 declarationList = mySendClosePendingRequestParams.DeclarationsList,
                 FilteredRequest = mySendClosePendingRequestParams.DeclarationsList != null,
+                IsWorkSheetFromExcel = mySendClosePendingRequestParams.IsWorkSheetFromExcel,
+
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
@@ -178,6 +180,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public bool FilteredRequest  { get; set; }
         public int tenant { get; set; }
         public string LoggingUserId { get; set; }
+        public bool IsWorkSheetFromExcel { get; set; }
         public string CourierMasterId { get; set; }
         public string MAWB { get; set; }
         public string[] declarationList { get; set; }

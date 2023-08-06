@@ -345,6 +345,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     SendALLCorrectManifest(courierDeclarationStatusCode: string) {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
+
         if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -387,7 +389,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
         currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
-
+        currRequestParams.IsWorkSheetFromExcel = true;
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe((res: any) => {
@@ -403,6 +405,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     SendReadyLOWPAYToBatch() {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
 
         if (this._PAYReadyNotFastindividual == 0) {
             var myMessageWindow = new MessageWindow();
@@ -470,6 +473,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     SendALLCorrectDec(courierDeclarationStatusCode: string) {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
 
         if (this._ReadyDECToBatchSend == 0 && courierDeclarationStatusCode == "R") {
             var myMessageWindow = new MessageWindow();
@@ -511,6 +515,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
         currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
+        currRequestParams.IsWorkSheetFromExcel= this.CourierHawbsFromExcelUploaded;
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
             .subscribe((res: any) => {
@@ -525,7 +530,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     SendALLSVG(isAll: boolean) {
-        if ((this._SVGTotal == 0 && !isAll) || !this.CourierHawbsFromExcelUploaded) {
+        if ((this._SVGTotal == 0 && !isAll)) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
@@ -625,6 +630,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                     }
                 });
         }
+
 
     }
 
@@ -1743,13 +1749,14 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     GetPending() {
+
         this._PendingCodes.length = 0;
         this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
         if (this.HasRequiresApprovalFeature) {
             this._PendingCodes.push({ 'Key': "NotApproved", 'Value': TextCodeTranslator.Translate("Customs.CourierPendingReason.O.NotApprovedPending") });
         }
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetPending(this.entityPM?.Id)
+        this._CourierMasterService.GetPending(this.entityPM?.Id, true)
             .subscribe((resu: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var list: string[];
@@ -1796,23 +1803,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             this.RefreshList();
         }
     }
-    /*
-    _PendingCodesFilter: KeyValuePair;
-    get _SelectedHOLDValue() {
-        if (this._PendingFilter == "A" && this._PendingCodes != null) {
-            this._PendingCodesFilter = this._PendingCodes[0];
-        } else {
-            if (this._PendingCodes!= null)this._PendingCodesFilter = this._PendingCodes.find(r => r.Key == this._PendingFilter);
-        }
-        return this._PendingCodesFilter;
-    }
-    set _SelectedHOLDValue(value) {
-        if (this._PendingCodesFilter != value) {
-            this._PendingCodesFilter = value;
-            if (this._PendingCodesFilter != null)this._PendingFilter = this._PendingCodesFilter.Key;
-        }
-    }
-    */
+
     _SelectedPendingCodeFilter: KeyValuePair;
     get SelectedPendingCodeFilter() {
         if (this.PendingFilter == "A" && this._PendingCodes != null) {
@@ -2030,7 +2021,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     DeclarationsStatusRequestMethod() {
 
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM?.Id, null, true)
+        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM?.Id, null, true,SessionLocator.LoggedUserId)
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
@@ -2040,6 +2031,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     ImportCourierMawbsFromExcel() {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
+
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "הטענת אקסל למסך עבודה";
         logitudeWindow.ShowCloseButton = true;
@@ -2055,6 +2048,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
 
     SendALLTerminal() {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -2166,6 +2160,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM?.Id;
         currRequestParams.MAWB = this.entityPM?.MAWB;
+        currRequestParams.IsWorkSheetFromExcel = true;
+
         let text = "נא אשר מחיקת קוד עיכוב";
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
@@ -2176,6 +2172,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         } else {
             currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
         }
+
+        currRequestParams
         //currRequestParams.PendingCode=this.SelectedPendingCodeFilter.Key;
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show(text);
@@ -2218,6 +2216,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM?.Id;
         currRequestParams.MAWB = this.entityPM?.MAWB;
+        currRequestParams.IsWorkSheetFromExcel = true;
+
         let text = "האם לאשר את כל Pending שלא אושרו בטיסה";
 
         var confirmWindow = new ConfirmWindow();
@@ -2250,13 +2250,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     _CourierMasterPMService: CourierMasterPMService = new CourierMasterPMService();
 
     Export2Excel() {
-        //this._IsDisableToggle = !this._IsDisableToggle;
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
 
-
-
-
-        //communicationLogStepListService.GetExportExcelByRequestId("8305", this.MyLastCustomsRequestSheetId, SessionLocator.Tenant);
-        //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
         var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM?.Id + '&tenant=' + SessionLocator.Tenant.toString() + '&userId=' + SessionLocator.LoggedUserId + '&IsWorkSheetFromExcel=' + this.CourierHawbsFromExcelUploaded;
 
 
@@ -2368,6 +2363,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
         currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
+        currRequestParams.IsWorkSheetFromExcel = true;
+
         if (sendMode == 'VX') currRequestParams.IsCreateNewDocumentVersion = true;
 
         this._CourierMasterService.PostSendUnCorrectDocuments(currRequestParams)
@@ -2421,6 +2418,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
 
     openBulkFeedPending() {
+        if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
+
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 1600;
         logitudeWindow.Height = 800;
