@@ -47,6 +47,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool HasCreditLimitOverrideFeature { get; set; }
         public bool HasInterestFeature { get; set; }
         public bool IsFromInterestBatchInvoice { get; set; }
+        public bool HasDoc { get; set; }
 
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

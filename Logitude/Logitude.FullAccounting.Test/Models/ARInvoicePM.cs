@@ -41,9 +41,10 @@ namespace Logitude.FullAccounting.Test.Models
         public bool HasCreditLimitOverrideFeature { get; set; }
         public bool HasInterestFeature { get; set; }
         public bool IsFromInterestBatchInvoice { get; set; }
-
-
+        public bool HasDoc { get; set; }
         
+
+
         public string BillToAddressId { get; set; }
         public string VatNumber { get; set; }
 

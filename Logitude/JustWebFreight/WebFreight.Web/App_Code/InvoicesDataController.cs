@@ -219,6 +219,7 @@ namespace WebFreight.Web.App_Code
                              ExpectedPaymentDate = entity.ExpectedPaymentDate,
                              DraftNumber = entity.DraftNumber,
                              IsPrinted = entity.IsPrinted,
+                             HasDoc = entity.DocumentFilingId != null ? true : false,
                              ProfitCurrencyCode = entity.ProfitCurrency != null ? entity.ProfitCurrency.Code : null,
                              AmountDueInLocalCurrency = entity.AmountDueInLocalCurrency,
                              AmountDueInProfitCurrency = entity.AmountDueInProfitCurrency,

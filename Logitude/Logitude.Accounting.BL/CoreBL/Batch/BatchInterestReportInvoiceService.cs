@@ -168,8 +168,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
                 UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
             }
-        }
-
+        }  
         private void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM , InterestReportPM interestReport)
         {
             string ARInvoiceChildEntityReference = !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) ? aRInvoicePM.InvoiceNumber : "Draft: " + aRInvoicePM.DraftNumber;
