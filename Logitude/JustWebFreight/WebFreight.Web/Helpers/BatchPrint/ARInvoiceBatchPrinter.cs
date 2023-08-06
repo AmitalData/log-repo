@@ -47,7 +47,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
         {
             if (item.IsAlreadyPrinted) return;
             ARInvoicePrintDetailsService aRInvoicePrintDetailsService = new ARInvoicePrintDetailsService(_batchPrinterArgs.Tenant, item.ChildEntityId, _batchPrinterArgs.Email);
-            aRInvoicePrintDetailsService.Update();
+            aRInvoicePrintDetailsService.Update(documentOutId);
         }
     }
     public class DocumentTypeCodes

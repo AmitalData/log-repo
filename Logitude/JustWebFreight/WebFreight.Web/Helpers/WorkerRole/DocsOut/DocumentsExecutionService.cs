@@ -215,7 +215,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         private void UpdateARInvoicePrintingDetails(ExportDocumentArgs exportDocumentArgs ,  string loggedUserEmail)
         {
             ARInvoicePrintDetailsService aRInvoicePrintDetailsService = new ARInvoicePrintDetailsService(exportDocumentArgs.Tenant, !string.IsNullOrWhiteSpace(exportDocumentArgs.ChildEntityId) ? exportDocumentArgs.ChildEntityId : exportDocumentArgs.EntityId , loggedUserEmail);
-            aRInvoicePrintDetailsService.Update();
+            aRInvoicePrintDetailsService.Update(exportDocumentArgs.CurrentDocumentOutId);
 
         }
 
