@@ -1,7 +1,12 @@
-﻿using Logitude.BL.InvoiceModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -47,12 +52,32 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 aRInvoicePM.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 aRInvoicePM.IsPrinted = GetIsPrintedValue(aRInvoicePM);
                 aRInvoicePM.IsUpdatedByPrint = true;
+                if (aRInvoicePM.IsFromInterestBatchInvoice && IsFullAccountingActivated(tenant))
+                {
+                    var DocumentsFilingId = getDocumentsFilingId(aRInvoicePM);
+                    aRInvoicePM.DocumentFilingId = DocumentsFilingId;
+                }
                 aRInvoiceService.Update(aRInvoicePM, true);
                 scope.Complete();
             }
         }
 
-
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
+        }
+        private string getDocumentsFilingId(ARInvoicePM aRInvoicePM)
+        {
+            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(aRInvoicePM.Tenant);
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(aRInvoicePM.Tenant);
+            var documentTypeId = documentTypeQuery.GetDocumentTypeIdByCode("999G", aRInvoicePM.Tenant);
+            string objectTableId = ObjectTableRepository.GetObjectTableByName("ARInvoice");
+            DocumentsFilingPM myResult = documentsFilingQuery.GetDocumentsFilingPMByEntityIdAndObjectTableIdAndDocumentTypeId(aRInvoicePM.Id, objectTableId, documentTypeId, aRInvoicePM.Tenant);
+            return myResult.Id;
+        }
         private  bool GetIsPrintedValue(ARInvoicePM aRInvoicePM)
         {
             bool isPrinted = aRInvoicePM.IsPrinted;

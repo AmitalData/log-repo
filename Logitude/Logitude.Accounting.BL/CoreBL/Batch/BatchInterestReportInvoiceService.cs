@@ -166,31 +166,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant, interestReportArgs.Email);
                 invoiceService.Create(aRInvoicePM);
                 BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
-                if (aRInvoicePM.IsFromInterestBatchInvoice && IsFullAccountingActivated(interestReportArgs.Tenant))
-                {
-                    var DocumentsFilingId = getDocumentsFilingId(aRInvoicePM);
-                    aRInvoicePM.DocumentFilingId = DocumentsFilingId;
-                    invoiceService.Update(aRInvoicePM);
-                }
                 UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
             }
-        }
-        private bool IsFullAccountingActivated(int tenant)
-        {
-            TenantRepository tenantRepository = new TenantRepository(tenant);
-            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
-            return isFullAccountingActivated;
-        }
-        private string getDocumentsFilingId(ARInvoicePM aRInvoicePM)
-        {
-            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(aRInvoicePM.Tenant);
-            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(aRInvoicePM.Tenant);
-            var documentTypeId = documentTypeQuery.GetDocumentTypeIdByCode("999G", aRInvoicePM.Tenant);
-            string objectTableId = ObjectTableRepository.GetObjectTableByName("ARInvoice");
-            DocumentsFilingPM myResult = documentsFilingQuery.GetDocumentsFilingPMByEntityIdAndObjectTableIdAndDocumentTypeId(aRInvoicePM.Id, objectTableId, documentTypeId, aRInvoicePM.Tenant);
-            return myResult.Id;
-        }
+        }  
         private void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM , InterestReportPM interestReport)
         {
             string ARInvoiceChildEntityReference = !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) ? aRInvoicePM.InvoiceNumber : "Draft: " + aRInvoicePM.DraftNumber;
