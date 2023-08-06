@@ -166,7 +166,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant, interestReportArgs.Email);
                 invoiceService.Create(aRInvoicePM);
                 BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
-                if (aRInvoicePM.IsFromInterestBatchInvoice)
+                if (aRInvoicePM.IsFromInterestBatchInvoice && IsFullAccountingActivated(interestReportArgs.Tenant))
                 {
                     var DocumentsFilingId = getDocumentsFilingId(aRInvoicePM);
                     aRInvoicePM.DocumentFilingId = DocumentsFilingId;
@@ -175,7 +175,13 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
             }
         }
-
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
+        }
         private string getDocumentsFilingId(ARInvoicePM aRInvoicePM)
         {
             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(aRInvoicePM.Tenant);
