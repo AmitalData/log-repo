@@ -35,28 +35,19 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             _setAsPrintedIfInvoiceFromInterestBatchInvoice = setAsPrintedIfInvoiceFromInterestBatchInvoice;
         }
 
-        public void Update()
+        public void Update(string documensFilingId)
         {
             ARInvoicePM aRInvoicePM = GetARInvoicePM();
-            if (aRInvoicePM == null) return;
-            if (aRInvoicePM.IsPrinted)
-            {
-                return;
-            }
-            if (string.IsNullOrEmpty(aRInvoicePM.IssuedByUserId)) return;
+            if (aRInvoicePM == null || aRInvoicePM.IsPrinted || string.IsNullOrEmpty(aRInvoicePM.IssuedByUserId)) return;
             if (_setAsPrintedIfInvoiceFromInterestBatchInvoice && !aRInvoicePM.IsFromInterestBatchInvoice) return;
+
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-        
                 aRInvoicePM.PrintByUserId = aRInvoicePM.IssuedByUserId;
                 aRInvoicePM.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 aRInvoicePM.IsPrinted = GetIsPrintedValue(aRInvoicePM);
                 aRInvoicePM.IsUpdatedByPrint = true;
-                if (aRInvoicePM.IsFromInterestBatchInvoice && IsFullAccountingActivated(tenant))
-                {
-                    var DocumentsFilingId = getDocumentsFilingId(aRInvoicePM);
-                    aRInvoicePM.DocumentFilingId = DocumentsFilingId;
-                }
+                aRInvoicePM.DocumentFilingId = aRInvoicePM.IsFromInterestBatchInvoice && IsFullAccountingActivated(tenant) ? documensFilingId : aRInvoicePM.DocumentFilingId;
                 aRInvoiceService.Update(aRInvoicePM, true);
                 scope.Complete();
             }
@@ -65,19 +56,10 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         private bool IsFullAccountingActivated(int tenant)
         {
             TenantRepository tenantRepository = new TenantRepository(tenant);
-            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            bool isFullAccountingActivated = tenantRepository.GetTenantAccountingActivated(tenant);
             return isFullAccountingActivated;
         }
-        private string getDocumentsFilingId(ARInvoicePM aRInvoicePM)
-        {
-            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(aRInvoicePM.Tenant);
-            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(aRInvoicePM.Tenant);
-            var documentTypeId = documentTypeQuery.GetDocumentTypeIdByCode("999G", aRInvoicePM.Tenant);
-            string objectTableId = ObjectTableRepository.GetObjectTableByName("ARInvoice");
-            DocumentsFilingPM myResult = documentsFilingQuery.GetDocumentsFilingPMByEntityIdAndObjectTableIdAndDocumentTypeId(aRInvoicePM.Id, objectTableId, documentTypeId, aRInvoicePM.Tenant);
-            return myResult.Id;
-        }
+  
         private  bool GetIsPrintedValue(ARInvoicePM aRInvoicePM)
         {
             bool isPrinted = aRInvoicePM.IsPrinted;

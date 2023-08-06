@@ -79,7 +79,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.Tenants where record.Id == id  select record.TenantEmailSendingQuota).FirstOrDefault();
         }
-
+        public bool GetTenantAccountingActivated(int id)
+        {
+            return (from record in context.Tenants where record.Id == id select record.AccountingActivated).FirstOrDefault();
+        }
         public  Tenant GetSingleTenantByIdAndTenant(int id, bool getFromCache)
         {
             string entityName = "Tenant" + id;
