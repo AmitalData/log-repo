@@ -2868,7 +2868,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentAdditionalCloudData = new ShipmentAdditionalCloudData();
                 shipmentAdditionalCloudData.Id = entityPM.Id;
                 shipmentAdditionalCloudData.Tenant = entityPM.Tenant;
-                shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
+                shipmentAdditionalCloudData.IsImporterApprovalRequried = GetIsImporterApprovalRequired(entityPM);
                 shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
                 shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
                 shipmentAdditionalCloudData.IsUserIDNumberRequired = entityPM.IsUserIDNumberRequired;
@@ -3141,7 +3141,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         IsImporterApprovalRequiredOldValue = shipmentAdditionalCloudData.IsImporterApprovalRequried;
                         if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                         {
-                            shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
+                            shipmentAdditionalCloudData.IsImporterApprovalRequried = GetIsImporterApprovalRequired(entityPM);
                         }
                         if (entityPM.UpdateSendUpdatesToAgentEnabledField)
                         {
@@ -3177,7 +3177,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 AddImporterApprovalReceivedQueueForCargoTracking();
                             }
                             shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
-                            shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
+                            shipmentAdditionalCloudData.IsImporterApprovalRequried = GetIsImporterApprovalRequired(entityPM);
                             ClearApprovalDenialFields();
                         }
                         else if (entityPM.IsShipmentAdditionalCloudDataChange)
@@ -3188,7 +3188,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             shipmentAdditionalCloudData.ApproveDateTime = null;
                             //if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                             //{
-                            shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
+                            shipmentAdditionalCloudData.IsImporterApprovalRequried = GetIsImporterApprovalRequired(entityPM);
                             //}
 
                         }
@@ -3253,6 +3253,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 behaviour.Handle();
                 this.initializer.IsUpdatingHousesFinalArrivalDate = behaviour.IsUpdatingHouses;
             }
+        }
+        private bool GetIsImporterApprovalRequired(ShipmentPM shipmentPM)
+        {
+            if (shipmentPM.StatusCode.ToLower() == "ccd" || shipmentPM.CustomsClearanceDate != null) return false;
+            return entityPM.IsImporterApprovalRequired;
         }
 
         private void AddImporterApprovalReceivedQueueForCargoTracking()
