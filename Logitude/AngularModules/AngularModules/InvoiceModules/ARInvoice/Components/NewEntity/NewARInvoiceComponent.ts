@@ -267,6 +267,7 @@ export class NewARInvoiceComponent extends BaseComponent {
 
 
     SetWindowArgs(myarguments: any) {
+        debugger
         this.shipmentPM = myarguments["Shipment"];
         this.InvoiceTypeCode = myarguments["InvoiceTypeCode"];
         this.EntityLevelCode = myarguments["EntityLevelCode"];
@@ -926,6 +927,9 @@ export class NewARInvoiceComponent extends BaseComponent {
         if (loadingDate == null) {
             loadingDate = DateTool.GetCurrentDateAsUtc();
         }
+debugger
+        this.EntityPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
+ 
 
         this.myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.LocalCurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
 

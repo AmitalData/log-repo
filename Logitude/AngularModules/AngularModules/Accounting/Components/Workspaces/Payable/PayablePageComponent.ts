@@ -360,6 +360,7 @@ export class PayablePageComponent {
                     entity.LocalCurrencyId = SessionLocator.LocalCurrencyId;
                     entity.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
                     entity.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                    entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
 
                     const additionalFieldsScreenCode = "APInvoice.AdditionalFields";
 
