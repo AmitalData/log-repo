@@ -27517,12 +27517,6 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.Declaration.O.NotCarriedInsurance&quot;"
-      DefaultText="&quot;nsurance was not carried out due to differences in currency/shipping conditions between the accounts&quot;"
-      LocalDefaultText="&quot;לא בוצע ביטוח בגלל שוני במטבע/תנאי משלוח בין החשבונות&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;Customs.Declaration.O.Choose&quot;"
       DefaultText="&quot;Choose&quot;"
       LocalDefaultText="&quot;בחר&quot;"
@@ -27889,24 +27883,6 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.Pending900InDetainedOrPhysicalCheck&quot;"
       FeatureDefaultText="&quot;גביה - בתהליך בדיקה פיזית/מעוכבים&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;SendManifestEvent&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Customs.Declaration.Features.SendManifest&quot;"
-      FeatureDefaultText="&quot;Send Manifest Event&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;IsAutoInsuranceExportSubmit&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Customs.Declaration.Features.ISDefineToInsureFromSubmit&quot;"
-      FeatureDefaultText="&quot;Automatic insurance in export submission&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
