@@ -37,9 +37,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<ARInvoicesSignedStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ARInvoicesSignedStatus> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<ARInvoicesSignedStatus> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<ARInvoicesSignedStatus> iQueryable)
+            return iQueryable;
+        }
+        private IQueryable<ARInvoicesSignedStatus> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<ARInvoicesSignedStatus> iQueryable)
         {
 			return iQueryable;
 		}
