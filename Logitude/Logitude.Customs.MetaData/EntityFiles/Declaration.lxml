@@ -27495,7 +27495,7 @@
     <TextCode
       Code="&quot;Customs.Declaration.O.IsSendManifest&quot;"
       DefaultText="&quot;This field is intended for situations where it is required to field the statement without declaration data&quot;"
-      LocalDefaultText="&quot;את 5 השדות שלהלן אין חובה לשדר למכס ולכן הם לא ישודרו. אם ברצונכם לשדר אותם בכל זאת, אנא הסירו את ה V -  השדות הם: תאריך מזהה מטען, ארץ מוצא, נמל טעינה ותאריך גמר פריקה .&quot;"
+      LocalDefaultText="&quot;את 4 השדות שלהלן אין חובה לשדר למכס ולכן הם לא ישודרו. אם ברצונכם לשדר אותם בכל זאת, אנא הסירו את ה V -  השדות הם: תאריך מזהה מטען, ארץ מוצא, נמל טעינה ותאריך גמר פריקה .&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
