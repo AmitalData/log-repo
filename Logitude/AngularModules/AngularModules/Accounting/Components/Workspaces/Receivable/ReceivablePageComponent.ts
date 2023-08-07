@@ -34,6 +34,7 @@ import { ARInvoicePM } from 'Invoice/EntityPMs/ARInvoicePM';
 import {CurrencyList} from "../../../../Common/EntityLists/CurrencyList";
 import {CurrencyListService} from "../../../../Common/Services/StandardLists/CurrencyListService";
 import {InvoiceTool} from "../../../../Invoice/Tools";
+import { PartnersDomainService } from 'Common/Services/PartnersDomainService';
 
 
 @Component({
@@ -220,6 +221,8 @@ export class ReceivablePageComponent {
          {
             var entity = new ARPaymentPM();
             entity.IsFullAccounting = true;
+            entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
+
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
@@ -244,7 +247,7 @@ export class ReceivablePageComponent {
             //    });
          }
 
-    }
+    }   
     filterAgrs: ApiQueryFilters;
     private getAutoNewName() {
         var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
@@ -376,6 +379,7 @@ export class ReceivablePageComponent {
             var entity = new ARInvoicePM();
             entity.ARInvoiceTypeCode = type;
             entity.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
+            entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
             this.GetCurrenciesExchangeRateByValueDate(entity);
             return;
         }
