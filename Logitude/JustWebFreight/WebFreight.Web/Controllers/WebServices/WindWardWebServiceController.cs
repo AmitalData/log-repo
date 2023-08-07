@@ -16,6 +16,7 @@ using System.Security.AccessControl;
 using System.Web.Mvc;
 using System.Globalization;
 using System.Configuration;
+using System.Linq;
 
 namespace WebFreight.Web.Controllers.WebServices
 {
@@ -28,7 +29,7 @@ namespace WebFreight.Web.Controllers.WebServices
 			try
 			{
 				WriteLogMe("shipmentUpdate ENTER POST: ", webhook, "shipmentUpdate");
-
+				
 				var webhookService = new TrackedShipmentsAPI.Services.WebhookService();
 
 				dynamic webhookObject = webhook  ; //= JObject.Parse(webhook.GetRawText());
@@ -39,6 +40,7 @@ namespace WebFreight.Web.Controllers.WebServices
 				var result = webhookService.JsonToXML(enrichedData);
 
 				var xmlString = result.OuterXml;
+				WriteData(webhook, xmlString);
 				var ContainerPushPage = new ContainerPush();
 				WriteLogMe("shipmentUpdate AnalyzeContainerStatus: " , null, "shipmentUpdate");
 
@@ -54,7 +56,34 @@ namespace WebFreight.Web.Controllers.WebServices
 				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
 			}
 		}
+		private void WriteData(dynamic webhook, dynamic xmlString)
+		{
+			try
+			{
+				string WindWardSettings = LogitudeSettings.WindWardSettings;
+				var WindWardSettingsArray = WindWardSettings?.Split(',');
+				string IsWriteData = (WindWardSettingsArray!=null && WindWardSettingsArray.Count() > 3) ? WindWardSettingsArray[3] : "0";
+				if (IsWriteData == "1")
+				{				
+				   string id = webhook.data?.metadata?.jobNumber;
+				   string containerNumber = webhook.data?.shipment?.identifiers?.containerNumber;
+					string BLNumber = webhook.data?.shipment?.identifiers?.bolNumber;
+					string filename =string.Format("{0}_{1}_{2}_{3}.json", containerNumber, BLNumber, id ,DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff"));
+				   
+				   
+				   if (!System.IO.Directory.Exists("c:\\temp\\windward"))
+				   {
+				   	System.IO.Directory.CreateDirectory("c:\\temp\\windward");
+				   }
+				   System.IO.File.WriteAllText(Path.Combine("c:\\temp\\windward", filename), JsonConvert.SerializeObject(xmlString));
+				}
+			}
+			catch (Exception ex)
+			{
 
+				//throw;
+			}
+		}
 		public void WriteLogMe(string subject, object obj, string funcName)
 		{
 			DateTime stopLogAt = DateTime.MinValue;

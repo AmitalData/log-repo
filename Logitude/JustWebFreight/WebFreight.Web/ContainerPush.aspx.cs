@@ -63,7 +63,9 @@ namespace WebFreight.Web
                     Debug.WriteLine(key + " :" + Request.Headers[key]);
                 }
                 string data = getData(Request.InputStream);
-                AnalyzeContainerStatus(data);
+                WriteData(data);
+
+				AnalyzeContainerStatus(data);
 
 			}
             catch (Exception ex)
@@ -435,8 +437,62 @@ namespace WebFreight.Web
                 scope.Complete();
             }
         }
+		private void WriteData(dynamic data)
+		{
+			try
+			{
+				string WindWardSettings = LogitudeSettings.WindWardSettings;
+				var WindWardSettingsArray = WindWardSettings?.Split(',');
+				string IsWriteData = (WindWardSettingsArray != null && WindWardSettingsArray.Count() > 3) ? WindWardSettingsArray[3] : "0";
+				if (IsWriteData == "1")
+				{
+                    if(!string.IsNullOrEmpty(data)) { 
+					    XmlDocument xmldoc = new XmlDocument();
+					    xmldoc.LoadXml(data);
 
-        private byte[] ReadFully(Stream input)
+						XmlNodeList nodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
+						string id = string.Empty;
+						//foreach (XmlNode item in nodeList)
+						//{
+						if (nodeList[0] != null)
+						{
+							id = nodeList[0].InnerText;
+						}
+						string containerNumber = string.Empty;
+						XmlNodeList requestkeynodeList = xmldoc.GetElementsByTagName("container_number");
+						foreach (XmlNode item in requestkeynodeList)
+						{
+							containerNumber = item.InnerText;
+						}
+						string BLNumber = string.Empty;
+						XmlNodeList blnumbernodeList = xmldoc.GetElementsByTagName("bl_number");
+						if (blnumbernodeList != null)
+						{
+							foreach (XmlNode item in blnumbernodeList)
+							{
+								BLNumber = item.InnerText;
+							}
+						}
+
+
+						string filename = string.Format("{0}_{1}_{2}_{3}.json", containerNumber, BLNumber, id, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff"));
+                        
+                        
+					    if (!System.IO.Directory.Exists("c:\\temp\\oceanInsight"))
+					    {
+					    	System.IO.Directory.CreateDirectory("c:\\temp\\oceanInsight");
+					    }
+					    System.IO.File.WriteAllText(Path.Combine("c:\\temp\\oceanInsight", filename), JsonConvert.SerializeObject(data));
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+
+				//throw;
+			}
+		}
+		private byte[] ReadFully(Stream input)
         {
             byte[] buffer = new byte[16 * 1024];
             using (MemoryStream ms = new MemoryStream())
