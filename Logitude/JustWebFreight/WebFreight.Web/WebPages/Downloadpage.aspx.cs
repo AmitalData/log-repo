@@ -614,7 +614,7 @@ ExceptionInErrorLog.ToString()
             if(documentFiling != null)
             {
                 ARInvoicePrintDetailsService aRInvoicePrintDetailsService = new ARInvoicePrintDetailsService((int)tenant, documentFiling.EntityId, email, true);
-                aRInvoicePrintDetailsService.Update();
+                aRInvoicePrintDetailsService.Update(documentFiling.Id);
             }
         }
 

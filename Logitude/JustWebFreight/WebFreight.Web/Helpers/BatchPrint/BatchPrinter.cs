@@ -33,7 +33,7 @@ namespace WebFreight.Web.Helpers.BatchPrint
         public DocumentTypeTemplatePM template;
         public User printedBy;
         public BatchTaskExecutionUpdateService batchTaskExecutionUpdateService;
-        private string documentOutId = null;
+        public string documentOutId = null;
         public BatchPrinter(BatchPrinterArgs batchPrinterArgs)
         {
             _batchPrinterArgs = batchPrinterArgs;

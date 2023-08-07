@@ -1,7 +1,12 @@
-﻿using Logitude.BL.InvoiceModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -30,29 +35,31 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             _setAsPrintedIfInvoiceFromInterestBatchInvoice = setAsPrintedIfInvoiceFromInterestBatchInvoice;
         }
 
-        public void Update()
+        public void Update(string documensFilingId)
         {
             ARInvoicePM aRInvoicePM = GetARInvoicePM();
-            if (aRInvoicePM == null) return;
-            if (aRInvoicePM.IsPrinted)
-            {
-                return;
-            }
-            if (string.IsNullOrEmpty(aRInvoicePM.IssuedByUserId)) return;
+            if (aRInvoicePM == null || aRInvoicePM.IsPrinted || string.IsNullOrEmpty(aRInvoicePM.IssuedByUserId)) return;
             if (_setAsPrintedIfInvoiceFromInterestBatchInvoice && !aRInvoicePM.IsFromInterestBatchInvoice) return;
+
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-        
                 aRInvoicePM.PrintByUserId = aRInvoicePM.IssuedByUserId;
                 aRInvoicePM.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 aRInvoicePM.IsPrinted = GetIsPrintedValue(aRInvoicePM);
                 aRInvoicePM.IsUpdatedByPrint = true;
+                aRInvoicePM.DocumentFilingId = aRInvoicePM.IsFromInterestBatchInvoice && IsFullAccountingActivated(tenant) ? documensFilingId : aRInvoicePM.DocumentFilingId;
                 aRInvoiceService.Update(aRInvoicePM, true);
                 scope.Complete();
             }
         }
 
-
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            bool isFullAccountingActivated = tenantRepository.GetTenantAccountingActivated(tenant);
+            return isFullAccountingActivated;
+        }
+  
         private  bool GetIsPrintedValue(ARInvoicePM aRInvoicePM)
         {
             bool isPrinted = aRInvoicePM.IsPrinted;
