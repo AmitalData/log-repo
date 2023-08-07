@@ -183,7 +183,7 @@ namespace Logitude.Accounting.BL.Validators
             currDateTimeUtcNow = currDateTimeUtcNow ?? TenantServerConfigration.GetCurrentDateTime(myJournalPM.Tenant); //DateTime.UtcNow;
 
             //Use SearchFields as an indicator to apply validation only for one-line reconciliation if the journal is one or split.
-            if ((myJournalPM.SearchFields== "OneLineReconciliation") && accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_AccountingPeriodsByTypeRegular))
+            if (!(myJournalPM.SearchFields== "OneLineReconciliation") && accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_AccountingPeriodsByTypeRegular))
             {
                 var accountingPeriodsByTypeRegular = accountingValidationContextServiceProvider.Items[JournalValidator.K_AccountingPeriodsByTypeRegular] as List<AccountingPeriodPM>;
                 if (accountingPeriodsByTypeRegular != null)
