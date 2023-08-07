@@ -851,7 +851,8 @@
   <Column
     Name="IsSigned"
     OldNames="is_signed"
-    Type="varchar">
+    Type="varchar"
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
