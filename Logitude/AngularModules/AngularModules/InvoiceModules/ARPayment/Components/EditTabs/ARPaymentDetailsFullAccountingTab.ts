@@ -1217,13 +1217,12 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
     set BillToId(value: string)
     {
-        debugger
         if (this.EntityPM != null) {
             if (this.EntityPM.BillToId != value) {
                 this.EntityPM.BillToId = value;
         if(AppTool.IsNullOrEmpty(this.EntityPM.Id))
             this.GetCardProperties();
-            
+
         else
         {
 
@@ -1376,7 +1375,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
 
     FillDataFromCardList(list: CardList) {
-        debugger
         if (list == null) {
             this.BillToAddressId = null;
             this.EntityPM.BillToName = null;
