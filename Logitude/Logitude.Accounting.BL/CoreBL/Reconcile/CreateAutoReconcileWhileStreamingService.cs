@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var myOldTransToReconcile = GetLedgerTransactionToReconcile(theReconcileAgainstLTranIdList);
 
 
-            if (myOldTransToReconcile.Any(r => r.IsReconciled))
+            if (myOldTransToReconcile.Any(r => r.IsReconciled && r.AmountToReconcile!=0))
             {
                 if (!_JournalPM.IsVoided.GetValueOrDefault())//while voiding -old transaction IsReconciled change after !!
                 {
