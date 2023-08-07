@@ -655,7 +655,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     ChargesGroupRepository chargesGroupRepository = new ChargesGroupRepository(context);
 
                     TenantZeroMeasurements = measurementsRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
-                    TenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+                    TenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code + d.Id, a => a);
                     TenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
                     TenantZeroRanks = rankRepository.GetRanks(0).ToDictionary(d => d.Code, a => a);
                     TenantZeroDocumentTypes = documentTypeQuery.GetDocumentTypePMsByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
