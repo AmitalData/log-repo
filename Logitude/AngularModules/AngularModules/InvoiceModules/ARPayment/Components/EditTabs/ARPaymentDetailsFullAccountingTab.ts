@@ -170,7 +170,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         //#endregion
 
-        this.GetData();
+        this.ReloadGLAccount();
 
         // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
         this.InitializeBillToLov();
@@ -1191,6 +1191,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     var list: CardList = myResponse.Result;
+                    if(list!=null)
                     this.SelectedPartnerType = partnerTypes.filter(d => d.Id == list.PartnerTypeId)[0];
                 }
             }
