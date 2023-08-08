@@ -172,7 +172,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         //#endregion
         if (!this.PrintNotes) this.PrintNotes = TextCodeTranslator.Translate("ARPayment.S.ShortTitle");
 
-        this.GetData();
+        this.ReloadGLAccount();
 
         // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
         this.InitializeBillToLov();
@@ -1194,7 +1194,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			if (myResponse != null) {
 				if (!myResponse.HasError) {
 					var list: CardList = myResponse.Result;
-					this.SelectedPartnerType = partnerTypes.filter(d => d.Id == list.PartnerTypeId)[0];
+                    if(list!=null)
+                    this.SelectedPartnerType = partnerTypes.filter(d => d.Id == list.PartnerTypeId)[0];
 				}
 			}
 		});
