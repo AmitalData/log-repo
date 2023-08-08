@@ -158,10 +158,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string accountId = GetGLAccountFilterValueFromQueryOperations(filters, tenant);
                 string isFutureOpenCheques = GetIsFutureOpenChequesFilterValueFromQueryOperations(filters, tenant);
 
-                QueryOperations queryOperations = BuildQueryOperationsForLedgerTransactions(filters, tenant);
-
-                QueryFilterItem filterItem = queryOperations?.QueryFilterItems.Find(d => d.FieldName == "IsInBankAccountStatus");
-                string isInBankAccountStatus = filterItem?.FieldValue.ToString();
+                string isInBankAccountStatus = GetIsInBankAccountStatusFilterValueFromQueryOperations(filters, tenant);
 
 
                 List<LedgerTransactionList> tranactions = GetAccountChequesTransactions(tenant, accountId, isFutureOpenCheques, isInBankAccountStatus, filters.SortBy, filters.SortDirection);
@@ -195,6 +192,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             QueryOperations queryOperations = BuildQueryOperationsForLedgerTransactions(filters, tenant);
             string IsFutureOpenCheques = GetIsFutureOpenChequesFilterValue(queryOperations);
             return IsFutureOpenCheques;
+        }
+
+        private static string GetIsInBankAccountStatusFilterValueFromQueryOperations(ApiQueryFilters filters, int tenant)
+        {
+            QueryOperations queryOperations = BuildQueryOperationsForLedgerTransactions(filters, tenant);
+
+            QueryFilterItem filterItem = queryOperations?.QueryFilterItems.Find(d => d.FieldName == "IsInBankAccountStatus");
+            string isInBankAccountStatus = filterItem?.FieldValue.ToString();
+            return isInBankAccountStatus;
         }
 
         private static List<LedgerTransactionList> GetAccountChequesTransactions(int tenant, string accountId, string isFutureOpenCheques, string isInBankAccountStatus, string sortBy, string sortDirection)
