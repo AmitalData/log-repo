@@ -679,7 +679,7 @@
                                                 {{(GLAccountMoreData.TotalOpenChequesInLocalCur?GLAccountMoreData.TotalOpenChequesInLocalCur:0) | NumbersPipe:'N2'}}
                                             </div>
                                             <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked(GLAccountMoreData.AccountId)" float-start text-start >
-                                                {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
+                                                {{ 'GLAccounts.O.NotRepaid' | TextCodeTranslationPipe }}
                                             </a>
                                         </div>
 
@@ -707,7 +707,7 @@
 
                                             </div>
                                             <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayFutureChequelistClicked(GLAccountMoreData.AccountId)" float-start text-start >
-                                                {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
+                                                {{ 'GLAccounts.O.FutureCheque' | TextCodeTranslationPipe }}
                                             </a>
                                         </div>
 

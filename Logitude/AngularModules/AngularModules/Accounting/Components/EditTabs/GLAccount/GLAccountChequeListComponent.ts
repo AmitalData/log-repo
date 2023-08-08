@@ -47,6 +47,8 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
     private CurrentSession = SessionLocator.SelectedSession;
     public IsExcelEnabled = true;
     public IsFutureOpenCheques= false;
+    public IsInBankAccountStatus= false;
+
     constructor( private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -62,6 +64,9 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             this.EntityPM = args.EntityPM;
             if(args.IsFutureOpenCheques) {
                 this.IsFutureOpenCheques = args.IsFutureOpenCheques;
+            }
+            if(args.IsInBankAccountStatus) {
+                this.IsInBankAccountStatus = args.IsInBankAccountStatus;
             }
             
             this.LoadData();
@@ -258,6 +263,8 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
 
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         this.filterAgrs.addAdditionalFilter("IsFutureOpenCheques", this.IsFutureOpenCheques, null, null, "Equals", true, false, false, "Boolean");
+        this.filterAgrs.addAdditionalFilter("IsInBankAccountStatus", this.IsInBankAccountStatus, null, null, "Equals", true, false, false, "Boolean");
+
     }
 
     CancelButtonClicked() {

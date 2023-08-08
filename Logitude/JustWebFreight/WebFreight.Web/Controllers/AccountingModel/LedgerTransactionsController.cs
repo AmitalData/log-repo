@@ -158,7 +158,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string accountId = GetGLAccountFilterValueFromQueryOperations(filters, tenant);
                 string isFutureOpenCheques = GetIsFutureOpenChequesFilterValueFromQueryOperations(filters, tenant);
 
-                List<LedgerTransactionList> tranactions = GetAccountChequesTransactions(tenant, accountId, isFutureOpenCheques, filters.SortBy, filters.SortDirection);
+                QueryOperations queryOperations = BuildQueryOperationsForLedgerTransactions(filters, tenant);
+
+                QueryFilterItem filterItem = queryOperations?.QueryFilterItems.Find(d => d.FieldName == "IsInBankAccountStatus");
+                string isInBankAccountStatus = filterItem?.FieldValue.ToString();
+
+
+                List<LedgerTransactionList> tranactions = GetAccountChequesTransactions(tenant, accountId, isFutureOpenCheques, isInBankAccountStatus, filters.SortBy, filters.SortDirection);
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
@@ -191,10 +197,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             return IsFutureOpenCheques;
         }
 
-        private static List<LedgerTransactionList> GetAccountChequesTransactions(int tenant, string accountId, string isFutureOpenCheques, string sortBy, string sortDirection)
+        private static List<LedgerTransactionList> GetAccountChequesTransactions(int tenant, string accountId, string isFutureOpenCheques, string isInBankAccountStatus, string sortBy, string sortDirection)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-            GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, MyContext, isFutureOpenCheques == "True");
+            GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, MyContext, isFutureOpenCheques == "True", isInBankAccountStatus == "True");
             List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(accountId, sortBy, sortDirection);
             return tranactions;
         }
