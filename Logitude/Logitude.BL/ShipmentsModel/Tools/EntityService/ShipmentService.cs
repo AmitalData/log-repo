@@ -3256,7 +3256,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private bool GetIsImporterApprovalRequired(ShipmentPM shipmentPM)
         {
-            if (shipmentPM.StatusCode.ToLower() == "ccd" || shipmentPM.CustomsClearanceDate != null) return false;
+            if (shipmentPM.StatusCode?.ToLower() == "ccd" || shipmentPM.CustomsClearanceDate != null) return false;
             return entityPM.IsImporterApprovalRequired;
         }
 
