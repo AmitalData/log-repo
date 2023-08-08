@@ -584,10 +584,9 @@
                                                                 <div class="TextTrimming" style="font-size:10px;color:#312C31;margin-right:6px;float:right;width:170px;">
                                                                     {{relatedDoc.DocumentTypeName}}
                                                                     {{relatedDoc.Notes}}
-                                                                    <span *ngIf="relatedDoc.documentsFilingPM.OcrScore != -1" style ="position: absolute;
-                                                                    left: 2px;
-                                                                    top: 3px;
-                                                                    font-weight: bold">
+                                                                    <span 
+                                                                    *ngIf="relatedDoc.documentsFilingPM.OcrScore != -1 && (relatedDoc.documentsFilingPM.OcrStatusCode == '2' || relatedDoc.documentsFilingPM.OcrStatusCode == '4')" 
+                                                                    style ="position: absolute;left: 2px;top: 3px;font-weight: bold">
                                                                         {{relatedDoc.documentsFilingPM.OcrScore}}%
                                                                     </span>                                                                 
                                                                 </div>
