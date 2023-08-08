@@ -44,6 +44,7 @@ using UnifreightIIG.Common.MessageLib.Unifreight.Customs;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.EntityKeys;
+using static Logitude.Customs.BL.Messaging.Customs.SupplierInvoiceByOcr;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -323,34 +324,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-    public class SupplierInvoiceOcr
-    {
-       
-        public Page[] pages { get; set; }
-    }
-
-    public class Page
-    {
-        
-        public Prediction[] prediction { get; set; }
-        
-    }
-
     
-
-    public class Prediction
-    {
-        public string label { get; set; }
-        public string ocr_text { get; set; }
-        public Cell[] cells { get; set; }
-    }
-
-    public class Cell
-    {
-        public int row { get; set; }
-        public string label { get; set; }
-        public string text { get; set; }
-       
-    }
 
 }
