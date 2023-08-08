@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Interfaces;
 using Logitude.Server.Tools;
@@ -20,13 +21,15 @@ namespace Logitude.Accounting.BL.CoreBL
         const string paymentIconCode = "PY";
         const string journalIconCode = "JR";
         bool _IsFutureOpenCheques = false;
+        bool _IsInBankAccountStatus = false;
 
-        public GLAccountChequesTransactionsRetreivingService(int Tenant, IAccountingContext context, bool isFutureOpenCheques = false)
+        public GLAccountChequesTransactionsRetreivingService(int Tenant, IAccountingContext context, bool isFutureOpenCheques = false, bool isInBankAccountStatus = false)
         {
             tenant = Tenant;
             this.accountingContext = context;
             this.showLocal = GetLoggedContactShowLocal(tenant);
             _IsFutureOpenCheques = isFutureOpenCheques;
+            _IsInBankAccountStatus = isInBankAccountStatus;
         }
 
         public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId, string sortBy, string sortDirection)
@@ -62,7 +65,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     where transaction.Tenant == tenant && transaction.AccountId == accountId && journal.AccountingEntityCode == AccountingEntityValues.ARPayment && 
                     transaction.Reference2 ==arpaymentcheque.ChequeNumber && arpaymentcheque.StatusCode != ARPaymentChequeStatuses.ReturnToCustomer 
-                    && arpaymentcheque.StatusCode != ARPaymentChequeStatuses.Redeemed
+                    && arpaymentcheque.StatusCode != ARPaymentChequeStatuses.Redeemed &&(!_IsInBankAccountStatus || arpaymentcheque.StatusCode == "3")
 
                     select new LedgerTransactionList()
                     {
@@ -96,6 +99,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (_IsFutureOpenCheques) {
                 query = query.Where(x => x.PaymentValueDate > today);
             }
+            
             return query.ToList();
         }
 

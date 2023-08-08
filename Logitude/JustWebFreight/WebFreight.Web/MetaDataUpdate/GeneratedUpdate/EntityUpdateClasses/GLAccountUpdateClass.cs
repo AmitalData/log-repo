@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "145d75756143525245d8076710696f2e";
+		public const string HashString = "bc3baa915f0ffd035378c1517328ac37";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13797,6 +13797,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsOSettingOfCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.SettingOfCurrency", DefaultText = "Setting the currency on the card",LocalDefaultText = @"הגדרת המטבע בכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsOInCorrectCorrect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.InCorrectCorrect", DefaultText = "Data is Incorrect please correct",LocalDefaultText = @"שגויה יש לבצע תיקון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsONotRepaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NotRepaid", DefaultText = "Not Repaid",LocalDefaultText = @"פירוט שלא נפרעו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOFutureCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheque", DefaultText = "FutureCheque",LocalDefaultText = @"פירוט המחאות עתידיות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

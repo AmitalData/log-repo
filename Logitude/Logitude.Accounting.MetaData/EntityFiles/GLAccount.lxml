@@ -18491,6 +18491,18 @@
       LocalDefaultText="&quot;שגויה יש לבצע תיקון&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.NotRepaid&quot;"
+      DefaultText="&quot;Not Repaid&quot;"
+      LocalDefaultText="&quot;פירוט שלא נפרעו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.FutureCheque&quot;"
+      DefaultText="&quot;FutureCheque&quot;"
+      LocalDefaultText="&quot;פירוט המחאות עתידיות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
