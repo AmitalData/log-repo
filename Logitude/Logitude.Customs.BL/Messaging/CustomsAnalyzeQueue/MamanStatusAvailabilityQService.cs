@@ -127,7 +127,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                             });
                         }
                         break;
-                    case "0016":
+                    case "0006":
                         {
                             unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
                             {
