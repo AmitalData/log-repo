@@ -370,7 +370,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                        ExternalAttachmentId = rec.ExternalAttachmentId,
                        IsPartOfDeclaration = rec.IsPartOfDeclaration,
                        OcrStatusCode = o != null ? o.StatusCode : null,
-                       OcrScore = o != null ? (decimal)o.Score : -1, 
+                       OcrScore = o != null && o.Score != null ? (decimal)o.Score : -1, 
+                       OcrReference = o != null && o.Reference != null ? o.Reference : null, 
 
                    });
 

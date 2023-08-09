@@ -169,6 +169,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool BackedupExternally { get; set; }
         public string OcrStatusCode { get; set; }
         public decimal OcrScore { get; set; }
+        public string OcrReference { get; set; }
 
 
     }
