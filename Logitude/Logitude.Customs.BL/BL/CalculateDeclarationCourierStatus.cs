@@ -418,6 +418,10 @@ namespace Logitude.Customs.BL.BL
                             LogMessagingUtil.Instance.AppendLine("DeclarationStatusTypeCode is " + declarationPM.DeclarationStatusTypeCode +
                                 ",CourierDeclarationStatusCode set to " + myDeclarationCourierStatusPM.CourierDeclarationStatusCode);
                         }
+                        else
+                        {
+                            myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
+                        }
                     }
                 }
             }
