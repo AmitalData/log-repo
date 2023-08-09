@@ -42,6 +42,8 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal OcrScore  { get; set; }
        [DataMember]
        public string OcrStatusCode  { get; set; }
+       [DataMember]
+       public string OcrReference  { get; set; }
    }
 
 }

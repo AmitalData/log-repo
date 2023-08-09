@@ -837,6 +837,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string ocrReference ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OcrReference  
+	   {
+	    
+	     get
+		{
+		   return ocrReference;
+		 }
+		 set
+		 {
+		   if(ocrReference != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrReference",OldValue=ocrReference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ocrReference=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
