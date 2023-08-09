@@ -39,8 +39,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         DeclarationPM _MyDeclarationPM;
         DeclarationPM _MyDeclarationPMOrg;
 
-        private bool isExportClose=false;
-        private bool isExportCloseFromMehes= false;
+        private bool isExportClose = false;
+        private bool isExportCloseFromMehes = false;
         private bool HasErors = false;
 
         private DeclarationPrintResponseData _SendDeclarationPrintResponse;
@@ -52,7 +52,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
         public override void Update(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, AmendmentRequestParams requestParams)
-        {  
+        {
             var declarationNumber = customResponse?.Response?.Declaration?.ID.Value;
             if (declarationNumber == null)
             {
@@ -62,9 +62,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             IDisposable disposableToken = null;
 
             try
-            {                
+            {
                 string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
-                disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber");            
+                disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "DeclarationNumber");
 
                 var context = CustomContext.GetContext(requestParams.Tenant);
                 var myDeclarationQueryService = new DeclarationQueryService(context);
@@ -115,7 +115,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (!isExportClose)
                 {
 
-                    var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID,agentFileReferenceID, requestParams.Tenant);
+                    var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID, requestParams.Tenant);
 
                     _MyDeclarationPM = declaration;
                     var AdditionalInformation = customResponse.Response.AdditionalInformation;
@@ -153,6 +153,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         }
                     }
+
                 }
                 else
                 {
@@ -222,12 +223,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
                 EventContextTagModel myUpdateEventContextTagModel = null;
+
                 string s = "";
                 if (customResponse.Response.AdditionalInformation != null)
                     s = customResponse.Response.AdditionalInformation.FirstOrDefault(x => x.Content != null && x.StatementTypeCode.Value == "32").Content.Value;
 
                 disconnectExportStorages(s, myDeclarationQueryService);
-                
+
+
                 if ((isExportCloseFromMehes || isExportClose) && customResponse.Response.Amendment != null && customResponse.Response.Amendment.Length > 0)
                 {
                     var customResponseResponseXml = XmlGenericUtil<Response>.SerializeObject(customResponse.Response);
@@ -849,8 +852,78 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        private void disconnectExportStorages(string status, DeclarationQueryService myDeclarationQueryService) 
+
+    private void disconnectExportStorages(string status, DeclarationQueryService myDeclarationQueryService)
+    {
+        var context = CustomContext.GetContext(_MyDeclarationPM.Tenant);
+        if (status == "4")
         {
+            var myConsignmentQueryService = new ConsignmentQueryService(context);
+            var consignments = myConsignmentQueryService.GetMulti(new Customs.Data.EntityKeys.DeclarationKeys { Id = _MyDeclarationPM.Id }, false, false);
+            foreach (var item in consignments)
+            {
+                if (item.ExportStoragesId != null)
+                {
+                    item.ExportStoragesId = null;
+                    item.ChangeSetOp = ChangeSetOperation.Update;
+                    ConsignmentUpdateService cUpdateservice = new ConsignmentUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                    cUpdateservice.Update(item, true);
+                }
+            }
+            var myExportStorageQueryService = new ExportStorageQueryService(context);
+            var exportStorages = myExportStorageQueryService.GetDeclarationExportStorages(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
+            foreach (var item in exportStorages)
+            {
+                item.DeclarationId = null;
+                item.ChangeSetOp = ChangeSetOperation.Update;
+                ExportStorageUpdateService sUpdateservice = new ExportStorageUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                sUpdateservice.Update(item, true);
+            }
+        }
+        if (status == "2" || status == "1")
+        {
+            var myConsignmentQueryService = new ConsignmentQueryService(context);
+            var declarationParent = myDeclarationQueryService.GetAcceptDeclarationAmendment(_MyDeclarationPM.AmendmentOriginalDeclartation, _MyDeclarationPM.Tenant);
+            if (declarationParent != null)
+            {
+                var consignments_prev = myConsignmentQueryService.GetMulti(new Customs.Data.EntityKeys.DeclarationKeys { Id = declarationParent.Id }, false, false);
+                foreach (var item in consignments_prev)
+                {
+                    if (item.ExportStoragesId != null)
+                    {
+                        item.ExportStoragesId = null;
+                        item.ChangeSetOp = ChangeSetOperation.Update;
+                        ConsignmentUpdateService cUpdateservice = new ConsignmentUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        cUpdateservice.Update(item, true);
+                    }
+                }
+                var myExportStorageQueryService = new ExportStorageQueryService(context);
+                var exportStorages = myExportStorageQueryService.GetDeclarationExportStorages(declarationParent.Id, _MyDeclarationPM.Tenant);
+                var consignments = myConsignmentQueryService.GetMulti(new Customs.Data.EntityKeys.DeclarationKeys { Id = _MyDeclarationPM.Id }, true, false);
+
+                foreach (var item in exportStorages)
+                {
+                    if (consignments.Any(x => x.ExportStoragesId == item.Id))
+                    {
+                        item.DeclarationId = _MyDeclarationPM.Id;
+                    }
+                    else
+                    {
+                        item.DeclarationId = null;
+                    }
+                    item.ChangeSetOp = ChangeSetOperation.Update;
+                    ExportStorageUpdateService cUpdateservice = new ExportStorageUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                    cUpdateservice.Update(item, true);
+                }
+            }
+        }
+    }
+
+
+ 
+
+        private void disconnectExportStorages(string status) 
+         {
             var context = CustomContext.GetContext(_MyDeclarationPM.Tenant);
             if (status == "4")
             {

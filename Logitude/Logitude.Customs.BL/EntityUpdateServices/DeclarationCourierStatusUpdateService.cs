@@ -592,8 +592,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             else
             {
-                listReasonCode = entityPM.DeclarationPendings.Where(c => (entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))
-                || (entityPOCO.CourierPendingReasonList.Contains(c.CourierPendingReasonCode) && !(entityPM.CourierPendingReasonList.Contains(c.CourierPendingReasonCode)))).Select(d => d.CourierPendingReasonCode).ToList();
+                listReasonCode = entityPM.DeclarationPendings.Where(c => ((entityPM.CourierPendingReasonList+",").Contains(c.CourierPendingReasonCode+",") && !((entityPOCO.CourierPendingReasonList+",").Contains(c.CourierPendingReasonCode+",")))
+                || ((entityPOCO.CourierPendingReasonList+",").Contains(c.CourierPendingReasonCode+",") && !((entityPM.CourierPendingReasonList + ",").Contains(c.CourierPendingReasonCode + ",")))).Select(d => d.CourierPendingReasonCode).ToList();
             }
             foreach (var item in listReasonCode)
             {
