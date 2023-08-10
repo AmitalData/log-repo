@@ -195,7 +195,6 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
         this.isValid = true;
         this.inValid = false;
         this.DeclarationCourierStatus.ApprovedCourierPendingList="";
-        debugger;
         for (let item of this.DeclarationPendingsList) {
             if(item.WasApproved == false && item.Approval){
                 this.DeclarationCourierStatus.ApprovedCourierPendingList+=","+item.CourierPendingReasonCode
