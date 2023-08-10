@@ -496,7 +496,6 @@ export class DeclarationPendingLine extends BaseComponent {
     }
 
     itemApproved(item:any,$event){
-        debugger;
         this.entityPM.Approval=true;
     }
     

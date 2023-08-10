@@ -190,13 +190,11 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
     hasRequest: boolean;
     notMandatoryIsNotEmpty: boolean = false;
     OkButtonClicked() {
-         debugger;
         this.ValidationErrorsList = [];
         var errors: string[] = [];
         this.isValid = true;
         this.inValid = false;
         this.DeclarationCourierStatus.ApprovedCourierPendingList="";
-        debugger;
         for (let item of this.DeclarationPendingsList) {
             if(item.WasApproved == false && item.Approval){
                 this.DeclarationCourierStatus.ApprovedCourierPendingList+=","+item.CourierPendingReasonCode
@@ -243,7 +241,6 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                     if (errors.length == 0) {
                         var isSave = 1;
                         if (isSave == 1) {
-                            debugger;
                             SessionLocator.SelectedSession.StartBusyIndicatorSaving();
                             this._DeclarationCourierStatusPMService.update(this.DeclarationCourierStatus).subscribe((response: ServiceResponse) => {
                                 //this.DeclarationPendingsList.forEach((declarationPendingPM: DeclarationPendingPM) => {
