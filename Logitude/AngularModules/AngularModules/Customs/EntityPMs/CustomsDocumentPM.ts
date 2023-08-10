@@ -229,6 +229,11 @@ export class CustomsDocumentPM {
     public set OcrStatusCode(newValue: string) { if (this.ocrStatusCode != newValue) { this.ocrStatusCode = newValue; this.MarkAsDirty("OcrStatusCode"); } }
        
 	 
+    private ocrReference: string;
+    public get OcrReference() { return this.ocrReference; }
+    public set OcrReference(newValue: string) { if (this.ocrReference != newValue) { this.ocrReference = newValue; this.MarkAsDirty("OcrReference"); } }
+       
+	 
 
     public OldEntityPM: CustomsDocumentPM;
 		

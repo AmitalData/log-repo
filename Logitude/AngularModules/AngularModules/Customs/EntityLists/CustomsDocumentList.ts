@@ -22,6 +22,7 @@ export class CustomsDocumentList {
 	IsPartOfDeclaration: boolean;
 	OcrScore: number;
 	OcrStatusCode: string;
+	OcrReference: string;
 	
 }
  

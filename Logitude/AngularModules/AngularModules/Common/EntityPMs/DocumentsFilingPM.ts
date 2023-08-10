@@ -584,6 +584,10 @@ export class DocumentsFilingPM {
 	private ocrScore: number;
     public get OcrScore() { return this.ocrScore; }
     public set OcrScore(newValue: number) { if (this.ocrScore != newValue) { this.ocrScore = newValue; this.MarkAsDirty("OcrScore"); } } 
+
+    private ocrReference: string;
+    public get OcrReference() { return this.ocrReference; }
+    public set OcrReference(newValue: string) { if (this.ocrReference != newValue) { this.ocrReference = newValue; this.MarkAsDirty("OcrReference"); } } 
       
 
     public OldEntityPM: DocumentsFilingPM;

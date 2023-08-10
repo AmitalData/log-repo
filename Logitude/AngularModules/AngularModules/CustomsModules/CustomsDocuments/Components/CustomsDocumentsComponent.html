@@ -582,8 +582,14 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="TextTrimming" style="font-size:10px;color:#312C31;margin-right:6px;float:right;width:170px;">
-                                                                    {{relatedDoc.DocumentTypeName}}
-                                                                    {{relatedDoc.Notes}}
+                                                                    <span *ngIf="!relatedDoc.documentsFilingPM.OcrReference" style="font-size:10px;">
+                                                                        {{relatedDoc.DocumentTypeName}}
+                                                                        {{relatedDoc.Notes}}
+                                                                    </span>
+                                                                   
+                                                                    <span *ngIf="relatedDoc.documentsFilingPM.OcrReference" style="font-size:10px;">
+                                                                        {{relatedDoc.documentsFilingPM.OcrReference}}
+                                                                    </span>
                                                                     <span 
                                                                     *ngIf="relatedDoc.documentsFilingPM.OcrScore != -1 && (relatedDoc.documentsFilingPM.OcrStatusCode == '2' || relatedDoc.documentsFilingPM.OcrStatusCode == '4')" 
                                                                     style ="position: absolute;left: 2px;top: 3px;font-weight: bold">
@@ -644,15 +650,15 @@
                                                                 {{relatedDoc.Code}}
                                                             </span>
                                                         </div>
-                                                        <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '1'"
+                                                        <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '1' || relatedDoc.documentsFilingPM.OcrStatusCode == '3'"
                                                         style="width: 17px;position: absolute;left: 5px;top: 5px;"
                                                         src="./Images/in_progress@2x.png"
                                                          />
-                                                        <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '2'"
+                                                        <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '2' || relatedDoc.documentsFilingPM.OcrStatusCode == '4'"
                                                         style="width: 17px;position: absolute;left: 5px;top: 5px;"
                                                         src="./Images/Successful_process@2x.png"
                                                          /> 
-                                                        <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '3'"
+                                                        <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '7' || relatedDoc.documentsFilingPM.OcrStatusCode == '8' || relatedDoc.documentsFilingPM.OcrStatusCode == '9'"
                                                          style="width: 17px;position: absolute;left: 5px;top: 5px;"
                                                          src="./Images/process_failed@2x.png"
                                                           /> 

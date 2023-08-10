@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Ocr Document&quot;"
-  Code="&quot;e0d9&quot;"
+  Code="&quot;1aed&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -1077,6 +1077,85 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.InvoiceUpdatedSuccessfully&quot;"
+      DefaultText="&quot;Invoice Updated Successfully&quot;"
+      LocalDefaultText="&quot;חשבון יצואן עודכן בהצלחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.InvoiceSuccessfullyOpened&quot;"
+      DefaultText="&quot;Invoice Successfully Opened&quot;"
+      LocalDefaultText="&quot;חשבון יצואן נפתח בהצלחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.ErrorCreatingInvoice&quot;"
+      DefaultText="&quot;Error Creating Invoice&quot;"
+      LocalDefaultText="&quot;שגיאה ביצירת החשבון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.IsNotOcrDocument&quot;"
+      DefaultText="&quot;Is not ocr document&quot;"
+      LocalDefaultText="&quot;OCR מסמך לא הוגדר כ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.ErrorInReceivingData&quot;"
+      DefaultText="&quot;Error in receiving data&quot;"
+      LocalDefaultText="&quot;לא ניתן לפתוח חשבון ממסמך זה, שגיאה בקבלת הנתונים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.CannotOpenInvoice&quot;"
+      DefaultText="&quot;Cannot Open Invoice&quot;"
+      LocalDefaultText="&quot;לא ניתן לפתוח חשבון ממסמך זה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.JSONFileNotReceived&quot;"
+      DefaultText="&quot;JSON file not received&quot;"
+      LocalDefaultText="&quot;לא התקבל קובץ JSON&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.MissingInvoiceNumber&quot;"
+      DefaultText="&quot;Missing Invoice Number&quot;"
+      LocalDefaultText="&quot;מספר חשבון יצואן חסר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.OcrStatus&quot;"
+      DefaultText="&quot;Ocr Status&quot;"
+      LocalDefaultText="&quot;סטטוס OCR&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.ContinueAnyway&quot;"
+      DefaultText="&quot;Continue Anyway&quot;"
+      LocalDefaultText="&quot;האם להמשיך בכל זאת ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.Rejected&quot;"
+      DefaultText="&quot;Rejected&quot;"
+      LocalDefaultText="&quot;נדחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.Cancelled&quot;"
+      DefaultText="&quot;Cancelled&quot;"
+      LocalDefaultText="&quot;מבוטל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.InPrograss&quot;"
+      DefaultText="&quot;In Prograss&quot;"
+      LocalDefaultText="&quot;בתהליך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

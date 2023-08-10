@@ -57,9 +57,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
 
-        public override void Update(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, GenericRequestParams requestParams)
-        {
+        public override void Update(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, GenericRequestParams requestParams){
 
+            ICustomContext context = CustomContext.GetContext(customResponse.tenant);
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
@@ -110,17 +110,41 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //insert or update supplierInvoice
                         try
                         {
-                            UpsertSupplierInvoicebyOcr(customResponse, myOcrDocument.Reference, dic, supplierInvoiceItemsList);
-
+                            bool isNewInvoice =  UpsertSupplierInvoicebyOcr(customResponse, myOcrDocument.Reference, dic, supplierInvoiceItemsList);
+                            if(isNewInvoice)// update CustomsDocumentPointer
+                            {
+                                CustomsDocumentsTicketQueryService customsDocumentsTicketQuery = new CustomsDocumentsTicketQueryService(customResponse.tenant);
+                                CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(customResponse.Declarationid, "", "", "", customResponse.tenant, "Declaration")
+                                    ?.Where(x => x.DocumentsFilingId == customResponse.DocumentsFilingId)?.FirstOrDefault();
+                                CustomsDocumentsTicketUpdateService customsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), customResponse.tenant);
+                                
+                                SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
+                                var invoiceCounterKey = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, myOcrDocument.Reference, customResponse.tenant, false)?.InvoiceCounterKey;
+                                if (customsDocumentsTicketPM != null && invoiceCounterKey != null)
+                                {
+                                    customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
+                                    foreach (var CustomsDocumentPointer in customsDocumentsTicketPM.CustomsDocumentPointers)
+                                    {
+                                        CustomsDocumentPointer.ChangeSetOp = ChangeSetOperation.Update;
+                                        CustomsDocumentPointer.Child1EntityCode = "SupplierInvoice";
+                                        CustomsDocumentPointer.Child1EntityId = invoiceCounterKey.ToString();
+                                    }
+                                customsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
+                                }
+                                
+                            }
+                            
+                            
                             this.MyResponseData.Succeeded = true;
                             this.MyResponseData.HasException = false;
-                            this.MyResponseData.UserMessage = "חשבון יצואן עודכן בהצלחה";
+                            string InvoiceSuccess = isNewInvoice ? "Customs.OcrDocument.O.InvoiceSuccessfullyOpened" : "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully";
+                            this.MyResponseData.UserMessage = TextCodesTranslator.TranslateText( InvoiceSuccess, customResponse.tenant);
                         }
                         catch (System.Exception ex)
                         {
                             this.MyResponseData.Succeeded = false;
                             this.MyResponseData.HasException = true;
-                            this.MyResponseData.UserMessage = ex.Message + " : " + "  שגיאה ביצירת החשבון  ";
+                            this.MyResponseData.UserMessage = ex.Message + " : " + " "+ TextCodesTranslator.TranslateText("Customs.OcrDocument.O.ErrorCreatingInvoice", customResponse.tenant) +" ";
                             return;
                         }
 
@@ -131,7 +155,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     this.MyResponseData.Succeeded = false;
                     this.MyResponseData.HasException = true;
-                    this.MyResponseData.UserMessage = ex.Message + " : " + " לא ניתן לפתוח חשבון ממסמך זה, שגיאה בקבלת הנתונים  ";
+                    this.MyResponseData.UserMessage = ex.Message + " : " + " "+ TextCodesTranslator.TranslateText("Customs.OcrDocument.O.ErrorInReceivingData", customResponse.tenant) + " ";
                 }
 
 
@@ -143,13 +167,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.HasException = true;
 
                 if (myOcrDocument == null)
-                    this.MyResponseData.UserMessage = " OCR מסמך לא הוגדר כ";
+                    this.MyResponseData.UserMessage = TextCodesTranslator.TranslateText("Customs.OcrDocument.O.IsNotOcrDocument", customResponse.tenant);
 
                 else
                 {
-                    string message = "לא ניתן לפתוח חשבון ממסמך זה";
+                    string message = TextCodesTranslator.TranslateText("Customs.OcrDocument.O.CannotOpenInvoice", customResponse.tenant);
                     this.MyResponseData.UserMessage =
-                        string.IsNullOrEmpty(myOcrDocument.Reference) ? message + ", מספר חשבון יצואן חסר" : message + ", לא התקבל קובץ JSON";
+                        string.IsNullOrEmpty(myOcrDocument.Reference) ? message + "," + TextCodesTranslator.TranslateText("Customs.OcrDocument.O.MissingInvoiceNumber", customResponse.tenant)
+                        : message + "," + TextCodesTranslator.TranslateText("Customs.OcrDocument.O.JSONFileNotReceived", customResponse.tenant);
                 }
 
             }
@@ -161,15 +186,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-        public void UpsertSupplierInvoicebyOcr(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, string invoiceNumber, Dictionary<string, string> dic, List<Dictionary<string, string>> supplierInvoiceItemsList)
+        public bool UpsertSupplierInvoicebyOcr(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, string invoiceNumber, Dictionary<string, string> dic, List<Dictionary<string, string>> supplierInvoiceItemsList)
         {
 
             ICustomContext context = CustomContext.GetContext(customResponse.tenant);
             SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
             SupplierInvoicePM mySupplierInvoice = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, invoiceNumber, customResponse.tenant, true);
-
+            bool isNewInvoice = false;
             if (mySupplierInvoice == null)
             {
+                isNewInvoice = true;
                 mySupplierInvoice = new SupplierInvoicePM()
                 {
                     DeclarationId = customResponse.Declarationid,
@@ -312,7 +338,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             supplierInvoiceUpdateService.Update(mySupplierInvoice, true);
 
-
+            return isNewInvoice;
 
 
 

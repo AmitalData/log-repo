@@ -3075,7 +3075,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Description = "פתיחת חשבון יצואן - OCR",
                 DcaPrefixName = "DCAOCR_OUT",
                 DefaultSendOptionsCode = null,
-                DefaultPriority = 5,
+                DefaultPriority = 1,
                 AllowRestore = true,
                 Active = true,
                 SendAsDual = false,
