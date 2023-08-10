@@ -49,12 +49,12 @@ export class CustDocRelatedDocsWebService {
 
     }
 
-    GetSingleDocumentsFilingPM(id: string) {
+    GetSingleDocumentsFilingPM(id: string, checkOcr: boolean = false) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         id = encodeURIComponent(id);
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleDocumentsFilingPM?' + 'id=' + id ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetSingleDocumentsFilingPM?' + 'id=' + id + '&checkOcr=' + checkOcr,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -69,10 +69,11 @@ export class CustDocRelatedDocsWebService {
     }
 
     UpdateSupplierInvioceByOcr(declarationId: string, documentsFilingId: string) {
-       
-        return defer(() => {
 
-            return this._http.get(this._apiUrl + '/UpsertSupplierInvioceByOcr?' + 'declarationId=' + declarationId + '&documentsFilingId=' + documentsFilingId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return defer(() => {
+            const encodedDocumentsFilingId = encodeURIComponent(documentsFilingId);
+
+            return this._http.get(this._apiUrl + '/UpsertSupplierInvioceByOcr?' + 'declarationId=' + declarationId + '&documentsFilingId=' + encodedDocumentsFilingId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
                 return serviceResponse;

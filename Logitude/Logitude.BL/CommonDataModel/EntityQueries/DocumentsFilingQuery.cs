@@ -30,6 +30,8 @@ using Microsoft.Practices.Unity;
 using System.Text.RegularExpressions;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.Args;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -345,7 +347,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return extDocPm;
         }
 
-        public DocumentsFilingPM GetSinglePM(string id, int tenant)
+        public DocumentsFilingPM GetSinglePM(string id, int tenant, bool checkOcr = false)
         {
             if (!string.IsNullOrEmpty(id))
             { 
@@ -438,7 +440,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         extDocPm.HasFollowUp = docFollowUp.Any();
                     }
                 }
-
+                if (checkOcr)
+                {
+                    OcrDocumentRepository ocrDocumentRepository = new OcrDocumentRepository(tenant);
+                    extDocPm.OcrReference = ocrDocumentRepository.GetSingleByDocId(id, tenant)?.Reference;
+                }
 
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
@@ -1975,8 +1981,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<DocumentsFilingPM> GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, List<string> externalEntityReferences, int tenant, string declarationType = null)
         {
-            ICustomContext customContext = CustomContext.GetContext(tenant);
-
 
             ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
 
@@ -1990,9 +1994,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        //.Include("CreatedByUser.Contact")
                                        .Include("Document").Include("DocumentType")
                                        //.Include("Owner.Contact")
-                                       //join o in customContext.OcrDocuments on a.Id equals o.DocId into ocrDocs
-                                       //from o in ocrDocs.DefaultIfEmpty()
-
                                        where a.Tenant == tenant && ((a.EntityId == entityId && a.ObjectTableId == objectTableId && (a.ExternalEntityName != "EFIFILEM" && a.ExternalEntityName != "MFIFILEM")) 
                                        || (a.ExternalEntityName == "CFIFILEM" && a.ExternalEntityReference == referenceNumber) 
                                        || ((a.ExternalEntityName == "EFIFILEM" || a.ExternalEntityName == "MFIFILEM" )&& a.EntityReference == referenceNumber))
@@ -2068,30 +2069,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsSharedOut = a.IsSharedOut,
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
-                                           BackedupExternally = a.BackedupExternally,
-                                           //OcrStatusCode = o != null ? o.StatusCode : null,
-                                           //OcrScore = o != null ? (decimal)o.Score : 0,
+                                           BackedupExternally = a.BackedupExternally,                                          
                                        }).ToList();
-
-  //           var OcrDocumentPMs = (
-  //                                     from o in customContext.OcrDocuments
-  //                                     where externalDocumentPMs.Select(x=>x.Id).Contains(o.DocId)
-  //                                     select o ).ToList();
-
-
-  //              var results = externalDocumentPMs.Join(OcrDocumentPMs,
-  //d => d.Id,
-  //o => o.DocId,
-  //(doc, ocr) => new { doc, ocr });
 
             }
             else
             {
-                externalDocumentPMs = (from a in repository.context.DocumentsFilings.Include("Document").Include("DocumentType")
-                                       //join o in customContext.OcrDocuments on a.Id equals o.DocId into ocrDocs
-                                       //from o in ocrDocs.DefaultIfEmpty()
-
-                                       //.Include("CreatedByUser.Contact")
+                externalDocumentPMs = (from a in repository.context.DocumentsFilings
+                                       .Include("Document").Include("DocumentType")                                       //.Include("CreatedByUser.Contact")
                                        //.Include("ReceivedByUser.Contact")
                                        
                                        //.Include("Owner.Contact")
@@ -2167,8 +2152,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
-                                        //   OcrStatusCode = o != null ? o.StatusCode : null,
-                                      //     OcrScore = o != null ? (decimal)o.Score : 0,
                                        }).ToList();
             }
 
@@ -2181,6 +2164,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 .Include("Document").Include("DocumentType")
                                                     //.Include("Owner.Contact")
                                                 where a.Tenant == tenant && externalEntityReferences.Any(e => a.ExternalEntityReference.IndexOf(e + ",") == 0 || a.ExternalEntityReference == e)
+
 
                                                 select new DocumentsFilingPM()
                                                 {
@@ -2249,9 +2233,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     OrigionalDocumentId = a.OrigionalDocumentId,
                                                     IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                     BackedupExternally = a.BackedupExternally,
-                                          //          OcrStatusCode = o != null ? o.StatusCode : null,
-                                          //          OcrScore = o != null ? (decimal)o.Score : 0,
-                                                }).ToList();
+                                             }).ToList();
 
                 externalDocumentPMs = externalDocumentPMs.Concat(docs).ToList();
 
@@ -2307,21 +2289,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     extDocPm.ExternalAttachmentId = customsDoc.ExternalAttachmentId;
                     extDocPm.OcrStatusCode = customsDoc.OcrStatusCode;
                     extDocPm.OcrScore = customsDoc.OcrScore;
+                    extDocPm.OcrReference = customsDoc.OcrReference;
                 }
 
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValuesList;//.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
             }
 
-//            var OcrDocumentPMs = (
-//                                    from o in customContext.OcrDocuments
-//                                    where externalDocumentPMs.Select(x => x.Id).Contains(o.DocId)
-//                                    select o).ToList();
-
-
-//             externalDocumentPMs = externalDocumentPMs.Join(OcrDocumentPMs,
-//d => d.Id,
-//o => o.DocId,
-//(doc, ocr) => new DocumentsFilingPM () { doc }).ToList();
 
             return externalDocumentPMs.Where(d => d.HasFile).ToList();
         }

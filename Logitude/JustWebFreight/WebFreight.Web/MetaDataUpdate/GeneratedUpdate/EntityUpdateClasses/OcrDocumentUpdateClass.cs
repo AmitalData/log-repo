@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OcrDocumentUpdateClass
    {  		
-		public const string HashString = "fefd7e66d5e78b0c13c163e0cfcc6bc3";
+
+		public const string HashString = "9a76ad7fe7e44cfdfb0fbc74ece7c9fd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Ocr Document",
-			      				    Code =  "e0d9",
+			      				    Code =  "1aed",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -315,10 +316,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Score",
 					  						DefaultText =  "Score",
-					  						FullLocalDefaultText =  "אחוז הצלחה",
+					  						FullLocalDefaultText =  "םחוז הצלחה",
 					  						ListFieldLable =  "ScoreListLable",
 					  						ListLableDefaultText =  "Score",
-					  						ListLocalDefaultText =  "אחוז הצלחה",
+					  						ListLocalDefaultText =  "םחוז הצלחה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -437,10 +438,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ErrorMsg",
 					  						DefaultText =  "Error Message",
-					  						FullLocalDefaultText =  "הודעת שגיאה",
+					  						FullLocalDefaultText =  "הודעת שגיםה",
 					  						ListFieldLable =  "ErrorMsgListLable",
 					  						ListLableDefaultText =  "Error Message",
-					  						ListLocalDefaultText =  "הודעת שגיאה",
+					  						ListLocalDefaultText =  "הודעת שגיםה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -909,7 +910,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable OcrDocumentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.OcrDocument" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInvoiceUpdatedSuccessfully = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully", DefaultText = "Invoice Updated Successfully",LocalDefaultText = @"חשבון יצוםן עודכן בהצלחה", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInvoiceSuccessfullyOpened = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InvoiceSuccessfullyOpened", DefaultText = "Invoice Successfully Opened",LocalDefaultText = @"חשבון יצוםן נפתח בהצלחה", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOErrorCreatingInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ErrorCreatingInvoice", DefaultText = "Error Creating Invoice",LocalDefaultText = @"שגיםה ביצירת החשבון", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOIsNotOcrDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.IsNotOcrDocument", DefaultText = "Is not ocr document",LocalDefaultText = @"OCR מסמך לם הוגדר כ", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOErrorInReceivingData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ErrorInReceivingData", DefaultText = "Error in receiving data",LocalDefaultText = @"לם ניתן לפתוח חשבון ממסמך זה, שגיםה בקבלת הנתונים", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOCannotOpenInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.CannotOpenInvoice", DefaultText = "Cannot Open Invoice",LocalDefaultText = @"לם ניתן לפתוח חשבון ממסמך זה", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOJSONFileNotReceived = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.JSONFileNotReceived", DefaultText = "JSON file not received",LocalDefaultText = @"לם התקבל קובץ JSON", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOMissingInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.MissingInvoiceNumber", DefaultText = "Missing Invoice Number",LocalDefaultText = @"מספר חשבון יצוםן חסר", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOOcrStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.OcrStatus", DefaultText = "Ocr Status",LocalDefaultText = @"סטטוס OCR", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOContinueAnyway = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ContinueAnyway", DefaultText = "Continue Anyway",LocalDefaultText = @"הםם להמשיך בכל זםת ?", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentORejected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.Rejected", DefaultText = "Rejected",LocalDefaultText = @"נדחה", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOCancelled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.Cancelled", DefaultText = "Cancelled",LocalDefaultText = @"מבוטל", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInPrograss = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InPrograss", DefaultText = "In Prograss",LocalDefaultText = @"בתהליך", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

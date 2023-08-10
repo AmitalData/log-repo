@@ -172,7 +172,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-        public HttpResponseMessage GetSingleDocumentsFilingPM(string id)
+        public HttpResponseMessage GetSingleDocumentsFilingPM(string id, bool checkOcr)
         {
             try
             {
@@ -181,7 +181,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(authToken.Tenant);
-                DocumentsFilingPM newExtDoc = documentsFilingQuery.GetSinglePM(id, authToken.Tenant);
+                DocumentsFilingPM newExtDoc = documentsFilingQuery.GetSinglePM(id, authToken.Tenant, checkOcr);
                 return Request.CreateResponse(HttpStatusCode.OK, newExtDoc);
             }
             catch (Exception ex)
