@@ -196,7 +196,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
         this.isValid = true;
         this.inValid = false;
         this.DeclarationCourierStatus.ApprovedCourierPendingList="";
-
+        debugger;
         for (let item of this.DeclarationPendingsList) {
             if(item.WasApproved == false && item.Approval){
                 this.DeclarationCourierStatus.ApprovedCourierPendingList+=","+item.CourierPendingReasonCode
@@ -329,7 +329,6 @@ export class DeclarationPendingLine extends BaseComponent {
     constructor(EntityPM: DeclarationPendingPM, Parent: DeclarationPendingsGeneralComponent) {
         super();
         this.entityPM = EntityPM;
-        this.entityPM.WasApproved=this.entityPM.Approval;
         this._StatusItems.push({ 'Key': "A", 'Value': "Active" });
         this._StatusItems.push({ 'Key': "S", 'Value': "Solved" });
         this.parent = Parent;
