@@ -903,7 +903,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     myDeclarationUpdateService.IsFromU2L = true;
                     myDeclarationUpdateService.TruckerId = truckerId;
                     myDeclarationUpdateService.DistributionArea = _AmitalCustomsFile.DistributionArea;
-                    myDeclarationUpdateService.ImporterCode = _AmitalCustomsFile.ImporterId;
+                    if (_AmitalCustomsFile.ImporterId != null && string.IsNullOrEmpty(this._MyDeclarationPM.ImporterCode))
+                    {
+                        myDeclarationUpdateService.ImporterCode = _AmitalCustomsFile.ImporterId;
+                    }
                     myDeclarationUpdateService.LastMileServiceType = _AmitalCustomsFile.LastMileServiceType;
                     myDeclarationUpdateService.MAWB = _AmitalCustomsFile.MAWB;
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
