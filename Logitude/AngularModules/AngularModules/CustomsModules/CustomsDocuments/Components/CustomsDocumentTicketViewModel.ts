@@ -637,7 +637,7 @@ export class CustomsDocumentTicketViewModel {
                 });
             }
             else {
-                debugger
+                
 
                 var ocrStatuses = ['1','3','7','8','9'];
 
