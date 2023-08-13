@@ -138,13 +138,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this.MyResponseData.Succeeded = true;
                             this.MyResponseData.HasException = false;
                             string InvoiceSuccess = isNewInvoice ? "Customs.OcrDocument.O.InvoiceSuccessfullyOpened" : "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully";
-                            this.MyResponseData.UserMessage = TextCodesTranslator.TranslateText( InvoiceSuccess, customResponse.tenant);
+                            this.MyResponseData.UserMessage = TranslateTextsClass.Translate( InvoiceSuccess, customResponse.tenant, true);
                         }
                         catch (System.Exception ex)
                         {
                             this.MyResponseData.Succeeded = false;
                             this.MyResponseData.HasException = true;
-                            this.MyResponseData.UserMessage = ex.Message + " : " + " "+ TextCodesTranslator.TranslateText("Customs.OcrDocument.O.ErrorCreatingInvoice", customResponse.tenant) +" ";
+                            this.MyResponseData.UserMessage = ex.Message + " : " + " "+ TranslateTextsClass.Translate("Customs.OcrDocument.O.ErrorCreatingInvoice", customResponse.tenant, true) +" ";
                             return;
                         }
 
@@ -155,7 +155,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     this.MyResponseData.Succeeded = false;
                     this.MyResponseData.HasException = true;
-                    this.MyResponseData.UserMessage = ex.Message + " : " + " "+ TextCodesTranslator.TranslateText("Customs.OcrDocument.O.ErrorInReceivingData", customResponse.tenant) + " ";
+                    this.MyResponseData.UserMessage = ex.Message + " : " + " "+ TranslateTextsClass.Translate("Customs.OcrDocument.O.ErrorInReceivingData", customResponse.tenant, true) + " ";
                 }
 
 
@@ -167,14 +167,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.HasException = true;
 
                 if (myOcrDocument == null)
-                    this.MyResponseData.UserMessage = TextCodesTranslator.TranslateText("Customs.OcrDocument.O.IsNotOcrDocument", customResponse.tenant);
+                    this.MyResponseData.UserMessage = TranslateTextsClass.Translate("Customs.OcrDocument.O.IsNotOcrDocument", customResponse.tenant, true);
 
                 else
                 {
-                    string message = TextCodesTranslator.TranslateText("Customs.OcrDocument.O.CannotOpenInvoice", customResponse.tenant);
+                    string message = TranslateTextsClass.Translate("Customs.OcrDocument.O.CannotOpenInvoice", customResponse.tenant, true);
                     this.MyResponseData.UserMessage =
-                        string.IsNullOrEmpty(myOcrDocument.Reference) ? message + "," + TextCodesTranslator.TranslateText("Customs.OcrDocument.O.MissingInvoiceNumber", customResponse.tenant)
-                        : message + "," + TextCodesTranslator.TranslateText("Customs.OcrDocument.O.JSONFileNotReceived", customResponse.tenant);
+                        string.IsNullOrEmpty(myOcrDocument.Reference) ? message + "," + TranslateTextsClass.Translate("Customs.OcrDocument.O.MissingInvoiceNumber", customResponse.tenant, true)
+                        : message + "," + TranslateTextsClass.Translate("Customs.OcrDocument.O.JSONFileNotReceived", customResponse.tenant, true);
                 }
 
             }

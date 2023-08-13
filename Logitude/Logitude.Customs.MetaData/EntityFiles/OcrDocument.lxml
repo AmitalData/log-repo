@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Ocr Document&quot;"
-  Code="&quot;1aed&quot;"
+  Code="&quot;4a39&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -1154,6 +1154,18 @@
       Code="&quot;Customs.OcrDocument.O.InPrograss&quot;"
       DefaultText="&quot;In Prograss&quot;"
       LocalDefaultText="&quot;בתהליך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.OpenOcrInvoice&quot;"
+      DefaultText="&quot;Open SupplierInvoice - OCR&quot;"
+      LocalDefaultText="&quot;פתיחת חשבון יצואן - OCR&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.DCAOCRInPrograss&quot;"
+      DefaultText="&quot;Open Supplierinvoice - OCR in prograss, cannot be linked&quot;"
+      LocalDefaultText="&quot;פתיחת חשבון יצואן - OCR בתהליך , לא ניתן לקשר מסמכים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
