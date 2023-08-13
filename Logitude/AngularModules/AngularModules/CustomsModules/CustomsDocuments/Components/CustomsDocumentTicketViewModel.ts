@@ -646,14 +646,22 @@ export class CustomsDocumentTicketViewModel {
                 if(ocrStatuses.includes(relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode))
                 {
                     SessionLocator.SelectedSession.StopBusyIndicator();
-                    var status: string;
-                    switch(relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode)
+                    var status: string = null;
+                    switch (relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode) 
                     {
-                        case "1": 
-                        case "3": status = TextCodeTranslator.Translate("Customs.OcrDocument.O.InPrograss");
-                        case "7": status = TextCodeTranslator.Translate("Customs.OcrDocument.O.Cancelled");
-                        case "8": status = TextCodeTranslator.Translate("Customs.OcrDocument.O.Rejected");
-                        case "9": status =  TextCodeTranslator.Translate("Customs.General.O.Fail");
+                        case "1":
+                        case "3":
+                          status = TextCodeTranslator.Translate("Customs.OcrDocument.O.InPrograss");
+                          break;
+                        case "7":
+                          status = TextCodeTranslator.Translate("Customs.OcrDocument.O.Cancelled");
+                          break;
+                        case "8":
+                          status = TextCodeTranslator.Translate("Customs.OcrDocument.O.Rejected");
+                          break;
+                        case "9":
+                          status = TextCodeTranslator.Translate("Customs.General.O.Fail");
+                          break;
                     }
                     
 
