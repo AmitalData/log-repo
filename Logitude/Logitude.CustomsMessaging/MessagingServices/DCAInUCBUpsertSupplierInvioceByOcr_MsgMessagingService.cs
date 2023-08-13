@@ -55,7 +55,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             };
             
-            genericRequestParams.RequestName = $" {customsResponse.DocumentsFilingId} פתיחת חשבון יצואן - OCR";
+            genericRequestParams.RequestName = $" {customsResponse.DocumentsFilingId} {TranslateTextsClass.Translate("Customs.OcrDocument.O.OpenOcrInvoice", customsResponse.tenant,true)}";
            
             return genericRequestParams;
         }

@@ -208,6 +208,8 @@ export class CustomsDocumentTicketViewModel {
         this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response: any) => {
             CustomsDocumentTicketViewModel.Customs_Claim_TH_CustomAnswer = TextCodeTranslator.Translate("Customs.Claim.TH.CustomAnswer");
         });
+        this.EntityResourceService.getEntityResourceByTableName("Customs.OcrDocument").subscribe((response: any) => {
+        });
     }
     public ListOfStatusCode2Show: string[] = ["1", "2"];
     public get HaveCustomAnswer(): boolean {
@@ -461,7 +463,14 @@ export class CustomsDocumentTicketViewModel {
             messageWindow.Width = 400;
             messageWindow.Height = 200;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים");
+            if(dataContext?.DisplayOnlyMessage?.includes(TextCodeTranslator.Translate("Customs.OcrDocument.O.OpenOcrInvoice")))
+            {
+                messageWindow.RTL = true;
+                messageWindow.Show(TextCodeTranslator.Translate("Customs.OcrDocument.O.DCAOCRInPrograss"));
+            }
+            else{
+                messageWindow.Show("ההצהרה כבר הוגשה - לא ניתן לקשר מסמכים חדשים");
+            }
             messageWindow.WindowClosed.subscribe((event: any) => {
 
                 messageWindow.Close();
@@ -630,6 +639,7 @@ export class CustomsDocumentTicketViewModel {
                 });
             }
             else {
+                
 
                 var ocrStatuses = ['1','3','7','8','9'];
 
@@ -670,6 +680,7 @@ export class CustomsDocumentTicketViewModel {
                 else if(relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode == "2" || relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode == "4" )
                 {
                     CustomsDocumentTicketViewModel.IsOcrDocument = true;
+                    this.ProcessConnectDocument(relatedDocumentViewModel);
                     
                 }
                 else{
@@ -1317,7 +1328,7 @@ export class CustomsDocumentTicketViewModel {
     }
 
     ViewDocumentsQuery(IsClose:boolean=false) {
-
+        
         var windowArgs: any = this.EntityPM;
 
         var entityInfo = this.iCustomsDocumentsController.GetParentAndChildrenEntityCodesAndIds();
@@ -1337,7 +1348,7 @@ export class CustomsDocumentTicketViewModel {
     }
 
     OnAddEditWindowClosed(event) {
-       
+        
         if (event != 'cancel' && this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId) {
             var messageWindow = new MessageWindow();
             messageWindow.Width = 400;
