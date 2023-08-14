@@ -593,6 +593,20 @@ namespace Logitude.Customs.Data.Repsitories
                   .FirstOrDefault();
         }
 
+        public string GetCustomFileNoByDeclarationNumber(string declarationNumber, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.DeclarationNumber == declarationNumber && rec.Tenant == tenant
+                  select rec.CustomFileNo
+                  )
+                  .FirstOrDefault();
+        }
+
         public (string id, string direction, string declarationTypeCode) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return (id: "", direction: "", declarationTypeCode: "1");// tuple literal
