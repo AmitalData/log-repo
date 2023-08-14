@@ -111,7 +111,7 @@
                                     [visibility]="HasRequiresApprovalFeature?'collapsed':'hidden'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right"
+                                            <div class="TextTrimming" style="text-align:right; height:20px;padding-top:3px"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <CheckBox *ngIf="item.CourierPendingRequireApr"
                                                     [IsChecked]="item.Approval"
@@ -120,7 +120,7 @@
                                                 <span
                                                     *ngIf="!item.CourierPendingRequireApr">{{item.Approval}}</span>
                                             </div>
-                                            <div class="TextTrimming" style="text-align:right"
+                                            <div class="TextTrimming" style="text-align:right; height:20px;padding-top:3px"
                                                 *ngIf="logcelltemplate.IsEditMode">
                                                 <CheckBox *ngIf="item.CourierPendingRequireApr"
                                                     [IsChecked]="item.Approval"
