@@ -74,10 +74,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 var declarationPM = myDeclarationQueryService.GetSingle(settings.DeclarationId, true, false);
                 declarationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
-
+                LogMessagingUtil.Instance.AppendLine($"AnalyzeQResponse(declarationPM.id={declarationPM.Id})");
                 bool mamanResponseSuccesed = false;
                 switch (responeECSpclMamanData.ResponseStatusCode)
                 {
+                       
                     case 1:
                         {
                             //declarationPM.MamanStatusCode = "1";
@@ -98,6 +99,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         //declarationPM.MamanStatusCode = "2";
                         break;
                 }
+                LogMessagingUtil.Instance.AppendLine($"mamanResponseSuccesed{mamanResponseSuccesed})");
                 string MamanSpecialActionsErrorXml = responeECSpclMamanData.ResponseStatusCode.ToString() + "," + responeECSpclMamanData.ResponseStatusMsg ?? "";
 
 
@@ -117,6 +119,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         cfifilmFUStatus = "CDS";
                         break;
                 }
+                LogMessagingUtil.Instance.AppendLine($"cfifilmFUStatus{cfifilmFUStatus})");
                 var toCancel = false;
                 UnifreightEventMode unifreightEventMode = UnifreightEventMode.@new;
                 if (responeECSpclMamanData.ActionCode == "C")
@@ -133,6 +136,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     var myDeclarationMamanSpecialAction = new DeclarationMamanSpecialActionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
                     pmDeclarationMamanSpecialAction.MamanSpecialActionsErrorXml = MamanSpecialActionsErrorXml;
 #endif
+                    LogMessagingUtil.Instance.AppendLine($"MamanSpecialActionsErrorXml{MamanSpecialActionsErrorXml})");
                     if (!mamanResponseSuccesed)
                     {
                         //update Failed Status  + message !!!
@@ -155,11 +159,18 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             pmDeclarationMamanSpecialAction.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                             // Create FUStatus 
                         }
+                        LogMessagingUtil.Instance.AppendLine($"UpsertFUStatusLE2U");
+                        LogMessagingUtil.Instance.AppendLine($"declarationPM.CustomFileNo{declarationPM.CustomFileNo})");
+                        LogMessagingUtil.Instance.AppendLine($"unifreightEventMode{unifreightEventMode})");
+                        LogMessagingUtil.Instance.AppendLine($"cfifilmFUStatus{cfifilmFUStatus})");
+                        LogMessagingUtil.Instance.AppendLine($"MamanSpecialActionsErrorXml{MamanSpecialActionsErrorXml})");
+
+
                         var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
                         unifreightFUStatusTaskService.UpsertFUStatusLE2U(settings.Tenant, settings.LoggedContactId, new UnifreightFUStatusParam()
                         {
                             Entname = "CFIFILEM",
-                            PrimaryNum = declarationPM.CustomFileNo,
+                            PrimaryNum = declarationPM?.CustomFileNo,
                             Mode = unifreightEventMode,
                             StatusCode = cfifilmFUStatus,
                             StatusRemarks = MamanSpecialActionsErrorXml,
@@ -168,12 +179,16 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
                     }
                     myDeclarationMamanSpecialAction.Update(pmDeclarationMamanSpecialAction, true);
+                    LogMessagingUtil.Instance.AppendLine($"UpsertFUStatusLE2U-> myDeclarationMamanSpecialAction.Update{pmDeclarationMamanSpecialAction})");
 
 
                     if (cfifilmFUStatus == "CDE" && mamanResponseSuccesed)
                     {
+                        LogMessagingUtil.Instance.AppendLine($"Send2Masof");
+
                         var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
                         mySend2MasofIfNeededService.Send2Masof(declarationPM, false, declarationPM, true);
+                        LogMessagingUtil.Instance.AppendLine($"Send2Masof end");
 
                     }
 
@@ -182,6 +197,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
             catch (Exception ex)
 			{
+
+                LogMessagingUtil.Instance.AppendLine($"ex{ex.StackTrace}");
+
                 var myDeclarationMamanSpecialAction = new DeclarationMamanSpecialActionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
 
                 pmDeclarationMamanSpecialAction.MamanSpecialActionStatusCode = "2";//2   Error   2,error
