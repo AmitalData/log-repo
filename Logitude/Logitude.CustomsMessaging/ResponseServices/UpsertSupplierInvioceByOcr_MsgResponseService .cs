@@ -45,14 +45,15 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.EntityKeys;
 using static Logitude.Customs.BL.Messaging.Customs.SupplierInvoiceByOcr;
+using static Logitude.CustomsMessaging.ResponseServices.UpsertSupplierInvioceByOcr_MsgResponseService;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
-    public class UpsertSupplierInvioceByOcr_MsgResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader, GenericRequestParams>
+    public class UpsertSupplierInvioceByOcr_MsgResponseService : ResponseServiceBase<UpsertSupplierInvioceByOcrResponseData, DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader, GenericRequestParams>
     {
         const string label = "TABLE";
 
-        public override INF_MSG_GenericResponseData GetResponse(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, GenericRequestParams requestParams)
+        public override UpsertSupplierInvioceByOcrResponseData GetResponse(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             return this.MyResponseData;
         }
@@ -61,7 +62,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             ICustomContext context = CustomContext.GetContext(customResponse.tenant);
 
-            this.MyResponseData = new INF_MSG_GenericResponseData();
+            this.MyResponseData = new UpsertSupplierInvioceByOcrResponseData();
 
             OcrDocumentQueryService ocrDocumentService = new OcrDocumentQueryService(customResponse.tenant);
 
@@ -89,13 +90,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         var cells = convertJson.pages[0].prediction.Where(x => x.label.ToUpper() == label)?.First().cells;
 
-                        int row = 1;
+                        int row = 0;
                         foreach (var cell in cells)
                         {
                             if (cell != null && cell.row != row && dicItems.Count > 0)
                             {
                                 supplierInvoiceItemsList.Add(dicItems);
-                                dicItems.Clear();
+                                dicItems = new Dictionary<string, string>();
                             }
                             if (!dicItems.ContainsKey(cell.label))
                                 dicItems.Add(cell.label, cell.text);
@@ -110,8 +111,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //insert or update supplierInvoice
                         try
                         {
-                            bool isNewInvoice =  UpsertSupplierInvoicebyOcr(customResponse, myOcrDocument.Reference, dic, supplierInvoiceItemsList);
-                            if(isNewInvoice)// update CustomsDocumentPointer
+                            UpsertSupplierInvoiceResult Result = UpsertSupplierInvoiceByOcr(customResponse, myOcrDocument.Reference, dic, supplierInvoiceItemsList);
+                            
+                            if(Result.isNewInvoice)// update CustomsDocumentPointer
                             {
                                 CustomsDocumentsTicketQueryService customsDocumentsTicketQuery = new CustomsDocumentsTicketQueryService(customResponse.tenant);
                                 CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(customResponse.Declarationid, "", "", "", customResponse.tenant, "Declaration")
@@ -137,8 +139,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             
                             this.MyResponseData.Succeeded = true;
                             this.MyResponseData.HasException = false;
-                            string InvoiceSuccess = isNewInvoice ? "Customs.OcrDocument.O.InvoiceSuccessfullyOpened" : "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully";
-                            this.MyResponseData.UserMessage = TranslateTextsClass.Translate( InvoiceSuccess, customResponse.tenant, true);
+                            string InvoiceSuccess = Result.isNewInvoice ? "Customs.OcrDocument.O.InvoiceSuccessfullyOpened" : "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully";                            this.MyResponseData.UserMessage =
+                            this.MyResponseData.UserMessage = TranslateTextsClass.Translate(InvoiceSuccess, customResponse.tenant, true);
+                            if (Result.invalidValuesRemarks != null)
+                                this.MyResponseData.Remarks = "Invalid value, not exist in table - " + Result.invalidValuesRemarks;
                         }
                         catch (System.Exception ex)
                         {
@@ -176,30 +180,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         string.IsNullOrEmpty(myOcrDocument.Reference) ? message + "," + TranslateTextsClass.Translate("Customs.OcrDocument.O.MissingInvoiceNumber", customResponse.tenant, true)
                         : message + "," + TranslateTextsClass.Translate("Customs.OcrDocument.O.JSONFileNotReceived", customResponse.tenant, true);
                 }
-
             }
-
-
         }
 
 
 
 
 
-        public bool UpsertSupplierInvoicebyOcr(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, string invoiceNumber, Dictionary<string, string> dic, List<Dictionary<string, string>> supplierInvoiceItemsList)
+        public UpsertSupplierInvoiceResult UpsertSupplierInvoiceByOcr(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, string invoiceNumber, Dictionary<string, string> dic, List<Dictionary<string, string>> supplierInvoiceItemsList)
         {
-
+            int tenant = customResponse.tenant;
             ICustomContext context = CustomContext.GetContext(customResponse.tenant);
             SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
             SupplierInvoicePM mySupplierInvoice = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, invoiceNumber, customResponse.tenant, true);
             bool isNewInvoice = false;
+            string invalidValuesRemarks = null;
             if (mySupplierInvoice == null)
             {
                 isNewInvoice = true;
                 mySupplierInvoice = new SupplierInvoicePM()
                 {
                     DeclarationId = customResponse.Declarationid,
-                    Tenant = customResponse.tenant,
+                    Tenant = tenant,
                     InvoiceNumber = invoiceNumber,
                     ChangeSetOp = ChangeSetOperation.Insert,
                 };
@@ -232,7 +234,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             if (dic.TryGetValue("currency", out string currency))
             {
-                mySupplierInvoice.InvoiceCurrencyTypeCode = new string(currency.Where(char.IsLetter).ToArray());
+                CurrencyTypeQueryService currencyTypeQueryService = new CurrencyTypeQueryService(tenant);
+                CurrencyTypePM CurrencyType = currencyTypeQueryService.GetSingle(new string(currency.Where(char.IsLetter).ToArray()), false, true);
+                if (CurrencyType == null)
+                    invalidValuesRemarks += $" FieldJson: currency, FieldName: InvoiceCurrencyTypeCode, InvalidValueReceived: {currency};";
+                else
+                    mySupplierInvoice.InvoiceCurrencyTypeCode = new string(currency.Where(char.IsLetter).ToArray());
             }
             if (dic.TryGetValue("invoice_amount", out string invoiceAmount) && decimal.TryParse(invoiceAmount, out decimal amount))
             {
@@ -244,7 +251,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             if (dic.TryGetValue("incoterrns", out string incoterrns))
             {
-                mySupplierInvoice.IncotermCode = incoterrns;
+                TermsOfSaleTypeQueryService termsOfSaleTypeQueryService = new TermsOfSaleTypeQueryService(tenant);
+                TermsOfSaleTypePM termsOfSaleType = termsOfSaleTypeQueryService.GetSingle(incoterrns, false, true);
+                if (termsOfSaleType == null)
+                    invalidValuesRemarks += $" FieldJson: incoterrns, FieldName: IncotermCode, InvalidValueReceived: {incoterrns};";
+                else
+                    mySupplierInvoice.IncotermCode = incoterrns;
             }
 
             //mapping more from SupplierInvioceExportDefaults
@@ -307,11 +319,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (supplierInvoiceItem.TryGetValue("Item_country_of_origin", out string itemCountryOfOrigin))
                     {
-                        supplierInvoiceItemPM.OriginCountryCode = itemCountryOfOrigin;
+                        CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(tenant);
+                        CustomsCountryPM CustomsCountry = customsCountryQueryService.GetSingle(itemCountryOfOrigin, false, true);
+                        if (CustomsCountry == null)
+                            invalidValuesRemarks += $" FieldJson: Item_country_of_origin, FieldName: OriginCountryCode, InvalidValueReceived: {itemCountryOfOrigin};";
+                        else
+                            supplierInvoiceItemPM.OriginCountryCode = itemCountryOfOrigin;
                     }
                     if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
                     {
-                        supplierInvoiceItemPM.InvoiceQuantityType = ItemUnit;
+                        MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
+                        MeasurmentUnitPM MeasurmentUnit = measurmentUnitQueryService.GetSingle(ItemUnit, false, true);
+                        if (MeasurmentUnit == null)
+                            invalidValuesRemarks += $" FieldJson: Item_unit, FieldName: InvoiceQuantityType, InvalidValueReceived: {ItemUnit};";
+                        else
+                            supplierInvoiceItemPM.InvoiceQuantityType = ItemUnit;
                     }
                     //mapping supplierInvoiceItem from SupplierInvioceExportDefaults
                     supplierInvoiceItemPM.TransactionNatureCode = myInvoiceDefaults.TransactionNatureCode;
@@ -338,10 +360,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             supplierInvoiceUpdateService.Update(mySupplierInvoice, true);
 
-            return isNewInvoice;
+            UpsertSupplierInvoiceResult upsertSupplierInvoiceResult =  new UpsertSupplierInvoiceResult() 
+            { 
+                isNewInvoice = isNewInvoice, 
+                invalidValuesRemarks = invalidValuesRemarks 
+            };             
+            return upsertSupplierInvoiceResult;
 
 
 
+        }
+        public class UpsertSupplierInvoiceResult
+        {
+            public bool isNewInvoice { get; set; }
+            public string invalidValuesRemarks { get; set; }
         }
 
 

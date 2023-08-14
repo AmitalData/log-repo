@@ -593,7 +593,7 @@
                                                                     <span 
                                                                     *ngIf="relatedDoc.documentsFilingPM.OcrScore != -1 && (relatedDoc.documentsFilingPM.OcrStatusCode == '2' || relatedDoc.documentsFilingPM.OcrStatusCode == '4')" 
                                                                     style ="position: absolute;left: 2px;top: 3px;font-weight: bold">
-                                                                        {{relatedDoc.documentsFilingPM.OcrScore}}%
+                                                                        {{relatedDoc.documentsFilingPM.OcrScore * 100}}%
                                                                     </span>                                                                 
                                                                 </div>
                                                             </td>

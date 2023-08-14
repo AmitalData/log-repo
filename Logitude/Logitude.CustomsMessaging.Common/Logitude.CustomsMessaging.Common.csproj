@@ -135,6 +135,7 @@
     <Compile Include="RequestParams\VE_MSG010_VendorInsertUpdateDeleteMessageRequestParams.Shared.cs" />
     <Compile Include="RequestParams\VE_MSG013_VendorAddCommunicationDeviceRequestParams.Shared.cs" />
     <Compile Include="RequestParams\VE_MSG051_VendorSearchByCustomsAgentRequestParams.Shared.cs" />
+    <Compile Include="ResponseData\UpsertSupplierInvioceByOcrResponseData.Shared .cs" />
     <Compile Include="ResponseData\AddAttachmentResponseData.Shared.cs" />
     <Compile Include="ResponseData\BlockListInWarehouseResponseData.Shared.cs" />
     <Compile Include="ResponseData\CargoQueryResponseData.Shared.cs" />
