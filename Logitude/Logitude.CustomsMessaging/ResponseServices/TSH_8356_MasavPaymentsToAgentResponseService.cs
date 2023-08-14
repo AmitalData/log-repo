@@ -118,14 +118,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             if (relatedEntityItem.entityType == 1055 && !string.IsNullOrWhiteSpace(relatedEntityItem.entityIdKey1))
                             {
-                                var myDeclarationId = declarationQueryService.GetIdByDeclarationNumber(relatedEntityItem.entityIdKey1, requestParams.Tenant);
-                                DeclarationPM myDeclarationPM = declarationQueryService.GetSingle(myDeclarationId, false, false);
-                                if (myDeclarationPM != null)
+                                string myCustomFileNo = declarationQueryService.GetCustomFileNoByDeclarationNumber(relatedEntityItem.entityIdKey1, requestParams.Tenant);
+                                
+                                if (string.IsNullOrEmpty(myCustomFileNo))
                                 {
-                                    relatedEntity.EntityIdExternalReferenceID = myDeclarationPM.CustomFileNo;
+                                    relatedEntity.EntityIdExternalReferenceID = myCustomFileNo;
                                     if (agentMasavPaymentItem.RelatedEntity.Count() == 1)
                                     {
-                                        myAgentMasavPaymentResult.EntityIdExternalReferenceID = myDeclarationPM.CustomFileNo;
+                                        myAgentMasavPaymentResult.EntityIdExternalReferenceID = myCustomFileNo;
                                     }
                                 }
                             }
