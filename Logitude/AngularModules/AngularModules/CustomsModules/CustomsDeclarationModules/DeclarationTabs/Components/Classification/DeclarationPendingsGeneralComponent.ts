@@ -449,7 +449,7 @@ export class DeclarationPendingLine extends BaseComponent {
     }
 
     itemApproved(item:any,$event){;
-        this.entityPM.Approval=true;
+        this.Approval=true;
     }
     
 
