@@ -121,7 +121,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void AfterUpdating(SupplierInvoiceItemPM entityPM, SupplierInvoicePM entityParentPM)
         {
 
-
             //if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || entityPM.ChangeSetOp == ChangeSetOperation.Delete)&&entityParentPM.ChangeSetOp!=ChangeSetOperation.Delete)
             //{
             //    SubmitChanges();
@@ -164,13 +163,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 logData = $"entityPM.ClassificationCode(New value)={entityPM.ClassificationCode},entityPOCO.ClassificationCode(Old value)={entityPOCO.ClassificationCode}, User name={loggedUser}"; 
                 LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
             }
-            if(entityPM.ClassificationCode!=entityPOCO.ClassificationCode || entityPM.ItemCode!=entityPOCO.ItemCode ||entityPM.OriginCountryCode!=entityPOCO.OriginCountryCode || entityPM.ItemDescription != entityPOCO.ItemDescription)
-            {
-                declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
 
-                if (declarationPM.Direction == "E" && SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant))
-                    this.UpdateOrInsertInClientItems(entityPM, declarationPM?.ExporterImporterCode, declarationPM.ImporterId);
+            if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant)) {
+
+                if (entityPM.ClassificationCode != entityPOCO.ClassificationCode || entityPM.ItemCode != entityPOCO.ItemCode || entityPM.OriginCountryCode != entityPOCO.OriginCountryCode || entityPM.ItemDescription != entityPOCO.ItemDescription)
+                {
+                    declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, true);
+                    if (declarationPM != null) {
+                        if (declarationPM.Direction == "E")
+                            this.UpdateOrInsertInClientItems(entityPM, declarationPM?.ExporterImporterCode, declarationPM.ImporterId);
+                    }
+                
+                }
             }
+             
             base.OnUpdating(entityPM, entityPOCO);
         }
 
