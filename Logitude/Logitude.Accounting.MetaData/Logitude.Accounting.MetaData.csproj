@@ -78,6 +78,7 @@
     <Content Include="DBScripts\20220721_164759_ARInvoiceOppositeJournalCreditLinesNewLogic.axml" />
     <Content Include="DBScripts\202207041224_ARInvoiceOppositeJournalCreditLines.axml" />
     <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
+    <None Include="DBScripts\202308141215_UpdateInterestReportSearchFields.sxml" />
     <None Include="DBScripts\20221213_UpdateChartOfAccountTypesOrders.sxml" />
     <None Include="DBScripts\202208081221_UpdateSearchFieldsForInterestReports.sxml" />
     <None Include="DBScripts\202206201224_UpdateInterestTransactionsGLAccountIfInvIsNotMultiCurrency.sxml" />
