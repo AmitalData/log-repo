@@ -83,6 +83,12 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.IsEditExchangeRateVisible = true;
         }
         this.InitializeVendorLov();
+        
+        if (this.EntityPM.StatusCode == null)
+        {
+            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
+        }
+  
     }
 
     SetIsUsingVirtuallization() {
@@ -192,7 +198,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
 
         else {
-            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AmountInInvoiceCurrency", this.ObjectTableName, true);
@@ -1203,7 +1208,7 @@ export class APInvoiceLineItem extends BaseComponent {
         this.SetUIProperties();
         this.GetUserName();
         this.setColors();
-        this.ReadVatTypeData();
+        this.ReadVatTypeData();     
     }
 
     private GetUserName() {
