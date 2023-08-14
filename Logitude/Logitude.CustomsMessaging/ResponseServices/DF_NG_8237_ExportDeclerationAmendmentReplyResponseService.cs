@@ -228,6 +228,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customResponse.Response.AdditionalInformation != null)
                     s = customResponse.Response.AdditionalInformation.FirstOrDefault(x => x.Content != null && x.StatementTypeCode.Value == "32").Content.Value;
 
+                if(!isExportClose && !isExportCloseFromMehes)
                 disconnectExportStorages(s, myDeclarationQueryService);
 
 
