@@ -22,7 +22,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 {
     public class DCAInUCBUpsertSupplierInvioceByOcr_MsgMessagingService : MessagingServiceBase<
       GenericRequestParams,
-      INF_MSG_GenericResponseData,
+      UpsertSupplierInvioceByOcrResponseData,
       SYSTBL_NG_9000_MSG_SystemTableRequest,
       DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader,
       DCAInCustomReturnNullRequestService,
