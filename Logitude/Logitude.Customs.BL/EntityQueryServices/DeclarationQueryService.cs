@@ -381,6 +381,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
             return repository.GetIdByDeclarationNumber(declarationNumber, tenant);
         }
+
+        public string GetCustomFileNoByDeclarationNumber(string declarationNumber, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
+            return repository.GetCustomFileNoByDeclarationNumber(declarationNumber, tenant);
+        }
         public (string id, string direction, string declarationTypeCode) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
         {
 
