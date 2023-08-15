@@ -35,17 +35,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             }
 
-            if (entityPM!= null && entityPM.ChangeSetOp == ChangeSetOperation.Insert) {
+            if (entityPM != null && entityPM.ChangeSetOp == ChangeSetOperation.Insert) {
                 var customContext = MainContext as ICustomContext;
                 var customsDocumentQueryService = new CustomsDocumentQueryService(customContext);
-                CustomsDocumentPM customsDocumentPM = customsDocumentQueryService.GetSingleCustomsDocumentPMWithDeclarationId(entityPM.Id, entityPM.Tenant);
-                  if (customsDocumentPM != null && customsDocumentPM?.CustomsDocId==null)
-                 {
-
+                CustomsDocumentPM customsDocumentPM = customsDocumentQueryService.GetSingleCustomsDocumentPMWithDeclarationId(entityPM.DocId, entityPM.Tenant);
+                if (customsDocumentPM != null && customsDocumentPM?.CustomsDocId == null)
+                {
                     CustomsDocumentUpdateService CustomsDocumentUpdateService = new CustomsDocumentUpdateService(entityPM.Tenant);
                     CustomsDocumentUpdateService.SendMessageToQueue(customsDocumentPM);
-
-                 }
+                }
 
             }
 
