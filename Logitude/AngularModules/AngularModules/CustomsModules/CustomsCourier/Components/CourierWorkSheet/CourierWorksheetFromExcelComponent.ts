@@ -571,6 +571,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                     ids.push(item.DeclarationId);
                 });
                 var selectedEntityId = ids[0];
+                SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         var label = "מסך עבודה";//TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
@@ -1973,6 +1974,9 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                 if (objectTableName == "Customs.Declaration") {
 
                     if (currentScreenCode == "DEGC" && selected.IsAmendment == true) currentScreenCode = "DCCR";
+                    SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
+
+
 
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
