@@ -1145,7 +1145,30 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
              });
 
         }
+        public SupplierInvoiceItemPM initSupplierInvoiceItems(ExportInvoiceItem invoiceItem, SupplierInvoicePM supplierInvoice)
+        {
+            var supplierInvoiceItem = new SupplierInvoiceItemPM()
+            {
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Tenant = ResolvedTenant()
+            };
+           
+            supplierInvoiceItem.ItemCode = invoiceItem.ItemNo;
+            supplierInvoiceItem.ItemDescription=invoiceItem.ItemDescription;
+            supplierInvoiceItem.ClassificationCode = invoiceItem.ItemHScode;
+            if (decimal.TryParse(invoiceItem.ItemQuantity, out decimal ItemQuantity))
+            {
+                supplierInvoiceItem.InvoiceQuantity = ItemQuantity;
+            }
+            supplierInvoiceItem.InvoiceQuantityType = invoiceItem.ItemQuantityType;
+            if (decimal.TryParse(invoiceItem.ItemAmount, out decimal ItemAmount))
+            {
+                supplierInvoiceItem.ItemPrice = ItemAmount;
+            }
+            supplierInvoiceItem.OriginCountryCode = invoiceItem.ItemOriginCountry;
+            return supplierInvoiceItem;
 
+        }
         private void InitSupplierInvoice(ExportInvoice invocie,SupplierInvoicePM supplierInvoice)
         {
             AppendLogLine("InitSupplierInvoice" + supplierInvoice.DeclarationId);
@@ -1166,16 +1189,29 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if (!invocie.IsEmpty)
                 {
                     AppendLogLine("!invocie.IsEmpty");
-                    supplierInvoice.InvoiceNumber=invocie.Number;
-                    supplierInvoice.IssueDate = !String.IsNullOrWhiteSpace( invocie?.Date)? DateTime.Parse(invocie?.Date): supplierInvoice.IssueDate;
+                    supplierInvoice.InvoiceNumber=invocie.InvoiceNumber;
+                    supplierInvoice.IssueDate = !String.IsNullOrWhiteSpace( invocie?.InvoiceDate)? DateTime.Parse(invocie?.InvoiceDate) : supplierInvoice.IssueDate;
+                    if (decimal.TryParse(invocie.InvoiceAmount, out decimal amount))
+                    {
+                        supplierInvoice.InvoiceAmount = amount;
+                    }
 
+                    supplierInvoice.InvoiceCurrencyTypeCode = invocie.InvoiceCurrency;
+                    supplierInvoice.AccountTypeCode = invocie.InvoiceType;
+                    supplierInvoice.IncotermCode = invocie.InvoiceIncoterms;
+                    supplierInvoice.BuyerName = invocie.InvoiceBuyerName;
+                    supplierInvoice.BuyerAddress = invocie.InvoiceBuyerAddress;
+                    supplierInvoice.BuyerCountryCode = invocie.InvoiceBuyerCountryCode;
+                    var invoiceItemsArrayToAdd = invocie.ExportInvoiceItems?.invoiceItem.Length > 0 ? invocie .ExportInvoiceItems?.invoiceItem: new ExportInvoiceItem[] { new ExportInvoiceItem() };
+                    Array.ForEach(invoiceItemsArrayToAdd, (invoiceItem) =>
+                    {
+                        supplierInvoice.SupplierInvoiceItems.Add(initSupplierInvoiceItems(invoiceItem, supplierInvoice));
+                    });
                 }
-            }
             if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.IncotermCode))
             {
                 supplierInvoice.IncotermCode = _AmitalCustomsFile.IncotermCode;
             }
-
             if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerName))
             {
                 supplierInvoice.BuyerName = _AmitalCustomsFile.BuyerName;

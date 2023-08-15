@@ -1204,6 +1204,19 @@ public class ExportInvoice
     private string numberField;
 
     private string dateField;
+    private string InvoiceNumberField;
+    private string InvoiceDatField;
+    private string InvoiceAmounField;
+    private string InvoiceCurrencyField;
+    private string InvoiceTypeField;
+    private string InvoiceIncotermsField;
+    private string InvoiceBuyerNameField;
+    private string InvoiceBuyerAddressField;
+    private string InvoiceBuyerCountryCodeField;
+    private string InvoiceItemsField;
+    private ExportInvoiceItems invoiceItemsField;
+
+
 
     [XmlIgnore]
     public bool IsEmpty
@@ -1237,9 +1250,211 @@ public class ExportInvoice
             this.dateField = value;
         }
     }
+    public string InvoiceNumber
+    {
+        get
+        {
+            return this.InvoiceNumberField;
+        }
+        set
+        {
+            this.InvoiceNumberField = value;
+        }
+    }
+    public string InvoiceDate
+    {
+        get
+        {
+            return this.InvoiceDatField;
+        }
+        set
+        {
+            this.InvoiceDatField = value;
+        }
+    }
+    public string InvoiceAmount
+    {
+        get
+        {
+            return this.InvoiceAmounField;
+        }
+        set
+        {
+            this.InvoiceAmounField = value;
+        }
+    }
+    public string InvoiceCurrency
+    {
+        get
+        {
+            return this.InvoiceCurrencyField;
+        }
+        set
+        {
+            this.InvoiceCurrencyField = value;
+        }
+    }
+    public string InvoiceType
+    {
+        get
+        {
+            return this.InvoiceTypeField;
+        }
+        set
+        {
+            this.InvoiceTypeField = value;
+        }
+    }
+    public string InvoiceIncoterms
+    {
+        get
+        {
+            return this.InvoiceIncotermsField;
+        }
+        set
+        {
+            this.InvoiceIncotermsField = value;
+        }
+    }
+    public string InvoiceBuyerName
+    {
+        get
+        {
+            return this.InvoiceBuyerNameField;
+        }
+        set
+        {
+            this.InvoiceBuyerNameField = value;
+        }
+    }
+    public string InvoiceBuyerAddress
+    {
+        get
+        {
+            return this.InvoiceBuyerAddressField;
+        }
+        set
+        {
+            this.InvoiceBuyerAddressField = value;
+        }
+    }
+    public string InvoiceBuyerCountryCode
+    {
+        get
+        {
+            return this.InvoiceBuyerCountryCodeField;
+        }
+        set
+        {
+            this.InvoiceBuyerCountryCodeField = value;
+        }
+    }
+    public ExportInvoiceItems ExportInvoiceItems
+    {
+        get
+        {
+            return this.invoiceItemsField;
+        }
+        set
+        {
+            this.invoiceItemsField = value;
+        }
+    }
 
-    
+
+
 }
+public class ExportInvoiceItem
+{
+    private string ItemNoField;
+    private string ItemDescriptionField;
+    private string ItemHScodeField;
+    private string ItemQuantityField;
+    private string ItemQuantityTypeField;
+    private string ItemAmountField;
+    private string ItemOriginCountryField;
+
+
+
+    public string ItemNo
+    {
+        get
+        {
+            return this.ItemNoField;
+        }
+        set
+        {
+            this.ItemNoField = value;
+        }
+    }
+    public string ItemDescription
+    {
+        get
+        {
+            return this.ItemDescriptionField;
+        }
+        set
+        {
+            this.ItemDescriptionField = value;
+        }
+    }
+    public string ItemHScode
+    {
+        get
+        {
+            return this.ItemHScodeField;
+        }
+        set
+        {
+            this.ItemHScodeField = value;
+        }
+    }
+    public string ItemQuantity
+    {
+        get
+        {
+            return this.ItemQuantityField;
+        }
+        set
+        {
+            this.ItemQuantityField = value;
+        }
+    }
+    public string ItemQuantityType
+    {
+        get
+        {
+            return this.ItemQuantityTypeField;
+        }
+        set
+        {
+            this.ItemQuantityTypeField = value;
+        }
+    }
+    public string ItemAmount
+    {
+        get
+        {
+            return this.ItemAmountField;
+        }
+        set
+        {
+            this.ItemAmountField = value;
+        }
+    }
+    public string ItemOriginCountry
+    {
+        get
+        {
+            return this.ItemOriginCountryField;
+        }
+        set
+        {
+            this.ItemOriginCountryField = value;
+        }
+    }
+}
+
 
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
@@ -1266,5 +1481,24 @@ public class ExportInvoices
         }
     }
 }
+public class ExportInvoiceItems
+{
+    private ExportInvoiceItem[] InvoiceItemField;
+
+    [System.Xml.Serialization.XmlElementAttribute("Invoice")]
+
+    public ExportInvoiceItem[] invoiceItem
+    {
+        get
+        {
+            return this.InvoiceItemField;
+        }
+        set
+        {
+            this.InvoiceItemField = value;
+        }
+    }
+}
+
 
 
