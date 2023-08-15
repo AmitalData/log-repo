@@ -1173,7 +1173,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             return supplierInvoiceItem;
 
         }
-        private void InitSupplierInvoice(ExportInvoice invocie,SupplierInvoicePM supplierInvoice)
+        private void InitSupplierInvoice(ExportInvoice invocie, SupplierInvoicePM supplierInvoice)
         {
             AppendLogLine("InitSupplierInvoice" + supplierInvoice.DeclarationId);
             AppendLogLine("InitSupplierInvoice" + invocie?.Number);
@@ -1193,8 +1193,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if (!invocie.IsEmpty)
                 {
                     AppendLogLine("!invocie.IsEmpty");
-                    supplierInvoice.InvoiceNumber=invocie.InvoiceNumber;
-                    supplierInvoice.IssueDate = !String.IsNullOrWhiteSpace( invocie?.InvoiceDate)? DateTime.Parse(invocie?.InvoiceDate) : supplierInvoice.IssueDate;
+                    supplierInvoice.InvoiceNumber = invocie.InvoiceNumber;
+                    supplierInvoice.IssueDate = !String.IsNullOrWhiteSpace(invocie?.InvoiceDate) ? DateTime.Parse(invocie?.InvoiceDate) : supplierInvoice.IssueDate;
                     if (decimal.TryParse(invocie.InvoiceAmount, out decimal amount))
                     {
                         supplierInvoice.InvoiceAmount = amount;
@@ -1206,35 +1206,31 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     supplierInvoice.BuyerName = invocie.InvoiceBuyerName;
                     supplierInvoice.BuyerAddress = invocie.InvoiceBuyerAddress;
                     supplierInvoice.BuyerCountryCode = invocie.InvoiceBuyerCountryCode;
-                    var invoiceItemsArrayToAdd = invocie.ExportInvoiceItems?.invoiceItem.Length > 0 ? invocie .ExportInvoiceItems?.invoiceItem: new ExportInvoiceItem[] { new ExportInvoiceItem() };
+                    var invoiceItemsArrayToAdd = invocie.ExportInvoiceItems?.invoiceItem.Length > 0 ? invocie.ExportInvoiceItems?.invoiceItem : new ExportInvoiceItem[] { new ExportInvoiceItem() };
                     Array.ForEach(invoiceItemsArrayToAdd, (invoiceItem) =>
                     {
                         supplierInvoice.SupplierInvoiceItems.Add(initSupplierInvoiceItems(invoiceItem, supplierInvoice));
                     });
                 }
-            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.IncotermCode))
-            {
-                supplierInvoice.IncotermCode = _AmitalCustomsFile.IncotermCode;
-            }
-            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerName))
-            {
-                supplierInvoice.BuyerName = _AmitalCustomsFile.BuyerName;
-            }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.IncotermCode))
+                {
+                    supplierInvoice.IncotermCode = _AmitalCustomsFile.IncotermCode;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerName))
+                {
+                    supplierInvoice.BuyerName = _AmitalCustomsFile.BuyerName;
+                }
 
-            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerAddress))
-            {
-                supplierInvoice.BuyerAddress = _AmitalCustomsFile.BuyerAddress;
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerAddress))
+                {
+                    supplierInvoice.BuyerAddress = _AmitalCustomsFile.BuyerAddress;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerCountryCode))
+                {
+                    supplierInvoice.BuyerCountryCode = _AmitalCustomsFile.BuyerCountryCode;
+                }
             }
-            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerCountryCode))
-            {
-                supplierInvoice.BuyerCountryCode = _AmitalCustomsFile.BuyerCountryCode;
-            }
-
-
-          
-
         }
-
         private void DeclarationReferantDataUpdate()
         {
             MyGenericResponseObj.Stage = "DeclarationReferantDataUpsert";
