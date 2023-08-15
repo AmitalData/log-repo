@@ -129,7 +129,7 @@ namespace Logitude.Customs.BL.TraceEvents
             };
 
             if (mySetting.IsConnectedToUniFreight) {
-                AmitalContext _AmitalContext = AmitalContext.GetContext(tenant);
+                AmitalContext  _AmitalContext = AmitalContext.GetContext(tenant);
                 var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
                 myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
 
