@@ -1549,6 +1549,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating, entityPM.IsCourierDeclaration = true");
                     var context = CustomContext.GetContext(entityPM.Tenant);
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+
                     if (IsFromU2L)
                     {
                         declarationCourierStatusUpdateService.ImporterCode = ImporterCode;
