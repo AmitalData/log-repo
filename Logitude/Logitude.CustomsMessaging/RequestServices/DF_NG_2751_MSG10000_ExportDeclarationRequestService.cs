@@ -262,7 +262,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                 if (isConnectedToUnifreight)
                 {
-                    AmitalContext _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
+                     _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
                     var myCCUQUELOCKQueryService = new Unifreight.BL.EntityQueryServices.CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new Unifreight.BL.EntityUpdateServices.CCUQUELOCKUpdateService(_AmitalContext);
                     myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.

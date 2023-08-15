@@ -803,7 +803,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void OpenUnifreighTask()
         {
             bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant).IsConnectedToUniFreight;
-            AmitalContext _AmitalContext = null;
+           
 
             TransactionScope scope = null;
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
