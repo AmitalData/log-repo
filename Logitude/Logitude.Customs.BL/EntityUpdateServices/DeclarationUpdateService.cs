@@ -63,6 +63,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public string TruckerId;
         public bool IsFromU2L;
         public string DistributionArea;
+        public string ImporterCode;
         public string LastMileServiceType;
         public string MAWB;
 
@@ -1548,7 +1549,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating, entityPM.IsCourierDeclaration = true");
                     var context = CustomContext.GetContext(entityPM.Tenant);
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                    //if(entity)
+
+                    if (IsFromU2L)
+                    {
+                        declarationCourierStatusUpdateService.ImporterCode = ImporterCode;
+                    }
                     DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(entityPM); 
                     if (IsFromU2L)
                     {
@@ -1560,7 +1565,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.UpdateTrucker(newDeclarationCourierStatusPM, entityPM);
                         newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.UpdateLastMileServiceType(newDeclarationCourierStatusPM, entityPM);
                     }
-                    
+
                     /*
                      * getSingle moved to CalculateDeclarationCourierStatus
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);

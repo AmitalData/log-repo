@@ -24,6 +24,8 @@ namespace Logitude.Customs.BL.BL
     public class CalculateDeclarationCourierStatus
     {
         private DeclarationPM declarationPM;
+        public string ImporterCode;
+
         public static void UpdateCourierDeclarationStatusCode(int Tenant, string DeclarationId)
         {
             var customContext = CustomContext.GetContext(Tenant);
@@ -376,28 +378,36 @@ namespace Logitude.Customs.BL.BL
                     }
                     else
                     {
-                        switch (declarationPM.DeclarationStatusTypeCode)
-                        {
-                            case "12":
-                                myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
-                                break;
-                            case "11":
-                            case "13":
-                                if (declarationPM.IsChanged == true)
-                                {
-                                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
-                                }
-                                else
-                                {
-                                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "V";
-                                }
-                                break;
-                            default:
-                                myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "";
-                                break;
+                        if (ImporterCode == null)
+                        { // importercode from u2l changed 
+
+                            switch (declarationPM.DeclarationStatusTypeCode)
+                            {
+                                case "12":
+                                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
+                                    break;
+                                case "11":
+                                case "13":
+                                    if (declarationPM.IsChanged == true)
+                                    {
+                                        myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
+                                    }
+                                    else
+                                    {
+                                        myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "V";
+                                    }
+                                    break;
+                                default:
+                                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "";
+                                    break;
+                            }
+                            LogMessagingUtil.Instance.AppendLine("DeclarationStatusTypeCode is " + declarationPM.DeclarationStatusTypeCode +
+                                ",CourierDeclarationStatusCode set to " + myDeclarationCourierStatusPM.CourierDeclarationStatusCode);
                         }
-                        LogMessagingUtil.Instance.AppendLine("DeclarationStatusTypeCode is "+ declarationPM.DeclarationStatusTypeCode+
-                            ",CourierDeclarationStatusCode set to "+ myDeclarationCourierStatusPM.CourierDeclarationStatusCode);
+                        else
+                        {
+                            myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
+                        }
                     }
                 }
             }

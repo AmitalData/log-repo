@@ -760,6 +760,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 }
                 else
                 {
+                    if (_AmitalCustomsFile.ImporterId != null && string.IsNullOrEmpty(this._MyDeclarationPM.ImporterCode))
+                    {
+                        myDeclarationUpdateService.ImporterCode = _AmitalCustomsFile.ImporterId;
+                    }
                     //Update Declaration
                     _MyDeclarationPM.IsCourierDeclaration = true;
                     _MyDeclarationPM.ProcedureCurrentCode = _AmitalCustomsFile.ProcedureCurrentCode;
