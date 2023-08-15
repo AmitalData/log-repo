@@ -1532,7 +1532,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             try
             {
-                AmitalContext _AmitalContext = null;
+               
                 bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
                 if (isConnectedToUnifreight)
                 {

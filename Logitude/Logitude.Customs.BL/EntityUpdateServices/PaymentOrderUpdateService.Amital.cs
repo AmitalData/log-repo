@@ -482,7 +482,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var sw = Stopwatch.StartNew();
             var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
             TransactionScope scope = null;
-            AmitalContext _AmitalContext = null;
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
                 scope = TransactionFactory.GetNewOracleReadCommittedTransaction();

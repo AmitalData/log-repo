@@ -109,7 +109,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
                 if (isConnectedToUniFreight)
                 {
-                    AmitalContext _AmitalContext = AmitalContext.GetContext(tenant);
+                     _AmitalContext = AmitalContext.GetContext(tenant);
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
                     var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
