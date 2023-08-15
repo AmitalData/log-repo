@@ -29,6 +29,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.DeclarationID = entityPM.DeclarationID;
                 entityPOCO.Tenant = entityPM.Tenant;
                 entityPOCO.CourierPendingReasonCode = entityPM.CourierPendingReasonCode;
+                entityPOCO.Approval= (entityPM.Approval == true) ? true : false;
             }
         }
 
@@ -43,7 +44,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.CourierPendingReasonName = constraintType.LocalName;
                 entityPM.CourierPendingRequireApr = constraintType.RequiresApproval;
             }
-            entityPM.WasApproved = entityPM.Approval;
+            entityPM.WasApproved = (entityPM.Approval==true)?true:false;
+            entityPM.Approval = (entityPM.Approval == true) ? true : false;
 
         }
     }
