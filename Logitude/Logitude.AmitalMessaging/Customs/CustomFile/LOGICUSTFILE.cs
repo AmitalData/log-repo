@@ -1204,7 +1204,7 @@ public class ExportInvoice
     private string numberField;
 
     private string dateField;
-    private string InvoiceNumberField;
+    private string InvoiceNumField;
     private string InvoiceDatField;
     private string InvoiceAmounField;
     private string InvoiceCurrencyField;
@@ -1213,7 +1213,6 @@ public class ExportInvoice
     private string InvoiceBuyerNameField;
     private string InvoiceBuyerAddressField;
     private string InvoiceBuyerCountryCodeField;
-    private string InvoiceItemsField;
     private ExportInvoiceItems invoiceItemsField;
 
 
@@ -1250,15 +1249,15 @@ public class ExportInvoice
             this.dateField = value;
         }
     }
-    public string InvoiceNumber
+    public string InvoiceNum
     {
         get
         {
-            return this.InvoiceNumberField;
+            return this.InvoiceNumField;
         }
         set
         {
-            this.InvoiceNumberField = value;
+            this.InvoiceNumField = value;
         }
     }
     public string InvoiceDate
@@ -1349,7 +1348,7 @@ public class ExportInvoice
             this.InvoiceBuyerCountryCodeField = value;
         }
     }
-    public ExportInvoiceItems ExportInvoiceItems
+    public ExportInvoiceItems InvoiceItems
     {
         get
         {
@@ -1360,9 +1359,6 @@ public class ExportInvoice
             this.invoiceItemsField = value;
         }
     }
-
-
-
 }
 public class ExportInvoiceItem
 {
@@ -1485,9 +1481,9 @@ public class ExportInvoiceItems
 {
     private ExportInvoiceItem[] InvoiceItemField;
 
-    [System.Xml.Serialization.XmlElementAttribute("Invoice")]
+    [System.Xml.Serialization.XmlElementAttribute("InvoiceItem")]
 
-    public ExportInvoiceItem[] invoiceItem
+    public ExportInvoiceItem[] InvoiceItem
     {
         get
         {
