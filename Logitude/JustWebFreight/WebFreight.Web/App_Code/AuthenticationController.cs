@@ -1409,7 +1409,7 @@ namespace WebFreight.Web
                      customerCare = false;
                     bool distributor = false;
                     User logitudeUser = null;
-                    GlobalContact contact = globalContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.Email.ToLower() == parameters.Email.ToLower()).FirstOrDefault(); //mohammad
+                    GlobalContact contact = globalContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.Email.ToLower() == parameters.Email.ToLower()&& d.InActive==false).FirstOrDefault(); //mohammad
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
                     if (contact != null)
                     {
