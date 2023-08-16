@@ -42,6 +42,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             {
                 poco.ComputedForwarderDocumentId = entityPM.ForwarderDocumentId;
             }
+            poco.BillToId = entityPM.InvoiceBillTo;
             poco.Tenant = entityPM.Tenant;
             poco.DocumentId = entityPM.DocumentId;
             poco.DocumentTypeId = entityPM.DocumentTypeId;

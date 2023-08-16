@@ -92,5 +92,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool BackedupExternally { get; set; }
         public string ReceivedByByContactId { get; set; }
         public string ReceivedByPartner { get; set; }
+         public string BillToId { get; set; }
+
     }
 }
