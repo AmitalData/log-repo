@@ -62,7 +62,8 @@ export class ExportFilterMenuComponent extends BaseComponent {
     filtersInputs = this.filters.map(x => x.dbField).reduce((a, v) => ({ ...a, [v]: []}), {}) 
     
     SetWindowArgs({ apiQueryFilters, filtersInputs }: { apiQueryFilters: ApiQueryFilters, filtersInputs: any }) {
-        this.filtersInputs = filtersInputs;
+        if(filtersInputs)
+            this.filtersInputs = filtersInputs;
     }
 
     cleanFliter() {
