@@ -22,6 +22,7 @@ using System.Linq;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using static Logitude.CustomsMessaging.U2L.Sivug.SivugUpsertService;
 
 namespace Logitude.CustomsMessaging.U2L.Sivug
 {
@@ -615,6 +616,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 this._MySupplierInvoicePM = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault();
                 if (this._MySupplierInvoicePM == null)
                 {
+                    AppendLogLine("this._MySupplierInvoicePM.ChangeSetOp.Insert" );
                     this._MySupplierInvoicePM = new Logitude.Customs.Def.EntityPMs.SupplierInvoicePM();
                     this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
                 }
@@ -644,9 +646,11 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                 var lineToSequenceNumeric = new LineToSequenceNumeric();
                                 lineToSequenceNumeric.line = int1;
                                 lineToSequenceNumeric.sequenceNumeric = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault().SequenceNumeric.Value;
+                               
                                 lineToSequence.Add(lineToSequenceNumeric);
                                 if (this._MySupplierInvoicePM.SequenceNumeric != int1)
                                 {
+                                    AppendLogLine(" lineToSequenceNumeric.sequenceNumeric" + lineToSequenceNumeric.sequenceNumeric);
                                     this._MySupplierInvoicePM.SequenceNumeric = int1;
                                     this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
                                 }
@@ -694,6 +698,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     }
                     else
                     {
+                        AppendLogLine("  ChangeSetOperation.Update;" );
                         this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
                     }
 
@@ -719,6 +724,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                     if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
                     {
+                        AppendLogLine("int1" + int1);
                         this._MySupplierInvoicePM.SequenceNumeric = int1;
                         //this._MySupplierInvoicePM.InvoiceCounterKey = int1; // moran 8.10.15 - Task 16452 - commented - initiated automatically on creating
                     }
@@ -734,6 +740,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     lastSequenceNumeric += 1;
                     this._MySupplierInvoicePM.SequenceNumeric = lastSequenceNumeric;
+                    AppendLogLine("  this._MySupplierInvoicePM.SequenceNumeric " + lastSequenceNumeric);
                 }
             }
             if (mode == "INSERT_UPDATE_DELETE")
@@ -811,7 +818,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             {
                 this._MySupplierInvoicePM.IncotermCode = TranslateTermsOfSaleType(this._INVOICE.INCOTERM_ID);
             }
-
+            AppendLogLine("this._INVOICE.SI_COUNTER" + this._INVOICE.SI_COUNTER);
             if (this._INVOICE.SI_COUNTER != null) this._MySupplierInvoicePM.UnfInvoiceCounterKey = this._INVOICE.SI_COUNTER;
             VendorCommissionQueryService vendorCommissionQuery = new VendorCommissionQueryService(CustomContext.GetContext(ResolvedTenant()));
             VendorCommissionPM commisionPM = vendorCommissionQuery.GetSingleCommisionByVendorAndCustomer(this._MySupplierInvoicePM.VendorId, this._MyDeclarationPM.CustomerId, ResolvedTenant());
@@ -822,8 +829,10 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 this._MySupplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItemPM(this._INVOICE);
             }
             this._MySupplierInvoicePM.SupplierInvoiceModifications = GetSupplierInvoiceModificationsPM(this._INVOICE);
+            AppendLogLine("this._MySupplierInvoicePM.ChangeSetOp"+ this._MySupplierInvoicePM.ChangeSetOp);
             if (this._MySupplierInvoicePM.ChangeSetOp != ChangeSetOperation.Update)
             {
+                AppendLogLine("SupplierInvoices.Add");
                 this._MySupplierInvoicePM.Tenant = ResolvedTenant();
                 this._MyDeclarationPM.SupplierInvoices.Add(this._MySupplierInvoicePM);
             }
