@@ -148,10 +148,10 @@ myService.GetByGLAccountsDisplayNumber(this.EntityPM.gLAccountNumber, this.Entit
         var result = myResponse.Result;
         if (result != null) {
             if (result.CurrencySign != null ){
-            this.AccountInfo = result.LocalName + ',' + result.DisplayNumber + ',' + result.CurrencySign;
+                this.AccountInfo = result.LocalName + ',' + result.DisplayNumber + ',' + result.CurrencySign;
             }
             else{
-                this.AccountInfo = result.LocalName + ',' + result.DisplayNumber;
+                this.AccountInfo = result.LocalName + ',' + result.DisplayNumber + ',' + "MULTI";
             }
         }
     }
