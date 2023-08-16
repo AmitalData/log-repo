@@ -147,7 +147,7 @@ export class DeclarationFiltersMenuComponent
         logitudeWindow.Width = 450;
         logitudeWindow.Height = 170;
         logitudeWindow.Title = this.titleExportFilterMenu;
-        logitudeWindow.WindowArgs = this.exportFilterData;
+        logitudeWindow.WindowArgs = JSON.parse(JSON.stringify(this.exportFilterData || ''));
         logitudeWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/FiltersMenu/ExportFilterMenuComponent');        
         logitudeWindow.WindowClosed.pipe(filter(x=> x)).subscribe((exportFilterData) => {
             this.exportFilterData = exportFilterData;
