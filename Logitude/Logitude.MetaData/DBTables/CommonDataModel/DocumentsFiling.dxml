@@ -206,6 +206,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ComputedCustomerDocumentId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="SecurityId"
     Type="varchar"
     Size="60">
