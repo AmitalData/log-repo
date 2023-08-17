@@ -392,12 +392,12 @@
                                     </span>
                                     <span class="more-mobile mobile-only" *ngIf="i == 0">
                                         <a
-                                            (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), true); $event.stopPropagation()"><u>+
+                                            (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), true, $event); $event.stopPropagation()"><u>+
                                                 {{references?.length}} More</u></a>
                                     </span>
                                 </div>
                                 <span class="hide-mobile"
-                                    (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), false); $event.stopPropagation()"
+                                    (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), false, $event); $event.stopPropagation()"
                                     *ngIf="references?.length > 3"
                                     [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
                                     <img src="./assets/images/icons/info.png" alt=" "

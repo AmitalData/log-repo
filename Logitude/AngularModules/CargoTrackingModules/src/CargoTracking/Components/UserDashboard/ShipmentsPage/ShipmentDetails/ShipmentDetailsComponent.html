@@ -176,7 +176,7 @@
                         </li>
                         <li>
                             <span class="hide-mobile clickable"
-                                (click)="OpenReferencesMessageWindow(ShipmentReferences, false); $event.stopPropagation()"
+                                (click)="OpenReferencesMessageWindow(ShipmentReferences, false,$event); $event.stopPropagation()"
                                 *ngIf="ShipmentReferences?.length > WebReferencesViewCount"
                                 >
                                 <img src="./assets/images/icons/info.png" alt=" "
@@ -416,7 +416,7 @@
                                     {{cargoTrackingShipmentPM.PoNumber}}
                                 </custom-label> -->
                                 <span class="clickable"
-                                (click)="OpenReferencesMessageWindow(ShipmentReferences, true); $event.stopPropagation()"
+                                (click)="OpenReferencesMessageWindow(ShipmentReferences, true,$event); $event.stopPropagation()"
                                 *ngIf="ShipmentReferences?.length > MobileReferencesViewCount"
                                 >
                                 <img src="./assets/images/icons/info.png" alt=" "

@@ -353,7 +353,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
             this.ShipmentReferences.push(this.cargoTrackingShipmentPM.SHOBookingConfirmationNumber);
     }
 
-    OpenReferencesMessageWindow(references: any[], isMobile: boolean) {
+    OpenReferencesMessageWindow(references: any[], isMobile: boolean ,event) {
         if (!references)
             return;
 
@@ -362,7 +362,13 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
             data: {
                 title: 'References',
                 description: isMobile ? references.slice(1, references.length + 1).join("\n") : references.slice(3, references.length + 1).join("\n"),
-            }
+            },
+            
+            position: {
+                top: event.clientY + 'px',
+                left: event.clientX + 'px',
+              },
+          
         });
     }
 
