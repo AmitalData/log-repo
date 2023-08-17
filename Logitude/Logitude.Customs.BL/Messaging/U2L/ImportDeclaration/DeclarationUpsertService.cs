@@ -1214,7 +1214,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 supplierInvoice.BuyerCountryCode = _AmitalCustomsFile.BuyerCountryCode;
             }
-            if (false)
+            if (true)
             {
                 if (!string.IsNullOrWhiteSpace(invoice.InvoiceNum))
                 {
