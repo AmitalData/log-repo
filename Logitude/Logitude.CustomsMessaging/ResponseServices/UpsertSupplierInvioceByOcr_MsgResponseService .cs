@@ -121,7 +121,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 CustomsDocumentsTicketUpdateService customsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), customResponse.tenant);
                                 
                                 SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
-                                var invoiceCounterKey = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, myOcrDocument.Reference, customResponse.tenant, false)?.InvoiceCounterKey;
+                                var invoiceCounterKey = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, myOcrDocument.Reference, customResponse.tenant, false)?[0]?.InvoiceCounterKey;
                                 if (customsDocumentsTicketPM != null && invoiceCounterKey != null)
                                 {
                                     customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -192,10 +192,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             int tenant = customResponse.tenant;
             ICustomContext context = CustomContext.GetContext(customResponse.tenant);
             SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
-            SupplierInvoicePM mySupplierInvoice = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, invoiceNumber, customResponse.tenant, true);
+            List<SupplierInvoicePM> mySupplierInvoices = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, invoiceNumber, customResponse.tenant, true);
+            SupplierInvoicePM mySupplierInvoice = 
+                                    mySupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == invoiceNumber)
+                                    ?? mySupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == null)
+                                    ?? new SupplierInvoicePM();
+
             bool isNewInvoice = false;
             string invalidValuesRemarks = null;
-            if (mySupplierInvoice == null)
+            if (mySupplierInvoices == null)
             {
                 isNewInvoice = true;
                 mySupplierInvoice = new SupplierInvoicePM()

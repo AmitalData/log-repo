@@ -308,13 +308,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return supplierInvoicePMs.OrderBy(d=>d.SequenceNumeric).ToList();
         }
 
-        public SupplierInvoicePM GetInvoicesForDeclarationByInvoiceNum(string declarationId, string invoiceNumber, int tenant,  bool getComposition = false)
+        public List<SupplierInvoicePM> GetInvoicesForDeclarationByInvoiceNum(string declarationId, string invoiceNumber, int tenant,  bool getComposition = false)
         {
-            SupplierInvoice supplierInvoice = repository.GetInvoicesForDeclarationByInvoiceNum(declarationId,invoiceNumber, tenant);
+            List<SupplierInvoice> supplierInvoices = repository.GetInvoicesForDeclarationByInvoiceNum(declarationId,invoiceNumber, tenant);
 
-            if (supplierInvoice == null) { return null; }
+            if (supplierInvoices == null) { return null; }
             SupplierInvoiceDataMapping mappings = new SupplierInvoiceDataMapping();
+            List<SupplierInvoicePM> supplierInvoicesPM = new List<SupplierInvoicePM>();
 
+            foreach (SupplierInvoice supplierInvoice in supplierInvoices)
+            {
                 SupplierInvoicePM invoicePM = new SupplierInvoicePM();
 
                 mappings.CustomPOCOToPM(invoicePM, supplierInvoice);
@@ -323,9 +326,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 {
                     GetComposition(new SupplierInvoiceKeys() { DeclarationId = invoicePM.DeclarationId, InvoiceCounterKey = invoicePM.InvoiceCounterKey }, invoicePM);
                 }
-                
+                supplierInvoicesPM.Add(invoicePM);
+            }
+            return supplierInvoicesPM;
             
-            return invoicePM;
         }
 
 
