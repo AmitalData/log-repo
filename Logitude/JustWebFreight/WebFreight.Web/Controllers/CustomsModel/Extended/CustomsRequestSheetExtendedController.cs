@@ -50,7 +50,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             string ObjectTableId1, string EntityId1,
             string ObjectTableId2, string EntityId2,
             string CustomFileNo,
-            bool displayOnlyMode)
+            bool displayOnlyMode,bool isWorkSheetFromExcel,string userId)
         {
             try
             {
@@ -90,7 +90,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     EntityId2 = EntityId2,
                     CustomFileNo = CustomFileNo,
                     DisplayOnlyMode = displayOnlyMode,
-                    Include8250IsShaam= include8250IsShaam
+                    Include8250IsShaam= include8250IsShaam,
+                    IsWorkSheetFromExcel= isWorkSheetFromExcel,
+                    UserId=userId,
                 });
                 var payRequest = requestSheets.FirstOrDefault(r => r.InterfaceTypeCode == "2755");
                 if (payRequest != null)

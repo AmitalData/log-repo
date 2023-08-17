@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.Infrastructure;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityListQueryServices;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -374,7 +376,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 listSheetStatusInProcess.Add(((int)item).ToString());
             }
-
             //List<CustomsRequestsSheet> requests = repository.GetCustomsRequestsSheetByCustomFileNumber(customFileNumber, tenant);
             var q = //context.CustomsRequestsSheets
                 this.repository.GetAll(requestInProgressParams.Tenant)
@@ -407,6 +408,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
             var haveFilter = false;
+            if (requestInProgressParams.IsWorkSheetFromExcel)
+            {
+                CourierHawbFromExcelRepository courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+                var qFromExcel = courierHawbFromExcelRepository.GetAllByUser(requestInProgressParams.Tenant, requestInProgressParams.UserId);
+                q = (from customsRequestSheet in q
+                     join courierHawbFromExcel in qFromExcel
+                      on customsRequestSheet.CustomFileNo equals courierHawbFromExcel.CustomFileNo
+                   select customsRequestSheet);
+            }
             if (!string.IsNullOrWhiteSpace(requestInProgressParams.CustomFileNo))
             {
                 haveFilter = true;
@@ -891,5 +901,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public bool DisplayOnlyMode { get; set; }
         public string CustomFileNo { get;  set; }
         public bool Include8250IsShaam { get; set; }
+        public bool IsWorkSheetFromExcel { get; set; }
+        public string UserId { get; set; }
+
     }
 }

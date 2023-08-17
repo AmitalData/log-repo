@@ -45,6 +45,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CustomFileNo"
+    Type="varchar"
+    Size="12">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

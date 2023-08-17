@@ -27,7 +27,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DeclarationId, 
 	         NotFound, 
 	         CourierHawb, 
-	         ErrorMessage,
+	         ErrorMessage, 
+	         CustomFileNo,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DeclarationId, 
 	         NotFound, 
 	         CourierHawb, 
-	         ErrorMessage,
+	         ErrorMessage, 
+	         CustomFileNo,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -71,6 +73,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorMessage))
             {
 				entityPOCO.ErrorMessage = entityPM.ErrorMessage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomFileNo))
+            {
+				entityPOCO.CustomFileNo = entityPM.CustomFileNo;
 			}
 			}
 
@@ -107,6 +114,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ErrorMessage = entityPOCO.ErrorMessage;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomFileNo))
+            {
+					entityPM.CustomFileNo = entityPOCO.CustomFileNo;
+            }
+
 		}
 
 		public void PMToOldPM(CourierHawbFromExcelPM entityPM, CourierHawbFromExcelPM oldEntityPM)
@@ -136,6 +148,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorMessage))
             {
                 oldEntityPM.ErrorMessage = entityPM.ErrorMessage;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomFileNo))
+            {
+                oldEntityPM.CustomFileNo = entityPM.CustomFileNo;
             }
 			
 		}

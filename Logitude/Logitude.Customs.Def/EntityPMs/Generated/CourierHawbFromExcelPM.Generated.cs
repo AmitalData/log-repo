@@ -158,6 +158,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string customFileNo ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomFileNo  
+	   {
+	    
+	     get
+		{
+		   return customFileNo;
+		 }
+		 set
+		 {
+		   if(customFileNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomFileNo",OldValue=customFileNo,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customFileNo=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
