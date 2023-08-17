@@ -56,14 +56,14 @@ namespace Logitude.Customs.Data.Repsitories
             return q.ToList();
         }
 
-        public SupplierInvoice GetInvoicesForDeclarationByInvoiceNum(string declarationId, string invoiceNumber, int tenant)
+        public List<SupplierInvoice> GetInvoicesForDeclarationByInvoiceNum(string declarationId, string invoiceNumber, int tenant)
         {
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
-            SupplierInvoice exists = (from a in context.SupplierInvoices
-                                      where a.DeclarationId == declarationId && a.InvoiceNumber == invoiceNumber && a.Tenant == tenant
-                                      select a).FirstOrDefault();
-            return exists;
+            return (from a in context.SupplierInvoices
+                                      where a.DeclarationId == declarationId && (a.InvoiceNumber == invoiceNumber || string.IsNullOrEmpty(a.InvoiceNumber)) && a.Tenant == tenant
+                                      select a).ToList();
+            
         }
 
         public IQueryable<SupplierInvoice> GetSupplierInvoicesQueryForDeclaration(string declarationId, int tenant)
