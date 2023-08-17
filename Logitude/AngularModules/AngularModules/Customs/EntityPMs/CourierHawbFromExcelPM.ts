@@ -54,6 +54,11 @@ export class CourierHawbFromExcelPM {
     public set ErrorMessage(newValue: string) { if (this.errorMessage != newValue) { this.errorMessage = newValue; this.MarkAsDirty("ErrorMessage"); } }
        
 	 
+    private customFileNo: string;
+    public get CustomFileNo() { return this.customFileNo; }
+    public set CustomFileNo(newValue: string) { if (this.customFileNo != newValue) { this.customFileNo = newValue; this.MarkAsDirty("CustomFileNo"); } }
+       
+	 
 
     public OldEntityPM: CourierHawbFromExcelPM;
 		

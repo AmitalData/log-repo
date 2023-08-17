@@ -2302,13 +2302,12 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     DisplayOnlyCheckApprovePending() {
-        /*
         this.IsDisplayOnly = false;
         this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
 
         //Check if deleting pending
         this._CourierMasterValidator.SetEntityPM(this.entityPM);
-        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "DCAInUCBApproveAllPending", this.entityPM.Id).subscribe((response: any) => {
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(SessionLocator.Tenant, "DCAInUCBApproveAllPending", null,true,this.CourierHawbsFromExcelUploaded,SessionLocator.LoggedUserId.toString()).subscribe((response: any) => {
             var displayOnlyCheckResult = response.Result;
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "DCAInUCBApproveAllPending")[0];
@@ -2318,7 +2317,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
-        });*/
+        });
     }
 
     DisplayOnlyCheck() {

@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CourierHawb { get; set; }
         [Column("ErrorMessage")]
 	    public string ErrorMessage { get; set; }
+        [Column("CustomFileNo")]
+	    public string CustomFileNo { get; set; }
     }
 }
 	 

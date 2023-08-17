@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CourierHawb).HasColumnName("CourierHawb").HasMaxLength(35).IsUnicode(false);
 
             this.Property(t => t.ErrorMessage).HasColumnName("ErrorMessage").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.CustomFileNo).HasColumnName("CustomFileNo").HasMaxLength(12).IsUnicode(false);
         }
     }
 }

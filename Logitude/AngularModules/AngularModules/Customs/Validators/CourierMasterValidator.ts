@@ -69,13 +69,14 @@ export class CourierMasterValidator {
     });
   }
 
-  public CheckRequestInProgressForCourierMaster(tenant: number, interfaceTypeCode: string, courierMasterId: string, displayOnlyMode: boolean = true) {
+  public CheckRequestInProgressForCourierMaster(tenant: number, interfaceTypeCode: string, courierMasterId: string, displayOnlyMode: boolean = true,isWorkSheetFromExcel:boolean=false,userId:string=null) {
 
     var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.CourierMaster")[0];
     var apiUrl: string = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
 
     return defer(() => {
-      return ServiceHelper.HttpClient.get(apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + objecttable.Id + '&entityId1=' + courierMasterId + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + "" + '&displayOnlyMode=' + displayOnlyMode, ServiceHelper.GetHttpHeaders())
+      return ServiceHelper.HttpClient.get(apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + objecttable.Id + '&entityId1=' 
+      + courierMasterId + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + "" + '&displayOnlyMode=' + displayOnlyMode + '&isWorkSheetFromExcel=' + isWorkSheetFromExcel+ '&userId=' + userId, ServiceHelper.GetHttpHeaders())
         .pipe(map(response => {
           var serviceResponse: ServiceResponse = new ServiceResponse();
           var requestSheets = response;

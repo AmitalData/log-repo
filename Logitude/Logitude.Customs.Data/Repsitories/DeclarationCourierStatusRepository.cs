@@ -102,7 +102,7 @@ namespace Logitude.Customs.Data.Repsitories
         public List<DeclarationCourierStatus> GetFromExcelCourierPaymentStatusCode(int tenant, string userId,
            string CourierPaymentStatusCode, string HighLowValue)
         {
-            var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+            CourierHawbFromExcelRepository courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
             var q = (from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
                      join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
