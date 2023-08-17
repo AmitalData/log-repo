@@ -380,11 +380,16 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         }
         private List<DocumentsFilingPM> GetShipmentDocumentsFilings()
         {
-            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(cargoShipmentPM.Tenant);
-
-            List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetInputDocumentsFilingPMsByEntityId(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
             
-            if (!string.IsNullOrWhiteSpace(cargoShipmentPM.ForwardingShipmentHeaderId))
+            string[] allowedDocumentTypes = { "EINV", "CINV", "FINV" };
+
+            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(cargoShipmentPM.Tenant);
+            List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetInputDocumentsFilingPMsByEntityId(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
+            documentsFilingPM = documentsFilingPM.Where(document =>
+           (allowedDocumentTypes.Contains(document.DocumentTypeCode.ToUpper()) && document.BillToId == cargoShipmentPM.CustomerId)
+           || !allowedDocumentTypes.Contains(document.DocumentTypeCode.ToUpper())).ToList();
+
+             if (!string.IsNullOrWhiteSpace(cargoShipmentPM.ForwardingShipmentHeaderId))
             {
                 List<DocumentsFilingPM> forwardingShipmentDocumentsFiling = documentsFilingQuery
                     .GetInputDocumentsFilingPMsByEntityId(cargoShipmentPM.ForwardingShipmentHeaderId, cargoShipmentPM.Tenant);

@@ -179,6 +179,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsFromDigital { get; set; }
         public string ReceivedByPartner { get; set; }
         public string InvoiceBillTo { get; set; }
+        public string BillToId { get; set; }
+
 
     }
 }
