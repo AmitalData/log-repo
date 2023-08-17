@@ -1114,6 +1114,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     this._MyDeclarationPM.Consignments[0].ShipCode = _AmitalCustomsFile.ShipCode;
                 }
+
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.FlightDate))
+                {
+                    this._MyDeclarationPM.ExportFlightDate = DateTime.Parse(_AmitalCustomsFile.FlightDate);
+                }
             }
         }
 
