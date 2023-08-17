@@ -262,6 +262,7 @@ export class Environment {
                 case "U.N.I":
                     {
                         changeFavicon('./Images/ApplicationLogo/UnifreightSmallLogo.png');
+                        changeTitle("Cloud Amital");
                         break;
                     }
 
