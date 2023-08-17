@@ -418,6 +418,12 @@ export class SearchComponent implements AfterViewInit, OnInit, OnDestroy {
                 title: 'References',
                 description: references.join("\n"),
             }
+            ,
+              position: {
+                top: event.clientY + 'px',
+                left: event.clientX + 'px',
+              },
+          
         });
     }
     public transform: string;

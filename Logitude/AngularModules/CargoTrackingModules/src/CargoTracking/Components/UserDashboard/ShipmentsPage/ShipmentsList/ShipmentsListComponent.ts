@@ -108,14 +108,14 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     get enableExportToExcel() {
         return CargoTrackingBrandingData.EnableExportToExcel;
     }
-    
+
     FiltersSelectedInvitedCustoms: any[] = [];
     ShipmentSearchInput: CargoTrackingShipmentSearchInput = new CargoTrackingShipmentSearchInput();
     MilestonesStatus: any[] = [];
     MilestonesStatusDictionary: {} = {};
     InvitedCustomers: any[] = [];
     MoreFilterMobileValue: MoreFilter = new MoreFilter();
-    InvitedCustomersDictionary : {} = {};
+    InvitedCustomersDictionary: {} = {};
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -139,17 +139,16 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private GetCompanyLoginsFromCache() {
-        
+
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
-        if(!SessionInfo.IsAdmin)
-        {
-        this.GetInvitedCustomers();
+        if (!SessionInfo.IsAdmin) {
+            this.GetInvitedCustomers();
         }
        
     }
 
     GetInvitedCustomers() {
-        
+
         console.log('SessionInfo.LoggedUserCompanyLogins', SessionInfo.LoggedUserCompanyLogins);
         this.InvitedCustomers = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
@@ -160,12 +159,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
                     ...d
                 }
             ));
-            let StartwithSpeicalCharCustomers = this.InvitedCustomers.filter(a => this.CheckSpeicalChar(a.Name.replace(/ /g, ""))); 
-            let StartwithoutSpeicalCharCustomers = this.InvitedCustomers.filter(a => !this.CheckSpeicalChar(a.Name.replace(/ /g, "")));   
-            StartwithSpeicalCharCustomers=StartwithSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);
-            StartwithoutSpeicalCharCustomers=StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);  
-            this.InvitedCustomers=StartwithSpeicalCharCustomers.concat(StartwithoutSpeicalCharCustomers);
-            this.FillInvitedCustomersDictionary(this.InvitedCustomers);
+        let StartwithSpeicalCharCustomers = this.InvitedCustomers.filter(a => this.CheckSpeicalChar(a.Name.replace(/ /g, "")));
+        let StartwithoutSpeicalCharCustomers = this.InvitedCustomers.filter(a => !this.CheckSpeicalChar(a.Name.replace(/ /g, "")));
+        StartwithSpeicalCharCustomers = StartwithSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);
+        StartwithoutSpeicalCharCustomers = StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);
+        this.InvitedCustomers = StartwithSpeicalCharCustomers.concat(StartwithoutSpeicalCharCustomers);
+        this.FillInvitedCustomersDictionary(this.InvitedCustomers);
     }
 
     FillInvitedCustomersDictionary(InvitedCustomers: any[]) {
@@ -174,13 +173,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         });
         this.InvitedCustomers.forEach(val => this.tempInvitedCustomers.push(val));
     }
-    private CheckSpeicalChar(s : string){  
+    private CheckSpeicalChar(s: string) {
         var format = /^[A-Za-z0-9]/;
-        if (format.test(s.charAt(0))) {    
-              return true;    
-               }   
-              return false;
-  }
+        if (format.test(s.charAt(0))) {
+            return true;
+        }
+        return false;
+    }
 
     ngOnInit(): void {
         this.setMaxNumberOfCarachter(window.innerWidth);
@@ -189,7 +188,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.getPreviousScroll();
         this.GetCompanyLoginsFromCache();
         this.fillFeltersDictionary();
-        this.setViews(); 
+        this.setViews();
     }
 
     OnRouteChanged(event) {
@@ -220,7 +219,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         if (this.ShipmentSearchInput.CustomersIds.length > 0) {
             this.filterAgrs.addAdditionalFilter("CustomersIds", this.ShipmentSearchInput.CustomersIds.join("_"), null, null, "Equals", false, false, false, "string");
         } else if (this.InvitedCustomers.length > 0) {
-           
+
             this.filterAgrs.addAdditionalFilter("CustomersIds", this.InvitedCustomers.map(d => d.CardId).join("_"), null, null, "Equals", false, false, false, "string");
         }
 
@@ -260,7 +259,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IsOrder", 'Text', 'Is Order'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("NumberOfPackages", 'Integer', 'Quantity'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IncotermName", 'Text', 'Incoterm'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ChargeableWeight", 'Double', 'Chargeable Weight',100));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ChargeableWeight", 'Double', 'Chargeable Weight', 100));
 
     }
 
@@ -346,8 +345,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.LoadScreenData();
     }
     private timerToken: any;
-    onSearchChange(){
-        
+    onSearchChange() {
+
         this.timerToken = setTimeout(() => this.LoadScreenData(), 500);
         this.ShipmentSearchInput;
     }
@@ -385,7 +384,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.LoadScreenData();
         this.showMobileSortMenu = false;
     }
-    
+
     DeselectTransportModeFilter(code) {
         RootContext.ShipmentsScrollPosition = 0;
         this.ShipmentSearchInput.TransportModeCodes = this.ShipmentSearchInput.TransportModeCodes.filter(e => e != code)
@@ -462,99 +461,87 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     }
 
-    onSearchAdvancedFiltersChange(searchInput){
+    onSearchAdvancedFiltersChange(searchInput) {
         this.onSearchInvitedCustomersChange(searchInput);
         this.onSearchMilestonesStatusChange(searchInput);
         this.onSearchShipmentDirectionFiltersChange(searchInput);
         this.onSearchShipmentTypeFiltersChange(searchInput);
-        this.SearchText=searchInput;
+        this.SearchText = searchInput;
     }
-    onSearchInvitedCustomersChange(searchInput)
-    {        
-        if(searchInput) 
-        {
-         var size =  this.InvitedCustomers.length;
-         this.InvitedCustomers = [];
-         for (let i = 0; i < size; i++) {
-             if (this.tempInvitedCustomers[i].Name.toUpperCase().match(searchInput.toUpperCase())) {
-                 this.InvitedCustomers.push(this.tempInvitedCustomers[i]);
-             }
-         }
-         this.InvitedCustomersNoResult=false;
-         if(this.InvitedCustomers.length===0)
-         this.InvitedCustomersNoResult=true;
+    onSearchInvitedCustomersChange(searchInput) {
+        if (searchInput) {
+            var size = this.InvitedCustomers.length;
+            this.InvitedCustomers = [];
+            for (let i = 0; i < size; i++) {
+                if (this.tempInvitedCustomers[i].Name.toUpperCase().match(searchInput.toUpperCase())) {
+                    this.InvitedCustomers.push(this.tempInvitedCustomers[i]);
+                }
+            }
+            this.InvitedCustomersNoResult = false;
+            if (this.InvitedCustomers.length === 0)
+                this.InvitedCustomersNoResult = true;
         }
-        else
-        {
-         this.InvitedCustomers = [];
-         this.tempInvitedCustomers.forEach(val => this.InvitedCustomers.push(val));
-         this.InvitedCustomersNoResult=false;
+        else {
+            this.InvitedCustomers = [];
+            this.tempInvitedCustomers.forEach(val => this.InvitedCustomers.push(val));
+            this.InvitedCustomersNoResult = false;
         }
     }
-    onSearchMilestonesStatusChange(searchInput)
-    {
-        if(searchInput) 
-        {
-         var size =  this.tempMilestonesStatus.length;
-         this.MilestonesStatus = [];
-         for (let i = 0; i < size; i++) {
-             if (this.tempMilestonesStatus[i].EnglishName.toUpperCase().match(searchInput.toUpperCase())) {
-                 this.MilestonesStatus.push(this.tempMilestonesStatus[i]);
-             }
-         }
-         this.MilestonesStatusNoResult=false;
-         if(this.MilestonesStatus.length===0)
-         this.MilestonesStatusNoResult=true;
+    onSearchMilestonesStatusChange(searchInput) {
+        if (searchInput) {
+            var size = this.tempMilestonesStatus.length;
+            this.MilestonesStatus = [];
+            for (let i = 0; i < size; i++) {
+                if (this.tempMilestonesStatus[i].EnglishName.toUpperCase().match(searchInput.toUpperCase())) {
+                    this.MilestonesStatus.push(this.tempMilestonesStatus[i]);
+                }
+            }
+            this.MilestonesStatusNoResult = false;
+            if (this.MilestonesStatus.length === 0)
+                this.MilestonesStatusNoResult = true;
         }
-        else
-        {
-         this.MilestonesStatus = [];
-         this.tempMilestonesStatus.forEach(val => this.MilestonesStatus.push(val));
-         this.MilestonesStatusNoResult=false;
+        else {
+            this.MilestonesStatus = [];
+            this.tempMilestonesStatus.forEach(val => this.MilestonesStatus.push(val));
+            this.MilestonesStatusNoResult = false;
         }
     }
-    onSearchShipmentDirectionFiltersChange(searchInput)
-    {
-        if(searchInput) 
-        {
-         var size =  this.tempShipmentDirectionFilters.length;
-         this.ShipmentDirectionFilters = [];
-         for (let i = 0; i < size; i++) {
-             if (this.tempShipmentDirectionFilters[i].name.toUpperCase().match(searchInput.toUpperCase())) {
-                 this.ShipmentDirectionFilters.push(this.tempShipmentDirectionFilters[i]);
-             }
-         }
-         this.ShipmentDirectionFiltersNoResult=false;
-         if(this.ShipmentDirectionFilters.length===0)
-         this.ShipmentDirectionFiltersNoResult=true;
+    onSearchShipmentDirectionFiltersChange(searchInput) {
+        if (searchInput) {
+            var size = this.tempShipmentDirectionFilters.length;
+            this.ShipmentDirectionFilters = [];
+            for (let i = 0; i < size; i++) {
+                if (this.tempShipmentDirectionFilters[i].name.toUpperCase().match(searchInput.toUpperCase())) {
+                    this.ShipmentDirectionFilters.push(this.tempShipmentDirectionFilters[i]);
+                }
+            }
+            this.ShipmentDirectionFiltersNoResult = false;
+            if (this.ShipmentDirectionFilters.length === 0)
+                this.ShipmentDirectionFiltersNoResult = true;
         }
-        else
-        {
-         this.ShipmentDirectionFilters = [];
-         this.tempShipmentDirectionFilters.forEach(val => this.ShipmentDirectionFilters.push(val));
-         this.ShipmentDirectionFiltersNoResult=false;
+        else {
+            this.ShipmentDirectionFilters = [];
+            this.tempShipmentDirectionFilters.forEach(val => this.ShipmentDirectionFilters.push(val));
+            this.ShipmentDirectionFiltersNoResult = false;
         }
     }
-    onSearchShipmentTypeFiltersChange(searchInput)
-    {
-        if(searchInput) 
-        {
-         var size =  this.tempShipmentTypeFilters.length;
-         this.ShipmentTypeFilters = [];
-         for (let i = 0; i < size; i++) {
-             if (this.tempShipmentTypeFilters[i].name.toUpperCase().match(searchInput.toUpperCase())) {
-                 this.ShipmentTypeFilters.push(this.tempShipmentTypeFilters[i]);
-             }
-         }
-         this.ShipmentTypeFiltersNoResult=false;
-         if(this.ShipmentTypeFilters.length===0)
-         this.ShipmentTypeFiltersNoResult=true;
+    onSearchShipmentTypeFiltersChange(searchInput) {
+        if (searchInput) {
+            var size = this.tempShipmentTypeFilters.length;
+            this.ShipmentTypeFilters = [];
+            for (let i = 0; i < size; i++) {
+                if (this.tempShipmentTypeFilters[i].name.toUpperCase().match(searchInput.toUpperCase())) {
+                    this.ShipmentTypeFilters.push(this.tempShipmentTypeFilters[i]);
+                }
+            }
+            this.ShipmentTypeFiltersNoResult = false;
+            if (this.ShipmentTypeFilters.length === 0)
+                this.ShipmentTypeFiltersNoResult = true;
         }
-        else
-        {
-         this.ShipmentTypeFilters = [];
-         this.tempShipmentTypeFilters.forEach(val => this.ShipmentTypeFilters.push(val));
-         this.ShipmentTypeFiltersNoResult=false;
+        else {
+            this.ShipmentTypeFilters = [];
+            this.tempShipmentTypeFilters.forEach(val => this.ShipmentTypeFilters.push(val));
+            this.ShipmentTypeFiltersNoResult = false;
         }
     }
 
@@ -679,7 +666,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
                 this.MilestonesStatus = milestones;
                 this.tempMilestonesStatus = milestones;
                 this.FillMilestoneDictionary(milestones);
-            }); 
+            });
     }
 
     FillMilestoneDictionary(milestones: any[]) {
@@ -723,7 +710,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
 
     LoadScreenData() {
-        
+
         if (this.tenant) {
             this.ShipmentSearchInput.Tenant = this.tenant;
             var shipmentFilters = this.BuildShipmentFilters();
@@ -766,8 +753,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         let filter = await this.filterWithAllCustomersWhenCustomersNotSelected();
         this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
         let s = SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0];
-        if(SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === true)
-        {
+        if (SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === true) {
             this.ShipmentsDataSource.GetShipmentsCustomers(this.tenant);
         }
     }
@@ -872,7 +858,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         });
     }
 
-    OpenReferencesMessageWindow(references: any[], isMobile: boolean) {
+    OpenReferencesMessageWindow(references: any[], isMobile: boolean, event: MouseEvent) {
         if (!references)
             return;
 
@@ -880,9 +866,16 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         references = references.filter((el, i, a) => i === a.indexOf(el));
         this.dialog.open(MessageWindowComponent, {
             data: {
+               
                 title: 'References',
                 description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),
-            }
+            },
+
+            position: {
+                top: event.clientY + 'px',
+                left: event.clientX + 'px',
+            },
+
         });
     }
 
@@ -1084,12 +1077,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     ShipmentsCount: number = 0;
-    ShipmentsCustomers: any ;
+    ShipmentsCustomers: any;
 
     ShipmentsLoadingError: string;
 
     OpenAdvancedFiltersSidebar() {
-        
+
         this.sharedService.updateValue(true);
     }
 
