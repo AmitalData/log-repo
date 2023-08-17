@@ -196,11 +196,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             SupplierInvoicePM mySupplierInvoice = 
                                     mySupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == invoiceNumber)
                                     ?? mySupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == null)
-                                    ?? new SupplierInvoicePM();
-
+                                    ?? null;
             bool isNewInvoice = false;
             string invalidValuesRemarks = null;
-            if (mySupplierInvoices == null)
+
+            if (mySupplierInvoice == null)
             {
                 isNewInvoice = true;
                 mySupplierInvoice = new SupplierInvoicePM()
@@ -214,6 +214,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             else
             {
                 mySupplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
+                mySupplierInvoice.InvoiceNumber = invoiceNumber;
             }
 
             //mapping supplierInvoice from json
