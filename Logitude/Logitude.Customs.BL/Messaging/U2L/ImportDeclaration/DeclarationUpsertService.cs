@@ -1146,7 +1146,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     {
                         ChangeSetOp = ChangeSetOperation.Insert,
                         Tenant = ResolvedTenant(),
-                        SequenceNumeric = sequenceCounter,
+                        SequenceNumeric = sequenceCounter++,
                     };
 
                     InitSupplierInvoice(invoice, suppplierInvoice);
@@ -1157,29 +1157,55 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
              });
 
         }
-        public SupplierInvoiceItemPM initSupplierInvoiceItems(ExportInvoiceItem invoiceItem, SupplierInvoicePM supplierInvoice)
+        public List<SupplierInvoiceItemPM> initSupplierInvoiceItems(ExportInvoice invoice,SupplierInvoicePM supplierInvoice)
         {
-            var supplierInvoiceItem = new SupplierInvoiceItemPM()
+            var SupplierInvoiceItemPMList = new List<SupplierInvoiceItemPM>();
+            int int1 = 0;
+            foreach (var invoiceItem in invoice.InvoiceItems?.InvoiceItem)
             {
-                ChangeSetOp = ChangeSetOperation.Insert,
-                Tenant = ResolvedTenant()
-            };
-           
-            supplierInvoiceItem.ItemCode = invoiceItem.ItemNo;
-            supplierInvoiceItem.ItemDescription=invoiceItem.ItemDescription;
-            supplierInvoiceItem.ClassificationCode = invoiceItem.ItemHScode;
-            if (decimal.TryParse(invoiceItem.ItemQuantity, out decimal ItemQuantity))
-            {
-                supplierInvoiceItem.InvoiceQuantity = ItemQuantity;
-            }
-            supplierInvoiceItem.InvoiceQuantityType = invoiceItem.ItemQuantityType;
-            if (decimal.TryParse(invoiceItem.ItemAmount, out decimal ItemAmount))
-            {
-                supplierInvoiceItem.ItemPrice = ItemAmount;
-            }
-            supplierInvoiceItem.OriginCountryCode = invoiceItem.ItemOriginCountry;
-            return supplierInvoiceItem;
+                int1++;
+                decimal decimal1 = 0;
+                var SupplierInvoiceItemPM = new SupplierInvoiceItemPM();
+                SupplierInvoiceItemPM.CounterKey = supplierInvoice.InvoiceCounterKey;
+                SupplierInvoiceItemPM.DeclarationId = supplierInvoice.DeclarationId;
+                SupplierInvoiceItemPM.SequenceNumeric = int1;
+                SupplierInvoiceItemPM.LineNumber = int1;
+                if (decimal.TryParse(invoiceItem.ItemQuantity, out  decimal1))
+                {
+                    SupplierInvoiceItemPM.InvoiceQuantity = decimal1;
+                }
+                SupplierInvoiceItemPM.ItemCode = invoiceItem.ItemNo;
+                SupplierInvoiceItemPM.ItemDescription = invoiceItem.ItemDescription;
+                SupplierInvoiceItemPM.ClassificationCode = invoiceItem.ItemHScode;
+                if (decimal.TryParse(invoiceItem.ItemQuantity, out  decimal1))
+                {
+                    SupplierInvoiceItemPM.InvoiceQuantity = decimal1;
+                }
+                SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.ItemQuantityType);
+                if (decimal.TryParse(invoiceItem.ItemAmount, out decimal ItemAmount))
+                {
+                    SupplierInvoiceItemPM.ItemPrice = ItemAmount;
+                }
+                SupplierInvoiceItemPM.OriginCountryCode = invoiceItem.ItemOriginCountry;
+                SupplierInvoiceItemPM.Tenant = ResolvedTenant();
+                SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Insert;
+                SupplierInvoiceItemPMList.Add(SupplierInvoiceItemPM);
 
+            }
+            return SupplierInvoiceItemPMList;
+
+        }
+        private string TranslateMeasurmentUnit(string amitalMeasurmentUnitCode)
+        {
+            var measurmentUnit = new MeasurmentUnitRepository(ResolvedTenant());
+            var myMeasurmentUnit = measurmentUnit.GetSingle(amitalMeasurmentUnitCode);
+            if (myMeasurmentUnit == null)
+            {
+                AppendLogLine("amitalMeasurmentUnitCode = " + amitalMeasurmentUnitCode + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("amitalMeasurmentUnitCode = " + amitalMeasurmentUnitCode + " Translated to " + myMeasurmentUnit.Code);
+            return myMeasurmentUnit.Code;
         }
         private void InitSupplierInvoice(ExportInvoice invoice, SupplierInvoicePM supplierInvoice)
         {
@@ -1255,12 +1281,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     supplierInvoice.BuyerCountryCode = invoice.InvoiceBuyerCountryCode;
                 }
-
-                /*var invoiceItemsArrayToAdd = invoice.InvoiceItems?.InvoiceItem.Length > 0 ? invoice.InvoiceItems?.InvoiceItem : new ExportInvoiceItem[] { new ExportInvoiceItem() };
-                Array.ForEach(invoiceItemsArrayToAdd, (invoiceItem) =>
-                {
-                    supplierInvoice.SupplierInvoiceItems.Add(initSupplierInvoiceItems(invoiceItem, supplierInvoice));
-                });*/
+                supplierInvoice.SupplierInvoiceItems = initSupplierInvoiceItems(invoice,supplierInvoice);
             }
         }
         private void DeclarationReferantDataUpdate()
@@ -1950,7 +1971,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             var xml = XmlGenericUtil<LOGICUSTFILE>.SerializeObject(amitalObjExample);
             xml = @"<?xml version=""1.0""?><LOGICUSTFILE xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns=""http://tempuri.org/LOGICUSTFILE"">
-<LogitudeCustomsFile> <CustomFileNo>4390</CustomFileNo> <Id/> <DeclarationOfficeCode>4</DeclarationOfficeCode> <FileState>P</FileState> <AgentId>513046615</AgentId> <CustomerId>10017414</CustomerId> <TransportModeId>A</TransportModeId> <CreatedByUserId>AMS</CreatedByUserId> <ReferentUserId/> <DepartmentId>ADMIN</DepartmentId> <MAWB/> <DealId/> <HAWB/> <ManifestNumber>2023</ManifestNumber> <LoadingPortCode/> <OriginCountryCode>IL</OriginCountryCode> <CargoDescription>Theo Embellished Leather and Canvas Trainer</CargoDescription> <PackageTypeCode>PP</PackageTypeCode> <PackageMeasureQualifierCode>2</PackageMeasureQualifierCode> <PackageQuantity>1</PackageQuantity> <GrossMassMeasure>0.20</GrossMassMeasure> <VendorId/> <ImporterId>511812463</ImporterId> <Tenant>6</Tenant> <GrantDate/> <ManifestDate/> <ArrivalDateTime/> <Mode>NEW</Mode> <EnglishName>NOVA MEASURING INSTRUMENT LTD.</EnglishName> <HebrewName>נובה מכשירי מדידה בעמ</HebrewName> <WarehouseId/> <UnloadportId>NLAMS</UnloadportId> <ProcedureCurrentCode>1000001</ProcedureCurrentCode> <ImporterAddress/> <CargoTypeCode>16</CargoTypeCode> <SecondCargoID/> <ThirdCargoID>FEA</ThirdCargoID> <UnloadDate/> <IsCourierDeclaration/> <CasualSupplierName/> <CasualSupplierAddress/> <CourierHawb/> <HAWBDATE/> <COUWTVAL/> <CasualImporterAddress1/> <CasualImporterAddress2/> <CasualImporterCity/> <CasualImporterZipCode/> <CasualImporterFax/> <CasualImporterEmail/> <CasualImportelTel/> <CasualImporterContact/> <CasualImporterCountry/> <IsDiamondsDeclaration/> <EstimatedTimeOfArrival/> <OrderNumber/> <WithPaper/> <FileStatus/> <NewFile>true</NewFile> <ImporterFile>38417</ImporterFile> <Team/> <FileOpenDate>16.08.23</FileOpenDate> <TruckerId/> <DistributionArea/> <FclLcl/> <ForwarderId/> <shopId/> <LastMileServiceType/> <Commodity/> <DestinationCountryCode>NL</DestinationCountryCode> <BuyerName>Hadil Qashua</BuyerName> <BuyerAddress>Tarik abd alhai - Tarik abd alhai T</BuyerAddress> <BuyerCountryCode>IL</BuyerCountryCode> <BuyerRoleCode/> <InvoiceNumber>400106</InvoiceNumber> <IncotermCode>3</IncotermCode> <ExportUnloadingPortCode>NLAMS</ExportUnloadingPortCode> <StorageSiteCode/> <MarksNumbers>Name &amp; Add</MarksNumbers> <ReferentMAWB/> <ReferentHAWB/> <Invoices> <Invoice> <InvoiceNum>400106</InvoiceNum> <InvoiceDate>03.01.2023</InvoiceDate> <InvoiceAmount>951.64</InvoiceAmount> <InvoiceCurrency>ILS</InvoiceCurrency> <InvoiceType/> <InvoiceIncoterms>3</InvoiceIncoterms> <InvoiceBuyerName>Hadil Qashua</InvoiceBuyerName> <InvoiceBuyerAddress>Tarik abd alhai - Tarik abd alhai T</InvoiceBuyerAddress> <InvoiceBuyerCountryCode>IL</InvoiceBuyerCountryCode> <InvoiceItems> <InvoiceItem> <ItemNo>897134428</ItemNo> <ItemDescription>Theo Embellished Leather and Canvas Trainer</ItemDescription> <ItemHScode>64021900</ItemHScode> <ItemQuantity>1</ItemQuantity> <ItemQuantityType/> <ItemAmount>459.0600</ItemAmount> <ItemOriginCountry>KH</ItemOriginCountry> </InvoiceItem> <InvoiceItem> <ItemNo>897134429</ItemNo> <ItemDescription>Parker Leather Loafer</ItemDescription> <ItemHScode>64029900</ItemHScode> <ItemQuantity>1</ItemQuantity> <ItemQuantityType/> <ItemAmount>492.5800</ItemAmount> <ItemOriginCountry>VN</ItemOriginCountry> </InvoiceItem> </InvoiceItems> </Invoice> </Invoices> <ForwarderFiles/> <FlightDate/> <Direction>E</Direction> </LogitudeCustomsFile>
+<LogitudeCustomsFile> <CustomFileNo>10</CustomFileNo> <Id/> <DeclarationOfficeCode>4</DeclarationOfficeCode> <FileState>P</FileState> <AgentId>513046615</AgentId> <CustomerId>10017414</CustomerId> <TransportModeId>A</TransportModeId> <CreatedByUserId>AMS</CreatedByUserId> <ReferentUserId/> <DepartmentId>ADMIN</DepartmentId> <MAWB/> <DealId/> <HAWB/> <ManifestNumber>2023</ManifestNumber> <LoadingPortCode/> <OriginCountryCode>IL</OriginCountryCode> <CargoDescription>Theo Embellished Leather and Canvas Trainer</CargoDescription> <PackageTypeCode>PP</PackageTypeCode> <PackageMeasureQualifierCode>2</PackageMeasureQualifierCode> <PackageQuantity>1</PackageQuantity> <GrossMassMeasure>0.20</GrossMassMeasure> <VendorId/> <ImporterId>511812463</ImporterId> <Tenant>6</Tenant> <GrantDate/> <ManifestDate/> <ArrivalDateTime/> <Mode>NEW</Mode> <EnglishName>NOVA MEASURING INSTRUMENT LTD.</EnglishName> <HebrewName>נובה מכשירי מדידה בעמ</HebrewName> <WarehouseId/> <UnloadportId>NLAMS</UnloadportId> <ProcedureCurrentCode>1000001</ProcedureCurrentCode> <ImporterAddress/> <CargoTypeCode>16</CargoTypeCode> <SecondCargoID/> <ThirdCargoID>FEA</ThirdCargoID> <UnloadDate/> <IsCourierDeclaration/> <CasualSupplierName/> <CasualSupplierAddress/> <CourierHawb/> <HAWBDATE/> <COUWTVAL/> <CasualImporterAddress1/> <CasualImporterAddress2/> <CasualImporterCity/> <CasualImporterZipCode/> <CasualImporterFax/> <CasualImporterEmail/> <CasualImportelTel/> <CasualImporterContact/> <CasualImporterCountry/> <IsDiamondsDeclaration/> <EstimatedTimeOfArrival/> <OrderNumber/> <WithPaper/> <FileStatus/> <NewFile>true</NewFile> <ImporterFile>38417</ImporterFile> <Team/> <FileOpenDate>16.08.23</FileOpenDate> <TruckerId/> <DistributionArea/> <FclLcl/> <ForwarderId/> <shopId/> <LastMileServiceType/> <Commodity/> <DestinationCountryCode>NL</DestinationCountryCode> <BuyerName>Hadil Qashua</BuyerName> <BuyerAddress>Tarik abd alhai - Tarik abd alhai T</BuyerAddress> <BuyerCountryCode>IL</BuyerCountryCode> <BuyerRoleCode/> <InvoiceNumber>400106</InvoiceNumber> <IncotermCode>3</IncotermCode> <ExportUnloadingPortCode>NLAMS</ExportUnloadingPortCode> <StorageSiteCode/> <MarksNumbers>Name &amp; Add</MarksNumbers> <ReferentMAWB/> <ReferentHAWB/> <Invoices> <Invoice> <InvoiceNum>400106</InvoiceNum> <InvoiceDate>03.01.2023</InvoiceDate> <InvoiceAmount>951.64</InvoiceAmount> <InvoiceCurrency>ILS</InvoiceCurrency> <InvoiceType/> <InvoiceIncoterms>3</InvoiceIncoterms> <InvoiceBuyerName>Hadil Qashua</InvoiceBuyerName> <InvoiceBuyerAddress>Tarik abd alhai - Tarik abd alhai T</InvoiceBuyerAddress> <InvoiceBuyerCountryCode>IL</InvoiceBuyerCountryCode> <InvoiceItems> <InvoiceItem> <ItemNo>897134428</ItemNo> <ItemDescription>Theo Embellished Leather and Canvas Trainer</ItemDescription> <ItemHScode>64021900</ItemHScode> <ItemQuantity>1</ItemQuantity> <ItemQuantityType/> <ItemAmount>459.0600</ItemAmount> <ItemOriginCountry>KH</ItemOriginCountry> </InvoiceItem> <InvoiceItem> <ItemNo>897134429</ItemNo> <ItemDescription>Parker Leather Loafer</ItemDescription> <ItemHScode>64029900</ItemHScode> <ItemQuantity>1</ItemQuantity> <ItemQuantityType/> <ItemAmount>492.5800</ItemAmount> <ItemOriginCountry>VN</ItemOriginCountry> </InvoiceItem> </InvoiceItems> </Invoice> </Invoices> <ForwarderFiles/> <FlightDate/> <Direction>E</Direction> </LogitudeCustomsFile>
 </LOGICUSTFILE>";
 
             var dus = new DeclarationUpsertService();
