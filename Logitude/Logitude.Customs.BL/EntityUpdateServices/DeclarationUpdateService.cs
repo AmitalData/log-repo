@@ -328,9 +328,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             DateTime stopLogAt = DateTime.MinValue;
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
                 stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
-
-            LogitudeSettings.HandleLogMe(msg +" DeclarationUpdateService.OnUpdating = declarationPM.Id: " + declarationPM.Id + ", PaymentOrderPM.PaymentNumber: " + declarationPM.PaymentOrderNumber + declarationPM.PaymentStatusCode + ", courierPaymentStatusCode: " + declarationPM.CourierPaymentStatusCode, false, "CreateUD2LTService", stopLogAt);
+                LogitudeSettings.HandleLogMe(msg + " DeclarationUpdateService.OnUpdating = declarationPM.Id: " + declarationPM.Id + ", PaymentOrderPM.PaymentNumber: " + declarationPM.PaymentOrderNumber + declarationPM.PaymentStatusCode + ", courierPaymentStatusCode: " + declarationPM.CourierPaymentStatusCode, false, "CreateUD2LTService", stopLogAt);
+            }
         }
 
         protected override void OnUpdating(DeclarationPM entityPM)
