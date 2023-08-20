@@ -706,4 +706,8 @@ export class SharedLogisticsMainComponent implements OnInit {
         logWindow.Title = "Document Type" + " Edit";
         logWindow.ShowEditComponent(documentId, "DocumentType");
     }
+
+    RefreshButtonClicked() {
+        this.LoadData();
+    }
 }
