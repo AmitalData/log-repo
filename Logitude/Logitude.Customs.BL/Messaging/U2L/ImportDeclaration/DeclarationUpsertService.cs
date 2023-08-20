@@ -1276,7 +1276,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     supplierInvoice.BuyerCountryCode = invoice.InvoiceBuyerCountryCode;
                 }
-                supplierInvoice.SupplierInvoiceItems = initSupplierInvoiceItems(invoice,supplierInvoice);
+                if (invoice.InvoiceItems != null && invoice.InvoiceItems.InvoiceItem.Length > 0)
+                {
+                    supplierInvoice.SupplierInvoiceItems = initSupplierInvoiceItems(invoice, supplierInvoice);
+                }
             }
         }
         private void DeclarationReferantDataUpdate()
