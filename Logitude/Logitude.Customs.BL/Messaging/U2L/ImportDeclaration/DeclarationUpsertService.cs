@@ -1161,7 +1161,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         {
             var SupplierInvoiceItemPMList = new List<SupplierInvoiceItemPM>();
             int int1 = 0;
-            foreach (var invoiceItem in invoice.InvoiceItems?.InvoiceItem)
+            foreach (var invoiceItem in invoice?.InvoiceItems?.InvoiceItem)
             {
                 int1++;
                 decimal decimal1 = 0;
@@ -1240,7 +1240,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 supplierInvoice.BuyerCountryCode = _AmitalCustomsFile.BuyerCountryCode;
             }
-            if (true)
+            if (invoice != null)
             {
                 if (!string.IsNullOrWhiteSpace(invoice.InvoiceNum))
                 {
