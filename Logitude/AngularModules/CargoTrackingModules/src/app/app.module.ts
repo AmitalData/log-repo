@@ -57,6 +57,8 @@ import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Oth
 import { SafePipe } from 'src/Infrastructure/Pipes/SafePipe';
 import { StopLoopPipe } from 'src/Infrastructure/Pipes/StopLoopPipe';
 import { TenantManagementPMService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService copy';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -115,7 +117,8 @@ export function getBaseUrl() {
         MatIconModule,
         FormsModule, HttpClientModule, NoopAnimationsModule,
         MatTooltipModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        BrowserAnimationsModule
     ],
     providers: [
         CargoTrackingSearchService,

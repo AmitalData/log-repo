@@ -25,9 +25,12 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     styleUrls: ['./UserDashboardComponent.css'],
     animations: [
         trigger('fade', [
-          state('void', style({ opacity: 0 })),
-          transition(':enter, :leave', [
-            animate(500)
+          state('void', style({ opacity: 0, transform: 'scale(0.8)' })),
+          transition(':enter', [
+            animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'scale(1)' }))
+          ]),
+          transition(':leave', [
+            animate('300ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 0, transform: 'scale(0.8)' }))
           ])
         ])
       ]
