@@ -927,7 +927,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             }
 
-            entityPM.IsImporterApprovalRequired = (entityAM.StatusCode.ToLower() == "ccd" || entityAM.CustomsClearanceDate != null) ? false : entityAM.IsImporterApprovalRequired;
+            entityPM.IsImporterApprovalRequired = (entityAM.StatusCode?.ToLower() == "ccd" || entityAM.CustomsClearanceDate != null) ? false : entityAM.IsImporterApprovalRequired;
             entityPM.IsOperationalClosed = GetIsOperationalClosed(entityAM, entityPM, currentTenant);
             if (entityPM.CustomsClearanceDate == null)
             {
