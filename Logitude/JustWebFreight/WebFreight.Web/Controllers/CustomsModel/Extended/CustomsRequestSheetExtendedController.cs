@@ -50,7 +50,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             string ObjectTableId1, string EntityId1,
             string ObjectTableId2, string EntityId2,
             string CustomFileNo,
-            bool displayOnlyMode,bool isWorkSheetFromExcel,string userId)
+            bool displayOnlyMode,bool isWorkSheetFromExcel = false,string userId = null)
         {
             try
             {
