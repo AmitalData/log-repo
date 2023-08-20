@@ -410,12 +410,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var haveFilter = false;
             if (requestInProgressParams.IsWorkSheetFromExcel)
             {
-                CourierHawbFromExcelRepository courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
-                var qFromExcel = courierHawbFromExcelRepository.GetAllByUser(requestInProgressParams.Tenant, requestInProgressParams.UserId);
-                q = (from customsRequestSheet in q
-                     join courierHawbFromExcel in qFromExcel
-                      on customsRequestSheet.CustomFileNo equals courierHawbFromExcel.CustomFileNo
-                   select customsRequestSheet);
+                /* CourierHawbFromExcelRepository courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+                 var qFromExcel = courierHawbFromExcelRepository.GetAllByUser(requestInProgressParams.Tenant, requestInProgressParams.UserId);
+                 q = (from customsRequestSheet in q
+                      join courierHawbFromExcel in qFromExcel
+                       on customsRequestSheet.CustomFileNo equals courierHawbFromExcel.CustomFileNo
+                    select customsRequestSheet);*/
+                q = q.Where(rec => rec.RequestOwnerId == requestInProgressParams.UserId);
             }
             if (!string.IsNullOrWhiteSpace(requestInProgressParams.CustomFileNo))
             {

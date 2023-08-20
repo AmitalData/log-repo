@@ -78,8 +78,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public string CreateCRS(int tenant, string LoggingUserId, SendUnCorrectDocumentsRequestParams mySendUnCorrectDocumentsRequestParams)
         {
-
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+            if (mySendUnCorrectDocumentsRequestParams.IsWorkSheetFromExcel)
+            {
+                objectTableId= ObjectTableRepository.GetObjectTableByName("Customs.CourierHawbFromExcel");
+            }
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendUnCorrectDocumentsRequestParams.CourierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
