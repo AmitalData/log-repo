@@ -176,6 +176,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pocoGLAccount;
         }
 
+        public GLAccountPM GetByGLAccountsDisplayNumber(string displayNumber, int tenant)
+        {
+             
+               GLAccount gLAccount = this.repository.GetByGLAccountsDisplayNumber(displayNumber , tenant);
+               GLAccountPM pm = this.GetEntityPM(gLAccount);
+            return pm;
+        }
+
 
 
         public List<int> GetTenantByNextDueDate(DateTime today, List<string> accountTypeCodeList)

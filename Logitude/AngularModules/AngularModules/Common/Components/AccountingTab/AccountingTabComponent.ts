@@ -4,6 +4,8 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     template:
@@ -11,7 +13,8 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
     <div class="TabHolder">
         <table>
             <tr class="TabTitleRow">
-                <td>{{TabTitleTextCode | TextCodeTranslationPipe}}</td>
+                <td>{{TabTitleTextCode | TextCodeTranslationPipe}}
+                ({{AccountInfo}})</td>
             </tr>
 
             <tr>
@@ -30,6 +33,7 @@ export class AccountingTabComponent implements OnInit,AfterViewInit {
     public EntityPM: any = null;
     public ObjectTableName: string;
     public TabTitleTextCode: string = null;
+    public AccountInfo:string = null;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
    // @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
@@ -69,7 +73,7 @@ export class AccountingTabComponent implements OnInit,AfterViewInit {
     
         this.Listen();
     }
-
+    
     private AccountingSystemPM: any = null;
     private isFullAccounting: boolean = false;
     private isQuickBooksOnline: boolean = false;
@@ -137,6 +141,22 @@ export class AccountingTabComponent implements OnInit,AfterViewInit {
         if (this.IsExternalCodesFromAPI && this.isQuickBooksOnlineEntity) {
             this.isQuickBooksOnline = true;
         }
+
+var myService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
+myService.GetByGLAccountsDisplayNumber(this.EntityPM.gLAccountNumber, this.EntityPM.tenant).subscribe((myResponse: ServiceResponse) => {
+    if (!myResponse.HasError && myResponse != null) {
+        var result = myResponse.Result;
+        if (result != null) {
+            if (result.CurrencySign != null ){
+            this.AccountInfo = result.LocalName + ',' + result.DisplayNumber + ',' + result.CurrencySign;
+            }
+            else{
+                this.AccountInfo = result.LocalName + ',' + result.DisplayNumber;
+            }
+        }
+    }
+});
+
     }
     private LoadCompletedEvent: any = null;
 
