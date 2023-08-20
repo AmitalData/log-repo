@@ -84,7 +84,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
 
-       
+
 
         this.InitializeInvoice();
         if(SessionLocator.TenantPM.AccountingActivated)
@@ -599,6 +599,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.newARPaymentPM.ReconcileExternalPagesIds = this.exteranlPageLinesIds;
         }
 
+        this.PrintNotes = TextCodeTranslator.Translate("ARPayment.S.ShortTitle");
 
     }
 

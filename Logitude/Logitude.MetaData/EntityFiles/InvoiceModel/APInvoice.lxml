@@ -12466,6 +12466,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;APInvoice.O.VendorInvoice&quot;"
+      DefaultText="&quot;Vendor Invoice&quot;"
+      LocalDefaultText="&quot;חשבונית מס (ספק)&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;APInvoice.CH.OtherPayments&quot;"
       DefaultText="&quot;Other Payments&quot;"
       LocalDefaultText="&quot;קבלות אחרות&quot;"
@@ -12556,6 +12562,15 @@
       FeatureTextCodeCode="&quot;APInvoice.Features.EditExchangeRate&quot;"
       FeatureDefaultText="&quot;Edit Exchange Rate&quot;"
       IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;HideVatTypes&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;APInvoice.Features.HideVatTypes&quot;"
+      FeatureDefaultText="&quot;Hide Vat Types&quot;"
+      IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />

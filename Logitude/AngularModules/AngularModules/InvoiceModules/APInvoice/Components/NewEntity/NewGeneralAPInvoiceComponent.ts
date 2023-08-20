@@ -136,7 +136,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
             this.IsResourcesReady = true;
             this.SetUIProperties();
             this.LoadData();
-
+            if (!this.EntityPM.InternalNotes) this.EntityPM.InternalNotes = TextCodeTranslator.Translate("APInvoice.O.VendorInvoice");
             this.ShowLanguageFilterOnVendorSearchWindow = SessionLocator.TenantPM.AccountingActivated;
         });
     }

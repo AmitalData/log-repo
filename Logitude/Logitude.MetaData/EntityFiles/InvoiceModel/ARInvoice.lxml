@@ -5551,8 +5551,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;PrintNotes&quot;"
     DefaultText="&quot;Print Notes&quot;"
+    FullLocalDefaultText="&quot;הערות הדפסה&quot;"
     ListFieldLable="&quot;PrintNotesListLable&quot;"
     ListLableDefaultText="&quot;Notes&quot;"
+    ListLocalDefaultText="&quot;הערות&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -20137,6 +20139,12 @@
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;ARInvoice.O.Invoice&quot;"
+      DefaultText="&quot;Invoice&quot;"
+      LocalDefaultText="&quot;חשבונית מס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;ARInvoice.M.VatTypePercentageEmpty&quot;"
       DefaultText="&quot;Some of invoice lines Vat Type Percentage is empty&quot;"
       LocalDefaultText="&quot;בחלק מהשורות לא הוגדר אחוז מע''מ&quot;"
@@ -20761,6 +20769,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;ARInvoice.Features.NEWCREDITNOTE&quot;"
       FeatureDefaultText="&quot;New Credit Note&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;HideVatTypes&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;ARInvoice.Features.HideVatTypes&quot;"
+      FeatureDefaultText="&quot;Hide Vat Types&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
