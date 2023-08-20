@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Output } from "@angular/core";
-import { AnyKindOfDictionary } from "cypress/types/lodash";
+import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
+import { filter } from "rxjs/operators";
 
 @Component({
     selector: 'DeclarationFiltersMenuComponent',
@@ -18,13 +20,23 @@ export class DeclarationFiltersMenuComponent
     TransportFilter_A: string;
     TransportFilter_O: string;
     TransportFilter_I: string;
+    isExport: boolean = false;
+    titleExportFilterMenu: string = TextCodeTranslator.Translate("Customs.Declaration.O.exportFilterMenu");
+    exportFilterData: any;
 
     constructor() {
         super();
         this.TransportFilter_A = "TransportFilter_A";
         this.TransportFilter_O = "TransportFilter_O";
         this.TransportFilter_I = "TransportFilter_I";
+    }
 
+    ngOnInit() {        
+        this.initIsExport();
+    }
+
+    private initIsExport() {
+        this.isExport = this.CurrentSession.CurrentListComponent.MenuTableQuerySection == "Customs.ExportDeclaration";
     }
 
     itemMouseLeave(itemValue: string) {
@@ -128,6 +140,20 @@ export class DeclarationFiltersMenuComponent
         if (this.selectedValue != value) {
             this.selectedValue = value;
         }
+    }
+
+    openFiltersWindow() {
+        const logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 450;
+        logitudeWindow.Height = 170;
+        logitudeWindow.Title = this.titleExportFilterMenu;
+        logitudeWindow.WindowArgs = JSON.parse(JSON.stringify(this.exportFilterData || ''));
+        logitudeWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/FiltersMenu/ExportFilterMenuComponent');        
+        logitudeWindow.WindowClosed.pipe(filter(x=> x)).subscribe((exportFilterData) => {
+            this.exportFilterData = exportFilterData;
+            console.log(this.exportFilterData)
+            this.SelectedValueChanged.emit({ Filters: exportFilterData.apiQueryFilters, RemoveFilter: false });
+        });
     }
 }
 

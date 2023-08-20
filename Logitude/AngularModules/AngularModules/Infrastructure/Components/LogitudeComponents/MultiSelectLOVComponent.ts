@@ -1,9 +1,6 @@
-import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef, ContentChild, AfterContentChecked } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef, ContentChild, AfterContentChecked, SimpleChanges } from '@angular/core';
 import { AppTool } from '../../Tools';
 import { LogLovV2Component } from './LogLovV2Component';
-
-
-
 import { UserList } from '../../../Common/EntityLists/UserList';
 
 @Component({
@@ -138,14 +135,18 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
 
     ngOnInit() {
     }
+
     ngAfterContentChecked() {
+        this.FormatList();
         this._CD.detectChanges();
     }
+
     public Invalidate(): any {
 
         this.FormatList();
         this._CD.detectChanges();
     }
+
     addOnBlur() {
         var list: any[] = this.DataContext[this.LOVListComponentPropName];
         if (this.MyLogLovV2Component.SelectedItem == null && list.length == 0) {
@@ -294,6 +295,7 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
         this.MyLogLovV2Component.OnDeleteValue();
         //this.MyLogLovV2Component.SelectedItem = null;
     }
+
     FormatList(): any {
         this._ChosenFormatedList = "";
         var list: any[] = this.DataContext[this.LOVListComponentPropName];
@@ -312,7 +314,4 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
         }
         this.ChosenListItemsChanged.emit(list);
     }
-
-
-
 }
