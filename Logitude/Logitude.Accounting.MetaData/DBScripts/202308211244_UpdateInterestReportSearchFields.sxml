@@ -1,0 +1,13 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="false">
+  <Sql Version="1">
+    <![CDATA[
+	
+       UPDATE t1
+SET searchfields = t1.searchfields + ',' + t2.DisplayNumber
+FROM InterestReports t1
+JOIN GLAccounts t2 ON t1.GLAccountId = t2.Id
+
+		
+     ]]>
+ </Sql>
+</Script>
