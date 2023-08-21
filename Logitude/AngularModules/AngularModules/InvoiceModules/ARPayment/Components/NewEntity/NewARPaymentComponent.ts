@@ -84,7 +84,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
 
-       
+
 
         this.InitializeInvoice();
         if(SessionLocator.TenantPM.AccountingActivated)
@@ -220,10 +220,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.IsCreatedFromInvoiceSide = true;
             this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
             if (!this.accountingActivated) {
                 this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             }
         }
     }
@@ -599,6 +599,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.newARPaymentPM.ReconcileExternalPagesIds = this.exteranlPageLinesIds;
         }
 
+        this.PrintNotes = TextCodeTranslator.Translate("ARPayment.S.ShortTitle");
 
     }
 

@@ -169,6 +169,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
 
         //#endregion
+        if (!this.PrintNotes) this.PrintNotes = TextCodeTranslator.Translate("ARPayment.S.ShortTitle");
 
         this.GetData();
 

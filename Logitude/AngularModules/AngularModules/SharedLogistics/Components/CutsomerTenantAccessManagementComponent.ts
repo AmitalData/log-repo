@@ -484,4 +484,11 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
         logitudeWindow.Width = 800;
         logitudeWindow.Show("./SharedLogistics/Components/ViewBlocedCustomerComponent");
     }
+
+
+    RefreshButtonClicked() {
+        this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccess", 0).subscribe((response: any) => {
+            this.LoadData();
+        });
+    }
 }

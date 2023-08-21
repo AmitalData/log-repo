@@ -86,6 +86,21 @@ export class GLAccountExtendedPMService {
 
     }
 
+    GetByGLAccountsDisplayNumber(displayNumber: string, tenant: number)
+    {
+     
+     var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
+     return this.httpClient.get(api + '/GetByGLAccountsDisplayNumber?displayNumber=' + displayNumber + '&tenant=' + tenant,  ServiceHelper.GetHttpHeaders()).pipe(
+         map(response => {
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            serviceResponse.Result = response;
+
+            return serviceResponse;
+         }),
+         catchError(ServiceHelper.HandleServiceError));
+    }
+
     GetGLAReconcilationCount(accountId: string)
     {
      

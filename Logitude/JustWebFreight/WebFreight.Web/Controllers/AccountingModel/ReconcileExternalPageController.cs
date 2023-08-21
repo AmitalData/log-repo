@@ -59,13 +59,13 @@ using NPOI.HSSF.UserModel;
 using IWorkbook = NPOI.SS.UserModel.IWorkbook;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
-{ 
+{
 
-    
+
 
     public partial class ReconcileExternalPagesExtendedController : ApiController
     {
-        
+
         public HttpResponseMessage GetPageByNumber(int pageNumber, string entityId, string objectTableName)
         {
             try
@@ -80,7 +80,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 var accountingContext = AccountingContext.GetContext(tenant);
                 ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(accountingContext);
                 var myPage = query.GetPageByNumber(pageNumber, entityId, objectTableName, tenant);
-        
+
                 ServiceResponse response = new ServiceResponse();
                 response.Result = myPage;
 
@@ -164,7 +164,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-                
+
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -320,8 +320,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 if (islastAppprovedPage)
                 {
-                    ReconcileExternalPageLine ReconcileExternalPageLine= GetReconciledPageLine(reconcileExternalPage, tenant);
-                 
+                    ReconcileExternalPageLine ReconcileExternalPageLine = GetReconciledPageLine(reconcileExternalPage, tenant);
+
                     if (ReconcileExternalPageLine == null)
                     {
                         response.Result = null;
@@ -334,9 +334,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 else
                 {
 
-                    response.Result = TextCodesTranslator.TranslateText("Accounting.General.O.LastBankPage", tenant, showlocal );
+                    response.Result = TextCodesTranslator.TranslateText("Accounting.General.O.LastBankPage", tenant, showlocal);
                 }
-                return Request.CreateResponse(HttpStatusCode.OK, response );
+                return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {
@@ -358,10 +358,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 bool uncancelledPageExist = false;
                 if (reconcileExternalPage.StatusCode == "3")
                 {
-                    uncancelledPageExist = reconcileExternalPageQueryService.CheckNextUnCancelledPage(reconcileExternalPage.EntityId,"BankAccount", reconcileExternalPage.PageNo, tenant);
+                    uncancelledPageExist = reconcileExternalPageQueryService.CheckNextUnCancelledPage(reconcileExternalPage.EntityId, "BankAccount", reconcileExternalPage.PageNo, tenant);
                 }
                 ServiceResponse response = new ServiceResponse();
-                response.Result = SetResponseResult(uncancelledPageExist, response, authToken);             
+                response.Result = SetResponseResult(uncancelledPageExist, response, authToken);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
@@ -403,7 +403,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     throw new Exception("fileUploadParamerter is empty");
                 }
 
-                
+
 
             }
             catch (Exception ex)
@@ -414,25 +414,25 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         private AuthenticationToken GetAuthenticationToken()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
-           return AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            return AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
         }
-         private string SetResponseResult(bool exist, ServiceResponse response,AuthenticationToken authToken)
+        private string SetResponseResult(bool exist, ServiceResponse response, AuthenticationToken authToken)
         {
             bool showlocal = GetShowLocal(authToken.Email, authToken.Tenant);
             if (exist)
             {
-              return null;
+                return null;
             }
             else
             {
-               return TextCodesTranslator.TranslateText("Accounting.General.O.RestoreIsNotPossible", authToken.Tenant, showlocal);
+                return TextCodesTranslator.TranslateText("Accounting.General.O.RestoreIsNotPossible", authToken.Tenant, showlocal);
             }
         }
 
         private ContactPM GetLoggedContact(string loggedUserEmail, int tenant)
         {
-           
+
             ContactQuery contactQuery = new ContactQuery(tenant);
             ContactPM loggedContactPM = contactQuery.GetContactByNameAndTenant(loggedUserEmail, tenant, true);
             if (loggedContactPM == null)
@@ -444,7 +444,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             return loggedContactPM;
         }
 
-        private ReconcileExternalPageLine GetReconciledPageLine(ReconcileExternalPagePM reconcileExternalPage , int tenant)
+        private ReconcileExternalPageLine GetReconciledPageLine(ReconcileExternalPagePM reconcileExternalPage, int tenant)
         {
             ReconcileExternalPageLineQueryService externalPageLineQueryService = new ReconcileExternalPageLineQueryService(tenant);
             return externalPageLineQueryService.GetReconcileExternalPageLine(reconcileExternalPage.Id, tenant);
@@ -455,14 +455,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
 
             ContactPM loggedContact = GetLoggedContact(email, tenant);
-            return  !loggedContact.DontShowLocal;
+            return !loggedContact.DontShowLocal;
 
         }
         private ReconcileExternalPagePM GetReconcileExternalBankPage(string id, int tenant)
         {
 
             ReconcileExternalPageQueryService reconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
-           return reconcileExternalPageQueryService.GetSingle(id, false, false);
+            return reconcileExternalPageQueryService.GetSingle(id, false, false);
 
         }
         [HttpPost]
@@ -501,7 +501,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         }
 
                         var sheet = workbook.GetSheetAt(0); // Assuming the first sheet
-                        List<ReconcileExternalPageLinePM> myResult = this.BuildReconcileExternalPageLineFromExcelLines(sheet, tenant, bankCodeId, reconcileExternalPageId,line);
+                        List<ReconcileExternalPageLinePM> myResult = this.BuildReconcileExternalPageLineFromExcelLines(sheet, tenant, bankCodeId, reconcileExternalPageId, line);
                         filter.ExcelReconcileExternalPageLines = myResult;
                     }
                 }
@@ -512,7 +512,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private List<ReconcileExternalPageLinePM> BuildReconcileExternalPageLineFromExcelLines(ISheet sheet,int tenant, string bankCodeId, string reconcileExternalPageId, int line)
+        private List<ReconcileExternalPageLinePM> BuildReconcileExternalPageLineFromExcelLines(ISheet sheet, int tenant, string bankCodeId, string reconcileExternalPageId, int line)
         {
             List<ReconcileExternalPageLinePM> myResult = new List<ReconcileExternalPageLinePM>();
             var bankCodeRepository = new BankCodeRepository(tenant);
@@ -532,48 +532,99 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 excelReconcileExternalPageLine.ReconcileExternalPageId = "new";
                 excelReconcileExternalPageLine.IsReconciled = false;
                 excelReconcileExternalPageLine.LineNumber = line++;
-                var cell = sheet.GetRow(row)?.GetCell(0);
-                if (cell != null && cell.CellType == CellType.String)
+                ProcessCell(sheet.GetRow(row)?.GetCell(0), (cell) =>
                 {
-                    DateTime.TryParseExact(cell.StringCellValue, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime referenceDate);
-                    excelReconcileExternalPageLine.ReferenceDate = referenceDate;
-                }
-                cell = sheet.GetRow(row)?.GetCell(1);
-                if (cell != null && cell.CellType == CellType.String)
-                {
-                    decimal.TryParse(cell.StringCellValue, out decimal debitAmount);
-                    excelReconcileExternalPageLine.DebitAmount = debitAmount;
-                }
-                else if (cell != null && cell.CellType == CellType.Numeric)
-                {
-                    decimal.TryParse(cell.NumericCellValue.ToString(), out decimal debitAmount);
-                    excelReconcileExternalPageLine.CreditAmount = debitAmount;
-                }
-                cell = sheet.GetRow(row)?.GetCell(2);
-                if (cell != null && cell.CellType == CellType.String)
-                {
-                    decimal.TryParse(cell.StringCellValue, out decimal CreditAmount);
-                    excelReconcileExternalPageLine.CreditAmount = CreditAmount;
-                }
-                else if (cell != null && cell.CellType == CellType.Numeric)
-                {
-                    decimal.TryParse(cell.NumericCellValue.ToString(), out decimal CreditAmount);
-                    excelReconcileExternalPageLine.CreditAmount = CreditAmount;
-                }
-                cell = sheet.GetRow(row)?.GetCell(3);
-                if (cell != null && cell.CellType == CellType.String)
-                {
-                    excelReconcileExternalPageLine.Reference = cell.StringCellValue;
-                }
-                cell = sheet.GetRow(row)?.GetCell(4);
-                if (cell != null && cell.CellType == CellType.String)
-                {
-                    excelReconcileExternalPageLine.Notes = cell.StringCellValue;
+                    if (cell.CellType == CellType.String)
+                    {
+                        DateTime.TryParseExact(cell.StringCellValue, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime referenceDate);
+                        excelReconcileExternalPageLine.ReferenceDate = referenceDate;
+                    }
+                    else if (cell.CellType == CellType.Numeric)
+                    {
+                        DateTime referenceDate;
+                        if (DateUtil.IsCellDateFormatted(cell))
+                        {
+                            referenceDate = cell.DateCellValue;
+                        }
+                        else
+                        {
+                            DateTime.TryParseExact(cell.NumericCellValue.ToString(), format, CultureInfo.InvariantCulture, DateTimeStyles.None, out referenceDate);
+                        }
+                        excelReconcileExternalPageLine.ReferenceDate = referenceDate;
+                    }
+                });
 
-                }
+                ProcessCell(sheet.GetRow(row)?.GetCell(1), (cell) =>
+                {
+                    if (cell.CellType == CellType.String)
+                    {
+                        if (decimal.TryParse(cell.StringCellValue, out decimal debitAmount))
+                        {
+                            excelReconcileExternalPageLine.DebitAmount = debitAmount;
+                        }
+                        else
+                        {
+                            // Handle parsing failure if needed
+                        }
+                    }
+                    else if (cell.CellType == CellType.Numeric)
+                    {
+                        excelReconcileExternalPageLine.DebitAmount = (decimal)cell.NumericCellValue;
+                    }
+                    else if (cell != null)
+                    {
+                        decimal.TryParse(cell.NumericCellValue.ToString(), out decimal debitAmount);
+                        excelReconcileExternalPageLine.DebitAmount = debitAmount;
+                    }
+                });
+
+                ProcessCell(sheet.GetRow(row)?.GetCell(2), (cell) =>
+                {
+                    if (cell.CellType == CellType.String)
+                    {
+                        decimal.TryParse(cell.StringCellValue, out decimal CreditAmount);
+                        excelReconcileExternalPageLine.CreditAmount = CreditAmount;
+                    }
+                    if (cell.CellType == CellType.Numeric)
+                    {
+                        decimal.TryParse(cell.NumericCellValue.ToString(), out decimal CreditAmount);
+                        excelReconcileExternalPageLine.CreditAmount = CreditAmount;
+                    }
+                });
+
+                ProcessCell(sheet.GetRow(row)?.GetCell(3), (cell) =>
+                {
+                    if (cell.CellType == CellType.String)
+                    {
+                        excelReconcileExternalPageLine.Reference = cell.StringCellValue;
+                    }
+                    if (cell.CellType == CellType.Numeric)
+                    {
+                        excelReconcileExternalPageLine.Reference = cell.NumericCellValue.ToString();
+                    }
+                });
+
+                ProcessCell(sheet.GetRow(row)?.GetCell(4), (cell) =>
+                {
+                    if (cell.CellType == CellType.String)
+                    {
+                        excelReconcileExternalPageLine.Notes = cell.StringCellValue;
+                    }
+                    if (cell.CellType == CellType.Numeric)
+                    {
+                        excelReconcileExternalPageLine.Notes = cell.NumericCellValue.ToString();
+                    }
+                });
                 myResult.Add(excelReconcileExternalPageLine);
             }
             return myResult;
+        }
+        void ProcessCell(ICell cell, Action<ICell> processAction)
+        {
+            if (cell != null)
+            {
+                processAction(cell);
+            }
         }
     }
     public class ReconcileExternalPageLineParameters

@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "4a618f0bf09a279a505dd3e16953b703";
+
+		public const string HashString = "6712a5b82bd953210801eea95a4e614a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4209,8 +4210,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PrintNotes",
 					  						DefaultText =  "Print Notes",
+					  						FullLocalDefaultText =  "הערות הדפסה",
 					  						ListFieldLable =  "PrintNotesListLable",
 					  						ListLableDefaultText =  "Notes",
+					  						ListLocalDefaultText =  "הערות",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14908,9 +14911,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 		   Feature ARInvoiceFeature_NEWCREDITNOTE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWCREDITNOTE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.NEWCREDITNOTE", NameTextCodeDefaultText = @"New Credit Note" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
 
-		   Feature ARInvoiceFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.Automation", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
+           Feature ARInvoiceFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.Automation", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, ARInvoiceObjectTable);
 
-		   Feature ARInvoiceFeature_DatesFieldEnabledWhileCrediting = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DatesFieldEnabledWhileCrediting", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.DatesFieldEnabledWhileCrediting", NameTextCodeDefaultText = @"Enable dates while crediting" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
+           Feature ARInvoiceFeature_HideVatTypes = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HideVatTypes", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.HideVatTypes", NameTextCodeDefaultText = @"Hide Vat Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, ARInvoiceObjectTable);
+
+           Feature ARInvoiceFeature_DatesFieldEnabledWhileCrediting = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DatesFieldEnabledWhileCrediting", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.DatesFieldEnabledWhileCrediting", NameTextCodeDefaultText = @"Enable dates while crediting" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
 
 		   Feature ARInvoiceFeature_ConfirmationForAutoCreditForCreditNotes = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConfirmationForAutoCreditForCreditNotes", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.ConfirmationForAutoCreditForCreditNotes", NameTextCodeDefaultText = @"Confirmation For Auto Credit For CreditNotes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
 
@@ -15778,6 +15783,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARInvoiceTextCode_ARInvoiceBOk = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.B.Ok", DefaultText = "OK",LocalDefaultText = @"אישור", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceBCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.B.Cancel", DefaultText = "Cancel",LocalDefaultText = @"ביטול", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.Invoice", DefaultText = "Invoice",LocalDefaultText = @"חשבונית מס", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceMVatTypePercentageEmpty = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.VatTypePercentageEmpty", DefaultText = "Some of invoice lines Vat Type Percentage is empty",LocalDefaultText = @"בחלק מהשורות לא הוגדר אחוז מע''מ", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

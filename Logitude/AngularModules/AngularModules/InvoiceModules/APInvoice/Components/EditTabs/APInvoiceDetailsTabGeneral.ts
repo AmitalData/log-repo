@@ -34,6 +34,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+declare var window: any;
 
 @Component({
 
@@ -57,6 +58,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     DisplayLocalFieldsFromList:string;
     VendorLovSizeForFullAccounting: number;
     forceShowLocalAndEnglishColumns = false;
+    public AllowVatTypes: boolean = true;
     ColumnsWidths: any[] = [];
     public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs) {
@@ -68,6 +70,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.ItemsSource = new ObservableCollection([]);
         this.todayDate = DateTool.GetCurrentDateAsUtc();
         this.isBaseDataLoaded = false;
+
+        this.CheckFeatures();
         this.InitializeServices();
         this.SetUIProperties();
         this.BuildScreenData();
@@ -83,6 +87,12 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.IsEditExchangeRateVisible = true;
         }
         this.InitializeVendorLov();
+        
+        if (this.EntityPM.StatusCode == null)
+        {
+            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
+        }
+  
     }
 
     SetIsUsingVirtuallization() {
@@ -116,6 +126,15 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             { ColumnName: 'CountryCode', Width: 60 },
             { ColumnName: 'PartnerTypeName', Width: 60 }
         ];
+    }
+
+    CheckFeatures() {
+
+        var table = window.ObjectTables.filter(d => d.Name === 'APInvoice')[0];
+        var hideVatTypesFeature = FeatureLocator.Features.filter(f => (f.Code == "HideVatTypes") && f.ObjectTableId == table.Id)[0];
+        if (hideVatTypesFeature) {
+            this.AllowVatTypes = false;
+        }
     }
 
 
@@ -192,7 +211,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
 
         else {
-            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AmountInInvoiceCurrency", this.ObjectTableName, true);
@@ -1203,7 +1221,7 @@ export class APInvoiceLineItem extends BaseComponent {
         this.SetUIProperties();
         this.GetUserName();
         this.setColors();
-        this.ReadVatTypeData();
+        this.ReadVatTypeData();     
     }
 
     private GetUserName() {
