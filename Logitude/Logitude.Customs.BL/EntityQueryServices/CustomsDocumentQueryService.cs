@@ -355,7 +355,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                   (from rec in context.CustomsDocuments
                    join o in context.OcrDocuments on rec.DocumentsFilingId equals o.DocId into ocrDocs
                    from o in ocrDocs.DefaultIfEmpty()
-                   where rec.DocumentsFilingId == docFileId && o.Tenant == tenant
+                   where rec.DocumentsFilingId == docFileId && rec.Tenant == tenant
                    select new CustomsDocumentPM()
                    {
                        DocumentsFilingId = rec.DocumentsFilingId,
@@ -375,7 +375,18 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
                    }).FirstOrDefault();
 
+            if(query == null)
+            {
+                query = (from rec in context.OcrDocuments 
+                         where rec.DocId == docFileId && rec.Tenant == tenant
+                         select new CustomsDocumentPM()
+                         {
+                             OcrStatusCode = rec.StatusCode != null ? rec.StatusCode : null,
+                             OcrScore =  rec != null && rec.Score != null ? (decimal)rec.Score : -1,
+                             OcrReference = rec.Reference,
 
+                         }).FirstOrDefault();
+            }
 
             return query;
 
