@@ -142,6 +142,7 @@ export class AccountingTabComponent implements OnInit,AfterViewInit {
             this.isQuickBooksOnline = true;
         }
 
+
 var myService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
 myService.GetByGLAccountsDisplayNumber(this.EntityPM.gLAccountNumber, this.EntityPM.tenant).subscribe((myResponse: ServiceResponse) => {
     if (!myResponse.HasError && myResponse != null) {
@@ -156,7 +157,6 @@ myService.GetByGLAccountsDisplayNumber(this.EntityPM.gLAccountNumber, this.Entit
         }
     }
 });
-
     }
     private LoadCompletedEvent: any = null;
 
