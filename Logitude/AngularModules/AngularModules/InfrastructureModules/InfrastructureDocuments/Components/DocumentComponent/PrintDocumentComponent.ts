@@ -109,7 +109,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     ngOnInit() {
         var entityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         var IsFromInterestBatchInvoice = false;
-        if((this.ObjectTableName == "ARInvoice") && entityPM.IsFromInterestBatchInvoice) {
+        if(entityPM.IsFromInterestBatchInvoice) {
             IsFromInterestBatchInvoice = true;
         }
         if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && IsFromInterestBatchInvoice == false && SessionLocator.TenantPM.AccountingActivated && this.DataContext.invoiceType != "IT") {
