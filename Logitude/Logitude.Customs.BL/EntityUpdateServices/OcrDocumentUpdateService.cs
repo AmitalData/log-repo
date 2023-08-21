@@ -27,7 +27,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //   ValidatePM(entityPM);
             //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant)
             //;
-            if (string.IsNullOrEmpty(entityPM?.JsonData))
+            if (!string.IsNullOrEmpty(entityPM?.JsonData))
             {
 
                 SupplierInvoiceOcr convertJson = JsonConvert.DeserializeObject<SupplierInvoiceOcr>(entityPM.JsonData);//json מיפוי
