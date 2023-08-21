@@ -316,7 +316,7 @@ namespace Logitude.Accounting.BL.Validators
                     }
                     else
                     {
-                        if (ledgerTransactionPM.IsReconciled)
+                        if (ledgerTransactionPM.IsReconciled && ledgerTransactionPM.OpenAmount!=0)
                         {
                             bool useLocal_inner = true;
                             string txt_M_ledgerTransactionalreadyReconciled = TranslateMyTextCode(/*" ledgerTransaction already Reconciled  ?? ? TransactionId="*/M_ledgerTransactionalreadyReconciled, 0, useLocal_inner);
