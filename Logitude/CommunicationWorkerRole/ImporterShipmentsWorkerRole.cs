@@ -590,7 +590,7 @@ namespace CommunicationWorkerRole
                                                             ExceptionDescription = Shipment.ExceptionDescription,
                                                             //IsOperationalClosed = Shipment.IsOperationalClosed,
                                                             DeclarationXMLData = Shipment.DeclarationXMLData,
-                                                            IsImporterApprovalRequired = Shipment.IsImporterApprovalRequired,
+                                                            IsImporterApprovalRequired = GetIsImporterApprovalRequiredShipmentAM(Shipment),
                                                             VersionApproved = Shipment.VersionApproved,
                                                             ApproveDateTime = Shipment.ApproveDateTime,
                                                             ShipmentAddtionalDataXML = Shipment.ShipmentAddtionalDataXML,
@@ -840,7 +840,7 @@ namespace CommunicationWorkerRole
                                                             ExceptionDate = Shipment.ExceptionDate,
                                                             ExceptionDescription = Shipment.ExceptionDescription,
                                                             DeclarationXMLData = Shipment.DeclarationXMLData,
-                                                            IsImporterApprovalRequired = Shipment.IsImporterApprovalRequired,
+                                                            IsImporterApprovalRequired = GetIsImporterApprovalRequiredShipmentAM(Shipment),
                                                             VersionApproved = Shipment.VersionApproved,
                                                             ApproveDateTime = Shipment.ApproveDateTime,
                                                             Master = Shipment.Master,
@@ -1217,6 +1217,15 @@ namespace CommunicationWorkerRole
                 Thread.Sleep(10000);
             }
 
+        }
+
+        private static bool GetIsImporterApprovalRequiredShipmentAM(Logitude.BL.ShipmentsModel.EntityPMs.ShipmentPM Shipment)
+        {
+            if(Shipment.StatusCode?.ToLower() == "ccd" || Shipment.CustomsClearanceDate != null)
+            {
+                return false;
+            }
+            return Shipment.IsImporterApprovalRequired;
         }
 
         private static bool SendShipmentUpdates(Logitude.BL.ShipmentsModel.EntityPMs.ShipmentPM Shipment, CustomerTenantAccessCardsBatchPM customerTenantAccessCardsBatch, CustomerTenantAccessCardsBatchPM oldCustomerTenantAccessCardsBatch)
