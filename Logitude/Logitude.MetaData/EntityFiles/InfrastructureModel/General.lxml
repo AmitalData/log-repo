@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;b0be&quot;"
+  Code="&quot;69d2&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5853,6 +5853,30 @@
       DefaultText="&quot;No Lines Processed&quot;"
       LocalDefaultText="&quot;אין שורות לעיבוד&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ARPaymentCheques&quot;"
+      DefaultText="&quot;ARPayment Cheques&quot;"
+      LocalDefaultText="&quot;כל השקים מהלקוחות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.UnRedeemedCheques&quot;"
+      DefaultText="&quot;UnRedeemed Cheques&quot;"
+      LocalDefaultText="&quot;המחאות שלא נפרעו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.AllCheques&quot;"
+      DefaultText="&quot;All Cheques&quot;"
+      LocalDefaultText="&quot;כל ההמחאות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.PostponedCheques&quot;"
+      DefaultText="&quot;Postponed Cheques&quot;"
+      LocalDefaultText="&quot;המחאות דחויות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
