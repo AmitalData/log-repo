@@ -27552,6 +27552,42 @@
       LocalDefaultText="&quot;סינון מתקדם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Choose&quot;"
+      DefaultText="&quot;Choose&quot;"
+      LocalDefaultText="&quot;בחר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.StatusThatSelected&quot;"
+      DefaultText="&quot;Status that selected&quot;"
+      LocalDefaultText="&quot;סטטוסים שנבחרו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DestantionThatSelected&quot;"
+      DefaultText="&quot;Destantion that selected&quot;"
+      LocalDefaultText="&quot;יעדים שנבחרו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ImporterThatSelected&quot;"
+      DefaultText="&quot;Importer that selected&quot;"
+      LocalDefaultText="&quot;יצואנים שנבחרו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ReferentsThatSelected&quot;"
+      DefaultText="&quot;Referents that selected&quot;"
+      LocalDefaultText="&quot;רפרנטים שנבחרו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.exportFilterMenu&quot;"
+      DefaultText="&quot;Filters for multiple select&quot;"
+      LocalDefaultText="&quot;סינון מתקדם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
