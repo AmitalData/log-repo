@@ -973,7 +973,8 @@ AS */
                 }
                 catch (OracleException ex)
                 {
-
+                    System.Console.WriteLine("Exception: {0}", ex.ToString());
+                    throw;
                 }
                 finally
                 {
