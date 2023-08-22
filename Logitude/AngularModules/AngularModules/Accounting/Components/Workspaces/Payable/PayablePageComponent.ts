@@ -189,6 +189,7 @@ export class PayablePageComponent {
         newApPaymentPM.CreateDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
+        newApPaymentPM.PrintNotes=TextCodeTranslator.Translate("APPayment.S.ShortTitle");;
 
         newApPaymentPM.LocalCurrencyId = this.TenantPM.CurrencyId;
         newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
@@ -361,6 +362,7 @@ export class PayablePageComponent {
                     entity.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
                     entity.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
                     entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
+                    entity.InternalNotes = TextCodeTranslator.Translate("APInvoice.O.VendorInvoice");
 
                     const additionalFieldsScreenCode = "APInvoice.AdditionalFields";
 
