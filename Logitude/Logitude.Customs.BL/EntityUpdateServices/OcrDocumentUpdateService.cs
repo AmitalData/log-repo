@@ -28,9 +28,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         protected override void OnUpdating(OcrDocumentPM entityPM)
         {
-            //   ValidatePM(entityPM);
-            //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant)
-            //;
+           
             if (!string.IsNullOrEmpty(entityPM?.JsonData))
             {
 
@@ -39,17 +37,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     page.prediction?.FirstOrDefault(p => p.label == "invoice_number") != null)
                     ?.prediction.FirstOrDefault(p => p.label == "invoice_number")?.ocr_text;
 
-
             }
 
-            if (entityPM != null && entityPM.ChangeSetOp == ChangeSetOperation.Insert) {
-
+            if (entityPM != null && entityPM.ChangeSetOp == ChangeSetOperation.Insert) 
+            {
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(entityPM.Tenant);
                 DocumentsFilingPM documentsFiling = documentsFilingQuery.GetSinglePM(entityPM.DocId, entityPM.Tenant);
                 documentsFiling.OcrStatusCode = "2";
                 ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", entityPM.Tenant)) as ISendBondedCustomDocumentService;
                 myISendBondedCustomDocumentService.JustDoIt(documentsFiling);
-                
             }
 
 

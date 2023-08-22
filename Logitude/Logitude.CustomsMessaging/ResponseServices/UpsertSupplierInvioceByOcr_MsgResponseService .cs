@@ -214,7 +214,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             else
             {
                 mySupplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
-                mySupplierInvoice.InvoiceNumber = invoiceNumber;
+                if (string.IsNullOrEmpty(mySupplierInvoice.InvoiceNumber))
+                {
+                    mySupplierInvoice.InvoiceNumber = invoiceNumber;
+                    isNewInvoice = true;
+                }
+               
             }
 
             //mapping supplierInvoice from json
