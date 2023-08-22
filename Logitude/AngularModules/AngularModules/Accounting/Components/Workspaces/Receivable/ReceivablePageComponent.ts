@@ -380,10 +380,11 @@ export class ReceivablePageComponent {
             entity.ARInvoiceTypeCode = type;
             entity.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
             entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
+            entity.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
             this.GetCurrenciesExchangeRateByValueDate(entity);
             return;
         }
-
+      
 
 
         //var str = TextCodeTranslator.Translate("General.O.NewEntity");
