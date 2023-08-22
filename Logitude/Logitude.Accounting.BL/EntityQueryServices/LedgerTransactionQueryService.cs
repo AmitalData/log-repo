@@ -1111,6 +1111,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pocos;
         }
 
+        public List<LedgerTransactionPM> GetByJournalIdAndForeignAmountDebitNotEqualZero(string journalId, int tenant)
+        {
+            List<LedgerTransaction> ledgerTransactionPOCOs = null;
+            ledgerTransactionPOCOs = repository.GetByJournalIdAndForeignAmountDebitNotEqualZero(journalId, tenant).ToList();
+            List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
+            return pms;
+        }
+
     }
     public class JournalLineLedgerDTO
     {
