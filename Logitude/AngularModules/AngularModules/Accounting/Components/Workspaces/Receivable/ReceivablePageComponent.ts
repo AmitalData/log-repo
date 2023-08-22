@@ -376,9 +376,11 @@ export class ReceivablePageComponent {
             var entity = new ARInvoicePM();
             entity.ARInvoiceTypeCode = type;
             entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
+            entity.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
             this.GetCurrenciesExchangeRateByValueDate(entity);
             return;
         }
+      
 
 
         //var str = TextCodeTranslator.Translate("General.O.NewEntity");
