@@ -303,23 +303,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
 
 
-        public HttpResponseMessage GetByGLAccountsDisplayNumber(string displayNumber, int tenant)
-        {
-            try
-            {
-                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+        //public HttpResponseMessage GetByGLAccountsDisplayNumber(string displayNumber, int tenant)
+        //{
+        //    try
+        //    {
+        //        IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
-                GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(MyContext);
+        //        GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(MyContext);
 
-                GLAccountPM result = gLAccountQueryService.GetByGLAccountsDisplayNumber(displayNumber, tenant);
+        //        GLAccountPM result = gLAccountQueryService.GetByGLAccountsDisplayNumber(displayNumber, tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
+        //        return Request.CreateResponse(HttpStatusCode.OK, result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //    }
+        //}
 
 
 

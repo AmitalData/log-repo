@@ -6,7 +6,7 @@ import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
-
+/*({{ AccountInfo }})*/
 @Component({
     template:
     `
@@ -14,7 +14,7 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
         <table>
             <tr class="TabTitleRow">
                 <td>{{TabTitleTextCode | TextCodeTranslationPipe}}
-                ({{AccountInfo}})</td>
+               </td>
             </tr>
 
             <tr>
@@ -143,19 +143,19 @@ export class AccountingTabComponent implements OnInit,AfterViewInit {
         }
 
 var myService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
-myService.GetByGLAccountsDisplayNumber(this.EntityPM.gLAccountNumber, this.EntityPM.tenant).subscribe((myResponse: ServiceResponse) => {
-    if (!myResponse.HasError && myResponse != null) {
-        var result = myResponse.Result;
-        if (result != null) {
-            if (result.CurrencySign != null ){
-            this.AccountInfo = result.LocalName + ',' + result.DisplayNumber + ',' + result.CurrencySign;
-            }
-            else{
-                this.AccountInfo = result.LocalName + ',' + result.DisplayNumber;
-            }
-        }
-    }
-});
+//myService.GetByGLAccountsDisplayNumber(this.EntityPM.gLAccountNumber, this.EntityPM.tenant).subscribe((myResponse: ServiceResponse) => {
+//    if (!myResponse.HasError && myResponse != null) {
+//        var result = myResponse.Result;
+//        if (result != null) {
+//            if (result.CurrencySign != null ){
+//            this.AccountInfo = result.LocalName + ',' + result.DisplayNumber + ',' + result.CurrencySign;
+//            }
+//            else{
+//                this.AccountInfo = result.LocalName + ',' + result.DisplayNumber;
+//            }
+//        }
+//    }
+//});
 
     }
     private LoadCompletedEvent: any = null;
