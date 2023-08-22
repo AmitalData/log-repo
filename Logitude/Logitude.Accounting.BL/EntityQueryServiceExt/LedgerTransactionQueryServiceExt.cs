@@ -21,6 +21,11 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
             LedgerTransactionQueryService query = new LedgerTransactionQueryService(tenant);
             return query.GetByJournalId(journalId, tenant);
         }
+        public List<LedgerTransactionPM> GetByJournalIdAndForeignAmountDebitNotEqualZero(string journalId, int tenant)
+        {
+            LedgerTransactionQueryService query = new LedgerTransactionQueryService(tenant);
+            return query.GetByJournalIdAndForeignAmountDebitNotEqualZero(journalId, tenant);
+        }
         public List<LedgerTransactionPM> GetLedgerTransactionPMsByIdList(List<string> idList, int tenant)
         {
             LedgerTransactionQueryService query = new LedgerTransactionQueryService(tenant);

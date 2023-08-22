@@ -4208,7 +4208,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private static List<LedgerTransactionPM> GetTransactionsByJournalId(int tenant, string journalId)
         {
             ILedgerTransactionQueryService ledgerTransactionQuery = ContainerAccessor.Container.Resolve(typeof(ILedgerTransactionQueryService), "LedgerTransactionQueryServiceExt", new ParameterOverride("", 1)) as ILedgerTransactionQueryService;
-            return ledgerTransactionQuery.GetByJournalId(journalId, tenant);
+            return ledgerTransactionQuery.GetByJournalIdAndForeignAmountDebitNotEqualZero(journalId, tenant);
         }
 
         private static ARInvoicePM GetOriginalInvoiceByAutoCreditNumber(int tenant, string autoCreditByARInvoiceNumber)

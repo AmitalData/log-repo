@@ -1602,7 +1602,14 @@ on record.JournalId equals j.Id
                             && transaction.Tenant == tenant
                     select transaction).ToList();
         }
+        public IQueryable<LedgerTransaction> GetByJournalIdAndForeignAmountDebitNotEqualZero(string journalId, int tenant)
+        {
 
+            return (from a in context.LedgerTransactions
+                    where a.JournalId == journalId && a.Tenant == tenant && a.ForeignAmountDebit != 0
+                    select a);
+
+        }
     }
     public class GLAccountTotalByMonthsKey
     {
