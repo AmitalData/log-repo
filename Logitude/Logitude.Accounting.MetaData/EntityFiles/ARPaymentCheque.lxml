@@ -1693,37 +1693,37 @@
       <QueryColumn
         QueryCode="&quot;UnRedeemed Cheques&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;ValueDate&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;UnRedeemed Cheques&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;BankId&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;UnRedeemed Cheques&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;BankBranch&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;UnRedeemed Cheques&quot;"
-        IndexOrder="4"
-        ObjectFieldName="&quot;BankAccount&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;UnRedeemed Cheques&quot;"
-        IndexOrder="5"
-        ObjectFieldName="&quot;LocalAmount&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;UnRedeemed Cheques&quot;"
-        IndexOrder="6"
         ObjectFieldName="&quot;PaymentNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;UnRedeemed Cheques&quot;"
-        IndexOrder="7"
+        IndexOrder="2"
         ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;ValueDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;BankId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;BankBranch&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;BankAccount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;LocalAmount&quot;"
         ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
@@ -1737,6 +1737,122 @@
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;All Cheques&quot;"
+    TextCode="&quot;All Cheques&quot;"
+    LocalTextCode="&quot;כל ההמחאות&quot;"
+    QueryGroupCode="&quot;f3c3&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;ARPaymentCheque&quot;"
+    QuerySection="&quot;ARPaymentCheque&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;ChequeNumber&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ChequeNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ValueDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;BankId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;BankBranch&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;BankAccount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;LocalAmount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;PaymentNumber&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Query
+    Code="&quot;Postponed Cheques&quot;"
+    TextCode="&quot;Postponed Cheques&quot;"
+    LocalTextCode="&quot;המחאות דחויות&quot;"
+    QueryGroupCode="&quot;f3c3&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;ARPaymentCheque&quot;"
+    QuerySection="&quot;ARPaymentCheque&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;ChequeNumber&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ChequeNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ValueDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;BankId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;BankBranch&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;BankAccount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;LocalAmount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;PaymentNumber&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
   </Query>
   <Screen
     Name="&quot;ARPaymentChequeHeaderScreen&quot;"
