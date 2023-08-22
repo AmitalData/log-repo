@@ -359,9 +359,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetSupplierInvoiceCountForDeclaration(declarationId, tenant);
         }
 
-        public int? GetMaxCounterKey(string declarationId, int tenant)
+        public int? GetMaxSequenceNumeric(string declarationId, int tenant)
         {
-            return repository.GetMaxCounterKey(declarationId, tenant);
+            return repository.GetMaxSequenceNumeric(declarationId, tenant);
         }
 
         // this is for editing an invoice from the declaration invoice tab.
