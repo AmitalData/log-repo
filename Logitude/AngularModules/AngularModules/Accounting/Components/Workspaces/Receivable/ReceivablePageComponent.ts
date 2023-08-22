@@ -302,6 +302,52 @@ export class ReceivablePageComponent {
             });
         }
     }
+
+    // // TODO: change the logic for ViewPayment Cheques
+    ViewPaymentChequesQuery(args: string) {
+        if (args != null) {
+
+            var backButtonTitle = "Accounting";
+            var objectTableName = args.split(':')[0];
+            var queryCode = args.split(':')[1];
+            var displayTitle = queryCode;
+            this.filterAgrs = new ApiQueryFilters();
+
+            var ObjectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];
+            var query = window.Queries.filter(q => q.ObjectTableId == ObjectTable.Id && q.Code == queryCode)[0];
+
+            if (window.PreDefinedFilters.filter(d => d.queryCode == query.Code) != null) {
+                var predefinedFilters = window.PreDefinedFilters.filter(d => d.queryCode == query.Code);
+
+                predefinedFilters.forEach((filter, key) => {
+                    var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
+                    var value1 = filter.PredefinedValue;
+                    var value2 = filter.PredefinedValue2;
+                    if (value2 != null) {
+                        filterOperator = "Between";
+                    }
+                    this.filterAgrs.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, filter.IsCustomFilter, filter.DisplayInList, false, filter.DataTypeCode);
+                });
+            }
+
+            this.filterAgrs.ObjectTableName = query.ObjectTableName;
+
+            var listArgs = new ListComponentArgs();
+            listArgs.Filters = this.filterAgrs;
+            listArgs.QueryCode = queryCode;
+            listArgs.ObjectTableName = objectTableName;
+            listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Receivables");
+            //listArgs.DisplayTitle = displayTitle;
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run(listArgs);
+                        this.CurrentSession.AddMenuReference(cmpRef);
+                    });
+            });
+        }
+    }
     //#endregion
 
     //#region General ARInvoice
