@@ -2510,8 +2510,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             }
                         }
                         var errorWithMawbs=new List<CourierHawbFromExcel>();
-                        CustomsStoredProcedures.UpdateCourierHawbFromExcel(tenant, userid, values, out errorWithMawbs);
-
+                        try
+                        {
+                            CustomsStoredProcedures.UpdateCourierHawbFromExcel(tenant, userid, values, out errorWithMawbs);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle the exception from UpdateCourierHawbFromExcel
+                            var errorResponse = new
+                            {
+                                ErrorMessage = "An error occurred in UpdateCourierHawbFromExcel",
+                                ExceptionMessage = ex.Message
+                            };
+                            return Request.CreateResponse(HttpStatusCode.InternalServerError, errorResponse);
+                        }
                         if (values.Count > 0)
                         {
                             var firstValue = values[0];
