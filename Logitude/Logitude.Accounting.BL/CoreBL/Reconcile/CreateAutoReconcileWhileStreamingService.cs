@@ -52,10 +52,10 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (!_JournalPM.IsVoided.GetValueOrDefault())//while voiding -old transaction IsReconciled change after !!
                 {
-                    string errorMessage = "JournalReconciles already Is Reconciled The Error in : \n ";
+                    string errorMessage = "לא ניתן להמשיך כי לפחות אחת מהשורות כבר הותאמה ראה את : \n ";
                     foreach (var myOldTransToReconcileError in myOldTransToReconcile.Where(r => r.IsReconciled))
                     {
-                       errorMessage += "JournalLineNumber: "+ myOldTransToReconcileError.JournalLineNumber + ",OpenAmount: " + myOldTransToReconcileError.OpenAmount +"\n";
+                       errorMessage += "שורה: "+ myOldTransToReconcileError.JournalLineNumber + ",בסכום: " + myOldTransToReconcileError.OpenAmount +"\n";
                         
                     }
 
