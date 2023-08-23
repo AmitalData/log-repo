@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;69d2&quot;"
+  Code="&quot;a44b&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5631,12 +5631,6 @@
       DefaultText="&quot;Chart Of Accounts Types Order&quot;"
       LocalDefaultText="&quot;Chart Of Accounts Types Order&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.O.ChangeMadeToConnectedAccounts&quot;"
-      DefaultText="&quot;A change was made in the connected accounts. The connected accounts must be returned to their state as it was when the original journal was prodiced. Line &quot;"
-      LocalDefaultText="&quot;בוצע שינוי בחיבור החשבונות. יש להחזיר את חיבור החשבונות למצבם כפי שהיה בעת רישום פקודת היומן המקורית. שורה &quot;"
-      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.MC.CustomObjects.CustomObjects&quot;"
