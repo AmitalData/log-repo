@@ -1226,6 +1226,12 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM != null) {
             if (this.EntityPM.BillToId != value) {
                 this.EntityPM.BillToId = value;
+
+        if (value) {
+            console.log('[!] BillTo changed, reload GLAccount.  ', value);
+            this.ReloadGLAccount();
+        }
+
         if(AppTool.IsNullOrEmpty(this.EntityPM.Id))
             this.GetCardProperties();
 
@@ -1241,12 +1247,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
 
             this.LoadData();
-
-            if (value) {
-                console.log('[!] BillTo changed, reload GLAccount.  ', value);
-                this.ReloadGLAccount();
-            }
-
 
             if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
                 this.BillToAddressId = null;
@@ -1297,7 +1297,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 });
             }
         }
-               
+
 
             }
         }
@@ -1355,7 +1355,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 }
 
             }
-        }); 
+        });
     }
 
 /******************************************* new ARPayment - BillToAddressId ******************************************************************/

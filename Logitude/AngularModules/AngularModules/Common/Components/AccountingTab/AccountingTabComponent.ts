@@ -15,7 +15,7 @@ import { GLAccountPMService } from 'Accounting/Services/StandardPMs/GLAccountPMS
         <table>
             <tr class="TabTitleRow">
                 <td>{{TabTitleTextCode | TextCodeTranslationPipe}}
-                ({{AccountInfo}})</td>
+               </td>
             </tr>
 
             <tr>
@@ -160,6 +160,7 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
                 }
             });
         }
+
 
     }
     private LoadCompletedEvent: any = null;
