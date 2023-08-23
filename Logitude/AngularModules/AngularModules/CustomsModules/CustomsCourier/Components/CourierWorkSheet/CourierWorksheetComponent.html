@@ -207,7 +207,9 @@
                                                         <button style="text-align:right"
                                                             (click)="ChangeUnloadPortSiteMethod()"
                                                             [disabled]="IsDisplayOnly">{{'שינוי אתר פריקה' }}</button>
-
+                                                        <button style="text-align:right"
+                                                            (click)="ChangeLoadPortSiteMethod()"
+                                                            [disabled]="IsDisplayOnly">{{'עדכון נמל טעינה' }}</button>
                                                         <button *ngIf="isAllowAccounting" style="text-align:right"
                                                             (click)="IsReadyForInvoiceClick()"
                                                             [disabled]="IsDisplayOnly">{{'מוכן להכנת חשבונית' }}<img

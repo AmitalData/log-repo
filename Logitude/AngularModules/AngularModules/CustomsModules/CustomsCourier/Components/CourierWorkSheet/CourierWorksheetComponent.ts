@@ -2421,6 +2421,29 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             this.RefreshButtonClicked();
         });
     }
+    ChangeLoadPortSiteMethod() {
+
+        if (this.IsDisplayOnly) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("קיים מסר זהה בתהליך");
+            return;
+        }
+
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.CourierMasterPM = this.entityPM;
+        logitudeWindow.Width = 350;
+        logitudeWindow.Height = 250;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "עדכון נמל טעינה";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/ChangeLoadPortCode');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshButtonClicked();
+        });
+    }
     _CourierMasterPMService: CourierMasterPMService = new CourierMasterPMService();
     IsReadyForInvoiceClick() {
 

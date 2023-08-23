@@ -13,6 +13,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string StorageSiteCode { get; set; }
 
         public string UnLoadPortCode { get; set; }
+        public string LoadPortCode { get; }
     }
 }
 
