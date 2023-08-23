@@ -104,13 +104,18 @@ namespace Logitude.Accounting.BL.Utils
                                             if (moreDataPM != null)
                                             {
                                                 moreDataPM.TotFutureOpenChequesInLocalCur = 0;
-                                                if (item.PaymentId != null) {
+                                                if (item.PaymentId != null)
+                                                {
                                                     moreDataPM.TotalOpenChequesInLocalCur = 0;
                                                     List<string> paymentIds = data.Where(d => d.GLAccountId == item.GLAccountId).Select(d => d.PaymentId).ToList();
 
                                                     List<ARPaymentChequePM> aRPaymentChequePMs = (from a in aRPaymentCheques
-                                                                                                  where paymentIds.Contains(a.PaymentId)
-                                                                                                  select a).ToList();
+                                                                                                  join j in MyContext.Journals 
+                                                                                                  on a.PaymentId equals j.AccountingEntityId
+                                                                                                  join transaction in MyContext.LedgerTransactions 
+                                                                                                  on j.Id equals transaction.JournalId
+                                                                                                  where paymentIds.Contains(a.PaymentId) && transaction.Reference2 == a.ChequeNumber
+                                                                                                  select a).Distinct().ToList();
 
 
                                                     foreach (ARPaymentChequePM paymentCheque in aRPaymentChequePMs)

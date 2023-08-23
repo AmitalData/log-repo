@@ -65,7 +65,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     where transaction.Tenant == tenant && transaction.AccountId == accountId && journal.AccountingEntityCode == AccountingEntityValues.ARPayment && 
                     transaction.Reference2 ==arpaymentcheque.ChequeNumber && arpaymentcheque.StatusCode != ARPaymentChequeStatuses.ReturnToCustomer 
-                    && arpaymentcheque.StatusCode != ARPaymentChequeStatuses.Redeemed &&(!_IsInBankAccountStatus || arpaymentcheque.StatusCode == "3")
+                    && arpaymentcheque.StatusCode != ARPaymentChequeStatuses.Redeemed
 
                     select new LedgerTransactionList()
                     {
@@ -94,13 +94,17 @@ namespace Logitude.Accounting.BL.CoreBL
                         CalculatedLocalAmount = transaction.LocalAmountCredit != 0 ? transaction.LocalAmountCredit : transaction.LocalAmountDebit,
                         CurrencySign =transaction.Currency.Sign,
                         Tenant = transaction.Tenant
-                    }).Distinct();
+                    });
 
             if (_IsFutureOpenCheques) {
                 query = query.Where(x => x.PaymentValueDate > today);
             }
-            
-            return query.ToList();
+            if (_IsInBankAccountStatus)
+            {
+                query = query.Where(x => x.PaymentValueDate <= today);
+            }
+
+            return query.Distinct().ToList();
         }
 
         private List<LedgerTransactionList> GetExternalTransactionsForAccount(string accountId, int tenant)
@@ -145,6 +149,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 query = query.Where(x => x.PaymentValueDate > today);
             }
+
             return query.ToList();
         }
         public int GetAccountChequesTransactionsCount(string accountId)
@@ -227,7 +232,13 @@ namespace Logitude.Accounting.BL.CoreBL
             if (_IsFutureOpenCheques) {
                 query1 = query1.Where(x => x.PaymentValueDate > today);
                 query2 = query2.Where(x => x.PaymentValueDate > today);
-            } 
+            }
+
+            if (_IsInBankAccountStatus)
+            {
+                query1 = query1.Where(x => x.PaymentValueDate <= today);
+                query2 = query2.Where(x => x.PaymentValueDate <= today);
+            }
             return query1.Count() + query2.Count();
         }
 
