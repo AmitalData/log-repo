@@ -11,6 +11,7 @@ namespace Logitude.Accounting.Def.EntityQueryServicesExt
     public interface ILedgerTransactionQueryService
     {
         List<LedgerTransactionPM> GetByJournalId(string journalId, int tenant);
+        List<LedgerTransactionPM> GetByJournalIdAndForeignAmountDebitNotEqualZero(string journalId, int tenant);
 
         List<LedgerTransactionPM> GetLedgerTransactionPMsByIdList(List<string> idList, int tenant);
     }
