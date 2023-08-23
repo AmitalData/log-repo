@@ -160,7 +160,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPOCO.Tenant);
                 GLAccount gLAccount = gLAccountRepository.GetSingle(entityPOCO.GLAccountId, entityPOCO.Tenant);
-                entityPM.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;              
+                entityPM.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
+                entityPM.GLAccountLocalName = gLAccount.LocalName;
             }
 
 
@@ -186,7 +187,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         private void FillSearchFields(InterestReportPM entityPM, CustomerPM customerPM)
         {
-            entityPM.SearchFields = entityPM.ReportNumber + "," + entityPM.CustomerName + "," + entityPM.CustomerLocalName + "," + entityPM.GLAccountDisplayNumber;
+            entityPM.SearchFields = entityPM.ReportNumber + "," + entityPM.CustomerName + "," + entityPM.CustomerLocalName + "," + entityPM.GLAccountDisplayNumber + "," + entityPM.GLAccountLocalName;
 
             if (customerPM != null && customerPM.Code != null) {
                 entityPM.SearchFields = entityPM.SearchFields + "," + customerPM.Code;
