@@ -37,7 +37,7 @@
   InActive="false"
   IsSaveButtonVisible="false"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
@@ -1680,7 +1680,7 @@
     QuerySection="&quot;ARPaymentCheque&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="false"
+    IsPackagable="true"
     DefaultSortName="&quot;ChequeNumber&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
@@ -1748,7 +1748,7 @@
     QuerySection="&quot;ARPaymentCheque&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="false"
+    IsPackagable="true"
     DefaultSortName="&quot;ChequeNumber&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
@@ -1806,7 +1806,7 @@
     QuerySection="&quot;ARPaymentCheque&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="false"
+    IsPackagable="true"
     DefaultSortName="&quot;ChequeNumber&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">

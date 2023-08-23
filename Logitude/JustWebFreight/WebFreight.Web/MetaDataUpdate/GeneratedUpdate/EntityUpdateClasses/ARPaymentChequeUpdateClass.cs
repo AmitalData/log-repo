@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ARPaymentChequeUpdateClass
    {  		
-		public const string HashString = "67765c3909ee3c882ca023d934cf529d";
+		public const string HashString = "907a21cd7843cfd4deefa46769a8f6c5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
@@ -1547,15 +1547,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode ARPaymentChequeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.UnRedeemedCheques", DefaultText = @"UnRedeemed Cheques",LocalDefaultText = "המחאות שלא נפרעו", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ARPaymentChequeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.UnRedeemedCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.UnRedeemedCheques", NameTextCodeDefaultText = "UnRedeemed Cheques", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
+			   Feature ARPaymentChequeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.UnRedeemedCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.UnRedeemedCheques", NameTextCodeDefaultText = "UnRedeemed Cheques", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
  
 
 			   TextCode ARPaymentChequeTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.AllCheques", DefaultText = @"All Cheques",LocalDefaultText = "כל ההמחאות", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ARPaymentChequeFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.AllCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.AllCheques", NameTextCodeDefaultText = "All Cheques", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
+			   Feature ARPaymentChequeFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.AllCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.AllCheques", NameTextCodeDefaultText = "All Cheques", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
  
 
 			   TextCode ARPaymentChequeTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.PostponedCheques", DefaultText = @"Postponed Cheques",LocalDefaultText = "המחאות דחויות", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ARPaymentChequeFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.PostponedCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.PostponedCheques", NameTextCodeDefaultText = "Postponed Cheques", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
+			   Feature ARPaymentChequeFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.PostponedCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.PostponedCheques", NameTextCodeDefaultText = "Postponed Cheques", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
