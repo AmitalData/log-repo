@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ARPaymentChequeUpdateClass
    {  		
-		public const string HashString = "ce0f373b91e3914dc815562837cdc3c9";
+		public const string HashString = "67765c3909ee3c882ca023d934cf529d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1547,7 +1547,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode ARPaymentChequeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.UnRedeemedCheques", DefaultText = @"UnRedeemed Cheques",LocalDefaultText = "המחאות שלא נפרעו", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ARPaymentChequeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.UnRedeemedCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.UnRedeemedCheques", NameTextCodeDefaultText = "UnRedeemed Cheques", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
+			   Feature ARPaymentChequeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.UnRedeemedCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.UnRedeemedCheques", NameTextCodeDefaultText = "UnRedeemed Cheques", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ARPaymentChequeTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.AllCheques", DefaultText = @"All Cheques",LocalDefaultText = "כל ההמחאות", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ARPaymentChequeFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.AllCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.AllCheques", NameTextCodeDefaultText = "All Cheques", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ARPaymentChequeTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.PostponedCheques", DefaultText = @"Postponed Cheques",LocalDefaultText = "המחאות דחויות", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ARPaymentChequeFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.PostponedCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.PostponedCheques", NameTextCodeDefaultText = "Postponed Cheques", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -1557,22 +1565,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn UnRedeemedChequesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ARPaymentCheque.ChequeNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UnRedeemedChequesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ARPaymentCheque.ValueDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn UnRedeemedChequesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ARPaymentCheque.PaymentNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UnRedeemedChequesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ARPaymentCheque.BankId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn UnRedeemedChequesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ARPaymentCheque.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UnRedeemedChequesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ARPaymentCheque.BankBranch" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn UnRedeemedChequesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ARPaymentCheque.ValueDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UnRedeemedChequesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ARPaymentCheque.BankAccount" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn UnRedeemedChequesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ARPaymentCheque.BankId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UnRedeemedChequesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ARPaymentCheque.LocalAmount" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn UnRedeemedChequesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ARPaymentCheque.BankBranch" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UnRedeemedChequesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ARPaymentCheque.PaymentNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn UnRedeemedChequesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ARPaymentCheque.BankAccount" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UnRedeemedChequesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARPaymentCheque.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn UnRedeemedChequesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARPaymentCheque.LocalAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter UnRedeemedChequesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPaymentCheque.StatusCode", PredefinedValue = "5",PredefinedValue2 = "6", CustomPredefined = false, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
+  
+	      
+
+			  Query AllChequesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentChequeTextCode_1.Id, NameTextCodeCode = ARPaymentChequeTextCode_1.Code, ObjectTableName = "ARPaymentCheque", Code = "All Cheques",  QueryGroupCode = "f3c3", IndexOrder = 1, Tenant = 0, ObjectTableId = ARPaymentChequeObjectTable.Id, QuerySection = "ARPaymentCheque", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentChequeFeature_1.Id,FeatureUniqeCode= ARPaymentChequeFeature_1.FeatureUniqeCode, DefaultSortName = "ChequeNumber", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllChequesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChequesQuery.Id,QueryCode = AllChequesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ARPaymentCheque.ChequeNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllChequesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChequesQuery.Id,QueryCode = AllChequesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ARPaymentCheque.ValueDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllChequesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChequesQuery.Id,QueryCode = AllChequesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ARPaymentCheque.BankId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllChequesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChequesQuery.Id,QueryCode = AllChequesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ARPaymentCheque.BankBranch" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllChequesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChequesQuery.Id,QueryCode = AllChequesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ARPaymentCheque.BankAccount" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllChequesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChequesQuery.Id,QueryCode = AllChequesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ARPaymentCheque.LocalAmount" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllChequesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChequesQuery.Id,QueryCode = AllChequesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ARPaymentCheque.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllChequesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChequesQuery.Id,QueryCode = AllChequesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARPaymentCheque.PaymentNumber" , ColumnWidth = 100 }, addedQueryColumns);
+  
+	      
+
+			  Query PostponedChequesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentChequeTextCode_2.Id, NameTextCodeCode = ARPaymentChequeTextCode_2.Code, ObjectTableName = "ARPaymentCheque", Code = "Postponed Cheques",  QueryGroupCode = "f3c3", IndexOrder = 2, Tenant = 0, ObjectTableId = ARPaymentChequeObjectTable.Id, QuerySection = "ARPaymentCheque", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentChequeFeature_2.Id,FeatureUniqeCode= ARPaymentChequeFeature_2.FeatureUniqeCode, DefaultSortName = "ChequeNumber", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn PostponedChequesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PostponedChequesQuery.Id,QueryCode = PostponedChequesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ARPaymentCheque.ChequeNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PostponedChequesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PostponedChequesQuery.Id,QueryCode = PostponedChequesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ARPaymentCheque.ValueDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PostponedChequesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PostponedChequesQuery.Id,QueryCode = PostponedChequesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ARPaymentCheque.BankId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PostponedChequesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PostponedChequesQuery.Id,QueryCode = PostponedChequesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ARPaymentCheque.BankBranch" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PostponedChequesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PostponedChequesQuery.Id,QueryCode = PostponedChequesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ARPaymentCheque.BankAccount" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PostponedChequesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PostponedChequesQuery.Id,QueryCode = PostponedChequesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ARPaymentCheque.LocalAmount" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PostponedChequesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PostponedChequesQuery.Id,QueryCode = PostponedChequesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ARPaymentCheque.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PostponedChequesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PostponedChequesQuery.Id,QueryCode = PostponedChequesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARPaymentCheque.PaymentNumber" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
