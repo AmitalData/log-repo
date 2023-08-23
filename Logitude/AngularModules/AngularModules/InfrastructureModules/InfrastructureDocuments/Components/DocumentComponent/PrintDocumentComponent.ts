@@ -1064,7 +1064,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
     BuildCurrentCopies(copies: Array<DocumentCopiesViewModel>, mode: string) {
-
+        if(!this.ObjectTableName) {
+            this.StopBusyIndicator();
+            return;
+        }
         this.IsDocumentBuildSucceeded = false;
         this.IsDocumentBuildFailed = false;
 
