@@ -104,6 +104,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             changeStorgeSiteService.ChangeSite(customResponse.UnLoadPortCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM,true);
                         }
+                        if (customResponse.LoadPortCode != null)
+                        {
+                            changeStorgeSiteService.ChangeSite(customResponse.LoadPortCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM, false,true);
+                        }
                     }
 
                     scopeNewCRS.Complete();
@@ -196,7 +200,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.context = context;
         }
 
-        public void ChangeSite(string SiteCode, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationPM> lockedDeclarations, DeclarationCourierStatusPM itemPM, Boolean isUnLoadPort)
+        public void ChangeSite(string SiteCode, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationPM> lockedDeclarations, DeclarationCourierStatusPM itemPM, Boolean isUnLoadPort, Boolean isLoadPort=false)
         {
 
 
@@ -245,7 +249,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 declarationPM.Consignments.FirstOrDefault().UnloadPortCode = SiteCode;
                             }
-                            else
+                            if (isLoadPort)
+                            {
+                                declarationPM.Consignments.FirstOrDefault().LoadingPortCode = SiteCode;
+                            }
+                            if (!isUnLoadPort && !isLoadPort)
                             {
                                 declarationPM.Consignments.FirstOrDefault().StorageSiteCode = SiteCode;
                             }
