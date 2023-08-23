@@ -178,10 +178,7 @@ var myService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
                 }
             });
         }
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
     }
     private LoadCompletedEvent: any = null;
 
