@@ -1680,7 +1680,7 @@
     QuerySection="&quot;ARPaymentCheque&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;ChequeNumber&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
@@ -1748,7 +1748,7 @@
     QuerySection="&quot;ARPaymentCheque&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;ChequeNumber&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
@@ -1806,7 +1806,7 @@
     QuerySection="&quot;ARPaymentCheque&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;ChequeNumber&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
