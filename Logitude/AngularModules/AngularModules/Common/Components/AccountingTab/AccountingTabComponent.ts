@@ -14,7 +14,8 @@ import { GLAccountPMService } from 'Accounting/Services/StandardPMs/GLAccountPMS
     <div class="TabHolder">
         <table>
             <tr class="TabTitleRow">
-                <td>{{TabTitleTextCode | TextCodeTranslationPipe}}
+                 <td>{{TabTitleTextCode | TextCodeTranslationPipe}}
+                     ({{AccountInfo}})
                </td>
             </tr>
 
