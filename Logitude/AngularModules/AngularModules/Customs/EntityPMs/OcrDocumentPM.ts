@@ -89,6 +89,11 @@ export class OcrDocumentPM {
     public set JsonData(newValue: string) { if (this.jsonData != newValue) { this.jsonData = newValue; this.MarkAsDirty("JsonData"); } }
        
 	 
+    private notConnect: boolean;
+    public get NotConnect() { return this.notConnect; }
+    public set NotConnect(newValue: boolean) { if (this.notConnect != newValue) { this.notConnect = newValue; this.MarkAsDirty("NotConnect"); } }
+       
+	 
 
     public OldEntityPM: OcrDocumentPM;
 		

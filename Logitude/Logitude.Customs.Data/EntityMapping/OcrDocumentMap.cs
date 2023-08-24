@@ -46,6 +46,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Reference).HasColumnName("Reference").HasMaxLength(30).IsUnicode(false);
 
             this.Property(t => t.JsonData).HasColumnName("JsonData").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.NotConnect).HasColumnName("NotConnect");
         }
     }
 }

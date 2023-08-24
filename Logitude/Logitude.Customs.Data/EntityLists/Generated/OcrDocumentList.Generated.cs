@@ -40,6 +40,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string Reference  { get; set; }
        [DataMember]
        public string JsonData  { get; set; }
+       [DataMember]
+       public bool? NotConnect  { get; set; }
    }
 
 }

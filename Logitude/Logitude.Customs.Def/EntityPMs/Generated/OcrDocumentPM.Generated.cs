@@ -319,6 +319,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? notConnect ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? NotConnect  
+	   {
+	    
+	     get
+		{
+		   return notConnect;
+		 }
+		 set
+		 {
+		   if(notConnect != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NotConnect",OldValue=notConnect,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   notConnect=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

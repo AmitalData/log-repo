@@ -49,6 +49,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Reference { get; set; }
         [Column("JsonData")]
 	    public string JsonData { get; set; }
+        [Column("NotConnect")]
+	    public bool? NotConnect { get; set; }
     }
 }
 	 
