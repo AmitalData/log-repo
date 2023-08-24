@@ -290,7 +290,7 @@
   <field
     Id="&quot;82dff151-998a-4ff8-a460-614ee9775829&quot;"
     FieldName="&quot;JsonUrl&quot;"
-    OldNames="JsonData,JsonUrl"
+    OldNames="JsonUrl"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"

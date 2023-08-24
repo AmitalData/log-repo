@@ -27,7 +27,6 @@
   </Column>
   <Column
     Name="JsonUrl"
-    OldNames="JsonData"
     Type="varchar"
     Size="500">
     <Constraints
