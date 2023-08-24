@@ -1732,6 +1732,7 @@
         PredefinedValue="&quot;5&quot;"
         ObjectFieldName="&quot;StatusCode&quot;"
         IsPredefined="true"
+        PredefinedValue2="&quot;6&quot;"
         Operator="&quot;NotEqual&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
