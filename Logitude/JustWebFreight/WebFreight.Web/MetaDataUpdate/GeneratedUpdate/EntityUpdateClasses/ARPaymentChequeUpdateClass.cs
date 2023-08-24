@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ARPaymentChequeUpdateClass
    {  		
-		public const string HashString = "0a69214a74a6e28627fe257340314037";
+		public const string HashString = "e8dc8c62813e3bb6e4e005230a260b75";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1579,7 +1579,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn UnRedeemedChequesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARPaymentCheque.LocalAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter UnRedeemedChequesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPaymentCheque.StatusCode", PredefinedValue = "5",PredefinedValue2 = "6", CustomPredefined = false, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+             AdvancedQueryFilter UnRedeemedChequesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPaymentCheque.StatusCode", PredefinedValue = "5",PredefinedValue2 = null, CustomPredefined = false, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter UnRedeemedChequesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPaymentCheque.StatusCode", PredefinedValue = "6",PredefinedValue2 = null, CustomPredefined = false, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
   
 	      
