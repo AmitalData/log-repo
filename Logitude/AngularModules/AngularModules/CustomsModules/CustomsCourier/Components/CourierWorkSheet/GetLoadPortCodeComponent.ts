@@ -40,8 +40,8 @@ export class GetLoadPortCodeComponent extends BaseComponent {
 
     FillErrors() {
         this.ValidationErrorsList = [];
-        if (AppTool.IsNullOrEmpty(this.LoadPortCode)) {
-            this.ValidationErrorsList.push("Storage Site Field is Required");
+        if (AppTool.IsNullOrEmpty(this.LoadingPortCode)) {
+            this.ValidationErrorsList.push("Load Site Field is Required");
 
         } else {
             this.ValidationErrorsList = [];
@@ -51,8 +51,8 @@ export class GetLoadPortCodeComponent extends BaseComponent {
 
     // Properties
     private _LoadPortCode: string;
-    public get LoadPortCode() { return this._LoadPortCode; }
-    public set LoadPortCode(newValue: string) {
+    public get LoadingPortCode() { return this._LoadPortCode; }
+    public set LoadingPortCode(newValue: string) {
         this._LoadPortCode = newValue;
         this.ValidationErrorsList = [];
     }
@@ -85,17 +85,17 @@ export class GetLoadPortCodeComponent extends BaseComponent {
     }
 
     ChangeLoadPortCode() {
-        this.SendALLChangeUnloadPortCode();
+        this.SendALLChangeLoadPortCode();
     }
 
-    SendALLChangeUnloadPortCode() {
+    SendALLChangeLoadPortCode() {
 
         var currRequestParams = new SendALLStorageSiteRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.CourierMasterPM.Id;
-        currRequestParams.LoadPortCode = this.LoadPortCode;
+        currRequestParams.LoadPortCode = this.LoadingPortCode;
         currRequestParams.RequestName = "עדכון נמל טעינה";
 
         this._CourierMasterService.PostSendALLChangeStorageSiteCode(currRequestParams)

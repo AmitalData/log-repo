@@ -2439,7 +2439,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.IsShowCloseButton = true;
         logitudeWindow.Title = "עדכון נמל טעינה";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
         logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/ChangeLoadPortCode');
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetLoadPortCodeComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             this.RefreshButtonClicked();
         });
