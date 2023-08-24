@@ -142,7 +142,9 @@ namespace CommunicationWorkerRole
             ICommonDataContext commonContext = CommonDataContext.GetContext(analyzeQueue.Tenant);
             CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
             DocumentRepository documentrepository = new DocumentRepository(commonContext);
-            var MsgBody = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
+            var MsgBody = Encoding.UTF8.GetString(Encoding.Convert(
+             Encoding.Default, Encoding.UTF8, analyzeQueue.MessageBody.Where(b => b != '\n').ToArray())
+            );
             List<QueueTask> tasks = new List<QueueTask>();
             //&AnalyzeQueueDateTime=0103191133
             var AnalyzeQueueCreateDate = analyzeQueue.CreateDate.ToString("ddMMyyhhmm");
