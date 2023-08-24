@@ -139,6 +139,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     RaiseEvent(lockedDeclarations.FirstOrDefault(), declarationsList, "FSE", message);
                 }
+                if (customResponse.LoadPortCode != null)
+                {
+                    RaiseEvent(lockedDeclarations.FirstOrDefault(), declarationsList, "FSE", message);
+                }
             }
 
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
