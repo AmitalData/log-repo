@@ -74,7 +74,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             return (from a in context.SupplierInvoices
                     where a.DeclarationId == declarationId && a.Tenant == tenant
-                    select a).Max(d => d.SequenceNumeric ?? 0);
+                    select a).Max(d => d.SequenceNumeric);
         }
 
         public SupplierInvoice GetSupplierInvoiceBySequenceNumeric(string declarationId, int sequenceNumeric)
