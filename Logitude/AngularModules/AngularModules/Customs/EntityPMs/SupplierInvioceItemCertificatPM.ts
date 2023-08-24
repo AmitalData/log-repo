@@ -162,4 +162,4 @@ export class SupplierInvioceItemCertificatPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

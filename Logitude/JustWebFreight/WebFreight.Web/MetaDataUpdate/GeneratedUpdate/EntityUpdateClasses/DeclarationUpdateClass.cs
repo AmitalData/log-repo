@@ -85,11 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
- 
-
-		public const string HashString = "5b490013d5ca397d85b70910ea7ac560";
- 
+		public const string HashString = "b406f2d8c0f24453ef14ab80bb04922f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -21674,7 +21670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOManifestwillnotsent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Manifestwillnotsent", DefaultText = "Manifest data will not be sent to customs",LocalDefaultText = @"נתוני מצהר לא ישלחו במסר הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationONotCarriedInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NotCarriedInsurance", DefaultText = "nsurance was not carried out due to differences in currency/shipping conditions between the accounts",LocalDefaultText = @"לא בוצע ביטוח בגלל שוני במטבע/תנאי משלוח בין החשבונות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 
+
  		   TextCode DeclarationTextCode_CustomsDeclarationOImporterCourierFromExcel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterCourierFromExcel", DefaultText = "Worksheet From Excel",LocalDefaultText = @"הטענת ש.מ.ב מאקסל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Choose", DefaultText = "Choose",LocalDefaultText = @"בחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -21688,7 +21684,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOReferentsThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReferentsThatSelected", DefaultText = "Referents that selected",LocalDefaultText = @"רפרנטים שנבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOexportFilterMenu = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.exportFilterMenu", DefaultText = "Filters for multiple select",LocalDefaultText = @"סינון מתקדם", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 
 
    
 	    
