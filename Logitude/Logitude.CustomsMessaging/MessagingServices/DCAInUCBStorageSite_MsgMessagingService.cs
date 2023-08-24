@@ -112,7 +112,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = LoggingUserId,
                 HAWB = mySendALLStorageSiteRequestParams.HAWB,
                 StorageSiteCode = mySendALLStorageSiteRequestParams.StorageSiteCode,
-                LoadPortCode = mySendALLStorageSiteRequestParams.LoadPortCode,
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
