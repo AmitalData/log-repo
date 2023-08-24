@@ -51,6 +51,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                          PaymentNumber = a.PaymentId != null ? a.Payment.PaymentNo : null,
 
+                                                         StatusCode = a.StatusCode,
+
+                                                        StatusName =  a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.LocalName : null ,
+
                                                      });
             return query;
         }

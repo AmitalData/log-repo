@@ -1732,7 +1732,6 @@
         PredefinedValue="&quot;5&quot;"
         ObjectFieldName="&quot;StatusCode&quot;"
         IsPredefined="true"
-        PredefinedValue2="&quot;6&quot;"
         Operator="&quot;NotEqual&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
@@ -1852,7 +1851,17 @@
         ObjectFieldName="&quot;PaymentNumber&quot;"
         ColumnWidth="100" />
     </QueryColumns>
-    <QueryFilters />
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;Postponed Cheques&quot;"
+        PredefinedValue="&quot;#today&quot;"
+        ObjectFieldName="&quot;ValueDate&quot;"
+        IsPredefined="true"
+        PredefinedValue2="&quot;#today&quot;"
+        Operator="&quot;Between&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
   </Query>
   <Screen
     Name="&quot;ARPaymentChequeHeaderScreen&quot;"
