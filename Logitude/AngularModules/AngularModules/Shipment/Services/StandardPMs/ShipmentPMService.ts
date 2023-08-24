@@ -2878,5 +2878,6 @@ export class ShipmentPMService {
 export type UrlAndLogo = {
     url: string
     logo: string
+    serviceAgreementURL: string
 }
   
