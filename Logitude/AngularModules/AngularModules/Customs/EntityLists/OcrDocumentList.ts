@@ -21,6 +21,7 @@ export class OcrDocumentList {
 	DocId: string;
 	Reference: string;
 	JsonData: string;
+	NotConnect: boolean;
 	
 }
  

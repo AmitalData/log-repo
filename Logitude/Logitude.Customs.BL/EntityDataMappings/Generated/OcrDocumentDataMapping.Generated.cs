@@ -33,7 +33,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OcrId, 
 	         DocId, 
 	         Reference, 
-	         JsonData,
+	         JsonData, 
+	         NotConnect,
 	      }
 
 
@@ -52,7 +53,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OcrId, 
 	         DocId, 
 	         Reference, 
-	         JsonData,
+	         JsonData, 
+	         NotConnect,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -114,6 +116,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JsonData))
             {
 				entityPOCO.JsonData = entityPM.JsonData;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotConnect))
+            {
+				entityPOCO.NotConnect = entityPM.NotConnect;
 			}
 			}
 
@@ -180,6 +187,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.JsonData = entityPOCO.JsonData;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NotConnect))
+            {
+					entityPM.NotConnect = entityPOCO.NotConnect;
+            }
+
 		}
 
 		public void PMToOldPM(OcrDocumentPM entityPM, OcrDocumentPM oldEntityPM)
@@ -239,6 +251,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JsonData))
             {
                 oldEntityPM.JsonData = entityPM.JsonData;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotConnect))
+            {
+                oldEntityPM.NotConnect = entityPM.NotConnect;
             }
 			
 		}

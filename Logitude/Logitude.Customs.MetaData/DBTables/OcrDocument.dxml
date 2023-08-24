@@ -90,6 +90,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="NotConnect"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="StatusCode"
     ReferencedTable="OcrStatuses"
