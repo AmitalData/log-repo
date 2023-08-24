@@ -120,7 +120,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 string myCustomFileNo = declarationQueryService.GetCustomFileNoByDeclarationNumber(relatedEntityItem.entityIdKey1, requestParams.Tenant);
                                 
-                                if (string.IsNullOrEmpty(myCustomFileNo))
+                                if (!string.IsNullOrEmpty(myCustomFileNo))
                                 {
                                     relatedEntity.EntityIdExternalReferenceID = myCustomFileNo;
                                     if (agentMasavPaymentItem.RelatedEntity.Count() == 1)

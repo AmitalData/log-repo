@@ -33,12 +33,12 @@ BEGIN
 SELECT id
 INTO   v_dummy
 FROM   declarations
-WHERE  courierhawb = v_courierhawbList(i) and AmendmentDontDisplayInList=0;;
+WHERE  courierhawb = v_courierhawbList(i) and AmendmentDontDisplayInList=0;
 -- If the string exists, insert the selected column value into TableB
 INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid,CustomFileNo)
 SELECT v_Tenant, v_userid, id,CustomFileNo
 FROM   declarations
-WHERE  courierhawb = v_courierhawbList(i) and AmendmentDontDisplayInList=0;;
+WHERE  courierhawb = v_courierhawbList(i) and AmendmentDontDisplayInList=0;
 EXCEPTION
 WHEN NO_DATA_FOUND THEN
 -- If the string doesn't exist, add it to the not found strings collection
