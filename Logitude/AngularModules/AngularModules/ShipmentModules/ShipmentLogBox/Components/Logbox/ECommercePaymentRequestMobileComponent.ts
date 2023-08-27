@@ -67,6 +67,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     tenantManagement: TenantManagementPM;
     logoImg: string = '';
     logoUrl: string = '';
+    serviceAgreementURL: string = '';
 
     constructor(private cd: ChangeDetectorRef) {
         super();
@@ -393,7 +394,11 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
         //if (myResult.Result) { 
         //var securityId = myResult.Result.SecurityId;
-        DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
+
+        if(this.serviceAgreementURL)
+            open(this.serviceAgreementURL)
+        else
+            DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
         //  }
         //});
 
@@ -403,6 +408,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         const data: UrlAndLogo = await this._ShipmentPMService.getLogoAndUrlWithoutToken(securityKey)
         this.logoImg = data.logo;
         this.logoUrl = data.url;
+        this.serviceAgreementURL = data.serviceAgreementURL;
     }
 
     openLogoUrl() {
