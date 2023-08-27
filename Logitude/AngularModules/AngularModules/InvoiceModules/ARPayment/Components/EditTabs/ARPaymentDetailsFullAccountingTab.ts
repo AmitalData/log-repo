@@ -760,7 +760,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.UIProperties.SetEnabled("ChequeAmount", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("BankTransferAmount", this.ObjectTableName, true);
 
-            if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId) && !SessionLocator.TenantPM.AccountingActivated) {
                 this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             }
 
