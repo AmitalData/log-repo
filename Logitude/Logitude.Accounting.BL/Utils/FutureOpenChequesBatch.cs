@@ -5,6 +5,7 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -74,9 +75,9 @@ namespace Logitude.Accounting.BL.Utils
                                 FullAccountingSettingPM fullAccountingSettingPM = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant.Id);
                                 if (fullAccountingSettingPM != null && fullAccountingSettingPM.AccountingActivated)
                                 {
-                                    List<ARPaymentChequePM> aRPaymentCheques = null;
+                                    List<ARPaymentChequePM> aRPaymentChequePMs = null;
                                     ARPaymentChequeQueryService queryService = new ARPaymentChequeQueryService(tenant.Id);
-                                    aRPaymentCheques = queryService.GetOpenARPaymentCheques(tenant.Id);
+                                    //aRPaymentCheques = queryService.GetOpenARPaymentCheques(tenant.Id);
                                     //ARPaymentRepository repo = new ARPaymentRepository(tenant.Id);
                                     //CardRepository cardRepo = new CardRepository(tenant.Id);
                                     GLAccountMoreDataQueryService moreDataQueryService = new GLAccountMoreDataQueryService(tenant.Id);
@@ -104,15 +105,21 @@ namespace Logitude.Accounting.BL.Utils
                                             if (moreDataPM != null)
                                             {
                                                 moreDataPM.TotFutureOpenChequesInLocalCur = 0;
-                                                if (item.PaymentId != null) {
+                                                if (item.PaymentId != null)
+                                                {
                                                     moreDataPM.TotalOpenChequesInLocalCur = 0;
                                                     List<string> paymentIds = data.Where(d => d.GLAccountId == item.GLAccountId).Select(d => d.PaymentId).ToList();
 
-                                                    List<ARPaymentChequePM> aRPaymentChequePMs = (from a in aRPaymentCheques
-                                                                                                  where paymentIds.Contains(a.PaymentId)
-                                                                                                  select a).ToList();
+                                                    List<ARPaymentCheque> aRPaymentCheque = (from a in MyContext.ARPaymentCheques
+                                                                                              join j in MyContext.Journals
+                                                                                              on a.PaymentId equals j.AccountingEntityId
+                                                                                              join transaction in MyContext.LedgerTransactions
+                                                                                              on j.Id equals transaction.JournalId
+                                                                                              where paymentIds.Contains(a.PaymentId) && a.Tenant == tenant.Id && transaction.Reference2 == a.ChequeNumber
+                                                                                              select a).Distinct().ToList();
 
 
+                                                    aRPaymentChequePMs = aRPaymentCheque.Select(r => queryService.GetEntityPM(r)).ToList();
                                                     foreach (ARPaymentChequePM paymentCheque in aRPaymentChequePMs)
                                                     {
                                                         if (moreDataPM.TotalOpenChequesInLocalCur == null) moreDataPM.TotalOpenChequesInLocalCur = 0;
