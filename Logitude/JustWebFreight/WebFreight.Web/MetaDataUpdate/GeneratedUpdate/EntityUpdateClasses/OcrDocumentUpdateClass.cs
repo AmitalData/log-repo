@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OcrDocumentUpdateClass
    {  		
-		public const string HashString = "51104f9dc295fe1dd4cf069da4be5fec";
+		public const string HashString = "07e5314c4079509422a3a0ba09cc6c6b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Ocr Document",
-			      				    Code =  "c7fd",
+			      				    Code =  "9e8e",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -850,6 +850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "NotConnect",
 					  						ListPropertyPath =  "NotConnect",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1004,6 +1005,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOOpenOcrInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.OpenOcrInvoice", DefaultText = "Open SupplierInvoice - OCR",LocalDefaultText = @"פתיחת חשבון יצואן - OCR", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode OcrDocumentTextCode_CustomsOcrDocumentODCAOCRInPrograss = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.DCAOCRInPrograss", DefaultText = "Open Supplierinvoice - OCR in prograss, cannot be linked",LocalDefaultText = @"פתיחת חשבון יצואן - OCR בתהליך , לא ניתן לקשר מסמכים", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOConnectToDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ConnectToDec", DefaultText = "Document Connect To Another Ticket",LocalDefaultText = @"המסמך מקושר להצהרה אחרת", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

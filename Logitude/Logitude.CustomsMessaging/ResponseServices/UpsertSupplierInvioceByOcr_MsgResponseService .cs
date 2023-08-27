@@ -135,8 +135,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                                 
                             }
-                            
-                            
+                            myOcrDocument.NotConnect = true;
+                            OcrDocumentUpdateService ocrDocumentUpdateService = new OcrDocumentUpdateService(context, new Dictionary<string, IContext>(), customResponse.tenant);      
+                            OcrDocumentPM myOcrDocumentPM = ocrDocumentService.GetEntityPM(myOcrDocument, false);
+                            myOcrDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
+                            ocrDocumentUpdateService.Update(myOcrDocumentPM, true);
+
                             this.MyResponseData.Succeeded = true;
                             this.MyResponseData.HasException = false;
                             string InvoiceSuccess = Result.isNewInvoice ? "Customs.OcrDocument.O.InvoiceSuccessfullyOpened" : "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully";                            this.MyResponseData.UserMessage =

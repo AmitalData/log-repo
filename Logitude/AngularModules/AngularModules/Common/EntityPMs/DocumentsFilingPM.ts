@@ -589,7 +589,10 @@ export class DocumentsFilingPM {
     public get OcrReference() { return this.ocrReference; }
     public set OcrReference(newValue: string) { if (this.ocrReference != newValue) { this.ocrReference = newValue; this.MarkAsDirty("OcrReference"); } } 
       
-
+    private ocrNotConnect: boolean;
+    public get OcrNotConnect() { return this.ocrNotConnect; }
+    public set OcrNotConnect(newValue: boolean) { if (this.ocrNotConnect != newValue) { this.ocrNotConnect = newValue; this.MarkAsDirty("OcrNotConnect"); } } 
+     
     public OldEntityPM: DocumentsFilingPM;
 		
     public IsDirty: boolean;

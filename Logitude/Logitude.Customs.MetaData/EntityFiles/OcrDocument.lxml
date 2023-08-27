@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Ocr Document&quot;"
-  Code="&quot;c7fd&quot;"
+  Code="&quot;9e8e&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -1065,6 +1065,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;NotConnect&quot;"
     ListPropertyPath="&quot;NotConnect&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1238,6 +1239,12 @@
       Code="&quot;Customs.OcrDocument.O.DCAOCRInPrograss&quot;"
       DefaultText="&quot;Open Supplierinvoice - OCR in prograss, cannot be linked&quot;"
       LocalDefaultText="&quot;פתיחת חשבון יצואן - OCR בתהליך , לא ניתן לקשר מסמכים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.OcrDocument.O.ConnectToDec&quot;"
+      DefaultText="&quot;Document Connect To Another Ticket&quot;"
+      LocalDefaultText="&quot;המסמך מקושר להצהרה אחרת&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

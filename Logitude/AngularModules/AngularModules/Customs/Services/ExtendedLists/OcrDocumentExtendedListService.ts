@@ -22,6 +22,7 @@ export class OcrDocumentExtendedListService {
     GetOcrDocumentByDocumentFilingId(tenant: number, docId: string) {
 
         return defer(() => {
+            docId =  encodeURIComponent(docId);
             return this._http.get(this._apiUrl + '/GetOcrDocumentByDocId/?' + 'tenant=' + tenant + '&docId=' + docId,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
