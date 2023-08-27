@@ -28,6 +28,8 @@ import { DocumentTypeCustomsDataPMService } from '../../../Customs/Services/Stan
 import { CustomDocumentNewVersionService } from "../services/CustomDocumentNewVersion.service";
 import { SessionComponent } from "Infrastructure/Components/Session/SessionComponent";
 import { OcrDocumentExtendedListService } from "Customs/Services/ExtendedLists/OcrDocumentExtendedListService";
+import { OcrDocumentPM } from "Customs/EntityPMs/OcrDocumentPM";
+import { OcrDocumentPMService } from "Customs/Services/StandardPMs/OcrDocumentPMService";
 
 export class CustomsDocumentTicketViewModel {
 
@@ -639,11 +641,10 @@ export class CustomsDocumentTicketViewModel {
                 });
             }
             else {
-                
 
                 var ocrStatuses = ['1','3','7','8','9'];
 
-                if(ocrStatuses.includes(relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode))
+                if(ocrStatuses.includes(relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode) || relatedDocumentViewModel.documentsFilingPM?.OcrNotConnect)
                 {
                     SessionLocator.SelectedSession.StopBusyIndicator();
                     var status: string = null;
@@ -664,11 +665,14 @@ export class CustomsDocumentTicketViewModel {
                           break;
                     }
                     
-
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.ShowNoButton = true;
-                    
-                    var ShowMessage = TextCodeTranslator.Translate("Customs.OcrDocument.O.OcrStatus") + " " + status + " ,\n" + TextCodeTranslator.Translate("Customs.OcrDocument.O.ContinueAnyway")
+                    var ShowMessage = "";
+                    if(relatedDocumentViewModel.documentsFilingPM?.OcrNotConnect)
+                        ShowMessage = TextCodeTranslator.Translate("Customs.OcrDocument.O.ConnectToDec") + " ,\n";
+                    if(!AppTool.IsNullOrEmpty(status))
+                        ShowMessage += TextCodeTranslator.Translate("Customs.OcrDocument.O.OcrStatus") + " " + status + " ,\n"
+                    ShowMessage += TextCodeTranslator.Translate("Customs.OcrDocument.O.ContinueAnyway")
                     confirmWindow.Show(ShowMessage);
                     confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
@@ -684,6 +688,7 @@ export class CustomsDocumentTicketViewModel {
                 });
 
                 }
+
 
                 else if(relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode == "2" || relatedDocumentViewModel.documentsFilingPM?.OcrStatusCode == "4" )
                 {
@@ -1179,7 +1184,23 @@ export class CustomsDocumentTicketViewModel {
                 applyDisconnect = false;
                 message = "לא ניתן לנתק את המסמך - קיימת בקשה בתהליך";
             }
+            if(this.EntityPM.Direction == 'E' && applyDisconnect && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM?.DocumentsFilingId)){
+                var ocrDocumentExtendedListService: OcrDocumentExtendedListService = new OcrDocumentExtendedListService();                
+                ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, this.customsDocumentsTicketPM.DocumentsFilingId).subscribe((response)=>{
+                    if(response?.Result?.NotConnect){
+                        var ocrDocumentPM : OcrDocumentPM = response.Result;
+                        ocrDocumentPM.NotConnect = false;
+                        var ocrDocumentPMService: OcrDocumentPMService = new OcrDocumentPMService();   
+                        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));   
+                        ocrDocumentPMService.update(ocrDocumentPM).subscribe(()=>{
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                        });             
+                    }
+                });
+            }
+            
         }
+       
         if (applyDisconnect) {
             this.ApplyDisconnectFromDocument(true);
         }

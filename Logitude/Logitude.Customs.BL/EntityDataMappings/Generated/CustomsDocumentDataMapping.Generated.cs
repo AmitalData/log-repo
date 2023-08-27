@@ -73,7 +73,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ParentRequestId, 
 	         OcrScore, 
 	         OcrStatusCode, 
-	         OcrReference,
+	         OcrReference, 
+	         OcrNotConnect,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

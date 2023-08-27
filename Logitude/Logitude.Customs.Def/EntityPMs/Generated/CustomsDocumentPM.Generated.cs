@@ -860,6 +860,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool ocrNotConnect ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool OcrNotConnect  
+	   {
+	    
+	     get
+		{
+		   return ocrNotConnect;
+		 }
+		 set
+		 {
+		   if(ocrNotConnect != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrNotConnect",OldValue=ocrNotConnect,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   ocrNotConnect=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

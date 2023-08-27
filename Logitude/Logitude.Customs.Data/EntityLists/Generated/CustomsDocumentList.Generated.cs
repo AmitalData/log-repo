@@ -44,6 +44,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string OcrStatusCode  { get; set; }
        [DataMember]
        public string OcrReference  { get; set; }
+       [DataMember]
+       public bool OcrNotConnect  { get; set; }
    }
 
 }

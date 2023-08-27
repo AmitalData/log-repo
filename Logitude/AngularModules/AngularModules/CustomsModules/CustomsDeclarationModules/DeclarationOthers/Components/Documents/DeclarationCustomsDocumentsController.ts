@@ -231,7 +231,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                         if(RelatedDocuments != null){
                             RelatedDocuments.forEach((relatedDocument) => {
                                
-                                    if( !AppTool.IsNullOrEmpty(relatedDocument.documentsFilingPM.OcrStatusCode) && !AppTool.IsNullOrEmpty(relatedDocument.documentsFilingPM.OcrReference))
+                                    if( !AppTool.IsNullOrEmpty(relatedDocument.documentsFilingPM.OcrStatusCode) && !AppTool.IsNullOrEmpty(relatedDocument.documentsFilingPM.OcrReference) && !relatedDocument.documentsFilingPM.OcrNotConnect)
                                     {
                                         var entityParams: RelatedEntityParams = new RelatedEntityParams();
                                         entityParams.ParentEntityCode = 'Declaration';

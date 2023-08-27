@@ -372,6 +372,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                        OcrStatusCode = o != null ? o.StatusCode : null,
                        OcrScore = o != null && o.Score != null ? (decimal)o.Score : -1, 
                        OcrReference = o != null && o.Reference != null ? o.Reference : null, 
+                       OcrNotConnect = o != null && o.NotConnect == true ? true : false, 
 
                    }).FirstOrDefault();
 

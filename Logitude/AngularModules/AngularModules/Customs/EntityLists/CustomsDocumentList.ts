@@ -23,6 +23,7 @@ export class CustomsDocumentList {
 	OcrScore: number;
 	OcrStatusCode: string;
 	OcrReference: string;
+	OcrNotConnect: boolean;
 	
 }
  

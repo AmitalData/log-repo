@@ -2290,6 +2290,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     extDocPm.OcrStatusCode = customsDoc.OcrStatusCode;
                     extDocPm.OcrScore = customsDoc.OcrScore;
                     extDocPm.OcrReference = customsDoc.OcrReference;
+                    extDocPm.OcrNotConnect = customsDoc.OcrNotConnect;
+
                 }
 
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValuesList;//.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
