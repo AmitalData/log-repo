@@ -107,6 +107,7 @@ export class CopyJournalComponent extends BaseComponent implements OnInit  {
                 });
             });
     }
+    
     CopyJournalData(entityPM: JournalPM) {    
             for (var i = 0; i < this.EntityPM.JournalLines.length; i++) {
                 var line: JournalLinePM = this.NewJournalLine(entityPM, this.EntityPM.JournalLines[i]);
@@ -127,8 +128,8 @@ export class CopyJournalComponent extends BaseComponent implements OnInit  {
         journalLine.DocumentDate = this.Dates ? originalJourbnalLine.DocumentDate : this.DocumentDate;
         journalLine.CurrencyId = this.AmountsAndCurrencies ? originalJourbnalLine.CurrencyId : null;
         journalLine.CurrencyCode = this.AmountsAndCurrencies ? originalJourbnalLine.CurrencyCode : null;    
-        journalLine.LocalAmount = this.AmountsAndCurrencies ? originalJourbnalLine.LocalAmount : null;
-        journalLine.ForeignAmount = this.AmountsAndCurrencies ? originalJourbnalLine.ForeignAmount : null;
+        journalLine.LocalAmount = this.AmountsAndCurrencies ? originalJourbnalLine.LocalAmount * this.coefficientForAmountsAndCurrencies : null;
+        journalLine.ForeignAmount = this.AmountsAndCurrencies ? originalJourbnalLine.ForeignAmount * this.coefficientForAmountsAndCurrencies : null;
         
         return journalLine;
     }
@@ -137,6 +138,14 @@ export class CopyJournalComponent extends BaseComponent implements OnInit  {
     set AmountsAndCurrencies(value: boolean) {
         if (this.amountsAndCurrencies != value) {
             this.amountsAndCurrencies = value;
+        }
+    }
+    
+    private coefficientForAmountsAndCurrencies: number = 1;
+    get CoefficientForAmountsAndCurrencies() { return this.coefficientForAmountsAndCurrencies; }
+    set CoefficientForAmountsAndCurrencies(value: number) {
+        if (this.coefficientForAmountsAndCurrencies != value) {
+            this.coefficientForAmountsAndCurrencies = value;
         }
     }
 
