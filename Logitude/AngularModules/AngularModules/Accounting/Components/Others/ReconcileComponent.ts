@@ -33,7 +33,7 @@ import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { APPaymentPM } from 'Invoice/EntityPMs/APPaymentPM';
-import { delay, expand, takeLast } from 'rxjs/operators';
+import { count, delay, expand, takeLast } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 
@@ -1351,7 +1351,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         // this.SelectedLines = new ObservableCollection([]);
     }
 
+    
     PushLine(row, RowIndex) {
+        let countLines:number = 500;
+
         var index = this.SelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
             row.AmountToReconcile = row.OpenAmount;
@@ -1359,9 +1362,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.SelectedLines.Insert(r);
             //this.SelectedLines.push(r);
             this.CalculateTotals();
+            let selectMoreLines = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SML")[0] ? true : false;
 
             // update select all checkbox
-            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 2000)
+            if (selectMoreLines)
+            {
+                countLines = 2000;
+            }
+           
+            
+            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= countLines)
                 this._isAllSelected = true;
             if(this.isFullAccounting)
             {
