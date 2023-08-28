@@ -28,6 +28,17 @@
                 </div>
             </div>
             <div>
+                <div float-start style="width: 160px;">{{'Journal.O.CoefficientForAmountsAndCurrencies' | TextCodeTranslationPipe}}</div>
+                <div float-start style="width: 20px; padding-top: 5px;">
+                    <LogTextBox style="width:240px;" [ObjectFieldName]="'CoefficientForAmountsAndCurrencies'"                    
+                     [NoObjectField]="true"
+                        [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'integertext'"
+                        [DataContext]="DataContext">
+                    </LogTextBox>
+                </div>
+            </div>
+           
+            <div>
                 <div float-start style="width: 160px;">{{'Journal.O.Dates' | TextCodeTranslationPipe}}</div>
                 <div float-start style="width: 20px; padding-top: 5px;">
                     <CheckBox [IsChecked]="Dates" (Checked)="Dates = $event"></CheckBox>
