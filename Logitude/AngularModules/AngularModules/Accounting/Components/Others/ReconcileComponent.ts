@@ -575,6 +575,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
         if (v) {
             //this.GetFirst5000LedgerForReconciliation();
+
+            // Take selcted lines by defualt = 500 ; if toggle feature is active = 2000
             this.GetFirstXLedgerForReconciliationByParam();
             if(this.isFullAccounting)
             {
@@ -1353,7 +1355,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     
     PushLine(row, RowIndex) {
-        let countLines:number = 500;
 
         var index = this.SelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
@@ -1362,16 +1363,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.SelectedLines.Insert(r);
             //this.SelectedLines.push(r);
             this.CalculateTotals();
-            let selectMoreLines = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SML")[0] ? true : false;
 
-            // update select all checkbox
-            if (selectMoreLines)
-            {
-                countLines = 2000;
-            }
-           
             
-            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= countLines)
+            // update select all checkbox
+            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 2000)
                 this._isAllSelected = true;
             if(this.isFullAccounting)
             {
@@ -1529,7 +1524,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         if (this.foreignAmountFilter) {
             filters.AdditionalFilters.push(this.foreignAmountFilter);
         }
-        filters.PageSize = 500;
+        filters.PageSize = 2000;
         filters.PageIndex = 1; // decremented 1 in the service
         filters.GetAll = true;
         filters.GetCount = true;
