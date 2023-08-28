@@ -268,23 +268,7 @@
                                     </td>
                                 </tr>
 
-                                <!-- SecurityLevel -->
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'SecurityLevel'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td style="top:10px;">
-                                        <div style="width:90px">
-                                            <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1" [max]="UserSecurityLevel" [allowNull]="true"></NumberInput>
-                                        </div>
-                                    </td>
-                                    <td><div></div></td>
-                                </tr>
+                  
                             </table>
                         </td>
                         <td>
@@ -306,20 +290,33 @@
           <!-- Journal Rows -->
           <tr style="height: 20px;">
             <td style="padding: 4px;">
-              <table>
-                <tr>
-                  <td>
-                    <div>
-                      <IconButton [Name]="'Add'" [disabled]="journalDisabled" (click)="AddLine()" [style.float]="isRTL ? 'right' : 'left'"></IconButton>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="float: right; padding: 4px; width: 250px;">
-                      <!--<button class="Button" (click)="Test()">Test</button>-->
-                      <!--<SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>-->
-                    </div>
-                  </td>
-                </tr>
+                <table>
+                    <tr>
+                        <!-- SecurityLevel -->
+
+                        <td>
+                            <div style="float: right; padding: 4px; width: 1400px;">
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width:120px">
+                                <LogLabel [ObjectFieldName]="'SecurityLevel'" [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"></LogLabel>
+                               </div>
+                        </td>
+
+                        <td style="top:10px;">
+                            <div style="width:90px">
+                                <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1" [max]="UserSecurityLevel" [allowNull]="true"></NumberInput>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <IconButton [Name]="'Add'" [disabled]="journalDisabled" (click)="AddLine()" [style.float]="isRTL ? 'right' : 'left'"></IconButton>
+                            </div>
+                        </td>
+                       
+                    </tr>
               </table>
             </td>
           </tr>
