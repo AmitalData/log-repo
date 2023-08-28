@@ -125,6 +125,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                      message = string.Concat("אתר פריקה בטיסה השתנה ל ", customResponse.UnLoadPortCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
                 }
+                if (customResponse.LoadPortCode != null)
+                {
+                    message = string.Concat("נמל טעינה בטיסה השתנה ל", customResponse.LoadPortCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
+                }
                 mess.AppendLine("\n" + "Locked Declarations: " + "\n");
                 foreach (DeclarationPM itemDeclaration in lockedDeclarations)
                 {
