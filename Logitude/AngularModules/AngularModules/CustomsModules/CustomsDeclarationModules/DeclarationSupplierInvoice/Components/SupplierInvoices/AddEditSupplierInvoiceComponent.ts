@@ -232,7 +232,9 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             //Calculate commission percentage value
             //this.CalculateCommissionPercentage();
-            this.GetCustomerCommissions();
+            if (!this.IsDisplayOnly) {
+                this.GetCustomerCommissions();
+            }
         }
 
         var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
