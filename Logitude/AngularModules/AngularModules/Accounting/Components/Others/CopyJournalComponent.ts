@@ -145,7 +145,6 @@ export class CopyJournalComponent extends BaseComponent implements OnInit  {
     get CoefficientForAmountsAndCurrencies() { return this.coefficientForAmountsAndCurrencies; }
     set CoefficientForAmountsAndCurrencies(value: number) {
         if (this.coefficientForAmountsAndCurrencies != value) {
-            debugger
             this.coefficientForAmountsAndCurrencies = value;
         }
     }
