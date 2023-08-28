@@ -753,7 +753,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         
        var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
-        windowArgs.IsInBankAccountStatus = true;
+        windowArgs.IsUnpaidChecks = true;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1100;
         logWindow.Height = 600;

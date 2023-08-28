@@ -21,15 +21,15 @@ namespace Logitude.Accounting.BL.CoreBL
         const string paymentIconCode = "PY";
         const string journalIconCode = "JR";
         bool _IsFutureOpenCheques = false;
-        bool _IsInBankAccountStatus = false;
+        bool _IsUnpaidChecks = false;
 
-        public GLAccountChequesTransactionsRetreivingService(int Tenant, IAccountingContext context, bool isFutureOpenCheques = false, bool isInBankAccountStatus = false)
+        public GLAccountChequesTransactionsRetreivingService(int Tenant, IAccountingContext context, bool isFutureOpenCheques = false, bool isUnpaidChecks = false)
         {
             tenant = Tenant;
             this.accountingContext = context;
             this.showLocal = GetLoggedContactShowLocal(tenant);
             _IsFutureOpenCheques = isFutureOpenCheques;
-            _IsInBankAccountStatus = isInBankAccountStatus;
+            _IsUnpaidChecks = isUnpaidChecks;
         }
 
         public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId, string sortBy, string sortDirection)
@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (_IsFutureOpenCheques) {
                 query = query.Where(x => x.PaymentValueDate > today);
             }
-            if (_IsInBankAccountStatus)
+            if (_IsUnpaidChecks)
             {
                 query = query.Where(x => x.PaymentValueDate <= today);
             }
@@ -234,7 +234,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 query2 = query2.Where(x => x.PaymentValueDate > today);
             }
 
-            if (_IsInBankAccountStatus)
+            if (_IsUnpaidChecks)
             {
                 query1 = query1.Where(x => x.PaymentValueDate <= today);
                 query2 = query2.Where(x => x.PaymentValueDate <= today);
