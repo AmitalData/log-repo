@@ -39,6 +39,9 @@ export class DeclarationFiltersMenuComponent
         this.isExport = this.CurrentSession.CurrentListComponent.MenuTableQuerySection == "Customs.ExportDeclaration";
     }
 
+    SetFiltersMenu(args: any) {
+    }
+
     itemMouseLeave(itemValue: string) {
         if (this.SelectedValue != itemValue) {
             var img_A = document.getElementById(this.TransportFilter_A);
