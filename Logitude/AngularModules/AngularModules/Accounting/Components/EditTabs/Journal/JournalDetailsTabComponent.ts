@@ -178,10 +178,11 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     getAccountingSettingSecurityLevelField() {
+
         if (this.IsJournalSecurityManaged) {
             this.fullAccountingSettingListService.getSingle(SessionLocator.Tenant.toString()).subscribe((response: any) => {
                 this.CurrentSession.StopBusyIndicator();
-                var userSecurityLevel: number = 0;
+                var userSecurityLevel: number = 10;
                 if (this.UserSecurityLevel != undefined) {
                     userSecurityLevel = this.UserSecurityLevel;
                 }
