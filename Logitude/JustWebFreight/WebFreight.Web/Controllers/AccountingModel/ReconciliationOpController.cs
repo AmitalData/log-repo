@@ -648,6 +648,10 @@ tenant);
                     response.Count = count;
                 }
                 int firstX = 500;  // preparation fo a possible future parameter 
+                if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("SML", tenant))
+                {
+                    firstX = 2000;
+                }
                 //response.Result = openTransactions.Take(5000);
                 response.Result = openTransactions.Take(firstX);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
