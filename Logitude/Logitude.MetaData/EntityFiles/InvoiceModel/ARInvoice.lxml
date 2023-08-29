@@ -19065,6 +19065,32 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;HSMF&quot;"
+      ObjectTableName="&quot;ARInvoice&quot;"
+      EnglishName="&quot;The invoice signature HSM failed&quot;"
+      LocalName="&quot;The invoice signature HSM failed&quot;"
+      IsManualEntry="true"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;HSMS&quot;"
+      ObjectTableName="&quot;ARInvoice&quot;"
+      EnglishName="&quot;The invoice signature HSM Succeeded&quot;"
+      LocalName="&quot;The invoice signature HSM Succeeded&quot;"
+      IsManualEntry="true"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons

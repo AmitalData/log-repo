@@ -66,7 +66,7 @@ export class DocumentOutPMService {
 
 
 
-    getCreateDocumentOut(documentTypeId: string, entityId: string, childEntityId: string, childReference: string, objectTableId: string, tenant: number, documentTypeTemplateId:string = null) {
+    getCreateDocumentOut(documentTypeId: string, entityId: string, childEntityId: string, childReference: string, objectTableId: string, tenant: number, documentTypeTemplateId:string = null,signHSM:boolean=false) {
 
         var createDocumentOutArgs: CreateDocumentOutArgs = new CreateDocumentOutArgs();
         createDocumentOutArgs.DocumentTypeId = documentTypeId;
@@ -76,12 +76,14 @@ export class DocumentOutPMService {
         createDocumentOutArgs.ObjectTableId = objectTableId;
         createDocumentOutArgs.Tenant = tenant;
         createDocumentOutArgs.DocumentTypeTemplateId = documentTypeTemplateId;
+        createDocumentOutArgs.SignHSM = signHSM;
+
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return defer(() => {
             return this._http.put(this._apiUrl + "/PutCreateDocumentOut", JSON.stringify(createDocumentOutArgs), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result: any = response;
+                 var result: any = response;
                 var entity: DocumentOutPM;
                 entity = this.MapJsonToEntityPM(result);
                 var pmresponse: ServiceResponse;
@@ -258,5 +260,6 @@ export class CreateDocumentOutArgs{
     ObjectTableId: string;
     Tenant: number;
     DocumentTypeTemplateId: string;
+    SignHSM:boolean
 }
 

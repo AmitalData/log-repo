@@ -34,6 +34,9 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -281,6 +284,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 {
                     DocumentHelper documentHelper = new DocumentHelper();
                     documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant, null, createDocumentOutArgs.DocumentTypeTemplateId);
+                    if (createDocumentOutArgs.SignHSM)
+                    {
+                        documentHelper.CheckDetailsToHSM(documentOutPM.Id);
+                        
+                    }
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
@@ -290,7 +298,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
+        
 
         private static void Authentication()
         {
