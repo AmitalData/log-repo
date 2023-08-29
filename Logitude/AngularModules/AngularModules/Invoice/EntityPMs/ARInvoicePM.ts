@@ -1222,6 +1222,8 @@ export class ARInvoicePM {
     public set TransferError_Original(newValue: string) { if (this.transferError_Original != newValue) { this.transferError_Original = newValue; this.MarkAsDirty("TransferError_Original"); } }
        
 	 
+	 
+	 
     private vatsAmountsManulAdjuested: boolean;
     public get VatsAmountsManulAdjuested() { return this.vatsAmountsManulAdjuested; }
     public set VatsAmountsManulAdjuested(newValue: boolean) { if (this.vatsAmountsManulAdjuested != newValue) { this.vatsAmountsManulAdjuested = newValue; this.MarkAsDirty("VatsAmountsManulAdjuested"); } }
@@ -1255,4 +1257,4 @@ export class ARInvoicePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

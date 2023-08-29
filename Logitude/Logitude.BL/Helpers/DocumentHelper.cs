@@ -1,6 +1,10 @@
-﻿using Logitude.BL.CommonDataModel.EntityLists;
+﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Resolvers;
+using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -12,15 +16,21 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Transactions;
 using System.Web;
 namespace Logitude.BL.Helpers
@@ -30,6 +40,7 @@ namespace Logitude.BL.Helpers
 
         private readonly bool IsAutomation;
         private int Tenant;
+        private ARInvoiceRepository arInvoiceRepository;
 
         public DocumentHelper(bool isAutomation = false )
         {
@@ -230,6 +241,164 @@ namespace Logitude.BL.Helpers
 
             return context.Database.Connection.ConnectionString;
         }
+
+        public void CheckDetailsToHSM(string documentOutId )
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(Tenant);
+            ARInvoiceRepository repository = new ARInvoiceRepository(Tenant);
+            var EntityId = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault().EntityId;
+            var invocie = repository.GetARInvoiceById(Tenant, EntityId).FirstOrDefault();
+
+            if (invocie != null) {
+                if (this.IsSignatureHtmlPresentByBillToId(invocie.BillToId))
+                    this.StartSignPDFInvoice(invocie,invocie.Tenant);
+            }
+            
+        }
+
+        private bool IsSignatureHtmlPresentByBillToId(string Billto)
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(Tenant);
+
+            if (string.IsNullOrEmpty(Billto)) return false;
+            var contactIds = (from card in objectContext.Cards
+                              where card.BillToId == Billto
+                              join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
+                              select cardContact.ContactId).ToList();
+
+            foreach (var contactId in contactIds)
+            {
+                bool isSignatureHtmlPresent = objectContext.Contacts.Any(contact => contact.Id == contactId && contact.SignatureHtml.Equals(default(byte)));
+                return isSignatureHtmlPresent;
+            }
+            return false;
+        }
+
+        public void StartSignPDFInvoice(ARInvoice invocie, int tenant)
+        {
+
+            try
+            {
+                IHSMSignFileService HSMSignFileService = ContainerAccessor.Container.Resolve(typeof(IHSMSignFileService), "HSMSignFileService", new ParameterOverride("", 1)) as IHSMSignFileService;
+
+
+                ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+                DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+                DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
+                DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+                TenantRepository tenantRepository = new TenantRepository();
+
+                DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invocie.Id, tenant).FirstOrDefault();
+                Document document = documentRepository.GetSingleDocument(tenant, myDocumentFilings?.DocumentId);
+                var vatNumber = tenantRepository.GetSingleByTenant(tenant).VatNumber;
+                if (document != null)
+                {
+                    Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
+                    {
+                        FileName = document.Id,
+                        FolderName = document.Folder,
+                        Extension = document.Extension,
+                        Tenant = tenant,
+                        FileSize = document.FileSize,
+                    };
+
+                    Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                    byte[] filedata = storageservice.Read(fileInfo);
+
+                    byte[] signBytes = HSMSignFileService
+                        .SignCustomsRequest(tenant, invocie.Id, filedata, document.FileName, vatNumber);
+                    IInvoiceContext invoiceContext = InvoiceContext.GetContext(Tenant);
+                    arInvoiceRepository = new ARInvoiceRepository(invoiceContext);
+                    //invocie.IsSigned
+                    if (signBytes != null)
+                    {
+                        storageservice.Write(signBytes, fileInfo);
+                        this.HSMSignatureSucceeded(invocie);
+                       
+                        
+                    }
+                }
+                else
+                {
+                    throw new ArgumentNullException("There is no document");
+                }
+            }
+            catch(HSMException ex)
+            {
+                this.HSMSignatureFailed(invocie, ex);
+                                 
+            }
+            catch (Exception ex)
+            {
+                //Logger.LogMe($"hSMSignFile({tenant},{invocieId})" + ex.ToString(), true, "CustomsHSMSignWR");
+              //  ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "ProccessHSMSign-MarkExportSignTaskAsDone", "", null);
+
+
+            }
+        }
+
+        private void HSMSignatureFailed(ARInvoice invocie,HSMException ex)
+        {
+             
+
+            invocie.IsSigned = "2";//FALID
+            arInvoiceRepository.Update(invocie);
+
+            this.CreateEvent("HSMF", invocie, "חתימת החשבונית לא  צלחה");
+            this.SendEmailAlert("libby@amital.co.il","  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+invocie.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex);
+        }
+
+
+        private void HSMSignatureSucceeded(ARInvoice invocie)
+        {
+            invocie.IsSigned = "1";
+            arInvoiceRepository.Update(invocie);
+
+            this.CreateEvent("HSMS", invocie, "החשבונית נחתמה בהצלחה");
+            this.SendEmailAlert("libby@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר" + invocie.InvoiceNumber + "<br /><br />מצורפת השגיאה " );
+        }
+        private void CreateEvent(string eventCode,ARInvoice arinvocie, string Notes = null)
+        {
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(Tenant);
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = arinvocie.Id,
+                Tenant = arinvocie.Tenant,
+                UserId = loggedContact.Id,
+                ObjectTableName = "ARInvoice",
+                EventTypeCode = eventCode,
+                Notes = Notes,
+            });
+        }
+
+        private void SendEmailAlert(string email, string subject, string body)
+        {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(Tenant);
+            ContactRepository contactRepository = new ContactRepository(commonContext);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, Tenant);
+
+            StringBuilder HtmlTemplate = new StringBuilder();
+            HtmlTemplate.Append("<p style='text-align:left'>");
+            HtmlTemplate.Append("<br /><br />");
+            HtmlTemplate.Append(body);
+            HtmlTemplate.Append("<br /><br />");
+            HtmlTemplate.Append("Thank you");
+
+            if (loggedContact == null) return;
+
+            EmailCommunicationParams emailParams = new EmailCommunicationParams()
+            {
+
+                To = email,
+                Subject = subject,
+                EmailBody = HtmlTemplate.ToString(),
+                LoggingUserId = loggedContact.Id,
+                Tenant = Tenant,
+            };
+            Communications.AddEmailCommunicationLogQueue(emailParams, Tenant);
+        }
     }
+      
+   
 
 }
