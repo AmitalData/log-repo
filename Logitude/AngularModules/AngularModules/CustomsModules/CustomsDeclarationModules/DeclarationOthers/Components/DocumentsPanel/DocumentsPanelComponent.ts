@@ -20,6 +20,7 @@ import {CustomDocumentViewerService} from '../../../../../Customs/Services/WebSe
 import {CustomsDocumentMetaDataValuePM} from '../../../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
 import {CustDocMetaDataValuesWebService} from '../../../../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
 import {CustomsSettingListService} from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
+import { CustomsDocumentsDataProvider } from 'CustomsModules/CustomsDocuments/Components/CustomsDocumentsDataProvider';
 
 @Component({
     
@@ -31,6 +32,8 @@ export class DocumentsPanelComponent {
 
     EntityPM: DeclarationPM;
     ObjectTable: ObjectTablePM;
+    public customs: string = "עמילות";
+    public forwarding: string = "שילוח";
     private custDocRelatedDocsWebService: CustDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
     private _ImageLibraryService: ImageLibraryService = new ImageLibraryService();
     private _CustomDocumentViewerService: CustomDocumentViewerService = new CustomDocumentViewerService();
@@ -44,6 +47,12 @@ export class DocumentsPanelComponent {
     Run(args: any) {
         this.EntityPM = args.EntityPM;
         this.ObjectTable = args.ObjectTable;
+        if (this.EntityPM.Direction == 'E') {
+            this.customs = "תיק מכס";
+            this.forwarding = "תיק יצוא";
+
+            this.DocumentFilterSelectedValue = "all";
+        }
     }
 
     //#region Documents DDL
@@ -58,12 +67,17 @@ export class DocumentsPanelComponent {
 
     //#region Document List
     public RelatedDocuments: RelatedDocumentViewModel[];
+    private customsDocumentsDataProvider: CustomsDocumentsDataProvider;
 
     LoadDocuments() {
-        this.CurrentSession.StartBusyIndicatorLoading();
         var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
 
-        this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.EntityPM.Id, null, objecttable.Id, "I", this.EntityPM.CustomFileNo, this.DocumentFilterSelectedValue, this.EntityPM.Direction , this.EntityPM.ExportFile)
+        this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(objecttable?.Name, this.EntityPM, null, null, null);
+
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        this.customsDocumentsDataProvider.GetCustomsDocumentsRelatedDocuments(this.DocumentFilterSelectedValue)
+
             .subscribe((response: ServiceResponse) => {
                 console.log("[response] GetDocumentsFilingsForRelatedDocuments:", response);
                 this.CurrentSession.StopBusyIndicator();
