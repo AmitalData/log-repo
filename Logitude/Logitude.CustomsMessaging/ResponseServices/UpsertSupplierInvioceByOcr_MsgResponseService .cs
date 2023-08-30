@@ -247,6 +247,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 mySupplierInvoice.BuyerAddress = shiptoAddress;
 
             }
+            if (dic.TryGetValue("buyer_country", out string buyerCountry))
+            {
+                CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(tenant);
+                CustomsCountryPM customsCountry = customsCountryQueryService.GetSingle(buyerCountry, false, true);
+                if (customsCountry == null)
+                    invalidValuesRemarks += $" FieldJson: buyer_country, FieldName: BuyerCountryCode, InvalidValueReceived: {buyerCountry};";
+                else
+                    mySupplierInvoice.BuyerCountryCode = buyerCountry;
+            }
+            else if (dic.TryGetValue("shipto_country", out string shiptoCountry))
+            {
+                CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(tenant);
+                CustomsCountryPM customsCountry = customsCountryQueryService.GetSingle(shiptoCountry, false, true);
+                if (customsCountry == null)
+                    invalidValuesRemarks += $" FieldJson: shipto_country, FieldName: BuyerCountryCode, InvalidValueReceived: {shiptoCountry};";
+                else
+                    mySupplierInvoice.BuyerCountryCode = shiptoCountry;
+
+            }
             if (dic.TryGetValue("currency", out string currency))
             {
                 CurrencyTypeQueryService currencyTypeQueryService = new CurrencyTypeQueryService(tenant);
