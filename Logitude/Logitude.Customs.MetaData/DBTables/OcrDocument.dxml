@@ -26,7 +26,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="JsonData"
+    Name="JsonUrl"
     Type="varchar"
     Size="500">
     <Constraints
@@ -35,7 +35,7 @@
   <Column
     Name="Score"
     Type="decimal"
-    Precision="3"
+    Precision="4"
     Scale="2">
     <Constraints
       Nullable="true" />
@@ -72,6 +72,26 @@
     Name="DocId"
     Type="varchar"
     Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Reference"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="JsonData"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NotConnect"
+    Type="bit">
     <Constraints
       Nullable="true" />
   </Column>

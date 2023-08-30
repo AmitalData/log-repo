@@ -20,6 +20,10 @@ export class CustomsDocumentList {
 	DocumentTypeCode: string;
 	DocumentTypeName: string;
 	IsPartOfDeclaration: boolean;
+	OcrScore: number;
+	OcrStatusCode: string;
+	OcrReference: string;
+	OcrNotConnect: boolean;
 	
 }
  

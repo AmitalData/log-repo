@@ -15,7 +15,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 {
    public partial class SupplierInvioceExportDefaultQueryService
     {
-       public SupplierInvioceExportDefault GetDepositByPaymentOrderNumberOrTapagId( int  tenant)
+       public SupplierInvioceExportDefault GetSupplierInvoiceExportDefaultByTenant( int  tenant)
        {
             SupplierInvioceExportDefault supplierInvioceExportDefault = null;
            if (tenant!=null )

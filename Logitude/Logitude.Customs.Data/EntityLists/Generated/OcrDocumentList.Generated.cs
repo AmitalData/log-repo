@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string Process  { get; set; }
        [DataMember]
-       public string JsonData  { get; set; }
+       public string JsonUrl  { get; set; }
        [DataMember]
        public decimal? Score  { get; set; }
        [DataMember]
@@ -36,6 +36,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string OcrId  { get; set; }
        [DataMember]
        public string DocId  { get; set; }
+       [DataMember]
+       public string Reference  { get; set; }
+       [DataMember]
+       public string JsonData  { get; set; }
+       [DataMember]
+       public bool? NotConnect  { get; set; }
    }
 
 }

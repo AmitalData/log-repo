@@ -681,7 +681,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var currentCustomsDocumentsTicketId = entityPM.CurrentCustomsDocumentsTicketId;
 
                 ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant); //this.currentContext 
-                var customContext = MainContext as ICustomContext;
+                //var customContext = MainContext as ICustomContext;
+                ICustomContext customContext = CustomContext.GetContext(entityPM.Tenant);
                 var repo = new Logitude.Customs.Data.Repsitories.CustomsDocumentPointerRepository(entityPM.Tenant);
                 var declarationId = entityPM.DeclarationId;
                 var collateralId = entityPM.CollateralId;

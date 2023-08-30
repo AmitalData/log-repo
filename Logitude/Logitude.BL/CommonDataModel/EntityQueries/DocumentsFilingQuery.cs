@@ -30,6 +30,8 @@ using Microsoft.Practices.Unity;
 using System.Text.RegularExpressions;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.Args;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -345,7 +347,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return extDocPm;
         }
 
-        public DocumentsFilingPM GetSinglePM(string id, int tenant)
+        public DocumentsFilingPM GetSinglePM(string id, int tenant, bool checkOcr = false)
         {
             if (!string.IsNullOrEmpty(id))
             { 
@@ -438,7 +440,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         extDocPm.HasFollowUp = docFollowUp.Any();
                     }
                 }
-
+                if (checkOcr)
+                {
+                    OcrDocumentRepository ocrDocumentRepository = new OcrDocumentRepository(tenant);
+                    extDocPm.OcrReference = ocrDocumentRepository.GetSingleByDocId(id, tenant)?.Reference;
+                }
 
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
@@ -2063,15 +2069,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsSharedOut = a.IsSharedOut,
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
-                                           BackedupExternally = a.BackedupExternally,
+                                           BackedupExternally = a.BackedupExternally,                                          
                                        }).ToList();
+
             }
             else
             {
                 externalDocumentPMs = (from a in repository.context.DocumentsFilings
-                                       //.Include("CreatedByUser.Contact")
+                                       .Include("Document").Include("DocumentType")                                       //.Include("CreatedByUser.Contact")
                                        //.Include("ReceivedByUser.Contact")
-                                       .Include("Document").Include("DocumentType")
+                                       
                                        //.Include("Owner.Contact")
                                        where a.Tenant == tenant && a.EntityId == entityId && a.ChildEntityId == childEntityId && (a.ObjectTableId == objectTableId || a.ExternalEntityReference == referenceNumber)
                                        select new DocumentsFilingPM()
@@ -2224,7 +2231,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     OrigionalDocumentId = a.OrigionalDocumentId,
                                                     IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                     BackedupExternally = a.BackedupExternally,
-                                                }).ToList();
+                                             }).ToList();
 
                 externalDocumentPMs = externalDocumentPMs.Concat(docs).ToList();
 
@@ -2270,7 +2277,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     }
                 }
 
-                CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false,tenant);
+                CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingleByDocFileId(extDocPm.Id,tenant);
                 if (customsDoc != null)
                 {
                     extDocPm.CustomsDocumentTypeName = customsDoc.DocumentTypeName;
@@ -2278,6 +2285,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     extDocPm.IsMetaDataReady = customsDoc.IsMetaDataReady;
                     extDocPm.CustomsDocumentStatusCode = customsDoc.DocumentStatusCode;
                     extDocPm.ExternalAttachmentId = customsDoc.ExternalAttachmentId;
+                    extDocPm.OcrStatusCode = customsDoc.OcrStatusCode;
+                    extDocPm.OcrScore = customsDoc.OcrScore;
+                    extDocPm.OcrReference = customsDoc.OcrReference;
+                    extDocPm.OcrNotConnect = customsDoc.OcrNotConnect;
+
                 }
 
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValuesList;//.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();

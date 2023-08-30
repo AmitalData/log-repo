@@ -70,7 +70,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsDigitallySigned, 
 	         SignersList, 
 	         IsCustomSendTime, 
-	         ParentRequestId,
+	         ParentRequestId, 
+	         OcrScore, 
+	         OcrStatusCode, 
+	         OcrReference, 
+	         OcrNotConnect,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

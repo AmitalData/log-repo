@@ -308,6 +308,30 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return supplierInvoicePMs.OrderBy(d=>d.SequenceNumeric).ToList();
         }
 
+        public List<SupplierInvoicePM> GetInvoicesForDeclarationByInvoiceNum(string declarationId, string invoiceNumber, int tenant,  bool getComposition = false)
+        {
+            List<SupplierInvoice> supplierInvoices = repository.GetInvoicesForDeclarationByInvoiceNum(declarationId,invoiceNumber, tenant);
+
+            if (supplierInvoices == null) { return null; }
+            SupplierInvoiceDataMapping mappings = new SupplierInvoiceDataMapping();
+            List<SupplierInvoicePM> supplierInvoicesPM = new List<SupplierInvoicePM>();
+
+            foreach (SupplierInvoice supplierInvoice in supplierInvoices)
+            {
+                SupplierInvoicePM invoicePM = new SupplierInvoicePM();
+
+                mappings.CustomPOCOToPM(invoicePM, supplierInvoice);
+                mappings.POCOToPM(invoicePM, supplierInvoice);
+                if (getComposition)
+                {
+                    GetComposition(new SupplierInvoiceKeys() { DeclarationId = invoicePM.DeclarationId, InvoiceCounterKey = invoicePM.InvoiceCounterKey }, invoicePM);
+                }
+                supplierInvoicesPM.Add(invoicePM);
+            }
+            return supplierInvoicesPM;
+            
+        }
+
 
         public IQueryable<SupplierInvoicePM> GetSupplierInvoicesQueryForDeclaration(string declarationId, int tenant, bool getComposition = false)
         {
@@ -754,6 +778,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.DoesAnyInvoiceHasFreight(declarationId, tenant);
         }
+
 
         public List<SupplierInvoicePM> GetSupplierInvoicesForDeclarationWithFreightsOnly(string declarationId, int tenant)
         {

@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -53,6 +54,16 @@ namespace Logitude.Customs.Data.Repsitories
                      orderby a.SequenceNumeric
                      select a);
             return q.ToList();
+        }
+
+        public List<SupplierInvoice> GetInvoicesForDeclarationByInvoiceNum(string declarationId, string invoiceNumber, int tenant)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+            return (from a in context.SupplierInvoices
+                                      where a.DeclarationId == declarationId && (a.InvoiceNumber == invoiceNumber || string.IsNullOrEmpty(a.InvoiceNumber)) && a.Tenant == tenant
+                                      select a).ToList();
+            
         }
 
         public IQueryable<SupplierInvoice> GetSupplierInvoicesQueryForDeclaration(string declarationId, int tenant)
@@ -145,6 +156,8 @@ namespace Logitude.Customs.Data.Repsitories
             return exists;
         }
 
+
+        
         public List<SupplierInvoice> GetSupplierInvoicesWithoutTotalFrieght(int tenant)
         {
                 return (from a in context.SupplierInvoices

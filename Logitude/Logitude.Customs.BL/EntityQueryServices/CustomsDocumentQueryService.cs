@@ -15,6 +15,8 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Customs.Data.Repsitories;
 using Simplog.Server.Infrastructure;
 using Unifreight.Data.AmitalModel.Repsitories;
+using Logitude.Customs.BL.EntityDataMappings;
+using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -347,6 +349,53 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DocumentsFilingId = DocumentsFilingId
             };
         }
+
+        public CustomsDocumentPM GetSingleByDocFileId(string docFileId, int tenant)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            var query =
+                  (from rec in context.CustomsDocuments
+                   join o in context.OcrDocuments on rec.DocumentsFilingId equals o.DocId into ocrDocs
+                   from o in ocrDocs.DefaultIfEmpty()
+                   where rec.DocumentsFilingId == docFileId && rec.Tenant == tenant
+                   select new CustomsDocumentPM()
+                   {
+                       DocumentsFilingId = rec.DocumentsFilingId,
+                       Tenant = rec.Tenant,
+                       CustomsDocId = rec.CustomsDocId,
+                       DocumentStatusCode = rec.DocumentStatusCode,
+                       DocumentRemarks = rec.DocumentRemarks,
+                       DocumentTypeCode = rec.DocumentTypeCode,
+                       IsMetaDataReady = rec.IsMetaDataReady,
+                       CustomRecievedDate = rec.CustomRecievedDate,
+                       DocumentVersion = rec.DocumentVersion,
+                       ExternalAttachmentId = rec.ExternalAttachmentId,
+                       IsPartOfDeclaration = rec.IsPartOfDeclaration,
+                       OcrStatusCode = o != null ? o.StatusCode : null,
+                       OcrScore = o != null && o.Score != null ? (decimal)o.Score : -1, 
+                       OcrReference = o != null && o.Reference != null ? o.Reference : null, 
+                       OcrNotConnect = o != null && o.NotConnect == true ? true : false, 
+
+                   }).FirstOrDefault();
+
+            if(query == null)
+            {
+                query = (from rec in context.OcrDocuments 
+                         where rec.DocId == docFileId && rec.Tenant == tenant
+                         select new CustomsDocumentPM()
+                         {
+                             OcrStatusCode = rec.StatusCode != null ? rec.StatusCode : null,
+                             OcrScore =  rec != null && rec.Score != null ? (decimal)rec.Score : -1,
+                             OcrReference = rec.Reference,
+
+                         }).FirstOrDefault();
+            }
+
+            return query;
+
+        }
+
         public class ResultByDocumentType
         {
             public string DocumentsFilingId { get; set; }

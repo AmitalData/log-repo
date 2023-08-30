@@ -39,9 +39,9 @@ export class OcrDocumentPM {
     public set Process(newValue: string) { if (this.process != newValue) { this.process = newValue; this.MarkAsDirty("Process"); } }
        
 	 
-    private jsonData: string;
-    public get JsonData() { return this.jsonData; }
-    public set JsonData(newValue: string) { if (this.jsonData != newValue) { this.jsonData = newValue; this.MarkAsDirty("JsonData"); } }
+    private jsonUrl: string;
+    public get JsonUrl() { return this.jsonUrl; }
+    public set JsonUrl(newValue: string) { if (this.jsonUrl != newValue) { this.jsonUrl = newValue; this.MarkAsDirty("JsonUrl"); } }
        
 	 
     private score: number;
@@ -77,6 +77,21 @@ export class OcrDocumentPM {
     private docId: string;
     public get DocId() { return this.docId; }
     public set DocId(newValue: string) { if (this.docId != newValue) { this.docId = newValue; this.MarkAsDirty("DocId"); } }
+       
+	 
+    private reference: string;
+    public get Reference() { return this.reference; }
+    public set Reference(newValue: string) { if (this.reference != newValue) { this.reference = newValue; this.MarkAsDirty("Reference"); } }
+       
+	 
+    private jsonData: string;
+    public get JsonData() { return this.jsonData; }
+    public set JsonData(newValue: string) { if (this.jsonData != newValue) { this.jsonData = newValue; this.MarkAsDirty("JsonData"); } }
+       
+	 
+    private notConnect: boolean;
+    public get NotConnect() { return this.notConnect; }
+    public set NotConnect(newValue: boolean) { if (this.notConnect != newValue) { this.notConnect = newValue; this.MarkAsDirty("NotConnect"); } }
        
 	 
 

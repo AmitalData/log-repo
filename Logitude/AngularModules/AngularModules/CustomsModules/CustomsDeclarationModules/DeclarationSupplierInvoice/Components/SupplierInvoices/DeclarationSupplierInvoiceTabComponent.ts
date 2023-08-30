@@ -30,6 +30,9 @@ import { ImageParameter } from '../../../../../Infrastructure/DataContracts/Imag
 import { Guid } from '../../../../../Infrastructure/Utilities/Guid';
 import { List } from 'Infrastructure/DataContracts/Dashboard/List';
 import { forEach } from 'cypress/types/lodash';
+import { OcrDocumentExtendedListService } from 'Customs/Services/ExtendedLists/OcrDocumentExtendedListService';
+import { OcrDocumentPM } from 'Customs/EntityPMs/OcrDocumentPM';
+import { OcrDocumentPMService } from 'Customs/Services/StandardPMs/OcrDocumentPMService';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -81,8 +84,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         this.customsDocumentPointerService = new CustomsDocumentPointerService();
             this.ItemsSource = new ObservableCollection([]);
             this.InvoiceItems = new ObservableCollection([]);
-            
-            this.Listen();
+
+        this.Listen();
             this._entityListService = new EntityListService();
             //this.EntityPM = this.entityArgs.EntityPM;
             this.supplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
@@ -606,7 +609,36 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                         confirmWindow.Show(TextCodeTranslator.Translate("Customs.General.O.InvoiceRelatedPoiner"));
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
-                                this.DeleteSelected(item);
+                                
+                                if(this.EntityPM.Direction == 'E')
+                                {
+                                    this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(item.DeclarationId, item.InvoiceCounterKey).subscribe((response) =>{
+                                    var docId = response.Result
+                                    if(docId)
+                                    {
+
+                                        var ocrDocumentExtendedListService: OcrDocumentExtendedListService = new OcrDocumentExtendedListService();                
+
+                                        ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, docId).subscribe((response)=>{
+                                            if(response?.Result?.NotConnect){
+                                                var ocrDocumentPM : OcrDocumentPM = response.Result;
+                                                ocrDocumentPM.NotConnect = false; 
+                                                var ocrDocumentPMService: OcrDocumentPMService = new OcrDocumentPMService();   
+                                                ocrDocumentPMService.update(ocrDocumentPM).subscribe(()=>{
+                                                    this.DeleteSelected(item);
+                                                });             
+                                            }
+                                        });
+                                    }
+                                    else{
+                                        this.DeleteSelected(item);
+                                    }
+                                   
+                                    });
+                                }
+                                else{
+                                    this.DeleteSelected(item);
+                                }
                             } else if (confirmWindow.No) {
 
                             }

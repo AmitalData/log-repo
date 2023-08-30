@@ -126,7 +126,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                    objectTableDocumentsFilingId, documentsFilingPM.Id, null, true);
 
             }
-            if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+            if (RequestInProgressList != null && RequestInProgressList.Count > 0 )
             {
                 LogMessagingUtil.Instance.AppendLine("קיים מסר זהה בתהליך");
                 ///throw new System.Exception("Requestsheet  with Interface Type  = UCBUCBNDCD  already in progress  !!!");
@@ -320,7 +320,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 var DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(_DocumentsFilingPM.Tenant);
                 var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", _DocumentsFilingPM.Tenant);
                 var myDocumentsFilingMetaDataValueReferenceAsDocType = "";
-                if (!CheckIsSendByDocType(logData))
+                if (!CheckIsSendByDocType(logData) && string.IsNullOrEmpty(_DocumentsFilingPM.OcrStatusCode))
                 {
                     if (ENDOC == null)
                     {
@@ -581,7 +581,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ICustomContext dbContext = CustomContext.GetContext(Tenant);
             var myDocumentTypeCustomsDatatQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
             var DocumentTypeCustomsDatat = myDocumentTypeCustomsDatatQueryService.GetSingle(CustomsDoucumentTypeCode, true, false);
-            customsDocumentPM.DocumentTypeCode = DocumentTypeCustomsDatat.CustomsDoucumentTypeCode;//_DocumentsFilingPM.DocumentTypeCode;
+            customsDocumentPM.DocumentTypeCode = DocumentTypeCustomsDatat?.CustomsDoucumentTypeCode;//_DocumentsFilingPM.DocumentTypeCode;
                                                                           //myCustomsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
             customsDocumentPM.Tenant = Tenant;
 

@@ -987,7 +987,7 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<LogisticActionRequest>().Property(x => x.Quantity).HasPrecision(10, 2);
 				
-			modelBuilder.Entity<OcrDocument>().Property(x => x.Score).HasPrecision(3, 2);
+			modelBuilder.Entity<OcrDocument>().Property(x => x.Score).HasPrecision(4, 2);
 				
 			modelBuilder.Entity<PaymentOrder>().Property(x => x.TotalSumToPay).HasPrecision(18, 2);
 				

@@ -45,7 +45,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 SupplierInvioceExportDefaultQueryService queryService = new SupplierInvioceExportDefaultQueryService(customContext);
-                SupplierInvioceExportDefault supplierInvioceExportDefault = queryService.GetDepositByPaymentOrderNumberOrTapagId( tenant);
+                SupplierInvioceExportDefault supplierInvioceExportDefault = queryService.GetSupplierInvoiceExportDefaultByTenant( tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, supplierInvioceExportDefault);
             }

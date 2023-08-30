@@ -96,6 +96,8 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
 
     _DocumentFilingIdToSetWhileLoadDocument: string;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+
     SetComponentArgs(args: any) {
         debugger;
         if (!AppTool.IsNullOrEmpty(args)) {
@@ -109,11 +111,17 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                     this.IsConnectedToUniFreight = customsSetting.IsConnectedToUniFreight;
                 }
                 if (this.DeclarationPM.Direction == 'E') {
-                    this.customs = "תיק מכס";
-                    this.forwarding = "תיק יצום";
-
-                    this.DocumentFilterSelectedValue = "all";
-                }
+                 this._entityResourceService.getEntityResourceByTableName("Customs.CustomsDocument", 0).subscribe((response:any) => {
+                  
+                        this.customs = TextCodeTranslator.Translate('Customs.CustomsDocument.O.CustomFile');
+    
+                        this.forwarding = TextCodeTranslator.Translate('Customs.CustomsDocument.O.ExportFile');
+    
+                        this.DocumentFilterSelectedValue = "all";
+                 
+                 });
+             }
+                
                 //// 2- get metadata values then
                 //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                 //this.custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {

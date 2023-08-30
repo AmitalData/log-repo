@@ -123,13 +123,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //base.OnCreating(entityPM, entityParentPM);
         }
 
-        public void DeclarationSupplierInvoiceItemsParentsFastDelete(SupplierInvoicePM entityPM, ICustomContext dbContext)
+        public void DeclarationSupplierInvoiceItemsParentsFastDelete(SupplierInvoicePM entityPM, ICustomContext dbContext,bool isParent = true )
         {
 
 
 
             var mySupplierInvoiceItemUpdateService = new SupplierInvoiceItemUpdateService(dbContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            mySupplierInvoiceItemUpdateService.DeclarationSupplierInvoiceItemsParentsFastDeleteComposition(new Data.EntityKeys.SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey }, dbContext, entityPM.Tenant);
+            mySupplierInvoiceItemUpdateService.DeclarationSupplierInvoiceItemsParentsFastDeleteComposition(new Data.EntityKeys.SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey }, dbContext, entityPM.Tenant, isParent);
 
             /*
             var mySupplierInvoiceItemsConDeclarUpdateService = new SupplierInvoiceItemsConDeclarUpdateService(dbContext, new Dictionary<string, IContext>(), entityPM.Tenant);
