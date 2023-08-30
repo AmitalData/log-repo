@@ -103,6 +103,7 @@ export class CustomsDocumentsComponent
     IsClose: boolean = false;
     //************************************//
     private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         if (entityArgs.EntityParentPM != null) {
@@ -133,8 +134,10 @@ export class CustomsDocumentsComponent
         this.ClosingData = closingData;
 
         if (this.EntityPM.Direction == 'E') {
-            this.customs = "תיק מכס";
-            this.forwarding = "תיק יצוא";
+            
+                this.customs =  TextCodeTranslator.Translate('Customs.CustomsDocument.O.CustomFile');
+                this.forwarding =  TextCodeTranslator.Translate('Customs.CustomsDocument.O.ExportFile');      
+                         
 
             this.DocumentFilterSelectedValue = "all";
             this.IsClose = IsClose;

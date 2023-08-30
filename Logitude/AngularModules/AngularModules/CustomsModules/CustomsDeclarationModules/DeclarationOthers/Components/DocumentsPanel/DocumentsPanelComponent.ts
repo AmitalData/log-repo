@@ -1,29 +1,30 @@
 declare var window: any;
-import {Component, Output, EventEmitter, Input} from '@angular/core';
-import {ObjectTablePM} from '../../../../../Infrastructure/EntityPMs/ObjectTablePM'
-import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator'
-import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelper'
-import {AppTool, DateTool} from '../../../../../Infrastructure/Tools'
-import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
-import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ControlsIdCounter} from '../../../../../Infrastructure/Utilities/ControlsIdCounter';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { ObjectTablePM } from '../../../../../Infrastructure/EntityPMs/ObjectTablePM'
+import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator'
+import { ServiceHelper } from '../../../../../Infrastructure/Utilities/ServiceHelper'
+import { AppTool, DateTool } from '../../../../../Infrastructure/Tools'
+import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ControlsIdCounter } from '../../../../../Infrastructure/Utilities/ControlsIdCounter';
 
-import {DocumentsFilingPM}  from '../../../../../Common/EntityPMs/DocumentsFilingPM';
-import {RelatedDocumentViewModel} from '../../../../CustomsDocuments/Components/RelatedDocumentViewModel';
+import { DocumentsFilingPM } from '../../../../../Common/EntityPMs/DocumentsFilingPM';
+import { RelatedDocumentViewModel } from '../../../../CustomsDocuments/Components/RelatedDocumentViewModel';
 
-import {CustDocRelatedDocsWebService} from '../../../../../Customs/Services/WebServices/CustDocRelatedDocsWebService';
+import { CustDocRelatedDocsWebService } from '../../../../../Customs/Services/WebServices/CustDocRelatedDocsWebService';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 
-import {ImageLibraryService} from'../../../../../Common/Services/Others/ImageLibraryService';
-import {CustomDocumentViewerService} from '../../../../../Customs/Services/WebServices/CustomDocumentViewerService';
-import {CustomsDocumentMetaDataValuePM} from '../../../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
-import {CustDocMetaDataValuesWebService} from '../../../../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
-import {CustomsSettingListService} from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
+import { ImageLibraryService } from '../../../../../Common/Services/Others/ImageLibraryService';
+import { CustomDocumentViewerService } from '../../../../../Customs/Services/WebServices/CustomDocumentViewerService';
+import { CustomsDocumentMetaDataValuePM } from '../../../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
+import { CustDocMetaDataValuesWebService } from '../../../../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
+import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomsDocumentsDataProvider } from 'CustomsModules/CustomsDocuments/Components/CustomsDocumentsDataProvider';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+
     selector: 'DocumentsPanelComponent',
     templateUrl: "DocumentsPanelComponent.html",
 })
@@ -40,17 +41,25 @@ export class DocumentsPanelComponent {
     private custDocsMetadataWebService: CustDocMetaDataValuesWebService = new CustDocMetaDataValuesWebService();
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     private CurrentSession = SessionLocator.SelectedSession;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+
     constructor() {
         var counter = ControlsIdCounter.GetNextControlIdCounter("DocumentListWrapperId");
         this.DocumentListWrapperId = "DocumentListWrapperId" + counter;
     }
+
+
     Run(args: any) {
         this.EntityPM = args.EntityPM;
         this.ObjectTable = args.ObjectTable;
         if (this.EntityPM.Direction == 'E') {
-            this.customs =  TextCodeTranslator.Translate('Customs.CustomsDocument.O.CustomFile');
-            this.forwarding =  TextCodeTranslator.Translate('Customs.CustomsDocument.O.ExportFile');
-            this.DocumentFilterSelectedValue = "all";
+            this._entityResourceService.getEntityResourceByTableName("Customs.CustomsDocument", 0).subscribe((response: any) => {
+                this.customs = TextCodeTranslator.Translate('Customs.CustomsDocument.O.CustomFile');
+                this.forwarding = TextCodeTranslator.Translate('Customs.CustomsDocument.O.ExportFile');
+                this.DocumentFilterSelectedValue = "all";
+            });
+
+
         }
     }
 
@@ -92,7 +101,7 @@ export class DocumentsPanelComponent {
                         var values = null;
 
                         //if (!ticket) {
-                        var relatedDocViewModel = new RelatedDocumentViewModel(relatedDocs[i], values,true);
+                        var relatedDocViewModel = new RelatedDocumentViewModel(relatedDocs[i], values, true);
                         this.RelatedDocuments.push(relatedDocViewModel);
                         //}
                     }
@@ -107,7 +116,7 @@ export class DocumentsPanelComponent {
 
         this.custDocRelatedDocsWebService.GetSingleDocumentsFilingPM(documentsFilingId).subscribe((resp: ServiceResponse) => {
             var documentFiling = resp.Result;
-            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res:any) => {
+            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res: any) => {
 
 
                 var documentName = SessionLocator.Tenant + "_" + documentFiling.DocumentId;
