@@ -16,6 +16,7 @@ using Logitude.Customs.Data.Repsitories;
 using Simplog.Server.Infrastructure;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.BL.EntityDataMappings;
+using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -351,6 +352,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public CustomsDocumentPM GetSingleByDocFileId(string docFileId, int tenant)
         {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
             var query =
                   (from rec in context.CustomsDocuments
                    join o in context.OcrDocuments on rec.DocumentsFilingId equals o.DocId into ocrDocs
