@@ -84,8 +84,8 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         this.customsDocumentPointerService = new CustomsDocumentPointerService();
             this.ItemsSource = new ObservableCollection([]);
             this.InvoiceItems = new ObservableCollection([]);
-            
-            this.Listen();
+
+        this.Listen();
             this._entityListService = new EntityListService();
             //this.EntityPM = this.entityArgs.EntityPM;
             this.supplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
@@ -625,14 +625,20 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                                                 ocrDocumentPM.NotConnect = false; 
                                                 var ocrDocumentPMService: OcrDocumentPMService = new OcrDocumentPMService();   
                                                 ocrDocumentPMService.update(ocrDocumentPM).subscribe(()=>{
+                                                    this.DeleteSelected(item);
                                                 });             
                                             }
                                         });
                                     }
+                                    else{
+                                        this.DeleteSelected(item);
+                                    }
                                    
                                     });
                                 }
-                                this.DeleteSelected(item);
+                                else{
+                                    this.DeleteSelected(item);
+                                }
                             } else if (confirmWindow.No) {
 
                             }
