@@ -353,7 +353,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         {
                             this._MyDeclarationPM.ImporterPassportNumber = _AmitalCustomsFile.ImporterId.Substring(2);
                             this._MyDeclarationPM.ImporterTypeCode = "2";
-                            this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId;
+                            this._MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId.Length > 15 ? this._MyDeclarationPM.ImporterCode : _AmitalCustomsFile.ImporterId;
                             if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CasualImporterCountry))
                             {
                                 string countryCode = "";
@@ -377,8 +377,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             }
                             string clientId = TranslateClient(importerId);
 
-                            this._MyDeclarationPM.ImporterId = clientId;
-                            this._MyDeclarationPM.ImporterCode = importerId;
+                            this._MyDeclarationPM.ImporterId = clientId.Length > 15 ? this._MyDeclarationPM.ImporterId : clientId;
+                            this._MyDeclarationPM.ImporterCode = importerId.Length>15? this._MyDeclarationPM.ImporterCode : importerId;
 
                         }
                     }
@@ -762,7 +762,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     if (_AmitalCustomsFile.ImporterId != null && string.IsNullOrEmpty(this._MyDeclarationPM.ImporterCode))
                     {
-                        myDeclarationUpdateService.ImporterCode = _AmitalCustomsFile.ImporterId;
+                        myDeclarationUpdateService.ImporterCode = _AmitalCustomsFile.ImporterId.Length>15? myDeclarationUpdateService.ImporterCode: _AmitalCustomsFile.ImporterId;
                     }
                     //Update Declaration
                     _MyDeclarationPM.IsCourierDeclaration = true;
@@ -771,7 +771,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     _MyDeclarationPM.ImporterAddress = _AmitalCustomsFile.ImporterAddress;
                     _MyDeclarationPM.ImporterName = _AmitalCustomsFile.EnglishName;
-                    _MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId;
+                    _MyDeclarationPM.ImporterCode = _AmitalCustomsFile.ImporterId.Length > 15 ? this._MyDeclarationPM.ImporterCode : _AmitalCustomsFile.ImporterId;
                     if (string.IsNullOrWhiteSpace(_MyDeclarationPM.ImporterName))
                     {
                         _MyDeclarationPM.ImporterName = _AmitalCustomsFile.HebrewName;
