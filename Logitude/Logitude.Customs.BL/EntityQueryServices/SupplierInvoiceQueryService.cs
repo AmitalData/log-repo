@@ -819,16 +819,30 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 {
                     supplierInvoiceItem.TransactionNatureCode = supplierInvioceExportDefault.TransactionNatureCode!="non"? supplierInvioceExportDefault.TransactionNatureCode: supplierInvoiceItem.TransactionNatureCode;
                     supplierInvoiceItem.ClaimReasonCode = supplierInvioceExportDefault.ClaimReasonCode!="non"? supplierInvioceExportDefault.ClaimReasonCode: supplierInvoiceItem.ClaimReasonCode;
+                    supplierInvoiceItem.ItemAdditionalStatus = supplierInvioceExportDefault.ClaimReasonCode != "non" || supplierInvioceExportDefault.TransactionNatureCode != "non"||supplierInvioceExportDefault.ProcessTypeCode != "non";
+
                     supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
 
                     if (supplierInvioceExportDefault.ProcessTypeCode != "non")
                     {
-                        foreach (var supplierInvoiceItemProcesType in supplierInvoiceItem.SupplierInvoiceItemProcesTypes)
+                        if (supplierInvoiceItem.SupplierInvoiceItemProcesTypes.Count() > 0) {
+                            foreach (var supplierInvoiceItemProcesType in supplierInvoiceItem.SupplierInvoiceItemProcesTypes)
+                            {
+                                supplierInvoiceItemProcesType.ProcessTypeCode = supplierInvioceExportDefault.ProcessTypeCode;
+                                supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Update;
+
+                            }
+                        }
+                        else
                         {
-                            supplierInvoiceItemProcesType.ProcessTypeCode = supplierInvioceExportDefault.ProcessTypeCode;
-                            supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Update;
+                            SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesType=new SupplierInvoiceItemProcesTypePM();
+                            supplierInvoiceItemProcesType.ProcessTypeCode=supplierInvioceExportDefault.ProcessTypeCode;
+                            supplierInvoiceItemProcesType.DeclarationId = supplierInvoiceItem.DeclarationId;
+                            supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Insert;
+                            supplierInvoiceItem.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesType);
 
                         }
+
                     }
                 }
 
