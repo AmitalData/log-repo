@@ -487,8 +487,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             var signQueueHSMService = new SignQueueHSMService();
             
             if (string.IsNullOrWhiteSpace(availableSignServer) &&
-                 (SignQueueHybridDbService.IsCloudExport(_RequestParams.Tenant) ||
-                signQueueHSMService.IsHSMSign_IsOn(_RequestParams.Tenant)))
+                 SignQueueHybridDbService.IsCloudExport(_RequestParams.Tenant))
  
             {
                 var dbSignQueueService = new SignQueueHybridDbService();
