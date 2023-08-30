@@ -110,7 +110,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                 }
                 if (this.DeclarationPM.Direction == 'E') {
                     this.customs = "תיק מכס";
-                    this.forwarding = "תיק יצום";
+                    this.forwarding = "תיק יצוא";
 
                     this.DocumentFilterSelectedValue = "all";
                 }

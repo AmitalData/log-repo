@@ -49,7 +49,7 @@ export class DocumentsPanelComponent {
         this.ObjectTable = args.ObjectTable;
         if (this.EntityPM.Direction == 'E') {
             this.customs = "תיק מכס";
-            this.forwarding = "תיק יצום";
+            this.forwarding = "תיק יצוא";
 
             this.DocumentFilterSelectedValue = "all";
         }
