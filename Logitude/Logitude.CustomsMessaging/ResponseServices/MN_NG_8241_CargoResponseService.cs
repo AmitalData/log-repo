@@ -370,7 +370,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (_MyDeclarationPM.AvailabilityDate == null)
                         {
                             IsAvailabilityDate = true;
-                            _MyDeclarationPM.AvailabilityDate = DateTime.Now;
+                            _MyDeclarationPM.AvailabilityDate = customResponse.DeliveryOrder?[0]?.DeliveryOrderDate ?? DateTime.Now;
+
                         }
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
