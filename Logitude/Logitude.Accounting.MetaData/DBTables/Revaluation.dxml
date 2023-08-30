@@ -79,7 +79,7 @@
   </Column>
   <Column
     Name="Message"
-    Type="varchar"
+    Type="nvarchar"
     Size="200">
     <Constraints
       Nullable="true" />
