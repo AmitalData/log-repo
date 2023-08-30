@@ -150,7 +150,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (doUpdateCustomsItem && !(currentDBListCustomsItemDetailsHistoryRow.ChangeSetOp == ChangeSetOperation.Insert && mehesCustomsItemRow.isDiscountCode == true))
                     {
-                        currentDBListCustomsItemRow.FullClassification = mehesCustomsItemRow.Title;
+                        currentDBListCustomsItemRow.FullClassification = mehesCustomsItemRow.fullClassification.Split('/')[0]?? mehesCustomsItemRow.fullClassification;
                         currentDBListCustomsItemRow.CustomsItemHierarchicLocationID = mehesCustomsItemRow.HierarchicLocationID;
                         currentDBListCustomsItemRow.ComputedCheckDigit =mehesCustomsItemRow.fullClassification.Length>10 ?mehesCustomsItemRow.fullClassification.Substring(mehesCustomsItemRow.fullClassification.Length - 1):null ;
                         currentDBListCustomsItemRow.CustomsBookTypeID = requestParams.CustomsBookType;
