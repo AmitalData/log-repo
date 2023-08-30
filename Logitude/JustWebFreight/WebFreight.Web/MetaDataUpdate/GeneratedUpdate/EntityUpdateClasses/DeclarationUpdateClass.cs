@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "943fb71979cd5c3c4d52dc31ec419be7";
+		public const string HashString = "21ecb6e57e48a0c957176782d55d6f16";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17971,16 +17971,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn PendingPaymentQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter PendingPaymentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsPending900", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter PendingPaymentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter PendingPaymentQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter PendingPaymentQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter PendingPaymentQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+             AdvancedQueryFilter PendingPaymentQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter PendingPaymentQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter PendingPaymentQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.CourierPendingReasonList", PredefinedValue = "900",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "Contains"}, addedQueryFilters);
 
   
 	      
@@ -21670,8 +21670,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOImporterCourierFromExcel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterCourierFromExcel", DefaultText = "Worksheet From Excel",LocalDefaultText = @"הטענת ש.ט.ב מאקסל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationONotCarriedInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NotCarriedInsurance", DefaultText = "nsurance was not carried out due to differences in currency/shipping conditions between the accounts",LocalDefaultText = @"לא בוצע ביטוח בגלל שוני במטבע/תנאי משלוח בין החשבונות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 		   
-		   TextCode DeclarationTextCode_CustomsDeclarationOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Choose", DefaultText = "Choose",LocalDefaultText = @"בחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Choose", DefaultText = "Choose",LocalDefaultText = @"בחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOStatusThatSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.StatusThatSelected", DefaultText = "Status that selected",LocalDefaultText = @"סטטוסים שנבחרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
