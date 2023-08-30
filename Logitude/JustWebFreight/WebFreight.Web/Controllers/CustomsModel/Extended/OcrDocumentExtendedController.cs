@@ -38,7 +38,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 OcrDocumentQueryService ocrDocumentService = new OcrDocumentQueryService(tenant);
 
-                OcrDocument myResult = ocrDocumentService.GetOcrDocumentByDocumentFilingId(docId, tenant);
+                OcrDocument myOcrDocument = ocrDocumentService.GetOcrDocumentByDocumentFilingId(docId, tenant);
+
+                OcrDocumentPM myResult = ocrDocumentService.GetEntityPM(myOcrDocument);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
