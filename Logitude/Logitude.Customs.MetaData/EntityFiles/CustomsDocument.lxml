@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customs Document&quot;"
-  Code="&quot;eff8&quot;"
+  Code="&quot;8e27&quot;"
   Name="&quot;Customs.CustomsDocument Query Group&quot;"
   GenerateDomainService="false"
   NoViewController="false"
@@ -2694,6 +2694,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;OcrNotConnect&quot;"
     ListPropertyPath="&quot;OcrNotConnect&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2780,7 +2781,20 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.CustomsDocument.O.ExportFile&quot;"
+      DefaultText="&quot;Export File&quot;"
+      LocalDefaultText="&quot;תיק יצוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsDocument.O.CustomFile&quot;"
+      DefaultText="&quot;Custom File&quot;"
+      LocalDefaultText="&quot;תיק מכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;GENERAL&quot;"

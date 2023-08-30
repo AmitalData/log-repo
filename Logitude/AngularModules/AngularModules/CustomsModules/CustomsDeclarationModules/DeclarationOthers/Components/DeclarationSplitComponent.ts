@@ -109,8 +109,9 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                     this.IsConnectedToUniFreight = customsSetting.IsConnectedToUniFreight;
                 }
                 if (this.DeclarationPM.Direction == 'E') {
-                    this.customs = "תיק מכס";
-                    this.forwarding = "תיק יצוא";
+                    this.customs = TextCodeTranslator.Translate('Customs.CustomsDocument.O.CustomFile');
+
+                    this.forwarding = TextCodeTranslator.Translate('Customs.CustomsDocument.O.ExportFile');
 
                     this.DocumentFilterSelectedValue = "all";
                 }
