@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsDocumentUpdateClass
    {  		
-		public const string HashString = "627746eb4171c2c55bdb3a71341ca968";
+		public const string HashString = "c1357b99b50885c258e96397e2cd693f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Document",
-			      				    Code =  "eff8",
+			      				    Code =  "8e27",
 			      				    Name =  "Customs.CustomsDocument Query Group",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -2238,6 +2238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OcrNotConnect",
 					  						ListPropertyPath =  "OcrNotConnect",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2365,7 +2366,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CustomsDocumentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsDocument" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CustomsDocumentTextCode_CustomsCustomsDocumentOExportFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.O.ExportFile", DefaultText = "Export File",LocalDefaultText = @"תיק יצוא", ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsDocumentTextCode_CustomsCustomsDocumentOCustomFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.O.CustomFile", DefaultText = "Custom File",LocalDefaultText = @"תיק מכס", ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

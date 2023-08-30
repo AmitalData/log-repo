@@ -48,9 +48,8 @@ export class DocumentsPanelComponent {
         this.EntityPM = args.EntityPM;
         this.ObjectTable = args.ObjectTable;
         if (this.EntityPM.Direction == 'E') {
-            this.customs = "תיק מכס";
-            this.forwarding = "תיק יצוא";
-
+            this.customs =  TextCodeTranslator.Translate('Customs.CustomsDocument.O.CustomFile');
+            this.forwarding =  TextCodeTranslator.Translate('Customs.CustomsDocument.O.ExportFile');
             this.DocumentFilterSelectedValue = "all";
         }
     }
