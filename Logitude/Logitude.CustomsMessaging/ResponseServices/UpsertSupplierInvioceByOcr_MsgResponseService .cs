@@ -369,17 +369,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
                             supplierInvoiceItemPM.InvoiceQuantityType = ItemUnit;
                     }
-                    //mapping supplierInvoiceItem from SupplierInvioceExportDefaults
-                    supplierInvoiceItemPM.TransactionNatureCode = myInvoiceDefaults.TransactionNatureCode;
-                    supplierInvoiceItemPM.ClaimReasonCode = myInvoiceDefaults.ClaimReasonCode;
+                    if(myInvoiceDefaults != null)
+                    {
+                        //mapping supplierInvoiceItem from SupplierInvioceExportDefaults
+                        supplierInvoiceItemPM.TransactionNatureCode = myInvoiceDefaults.TransactionNatureCode;
+                        supplierInvoiceItemPM.ClaimReasonCode = myInvoiceDefaults.ClaimReasonCode;
 
-                    //mapping supplierInvoiceItemProcesType from SupplierInvioceExportDefaults
-                    SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesType = new SupplierInvoiceItemProcesTypePM();
-                    supplierInvoiceItemProcesType.ProcessTypeCode = myInvoiceDefaults.ProcessTypeCode;
-                    supplierInvoiceItemProcesType.DeclarationId = customResponse.Declarationid;
-                    supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Insert;
+                        //mapping supplierInvoiceItemProcesType from SupplierInvioceExportDefaults
+                        SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesType = new SupplierInvoiceItemProcesTypePM();
+                        supplierInvoiceItemProcesType.ProcessTypeCode = myInvoiceDefaults.ProcessTypeCode;
+                        supplierInvoiceItemProcesType.DeclarationId = customResponse.Declarationid;
+                        supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Insert;
 
-                    supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesType);
+                        supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesType);
+                    }
+                    
 
                     //add supplierInvoiceItem
                     mySupplierInvoice.SupplierInvoiceItems.Add(supplierInvoiceItemPM);
