@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using WWApi.Models;
 using System;
 using System.Linq;
+using System.Globalization;
 
 namespace TrackedShipmentsAPI.Services
 {
@@ -135,8 +136,8 @@ namespace TrackedShipmentsAPI.Services
             itemObject["name"] = port?.name ?? "";
             itemObject["locode"] = port?.locode ?? "";
             itemObject["timezone"] = port?.timezone ?? "";
-            itemObject["latitude"] = port?.coordinates?[1] ?? "";
-            itemObject["longitude"] = port?.coordinates?[0] ?? "";
+            itemObject["latitude"] = port?.coordinates?[1] ?? null;
+            itemObject["longitude"] = port?.coordinates?[0] ?? null;
             itemObject["city"] = "";
             itemObject["state"] = "";
             itemObject["country"] = port?.country ?? "";
@@ -185,11 +186,12 @@ namespace TrackedShipmentsAPI.Services
             bool isActual = timestamps?.code == ACTUAL_CODE;
 
             if (actualField) {
-                return isActual ? datetime : "";
+                return isActual ? (datetime != null ? DateTime.ParseExact(datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : datetime) : "";
             }
 
-            return isActual ? "" : datetime;
-        }
+            return isActual ? "" : (datetime != null ? DateTime.ParseExact(datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : datetime);
+			;
+		}
 
         public void AddTransshipmentsData(JObject json, Milestone[] milestones, Event[] events, Dictionary<string, Port> portsDict, Dictionary<string, Vessel> vesselsDict)
         {
@@ -272,7 +274,11 @@ namespace TrackedShipmentsAPI.Services
             CarrierLatestStatus carrierLatestStatus = data?.shipment?.carrierLatestStatus?.ToObject<CarrierLatestStatus>();
             Vessel currentVessel = carrierLatestStatus?.vesselId != null ? vesselsDict[carrierLatestStatus?.vesselId ?? ""] : new Vessel();
 
-            string podVesselArrivalPlannedLast = GetDateByActual(podLocMilestone?.arrival?.timestamps?.carrier, false);
+			Milestone nextMilestone = milestones.FirstOrDefault((Milestone milestone) => milestone?.arrival?.timestamps?.carrier?.datetime != null && milestone?.arrival?.timestamps?.carrier?.code == PLANNED_CODE);
+			Port nextPort = currentVessel != null & nextMilestone?.arrival?.vesselId == currentVessel?.vesselId ? portsDict[nextMilestone?.portId ?? ""] : new Port();
+
+
+			string podVesselArrivalPlannedLast = GetDateByActual(podLocMilestone?.arrival?.timestamps?.carrier, false);
             string podVesselArrivalActual = GetDateByActual(podLocMilestone?.arrival?.timestamps?.carrier, true);
 
             // Parse the JSON structure
@@ -294,15 +300,28 @@ namespace TrackedShipmentsAPI.Services
                             ""code"": """",
                             ""severity"": """",
                             ""walltime"": """",
-                            ""created"": ""{sentAt}""
+                            ""created"": ""{DateTime.ParseExact(sentAt, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}""
                         }},
                         ""shipment"": {{
                             ""id"": ""{shipmentId ?? ""}"",
                             ""shipmentsubscription_status"": """",
-                            ""status_verbose"": """",
-                            ""current_vessel_nextport"": """",
-                            ""current_vessel_position"": """",
-                            ""current_vessel"": ""{currentVessel?.name ?? ""}"",
+                            ""status_verbose"": ""{carrierLatestStatus?.status?.description}"",
+                           ""current_vessel_nextport"": {{
+                                 ""name"": ""{nextPort?.name}"",
+                                 ""locode"": ""{nextPort?.locode}"",
+                                 ""eta"": ""{GetDateByActual(nextMilestone?.arrival?.timestamps?.predicted, false) ?? GetDateByActual(nextMilestone?.arrival?.timestamps?.carrier, false)}"",
+                            }},
+                            ""current_vessel_position"": {{
+                                ""latitude"": ""{currentVessel?.lastPosition?.coordinates?[1]}"",
+                                ""longitude"": ""{currentVessel?.lastPosition?.coordinates?[0]}"",
+                                ""timestamp"": ""{currentVessel?.lastPosition?.datetime}"",
+                                ""heading"": ""{currentVessel?.lastPosition?.course}"",
+                            }},
+                            ""current_vessel"": {{
+                                ""name"": ""{currentVessel?.name ?? ""}"",
+                                ""imo"": ""{currentVessel?.imo ?? ""}"",
+                                ""id"": ""{currentVessel?.vesselId ?? ""}"",
+                            }},
                             ""container_type_iso"": ""{data?.shipment?.identifiers?.ISOEquipmentCode ?? ""}"",
                             ""container_type_str"": """",
                             ""shipmentsubscription_status_verbose"": """",
@@ -328,12 +347,12 @@ namespace TrackedShipmentsAPI.Services
                             ""weight"": """",
                             ""status"": """",
                             ""lifecycle_status"": """",
-                            ""id_date"": """",
-                            ""pol_vsldeparture_planned_initial"": ""{data?.shipment?.initialCarrierETD}"",
+                            ""id_date"": ""{(carrierLatestStatus?.timestamps?.datetime != null ? DateTime.ParseExact(carrierLatestStatus?.timestamps?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
+                            ""pol_vsldeparture_planned_initial"": ""{data?.shipment?.initialCarrierETDnew.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}"",
                             ""pol_vsldeparture_planned_last"": """",
-                            ""pol_vsldeparture_actual"": ""{polLocMilestone?.departure?.timestamps?.carrier?.datetime ?? ""}"",
-                            ""pol_vsldeparture_detected"": ""{polLocMilestone?.departure?.timestamps?.predicted?.datetime ?? ""}"",
-                            ""pod_vslarrival_planned_initial"": ""{data?.shipment?.initialCarrierETA}"",
+                            ""pol_vsldeparture_actual"": ""{(polLocMilestone?.departure?.timestamps?.carrier?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.carrier?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
+                            ""pol_vsldeparture_detected"": ""{(polLocMilestone?.departure?.timestamps?.predicted?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.predicted?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
+                            ""pod_vslarrival_planned_initial"": ""{data?.shipment?.initialCarrierETA.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}"",
                             ""pod_vslarrival_planned_last"": ""{podVesselArrivalPlannedLast}"",
                             ""pod_vslarrival_actual"": ""{podVesselArrivalActual}"",
                             ""pod_vslarrival_detected"": ""{podVesselArrivalDetected}"",
