@@ -779,18 +779,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.DoesAnyInvoiceHasFreight(declarationId, tenant);
         }
 
-        //public SupplierInvoicePM GetInvoicesForDeclarationByInvoiceNum(string declarationId, string invoiceNumber, int tenant)
-        //{
-            
-        //    SupplierInvoice invoice = repository.GetInvoicesForDeclarationByInvoiceNum(declarationId, invoiceNumber, tenant);
-        //    if(invoice == null) { return null; }
-        //    SupplierInvoiceDataMapping mappings = new SupplierInvoiceDataMapping();
-        //    SupplierInvoicePM invoicePM = new SupplierInvoicePM();
-        //    mappings.CustomPOCOToPM(invoicePM, invoice);
-        //    mappings.POCOToPM(invoicePM, invoice);
-
-        //    return invoicePM;
-        //}
 
         public List<SupplierInvoicePM> GetSupplierInvoicesForDeclarationWithFreightsOnly(string declarationId, int tenant)
         {
