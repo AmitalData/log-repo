@@ -492,7 +492,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         queryFilterItems.push(new QueryFilterItem("IsCreditLimitSet", this.IsCreditLimitSet?  true:false ));
         queryFilterItems.push(new QueryFilterItem("GroupByDate", ""));
         queryFilterItems.push(new QueryFilterItem("BalanceFilter", this.SelectedBalanceTypeItem.Code));
-        queryFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
+        queryFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0,null, "decimal"));
         queryFilterItems.push(new QueryFilterItem("SortField", this.SelectedSortTypeItem.Code));
         queryFilterItems.push(new QueryFilterItem("SortDirection", this.SelectedSortDirectionCode));
         this.SetCategoryIndexAndValueFilters(queryFilterItems);
