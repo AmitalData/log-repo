@@ -396,6 +396,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Insert;
 
                         supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesType);
+
+                        if (!string.IsNullOrEmpty(supplierInvoiceItemProcesType.ProcessTypeCode))
+                        {
+                            supplierInvoiceItemPM.ItemAdditionalStatus = true;
+                        }
                     }
                     
 
