@@ -159,7 +159,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     
     public CurrentEditComponentId: string;
     private Listen() {
-        
+
         if (this.CurrentSession.CurrentEditComponent != null) {
 
             this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
@@ -190,6 +190,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEIN") {
 
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             this.ReloadMyScreen();
                         }
                     }
