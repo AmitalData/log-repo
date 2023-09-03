@@ -233,6 +233,13 @@ FROM ( SELECT DISTINCT
             return result;
         }
 
+        public int GetCountOfTicketsByDocFilingId(string docId, int tenant)
+        {
+            return (from a in context.CustomsDocumentsTickets
+                    where a.DocumentsFilingId == docId && a.Tenant == tenant
+                    select a).Count();
+        }
+
         public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketsByDocumentsFilingId(string documentsFilingId, int tenant)
 {
 (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 

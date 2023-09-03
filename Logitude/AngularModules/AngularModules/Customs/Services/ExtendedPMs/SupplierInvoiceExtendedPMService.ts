@@ -210,7 +210,7 @@ export class SupplierInvoiceExtendedPMService {
 
     }
 
-    GetDocumentFilingIdForForInvoice(declarationId: string, counterkey: number) {
+    GetDocumentFilingIdForForInvoice(declarationId: string, counterkey: number, isOcr = false) {
 
 
         var authHeader = new Headers();
@@ -218,7 +218,7 @@ export class SupplierInvoiceExtendedPMService {
 
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetDocumentFilingIdForForInvoice?'
-                + 'declarationId=' + declarationId + '&' + 'counterkey=' + counterkey, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                + 'declarationId=' + declarationId + '&' + 'counterkey=' + counterkey + '&' + 'isOcr=' + isOcr, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var resultJson = response;
 
                     var serviceResponse: ServiceResponse;
