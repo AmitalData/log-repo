@@ -1176,6 +1176,7 @@
     <Compile Include="EntityQueryServices\Generated\DefaultValueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GovernmentProcTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InternationalSiteTenantQueryService.Generated.cs" />
+
     <Compile Include="EntityQueryServices\Generated\SupplierInvioceExportDefaultQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\UIMessageTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OcrDocumentQueryService.Generated.cs" />
@@ -1707,6 +1708,7 @@
     <Compile Include="EntityUpdateServices\ClientItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OcrDocumentUpdateService.cs" />
+
     <Compile Include="EntityUpdateServices\CountryCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
@@ -1719,6 +1721,7 @@
     <Compile Include="EntityUpdateServices\Generated\DeclarationCounterUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GovernmentProcTypeTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InternationalSiteTenantUpdateService.Generated.cs" />
+
     <Compile Include="EntityUpdateServices\Generated\SupplierInvioceExportDefaultUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\UIMessageTenantUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClientIndicationUpdateService.Generated.cs" />
