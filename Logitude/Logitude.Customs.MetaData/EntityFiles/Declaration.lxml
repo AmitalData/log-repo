@@ -22123,13 +22123,6 @@
       <QueryFilter
         QueryCode="&quot;PendingPayment&quot;"
         PredefinedValue="&quot;true&quot;"
-        ObjectFieldName="&quot;IsPending900&quot;"
-        IsPredefined="true"
-        Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
-      <QueryFilter
-        QueryCode="&quot;PendingPayment&quot;"
-        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCourierDeclaration&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
@@ -22146,6 +22139,13 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PendingPayment&quot;"
+        PredefinedValue="&quot;900&quot;"
+        ObjectFieldName="&quot;CourierPendingReasonList&quot;"
+        IsPredefined="true"
+        Operator="&quot;Contains&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>

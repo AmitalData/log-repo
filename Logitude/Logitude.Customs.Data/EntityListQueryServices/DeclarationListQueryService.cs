@@ -524,7 +524,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           FastIndividualProcessCode = !isCourierEnv ? "" : dcs != null ? dcs.FastIndividualProcessCode : null,
                                                           TotalInvoiceAmountInUSD = !isCourierEnv ? 1 : dcs != null ? dcs.TotalInvoiceAmountInUSD : null,
                                                           IsPending902 = !isCourierEnv ? true : dcs != null ? dcs.CourierPendingReasonList.Contains("902") : false,
-                                                          IsPending900 = !isCourierEnv ? true : dcs != null ? dcs.CourierPendingReasonList.Contains("900") : false,
                                                           IsPendingNotNull = !isCourierEnv || (dcs != null && dcs.CourierPendingReasonList != null && dcs.CourierPendingReasonList.Length > 0),
                                                           CourierPendingReasonList = isCourierEnv && dcs != null ? dcs.CourierPendingReasonList : null,
                                                           IntegratorCode = !isCourierEnv ? "" : cd != null ? cd.IntegratorCode : null,
