@@ -378,7 +378,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             string clientId = TranslateClient(importerId);
 
                             this._MyDeclarationPM.ImporterId = clientId?.Length > 15 ? this._MyDeclarationPM?.ImporterId : clientId;
-                            this._MyDeclarationPM.ImporterCode = importerId?.Length>15? this._MyDeclarationPM?.ImporterCode : importerId;
+                            this._MyDeclarationPM.ImporterCode = importerId;
 
                         }
                     }
