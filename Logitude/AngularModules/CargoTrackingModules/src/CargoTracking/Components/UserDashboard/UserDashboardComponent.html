@@ -84,7 +84,7 @@
     <router-outlet *ngIf="IsBrandingDataLoaded"></router-outlet>
 </div>
 
-<div *ngIf="!isCookieNoticeDismissed" id="cookie-notice" style="position: fixed; bottom: 20px; left: 20px;" [@fade]>
+<div  class="mobile-cookies" *ngIf="!isCookieNoticeDismissed" id="cookie-notice" style="position: fixed; bottom: 20px; left: 20px;" [@fade]>
     <div>
       
         <h2 style="color: white !important;">
