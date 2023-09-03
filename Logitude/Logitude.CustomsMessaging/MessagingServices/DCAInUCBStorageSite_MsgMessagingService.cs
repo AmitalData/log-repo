@@ -63,6 +63,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 genericRequestParams.RequestName = $" {customsResponse.HAWB} שידור שינוי אתר איחסון לבלדר ";
 
             }
+            if (customsResponse.LoadPortCode != null)
+            {
+                genericRequestParams.RequestName = $" {customsResponse.HAWB} שידור עדכון נמל טעינה לבלדר ";
+
+            }
             if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
 
             {
@@ -120,7 +125,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 myDCAInUCBCMSSWithResponseContentHeader.UnLoadPortCode = mySendALLStorageSiteRequestParams.UnLoadPortCode;
             }
 
-                var body = XmlGenericUtil<DCAInUCBCMSSWithResponseContentHeader>.SerializeObject(myDCAInUCBCMSSWithResponseContentHeader);
+            if (mySendALLStorageSiteRequestParams.LoadPortCode != null)
+            {
+                myDCAInUCBCMSSWithResponseContentHeader.LoadPortCode = mySendALLStorageSiteRequestParams.LoadPortCode;
+            }
+            var body = XmlGenericUtil<DCAInUCBCMSSWithResponseContentHeader>.SerializeObject(myDCAInUCBCMSSWithResponseContentHeader);
             body = body.Substring(body.IndexOf(Environment.NewLine));
             var myESBResponseXmlClass = new ESBResponseXmlClass();
             var extrenalId = "62833ff7-1cd3-4faa-85a6-a4312ae4797a";
@@ -192,5 +201,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         public List<string> ServerSplitDeclarationsList { get; set; }
         public string UnLoadPortCode { get; set; }
+        public string LoadPortCode { get; set; }
+
     }
 }

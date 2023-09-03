@@ -6,5 +6,6 @@ export class SendALLStorageSiteRequestParams extends GenericRequestParams {
     public HAWB: string;
     public StorageSiteCode: string;
     public UnLoadPortCode: string;
+    public LoadPortCode:string;
 
 }

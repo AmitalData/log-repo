@@ -13,6 +13,7 @@ import { AddCourierPendingToUnifreightStatusComponent } from './Components/Couri
 import { GatepassRequestComponent } from './Components/GatepassRequest/GatepassRequestComponent';
 import { GetStorageSiteCodeComponent } from './Components/CourierWorkSheet/GetStorageSiteCodeComponent';
 import { GetUnloadPortCodeComponent } from './Components/CourierWorkSheet/GetUnloadPortCodeComponent';
+import { GetLoadPortCodeComponent } from './Components/CourierWorkSheet/GetLoadPortCodeComponent';
 import { AddEditPendingByKeywordComponent } from './Components/PendingByKeyword/AddEditPendingByKeywordComponent';
 import { DeclarationPendingsGeneralComponent } from './Components/CourierPendingReason/DeclarationPendingsGeneralComponent';
 import { CourierDeclarationWorkspaceComponent } from './Components/CourierWorkspaces/CourierDeclarationWorkspaceComponent';
@@ -70,7 +71,8 @@ export const Components =
         AWBWizardLoadComponent,
         PrioritizeFlightRequestsComponent,
         UpdatePriorityComponent,
-        ImportCourierMawbsFromExcelComponent
+        ImportCourierMawbsFromExcelComponent,
+        GetLoadPortCodeComponent,
     ];
 
 export class ModuleDeclarations {
@@ -101,7 +103,8 @@ export class ModuleDeclarations {
                 
             case "CourierDeclarationWorkspaceComponent": { myResult = CourierDeclarationWorkspaceComponent; break; }
             case "BulkFeedPendingComponent": { myResult = BulkFeedPendingComponent; break; }
-                
+            case "GetLoadPortCodeComponent": { myResult = GetLoadPortCodeComponent; break; }
+
             case "AutonomyKeywordComponent": { myResult = AutonomyKeywordComponent; break; }
             //case "VirtualScrollNG": { myResult = VirtualScrollNG; break; }
             //case "VirtualScrollNGScroll": { myResult = VirtualScrollNGScroll; break; }
