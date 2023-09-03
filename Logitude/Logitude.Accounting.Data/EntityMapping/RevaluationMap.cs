@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.Status).HasColumnName("Status").HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.Message).HasColumnName("Message").HasMaxLength(200).IsUnicode(false);
+            this.Property(t => t.Message).HasColumnName("Message").HasMaxLength(200).IsUnicode(true);
 
             this.Property(t => t.RevaluationsGLAccountId).HasColumnName("RevaluationsGLAccountId").HasMaxLength(15).IsUnicode(false);
         }
