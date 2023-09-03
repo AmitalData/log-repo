@@ -685,7 +685,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         }
 
-        public HttpResponseMessage GetDocumentFilingIdForForInvoice(string declarationId, int counterkey)
+        public HttpResponseMessage GetDocumentFilingIdForForInvoice(string declarationId, int counterkey, bool isOcr = false)
         {
             try
             {
@@ -752,8 +752,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     {
                         resultDocumentFilingId = FirstDocument.Id;
                     }
-                }
 
+                    if (isOcr)
+                    {
+                        ServiceResponse resultDocIdAndCountOfTickets = new ServiceResponse();
+                        resultDocIdAndCountOfTickets.Result = resultDocumentFilingId;
+                        resultDocIdAndCountOfTickets.Count = ticketsQuery.GetCountOfTicketsByDocFilingId(resultDocumentFilingId, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, resultDocIdAndCountOfTickets);
+
+                    }
+
+                }
                 
                 #region old code
                 ////
@@ -808,7 +817,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 //        // No document filing related to this ticket
                 //    }
                 //}
-                #endregion
+                #endregion   
                 return Request.CreateResponse(HttpStatusCode.OK, resultDocumentFilingId);
             }
 

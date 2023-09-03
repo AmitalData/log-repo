@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IdentityModel.Metadata;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -327,6 +328,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public List<string> GetDocConnectTicket(string documentsfilingid, string entityId, int tenant)
         {
             return repository.GetDocConnectTicket(documentsfilingid, entityId, tenant);
+        }
+
+        public int GetCountOfTicketsByDocFilingId(string documentsfilingid, int tenant)
+        {
+            if(string.IsNullOrEmpty(documentsfilingid)) {  return 0; }
+            return repository.GetCountOfTicketsByDocFilingId(documentsfilingid, tenant);
         }
     }
 }

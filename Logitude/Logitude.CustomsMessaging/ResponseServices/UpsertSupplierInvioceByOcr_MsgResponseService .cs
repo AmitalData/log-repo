@@ -52,6 +52,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
     public class UpsertSupplierInvioceByOcr_MsgResponseService : ResponseServiceBase<UpsertSupplierInvioceByOcrResponseData, DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader, GenericRequestParams>
     {
         const string label = "TABLE";
+        const string ExpensesAmount = "Expenses_amount";
+        const string ExpensesName = "Expenses_name";
 
         public override UpsertSupplierInvioceByOcrResponseData GetResponse(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
@@ -77,36 +79,48 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         Dictionary<string, string> dic = new Dictionary<string, string>();
 
-                        foreach (var prediction in convertJson.pages[0].prediction)
+                        foreach (var page in convertJson.pages)
                         {
-                            if (prediction.label.ToUpper() != label && !dic.ContainsKey(prediction.label))
+                            foreach (var prediction in page.prediction)
                             {
-                                dic.Add(prediction.label, prediction.ocr_text);
+                                if (prediction.label.ToUpper() != label && !dic.ContainsKey(prediction.label))
+                                {
+                                    dic.Add(prediction.label, prediction.ocr_text);
+                                }
                             }
                         }
 
                         List<Dictionary<string, string>> supplierInvoiceItemsList = new List<Dictionary<string, string>>();
                         Dictionary<string, string> dicItems = new Dictionary<string, string>();
-
-                        var cells = convertJson.pages[0].prediction.Where(x => x.label.ToUpper() == label)?.First().cells;
-
-                        int row = 0;
-                        foreach (var cell in cells)
+                        for(int i = 0; i < convertJson.pages.Count(); i++)
                         {
-                            if (cell != null && cell.row != row && dicItems.Count > 0)
+                            var cells = convertJson.pages[i].prediction.Where(x => x.label.ToUpper() == label);
+                            if (cells.Any())
                             {
-                                supplierInvoiceItemsList.Add(dicItems);
                                 dicItems = new Dictionary<string, string>();
-                            }
-                            if (!dicItems.ContainsKey(cell.label))
-                                dicItems.Add(cell.label, cell.text);
-                            row = cell.row;
-                        }
+                                int row = 0;
+                                foreach (var cell in cells?.First().cells)
+                                {
+                                    if (cell != null && cell.row != row && dicItems.Count > 0)
+                                    {
+                                        supplierInvoiceItemsList.Add(dicItems);
+                                        dicItems = new Dictionary<string, string>();
+                                    }
+                                    if (!dicItems.ContainsKey(cell.label) && cell.label != ExpensesAmount && cell.label != ExpensesName)
+                                        dicItems.Add(cell.label, cell.text);
+                                    row = cell.row;
+                                }
 
-                        if (dicItems.Count > 0)
-                        {
-                            supplierInvoiceItemsList.Add(dicItems);
+                                if (dicItems.Count > 0)
+                                {
+                                    supplierInvoiceItemsList.Add(dicItems);
+                                }
+
+
+                            }
+                            
                         }
+                        
 
                         //insert or update supplierInvoice
                         try
@@ -369,17 +383,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
                             supplierInvoiceItemPM.InvoiceQuantityType = ItemUnit;
                     }
-                    //mapping supplierInvoiceItem from SupplierInvioceExportDefaults
-                    supplierInvoiceItemPM.TransactionNatureCode = myInvoiceDefaults.TransactionNatureCode;
-                    supplierInvoiceItemPM.ClaimReasonCode = myInvoiceDefaults.ClaimReasonCode;
+                    if(myInvoiceDefaults != null)
+                    {
+                        //mapping supplierInvoiceItem from SupplierInvioceExportDefaults
+                        supplierInvoiceItemPM.TransactionNatureCode = myInvoiceDefaults.TransactionNatureCode;
+                        supplierInvoiceItemPM.ClaimReasonCode = myInvoiceDefaults.ClaimReasonCode;
 
-                    //mapping supplierInvoiceItemProcesType from SupplierInvioceExportDefaults
-                    SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesType = new SupplierInvoiceItemProcesTypePM();
-                    supplierInvoiceItemProcesType.ProcessTypeCode = myInvoiceDefaults.ProcessTypeCode;
-                    supplierInvoiceItemProcesType.DeclarationId = customResponse.Declarationid;
-                    supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Insert;
+                        //mapping supplierInvoiceItemProcesType from SupplierInvioceExportDefaults
+                        SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesType = new SupplierInvoiceItemProcesTypePM();
+                        supplierInvoiceItemProcesType.ProcessTypeCode = myInvoiceDefaults.ProcessTypeCode;
+                        supplierInvoiceItemProcesType.DeclarationId = customResponse.Declarationid;
+                        supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Insert;
 
-                    supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesType);
+                        supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesType);
+
+                        if (!string.IsNullOrEmpty(supplierInvoiceItemProcesType.ProcessTypeCode))
+                        {
+                            supplierInvoiceItemPM.ItemAdditionalStatus = true;
+                        }
+                    }
+                    
 
                     //add supplierInvoiceItem
                     mySupplierInvoice.SupplierInvoiceItems.Add(supplierInvoiceItemPM);
