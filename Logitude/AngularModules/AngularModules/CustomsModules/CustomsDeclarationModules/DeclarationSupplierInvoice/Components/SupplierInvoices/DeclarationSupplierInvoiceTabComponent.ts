@@ -630,6 +630,9 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                                                     this.DeleteSelected(item);
                                                 });             
                                             }
+                                            else{
+                                                this.DeleteSelected(item);
+                                            }
                                         });
                                     }
                                     else{
