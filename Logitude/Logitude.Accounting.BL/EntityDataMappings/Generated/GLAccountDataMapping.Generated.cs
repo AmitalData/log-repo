@@ -82,7 +82,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreditAllotmentPercentage, 
 	         CardsDataId, 
 	         PostponedChequesCommission,
-	      }
+             DateFormat,
+        }
 
 
 	      public enum PMPropertyNames
@@ -240,7 +241,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			 Obligo,
 			 CreditUsed,
 			InsuredCreditPercentage,
-		}
+            DateFormat,
+        }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -542,8 +544,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.PostponedChequesCommission = entityPM.PostponedChequesCommission;
 			}
-			
-				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateFormat))
+            {
+                entityPOCO.DateFormat = entityPM.DateFormat;
+            }
+
+            BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
 		public void POCOToPM(GLAccountPM entityPM, GLAccount entityPOCO)
@@ -848,8 +854,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.PostponedChequesCommission = entityPOCO.PostponedChequesCommission;
             }
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.DateFormat))
+            {
+                entityPM.DateFormat = entityPOCO.DateFormat;
+            }
 
-		}
+        }
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
         {
@@ -1149,8 +1159,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.PostponedChequesCommission = entityPM.PostponedChequesCommission;
             }
-			
-		}
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateFormat))
+            {
+                oldEntityPM.DateFormat = entityPM.DateFormat;
+            }
+
+        }
 
 	    public void EncodeBase64NVARCHARFields(GLAccountPM entityPM)
         {
@@ -1178,6 +1192,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.NameForPrintingCheques)) //T4 find type == nText 
             {
                 entityPM.NameForPrintingCheques = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.NameForPrintingCheques));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DateFormat)) //T4 find type == nText 
+            {
+                entityPM.DateFormat = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DateFormat));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

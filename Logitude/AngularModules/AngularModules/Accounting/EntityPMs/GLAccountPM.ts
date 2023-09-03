@@ -901,6 +901,10 @@ export class GLAccountPM {
     public get InsuredCreditPercentage() { return this.insuredCreditPercentage; }
     public set InsuredCreditPercentage(newValue: number) { if (this.insuredCreditPercentage != newValue) { this.insuredCreditPercentage = newValue; this.MarkAsDirty("InsuredCreditPercentage"); } }
     
+    private dateFormat: string;
+    public get DateFormat() { return this.dateFormat; }
+    public set DateFormat(newValue: string) { if (this.dateFormat != newValue) { this.dateFormat = newValue; this.MarkAsDirty("DateFormat"); } }
+    
     public OldEntityPM: GLAccountPM;
 		
     public IsDirty: boolean;

@@ -162,6 +162,9 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.CardsDataId).HasColumnName("CardsDataId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.PostponedChequesCommission).HasColumnName("PostponedChequesCommission").HasPrecision(16, 2);
+
+            this.Property(t => t.DateFormat).HasColumnName("DateFormat").HasMaxLength(50).IsUnicode(true);
+
         }
     }
 }
