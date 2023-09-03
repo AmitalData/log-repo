@@ -33,6 +33,7 @@ import { forEach } from 'cypress/types/lodash';
 import { OcrDocumentExtendedListService } from 'Customs/Services/ExtendedLists/OcrDocumentExtendedListService';
 import { OcrDocumentPM } from 'Customs/EntityPMs/OcrDocumentPM';
 import { OcrDocumentPMService } from 'Customs/Services/StandardPMs/OcrDocumentPMService';
+import { variable } from '@angular/compiler/src/output/output_ast';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -611,13 +612,13 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
                                 
-                                if(this.EntityPM.Direction == 'E')
+                                if(this.EntityPM.Direction == 'E' && this.IsOcr)
                                 {
-                                    this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(item.DeclarationId, item.InvoiceCounterKey).subscribe((response) =>{
-                                    var docId = response.Result
-                                    if(docId)
+                                    this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(item.DeclarationId, item.InvoiceCounterKey, true).subscribe((response) =>{
+                                    var docId = response?.Result?.Result;
+                                    var count = response?.Result?.Count ?? 0;
+                                    if(docId && count <= 1)
                                     {
-
                                         var ocrDocumentExtendedListService: OcrDocumentExtendedListService = new OcrDocumentExtendedListService();                
 
                                         ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, docId).subscribe((response)=>{
