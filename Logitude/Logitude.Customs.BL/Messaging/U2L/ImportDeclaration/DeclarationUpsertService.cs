@@ -1044,15 +1044,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     this._MyDeclarationPM.ExportFile = _AmitalCustomsFile.ImporterFile;
                 }
-
-                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.UNFCourier) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.UNFCourier) && _AmitalCustomsFile.UNFCourier.ToLower() != "true"))
+                if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.UNFCourier))
                 {
-                    _MyDeclarationPM.UNFCourier = false;
-                }
-                else
-                {
-                    _MyDeclarationPM.UNFCourier = true;
-
+                    if (_AmitalCustomsFile.UNFCourier.ToLower() == "true")
+                    {
+                        _MyDeclarationPM.UNFCourier = true;
+                    }
                 }
 
                 //DeclarationExportRecipients
