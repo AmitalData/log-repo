@@ -47,7 +47,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
     private CurrentSession = SessionLocator.SelectedSession;
     public IsExcelEnabled = true;
     public IsFutureOpenCheques= false;
-    public IsInBankAccountStatus= false;
+    public IsUnpaidChecks= false;
 
     constructor( private CD: ChangeDetectorRef){
         super();
@@ -65,8 +65,8 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
             if(args.IsFutureOpenCheques) {
                 this.IsFutureOpenCheques = args.IsFutureOpenCheques;
             }
-            if(args.IsInBankAccountStatus) {
-                this.IsInBankAccountStatus = args.IsInBankAccountStatus;
+            if(args.IsUnpaidChecks) {
+                this.IsUnpaidChecks = args.IsUnpaidChecks;
             }
             
             this.LoadData();
@@ -263,7 +263,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
 
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         this.filterAgrs.addAdditionalFilter("IsFutureOpenCheques", this.IsFutureOpenCheques, null, null, "Equals", true, false, false, "Boolean");
-        this.filterAgrs.addAdditionalFilter("IsInBankAccountStatus", this.IsInBankAccountStatus, null, null, "Equals", true, false, false, "Boolean");
+        this.filterAgrs.addAdditionalFilter("IsUnpaidChecks", this.IsUnpaidChecks, null, null, "Equals", true, false, false, "Boolean");
 
     }
 
