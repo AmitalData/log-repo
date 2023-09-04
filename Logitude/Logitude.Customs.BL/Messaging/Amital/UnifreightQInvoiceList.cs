@@ -80,90 +80,119 @@ namespace Logitude.Customs.BL.Messaging.Amital
 
             var resXML = @"<Statuses>
  <StatusData>
-  <Code>OPN</Code>
-  <Name>פתיחה</Name>
-  <Date>07.05.20</Date>
-  <Time>12:40</Time>
-  <Comments/>
+  <Code>99L</Code>
+  <Name>הערות פנימיות אוריין</Name>
+  <Date>29.08.23</Date>
+  <Time>14:57</Time>
+  <Comments>בטיפול סימונה דדיה</Comments>
+ </StatusData>
+ <StatusData>
+  <Code>TRG</Code>
+  <Name>נמסר למוביל</Name>
+  <Date>30.08.23</Date>
+  <Time>12:00</Time>
+  <Comments>ORIAN</Comments>
+ </StatusData>
+ <StatusData>
+  <Code>POD</Code>
+  <Name>נמסר לקוח</Name>
+  <Date>31.08.23</Date>
+  <Time>11:29</Time>
+  <Comments>from=נתבג               
+to=נהריה               
+weight=0.02
+volume=
+quantity=
+trans.type=
+warehouse=</Comments>
  </StatusData>
 </Statuses>
 <InvoiceLines>
  <InvoiceLine>
-  <ServiceCode>56</ServiceCode>
-  <ServiceName/>
+  <ServiceCode>T4</ServiceCode>
+  <ServiceName>מעמ רשימון</ServiceName>
   <PayType>L</PayType>
-  <AmountNIS>-100</AmountNIS>
+  <AmountNIS>1440</AmountNIS>
   <Currency>NIS</Currency>
-  <AmountForeign></AmountForeign>
+  <AmountForeign>1440</AmountForeign>
+  <LineNumber>56</LineNumber>
   <Wip>N</Wip>
-<LineNumber>1</LineNumber>
- </InvoiceLine>
- <InvoiceLine>
-  <ServiceCode>COM</ServiceCode>
-  <ServiceName>עמלה</ServiceName>
-  <PayType>L</PayType>
-  <AmountNIS>-344</AmountNIS>
-  <Currency>NIS</Currency>
-  <AmountForeign>344</AmountForeign>
-  <Wip>N</Wip>
-<LineNumber>2</LineNumber>
- </InvoiceLine>
- <InvoiceLine>
-  <ServiceCode>T16</ServiceCode>
-  <ServiceName>אגרת ביטחון</ServiceName>
-  <PayType>L</PayType>
-  <AmountNIS>41</AmountNIS>
-  <Currency>NIS</Currency>
-  <AmountForeign>41</AmountForeign>
-  <Wip>Y</Wip>
-<LineNumber>3</LineNumber>
  </InvoiceLine>
  <InvoiceLine>
   <ServiceCode>T6</ServiceCode>
   <ServiceName>אגרת מחשב</ServiceName>
-  <PayType>L</PayType>
-  <AmountNIS>36</AmountNIS>
+  <PayType>E</PayType>
+  <AmountNIS>20</AmountNIS>
   <Currency>NIS</Currency>
-  <AmountForeign>36</AmountForeign>
-  <Wip>Y</Wip>
-<LineNumber>4</LineNumber>
+  <AmountForeign>20</AmountForeign>
+  <LineNumber>57</LineNumber>
+  <Wip>N</Wip>
  </InvoiceLine>
  <InvoiceLine>
-  <ServiceCode>TAX</ServiceCode>
-  <ServiceName>מס</ServiceName>
-  <PayType>L</PayType>
-  <AmountNIS>-207144</AmountNIS>
+  <ServiceCode>T16</ServiceCode>
+  <ServiceName>אגרת ביטחון</ServiceName>
+  <PayType>E</PayType>
+  <AmountNIS>46</AmountNIS>
   <Currency>NIS</Currency>
-  <AmountForeign>-207144</AmountForeign>
-  <Wip>Y</Wip>
-<LineNumber>5</LineNumber>
+  <AmountForeign>46</AmountForeign>
+  <LineNumber>58</LineNumber>
+  <Wip>N</Wip>
+ </InvoiceLine>
+ <InvoiceLine>
+  <ServiceCode>SWIS</ServiceCode>
+  <ServiceName>סוויספורט</ServiceName>
+  <PayType>L</PayType>
+  <AmountNIS>119.86</AmountNIS>
+  <Currency>NIS</Currency>
+  <AmountForeign>119.86</AmountForeign>
+  <LineNumber>59</LineNumber>
+  <Wip>N</Wip>
+ </InvoiceLine>
+ <InvoiceLine>
+  <ServiceCode>GLX</ServiceCode>
+  <ServiceName>שער עולמי</ServiceName>
+  <PayType>L</PayType>
+  <AmountNIS>65</AmountNIS>
+  <Currency>NIS</Currency>
+  <AmountForeign>65</AmountForeign>
+  <LineNumber>51</LineNumber>
+  <Wip>N</Wip>
+ </InvoiceLine>
+ <InvoiceLine>
+  <ServiceCode>INL</ServiceCode>
+  <ServiceName>הובלה יבשתית</ServiceName>
+  <PayType>E</PayType>
+  <AmountNIS>2306</AmountNIS>
+  <Currency>NIS</Currency>
+  <AmountForeign>2306</AmountForeign>
+  <LineNumber>55</LineNumber>
+  <Wip>N</Wip>
  </InvoiceLine>
 </InvoiceLines>
-<IntegratedInvoices/>
+<IntegratedInvoices>
+ <IntegratedInvoice>
+  <InvoiceNumber>632304231</InvoiceNumber>
+  <ForwarderFile>A01151559</ForwarderFile>
+  <InvoiceCurrency>EUR</InvoiceCurrency>
+  <BillTo>Schenker Deutschland AG</BillTo>
+  <InvoiceAmount>754.84</InvoiceAmount>
+ </IntegratedInvoice>
+</IntegratedInvoices>
 <Invoices>
  <Invoice>
-  <InvoiceBillTo>אודליה</InvoiceBillTo>
-  <InvoiceBillToCard>10013234</InvoiceBillToCard>
-  <InvoiceDate>31.01.2020</InvoiceDate>
+  <InvoiceBillTo>Agrolan Ltd</InvoiceBillTo>
+  <InvoiceBillToCard>10219814</InvoiceBillToCard>
+  <InvoiceDate>31.08.2023</InvoiceDate>
   <InvoiceType>Client Invoice</InvoiceType>
+  <InvoiceTypeCode>L</InvoiceTypeCode>
   <InvoiceCurrency>NIS</InvoiceCurrency>
-  <InvoiceAmount>207665</InvoiceAmount>
+  <InvoiceAmount>1624.86</InvoiceAmount>
  </Invoice>
 </Invoices>
-<Messages>
- <MessagesData>
-  <E>חסר תאור בשורה של סעיף 56</E>
- </MessagesData>
-<MessagesData>
-<E>אריק בדיקה 1</E>
-</MessagesData>
-<MessagesData>
-<W>אריק שגיאה1</W>
-</MessagesData>
-</Messages>
+<Messages/>
 <GeneralDetails>
-<Forwarder>XXX</Forwarder>
-<TypeOfDelivery>2</TypeOfDelivery>
+ <Forwarder>ORIAN</Forwarder>
+ <TypeOfDelivery/>
 </GeneralDetails>
 ";
             if (!String.IsNullOrWhiteSpace(resXML))
@@ -241,7 +270,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string ForwarderFile { get; set; }
             public string InvoiceCurrency { get; set; }
             public decimal InvoiceAmount { get; set; }
-            public decimal BillTo { get; set; }
+            public string BillTo { get; set; }
 
 
         }
