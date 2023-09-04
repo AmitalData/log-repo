@@ -806,7 +806,7 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
-        public StiReport GetStimulReportByReportFilter(ReportFliter reportFliter)
+        public StiReport GetStimulReportByReportFilter(ReportFliter reportFliter,Boolean getStimulReportForMail = false)
         {
             StiReport report = null;
             if (reportFliter != null)
@@ -831,7 +831,7 @@ namespace WebFreight.Web.Helpers
                         using (MemoryStream memorystream = new MemoryStream(reportDataProvider))
                         {
                             ReportStimulDataProviderDetails reportStimulDataProviderDetails = GetReportStimulDataProviderDetails(memorystream, reportFliter);
-                            report = GetStimulReportByTemplateAndProviderDetails(reportStimulDataProviderDetails, template);
+                            report = GetStimulReportByTemplateAndProviderDetails(reportStimulDataProviderDetails, template, getStimulReportForMail);
                         }
                     }
                 }
@@ -2062,7 +2062,7 @@ namespace WebFreight.Web.Helpers
             return stimulReportDataProviderDetails;
         }
 
-        private StiReport GetStimulReportByTemplateAndProviderDetails(ReportStimulDataProviderDetails reportStimulDataProviderDetails, byte[] reportTemplate)
+        private StiReport GetStimulReportByTemplateAndProviderDetails(ReportStimulDataProviderDetails reportStimulDataProviderDetails, byte[] reportTemplate, Boolean getStimulReportForMail = false)
         {
             StiReport report = new StiReport();
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
@@ -2098,7 +2098,7 @@ namespace WebFreight.Web.Helpers
                 report.AutoLocalizeReportOnRun = true;
 
                 if (LogitudeSettings.LogitudeURL != "http://localhost:9996"
-                    && LogitudeSettings.LogitudeURL != "http://127.0.0.1:81")
+                    && LogitudeSettings.LogitudeURL != "http://127.0.0.1:81" && !getStimulReportForMail)
                 {
                     report.ReportCacheMode = StiReportCacheMode.On;
                     report.RenderedPages.CacheMode = true;

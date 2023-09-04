@@ -65,6 +65,9 @@ using WebFreight.Web.Helpers.CallBack;
 using WebFreight.Web.Helpers.CallBack.Handler;
 using System.Security.AccessControl;
 using System.Web.UI.WebControls;
+using Logitude.BL.InfrastructureModel.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Stimulsoft.Report;
 
 namespace WebFreight.Web.Helpers
 {
@@ -1495,7 +1498,7 @@ namespace WebFreight.Web.Helpers
             node.InnerHtml = stringWriter.ToString();
         }
 
-   
+
 
         private static IEnumerable<HtmlNode> GetDocumentSpanNode(int tenant, HtmlDocument document)
         {
@@ -1507,7 +1510,6 @@ namespace WebFreight.Web.Helpers
             return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
 
         }
-
         private HtmlEditorResolveResult MapHtmlEditorArgsToResult(HtmlEditorResolveArgs htmlEditorResolveArgs)
         {
             HtmlEditorResolveResult htmlEditorResolveResult = new HtmlEditorResolveResult
@@ -1657,7 +1659,20 @@ namespace WebFreight.Web.Helpers
 
             return entityName;
         }
+        public StiReport GetStimulReportByReportFilter(ReportFliter reportFilter,Boolean getStimulReportForMail=false)
+        {
+            AdvancedDateResolver advancedDateResolver = new AdvancedDateResolver();
+            List<QueryFilterItem> reportFilterItems = advancedDateResolver.ResolveDateValues(reportFilter.QueryFilterItemLists);
+            reportFilter.QueryFilterItemLists = reportFilterItems;
 
+            StiReport stiReport = null;
+            if (reportFilter != null)
+            {
+                ReportHelper reportHelper = new ReportHelper();
+                stiReport = reportHelper.GetStimulReportByReportFilter(reportFilter, getStimulReportForMail);
+            }
+            return stiReport;
+        }
         public string ResolveSystemDataHtml(string htmlString, string userId, ref string subject, ref string from, ref string replyTo, ref string cc, int tenant)
         {
 

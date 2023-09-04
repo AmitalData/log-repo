@@ -17,6 +17,7 @@ import {DocumentTypePMExtendedService} from '../../Common/Services/ExtendedPMs/D
 import {EntityPartner} from '../../Infrastructure/DataContracts/EntityPartner';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import { AppTool } from '../../Infrastructure/Tools';
+import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
 
 export class GeneralEmailSender {
     public ObjectTableName: string;
@@ -45,9 +46,10 @@ export class GeneralEmailSender {
     public IsToEmailIsDisabled: boolean = false;
     IsDigitalPortal: boolean = false;
     ToMail: string;
+    ReportFliter: ReportFliter;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    constructor(objecttablename: string, documentTypeCode: string, entityId: string, entityReference: string, childEntityId: string, childEntityReference: string, documentFilingId: string, subject: string, attachments: AttachmentsList[], eventRefreshName: string = null, entityPM: any = null, isCrm: boolean = false, eventTypeCode: string = null, fromMail: string = null,toMail:string = null, isDigitalPortal: boolean = false) {
+    constructor(objecttablename: string, documentTypeCode: string, entityId: string, entityReference: string, childEntityId: string, childEntityReference: string, documentFilingId: string, subject: string, attachments: AttachmentsList[], eventRefreshName: string = null, entityPM: any = null, isCrm: boolean = false, eventTypeCode: string = null, fromMail: string = null,toMail:string = null, isDigitalPortal: boolean = false,reportFliter:ReportFliter = null) {
         this.LoadingSendingComponent = true;
         this.CurrentObjectTableId = window.ObjectTables.filter(d => d.Name == objecttablename)[0].Id;
         this.ObjectTableName = window.ObjectTables.filter(d => d.Name == objecttablename)[0].Name;
@@ -68,6 +70,7 @@ export class GeneralEmailSender {
         this.IsDigitalPortal = isDigitalPortal;
         this.ToSpecificeEmail = this.IsDigitalPortal ? toMail : "";
         this.ToMail = toMail;
+        this.ReportFliter=reportFliter;
     }
 
     SetIsShareDocumentsViaEmail() {
@@ -105,6 +108,7 @@ export class GeneralEmailSender {
         windowArgs.IsUserFromReport = this.PartnersObslist ? true : false;
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.GlaccountId = glAccountId;
+        windowArgs.reportFilter=this.ReportFliter;
 
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = sendWindowWidth;

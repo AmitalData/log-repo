@@ -54,6 +54,10 @@ namespace CommunicationWorkerRole.Services
             {"Export pdf report", null},
             {"Stored pdf report in Blob", null},
             {"Send email to reciepents", null},
+            {"", null},
+            {"", null},
+            {"", null},
+
         };
 
         TaskManagerBase currentTask;
