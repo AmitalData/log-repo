@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CashBookUpdateClass
    {  		
-		public const string HashString = "f1cbe8f134a3997decda91722338a4b5";
+		public const string HashString = "00a1ed9364472d3fbf347e44dafa24db";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1929,6 +1929,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "BalanceInForeignCurrency",
 					  						ListPropertyPath =  "BalanceInForeignCurrency",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1948,6 +1949,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BalanceInForeignCurrency",
 					  						DefaultText =  "Balance in Foreign Currency",
+					  						FullLocalDefaultText =  "יתרת כרטיס הנח\"ש קופה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2081,7 +2083,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	          
              ScreenField CashBookCashBookHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = "CashBook.CurrencyCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CashBookCashBookHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = "CashBook.TotalAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CashBookCashBookHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = "CashBook.BalanceInForeignCurrency", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField CashBookCashBookHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = "CashBook.BranchName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
