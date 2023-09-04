@@ -37,6 +37,7 @@ export class IntegratedInvoice {
     InvoiceNumber: string;
     ForwarderFile: string;
     InvoiceCurrency: string;
+    BillTo: string;
     InvoiceAmount: any;
 
 }
