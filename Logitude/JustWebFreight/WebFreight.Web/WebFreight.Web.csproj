@@ -761,6 +761,7 @@
     <Compile Include="AccountingModel\DomainServices\OpenFormatReportDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
+    <Compile Include="Controllers\AccountingModel\BanksCCExternalRecoController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ARInvoicesSignedStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <!-- <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" /> -->
