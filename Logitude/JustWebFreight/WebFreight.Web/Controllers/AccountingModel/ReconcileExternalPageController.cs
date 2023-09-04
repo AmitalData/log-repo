@@ -466,7 +466,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
         [HttpPost]
-        public async Task<HttpResponseMessage> ImportReconcileExternalPageLineFromExcel(string bankCodeId, int tenant, string reconcileExternalPageId, int line)
+        public async Task<HttpResponseMessage> ImportReconcileExternalPageLineFromExcel(string bankCodeId, string GLAccountID, int tenant, string reconcileExternalPageId, int line)
         {
             try
             {
@@ -501,7 +501,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         }
 
                         var sheet = workbook.GetSheetAt(0); // Assuming the first sheet
-                        List<ReconcileExternalPageLinePM> myResult = this.BuildReconcileExternalPageLineFromExcelLines(sheet, tenant, bankCodeId, reconcileExternalPageId, line);
+                        List<ReconcileExternalPageLinePM> myResult = this.BuildReconcileExternalPageLineFromExcelLines(sheet, tenant, bankCodeId, reconcileExternalPageId, line, GLAccountID);
                         filter.ExcelReconcileExternalPageLines = myResult;
                     }
                 }
@@ -512,7 +512,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private List<ReconcileExternalPageLinePM> BuildReconcileExternalPageLineFromExcelLines(ISheet sheet, int tenant, string bankCodeId, string reconcileExternalPageId, int line)
+        private List<ReconcileExternalPageLinePM> BuildReconcileExternalPageLineFromExcelLines(ISheet sheet, int tenant, string bankCodeId, string reconcileExternalPageId, int line,string GLAccountID)
         {
             List<ReconcileExternalPageLinePM> myResult = new List<ReconcileExternalPageLinePM>();
             var bankCodeRepository = new BankCodeRepository(tenant);
@@ -521,6 +521,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             if (bankcodePM?.DateFormat != null)
             {
                 format = bankcodePM.DateFormat;
+            }
+            if(GLAccountID != null)
+            {
+                var glaccountRepository = new GLAccountRepository(tenant);
+                var account = glaccountRepository.GetSingle(GLAccountID, tenant);
+                if(account != null)
+                {
+                    format = account.DateFormat;
+                }
             }
 
             for (var row = 1; row <= sheet.LastRowNum; row++)
