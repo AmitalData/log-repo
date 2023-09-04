@@ -51,7 +51,7 @@ export class InvoiceQueueComponent
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                //this.GetData();
+               //this.GetData();
             });
         });
     }
@@ -70,8 +70,9 @@ export class InvoiceQueueComponent
 
     private GetData() {
         this.ResetVariables();
-        this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
-            //this._declarationPMService.get("1-211404").subscribe(data => {
+       this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
+        //this._declarationPMService.get("1-1000113").subscribe(data => {
+
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (this.declaration == null) {
