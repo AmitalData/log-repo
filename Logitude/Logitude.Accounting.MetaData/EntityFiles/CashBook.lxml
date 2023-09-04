@@ -2147,6 +2147,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;BalanceInForeignCurrency&quot;"
     ListPropertyPath="&quot;BalanceInForeignCurrency&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2166,6 +2167,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;BalanceInForeignCurrency&quot;"
     DefaultText="&quot;Balance in Foreign Currency&quot;"
+    FullLocalDefaultText="&quot;יתרת כרטיס הנח&quot;ש קופה&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -2397,7 +2399,7 @@
       <ScreenField
         Column="2"
         Row="0"
-        ObjectFieldName="&quot;TotalAmount&quot;"
+        ObjectFieldName="&quot;BalanceInForeignCurrency&quot;"
         ScreenName="HeaderScreen" />
       <ScreenField
         Column="2"
