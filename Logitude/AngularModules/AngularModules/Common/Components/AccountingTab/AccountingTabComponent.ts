@@ -7,6 +7,7 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
 import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { GLAccountPMService } from 'Accounting/Services/StandardPMs/GLAccountPMService';
+import { AccountingEventManager } from 'Accounting/Utilities/AccountingEventManager';
 
 @Component({
     template:
@@ -142,8 +143,11 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
         if (this.IsExternalCodesFromAPI && this.isQuickBooksOnlineEntity) {
             this.isQuickBooksOnline = true;
         }
+        this.GetAccountInfo();     
 
 
+    }
+    private GetAccountInfo(){
         var myService: GLAccountPMService = new GLAccountPMService();
         if (this.EntityPM?.card?.GLAccountId) {
             myService.get(this.EntityPM?.card?.GLAccountId).subscribe((myResponse: ServiceResponse) => {
@@ -160,7 +164,10 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
                 }
             });
         }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     }
     private LoadCompletedEvent: any = null;
 
@@ -170,10 +177,17 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.GetAccountInfo();     
                 }
             });
         }
+        AccountingEventManager.CustomerChangedEvent.subscribe(($event) => {
+            SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+            this.GetAccountInfo();
+            
+        });
     }
+
     LoadComponent() {
         var myComponentPath: string = null;
 
