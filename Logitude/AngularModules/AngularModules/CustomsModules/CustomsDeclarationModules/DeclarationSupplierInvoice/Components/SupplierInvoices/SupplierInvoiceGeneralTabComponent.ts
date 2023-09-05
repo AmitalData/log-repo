@@ -4381,7 +4381,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             }
             else if(FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR"))
             {
-                debugger
                 if(AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode) && !AppTool.IsNullOrEmpty(this.Parent.declarationPM.ExporterImporterCode) && !AppTool.IsNullOrEmpty(this.ItemCode))
                 {
                     var clientItemExtendedPMService: ClientItemExtendedPMService = new ClientItemExtendedPMService();
@@ -4446,7 +4445,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
 
     ItemCodeDblClick(logCellTemplate: LogCellTemplateComponent) {
-        debugger
         if (!this.Parent.IsReadOnly) {
             console.log("[Double Click] ", this.entityPM);
 
