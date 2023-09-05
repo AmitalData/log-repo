@@ -164,19 +164,45 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
             }
 
-            if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant)) {
-
-                if (entityPM.ClassificationCode != entityPOCO.ClassificationCode || entityPM.ItemCode != entityPOCO.ItemCode || entityPM.OriginCountryCode != entityPOCO.OriginCountryCode || entityPM.ItemDescription != entityPOCO.ItemDescription)
+            if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant) && !string.IsNullOrEmpty(entityPM.ItemCode)) 
+            {
+                if(string.IsNullOrEmpty(entityPM.ClassificationCode))
                 {
+                    ClientItemQueryService clientItemQueryService = new ClientItemQueryService(entityPM.Tenant);
                     declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, true);
-                    if (declarationPM != null) {
-                        if (declarationPM.Direction == "E")
-                            this.UpdateOrInsertInClientItems(entityPM, declarationPM?.ExporterImporterCode, declarationPM.ImporterId);
+                    
+                    if (declarationPM != null && declarationPM?.Direction == "E" && !string.IsNullOrEmpty(declarationPM.ExporterImporterCode))
+                    {
+                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenant(entityPM.ItemCode, declarationPM.ExporterImporterCode, entityPM.Tenant);
+                        if(clientItem != null)
+                        {
+                            entityPM.ClassificationCode = clientItem?.ClassificationCode;
+                            if(string.IsNullOrEmpty(entityPM.ItemDescription))
+                                entityPM.ItemDescription = clientItem?.ItemDescription;
+                            if (string.IsNullOrEmpty(entityPM.OriginCountryCode))
+                                entityPM.OriginCountryCode = clientItem?.OriginCountryCode;
+                        }
                     }
-                
+
                 }
+                else
+                {
+                    if (entityPM.ClassificationCode != entityPOCO.ClassificationCode || entityPM.ItemCode != entityPOCO.ItemCode || entityPM.OriginCountryCode != entityPOCO.OriginCountryCode || entityPM.ItemDescription != entityPOCO.ItemDescription)
+                    {
+                        declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, true);
+                        if (declarationPM != null)
+                        {
+                            if (declarationPM.Direction == "E")
+                                this.UpdateOrInsertInClientItems(entityPM, declarationPM?.ExporterImporterCode, declarationPM.ImporterId);
+                        }
+
+                    }
+                }
+          
+               
+
             }
-             
+
             base.OnUpdating(entityPM, entityPOCO);
         }
 
@@ -566,7 +592,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                
                     if (entityPM.ChangeSetOp != ChangeSetOperation.None && !string.IsNullOrEmpty(entityPM.ItemCode))
                     {
-                        ClientItemPM clientItem = clientItemQueryService.GetSingle(entityPM.ItemCode, exporterCode, false, false);
+                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenant(entityPM.ItemCode, exporterCode, entityPM.Tenant);
                         if (clientItem == null)
                         {
                             clientItem = new ClientItemPM()

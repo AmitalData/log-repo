@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -34,7 +35,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(ClientItemPM entityPM, ClientItem entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPMProperties.Add(PMPropertyNames.OriginCountryName);
+
+            if (entityPOCO.OriginCountryCode != null)
+            {
+                CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPOCO.Tenant);
+                CustomsCountryPM country = countryQueryService.GetSingle(entityPOCO.OriginCountryCode, false, true);
+                if (country != null)
+                    entityPM.OriginCountryName = country.LocalName;
+            }
         }
    }
 

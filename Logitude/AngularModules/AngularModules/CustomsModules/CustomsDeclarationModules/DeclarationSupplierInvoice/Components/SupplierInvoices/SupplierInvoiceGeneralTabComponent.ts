@@ -77,6 +77,8 @@ import { SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParams
 import { IIGGeneralMessagesService } from 'Customs/Services/WebServices/IIGGeneralMessagesService';
 import { ClientIndicationPM } from 'Customs/EntityPMs/ClientIndicationPM';
 import { ClientIndicationListService } from 'Customs/Services/StandardLists/ClientIndicationListService';
+import { ClientItemExtendedPMService } from 'Customs/Services/ExtendedPMs/ClientItemExtendedPMService';
+import { ClientItemPM } from 'Customs/EntityPMs/ClientItemPM';
 
 
 @Component({
@@ -4377,6 +4379,31 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 return;
             }
             }
+            else if(FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR"))
+            {
+                debugger
+                if(AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode) && !AppTool.IsNullOrEmpty(this.Parent.declarationPM.ExporterImporterCode) && !AppTool.IsNullOrEmpty(this.ItemCode))
+                {
+                    var clientItemExtendedPMService: ClientItemExtendedPMService = new ClientItemExtendedPMService();
+                    clientItemExtendedPMService.GetClientItemPM(this.ItemCode, this.Parent.declarationPM.ExporterImporterCode, SessionLocator.Tenant)
+                        .subscribe((response: ServiceResponse) => {
+                            if(response?.Result){
+                                var clientItemPM : ClientItemPM = response.Result;
+                                this.entityPM.ClassificationCode = clientItemPM?.ClassificationCode; 
+                                if(AppTool.IsNullOrEmpty(this.entityPM.ItemDescription))
+                                    this.entityPM.ItemDescription = clientItemPM?.ItemDescription;
+                                if(AppTool.IsNullOrEmpty(this.entityPM.OriginCountryCode))
+                                {
+                                    this.entityPM.OriginCountryCode = clientItemPM?.OriginCountryCode;     
+                                    this.entityPM.OriginCountryName = clientItemPM?.OriginCountryName;  
+                                }
+                                       
+                                            
+                            }
+
+                    })
+                }
+            }
            
         }
         
@@ -4419,6 +4446,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
 
     ItemCodeDblClick(logCellTemplate: LogCellTemplateComponent) {
+        debugger
         if (!this.Parent.IsReadOnly) {
             console.log("[Double Click] ", this.entityPM);
 
