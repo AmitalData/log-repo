@@ -123,9 +123,6 @@ export class SendToContactsComponent implements OnInit {
         if (this.PartnersObslist) {
 
             
-            if (!this.PartnersObslist.filter(d => d.PartnerType == "Bill To")[0]){
-                this.PartnersObslist.push(new EntityPartner("Bill To", "", false));
-            }
             if (!this.PartnersObslist.filter(d => d.PartnerType == "All")[0] && !this.IsSchedulerReport) {
                 this.PartnersObslist.push(new EntityPartner("All", "", false));
             }
@@ -333,7 +330,7 @@ export class SendToContactsComponent implements OnInit {
 
 
         if (this.SelectedPartnerItem != null) {
-            if (this.SelectedPartnerItem.PartnerType.toUpperCase() != "ALL" && this.SelectedPartnerItem.PartnerTypeCode.toUpperCase() != "BILLTO" && this.SelectedPartnerItem.PartnerTypeCode.toUpperCase() != "ALLUSERS") {
+            if (this.SelectedPartnerItem.PartnerType.toUpperCase() != "ALL"  && this.SelectedPartnerItem.PartnerTypeCode.toUpperCase() != "ALLUSERS") {
                 
                 if (this.SelectedPartnerItem.PartnerId) {
                     if (!this.SelectedPartnerItem.IsUser) {

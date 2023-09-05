@@ -34,6 +34,11 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -731,6 +736,25 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     }
 
                     #endregion
+                }
+                else if(objectTableName == "InterestReport")
+                {
+
+                    IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
+                    InterestReport iEntity = (from d in accountingContext.InterestReports where d.Id == entityId select d).FirstOrDefault();
+                    if (iEntity != null)
+                    {
+                        if (iEntity.CustomerId != null)
+                        {
+                            list.Add(new EntityPartner()
+                            {
+                                Id = 1,
+                                PartnerId = iEntity.CustomerId,
+                                PartnerType = "Bill To",
+                            });
+                        }
+                    }
+
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, list);
