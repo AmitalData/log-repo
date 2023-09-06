@@ -18,6 +18,7 @@ using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Server.Tools.Helpers;
 using System.Text.RegularExpressions;
+using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.Customs.BL.BL
 {
@@ -169,9 +170,13 @@ namespace Logitude.Customs.BL.BL
             //Set DocumentStatusCode
             if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode))
             {
+                LogMessagingUtil.Instance.AppendLine("string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode)");
+
                 myDeclarationCourierStatusPM.DocumentStatusCode = "M";
                 return;
             }
+            LogMessagingUtil.Instance.AppendLine("!string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode)");
+
             var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
             List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
@@ -184,6 +189,8 @@ namespace Logitude.Customs.BL.BL
             }
             else if (IsDocumentMissing(myDeclarationCourierStatusPM, customsDocumentsTicketPMList))
             {
+                LogMessagingUtil.Instance.AppendLine("IsDocumentMissing");
+
                 myDeclarationCourierStatusPM.DocumentStatusCode = "M";
             }
 
@@ -426,18 +433,29 @@ namespace Logitude.Customs.BL.BL
             {
                 foreach (CustomDocumentTypePM customDocumentTypePMItem in CustomDocumentTypePMList)
                 {
+                    LogMessagingUtil.Instance.AppendLine("customDocumentTypePMItem?.code" + customDocumentTypePMItem?.Code);
+
                     CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customDocumentTypePMItem.Code && d.DocumentsFilingId != null).FirstOrDefault();
+                    LogMessagingUtil.Instance.AppendLine("customsDocumentsTicketPM?.DocumentsFilingId" + customsDocumentsTicketPM?.DocumentsFilingId);
+                    LogMessagingUtil.Instance.AppendLine("customsDocumentsTicketPM?.DocumentStatusCode" + customsDocumentsTicketPM?.DocumentStatusCode);
+                    LogMessagingUtil.Instance.AppendLine("customsDocumentsTicketPM?.DocumentTypeCode" + customsDocumentsTicketPM?.DocumentTypeCode);
+
                     if (customsDocumentsTicketPM == null)
                     {
+                        LogMessagingUtil.Instance.AppendLine("customsDocumentsTicketPM == null");
+
                         return true;
                     }
                     if (string.IsNullOrWhiteSpace(customsDocumentsTicketPM.CustomsDocId))// is missing or  not sent yet  !!
                     {
+
+                        LogMessagingUtil.Instance.AppendLine("string.IsNullOrWhiteSpace(customsDocumentsTicketPM.CustomsDocId)");
+
                         return true;
                     }
                 }
             }
-
+            LogMessagingUtil.Instance.AppendLine(" return false;");
             return false;
         }
 
