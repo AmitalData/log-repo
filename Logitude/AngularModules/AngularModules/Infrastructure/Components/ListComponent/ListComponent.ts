@@ -1845,6 +1845,10 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log("SuppressOnRowSelected");
             return;
         }
+        
+        if (this.ObjectTableName == "ARPaymentCheque" ) {
+            this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        }
 
         if (this.SelectedQuery.Code == "LedgerTransactions") {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
