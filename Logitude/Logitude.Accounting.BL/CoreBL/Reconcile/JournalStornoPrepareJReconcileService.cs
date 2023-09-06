@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -45,6 +46,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 return false;
             }
             if (!IsStornoJournal())
+            {
+                return false;
+            }
+
+            if (theStorno.AccountingEntityCode == AccountingEntityValues.Revaluation)
             {
                 return false;
             }
