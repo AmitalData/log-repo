@@ -1554,6 +1554,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         declarationCourierStatusUpdateService.ImporterCode = ImporterCode;
                     }
+
                     DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(entityPM); 
                     if (IsFromU2L)
                     {

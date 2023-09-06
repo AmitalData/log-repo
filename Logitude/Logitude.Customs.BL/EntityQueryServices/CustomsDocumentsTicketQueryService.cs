@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IdentityModel.Metadata;
+using Logitude.Customs.Data.EntityMapping;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -42,6 +44,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
          public List<CustomsDocumentsTicketPM> GetCustomsDocumentsTicketPMsByEntityIdAndChilds(string entityId, string child1EntityId, string child2EntityId, string child3EntityId, int tenant, string parentEntityCode, bool isAir = false)
         {
+            LogMessagingUtil.Instance.AppendLine("GetCustomsDocumentsTicketPMsByEntityIdAndChilds" );
+
             List<CustomsDocumentsTicket> tickets = repository.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityId, child1EntityId, child2EntityId, child3EntityId,tenant,parentEntityCode,isAir);
             ICustomContext context = MainContext as CustomContext;
              CustomsDocumentPointerQueryService pointerQueryService = new CustomsDocumentPointerQueryService(context);
@@ -71,6 +75,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             List<int> claimsRelatedEntityKeys = new List<int>();
             foreach (CustomsDocumentPointerPM pointer in pointerPMs)
             {
+                LogMessagingUtil.Instance.AppendLine("pointer.DocumentTypeCode" + pointer.DocumentTypeCode);
+
                 if (pointer.ParentEntityCode == "Declaration")
                 {
                     if (!string.IsNullOrEmpty(pointer.Child1EntityId) && string.IsNullOrEmpty(pointer.Child2EntityId))
@@ -116,7 +122,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             if (supplierInvoiceKeys.Count > 0)
             {
-              
+                LogMessagingUtil.Instance.AppendLine("GetSupplierInvoicesByCounterKeys(entityId, supplierInvoiceKeys, tenant);" + entityId+ supplierInvoiceKeys);
+
                 SupplierInvoiceQueryService invoiceQueryService = new SupplierInvoiceQueryService(context);
                 supplierInvoicePMs = invoiceQueryService.GetSupplierInvoicesByCounterKeys(entityId, supplierInvoiceKeys, tenant);
             }
