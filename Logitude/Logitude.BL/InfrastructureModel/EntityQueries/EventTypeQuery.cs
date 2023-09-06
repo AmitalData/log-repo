@@ -80,8 +80,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   EntityStatusCode = a.EntityStatus != null ? a.EntityStatus.Code : null
 
                                               });
-                        if (IsFullAccountingActivated(tenant))
-                        {
+                        //if (IsFullAccountingActivated(tenant))
+                        //{
                             foreach (var e in entitystatuses)
                             {
                                 eventRemarkPM = (from a in repository.context.EventRemarks.AsEnumerable()
@@ -99,7 +99,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       }).ToList();
                                 e.EventRemarks = eventRemarkPM;
                             }
-                        }
+                        //}
  
                         foreach (var s in entitystatuses)
                         {
@@ -113,8 +113,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                         entity = (EventTypePM)CacheManager.CacheWrapper.Get(entityName);
 
-                        if (IsFullAccountingActivated(tenant))
-                        {
+                       // if (IsFullAccountingActivated(tenant))
+                       // {
                             eventRemarkPM = (from a in repository.context.EventRemarks.AsEnumerable()
                                   where a.EventTypeId == entity.Id
                                   select new EventRemarkPM
@@ -129,7 +129,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       IsChoose = a.IsChoose,
                                   }).ToList();
                             entity.EventRemarks = eventRemarkPM;
-                        }
+                       // }
                            
                     }
 
@@ -137,8 +137,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     {
                         entity = (EventTypePM)CacheManager.CacheWrapper.Get(entityName);
 
-                        if (IsFullAccountingActivated(tenant))
-                        {
+                       // if (IsFullAccountingActivated(tenant))
+                       // {
                             eventRemarkPM = (from a in repository.context.EventRemarks.AsEnumerable()
                                   where a.EventTypeId == entity.Id
                                   select new EventRemarkPM
@@ -153,7 +153,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       IsChoose = a.IsChoose,
                                   }).ToList();
                             entity.EventRemarks = eventRemarkPM;
-                        }
+                       // }
                            
                     }
                 }
@@ -196,8 +196,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                               }).FirstOrDefault();
 
-                    if (IsFullAccountingActivated(tenant))
-                    {
+                   // if (IsFullAccountingActivated(tenant))
+                    //{
                         eventRemarkPM = (from a in repository.context.EventRemarks.AsEnumerable()
                               where a.EventTypeId == entity.Id
                               select new EventRemarkPM
@@ -212,7 +212,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   IsChoose = a.IsChoose,
                               }).ToList();
                         entity.EventRemarks = eventRemarkPM;
-                    }
+                   // }
                         
                 }
 
