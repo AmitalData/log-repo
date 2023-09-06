@@ -302,6 +302,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
                                                      CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
                                                      CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
+                                                     LogoURL = a.LogoURL,
+                                                     ServiceAgreementURL = a.ServiceAgreementURL,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -323,6 +325,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                             tenant.AutoArchiveOnPODExport = tens.AutoArchiveOnPODExport;
                             tenant.IsTestTenant = ten.IsTestTenant;
                             tenant.IsHybrid = ten.IsHybrid;
+                            tenant.EcommerceSupportEmail = ten.EcommerceSupportEmail;
                         }
 
                         GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -522,6 +525,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
                                                   CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
                                                   CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
+                                                  LogoURL = a.LogoURL,
+                                                  ServiceAgreementURL = a.ServiceAgreementURL,
 
                                               }).FirstOrDefault();
 
@@ -546,6 +551,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         tenant1.AutoArchiveOnPODExport = tens.AutoArchiveOnPODExport;
                         tenant1.IsTestTenant = ten.IsTestTenant;
                         tenant1.IsHybrid = ten.IsHybrid;
+                        tenant1.EcommerceSupportEmail = ten.EcommerceSupportEmail;
                     }
 
                     GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -733,6 +739,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
                         CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
                         CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
+                        LogoURL = a.LogoURL,
+                        ServiceAgreementURL = a.ServiceAgreementURL,
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -891,6 +899,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     ShowMoneyOrder = entity.ShowMoneyOrder,
                     CargoTrackingPublicShowEvents = entity.CargoTrackingPublicShowEvents,
                     CargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents,
+                     LogoURL = entity.LogoURL,
+                    ServiceAgreementURL = entity.ServiceAgreementURL,
                 };
             }
 
@@ -1048,6 +1058,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
                        CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
                        CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
+                       LogoURL = a.LogoURL,
+                       ServiceAgreementURL = a.ServiceAgreementURL,
                    };
         }
 
@@ -1345,6 +1357,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
                                              CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
                                              CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
+                                             LogoURL = a.LogoURL,
+                                             ServiceAgreementURL = a.ServiceAgreementURL,
 
                                          }).FirstOrDefault();
 

@@ -85,7 +85,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class TenantManagementUpdateClass
    {  		
-		public const string HashString = "271037a295be473b4e873ef4fd756c3e";
+
+		public const string HashString = "e2fc6bdf9856ad7f1b9eeaf85bcf2bc1";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12689,6 +12691,184 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LogoURL",
+					  						ObjectTableName =  "TenantManagement",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  250,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LogoURL",
+					  						ListPropertyPath =  "LogoURL",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LogoURL",
+					  						DefaultText =  "Logo URL",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ServiceAgreementURL",
+					  						ObjectTableName =  "TenantManagement",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  250,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ServiceAgreementURL",
+					  						ListPropertyPath =  "ServiceAgreementURL",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ServiceAgreementURL",
+					  						DefaultText =  "Service agreement URL",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "EcommerceSupportEmail",
+					  						ObjectTableName =  "TenantManagement",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  50,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "EcommerceSupportEmail",
+					  						ListPropertyPath =  "EcommerceSupportEmail",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "EcommerceSupportEmail",
+					  						DefaultText =  "Ecommerce Support Email",
+					  						ListFieldLable =  "EcommerceSupportEmailListLable",
+					  						ListLableDefaultText =  "Ecommerce Support Email",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -12918,28 +13098,32 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   Feature TenantManagementCCSSettingsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CCSSettings", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.CCSSettings", NameTextCodeDefaultText = "CCS Settings", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
-			   TextCode TenantManagementStatisticsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Statistics", DefaultText = "Statistics",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementStatisticsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Statistics", NameTextCodeDefaultText = "Statistics", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
+			   TextCode TenantManagementConnectedAirlinesTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.ConnectedAirlines", DefaultText = "Connected Airlines",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature TenantManagementConnectedAirlinesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONNECTEDAIRLINES", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.ConnectedAirlines", NameTextCodeDefaultText = "Connected Airlines", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
-			   TextCode TenantManagementAWBMessagingStockTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.AWBMessagingStock", DefaultText = "AWB Messaging Stock",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementAWBMessagingStockFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWB.MESSAGING.STOCK", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.AWBMessagingStock", NameTextCodeDefaultText = "AWB messaging Stock", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
+			   TextCode TenantManagementStatisticsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Statistics", DefaultText = "Statistics",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature TenantManagementStatisticsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Statistics", NameTextCodeDefaultText = "Statistics", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
-			   TextCode TenantManagementSupportTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Support", DefaultText = "Support",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementSupportFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Support", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Support", NameTextCodeDefaultText = "Support", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
+			   TextCode TenantManagementAWBMessagingStockTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.AWBMessagingStock", DefaultText = "AWB Messaging Stock",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature TenantManagementAWBMessagingStockFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWB.MESSAGING.STOCK", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.AWBMessagingStock", NameTextCodeDefaultText = "AWB messaging Stock", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
-			   TextCode TenantManagementBrandingTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Branding", DefaultText = "Branding",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementBrandingFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Branding", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Branding", NameTextCodeDefaultText = "Branding", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
+			   TextCode TenantManagementSupportTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Support", DefaultText = "Support",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature TenantManagementSupportFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Support", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Support", NameTextCodeDefaultText = "Support", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
-			   TextCode TenantManagementEventsTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementEventsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
+			   TextCode TenantManagementBrandingTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Branding", DefaultText = "Branding",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature TenantManagementBrandingFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Branding", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Branding", NameTextCodeDefaultText = "Branding", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
-			   TextCode TenantManagementConnectedAirlinesTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.ConnectedAirlines", DefaultText = "Connected Airlines",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementConnectedAirlinesFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONNECTEDAIRLINES", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.ConnectedAirlines", NameTextCodeDefaultText = "Connected Airlines", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
+			   TextCode TenantManagementECommerceBrandingTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.ECommerceBranding", DefaultText = "ECommerce Branding",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature TenantManagementECommerceBrandingFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TenantManagement.Tab.ECommerceBranding", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagementFeatures.TECB", NameTextCodeDefaultText = "ECommerce Branding", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
+ 
+                 
+			   TextCode TenantManagementEventsTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature TenantManagementEventsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -12951,17 +13135,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCH",HtmlComponentName = "CCSSettingsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/CCSSettingsTabComponent", FeatureId = TenantManagementCCSSettingsFeature_TH2.Id,FeatureUniqeCode = TenantManagementCCSSettingsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementChampTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementCCSSettingsTextCode_TH2.Id, TabNameTextCodeCode = TenantManagementCCSSettingsTextCode_TH2.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGST",HtmlComponentName = "TenantManagementStatisticsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementStatisticsTabComponent", FeatureId = TenantManagementStatisticsFeature_TH3.Id,FeatureUniqeCode = TenantManagementStatisticsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementStatisticsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementStatisticsTextCode_TH3.Id, TabNameTextCodeCode = TenantManagementStatisticsTextCode_TH3.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantManagementConnectedAirlinesFeature_TH3.Id,FeatureUniqeCode = TenantManagementConnectedAirlinesFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementConnectedAirlinesControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementConnectedAirlinesTextCode_TH3.Id, TabNameTextCodeCode = TenantManagementConnectedAirlinesTextCode_TH3.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGMS",HtmlComponentName = "",HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/Maintenance/TenantManagementAWBStockTabComponent", FeatureId = TenantManagementAWBMessagingStockFeature_TH4.Id,FeatureUniqeCode = TenantManagementAWBMessagingStockFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementAWBMessagingStockControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementAWBMessagingStockTextCode_TH4.Id, TabNameTextCodeCode = TenantManagementAWBMessagingStockTextCode_TH4.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGST",HtmlComponentName = "TenantManagementStatisticsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementStatisticsTabComponent", FeatureId = TenantManagementStatisticsFeature_TH4.Id,FeatureUniqeCode = TenantManagementStatisticsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementStatisticsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementStatisticsTextCode_TH4.Id, TabNameTextCodeCode = TenantManagementStatisticsTextCode_TH4.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGSU",HtmlComponentName = "SupportTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/SupportTabComponent", FeatureId = TenantManagementSupportFeature_TH5.Id,FeatureUniqeCode = TenantManagementSupportFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.SupportTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementSupportTextCode_TH5.Id, TabNameTextCodeCode = TenantManagementSupportTextCode_TH5.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGMS",HtmlComponentName = "",HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/Maintenance/TenantManagementAWBStockTabComponent", FeatureId = TenantManagementAWBMessagingStockFeature_TH5.Id,FeatureUniqeCode = TenantManagementAWBMessagingStockFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementAWBMessagingStockControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementAWBMessagingStockTextCode_TH5.Id, TabNameTextCodeCode = TenantManagementAWBMessagingStockTextCode_TH5.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGBR",HtmlComponentName = "BrandingTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/BrandingTabComponent", FeatureId = TenantManagementBrandingFeature_TH6.Id,FeatureUniqeCode = TenantManagementBrandingFeature_TH6.FeatureUniqeCode, ControlPath = "", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementBrandingTextCode_TH6.Id, TabNameTextCodeCode = TenantManagementBrandingTextCode_TH6.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGSU",HtmlComponentName = "SupportTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/SupportTabComponent", FeatureId = TenantManagementSupportFeature_TH6.Id,FeatureUniqeCode = TenantManagementSupportFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.SupportTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementSupportTextCode_TH6.Id, TabNameTextCodeCode = TenantManagementSupportTextCode_TH6.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantManagementEventsFeature_TH7.Id,FeatureUniqeCode = TenantManagementEventsFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementEventsTextCode_TH7.Id, TabNameTextCodeCode = TenantManagementEventsTextCode_TH7.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGBR",HtmlComponentName = "BrandingTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/BrandingTabComponent", FeatureId = TenantManagementBrandingFeature_TH7.Id,FeatureUniqeCode = TenantManagementBrandingFeature_TH7.FeatureUniqeCode, ControlPath = "", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementBrandingTextCode_TH7.Id, TabNameTextCodeCode = TenantManagementBrandingTextCode_TH7.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantManagementConnectedAirlinesFeature_TH8.Id,FeatureUniqeCode = TenantManagementConnectedAirlinesFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementConnectedAirlinesControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementConnectedAirlinesTextCode_TH8.Id, TabNameTextCodeCode = TenantManagementConnectedAirlinesTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TECB",HtmlComponentName = "ECommerceBrandingTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/ECommerceBrandingTabComponent", FeatureId = TenantManagementECommerceBrandingFeature_TH8.Id,FeatureUniqeCode = TenantManagementECommerceBrandingFeature_TH8.FeatureUniqeCode, ControlPath = " ", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementECommerceBrandingTextCode_TH8.Id, TabNameTextCodeCode = TenantManagementECommerceBrandingTextCode_TH8.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantManagementEventsFeature_TH9.Id,FeatureUniqeCode = TenantManagementEventsFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = TenantManagementEventsTextCode_TH9.Id, TabNameTextCodeCode = TenantManagementEventsTextCode_TH9.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

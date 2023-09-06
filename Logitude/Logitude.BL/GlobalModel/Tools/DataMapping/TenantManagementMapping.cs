@@ -182,6 +182,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.DPArchiveShipmentDepartFilter =  entityPM.DPArchiveShipmentDepartFilter;
             entityPOCO.CargoTrackingPublicShowEvents = entityPM.CargoTrackingPublicShowEvents;
             entityPOCO.CargoTrackingPrivateShowEvents = entityPM.CargoTrackingPrivateShowEvents;
+            entityPOCO.LogoURL = entityPM.LogoURL;
+            entityPOCO.ServiceAgreementURL = entityPM.ServiceAgreementURL;
 
             string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -213,6 +215,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
 
                     tenant.IsTestTenant = entityPM.IsTestTenant;
                     tenant.IsHybrid = entityPM.IsHybrid;
+                    tenant.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
+
 
                     tenantRepository.Update(tenant);
                     tenantRepository.SubmitChanges();
