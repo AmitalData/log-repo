@@ -164,5 +164,6 @@ export class GLAccountList {
 	Obligo: number;
 	CreditUsed: number;
 	InsuredCreditPercentage: number;
+	DateFormat: string;
 
 }

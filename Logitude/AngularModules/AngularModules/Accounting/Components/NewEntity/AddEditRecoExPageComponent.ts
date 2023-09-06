@@ -711,13 +711,14 @@ export class AddEditRecoExPageComponent extends BaseComponent {
     }
 
     SendExcelToServer() {
+        var glaccountId=(this.PageObjectTableName == 'GLAccount') ? this.EntityPM.Id : null;
         var line = 0;
         if (this.ReconcileExternalPagePM.ReconcileExternalPageLines.length > 0) {
             var line = this.ReconcileExternalPagePM.ReconcileExternalPageLines.reduce(function (prev, current) { return (prev.LineNumber > current.LineNumber) ? prev : current }).LineNumber;
         }
         line++;
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromExcel(this.formData,this.EntityPM.bankId,this.EntityPM.tenant,this.ReconcileExternalPagePM?.Id,line).subscribe((response: ServiceResponse) => {
+        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromExcel(this.formData,this.EntityPM.bankId,this.EntityPM.tenant,this.ReconcileExternalPagePM?.Id,line,glaccountId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 //filters = response.Result;
                 this.FillReconcileExternalPageLines(response);
