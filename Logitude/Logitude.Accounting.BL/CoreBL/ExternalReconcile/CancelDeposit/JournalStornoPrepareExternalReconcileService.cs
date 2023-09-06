@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit
             List<JournalLinePM> journalLinePMs = _JournalToVoidPM.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit).ToList();
             if (journalLinePMs.Count!=1)
             {
-                throw new ApplicationException("IN DEPOSIT - WE debit bank  CREDIT THE KUPA - only one debit allowed");
+                throw new ApplicationException("IN DEPOSIT - WE debit bank  CREDIT THE cashbook - only one debit allowed");
                 return false;
             }
             var journalLineDebitBank = _JournalToVoidPM.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit).First();
@@ -86,7 +86,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit
                 
                 )
             {
-                throw new ApplicationException("IN DEPOSIT - WE debit bank  CREDIT THE KUPA - only one debit allowed");
+                throw new ApplicationException("IN DEPOSIT - WE debit bank  CREDIT THE cashbook - only one debit allowed");
                 return false;
             }
             if (
