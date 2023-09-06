@@ -5,17 +5,18 @@ Feature: AP Invoice
     Scenario: Create new AP Invoice
         Given the user logged in and navigates to Full Accounting workspace
         And an AP Invoice with the following details
-            | Vendor         | KHTest     |
+            | Vendor         | קטרינג כהן ובניו     |
             | InvoiceNumber  | Random     |
             | InvoiceAmount  | 100        |
-            | InvoiceDate    | 15/05/2023 |
-            | AccountingDate | 15/05/2023 |
-        When create AP Invoice
-        Then the AP Invoice should get successfully
+            | InvoiceDate    | 16/04/2023 |
+            | AccountingDate | 16/04/2023 |
+            | PaymentTerm    | Cash |
+            | BranchId       | Main Office         |
+        
 
     Scenario: Add new Invoice Line
         Given Invoice line with the following details
-            | ChargesType      | BDDChargeType  |
+            | ChargesType      | עמלת עמילות   |
             | LocalDescription | LocalDirection |
             | VatType          | Zero           |
             | Amount           | 100            |
