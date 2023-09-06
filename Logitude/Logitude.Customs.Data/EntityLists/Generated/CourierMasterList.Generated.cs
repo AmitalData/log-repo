@@ -152,6 +152,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierManifestStatusCode  { get; set; }
        [DataMember]
        public string IsCourierMissingClassification  { get; set; }
+       [DataMember]
+       public bool EffectiveFlight  { get; set; }
    }
 
 }
