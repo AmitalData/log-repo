@@ -57,7 +57,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierMasterRemarks, 
 	         OpenDeclarations, 
 	         NoOfCourierHawbwWithoutHatara, 
-	         NoOfCourierHawbWithoutDelivery,
+	         NoOfCourierHawbWithoutDelivery, 
+	         EffectiveFlight,
 	      }
 
 
@@ -133,7 +134,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierPaymentStatusCode, 
 	         CourierDeclarationStatusCode, 
 	         CourierManifestStatusCode, 
-	         IsCourierMissingClassification,
+	         IsCourierMissingClassification, 
+	         EffectiveFlight,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -315,6 +317,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NoOfCourierHawbWithoutDelivery))
             {
 				entityPOCO.NoOfCourierHawbWithoutDelivery = entityPM.NoOfCourierHawbWithoutDelivery;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EffectiveFlight))
+            {
+				entityPOCO.EffectiveFlight = entityPM.EffectiveFlight;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -503,6 +510,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.NoOfCourierHawbWithoutDelivery = entityPOCO.NoOfCourierHawbWithoutDelivery;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EffectiveFlight))
+            {
+					entityPM.EffectiveFlight = entityPOCO.EffectiveFlight;
+            }
+
 		}
 
 		public void PMToOldPM(CourierMasterPM entityPM, CourierMasterPM oldEntityPM)
@@ -682,6 +694,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NoOfCourierHawbWithoutDelivery))
             {
                 oldEntityPM.NoOfCourierHawbWithoutDelivery = entityPM.NoOfCourierHawbWithoutDelivery;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EffectiveFlight))
+            {
+                oldEntityPM.EffectiveFlight = entityPM.EffectiveFlight;
             }
 			
 		}

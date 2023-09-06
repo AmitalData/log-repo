@@ -118,6 +118,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string NoOfCourierHawbwWithoutHatara { get; set; }
         [Column("NoOfCourierHawbWithoutDelivery")]
 	    public string NoOfCourierHawbWithoutDelivery { get; set; }
+        [Column("EffectiveFlight")]
+	    public bool EffectiveFlight { get; set; }
     }
 }
 	 

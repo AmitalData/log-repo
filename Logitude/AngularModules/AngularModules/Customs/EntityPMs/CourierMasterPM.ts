@@ -374,6 +374,11 @@ export class CourierMasterPM {
     public set IsCourierMissingClassification(newValue: string) { if (this.isCourierMissingClassification != newValue) { this.isCourierMissingClassification = newValue; this.MarkAsDirty("IsCourierMissingClassification"); } }
        
 	 
+    private effectiveFlight: boolean;
+    public get EffectiveFlight() { return this.effectiveFlight; }
+    public set EffectiveFlight(newValue: boolean) { if (this.effectiveFlight != newValue) { this.effectiveFlight = newValue; this.MarkAsDirty("EffectiveFlight"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		
