@@ -78,7 +78,7 @@
                     <li *ngFor="let ref of ShipmentReferences.slice(0,ReferencesViewCount), let i = index">{{ref}}</li>
                     <li>
                         <span class="clickable"
-                            (click)="OpenReferencesMessageWindow(ShipmentReferences); $event.stopPropagation()"
+                            (click)="OpenReferencesMessageWindow(ShipmentReferences,$event); $event.stopPropagation()"
                             *ngIf="ShipmentReferences?.length > ReferencesViewCount">
                             <img height="15px" src="./assets/images/icons/info.png" alt=" "
                                 style="margin-right: 6px; margin-top: 6px" />

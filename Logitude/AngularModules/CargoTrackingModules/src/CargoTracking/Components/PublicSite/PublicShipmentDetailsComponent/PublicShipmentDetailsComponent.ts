@@ -288,7 +288,7 @@ export class PublicShipmentDetailsComponent implements OnInit
         }
         return houseReferences;
     }
-    OpenReferencesMessageWindow(references: any[]) {
+    OpenReferencesMessageWindow(references: any[],event) {
         if(!references)
             return;
 
@@ -298,6 +298,12 @@ export class PublicShipmentDetailsComponent implements OnInit
                 title: 'References',
                 description: this.GetReferencesMessageText(references,this.ReferencesViewCount),
             }
+           ,
+              position: {
+                top: event.clientY + 'px',
+                left: event.clientX + 'px',
+              },
+          
         });
     }
     GetReferencesMessageText(references,skip){
