@@ -3,6 +3,7 @@ using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools;
@@ -16,6 +17,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -33,6 +35,8 @@ using System.Linq;
 using System.Text;
 using System.Transactions;
 using System.Web;
+using WebFreight.Web;
+
 namespace Logitude.BL.Helpers
 {
     public class DocumentHelper
@@ -40,7 +44,6 @@ namespace Logitude.BL.Helpers
 
         private readonly bool IsAutomation;
         private int Tenant;
-        private ARInvoiceRepository arInvoiceRepository;
 
         public DocumentHelper(bool isAutomation = false )
         {
@@ -242,39 +245,11 @@ namespace Logitude.BL.Helpers
             return context.Database.Connection.ConnectionString;
         }
 
-        public void CheckDetailsToHSM(string documentOutId )
-        {
-            ICommonDataContext objectContext = CommonDataContext.GetContext(Tenant);
-            ARInvoiceRepository repository = new ARInvoiceRepository(Tenant);
-            var EntityId = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault().EntityId;
-            var invocie = repository.GetARInvoiceById(Tenant, EntityId).FirstOrDefault();
+      
+        
+        
 
-            if (invocie != null) {
-                if (this.IsSignatureHtmlPresentByBillToId(invocie.BillToId))
-                    this.StartSignPDFInvoice(invocie,invocie.Tenant);
-            }
-            
-        }
-
-        private bool IsSignatureHtmlPresentByBillToId(string Billto)
-        {
-            ICommonDataContext objectContext = CommonDataContext.GetContext(Tenant);
-
-            if (string.IsNullOrEmpty(Billto)) return false;
-            var contactIds = (from card in objectContext.Cards
-                              where card.BillToId == Billto
-                              join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
-                              select cardContact.ContactId).ToList();
-
-            foreach (var contactId in contactIds)
-            {
-                bool isSignatureHtmlPresent = objectContext.Contacts.Any(contact => contact.Id == contactId && contact.SignatureHtml.Equals(default(byte)));
-                return isSignatureHtmlPresent;
-            }
-            return false;
-        }
-
-        public void StartSignPDFInvoice(ARInvoice invocie, int tenant)
+        public void StartSignPDFInvoice(ARInvoice invocie, int tenant, ARInvoiceRepository repository)
         {
 
             try
@@ -307,13 +282,11 @@ namespace Logitude.BL.Helpers
 
                     byte[] signBytes = HSMSignFileService
                         .SignCustomsRequest(tenant, invocie.Id, filedata, document.FileName, vatNumber);
-                    IInvoiceContext invoiceContext = InvoiceContext.GetContext(Tenant);
-                    arInvoiceRepository = new ARInvoiceRepository(invoiceContext);
                     //invocie.IsSigned
                     if (signBytes != null)
                     {
                         storageservice.Write(signBytes, fileInfo);
-                        this.HSMSignatureSucceeded(invocie);
+                        this.HSMSignatureSucceeded(invocie, repository);
                        
                         
                     }
@@ -325,7 +298,7 @@ namespace Logitude.BL.Helpers
             }
             catch(HSMException ex)
             {
-                this.HSMSignatureFailed(invocie, ex);
+                this.HSMSignatureFailed(invocie, ex, repository);
                                  
             }
             catch (Exception ex)
@@ -337,23 +310,21 @@ namespace Logitude.BL.Helpers
             }
         }
 
-        private void HSMSignatureFailed(ARInvoice invocie,HSMException ex)
+        private void HSMSignatureFailed(ARInvoice invocie,HSMException ex, ARInvoiceRepository repository)
         {
-             
-
-            invocie.IsSigned = "2";//FALID
-            arInvoiceRepository.Update(invocie);
-
-            this.CreateEvent("HSMF", invocie, "חתימת החשבונית לא  צלחה");
+           invocie.IsSigned = "2";//FALID
+            repository.Update(invocie);
+            repository.SubmitChanges();
+             this.CreateEvent("HSMF", invocie, "חתימת החשבונית לא  צלחה");
             this.SendEmailAlert("libby@amital.co.il","  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+invocie.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex);
         }
 
 
-        private void HSMSignatureSucceeded(ARInvoice invocie)
+        private void HSMSignatureSucceeded(ARInvoice invocie, ARInvoiceRepository repository)
         {
             invocie.IsSigned = "1";
-            arInvoiceRepository.Update(invocie);
-
+            repository.Update(invocie);
+            repository.SubmitChanges();
             this.CreateEvent("HSMS", invocie, "החשבונית נחתמה בהצלחה");
             this.SendEmailAlert("libby@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר" + invocie.InvoiceNumber + "<br /><br />מצורפת השגיאה " );
         }
