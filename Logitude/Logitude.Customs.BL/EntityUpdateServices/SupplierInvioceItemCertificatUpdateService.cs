@@ -35,6 +35,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.DeclarationId = entityParentPM.DeclarationId;
             entityPM.InvoiceCounterKey = entityParentPM.CounterKey;
             entityPM.LineNumber = entityParentPM.LineNumber;
+            entityPM.Tenant = entityParentPM.Tenant;
+
             bool yaronRevertCS7859 = false;
             ICustomContext _Context = MainContext as CustomContext;
             if (yaronRevertCS7859)
