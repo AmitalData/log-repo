@@ -30,11 +30,18 @@ namespace Simplog.Data.InvoiceModel.Mapping
                 .HasMaxLength(60)
                 .IsUnicode(true);
 
+            this.Property(t => t.SearchFields)
+            .HasMaxLength(4000)
+            .IsUnicode(true);
+
+
             // Table & Column Mappings
-            this.ToTable("ARInvoicesSignedStatus");
+            this.ToTable("ARInvoicesSignedStatuses");
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.LocalName).HasColumnName("LocalName");
             this.Property(t => t.EnglishName).HasColumnName("EnglishName");
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+
         }
     }
 }
