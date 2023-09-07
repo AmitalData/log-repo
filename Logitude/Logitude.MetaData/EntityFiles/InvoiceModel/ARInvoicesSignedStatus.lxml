@@ -43,7 +43,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סטטוסים חשבוניות חתומות&quot;"
   DefaultText="&quot;ARInvoices Signed Statuses&quot;"
-  Code="&quot;1076&quot;"
+  Code="&quot;2e54&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
@@ -412,27 +412,27 @@
   <Records>
     <Record
       Code="&quot;0&quot;"
-      LocalName="&quot;לא נחתמה&quot;"
+      LocalName="&quot;לא נחתמה &quot;"
       EnglishName="&quot;No signed&quot;"
       SearchFields="&quot;&quot;" />
     <Record
       Code="&quot;1&quot;"
-      LocalName="&quot;נחתמה וטרם נשלחה&quot;"
+      LocalName="&quot; נחתמה וטרם נשלחה&quot;"
       EnglishName="&quot;Signed and not sent&quot;"
       SearchFields="&quot;&quot;" />
     <Record
       Code="&quot;2&quot;"
-      LocalName="&quot;חתימה נכשלה&quot;"
+      LocalName="&quot;חתימה נכשלה &quot;"
       EnglishName="&quot;Signature faild&quot;"
       SearchFields="&quot;&quot;" />
     <Record
       Code="&quot;3&quot;"
-      LocalName="&quot;נחתמה ונשלחה במייל&quot;"
+      LocalName="&quot; נחתמה ונשלחה במייל&quot;"
       EnglishName="&quot;Signed and sent by email&quot;"
       SearchFields="&quot;&quot;" />
     <Record
       Code="&quot;4&quot;"
-      LocalName="&quot;נחתמה והשליחה במייל לא הצליחה&quot;"
+      LocalName="&quot;נחתמה והשליחה במייל לא הצליחה &quot;"
       EnglishName="&quot;Signed, email was not successful&quot;"
       SearchFields="&quot;&quot;" />
   </Records>

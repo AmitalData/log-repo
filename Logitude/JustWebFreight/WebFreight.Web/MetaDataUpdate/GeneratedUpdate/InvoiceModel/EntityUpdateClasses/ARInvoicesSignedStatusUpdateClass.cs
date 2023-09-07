@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoicesSignedStatusUpdateClass
    {  		
-		public const string HashString = "1ed97441f30e6ae458303f4503957bf8";
+		public const string HashString = "9f13700307386300f24d16778a825b4e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סטטוסים חשבוניות חתומות",
 			      				    DefaultText =  "ARInvoices Signed Statuses",
-			      				    Code =  "1076",
+			      				    Code =  "2e54",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
