@@ -102,6 +102,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 int row = 0;
                                 foreach(var table in tables)
                                 {
+                                    dicItems = new Dictionary<string, string>();
                                     foreach (var cell in table?.cells)
                                     {
                                         if (cell != null && cell.row != row && dicItems.Count > 0)
