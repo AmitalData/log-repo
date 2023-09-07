@@ -1264,6 +1264,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         private void UpdateNoIdUnder150()
         {
+
             if (!String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
             {
                 if (_CourierMasterPM != null)
