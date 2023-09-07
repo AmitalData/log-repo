@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "f0c0a0ac9ddc3f52eaa6b1f495c78ac2";
+		public const string HashString = "609eb5fb5e25353b626fb4c58008118d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4547,6 +4547,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LoadingPortCode",
 					  						ListPropertyPath =  "LoadingPortCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5072,6 +5073,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CourierMasterTextCode_CustomsCourierMasterCourierCustomStatusNotReleased = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.CourierCustomStatus.NotReleased", DefaultText = "Not Released",LocalDefaultText = @"ללא התרה", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CourierMasterTextCode_CustomsCourierMasterODisplayOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.DisplayOnly", DefaultText = "Declarations in state 'readonly' not update",LocalDefaultText = @"הצהרות במצב 'תצוגה בלבד' לא יעודכנו", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOReadyApprov = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ReadyApprov", DefaultText = "Approve Pending",LocalDefaultText = @"אישור PENDING", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

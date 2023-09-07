@@ -94,6 +94,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 CourierMasterId = myPendingRequestParams.CourierMasterId,
                 LoggingUserId = LoggingUserId,
                 MAWB = myPendingRequestParams.MAWB,
+                PendingCode= myPendingRequestParams.PendingCode?.Length > 0?myPendingRequestParams.PendingCode[0]:null,
                 tenant = tenant,
                 MyMoreParams = "",
                 IsWorkSheetFromExcel = myPendingRequestParams.IsWorkSheetFromExcel,
@@ -173,6 +174,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
         public bool IsWorkSheetFromExcel { get; set; }
+        public string PendingCode { get; set; }
         public string MAWB { get; set; }
         public string[] declarationList { get; set; }
         public string MyMoreParams { get; set; }
