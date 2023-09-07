@@ -571,7 +571,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ChequeNumber&quot;"
     DefaultText="&quot;Cheque No.&quot;"
-    FullLocalDefaultText="&quot;סטאטוס המחאה&quot;"
+    FullLocalDefaultText="&quot;מספר המחאה&quot;"
     ListFieldLable="&quot;ChequeNumberListLable&quot;"
     ListLableDefaultText="&quot;Cheque No.&quot;"
     ListLocalDefaultText="&quot;סטאטוס המחאה&quot;"
