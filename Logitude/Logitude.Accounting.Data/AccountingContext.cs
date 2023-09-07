@@ -80,8 +80,6 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new AccountingPeriodMap());
 	
-            modelBuilder.Configurations.Add(new ARInvoicesSignedStatusMap());
-	
             modelBuilder.Configurations.Add(new ARPaymentChequeMap());
 	
             modelBuilder.Configurations.Add(new ARPaymentChequeStatusMap());
@@ -760,12 +758,6 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<AccountingPeriod> AccountingPeriods 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses 
 	 {
 	      get; set;
 	 
