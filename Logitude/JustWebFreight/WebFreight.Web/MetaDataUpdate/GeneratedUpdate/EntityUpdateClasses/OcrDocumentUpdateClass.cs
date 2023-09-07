@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OcrDocumentUpdateClass
    {  		
-		public const string HashString = "07e5314c4079509422a3a0ba09cc6c6b";
+		public const string HashString = "520a3120adae52ac9da6a6b2d0a09bec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
