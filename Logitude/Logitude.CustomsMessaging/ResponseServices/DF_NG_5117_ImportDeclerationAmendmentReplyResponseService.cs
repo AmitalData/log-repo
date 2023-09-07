@@ -303,8 +303,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             case "27":
                                 {
                                     if (additionalInformation.Content != null)
-                                        _MyDeclarationPM.AmendmentRejectionReason = additionalInformation.Content.Value;
-                                    break;
+                                    {
+                                        AmendRequestRejectReasonTypeQueryService amendRequestRejectReasonTypeQueryService = new AmendRequestRejectReasonTypeQueryService(context);
+
+                                        var amendRequestRejectReasonType = amendRequestRejectReasonTypeQueryService.GetSingle(additionalInformation.Content?.Value, false, true);
+
+                                        _MyDeclarationPM.AmendmentRejectionReason = amendRequestRejectReasonType != null ? amendRequestRejectReasonType.LocalName : additionalInformation.Content?.Value;
+                                    }
+                                        break;
 
                                 }
 
