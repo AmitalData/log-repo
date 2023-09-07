@@ -2761,7 +2761,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         else if (this.ObjectTableName == "ShippingLine" || this.ObjectTableName == "Airline" || this.ObjectTableName == "Port") {
             isVisible = true;
         }
-
+      
         this.IsAddButtonVisible = isVisible;
     }
 
@@ -2851,8 +2851,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.IsNewEntityButtonDisabled = !isEnabled;
     }
     private SetNewEntityButtonVisibility() {
-        var isVisible = true;
-
+        
+        var isVisible = true;    
         if (this.TenantPM.IsHybrid && (this.ObjectTableName == "User" || this.ObjectTableName == "Branche" || this.ObjectTableName == "Department" || this.ObjectTableName == "City" || this.ObjectTableName == "Vessel" || this.ObjectTableName == " Specialservice")) {
             isVisible = false;
         }
@@ -2882,6 +2882,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                             break;
                         }
 
+                    case "ARPaymentCheque":{
+                        isVisible = false;
+                        break;
+                    }
                     case "Customs.Declaration":
                         {
                             isVisible = false;

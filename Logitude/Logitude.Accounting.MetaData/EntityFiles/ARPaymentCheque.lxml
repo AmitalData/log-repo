@@ -574,7 +574,7 @@
     FullLocalDefaultText="&quot;מספר המחאה&quot;"
     ListFieldLable="&quot;ChequeNumberListLable&quot;"
     ListLableDefaultText="&quot;Cheque No.&quot;"
-    ListLocalDefaultText="&quot;סטאטוס המחאה&quot;"
+    ListLocalDefaultText="&quot;מספר המחאה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"

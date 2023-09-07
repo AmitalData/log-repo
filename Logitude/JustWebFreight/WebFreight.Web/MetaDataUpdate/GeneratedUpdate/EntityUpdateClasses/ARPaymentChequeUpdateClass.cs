@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ARPaymentChequeUpdateClass
    {  		
-		public const string HashString = "cde3536013e1ee2393affc889c063e9e";
+		public const string HashString = "d43dc591853571a270960bb959d89cd8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -588,7 +588,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "מספר המחאה",
 					  						ListFieldLable =  "ChequeNumberListLable",
 					  						ListLableDefaultText =  "Cheque No.",
-					  						ListLocalDefaultText =  "סטאטוס המחאה",
+					  						ListLocalDefaultText =  "מספר המחאה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
