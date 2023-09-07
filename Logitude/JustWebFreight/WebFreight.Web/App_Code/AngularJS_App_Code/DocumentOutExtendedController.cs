@@ -37,6 +37,11 @@ using WebFreight.Web.Security;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using System.IdentityModel.Metadata;
+using Logitude.BL.DataContracts;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using DocumentsFiling = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentsFiling;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -286,9 +291,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant, null, createDocumentOutArgs.DocumentTypeTemplateId);
                     if (createDocumentOutArgs.SignHSM)
                     {
-                        documentHelper.CheckDetailsToHSM(documentOutPM.Id);
+
+
+                        this.CheckDetailsToHSM(documentOutPM.Id,createDocumentOutArgs.Tenant);
                         
                     }
+              
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
@@ -298,8 +306,62 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+        public void CheckDetailsToHSM(string documentOutId,int tenant)
+        {
+            DocumentHelper documentHelper = new DocumentHelper();
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+            ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
 
+
+            var documentsFiling = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault();
+            ARInvoice invocie = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
+
+            if (invocie != null)
+            {
+                if (this.IsSignatureHtmlPresentByBillToId(invocie.BillToId, tenant))
+                {
+                    this.CreatePdfDoc(documentsFiling, invocie);
+                    documentHelper.StartSignPDFInvoice(invocie, invocie.Tenant, repository);
+                }
+
+            }
+
+        }
+        private void CreatePdfDoc(DocumentsFiling documentsFiling, ARInvoice invocie)
+        {
+
+            ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(invocie.Tenant);
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(invocie.Tenant);
+            DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentsFiling.DocumentTypeId, documentsFiling.Id, invocie.Tenant);
+
+            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(invocie.Tenant);
+            var objectTable = objectTableRepository.GetObjectTableByName("ARInvoice", invocie.Tenant, true);
+
+            documentTypePM.DocumentTypeCopies.ForEach(doc =>
+            {
+                exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, invocie.Id, objectTable.Id, null, null, documentsFiling.Id, invocie.Tenant, doc.Id, resolveLoggingUserId);
+            });
+
+        }
+
+        private bool IsSignatureHtmlPresentByBillToId(string Billto,int tenant)
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+
+            if (string.IsNullOrEmpty(Billto)) return false;
+            var contactIds = (from card in objectContext.Cards
+                              where card.BillToId == Billto
+                              join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
+                              select cardContact.ContactId).ToList();
+
+            foreach (var contactId in contactIds)
+            {
+                bool isSignatureHtmlPresent = objectContext.Contacts.Any(contact => contact.Id == contactId && contact.SignatureHtml.Equals(default(byte)));
+                return isSignatureHtmlPresent;
+            }
+            return false;
+        }
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
