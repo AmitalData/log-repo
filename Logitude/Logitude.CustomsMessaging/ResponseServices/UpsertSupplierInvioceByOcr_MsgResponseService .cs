@@ -46,6 +46,7 @@ using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.EntityKeys;
 using static Logitude.Customs.BL.Messaging.Customs.SupplierInvoiceByOcr;
 using static Logitude.CustomsMessaging.ResponseServices.UpsertSupplierInvioceByOcr_MsgResponseService;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -94,26 +95,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         Dictionary<string, string> dicItems = new Dictionary<string, string>();
                         for(int i = 0; i < convertJson.pages.Count(); i++)
                         {
-                            var cells = convertJson.pages[i].prediction.Where(x => x.label.ToUpper() == label);
-                            if (cells.Any())
+                            var tables = convertJson.pages[i].prediction.Where(x => x.label.ToUpper() == label);
+                            if (tables.Any())
                             {
                                 dicItems = new Dictionary<string, string>();
                                 int row = 0;
-                                foreach (var cell in cells?.First().cells)
+                                foreach(var table in tables)
                                 {
-                                    if (cell != null && cell.row != row && dicItems.Count > 0)
+                                    foreach (var cell in table?.cells)
+                                    {
+                                        if (cell != null && cell.row != row && dicItems.Count > 0)
+                                        {
+                                            supplierInvoiceItemsList.Add(dicItems);
+                                            dicItems = new Dictionary<string, string>();
+                                        }
+                                        if (!dicItems.ContainsKey(cell.label) && cell.label != ExpensesAmount && cell.label != ExpensesName)
+                                            dicItems.Add(cell.label, cell.text);
+                                        row = cell.row;
+                                    }
+
+                                    if (dicItems.Count > 0)
                                     {
                                         supplierInvoiceItemsList.Add(dicItems);
-                                        dicItems = new Dictionary<string, string>();
                                     }
-                                    if (!dicItems.ContainsKey(cell.label) && cell.label != ExpensesAmount && cell.label != ExpensesName)
-                                        dicItems.Add(cell.label, cell.text);
-                                    row = cell.row;
-                                }
 
-                                if (dicItems.Count > 0)
-                                {
-                                    supplierInvoiceItemsList.Add(dicItems);
                                 }
 
 
