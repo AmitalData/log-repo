@@ -98,10 +98,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var tables = convertJson.pages[i].prediction.Where(x => x.label.ToUpper() == label);
                             if (tables.Any())
                             {
-                                dicItems = new Dictionary<string, string>();
-                                int row = 0;
                                 foreach(var table in tables)
-                                {
+                                {  
+                                    int row = 0;
                                     dicItems = new Dictionary<string, string>();
                                     foreach (var cell in table?.cells)
                                     {
