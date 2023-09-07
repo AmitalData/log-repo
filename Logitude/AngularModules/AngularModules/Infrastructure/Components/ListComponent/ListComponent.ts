@@ -2852,10 +2852,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     private SetNewEntityButtonVisibility() {
         
-        var isVisible = true;
-        if (this.ObjectTableName == "ARPaymentCheque") {
-            isVisible = false;
-        }
+        var isVisible = true;    
         if (this.TenantPM.IsHybrid && (this.ObjectTableName == "User" || this.ObjectTableName == "Branche" || this.ObjectTableName == "Department" || this.ObjectTableName == "City" || this.ObjectTableName == "Vessel" || this.ObjectTableName == " Specialservice")) {
             isVisible = false;
         }
@@ -2885,6 +2882,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                             break;
                         }
 
+                    case "ARPaymentCheque":{
+                        isVisible = false;
+                        break;
+                    }
                     case "Customs.Declaration":
                         {
                             isVisible = false;
