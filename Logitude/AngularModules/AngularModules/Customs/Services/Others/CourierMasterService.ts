@@ -755,7 +755,7 @@ export class CourierMasterService {
 
         return LogtuideTableDataService.createInstance().sendAjaxAndGetDataStandart(ajax);
     }
-    PostApproveAllPending(requestParams: PendingRequestParams) {
+    PostApprovePending(requestParams: PendingRequestParams) {
 
         return defer(() => {
             var authHeader = new Headers();
@@ -766,7 +766,7 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostApproveAllPending/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                this._apiUrl + '/PostApprovePending/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     var messString = res;
                     var serviceResponse: ServiceResponse;
                     serviceResponse = new ServiceResponse();

@@ -6506,6 +6506,12 @@
       LocalDefaultText="&quot;הצהרות במצב 'תצוגה בלבד' לא יעודכנו&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CourierMaster.O.ReadyApprov&quot;"
+      DefaultText="&quot;Approve Pending&quot;"
+      LocalDefaultText="&quot;אישור PENDING&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
