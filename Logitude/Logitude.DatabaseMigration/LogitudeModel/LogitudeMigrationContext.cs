@@ -1925,6 +1925,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ARInvoiceStock> ARInvoiceStocks { get; set; }
         public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
         #endregion
+        public IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses { get; set; }
 
         #region Quotes Context
         public IDbSet<QuoteClosingReason> QuoteClosingReasons { get; set; }

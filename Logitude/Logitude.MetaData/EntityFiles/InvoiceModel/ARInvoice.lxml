@@ -16992,6 +16992,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;ARInvoice&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -17002,6 +17003,9 @@
     DisplayLongName="false"
     FullFieldLable="&quot;IsSigned&quot;"
     DefaultText="&quot;Is Signed&quot;"
+    ListFieldLable="&quot;IsSignedListLable&quot;"
+    ListLableDefaultText="&quot;Is Signed&quot;"
+    ListLocalDefaultText="&quot;קוד סטטוס חתימה&quot;"
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="&quot;ARInvoicesSignedStatus&quot;"
@@ -17246,125 +17250,87 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Query
-    Code="&quot;All Invoices&quot;"
-    TextCode="&quot;All Invoices&quot;"
-    LocalTextCode="&quot;כל החשבוניות&quot;"
-    QueryGroupCode="&quot;INVC&quot;"
-    IndexOrder="0"
+ 
+  <field
+    Id="&quot;de5806dc-08d1-4590-94de-d17835e2e699&quot;"
+    FieldName="&quot;IsSignedName&quot;"
+    OldNames="IsSignedName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
     ObjectTableName="&quot;ARInvoice&quot;"
-    QuerySection="&quot;ARInvoice&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    DefaultSortName="&quot;CreateDate&quot;"
-    DefaultSortDirection="&quot;Descending&quot;"
-    QueryGroupName="&quot;Invoices&quot;"
-    TextCodeCode="&quot;ARInvoice.Q.AllInvoices&quot;"
-    FeatureCode="&quot;ALLINVOICES&quot;"
-    FeatureTextCodeCode="&quot;ARInvoice.Features.AllInvoices&quot;"
-    FeatureDefaultText="&quot;All Invoices&quot;"
-    IsSpellChecked="false">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;IsPrinted&quot;"
-        ColumnWidth="30" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;IsExternalEntity&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;TotalAmountNotForTaxReport&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;TotalVAT&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="4"
-        ObjectFieldName="&quot;TotalAmountForTaxReport&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="5"
-        ObjectFieldName="&quot;TotaVatableAmountForTaxReport&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="6"
-        ObjectFieldName="&quot;TotalExamptFortaxReport&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="7"
-        ObjectFieldName="&quot;Sent&quot;"
-        ColumnWidth="30" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="8"
-        ObjectFieldName="&quot;InvoiceNumber&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="9"
-        ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="10"
-        ObjectFieldName="&quot;BillToName&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="11"
-        ObjectFieldName="&quot;StatusName&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="12"
-        ObjectFieldName="&quot;DueDate&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="13"
-        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="14"
-        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="15"
-        ObjectFieldName="&quot;AmountDue&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="16"
-        ObjectFieldName="&quot;CreateDate&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="17"
-        ObjectFieldName="&quot;CreatedByUserName&quot;"
-        ColumnWidth="130" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="30"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="30"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    IsListFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;IsSignedNameIsSignedName&quot;"
+    ListPropertyPath="&quot;IsSignedName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;ARInvoice&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;IsSignedName&quot;"
+    DefaultText="&quot;Is Signed Name&quot;"
+    ListFieldLable="&quot;IsSignedNameListLable&quot;"
+    ListLableDefaultText="&quot;Is Signed Name&quot;"
+    ListLocalDefaultText="&quot;סטטוס חתימה&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;Draft General Invoices&quot;"
     TextCode="&quot;Draft Invoices&quot;"
     LocalTextCode="&quot;חשבוניות בסטטוס טיוטה&quot;"
     QueryGroupCode="&quot;INVC&quot;"
-    IndexOrder="1"
+    IndexOrder="0"
     ObjectTableName="&quot;ARInvoice&quot;"
     QuerySection="&quot;ARInvoice&quot;"
     SystemLevel="true"
@@ -17387,56 +17353,66 @@
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Sent&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
         IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Draft General Invoices&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;Draft General Invoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="3"
+        IndexOrder="5"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="6"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="7"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="8"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="9"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="10"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -17455,7 +17431,7 @@
     TextCode="&quot;Approved Invoices&quot;"
     LocalTextCode="&quot;חשבוניות מאושרות&quot;"
     QueryGroupCode="&quot;INVC&quot;"
-    IndexOrder="2"
+    IndexOrder="1"
     ObjectTableName="&quot;ARInvoice&quot;"
     QuerySection="&quot;ARInvoice&quot;"
     SystemLevel="true"
@@ -17478,56 +17454,66 @@
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Sent&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
         IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Approval General Invoices&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;Approval General Invoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="3"
+        IndexOrder="5"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="6"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="7"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="8"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="9"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="10"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -17540,6 +17526,129 @@
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;All Invoices&quot;"
+    TextCode="&quot;All Invoices&quot;"
+    LocalTextCode="&quot;כל החשבוניות&quot;"
+    QueryGroupCode="&quot;INVC&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;ARInvoice&quot;"
+    QuerySection="&quot;ARInvoice&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Descending&quot;"
+    QueryGroupName="&quot;Invoices&quot;"
+    TextCodeCode="&quot;ARInvoice.Q.AllInvoices&quot;"
+    FeatureCode="&quot;ALLINVOICES&quot;"
+    FeatureTextCodeCode="&quot;ARInvoice.Features.AllInvoices&quot;"
+    FeatureDefaultText="&quot;All Invoices&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;IsPrinted&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;IsSigned&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;IsExternalEntity&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;TotalAmountNotForTaxReport&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;TotalVAT&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;TotalAmountForTaxReport&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;TotaVatableAmountForTaxReport&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;TotalExamptFortaxReport&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;InvoiceNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;BillToName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="14"
+        ObjectFieldName="&quot;DueDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="15"
+        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="16"
+        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="17"
+        ObjectFieldName="&quot;AmountDue&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="18"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="19"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters />
   </Query>
   <Query
     Code="&quot;All General Invoices&quot;"
@@ -17569,56 +17678,66 @@
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Sent&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
         IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All General Invoices&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;All General Invoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="3"
+        IndexOrder="5"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="6"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="7"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="8"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="9"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="10"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -17662,51 +17781,61 @@
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Sent&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
         IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Draft Invoices&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;Draft Invoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;DraftNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="3"
+        IndexOrder="5"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="6"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="7"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="8"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="9"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="10"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="11"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -17750,56 +17879,66 @@
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Sent&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
         IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Unpaid Invoices&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;Unpaid Invoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="3"
+        IndexOrder="5"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="6"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="7"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="8"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="9"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="10"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;ExpectedPaymentDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="13"
         ObjectFieldName="&quot;InternalNotes&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -18035,56 +18174,66 @@
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Sent&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
         IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenConstituent&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;OpenConstituent&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="3"
+        IndexOrder="5"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="4"
+        IndexOrder="6"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="5"
+        IndexOrder="7"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="6"
+        IndexOrder="8"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="7"
+        IndexOrder="9"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="8"
+        IndexOrder="10"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="9"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="11"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -18125,56 +18274,66 @@
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Sent&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
         IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="3"
+        IndexOrder="5"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="4"
+        IndexOrder="6"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="5"
+        IndexOrder="7"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="6"
+        IndexOrder="8"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="7"
+        IndexOrder="9"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="8"
+        IndexOrder="10"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="9"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="11"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -18211,56 +18370,66 @@
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Sent&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
         IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenInvoices&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;OpenInvoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="3"
+        IndexOrder="5"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="4"
+        IndexOrder="6"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="5"
+        IndexOrder="7"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="6"
+        IndexOrder="8"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="7"
+        IndexOrder="9"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="8"
+        IndexOrder="10"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="9"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;ExpectedPaymentDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="11"
+        IndexOrder="13"
         ObjectFieldName="&quot;InternalNotes&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -18297,61 +18466,71 @@
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsPrinted&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
         IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;IsPrinted&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="3"
+        IndexOrder="5"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="4"
+        IndexOrder="6"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="5"
+        IndexOrder="7"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="6"
+        IndexOrder="8"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="7"
+        IndexOrder="9"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="8"
+        IndexOrder="10"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="9"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="11"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="12"
+        IndexOrder="14"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
