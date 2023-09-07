@@ -130,7 +130,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     public DisplayOnlyMessage: string = "";
     private currentSession = SessionLocator.SelectedSession;
     private ChangedUnloadPortSite: boolean;
-    HasRequiresApprovalFeature:boolean=false;
+    HasRequiresApprovalFeature: boolean = false;
 
     //constructor(public entityArgs: EntityArgs) {
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
@@ -140,7 +140,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         }
         this.EntityResourceService.getEntityResourceByTableName("Customs.CourierPendingReason").subscribe(response => {
         });
-        
+
         //this.entityPM = entityArgs.EntityPM;
         this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
         this._TabFilterList.push(new TabFilter("DOC", "בעיות במסמכים ", null, null));
@@ -696,8 +696,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
 
-    _TotalNotAccepted  =0;
-   // _DecWithoutHaTra = 0;
+    _TotalNotAccepted = 0;
+    // _DecWithoutHaTra = 0;
 
     _PendingCodes: KeyValuePair[] = [];
 
@@ -749,7 +749,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     RefreshStatistic() {
         // SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetStatistic(this.entityPM.Id,false ,SessionLocator.LoggedUserId)
+        this._CourierMasterService.GetStatistic(this.entityPM.Id, false, SessionLocator.LoggedUserId)
             .subscribe((res: any) => {
                 //    this.currentSession.StopBusyIndicator();
                 var list: KeyValuePair[];
@@ -1626,7 +1626,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 break;
             }
             case "500": {
-                  filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75.01, 500, null, "Between", false, false, false, "number", false);
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75.01, 500, null, "Between", false, false, false, "number", false);
                 break;
             }
             case "1000": {
@@ -1688,7 +1688,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     break;
                 }
                 case "NotApproved": {
-                    filters.addAdditionalFilter("NotApprovedPendingList", "", null, null,  "NotEqual", true, false, false, "string");
+                    filters.addAdditionalFilter("NotApprovedPendingList", "", null, null, "NotEqual", true, false, false, "string");
                     break;
                 }
                 default: {
@@ -1813,7 +1813,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
         if (this.HasRequiresApprovalFeature) {
             this._PendingCodes.push({ 'Key': "NotApproved", 'Value': TextCodeTranslator.Translate("Customs.CourierPendingReason.O.NotApprovedPending") });
-        }       
+        }
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetPending(this.entityPM.Id)
             .subscribe((resu: any) => {
@@ -2136,7 +2136,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     DeclarationsStatusRequestMethod() {
 
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id,null,false)
+        this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id, null, false)
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
@@ -2253,7 +2253,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     private GetIsSendDocumentsFromQueueButton() {
 
         var myInterfaceTenantDefinitionPMService = new InterfaceTenantDefinitionsWebService();
-        myInterfaceTenantDefinitionPMService.get(SessionLocator.Tenant,"2715")
+        myInterfaceTenantDefinitionPMService.get(SessionLocator.Tenant, "2715")
             .subscribe((response: any) => {
                 this.IsSendDocumentsFromQueueButton = false;
                 if (!response.HasError) {
@@ -2344,72 +2344,75 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             if (confirmWindow.Yes) {
                 SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                 this._CourierMasterService.PostSendClosePending(currRequestParams)
- 
-            .subscribe((res: any) => {
- 
+
+                    .subscribe((res: any) => {
+
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
-                var myMessageWindow = new MessageWindow();
+                        var myMessageWindow = new MessageWindow();
                         myMessageWindow.Show(res.Result);
 
- 
-                myMessageWindow.WindowClosed.subscribe(s => {
+
+                        myMessageWindow.WindowClosed.subscribe(s => {
                             this.RefreshButtonClicked();
 
                         });
                     });
 
-         
-    }
+
+            }
         });
 
     }
     ApprovePendingMethod() {
         if (this.IsDisplayOnly) {
-           var myMessageWindow = new MessageWindow();
-           myMessageWindow.Width = 250;
-           myMessageWindow.Height = 150;
-           myMessageWindow.Show("קיים מסר זהה בתהליך");
-           SessionLocator.SelectedSession.StopBusyIndicator();
-           return;
-       }
-       var currRequestParams = new PendingRequestParams();
-       currRequestParams.LoggingEnabled = true;
-       currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-       currRequestParams.Tenant = SessionLocator.Tenant;
-       currRequestParams.CourierMasterId = this.entityPM.Id;
-       currRequestParams.MAWB = this.entityPM.MAWB;
-       debugger;
-       currRequestParams.PendingCode= [];
-       currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
-       let text = "האם לאשר את כל Pending שלא אושרו בטיסה";
-       
-       var confirmWindow = new ConfirmWindow();
-       confirmWindow.Show(text);
-       confirmWindow.WindowClosed.subscribe((event: any) => {
-           if (confirmWindow.Yes) {
-               SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-               this._CourierMasterService.PostApprovePending(currRequestParams)
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("קיים מסר זהה בתהליך");
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            return;
+        }
+        var currRequestParams = new PendingRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.CourierMasterId = this.entityPM.Id;
+        currRequestParams.MAWB = this.entityPM.MAWB;
+        currRequestParams.PendingCode = [];
+        let text = "נא אשר אישור פנדינג גורף";
+        currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+            let text = "נא אשר לבצע אישור רק לשורות שסומנו";
+        }
 
-           .subscribe((res: any) => {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show(text);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                this._CourierMasterService.PostApprovePending(currRequestParams)
 
-                       SessionLocator.SelectedSession.StopBusyIndicator();
-                       var myMessageWindow = new MessageWindow();
-               var myMessageWindow = new MessageWindow();
-                       myMessageWindow.Show(res.Result);
+                    .subscribe((res: any) => {
 
-
-               myMessageWindow.WindowClosed.subscribe(s => {
-                           this.RefreshButtonClicked();
-
-                       });
-                   });
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        var myMessageWindow = new MessageWindow();
+                        var myMessageWindow = new MessageWindow();
+                        myMessageWindow.Show(res.Result);
 
 
-           }
-       });
+                        myMessageWindow.WindowClosed.subscribe(s => {
+                            this.RefreshButtonClicked();
 
-   }
+                        });
+                    });
+
+
+            }
+        });
+
+    }
     ChangeStorageSiteMethod() {
 
         if (this.IsDisplayOnly) {
@@ -2483,7 +2486,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
         //communicationLogStepListService.GetExportExcelByRequestId("8305", this.MyLastCustomsRequestSheetId, SessionLocator.Tenant);
         //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
-        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM?.Id + '&tenant=' + SessionLocator.Tenant.toString()+ '&userId=' + SessionLocator.LoggedUserId +  '&IsWorkSheetFromExcel=' + false;
+        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM?.Id + '&tenant=' + SessionLocator.Tenant.toString() + '&userId=' + SessionLocator.LoggedUserId + '&IsWorkSheetFromExcel=' + false;
 
 
         window.open(url);
@@ -2714,7 +2717,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 480;
         logitudeWindow.Height = 620;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "תעדוף בקשות לטיסה"; 
+        logitudeWindow.Title = "תעדוף בקשות לטיסה";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/PrioritizeFlightRequestsComponent');
         this.ChangedUnloadPortSite = true;
