@@ -24,7 +24,7 @@ namespace Logitude.BL.InvoiceModel
             all.Add(new ARInvoicesSignedStatusDetails()
             {    
                 Code = "0", 
-                LocalName = "לא נחתמה", 
+                LocalName = "לא נחתמה ", 
                 EnglishName = "No signed", 
                 SearchFields = "", 
 			});
@@ -32,7 +32,7 @@ namespace Logitude.BL.InvoiceModel
             all.Add(new ARInvoicesSignedStatusDetails()
             {    
                 Code = "1", 
-                LocalName = "נחתמה וטרם נשלחה", 
+                LocalName = " נחתמה וטרם נשלחה", 
                 EnglishName = "Signed and not sent", 
                 SearchFields = "", 
 			});
@@ -40,7 +40,7 @@ namespace Logitude.BL.InvoiceModel
             all.Add(new ARInvoicesSignedStatusDetails()
             {    
                 Code = "2", 
-                LocalName = "חתימה נכשלה", 
+                LocalName = "חתימה נכשלה ", 
                 EnglishName = "Signature faild", 
                 SearchFields = "", 
 			});
@@ -48,7 +48,7 @@ namespace Logitude.BL.InvoiceModel
             all.Add(new ARInvoicesSignedStatusDetails()
             {    
                 Code = "3", 
-                LocalName = "נחתמה ונשלחה במייל", 
+                LocalName = " נחתמה ונשלחה במייל", 
                 EnglishName = "Signed and sent by email", 
                 SearchFields = "", 
 			});
@@ -56,7 +56,7 @@ namespace Logitude.BL.InvoiceModel
             all.Add(new ARInvoicesSignedStatusDetails()
             {    
                 Code = "4", 
-                LocalName = "נחתמה והשליחה במייל לא הצליחה", 
+                LocalName = "נחתמה והשליחה במייל לא הצליחה ", 
                 EnglishName = "Signed, email was not successful", 
                 SearchFields = "", 
 			});
