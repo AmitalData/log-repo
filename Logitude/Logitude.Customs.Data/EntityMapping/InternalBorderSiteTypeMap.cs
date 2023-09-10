@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
 
-            this.Property(t => t.AutonomyRegionTypeCode).HasColumnName("AutonomyRegionTypeCode").IsRequired().HasMaxLength(4).IsUnicode(false);
+            this.Property(t => t.AutonomyRegionTypeCode).HasColumnName("AutonomyRegionTypeCode").HasMaxLength(4).IsUnicode(false);
         }
     }
 }
