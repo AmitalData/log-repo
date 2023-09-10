@@ -143,7 +143,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 bool isUpdateDeclaration = true;
                 if (isUpdateDeclaration)
                 {
-                    var declarationPendingList = itemPM.DeclarationPendings.Where(r => r.CourierPendingRequireApr == true && r.Approval != true);
+                    var declarationPendingList = itemPM.DeclarationPendings.Where(r => r.CourierPendingRequireApr == true && r.Approval != true && r.Status =="A");
                     if (customResponse.PendingCode != "A" && customResponse.PendingCode != "NotApproved")
                     {
                         declarationPendingList = declarationPendingList.Where(r => r.CourierPendingReasonCode == customResponse.PendingCode);

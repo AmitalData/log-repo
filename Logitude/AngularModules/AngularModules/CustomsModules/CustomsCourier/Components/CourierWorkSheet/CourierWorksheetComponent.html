@@ -1051,8 +1051,22 @@
                                                                                 </div>
                                                                             </split-button>    
                                                                         <td>
-                                                                            <div *ngIf="HasRequiresApprovalFeature"
-                                                                                style="width: 130px;">
+                                                                                <div *ngIf="HasRequiresApprovalFeature && !this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
+                                                                                    style="width: 130px;">
+                                                                                <split-button
+                                                                                    (DefaultSplitButtonClicked)="ApprovePendingMethod()" 
+                                                                                    [IsDisabled]="IsDisplayOnly"
+                                                                                    [ButtonText]=SelectedApprovPendingSendButtonText
+                                                                                    [AsRegularButton]="'true'"
+                                                                                    [MENUDivExtraTop]="24"
+                                                                                    [MENUDivExtraLeft]="110">
+                                                                                    <div
+                                                                                        class="class-MENUSplitButton-content">
+                                                                                        <div></div>
+                                                                                    </div>
+                                                                                    [ngStyle]="{'width':!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) ? '130px' : '150px' }">
+                                                                                <div *ngIf="HasRequiresApprovalFeature && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
+                                                                                    style="width: 130px;">
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ApprovePendingMethod()" 
                                                                                     [IsDisabled]="IsDisplayOnly"
