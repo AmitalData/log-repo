@@ -1355,6 +1355,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     
     PushLine(row, RowIndex) {
+        let countLines:number = 500;
 
         var index = this.SelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
@@ -1364,9 +1365,15 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             //this.SelectedLines.push(r);
             this.CalculateTotals();
 
-            
+            // change max lines if toggle feature is active:
+            let selectMoreLines = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SML")[0] ? true : false;
+            if (selectMoreLines)
+            {
+                countLines = 2000;
+            }
+
             // update select all checkbox
-            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 2000)
+            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= countLines)
                 this._isAllSelected = true;
             if(this.isFullAccounting)
             {
