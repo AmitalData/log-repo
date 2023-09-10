@@ -16,7 +16,7 @@ import { AccountingEventManager } from 'Accounting/Utilities/AccountingEventMana
         <table>
             <tr class="TabTitleRow">
                 <td>{{TabTitleTextCode | TextCodeTranslationPipe}}
-               </td>
+                ({{AccountInfo}})</td> 
             </tr>
 
             <tr>
