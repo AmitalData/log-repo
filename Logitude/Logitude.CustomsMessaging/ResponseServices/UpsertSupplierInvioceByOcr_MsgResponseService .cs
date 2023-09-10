@@ -249,20 +249,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (dic.TryGetValue("buyer_name", out string buyerName))
             {
+                if(buyerName.Length > 35)
+                    buyerName = buyerName.Substring(0, 35);
                 mySupplierInvoice.BuyerName = buyerName;
             }
             else if (dic.TryGetValue("shipto_name", out string shiptoName))
             {
+                if(shiptoName.Length > 35)
+                    shiptoName = shiptoName.Substring(0, 35);
                 mySupplierInvoice.BuyerName = shiptoName;
 
             }
 
             if (dic.TryGetValue("buyer_address", out string buyerAddress))
             {
+                if(buyerAddress.Length > 35)
+                    buyerAddress = buyerAddress.Substring(0, 35);
                 mySupplierInvoice.BuyerAddress = buyerAddress;
             }
             else if (dic.TryGetValue("shipto_address", out string shiptoAddress))
             {
+                if (shiptoAddress.Length > 35)
+                    shiptoAddress = shiptoAddress.Substring(0, 35);
                 mySupplierInvoice.BuyerAddress = shiptoAddress;
 
             }
