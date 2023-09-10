@@ -5150,33 +5150,34 @@
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
-  Code="&quot;Journal.RE.AdjustMulti1&quot;"
-  DefaultText="&quot;Please note the selected account ( XXX ) is Multi Currency &quot;"
-  LocalDefaultText="&quot;לידיעתך הכרטיס הנבחר ( XXX ) שהיינו רב מטבעי&quot;"
-  TextCodeTypeCode="&quot;M&quot;"
-  IsSpellChecked="false" />
-
+      Code="&quot;Journal.RE.AdjustMulti1&quot;"
+      DefaultText="&quot;Please note the selected account ( XXX ) is Multi Currency &quot;"
+      LocalDefaultText="&quot;לידיעתך הכרטיס הנבחר ( XXX ) שהיינו רב מטבעי&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
     <TextCode
-  Code="&quot;Journal.RE.AdjustMulti2&quot;"
-  DefaultText="&quot;Linked to the card ( XXX ) whose currency is YYY&quot;"
-  LocalDefaultText="&quot;מקושר לכרטיס ( XXX ) שמטבעו YYY&quot;"
-  TextCodeTypeCode="&quot;M&quot;"
-  IsSpellChecked="false" />
-
-
+      Code="&quot;Journal.RE.AdjustMulti2&quot;"
+      DefaultText="&quot;Linked to the card ( XXX ) whose currency is YYY&quot;"
+      LocalDefaultText="&quot;מקושר לכרטיס ( XXX ) שמטבעו YYY&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
     <TextCode
-  Code="&quot;Journal.RE.AdjustMulti3&quot;"
-  DefaultText="&quot;Therefore the order will be registered on the linked card, should you continue&quot;"
-  LocalDefaultText="&quot;ולכן הפקודה תירשם על הכרטיס המקושר , האם להמשיך&quot;"
-  TextCodeTypeCode="&quot;M&quot;"
-  IsSpellChecked="false" />
-
-    
+      Code="&quot;Journal.RE.AdjustMulti3&quot;"
+      DefaultText="&quot;Therefore the order will be registered on the linked card, should you continue&quot;"
+      LocalDefaultText="&quot;ולכן הפקודה תירשם על הכרטיס המקושר , האם להמשיך&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
     <TextCode
       Code="&quot;Journal.RE.ReconcilePeriodClosed&quot;"
       DefaultText="&quot;Accounting date is closed for line (X)&quot;"
       LocalDefaultText="&quot;התקופה החשבונאית לשורה (X) סגורה, יש לפתוח תחילה את התקופה החשבונאית.&quot;"
       TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.CoefficientForAmountsAndCurrencies&quot;"
+      DefaultText="&quot;Coefficient&quot;"
+      LocalDefaultText="&quot;מקדם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

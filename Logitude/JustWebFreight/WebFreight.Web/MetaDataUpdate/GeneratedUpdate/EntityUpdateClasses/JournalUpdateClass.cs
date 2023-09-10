@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "ade596059251df8de429a7efff10736c";
+		public const string HashString = "749b43403eb7e6f3051e51482e2471aa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4138,6 +4138,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalREAdjustMulti3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AdjustMulti3", DefaultText = "Therefore the order will be registered on the linked card, should you continue",LocalDefaultText = @"ולכן הפקודה תירשם על הכרטיס המקושר , האם להמשיך", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalTextCode_JournalREReconcilePeriodClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.ReconcilePeriodClosed", DefaultText = "Accounting date is closed for line (X)",LocalDefaultText = @"התקופה החשבונאית לשורה (X) סגורה, יש לפתוח תחילה את התקופה החשבונאית.", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalOCoefficientForAmountsAndCurrencies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CoefficientForAmountsAndCurrencies", DefaultText = "Coefficient",LocalDefaultText = @"מקדם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
