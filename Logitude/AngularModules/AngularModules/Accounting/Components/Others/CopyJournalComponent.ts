@@ -5,6 +5,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { JournalLinePM } from '../../EntityPMs/JournalLinePM';
+import { AppTool } from 'Infrastructure/Tools';
 
 
 @Component({
@@ -129,7 +130,7 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
         journalLine.CurrencyId = this.AmountsAndCurrencies ? originalJourbnalLine.CurrencyId : null;
         journalLine.CurrencyCode = this.AmountsAndCurrencies ? originalJourbnalLine.CurrencyCode : null;
        
-        if (this.coefficientForAmountsAndCurrencies === null || this.coefficientForAmountsAndCurrencies.toString() === '0') {
+        if (AppTool.IsNullOrEmpty(this.coefficientForAmountsAndCurrencies) || this.coefficientForAmountsAndCurrencies.toString() === '0') {
             this.coefficientForAmountsAndCurrencies = 1; // default value = 1
         }
 
