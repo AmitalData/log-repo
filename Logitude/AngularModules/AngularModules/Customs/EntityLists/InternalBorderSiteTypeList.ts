@@ -13,6 +13,7 @@ export class InternalBorderSiteTypeList {
 	LocalName: string;
 	SearchFields: string;
 	Inactive: boolean;
+	AutonomyRegionTypeCode: string;
 	
 }
  

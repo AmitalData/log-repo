@@ -1784,6 +1784,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case "Customs.CustomsCountry":
                     case "Customs.ExceptionReason":
                     case "Customs.ReferantTeam":
+                    case "Customs.ReferantTeam":
                     case "HelpResource":
                         //case "Customs.InternationalSite":
                         selectedEntityId = $event.rowData.Code;
