@@ -16,11 +16,11 @@ export class ImageLibraryService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ImageLibrary';
     }
 
-    DownloadFile(filename: string, documentExtension: string, fileLocation: string, tenant: number , type:string = "") {
-
+    DownloadFile(filename: string, documentExtension: string, fileLocation: string, tenant: number , type:string = "",tokenTenant:number = -1 ) {
+        tokenTenant = tokenTenant > -1 ? tokenTenant:tenant;
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/getdownloadfile/?' + 'filename=' + filename + '&documentExtension=' + documentExtension + '&fileLocation=' + fileLocation + '&type=' + type + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(result => {
+        return this._http.get(this._apiUrl + '/getdownloadfile/?' + 'filename=' + filename + '&documentExtension=' + documentExtension + '&fileLocation=' + fileLocation + '&type=' + type + '&tenant=' + tenant+'&tokenTenant='+tokenTenant, ServiceHelper.GetHttpHeaders()).pipe(map(result => {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
@@ -28,6 +28,7 @@ export class ImageLibraryService {
             }),catchError(ServiceHelper.HandleServiceError));
     }
     UploadFile(imageuploadFilter: any) {
+        imageuploadFilter.TokenTenant = imageuploadFilter.TokenTenant > -1 ? imageuploadFilter.TokenTenant:imageuploadFilter.Tenant;
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
