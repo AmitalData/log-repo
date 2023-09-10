@@ -246,6 +246,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                             var _380ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicket, null, true,
                                                 this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this, relatedDocument.documentsFilingPM?.Id );
                                             _380ViewModel.IsOcrRelatedDocument = true;
+                                            _380ViewModel._SInvoiceNumber = relatedDocument.documentsFilingPM.OcrReference;
                                             _380ViewModel.SetCustomDocumentMetaData(metaData);
                                             this.GeneratedCustomsDocumentTicketViewModel.push(_380ViewModel);
                                             this.originalCustomsDocumentTicketViewModel.push(_380ViewModel);
