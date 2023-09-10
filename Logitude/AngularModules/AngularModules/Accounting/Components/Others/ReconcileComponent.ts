@@ -1371,6 +1371,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             {
                 countLines = 2000;
             }
+            
             // update select all checkbox
             if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= countLines)
                 this._isAllSelected = true;
