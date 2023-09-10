@@ -54,6 +54,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string StatusCode  { get; set; }
        [DataMember]
        public decimal? ExchangeRate  { get; set; }
+       [DataMember]
+       public string StatusName  { get; set; }
    }
 
 }

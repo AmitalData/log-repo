@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;b0be&quot;"
+  Code="&quot;a44b&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5633,12 +5633,6 @@
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Accounting.O.ChangeMadeToConnectedAccounts&quot;"
-      DefaultText="&quot;A change was made in the connected accounts. The connected accounts must be returned to their state as it was when the original journal was prodiced. Line &quot;"
-      LocalDefaultText="&quot;בוצע שינוי בחיבור החשבונות. יש להחזיר את חיבור החשבונות למצבם כפי שהיה בעת רישום פקודת היומן המקורית. שורה &quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;General.MC.CustomObjects.CustomObjects&quot;"
       DefaultText="&quot;Custom Objects&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
@@ -5853,6 +5847,30 @@
       DefaultText="&quot;No Lines Processed&quot;"
       LocalDefaultText="&quot;אין שורות לעיבוד&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ARPaymentCheques&quot;"
+      DefaultText="&quot;ARPayment Cheques&quot;"
+      LocalDefaultText="&quot;כל השקים מהלקוחות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.UnRedeemedCheques&quot;"
+      DefaultText="&quot;UnRedeemed Cheques&quot;"
+      LocalDefaultText="&quot;המחאות שלא נפרעו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.AllCheques&quot;"
+      DefaultText="&quot;All Cheques&quot;"
+      LocalDefaultText="&quot;כל ההמחאות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.PostponedCheques&quot;"
+      DefaultText="&quot;Postponed Cheques&quot;"
+      LocalDefaultText="&quot;המחאות דחויות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
