@@ -93,7 +93,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             if (defaultLex.Contains(consignmentPackage.PackageTypeCode))
                             {
-                                raiseEvent = true;
+                                raiseEvent = false;
                             }
                         }
 
