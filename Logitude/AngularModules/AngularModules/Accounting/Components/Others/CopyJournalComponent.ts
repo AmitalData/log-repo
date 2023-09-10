@@ -130,6 +130,7 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
         journalLine.CurrencyId = this.AmountsAndCurrencies ? originalJourbnalLine.CurrencyId : null;
         journalLine.CurrencyCode = this.AmountsAndCurrencies ? originalJourbnalLine.CurrencyCode : null;
        
+        
         if (AppTool.IsNullOrEmpty(this.coefficientForAmountsAndCurrencies) || this.coefficientForAmountsAndCurrencies.toString() === '0') {
             this.coefficientForAmountsAndCurrencies = 1; // default value = 1
         }
