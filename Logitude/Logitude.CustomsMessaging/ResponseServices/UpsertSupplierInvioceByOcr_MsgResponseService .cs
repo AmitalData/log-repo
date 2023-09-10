@@ -46,6 +46,7 @@ using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.EntityKeys;
 using static Logitude.Customs.BL.Messaging.Customs.SupplierInvoiceByOcr;
 using static Logitude.CustomsMessaging.ResponseServices.UpsertSupplierInvioceByOcr_MsgResponseService;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -94,26 +95,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         Dictionary<string, string> dicItems = new Dictionary<string, string>();
                         for(int i = 0; i < convertJson.pages.Count(); i++)
                         {
-                            var cells = convertJson.pages[i].prediction.Where(x => x.label.ToUpper() == label);
-                            if (cells.Any())
+                            var tables = convertJson.pages[i].prediction.Where(x => x.label.ToUpper() == label);
+                            if (tables.Any())
                             {
-                                dicItems = new Dictionary<string, string>();
-                                int row = 0;
-                                foreach (var cell in cells?.First().cells)
-                                {
-                                    if (cell != null && cell.row != row && dicItems.Count > 0)
+                                foreach(var table in tables)
+                                {  
+                                    int row = 0;
+                                    dicItems = new Dictionary<string, string>();
+                                    foreach (var cell in table?.cells)
+                                    {
+                                        if (cell != null && cell.row != row && dicItems.Count > 0)
+                                        {
+                                            supplierInvoiceItemsList.Add(dicItems);
+                                            dicItems = new Dictionary<string, string>();
+                                        }
+                                        if (!dicItems.ContainsKey(cell.label) && cell.label != ExpensesAmount && cell.label != ExpensesName)
+                                            dicItems.Add(cell.label, cell.text);
+                                        row = cell.row;
+                                    }
+
+                                    if (dicItems.Count > 0)
                                     {
                                         supplierInvoiceItemsList.Add(dicItems);
-                                        dicItems = new Dictionary<string, string>();
                                     }
-                                    if (!dicItems.ContainsKey(cell.label) && cell.label != ExpensesAmount && cell.label != ExpensesName)
-                                        dicItems.Add(cell.label, cell.text);
-                                    row = cell.row;
-                                }
 
-                                if (dicItems.Count > 0)
-                                {
-                                    supplierInvoiceItemsList.Add(dicItems);
                                 }
 
 
@@ -244,20 +249,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (dic.TryGetValue("buyer_name", out string buyerName))
             {
+                if(buyerName.Length > 35)
+                    buyerName = buyerName.Substring(0, 35);
                 mySupplierInvoice.BuyerName = buyerName;
             }
             else if (dic.TryGetValue("shipto_name", out string shiptoName))
             {
+                if(shiptoName.Length > 35)
+                    shiptoName = shiptoName.Substring(0, 35);
                 mySupplierInvoice.BuyerName = shiptoName;
 
             }
 
             if (dic.TryGetValue("buyer_address", out string buyerAddress))
             {
+                if(buyerAddress.Length > 35)
+                    buyerAddress = buyerAddress.Substring(0, 35);
                 mySupplierInvoice.BuyerAddress = buyerAddress;
             }
             else if (dic.TryGetValue("shipto_address", out string shiptoAddress))
             {
+                if (shiptoAddress.Length > 35)
+                    shiptoAddress = shiptoAddress.Substring(0, 35);
                 mySupplierInvoice.BuyerAddress = shiptoAddress;
 
             }
