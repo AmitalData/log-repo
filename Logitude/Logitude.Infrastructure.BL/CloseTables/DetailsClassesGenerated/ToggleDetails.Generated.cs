@@ -956,6 +956,14 @@ namespace Logitude.Infrastructure.BL
                 Description = "Update GLA Aging Data using WR", 
                 Name = "Update GLA Aging Data using WR", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SML", 
+                Name = "Select More Lines", 
+                SearchFields = "SML, Select More Lines", 
+                Description = "Select 2000 Lines ", 
+			});
 			
             return all;
        }

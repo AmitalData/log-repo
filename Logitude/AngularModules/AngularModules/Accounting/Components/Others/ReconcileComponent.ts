@@ -33,7 +33,7 @@ import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { APPaymentPM } from 'Invoice/EntityPMs/APPaymentPM';
-import { delay, expand, takeLast } from 'rxjs/operators';
+import { count, delay, expand, takeLast } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 
@@ -575,6 +575,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
         if (v) {
             //this.GetFirst5000LedgerForReconciliation();
+
+            // Take selcted lines by defualt = 500 ; if toggle feature is active = 2000
             this.GetFirstXLedgerForReconciliationByParam();
             if(this.isFullAccounting)
             {
@@ -1351,7 +1353,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         // this.SelectedLines = new ObservableCollection([]);
     }
 
+    
     PushLine(row, RowIndex) {
+        let countLines:number = 500;
+
         var index = this.SelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
             row.AmountToReconcile = row.OpenAmount;
@@ -1360,12 +1365,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             //this.SelectedLines.push(r);
             this.CalculateTotals();
 
+            // change max lines if toggle feature is active:
+            let selectMoreLines = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SML")[0] ? true : false;
+            if (selectMoreLines)
+            {
+                countLines = 2000;
+            }
+
             // update select all checkbox
-            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 500)
+            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= countLines)
                 this._isAllSelected = true;
             if(this.isFullAccounting)
             {
-                this.NumberOfFilteredlines=this.DataSource.rowCount;
+                this.NumberOfFilteredlines = this.DataSource.rowCount;
                 this.NumberOfselectedlines=this.SelectedLines.Length;  
             }      
         }
@@ -1519,7 +1531,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         if (this.foreignAmountFilter) {
             filters.AdditionalFilters.push(this.foreignAmountFilter);
         }
-        filters.PageSize = 500;
+        filters.PageSize = 2000;
         filters.PageIndex = 1; // decremented 1 in the service
         filters.GetAll = true;
         filters.GetCount = true;
