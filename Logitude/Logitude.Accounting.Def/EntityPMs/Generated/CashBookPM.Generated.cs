@@ -653,6 +653,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? balanceInForeignCurrency ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? BalanceInForeignCurrency  
+	   {
+	    
+	     get
+		{
+		   return balanceInForeignCurrency;
+		 }
+		 set
+		 {
+		   if(balanceInForeignCurrency != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BalanceInForeignCurrency",OldValue=balanceInForeignCurrency,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   balanceInForeignCurrency=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

@@ -189,6 +189,11 @@ export class CashBookPM {
     public set IsTotalUpdatedByCC(newValue: boolean) { if (this.isTotalUpdatedByCC != newValue) { this.isTotalUpdatedByCC = newValue; this.MarkAsDirty("IsTotalUpdatedByCC"); } }
        
 	 
+    private balanceInForeignCurrency: number;
+    public get BalanceInForeignCurrency() { return this.balanceInForeignCurrency; }
+    public set BalanceInForeignCurrency(newValue: number) { if (this.balanceInForeignCurrency != newValue) { this.balanceInForeignCurrency = newValue; this.MarkAsDirty("BalanceInForeignCurrency"); } }
+       
+	 
 
     public OldEntityPM: CashBookPM;
 		
