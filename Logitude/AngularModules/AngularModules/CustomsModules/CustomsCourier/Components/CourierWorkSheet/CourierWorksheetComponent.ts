@@ -732,7 +732,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     public get SelectedApprovPendingSendButtonText(): string {
         this._SelectedApprovPendingSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyApprov");
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
-            this._SelectedApprovPendingSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyApprov") + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
+            this._SelectedApprovPendingSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.SelectedApprov") + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
         }
         return this._SelectedApprovPendingSendButtonText;
     }
