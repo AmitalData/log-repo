@@ -66,19 +66,19 @@ namespace WebFreight.Web.App_Code
 
         }
 
-        public HttpResponseMessage GetDownloadFile(string filename, string documentExtension, string fileLocation, string type, int tenant)
+        public HttpResponseMessage GetDownloadFile(string filename, string documentExtension, string fileLocation, string type, int tenant,int tokenTenant)
         {
             string result = "";
 
-            try
+			try
             {
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnTenant(tokenTenant);
 
 
-                if (tenant != authToken.Tenant)
+                if (tokenTenant != authToken.Tenant)
                 {
                     throw new Exception("Sorry you’re not authenticated");
                 }
@@ -126,7 +126,7 @@ namespace WebFreight.Web.App_Code
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", filter.Tenant, authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", filter.TokenTenant, authToken.Tenant);
 
                 ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
                 if (filter.UploadMode == "AttachmentUploader" || filter.UploadMode == "Chunk")
