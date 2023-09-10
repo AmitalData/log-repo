@@ -49,6 +49,11 @@ export class InternalBorderSiteTypePM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private autonomyRegionTypeCode: string;
+    public get AutonomyRegionTypeCode() { return this.autonomyRegionTypeCode; }
+    public set AutonomyRegionTypeCode(newValue: string) { if (this.autonomyRegionTypeCode != newValue) { this.autonomyRegionTypeCode = newValue; this.MarkAsDirty("AutonomyRegionTypeCode"); } }
+       
+	 
 
     public OldEntityPM: InternalBorderSiteTypePM;
 		

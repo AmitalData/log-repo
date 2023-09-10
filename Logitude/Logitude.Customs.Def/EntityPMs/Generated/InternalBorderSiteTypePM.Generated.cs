@@ -135,6 +135,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string autonomyRegionTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AutonomyRegionTypeCode  
+	   {
+	    
+	     get
+		{
+		   return autonomyRegionTypeCode;
+		 }
+		 set
+		 {
+		   if(autonomyRegionTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutonomyRegionTypeCode",OldValue=autonomyRegionTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   autonomyRegionTypeCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
