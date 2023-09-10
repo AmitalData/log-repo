@@ -36,6 +36,8 @@ export class ImageParameter {
     public KeepOriginalSize:boolean;
     public FileLocation: string = "";
     public ForceCreateDocument: boolean;
+    public TokenTenant: number=-1;
+
     constructor() {
      
     }

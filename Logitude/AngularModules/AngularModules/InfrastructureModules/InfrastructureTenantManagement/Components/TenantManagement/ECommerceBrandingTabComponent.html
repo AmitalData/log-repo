@@ -208,7 +208,13 @@
                 <table>
                     
                     <!-- Comapny Logo -->
+           
+
+                  
+
+
                     <tr>
+                        
                         <td style="width:8px">
                             <div></div>
                         </td>
@@ -216,15 +222,22 @@
                             <LogLabel [ObjectFieldName]="'ComapnylogoId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
                         </td>
 
+                    
                         <td style="vertical-align:top">
+    
                             <div style="width:160px;height:100px">
-                                <ImageComponent [KeepOriginalSize]="true" [ImageResizeHeight]="83" [HeightImage]="'95px'" [ImageId]="ComapnylogoId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" (UploadCompleted)="ComapnylogoUploadedCompleted($event)"
-                                                style="height:72px;width:72px">
-                                </ImageComponent>
-                            </div>
-                            <a (click)="RemoveImage('company')">remove</a>
+    
+    
+    
+                                <img style="width:90px; top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;height:90px;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff" [attr.id]="SmalllogoHtmlId" src="#" />
+                                <span [attr.id]="ProgressDownloadId" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;display:none"><img class="CenterCenter" src="Images/progressDownload.gif" /></span>
 
-                        </td>  
+                            </div>
+
+                            <a [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;"  (click)="OpenUpLoadLogo()">Upload</a>
+                            <input [attr.id]="LogoFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file"  (change)="UploadogoFile($event)" style="display:none" class="upload" />
+
+                        </td>
                         <td style="width:30px">
                             <div></div>
                         </td>
@@ -238,7 +251,6 @@
                             <div></div>
                         </td>
                     </tr>
-
                     <!-- EcommerceSupportEmail -->
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px">
