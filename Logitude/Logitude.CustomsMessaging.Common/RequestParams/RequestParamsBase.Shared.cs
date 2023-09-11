@@ -44,6 +44,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string LoggingUserId { get; set; }
         public bool IsFakeResponse { get; set; }
         public int Tenant { get; set; }
+        public int TenantPriority { get; set; }
         public string RequestName { get; set; }
         public string ResponseName { get; set; }
         public TestCase TestCase { get; set; }

@@ -1542,9 +1542,20 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     }
                     else
                     {
+                        if (_CourierMasterPM.EffectiveFlight)
+                        {
+                            CourierMasterPM lastCourierMasterPM = myCourierMasterQueryService.GetSingle(_CourierDeclarationPM.CourierMasterId, false, false);
+                            if (lastCourierMasterPM != null && !lastCourierMasterPM.EffectiveFlight)
+                            {
+                                MyGenericResponseObj.ErrorDescription = "It is not possible to transfer from a non-effective flight to a effective flight";
+                            }
+                            else
+                                _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                        else
+                            _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
                         sbWhyDecNotConnected2Master.AppendLine($"_CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;");
-                        _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
 
 

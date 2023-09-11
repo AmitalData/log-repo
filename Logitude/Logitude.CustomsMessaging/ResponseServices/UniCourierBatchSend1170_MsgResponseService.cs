@@ -66,7 +66,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 List<DeclarationCourierStatus> ServerSplitDeclarationsList
                     = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
-                CreateCRS1170UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList);
+                CreateCRS1170UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList, customResponse.CourierMasterId);
             }
             else
             {
@@ -185,9 +185,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return listPM;
         }
 
-        private static void CreateCRS1170UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPM)
+        private static void CreateCRS1170UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPM, string courierMasterId)
         {
-            
+            //if is EffectiveFlight : TenantPriority = 98
+            var context = CustomContext.GetContext(requestParams.Tenant);
+            CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(context);
+            bool isEffectiveFlight = myCourierMasterQueryService.GetSingle(courierMasterId, false, false)?.EffectiveFlight ?? false;
+
+
             var listDeclarationIdCreateCRS = new List<string>();
             foreach (var itemPM in listPM)
             {
@@ -195,7 +200,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                     {
-                        Create1170(requestParams, mess, objectTableId, objectTableIdCourierMaster, itemPM);
+                        Create1170(requestParams, mess, objectTableId, objectTableIdCourierMaster, itemPM, isEffectiveFlight);
 
                         RealSetDeclarationCourierManifestStatusCode(requestParams.Tenant, itemPM.DeclarationId);
 
@@ -265,8 +270,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        private static void Create1170(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM)
+        private static void Create1170(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM, bool isEffectiveFlight)
         {
+           
+
             var requestParams1170 = new MANIFESTRequestRequestParams()
             {
                 Tenant = requestParams.Tenant,
@@ -291,6 +298,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //ImportManifest =""
                 ParentId = requestParams.CustomsRequestsSheetId,
             };
+            if (isEffectiveFlight)
+            {
+                requestParams1170.TenantPriority = 98;
+            }
 
             SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
             LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");

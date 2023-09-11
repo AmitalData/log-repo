@@ -31,6 +31,7 @@ import { CustDocRelatedDocsWebService } from '../../../../../Customs/Services/We
 import { CustDocsTicketWebService } from '../../../../../Customs/Services/WebServices/CustDocsTicketWebService';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { RelatedDocumentViewModel } from 'CustomsModules/CustomsDocuments/Components/RelatedDocumentViewModel';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 export class DeclarationCustomsDocumentsController implements ICustomsDocumentsController {
     public loadedSupplierInvoices: SupplierInvoicePM[];
@@ -228,24 +229,29 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                         });
 
                         //**********************************ocr Ticket 380********************************//
-                        if(RelatedDocuments != null){
+                        if((FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR")) && RelatedDocuments != null){
                             RelatedDocuments.forEach((relatedDocument) => {
                                
-                                    if( !AppTool.IsNullOrEmpty(relatedDocument.documentsFilingPM.OcrStatusCode) && !AppTool.IsNullOrEmpty(relatedDocument.documentsFilingPM.OcrReference) && !relatedDocument.documentsFilingPM.OcrNotConnect)
+                                    if(!AppTool.IsNullOrEmpty(relatedDocument.documentsFilingPM.OcrStatusCode) && !AppTool.IsNullOrEmpty(relatedDocument.documentsFilingPM.OcrReference) && !relatedDocument.documentsFilingPM.OcrNotConnect)
                                     {
-                                        var entityParams: RelatedEntityParams = new RelatedEntityParams();
-                                        entityParams.ParentEntityCode = 'Declaration';
-                                        entityParams.ParentEntityId = this.declarationPM.Id;
-                                        entityParams.ChildEntity1Code = "SupplierInvoice";
-    
-                                        var invoiceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "380");
-                                        
-                                        var _380ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicket, null, true,
-                                            this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this, relatedDocument.documentsFilingPM?.Id );
-                                        _380ViewModel.IsOcrRelatedDocument = true;
-                                        _380ViewModel.SetCustomDocumentMetaData(metaData);
-                                        this.GeneratedCustomsDocumentTicketViewModel.push(_380ViewModel);
-                                        this.originalCustomsDocumentTicketViewModel.push(_380ViewModel);
+                                        if(!this.GeneratedCustomsDocumentTicketViewModel.some(obj => obj._SInvoiceNumber && obj._SInvoiceNumber.includes(relatedDocument.documentsFilingPM.OcrReference)))
+                                        {
+                                            var entityParams: RelatedEntityParams = new RelatedEntityParams();
+                                            entityParams.ParentEntityCode = 'Declaration';
+                                            entityParams.ParentEntityId = this.declarationPM.Id;
+                                            entityParams.ChildEntity1Code = "SupplierInvoice";
+        
+                                            var invoiceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "380");
+                                            
+                                            var _380ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicket, null, true,
+                                                this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this, relatedDocument.documentsFilingPM?.Id );
+                                            _380ViewModel.IsOcrRelatedDocument = true;
+                                            _380ViewModel._SInvoiceNumber = relatedDocument.documentsFilingPM.OcrReference;
+                                            _380ViewModel.SetCustomDocumentMetaData(metaData);
+                                            this.GeneratedCustomsDocumentTicketViewModel.push(_380ViewModel);
+                                            this.originalCustomsDocumentTicketViewModel.push(_380ViewModel);
+                                        }
+                                       
                                     }
                                    
                             });

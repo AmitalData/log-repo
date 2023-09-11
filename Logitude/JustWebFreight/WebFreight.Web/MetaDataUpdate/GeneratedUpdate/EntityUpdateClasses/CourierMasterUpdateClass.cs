@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "73302c893ec8bff8d2db5a9915cd4411";
+		public const string HashString = "483de4af38e1c20d69d2ab510b90baee";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5137,6 +5137,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CourierMasterTextCode_CustomsCourierMasterODisplayOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.DisplayOnly", DefaultText = "Declarations in state 'readonly' not update",LocalDefaultText = @"הצהרות במצב 'תצוגה בלבד' לא יעודכנו", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CourierMasterTextCode_CustomsCourierMasterOReadyApprov = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ReadyApprov", DefaultText = "Approve Pending",LocalDefaultText = @"אישור PENDING", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterOSelectedApprov = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.SelectedApprov", DefaultText = "Approve Selected Pending",LocalDefaultText = @"אישור Pending מסומנים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
