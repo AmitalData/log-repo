@@ -250,7 +250,8 @@
                                                         <button *ngIf='isAllowBulkPendind' style="text-align:right"
                                                             (click)="openBulkFeedPending()">עדכון גורף</button>
                                                         <button style="text-align:right"
-                                                            (click)="PrioritizeFlightRequestsMethod()">תעדוף בקשות לטיסה</button>
+                                                            (click)="PrioritizeFlightRequestsMethod()">תעדוף בקשות
+                                                            לטיסה</button>
 
 
                                                     </div>
@@ -267,7 +268,8 @@
                                                         <td colspan="2" style="font-weight:bold; font-size:16px; ">
                                                             {{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}</td>
                                                         <td *ngIf="IsFiltered || SearchFilter != null"
-                                                            style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים לחיתוך'}}</td>
+                                                            style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים
+                                                            לחיתוך'}}</td>
                                                         <td></td>
                                                     </tr>
 
@@ -320,9 +322,10 @@
                                                                     ({{item.Total}}) {{item.Header}}</span>
                                                                 <span
                                                                     style="font-size:13px;font-weight:bold; text-align:right"
-
-                                                                    dir="ltr" *ngIf="item.Code == 'HOLD' && HasRequiresApprovalFeature">
-                                                                    ({{item.Total}}/{{this._NotApproved}}) {{item.Header}} </span>  
+                                                                    dir="ltr"
+                                                                    *ngIf="item.Code == 'HOLD' && HasRequiresApprovalFeature">
+                                                                    ({{item.Total}}/{{this._NotApproved}})
+                                                                    {{item.Header}} </span>
                                                             </div>
                                                         </td>
 
@@ -633,8 +636,8 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td style="width:1px"></td>
-                                                                         
-                                                                         
+
+
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
@@ -1036,7 +1039,7 @@
                                                                         <td style="width: 130px;">
 
 
-                                                                            
+
                                                                             <split-button *ngIf="DelayFormVisibility"
                                                                                 (DefaultSplitButtonClicked)="SendDelayForm()"
                                                                                 [IsDisabled]="IsDisplayOnly || (_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
@@ -1049,26 +1052,12 @@
                                                                                     class="class-MENUSplitButton-content">
                                                                                     <div></div>
                                                                                 </div>
-                                                                            </split-button>    
+                                                                            </split-button>
                                                                         <td>
-                                                                                <div *ngIf="HasRequiresApprovalFeature && !this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
-                                                                                    style="width: 130px;">
+                                                                            <div *ngIf="HasRequiresApprovalFeature && !this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
+                                                                                style="width: 130px;">
                                                                                 <split-button
-                                                                                    (DefaultSplitButtonClicked)="ApprovePendingMethod()" 
-                                                                                    [IsDisabled]="IsDisplayOnly"
-                                                                                    [ButtonText]=SelectedApprovPendingSendButtonText
-                                                                                    [AsRegularButton]="'true'"
-                                                                                    [MENUDivExtraTop]="24"
-                                                                                    [MENUDivExtraLeft]="110">
-                                                                                    <div
-                                                                                        class="class-MENUSplitButton-content">
-                                                                                        <div></div>
-                                                                                    </div>
-                                                                                    [ngStyle]="{'width':!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) ? '130px' : '150px' }">
-                                                                                <div *ngIf="HasRequiresApprovalFeature && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
-                                                                                    style="width: 130px;">
-                                                                                <split-button
-                                                                                    (DefaultSplitButtonClicked)="ApprovePendingMethod()" 
+                                                                                    (DefaultSplitButtonClicked)="ApprovePendingMethod()"
                                                                                     [IsDisabled]="IsDisplayOnly"
                                                                                     [ButtonText]=SelectedApprovPendingSendButtonText
                                                                                     [AsRegularButton]="'true'"
@@ -1079,9 +1068,26 @@
                                                                                         <div></div>
                                                                                     </div>
                                                                                 </split-button>
-                                                                            </div> 
+                                                                            </div>
+                                                                            [ngStyle]="{'width':!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length
+                                                                            > 0) ? '130px' : '150px' }">
+                                                                            <div *ngIf="HasRequiresApprovalFeature && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
+                                                                                style="width: 130px;">
+                                                                                <split-button
+                                                                                    (DefaultSplitButtonClicked)="ApprovePendingMethod()"
+                                                                                    [IsDisabled]="IsDisplayOnly"
+                                                                                    [ButtonText]=SelectedApprovPendingSendButtonText
+                                                                                    [AsRegularButton]="'true'"
+                                                                                    [MENUDivExtraTop]="24"
+                                                                                    [MENUDivExtraLeft]="110">
+                                                                                    <div
+                                                                                        class="class-MENUSplitButton-content">
+                                                                                        <div></div>
+                                                                                    </div>
+                                                                                </split-button>
+                                                                            </div>
                                                                         </td>
-                                                                     
+
                                                                         <td>
                                                                             <div></div>
                                                                         </td>
@@ -1540,7 +1546,9 @@
                                             <tr style="height:100%;">
                                                 <td colspan="7" style="height: 100%;width:100%; padding: 5px;">
 
-                                                    <div class="GeneratedGridContainer" *ngIf="_SelectedTabFilter.Code=='HOLD'" style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                    <div class="GeneratedGridContainer"
+                                                        *ngIf="_SelectedTabFilter.Code=='HOLD'"
+                                                        style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                         <logitude-grid GridWidth="100%" GridHeight="100%"
                                                             [ObjectTable]="ObjectTableName" [dataSource]="DataSource"
                                                             (AfterViewInitCompleted)="ViewInitCompleted($event)"
@@ -1575,7 +1583,9 @@
         -->
                                                     </div>
 
-                                                    <div class="GeneratedGridContainer" *ngIf="!(_SelectedTabFilter.Code=='HOLD')" style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                    <div class="GeneratedGridContainer"
+                                                        *ngIf="!(_SelectedTabFilter.Code=='HOLD')"
+                                                        style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                         <logitude-grid GridWidth="100%" GridHeight="100%"
                                                             [ObjectTable]="ObjectTableName" [dataSource]="DataSource"
                                                             (AfterViewInitCompleted)="ViewInitCompleted($event)"
