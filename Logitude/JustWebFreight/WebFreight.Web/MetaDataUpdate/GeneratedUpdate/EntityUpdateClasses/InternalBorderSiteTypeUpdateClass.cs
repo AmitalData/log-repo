@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InternalBorderSiteTypeUpdateClass
    {  		
-		public const string HashString = "ed4c05d5fd6718de96a4cbf06f670088";
+		public const string HashString = "a994c4a543d7af2a6e88af9251549dc6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -108,18 +108,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LookUp2 =  "LocalName",
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
+			      				    IsClosed =  false,
 			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
+			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Code",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
+			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
@@ -583,8 +583,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InternalBorderSiteType.HeaderScreen", Name = "Customs.InternalBorderSiteTypeHeaderScreen", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
+	         Screen InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InternalBorderSiteType.HeaderScreen", Name = "Customs.InternalBorderSiteTypeHeaderScreen", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField CustomsInternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Id,ScreenCode = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.InternalBorderSiteType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsInternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Id,ScreenCode = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.InternalBorderSiteType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsInternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Id,ScreenCode = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.InternalBorderSiteType.AutonomyRegionTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    InternalBorderSiteTypeObjectTable.HeaderScreenId = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Id;
 		    InternalBorderSiteTypeObjectTable.HeaderScreenCode = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Code;
 
@@ -593,11 +599,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable InternalBorderSiteTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InternalBorderSiteType" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode InternalBorderSiteTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternalBorderSiteType.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature InternalBorderSiteTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternalBorderSiteType.Tab.General", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteTypeFeatures.INTG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InternalBorderSiteTypeObjectTable);
+ 
+                 
+			   TextCode InternalBorderSiteTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternalBorderSiteType.TH.event", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature InternalBorderSiteTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternalBorderSiteType.Tab.Events", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteTypeFeatures.INTE", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InternalBorderSiteTypeObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INTG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InternalBorderSiteTypeGeneralFeature_TH0.Id,FeatureUniqeCode = InternalBorderSiteTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, TabNameTextCodeId = InternalBorderSiteTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = InternalBorderSiteTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INTE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InternalBorderSiteTypeEventsFeature_TH1.Id,FeatureUniqeCode = InternalBorderSiteTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, TabNameTextCodeId = InternalBorderSiteTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = InternalBorderSiteTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable InternalBorderSiteTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InternalBorderSiteType" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature InternalBorderSiteTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InternalBorderSiteTypeObjectTable);
+		   Feature InternalBorderSiteTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InternalBorderSiteTypeObjectTable);
+		   Feature InternalBorderSiteTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InternalBorderSiteTypeObjectTable);
+		   Feature InternalBorderSiteTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteType.Features.PackageFeature", NameTextCodeDefaultText = "InternalBorderSiteType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InternalBorderSiteTypeObjectTable);    
 	    
 		}
 

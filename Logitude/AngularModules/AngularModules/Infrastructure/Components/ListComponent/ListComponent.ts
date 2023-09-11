@@ -1758,7 +1758,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.ObjectTableName == "OccasionContact") {
             myObjectTableName = "Contact";
         }
-
+       
 
         if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
             this._ListComponentArgs.SuppressOnRowSelectedField = false;
@@ -1777,6 +1777,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case 'Customs.GovernmentProcedureType':
                     case "Customs.NotificationDefinition":
                     case "Customs.CustomsHouseType":
+                    case "Customs.InternalBorderSiteType":
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
                     case "Customs.CourierPendingReason":

@@ -445,6 +445,7 @@
                                                                         [DataContext]="item" [HideColumns]="true"
                                                                         [DisplayMemberPath]="'LocalName'"
                                                                         [HideMaintenanceIcon]="true"
+                                                                        (SelectedItemChanged)="item.SiteCodeChanged(item.Code)"
                                                                         [LookUpTableName]="'Customs.InternalBorderSiteType'">
                                                                     </LogLov>
 

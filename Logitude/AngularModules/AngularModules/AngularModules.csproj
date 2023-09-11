@@ -5329,6 +5329,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\UIMessageAdditionalListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\UIMessageListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomDocumentTypePMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\InternalBorderSiteTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsDocumentsDefinitionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationCargoSplitPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationCourierStatusPMService.ts" />

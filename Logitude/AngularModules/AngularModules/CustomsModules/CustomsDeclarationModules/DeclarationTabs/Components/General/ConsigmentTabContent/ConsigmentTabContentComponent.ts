@@ -36,6 +36,7 @@ import { EntityResourceService } from '../../../../../../Infrastructure/Services
 import { CargoIdentifireTypeListService } from '../../../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { DeclarationExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { CargoIdentifireTypePM } from '../../../../../../Customs/EntityPMs/CargoIdentifireTypePM';
+import { InternalBorderSiteTypeListService } from 'Customs/Services/StandardLists/InternalBorderSiteTypeListService';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -1308,7 +1309,14 @@ export class ConsignmentInternalTransitionModel extends BaseComponent {
     public set LineNumber(newValue: number) { this.EntityPM.LineNumber = newValue; }
     private timerToken: any;
 
+    SiteCodeChanged(item:any){
+        var MyInternalBorderSiteTypeListService: InternalBorderSiteTypeListService = new InternalBorderSiteTypeListService();
 
+        MyInternalBorderSiteTypeListService.getSingleFromCache(this.EntityPM.SiteCode).subscribe((myResponse: ServiceResponse) => {
+           
+            debugger
+        });
+    }
     public get SiteCode() { return this.EntityPM.SiteCode; }
     public set SiteCode(newValue: string) {
         this.EntityPM.SiteCode = newValue;
@@ -1323,6 +1331,7 @@ export class ConsignmentInternalTransitionModel extends BaseComponent {
         }
 
     }
+ 
     //#endregion
 
     OnMouseOver() {

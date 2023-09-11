@@ -136,7 +136,7 @@ export class CustomsClosedTablesListTemplate {
 
                 var SelectedQuery = null;
 
-
+                
 
                 SelectedQuery = allQueries[0];
            
@@ -147,6 +147,7 @@ export class CustomsClosedTablesListTemplate {
                     case "Customs.NotificationDefinition":
                     case "Customs.CustomsHouseType":
                     case "Customs.CustomDocumentType":
+                    case "Customs.InternalBorderSiteType":
                     case "Customs.UIMessage":
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
