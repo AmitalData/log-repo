@@ -111,6 +111,23 @@
         </td>
 
         <td><div></div></td>
+
+        <td>
+            <table>
+                <tr>
+                    <td style="width:20px"></td>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'EffectiveFlight'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:120px">
+                        <CheckBox (Checked)="EffectiveFlight = $event" [IsChecked]="EffectiveFlight" [IsEnabled]="!IsDisplayOnly"></CheckBox>
+                    </td>
+
+
+                </tr>
+            </table>
+        </td>
     </tr>
 
     <tr style="height:40px; width:700px">

@@ -34,7 +34,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         }
         public string BuildQueueSendWebAPI(string declarationId, int tenant, DeclarationPM declarationPM=null, CourierMasterPM courierMasterPM = null)
         {
-            string messageToMaman = GetMessage2Maman(declarationId, tenant, declarationPM, courierMasterPM);
+            string messageToMaman = GetMessage2Maman(declarationId, tenant, declarationPM, courierMasterPM, isAutomatic: false);
             List<string> requiredField = GetRequiredField(messageToMaman);
             if (requiredField.Count > 0)
             {
@@ -88,7 +88,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         }
 
 
-        public string GetMessage2Maman(string declarationId, int tenant, DeclarationPM paramDeclarationPM, CourierMasterPM courierMasterPM, DeclarationCourierStatusPM declarationCourierStatusPM = null,bool ignoreIfCourierMasterNull=false)
+        public string GetMessage2Maman(string declarationId, int tenant, DeclarationPM paramDeclarationPM, CourierMasterPM courierMasterPM, DeclarationCourierStatusPM declarationCourierStatusPM = null,bool ignoreIfCourierMasterNull=false, bool isAutomatic =  true)
         {
             var context = CustomContext.GetContext(tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
@@ -114,6 +114,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {if (ignoreIfCourierMasterNull) return null;
                 //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
                 throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
+            }
+            if (myCourierMasterPM.EffectiveFlight && isAutomatic)
+            {
+                throw new Exception($"Is EffectiveFlight, MAWB:{myCourierMasterPM?.MAWB}");
             }
 
             GWMessageECTHRData myGWMessageECTHRData = CreateCourierHawbMamanMessage(myDeclarationPM, myCourierMasterPM, declarationCourierStatusPM);

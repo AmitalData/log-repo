@@ -6,6 +6,7 @@ using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityMapping;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.ClosedTable;
 using Logitude.Customs.Def.EntityPMs;
@@ -2376,6 +2377,10 @@ After that Remove file  from DCA  .. ");
                 var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(this._Tenant);
                 currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(requestParams.ParentId, this._Tenant);
                 tenantPriority = currCustomsRequestsSheet?.TenantPriority;
+            }
+            if(requestParams.TenantPriority > 0)
+            {
+                tenantPriority = requestParams.TenantPriority;
             }
             if (tenantPriority == null)
             {
