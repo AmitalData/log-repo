@@ -899,7 +899,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     ShowMoneyOrder = entity.ShowMoneyOrder,
                     CargoTrackingPublicShowEvents = entity.CargoTrackingPublicShowEvents,
                     CargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents,
-                    LogoURL = entity.LogoURL,
+                     LogoURL = entity.LogoURL,
                     ServiceAgreementURL = entity.ServiceAgreementURL,
                 };
             }
