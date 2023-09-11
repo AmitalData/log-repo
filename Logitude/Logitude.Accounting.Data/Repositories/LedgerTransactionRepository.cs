@@ -1610,7 +1610,31 @@ on record.JournalId equals j.Id
                     select a);
 
         }
+        
+        public IQueryable<GLAccountsTotalByMonthDto> GetControllerTotalDateType1(int tenant)
+        {
+            return from a in context.LedgerTransactions
+                   where a.Tenant == tenant
+                   && a.ControlAccountId != null
+
+                   group a by new { Year = a.AccountingDate.Year, Month = a.AccountingDate.Month, CurrencyId = a.CurrencyId, ControlAccountId = a.ControlAccountId }
+                    into x
+                   select new GLAccountsTotalByMonthDto()
+                   {
+                       AccountId = x.Key.ControlAccountId,
+                       CurrencyId = x.Key.CurrencyId,
+                       DateTypeCode = "1",
+                       ForeignAmountCredit = x.Sum(y => y.ForeignAmountCredit),
+                       ForeignAmountDebit = x.Sum(y => y.ForeignAmountDebit),
+                       LocalAmountCredit = x.Sum(y => y.LocalAmountCredit),
+                       LocalAmountDebit = x.Sum(y => y.LocalAmountDebit),
+                       Month = x.Key.Month,
+                       Year = x.Key.Year,
+                       Tenant = tenant
+                   };                    
+        }
     }
+
     public class GLAccountTotalByMonthsKey
     {
         public string AccountId { get; set; }
@@ -1634,5 +1658,19 @@ on record.JournalId equals j.Id
     public struct JournalStatuses
     {
         public const string Voided = "3";
+    }
+
+    public class GLAccountsTotalByMonthDto
+    {
+        public string AccountId { get; set; }
+        public string CurrencyId { get; set; }
+        public string DateTypeCode { get; set; }
+        public decimal ForeignAmountCredit { get; set; }
+        public decimal ForeignAmountDebit { get; set; }
+        public decimal LocalAmountCredit { get; set; }
+        public decimal LocalAmountDebit { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+        public int Tenant { get; set; }
     }
 }
