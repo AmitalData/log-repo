@@ -118,11 +118,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //throw new Exception(ex.Message);
 
                 this.MyResponseData.UserMessage = ex.ToString();
-                if(this.MyResponseData.UserMessage.Contains("effective flight"))
-                {
-                    throw new BusinessErrorException(ex.ToString());
-
-                }
                 throw;
             }
             // }
