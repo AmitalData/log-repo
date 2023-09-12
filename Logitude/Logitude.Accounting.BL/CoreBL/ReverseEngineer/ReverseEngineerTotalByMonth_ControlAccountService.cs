@@ -270,13 +270,26 @@ namespace Logitude.Accounting.BL.CoreBL
                 throw new Exception("remove this._GLAccountId ");
             }
 
+            var sw = Stopwatch.StartNew();
+
             _AccountingContext = AccountingContext.GetContext(_Tenant);
             var myGLAccountTotalByMonthRepo = new GLAccountTotalByMonthRepository(_AccountingContext);
             myGLAccountTotalByMonthRepo.DeleteControlByTanent(_Tenant);
 
             var ledgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
-            IQueryable<GLAccountsTotalByMonthDto> gLAccountTotalByMonths = ledgerTransactionRepository.GetControllerTotalDateType1(_Tenant);
+            List<GLAccountTotalByMonthsDTO> gLAccountTotalByMonths = ledgerTransactionRepository.GetControllerTotalDateType1(_Tenant);
             myGLAccountTotalByMonthRepo.AddRange(gLAccountTotalByMonths);
+
+
+            CompareReport = new CompareReportM()
+            {
+                CompareReportName = "ReverseEngineerTotalByMonth_ControlAccountService",
+                Year = _SeedDate.Date.Year,
+                Month = _SeedDate.Date.Month,
+                //rows = res,
+                GLAccountTotalByMonthsList = gLAccountTotalByMonths,
+                Took = sw.Elapsed
+            };
 
             return;
             CheckDbIntegrity(/*thewholePeriod*/);

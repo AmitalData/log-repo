@@ -281,15 +281,14 @@ namespace Logitude.Accounting.Data.Repositories
             SubmitChanges();
         }
 
-        public void AddRange(IQueryable<GLAccountsTotalByMonthDto> gLAccountTotalByMonths)
+        public void AddRange(List<GLAccountTotalByMonthsDTO> gLAccountTotalByMonths)
         {
-            var gLAccountTotalByMonthsList = gLAccountTotalByMonths.ToList();
-            foreach (var  g in gLAccountTotalByMonthsList)
+            foreach (var  g in gLAccountTotalByMonths)
                 context.GLAccountTotalByMonths.Add(new GLAccountTotalByMonth()
                 {
                     AccountId = g.AccountId,
                     CurrencyId = g.CurrencyId,
-                    DateTypeCode = g.DateTypeCode,
+                    DateTypeCode = g.DateTypeValue,
                     ForeignAmountCredit = g.ForeignAmountCredit,
                     ForeignAmountDebit = g.ForeignAmountDebit,
                     LocalAmountCredit = g.LocalAmountCredit,
