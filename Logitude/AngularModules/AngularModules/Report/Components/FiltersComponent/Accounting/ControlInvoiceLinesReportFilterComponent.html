@@ -97,7 +97,7 @@
          <td style="width:15px;">
             <div></div>
         </td>
-        <td style="width:380px; left:9px;">
+        <td style="width:404px;">
             <div *ngIf="TypeFilterDate === 'VATreport'">
                 <td style="width: 30px;" [style.float]="isRTL ? 'right' : 'left'">
                    <span float-start style="width: 20px; padding-top: 2px;">
@@ -121,6 +121,8 @@
                </td>
            </div>
             <div *ngIf="TypeFilterDate != 'VATreport'">
+                <td style="width: 60px;" [style.padding-left]="isRTL ? '10px' : '0'" [style.padding-right]="isRTL ? '0' : '10px'" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.Datefrom' | TextCodeTranslationPipe}}:</td>   
+
                 <td style="width: 7px;" > 
                     <LogLabel  [ObjectTableName]="ObjectTableName" 
                     [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogLabel>
@@ -133,13 +135,16 @@
             </td>
     
     
-            <td style="width:10px;">
+           <td style="width:10px;">
                 <div></div>
-            </td>
+            </td> 
     
-            <td style="width: 15px;" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="TypeFilterDate != 'VATreport'">
+            <td style="width: 10px;" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="TypeFilterDate != 'VATreport'">
                 {{'Accounting.General.O.To'  | TextCodeTranslationPipe }}
             </td>
+             <td style="width:10px;">
+                <div></div>
+            </td> 
             <td style="width: 7px;" > 
                  <LogLabel  [ObjectTableName]="ObjectTableName" 
                 [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogLabel>
@@ -266,10 +271,13 @@
          <td style="width:15px;">
             <div></div>
         </td>
-        <td style="width:380px">
+        <td style="width:404px">
             <div>
                 <td style="width: 60px;" [style.padding-left]="isRTL ? '10px' : '0'" [style.padding-right]="isRTL ? '0' : '10px'" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.CaseNumber' | TextCodeTranslationPipe}}:</td>   
-
+                <td style="width:9px;">
+                    <div></div>
+                </td> 
+        
         
                     <td style="width: 150px;">
                         
@@ -277,10 +285,12 @@
                                       [SelectedItem]="selectedCaseNumberOperator"
                                       (SelectedItemChanged)="selectedCaseNumberOperator=$event"></ComboBox>
                     </td>
-                    <td style="width: 10px;"><div></div></td>
-                   
+                    <td style="width: 30px;"><div></div></td>
+                    <td style="width:13px;">
+                        <div></div>
+                    </td> 
         
-                    <td  style="width: 105px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                    <td  style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
                         <LogTextBox [InputType]="'ntext'" [NoObjectField]="true"
                         [ObjectFieldName]="'CaseNumber'" [Text]="CaseNumber" [HideColumns]="true"
                           [DataContext]="this"></LogTextBox>
@@ -407,22 +417,21 @@
          <td style="width:15px;">
             <div></div>
         </td>
-        <td style="width:380px">
-     <div>
-        <td  style="width: 230px; " >
-            <div>
-                <td style="width: 60px;" [style.padding-left]="isRTL ? '10px' : '0'" [style.padding-right]="isRTL ? '0' : '10px'" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.Descreption' | TextCodeTranslationPipe}}:</td>   
-
-                    <td  style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                        <LogTextBox [InputType]="'ntext'" [NoObjectField]="true"
-                        [ObjectFieldName]="'Description'" [Text]="Description" [HideColumns]="true"
-                          [DataContext]="this"></LogTextBox>
-                    </td>
-              </div>
-        
-        </td>
-          </div>
-           
+        <td style="width:404px">
+         <div>
+               
+                        <td style="width: 60px;" [style.padding-left]="isRTL ? '10px' : '0'" [style.padding-right]="isRTL ? '0' : '10px'" [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.O.Descreption' | TextCodeTranslationPipe}}:</td>   
+                        <td style="width:7px;">
+                            <div></div>
+                        </td> 
+                            <td  style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <LogTextBox [InputType]="'ntext'" [NoObjectField]="true"
+                                [ObjectFieldName]="'Description'" [Text]="Description" [HideColumns]="true"
+                                  [DataContext]="this"></LogTextBox>
+                            </td>
+                      </div>
+                
+               
         </td>
         <td style="width: 15px;">
             <div></div>
@@ -451,10 +460,16 @@
 
        </td>
         <td colspan="7"> 
-             <button (click)="RunReport()" class="greenButton" [style.right.px]="isRTL ? 300 : null" [style.left.px]="isRTL ? null : 288" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
+             <button (click)="RunReport()" class="greenButton" [style.right.px]="isRTL ? 280 : null" [style.left.px]="isRTL ? null : 288" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
                             <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{'Accounting.General.O.Run' | TextCodeTranslationPipe}}</div>
             </button>
         </td>
-      
+        <td colspan="1" style="width: 60px;" [style.text-align]="isRTL ? 'right' : 'left'">
+            {{'ניקוי שדות: '}}
+        </td>
+        <td colspan="1"  [style.text-align]="isRTL ? 'right' : 'left'"> 
+            
+            <img (click)="ClearFields()" class="trashIcon" title="Remove" style="cursor: pointer;" src="./Images/Trash-can.png" />
+       </td>
     </tr>
 </table>

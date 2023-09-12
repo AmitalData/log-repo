@@ -23,7 +23,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string Code { get; set; }
         public string TypeCode { get; set; }
         public string LocalName3 { get; set; }
-        public DateTime TaxReportMonth { get; set; }
+        public DateTime? TaxReportMonth { get; set; }
 
         public DateTime? CreateDate { get; set; }
         //public DateTime? InvoiceDate { get; set; }

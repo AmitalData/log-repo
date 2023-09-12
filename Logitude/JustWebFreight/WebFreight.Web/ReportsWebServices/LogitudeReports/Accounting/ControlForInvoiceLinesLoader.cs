@@ -145,13 +145,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 			QueryFilterItem CreateDateFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
 			if (CreateDateFilter != null)
 			{
-				iQueryable = iQueryable.Where(x => x.CreateDate > (DateTime)CreateDateFilter.FieldValue && x.CreateDate < (DateTime)CreateDateFilter.FieldValue2);
+				DateTime startDate = ((DateTime)CreateDateFilter.FieldValue).Date;
+				DateTime endDate = ((DateTime)CreateDateFilter.FieldValue2).Date.AddDays(1);
+				iQueryable = iQueryable.Where(x => x.CreateDate >= startDate && x.CreateDate < endDate);
 
 			}
 			QueryFilterItem InvoiceDateFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceDate").FirstOrDefault();
 			if (InvoiceDateFilter != null)
 			{
-				iQueryable = iQueryable.Where(x => x.InvoiceDate > (DateTime)InvoiceDateFilter.FieldValue && x.InvoiceDate < (DateTime)InvoiceDateFilter.FieldValue2);
+				DateTime startDate = ((DateTime)InvoiceDateFilter.FieldValue).Date;
+				DateTime endDate = ((DateTime)InvoiceDateFilter.FieldValue2).Date.AddDays(1);
+				iQueryable = iQueryable.Where(x => x.InvoiceDate >= startDate && x.InvoiceDate < endDate);
 
 			}
 			QueryFilterItem TaxReportIdFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TaxReportId").FirstOrDefault();
@@ -230,6 +234,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 							break;
 						}
 					case "Equals":
+						{
+							iQueryable = iQueryable.Where(pageLine =>
+							(amount == (pageLine.AmountInLocalCurrency))
+							);
+							break;
+						}
 					default:
 						{
 							iQueryable = iQueryable.Where(pageLine =>
@@ -325,6 +335,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 							break;
 						}
 					case "Equals":
+						{
+							iQueryable = iQueryable.Where(pageLine =>
+							(amount == (pageLine.TotalExamptFortaxReport))							
+							);
+							break;
+						}
 					default:
 						{
 							iQueryable = iQueryable.Where(pageLine =>
@@ -400,6 +416,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 							break;
 						}
 					case "Equals":
+						{
+							iQueryable = iQueryable.Where(pageLine =>
+							(amount == (pageLine.TotalVAT))
+							);
+							break;
+
+						}
 					default:
 						{
 							iQueryable = iQueryable.Where(pageLine =>
@@ -475,6 +498,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 							break;
 						}
 					case "Equals":
+						{
+							iQueryable = iQueryable.Where(pageLine =>
+							(amount == (pageLine.TotalAmountForTaxReport))				
+							);
+							break;
+						}
 					default:
 						{
 							iQueryable = iQueryable.Where(pageLine =>
