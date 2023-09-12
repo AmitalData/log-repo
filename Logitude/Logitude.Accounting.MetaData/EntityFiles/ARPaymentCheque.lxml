@@ -1732,10 +1732,17 @@
         PredefinedValue="&quot;5&quot;"
         ObjectFieldName="&quot;StatusCode&quot;"
         IsPredefined="true"
-        PredefinedValue2="&quot;6&quot;"
         Operator="&quot;NotEqual&quot;"
         IndexOrder="0"
-        CustomPredefined="true" />
+        CustomPredefined="false" />
+      <QueryFilter
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        PredefinedValue="&quot;6&quot;"
+        ObjectFieldName="&quot;StatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
