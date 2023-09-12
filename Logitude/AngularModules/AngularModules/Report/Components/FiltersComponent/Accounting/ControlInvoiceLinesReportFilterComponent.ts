@@ -51,7 +51,9 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
                 this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
                     this.entityResourceService.getEntityResourceByTableName("ARInvoiceLine").subscribe((response: any) => {
                         this.entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => {
+                            this.entityResourceService.getEntityResourceByTableName("General").subscribe((response: any) => {
                         this.isReady = true;
+                    });
                     });
                     });
                 });
@@ -489,6 +491,40 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
         queryFilterItem.FieldDataType = FieldDataType;
 
         return queryFilterItem;
+    }
+    ClearFields(){
+        this.fromDate = null;
+        this.toDate = null;
+        this.notIncludedInAnyTaxReport = false;
+        this.selectedTaxReport=null
+        this._dateTypeCode= '1';
+        this.typeFilterDate = "Accountant";
+
+        this.selectedAmountInvoiceOperator = null
+        this.amountInvoiceFrom = null;
+        this.amountInvoiceTo = null;
+
+
+        this.typeFilterReportsToVAT = "All";
+
+        this.typeFilterIsExternal = "All";
+
+        this.selectedAmountExamptOperator = null;
+        this.amountExamptFrom  = null;
+        this.amountExamptTo = null;
+
+        this.selectedAmountVatableOperator = null
+        this.amountVatableFrom = null;
+        this.amountVatableTo = null;
+
+        this.selectedAmountReportOperator = null
+        this.amountReportFrom = null;
+        this.amountReportTo = null;
+
+        this.selectedCaseNumberOperator = null;
+        this.caseNumber = "";
+        this.description = "";
+
     }
 }
 

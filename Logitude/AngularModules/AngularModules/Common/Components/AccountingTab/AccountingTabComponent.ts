@@ -18,6 +18,7 @@ import { AccountingEventManager } from 'Accounting/Utilities/AccountingEventMana
                  <td>{{TabTitleTextCode | TextCodeTranslationPipe}}
                      ({{AccountInfo}})
                </td>
+
             </tr>
 
             <tr>
@@ -62,11 +63,15 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
 
                                         this.LoadComponent();
                                     });
+
                                 });
+
                             });
+
                         });
                     });
                 });
+
             });
         });
 
