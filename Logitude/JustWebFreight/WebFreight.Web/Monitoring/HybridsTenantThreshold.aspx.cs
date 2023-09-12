@@ -25,18 +25,20 @@ namespace WebFreight.Web.Monitoring
             int? tenant = null;
             if (!string.IsNullOrEmpty(mytenant))
             {
-                 tenant = Int32.Parse(mytenant);
-               
+                tenant = Int32.Parse(mytenant);
+
             }
-            if (AnyFailedStatus(tenant))
+            string message = string.Empty;
+            if (AnyFailedStatus(tenant, out message))
             {
                 Response.Write("<status>Fail</status>");
+                //Response.Write("<list>${message}</list>");
             }
             else
             {
                 Response.Write("<status>OK</status>");
             }
-          
+
             int ResponseTime_Millisecond = HttpContext.Current.Timestamp.Millisecond;
             String ResponseTime = "<response_time>" + ResponseTime_Millisecond + "</response_time>";
             Response.Write(ResponseTime);
@@ -44,16 +46,16 @@ namespace WebFreight.Web.Monitoring
             Response.End();
         }
 
-        private bool AnyFailedStatus(int?tenant)
+        private bool AnyFailedStatus(int? tenant, out string message)
         {
-
+            message = string.Empty;
             bool IsFailed = false;
-           
-             int? WaitingThresold  =null;
-             int? FailedThresold=null;
-             int? WaitingQueue=null;
-             int? FailedQueue =null;
-             DateTime? LastUpdate = null;
+
+            int? WaitingThresold = null;
+            int? FailedThresold = null;
+            int? WaitingQueue = null;
+            int? FailedQueue = null;
+            DateTime? LastUpdate = null;
             List<GlobalDB> GlobalDatabases = new List<GlobalDB>();
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
@@ -79,56 +81,72 @@ namespace WebFreight.Web.Monitoring
 
                 CommonDataContext Context = CommonDataContext.GetContextByDBId(db.Id);
 
-                  try
-                  {
+                try
+                {
                     var hybridTenantThreshold = (from a in Context.HybridTenantThresholds
-                                            where a.Tenant == tenant
-                                                 select new { a.WaitingThresold, a.FailedThresold }).FirstOrDefault();
-                      if (hybridTenantThreshold != null)
-                      {
-                          WaitingThresold = hybridTenantThreshold.WaitingThresold;
-                          FailedThresold = hybridTenantThreshold.FailedThresold;
-                      }
-                  }
+                                                 join b in Context.HybridTenantStates
+                                                    on a.Tenant equals b.Tenant
 
-                  catch (Exception errorInfo)
-                  {
+                                                 select new
+                                                 {
+                                                     a.Tenant,
+                                                     a.WaitingThresold,
+                                                     a.FailedThresold,
+                                                     b.WaitingQueue,
+                                                     b.FailedQueue,
+                                                     b.LastUpdateDateTime,
+                                                     IsFailed = ((WaitingQueue > WaitingThresold || FailedQueue > FailedThresold) && ((DateTime.UtcNow - LastUpdate).Value.Hours < 1))
+                                                 }).ToList();
+                    if (hybridTenantThreshold != null)
+                    {
+                        //WaitingThresold = hybridTenantThreshold.WaitingThresold;
+                        //FailedThresold = hybridTenantThreshold.FailedThresold;
+                        IsFailed = (hybridTenantThreshold.Any(x => x.IsFailed));
+                        if (IsFailed)
+                        {
+                            message = string.Join(",", hybridTenantThreshold.Where(x => x.IsFailed).Select(t => t.Tenant.ToString()).ToArray());
+                        }
+                    }
+                }
+
+                catch (Exception errorInfo)
+                {
                     ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "HybridTenantThreshold", "Bug in AnyWaitingStatus Method : IsFaild = (from a in Context.HybridTenantThresholds ...", null);
-                  }
+                }
 
 
-                  try
-                  {
-                    var HybridTenantStates = (from a in Context.HybridTenantStates
-                                          where a.Tenant == tenant
-                                              select new { a.WaitingQueue, a.FailedQueue, a.LastUpdateDateTime }).FirstOrDefault();
-                       if (HybridTenantStates != null)
-                       {
-                           WaitingQueue = HybridTenantStates.WaitingQueue;
-                           FailedQueue = HybridTenantStates.FailedQueue;
-                           LastUpdate = HybridTenantStates.LastUpdateDateTime;
-                       }
-                  
-                   }
+                //  try
+                //  {
+                //    var HybridTenantStates = (from a in Context.HybridTenantStates
+                //                          where a.Tenant == tenant
+                //                              select new { a.WaitingQueue, a.FailedQueue, a.LastUpdateDateTime }).FirstOrDefault();
+                //       if (HybridTenantStates != null)
+                //       {
+                //           WaitingQueue = HybridTenantStates.WaitingQueue;
+                //           FailedQueue = HybridTenantStates.FailedQueue;
+                //           LastUpdate = HybridTenantStates.LastUpdateDateTime;
+                //       }
+
+                //   }
 
 
-                  catch (Exception errorInfo)
-                  {
-                    ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "HybridTenantThreshold", "Bug in AnyWaitingStatus Method : IsFaild = (from a in Context.HybridTenantStates ...", null);
-                  }
+                //  catch (Exception errorInfo)
+                //  {
+                //    ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "HybridTenantThreshold", "Bug in AnyWaitingStatus Method : IsFaild = (from a in Context.HybridTenantStates ...", null);
+                //  }
 
 
-                  TimeSpan? date = DateTime.UtcNow - LastUpdate;
-                if (LastUpdate != null && date.Value.Hours < 1)
-                  {
-                    if (WaitingQueue > WaitingThresold || FailedQueue > FailedThresold) IsFailed = true;
-                      else IsFailed = false;
-                  }
-                  else IsFailed = true;
+                //  TimeSpan? date = DateTime.UtcNow - LastUpdate;
+                //if (LastUpdate != null && date.Value.Hours < 1)
+                //  {
+                //    if (WaitingQueue > WaitingThresold || FailedQueue > FailedThresold) IsFailed = true;
+                //      else IsFailed = false;
+                //  }
+                //  else IsFailed = true;
             }
             return IsFailed;
 
-      
+
         }
     }
 }
