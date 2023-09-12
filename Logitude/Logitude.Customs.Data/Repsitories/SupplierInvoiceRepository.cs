@@ -81,11 +81,11 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).Count();
         }
 
-        public int? GetMaxCounterKey(string declarationId, int tenant)
+        public int? GetMaxSequenceNumeric(string declarationId, int tenant)
         {
             return (from a in context.SupplierInvoices
                     where a.DeclarationId == declarationId && a.Tenant == tenant
-                    select a).Max(d => (int?)d.InvoiceCounterKey) ?? 0;
+                    select a).Max(d => (int?)d.SequenceNumeric) ?? 0;
         }
 
         public SupplierInvoice GetSupplierInvoiceBySequenceNumeric(string declarationId, int sequenceNumeric)
