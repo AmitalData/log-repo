@@ -222,9 +222,9 @@ namespace Logitude.Accounting.BL.CoreBL
                                          ForeignAmountDebit = totalByMonth.ForeignAmountDebit - joinr.ForeignAmountDebit,
                                          CHANGE_TYPE = Const_qDiff
                                      });
-                        var GLAccountTotalByMonthsList =
                             //qNotinLedgerTransaction.Union(qNotinTotalByMonth).Union(qDiff).ToList();
-                            qNotinLedgerTransaction.Concat(qNotinTotalByMonth).Concat(qDiff).ToList();
+                        var q = qNotinLedgerTransaction.Concat(qNotinTotalByMonth).Concat(qDiff);
+                        var GLAccountTotalByMonthsList = q.ToList();
                         ;
                         GLAccountTotalByMonthsList.ForEach(
                             r =>
@@ -268,8 +268,30 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!string.IsNullOrWhiteSpace(this._GLAccountId))
             {
                 throw new Exception("remove this._GLAccountId ");
-
             }
+
+            var sw = Stopwatch.StartNew();
+
+            _AccountingContext = AccountingContext.GetContext(_Tenant);
+            var myGLAccountTotalByMonthRepo = new GLAccountTotalByMonthRepository(_AccountingContext);
+            myGLAccountTotalByMonthRepo.DeleteControlByTanent(_Tenant);
+
+            var ledgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
+            List<GLAccountTotalByMonthsDTO> gLAccountTotalByMonths = ledgerTransactionRepository.GetControllerTotalDateType1(_Tenant);
+            myGLAccountTotalByMonthRepo.AddRange(gLAccountTotalByMonths);
+
+
+            CompareReport = new CompareReportM()
+            {
+                CompareReportName = "ReverseEngineerTotalByMonth_ControlAccountService",
+                Year = _SeedDate.Date.Year,
+                Month = _SeedDate.Date.Month,
+                //rows = res,
+                GLAccountTotalByMonthsList = gLAccountTotalByMonths,
+                Took = sw.Elapsed
+            };
+
+            return;
             CheckDbIntegrity(/*thewholePeriod*/);
             if (this.CompareReport.GLAccountTotalByMonthsList == null || this.CompareReport.GLAccountTotalByMonthsList.Count == 0)
             {

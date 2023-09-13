@@ -1610,7 +1610,31 @@ on record.JournalId equals j.Id
                     select a);
 
         }
+        
+        public List<GLAccountTotalByMonthsDTO> GetControllerTotalDateType1(int tenant)
+        {
+            return (from a in context.LedgerTransactions
+                   where a.Tenant == tenant
+                   && a.ControlAccountId != null
+
+                   group a by new { Year = a.AccountingDate.Year, Month = a.AccountingDate.Month, CurrencyId = a.CurrencyId, ControlAccountId = a.ControlAccountId }
+                    into x
+                   select new GLAccountTotalByMonthsDTO()
+                   {
+                       AccountId = x.Key.ControlAccountId,
+                       CurrencyId = x.Key.CurrencyId,
+                       DateTypeValue = "1",
+                       ForeignAmountCredit = x.Sum(y => y.ForeignAmountCredit),
+                       ForeignAmountDebit = x.Sum(y => y.ForeignAmountDebit),
+                       LocalAmountCredit = x.Sum(y => y.LocalAmountCredit),
+                       LocalAmountDebit = x.Sum(y => y.LocalAmountDebit),
+                       Month = x.Key.Month,
+                       Year = x.Key.Year,
+                       Tenant = tenant
+                   }).ToList() ;                    
+        }
     }
+
     public class GLAccountTotalByMonthsKey
     {
         public string AccountId { get; set; }
