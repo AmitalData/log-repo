@@ -98,9 +98,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
 
                     }
+                    RaiseEvent(requestParams.Tenant, "EXT", "Exit From Storage Site", declaration, customResponse, comments + commentsCargoWeight);
                     if (raiseEvent)
                     {
-                        RaiseEvent(requestParams.Tenant, "EXT", "Exit From Storage Site", declaration, customResponse, comments + commentsCargoWeight);
                         if (customResponse.ReportingDetails.isLastExiOrLasttEntry == true)
 
                             RaiseEvent(requestParams.Tenant, "LEX", "Last Exit From Storage Site", declaration, customResponse, comments);
