@@ -2384,7 +2384,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-            let text = "נא אשר לבצע אישור רק לשורות שסומנו";
+            text = "נא אשר לבצע אישור רק לשורות שסומנו";
         }
 
         var confirmWindow = new ConfirmWindow();
