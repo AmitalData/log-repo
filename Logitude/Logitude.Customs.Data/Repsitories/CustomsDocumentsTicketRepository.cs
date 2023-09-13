@@ -233,6 +233,39 @@ FROM ( SELECT DISTINCT
             return result;
         }
 
+        public bool IsSendToCustomsAndNotConnectTicket(string documentsfilingid, string entityId, int tenant)
+        {
+
+            var query = (
+                 from c in context.CustomsDocuments
+                 where c.Tenant == tenant && !string.IsNullOrEmpty(c.CustomsDocId) && c.DocumentsFilingId == documentsfilingid
+                 select c).FirstOrDefault();
+
+
+            if( query != null)
+            {
+                var query2 = (
+                     from ticket in context.CustomsDocumentsTickets
+                     join p in context.CustomsDocumentPointers
+                     on ticket.Id equals p.CustomsDocumentsTicketId 
+                     join d in context.Declarations
+                     on p.ParentEntityId equals d.Id 
+                     where
+                     ticket.DocumentsFilingId == documentsfilingid
+                     &&  d.Id == entityId
+
+                     select ticket
+                     ).FirstOrDefault();
+                if(query2 == null)
+                {
+                    return true;
+                }
+                
+            }
+
+            return false;
+        }
+
         public int GetCountOfTicketsByDocFilingId(string docId, int tenant)
         {
             return (from a in context.CustomsDocumentsTickets
