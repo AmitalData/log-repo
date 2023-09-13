@@ -589,7 +589,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.myRelativeRateDate = value;
         }
     }
-    get ExchangeRateDate { return this.EntityPM.ExchangeRateDate; }
+    get ExchangeRateDate() { return this.EntityPM.ExchangeRateDate; }
     set ExchangeRateDate(value: Date) {
         if (this.EntityPM.ExchangeRateDate != value) {
             this.EntityPM.ExchangeRateDate = value;
