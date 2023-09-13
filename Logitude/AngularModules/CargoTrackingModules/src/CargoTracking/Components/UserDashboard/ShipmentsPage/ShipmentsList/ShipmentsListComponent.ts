@@ -32,8 +32,7 @@ import {SharedService} from 'src/CargoTracking/Services/Others/SharedService';
 import {QueryColumnPM} from 'src/CargoTracking/Services/Others/QueryColumnPM';
 import {ApiQueryFilters} from 'src/CargoTracking/Services/Others/ApiQueryFilters';
 import {LogitudeGridExportToExcelService} from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
-import { TenantManagementPMService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService copy';
-import { TenantManagementPM } from 'src/CargoTracking/Services/Others/TenantManagementPM';
+import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -99,7 +98,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShipmentTypeFiltersNoResult: boolean;
     InvitedCustomersNoResult: boolean;
     SearchText: any="";
-    tenantManagementPM: TenantManagementPM;
+    backMonths: number;
 
     get tenant() {
         return CargoTrackingBrandingData.Tenant;
@@ -128,7 +127,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         private milestonesService: CargoTrackingMilestoneService,
         public sharedService: SharedService,
         private logitudeGridExportToExcelService: LogitudeGridExportToExcelService,
-        private tenantManagementPMService: TenantManagementPMService,
+        private tenantManagementService: TenantManagementService,
         ) {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
@@ -739,13 +738,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     private async getFromDate() {
         const fromDate = new Date();
-        this.tenantManagementPM = this.tenantManagementPM || await this.tenantManagementPMService.get(this.tenant);
+        this.backMonths = this.backMonths || await this.tenantManagementService.getShipmentBuildMonth();
         
-        let backMonths: number = 6;
-        if(this.tenantManagementPM.ActivatePrivateSite && this.tenantManagementPM.PermissionBuildMonths)
-            backMonths = this.tenantManagementPM.PermissionBuildMonths;
-
-        fromDate.setMonth(fromDate.getMonth() - backMonths);
+        fromDate.setMonth(fromDate.getMonth() - this.backMonths);
         return fromDate;
     }
 
