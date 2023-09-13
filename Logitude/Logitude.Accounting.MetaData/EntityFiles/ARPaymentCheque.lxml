@@ -1464,7 +1464,7 @@
     ObjectFieldNotRequired="false"
     SystemMaxLength="15"
     DisplayInList="true"
-    IsCustomFilter="false"
+    IsCustomFilter="true"
     IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -1732,15 +1732,8 @@
         PredefinedValue="&quot;5&quot;"
         ObjectFieldName="&quot;StatusCode&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
-        IndexOrder="0"
-        CustomPredefined="false" />
-      <QueryFilter
-        QueryCode="&quot;UnRedeemed Cheques&quot;"
-        PredefinedValue="&quot;6&quot;"
-        ObjectFieldName="&quot;StatusCode&quot;"
-        IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        PredefinedValue2="&quot;6&quot;"
+        Operator="&quot;Custom&quot;"
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
