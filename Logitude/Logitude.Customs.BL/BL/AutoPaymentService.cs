@@ -547,7 +547,7 @@ namespace Logitude.Customs.BL.BL
 
 			if (!IsFromClient)
 			{
-				if (PaymentMethodsList?.Count() > 0 && PaymentMethodsList[0]?.BanksList?.Count() > 0)
+				if (PaymentMethodsList?.Count() > 0 && PaymentMethodsList[0]?.BanksList?.Count() > 1)
 				{
 					throw new Exception("ישנם ריבוי בנקים");
 
