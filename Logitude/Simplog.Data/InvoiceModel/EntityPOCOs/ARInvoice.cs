@@ -43,7 +43,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
 
         
-        public string IsSigned { get; set; }
+       
     
         public bool IsFromInterestBatchInvoice { get; set; }
 
@@ -235,5 +235,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string SATCancelReasonCode { get; set; }
         public string TotalEquation { get; set; }
 
+        [ForeignKey("IsSigned")]
+        public virtual ARInvoicesSignedStatus ARInvoicesSignedStatus { get; set; }
+        public string IsSigned { get; set; }
     }
 }

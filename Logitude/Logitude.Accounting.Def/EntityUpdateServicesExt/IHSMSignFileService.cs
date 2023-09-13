@@ -13,7 +13,9 @@ namespace Logitude.Accounting.Def.EntityUpdateServicesExt
            string invocieId,
            byte[] signBytes,
            string FileName,
-           string customsAgentId
+           string customsAgentId,
+           string personalId
+
            );
     }
 }

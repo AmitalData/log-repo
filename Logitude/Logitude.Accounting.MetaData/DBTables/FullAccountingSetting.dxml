@@ -270,7 +270,7 @@
   <Column
     Name="HSMtoken"
     Type="varchar"
-    Size="36">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

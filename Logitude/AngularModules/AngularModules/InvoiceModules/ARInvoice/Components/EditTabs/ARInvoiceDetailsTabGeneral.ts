@@ -1,43 +1,44 @@
-import {Component, OnDestroy}  from '@angular/core';
-import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
-import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
-import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {InvoiceTotalsClass, SummaryItem} from '../../../../Invoice/Args';
-import {InvoiceTool, InvoicePartnerType} from '../../../../Invoice/Tools';
-import {CardList} from '../../../../Common/EntityLists/CardList';
-import {AddressList} from '../../../../Common/EntityLists/AddressList';
-import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
-import {PaymentTermList} from '../../../../Common/EntityLists/PaymentTermList';
-import {VatTypeList} from '../../../../Common/EntityLists/VatTypeList';
-import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
-import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
-import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
-import {PaymentTermListService} from '../../../../Common/Services/StandardLists/PaymentTermListService';
-import {VatTypeListService} from '../../../../Common/Services/StandardLists/VatTypeListService';
-import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
-import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {UpdateCurrencyRateComponent} from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
-import {VatTypePercentagePM} from '../../../../Common/EntityPMs/VatTypePercentagePM';
-import {NumbersPipe} from '../../../../Infrastructure/Pipes/NumbersPipe';
-import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
-import {ShipmentReceivablePM} from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
-import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
-import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainService';
-import {JournalExtendedPMService} from '../../../../Accounting/Services/ExtendedPMs/JournalExtendedPMService';
-import {JournalPM} from '../../../../Accounting/EntityPMs/JournalPM';
-import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
-import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
-import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
-import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { ARInvoicePM } from '../../../../Invoice/EntityPMs/ARInvoicePM';
+import { ARInvoiceLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
+import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { InvoiceTotalsClass, SummaryItem } from '../../../../Invoice/Args';
+import { InvoiceTool, InvoicePartnerType } from '../../../../Invoice/Tools';
+import { CardList } from '../../../../Common/EntityLists/CardList';
+import { AddressList } from '../../../../Common/EntityLists/AddressList';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { PaymentTermList } from '../../../../Common/EntityLists/PaymentTermList';
+import { VatTypeList } from '../../../../Common/EntityLists/VatTypeList';
+import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
+import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
+import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
+import { PaymentTermListService } from '../../../../Common/Services/StandardLists/PaymentTermListService';
+import { VatTypeListService } from '../../../../Common/Services/StandardLists/VatTypeListService';
+import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { UpdateCurrencyRateComponent } from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
+import { VatTypePercentagePM } from '../../../../Common/EntityPMs/VatTypePercentagePM';
+import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
+import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
+import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
+import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
+import { GlobalDomainService } from '../../../../Common/Services/GlobalDomainService';
+import { JournalExtendedPMService } from '../../../../Accounting/Services/ExtendedPMs/JournalExtendedPMService';
+import { JournalPM } from '../../../../Accounting/EntityPMs/JournalPM';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { GLAccountPMService } from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
+import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ARInvoicePMService } from 'Invoice/Services/StandardPMs/ARInvoicePMService';
 declare var window: any;
 
 @Component({
@@ -58,17 +59,16 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsDatesFieldEnabledWhileCrediting: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public ShowLocal:boolean=false;
-    DisplayFieldsFromList:string;
-    DisplayLocalFieldsFromList:string;
-    BillToLovSizeForFullAccounting:number;
+    public ShowLocal: boolean = false;
+    DisplayFieldsFromList: string;
+    DisplayLocalFieldsFromList: string;
+    BillToLovSizeForFullAccounting: number;
     IsAccountingActivated: boolean = false;
     public AllowVatTypes: boolean = true;
     public IsUsingVirtuallization: boolean = false;
     public InvoicePartners: InvoicePartnerType[] = [];
-    public PartnerTypeComboBoxIsDisabled:boolean = true;
-
-    constructor(private entityArgs: EntityArgs) {
+    public PartnerTypeComboBoxIsDisabled: boolean = true;
+    constructor(private entityArgs: EntityArgs, private cdRef: ChangeDetectorRef) {
         super();
         // this.CurrentSession.StartBusyIndicatorLoading();
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
@@ -79,7 +79,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.IsCustomsInvoice = (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") ? true : false;
         this.ObservableItems = new ObservableCollection([]);
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
-        this.ShowLocal=  !SessionLocator.LoggedUserPM.DontShowLocal;
+        this.ShowLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
         this.CheckFeatures();
         this.InitializeBillToLov();
@@ -143,9 +143,22 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
+    private SessionEvent: any = null;
+    myEntityPMService: ARInvoicePMService = new ARInvoicePMService();
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
 
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+
+                if (s == "ResetARInvoiceBaseDeailsTab") {
+                    this.myEntityPMService.get(this.EntityPM.Id).subscribe(res => {
+                        this.EntityPM = res.Result;
+                        this.IsSigned = this.EntityPM.IsSigned;
+                       
+
+                    })
+                }
+            });
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
@@ -161,11 +174,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     this.BuildScreenData();
                 }
             });
+            
+
         }
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     private myCardListService: CardListService;
@@ -439,7 +455,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             else {
                 this.myCardListService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        this.cardList= myResponse.Result;
+                        this.cardList = myResponse.Result;
                         if (this.cardList != null) {
                             this.VatNumber = this.cardList.VatNumber;
                             this.BillToName = this.cardList.EnglishName;
@@ -557,10 +573,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
-    get ExchangeRateDate() { return this.EntityPM.ExchangeRateDate; }
-    set ExchangeRateDate(value: Date) {
-        if (this.EntityPM.ExchangeRateDate != value) {
-            this.EntityPM.ExchangeRateDate = value;
+    get IsSigned() { return this.EntityPM.IsSigned; }
+    set IsSigned(value: string) {
+        if (this.EntityPM.IsSigned != value) {
+            this.EntityPM.IsSigned = value;
             this.ComputeRelativeRateDate();
         }
     }
@@ -572,6 +588,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.myRelativeRateDate = value;
         }
     }
+    get ExchangeRateDate { return this.EntityPM.ExchangeRateDate; }
+    set ExchangeRateDate(value: Date) {
+        if (this.EntityPM.ExchangeRateDate != value) {
+            this.EntityPM.ExchangeRateDate = value;
+            this.ComputeRelativeRateDate();
+        }
+    }
+
     ComputeRelativeRateDate() {
         this.RelativeRateDate = DateTool.GetRelativeRateDate(this.InvoiceDate, this.ExchangeRateDate, "old");
     }
@@ -1010,7 +1034,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 }
 
                 if (tempList.indexOf(line) == -1) {
-                    this.ItemsSource.push(new ARInvoiceLineItem(line, this,false));
+                    this.ItemsSource.push(new ARInvoiceLineItem(line, this, false));
                 }
             });
 
@@ -1415,7 +1439,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     public ObjectTableName = "ARInvoiceLine";
     public DataContext = this;
 
-    constructor(entityPM: ARInvoiceLinePM, public fatherComponent: ARInvoiceDetailsTabGeneral, public AddNewLineMode ) {
+    constructor(entityPM: ARInvoiceLinePM, public fatherComponent: ARInvoiceDetailsTabGeneral, public AddNewLineMode) {
         super();
         this.EntityPM = entityPM;
         this.ReadIsMatched();
@@ -1435,6 +1459,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     public IsRateEnabled: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     SetUIProperties() {
+        
         this.IsEditExchangeRateVisible = this.fatherComponent.IsEditExchangeRateVisible;
 
         this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
@@ -1637,7 +1662,7 @@ export class ARInvoiceLineItem extends BaseComponent {
                 this.Description = null;
                 this.LocalDescription = null;
                 this.VatTypeId = null;
-                this.LineActionCode=null;
+                this.LineActionCode = null;
 
             }
 
