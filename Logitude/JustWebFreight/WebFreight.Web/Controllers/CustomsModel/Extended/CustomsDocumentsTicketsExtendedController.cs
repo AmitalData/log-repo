@@ -163,7 +163,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSendToMehesAndNotConnectTicket(string documentsfilingid, int tenant, string entityId)
+        public HttpResponseMessage GetIsSendToCustomsAndNotConnectTicket(string documentsfilingid, int tenant, string entityId)
         {
            
                 try
@@ -176,7 +176,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     ICustomContext MyContext = CustomContext.GetContext(tenant);
                     CustomsDocumentsTicketQueryService queryService = new CustomsDocumentsTicketQueryService(MyContext);
 
-                    bool response = queryService.IsSendToMehesandNotConnectTicket(documentsfilingid, entityId, tenant);
+                    bool response = queryService.IsSendToCustomsAndNotConnectTicket(documentsfilingid, entityId, tenant);
                     
 
                     return Request.CreateResponse(HttpStatusCode.OK, response);

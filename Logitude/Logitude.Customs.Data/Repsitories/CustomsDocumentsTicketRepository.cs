@@ -233,7 +233,7 @@ FROM ( SELECT DISTINCT
             return result;
         }
 
-        public bool IsSendToMehesandNotConnectTicket(string documentsfilingid, string entityId, int tenant)
+        public bool IsSendToCustomsAndNotConnectTicket(string documentsfilingid, string entityId, int tenant)
         {
 
             var query = (

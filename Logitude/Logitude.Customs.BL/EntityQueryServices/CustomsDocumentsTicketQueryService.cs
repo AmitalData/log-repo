@@ -337,9 +337,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetDocConnectTicket(documentsfilingid, entityId, tenant);
         }
 
-        public bool IsSendToMehesandNotConnectTicket(string documentsfilingid, string entityId, int tenant)
+        public bool IsSendToCustomsAndNotConnectTicket(string documentsfilingid, string entityId, int tenant)
         {
-            return repository.IsSendToMehesandNotConnectTicket(documentsfilingid, entityId, tenant);
+            return repository.IsSendToCustomsAndNotConnectTicket(documentsfilingid, entityId, tenant);
         }
 
         public int GetCountOfTicketsByDocFilingId(string documentsfilingid, int tenant)
