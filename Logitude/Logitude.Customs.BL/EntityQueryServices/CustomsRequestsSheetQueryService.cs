@@ -355,7 +355,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2791",// אחסנה
 "2755E",// הגשה יצוא
 "8250",// סטטוס הצהרה
-"DCAOCR"//פתיחת חשבון יצואן - OCR
+"DCAOCR",//פתיחת חשבון יצואן - OCR
 "8235", // תיקון הצהרה ברקע
             };
 
@@ -504,7 +504,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8314", // נתוני פרט מכס
 "8888",//תשובה לנתוני פרט מכס
 "2791",// אחסנה
-"DCAOCR"//פתיחת חשבון יצואן - OCR
+"DCAOCR",//פתיחת חשבון יצואן - OCR
 "8235", // תיקון הצהרה ברקע
 };
 

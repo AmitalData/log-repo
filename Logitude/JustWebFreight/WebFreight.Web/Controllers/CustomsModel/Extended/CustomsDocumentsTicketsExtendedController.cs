@@ -162,6 +162,33 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
+
+        public HttpResponseMessage GetSendToMehesAndNotConnectTicket(string documentsfilingid, int tenant, string entityId)
+        {
+           
+                try
+                {
+
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                    ICustomContext MyContext = CustomContext.GetContext(tenant);
+                    CustomsDocumentsTicketQueryService queryService = new CustomsDocumentsTicketQueryService(MyContext);
+
+                    bool response = queryService.IsSendToMehesandNotConnectTicket(documentsfilingid, entityId, tenant);
+                    
+
+                    return Request.CreateResponse(HttpStatusCode.OK, response);
+
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+           
+        }
         public class ConnectedDeclarations
         {
             public List<string> decConnect { get; set; }
