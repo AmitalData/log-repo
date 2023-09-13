@@ -33,6 +33,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                          IsActive = a.IsActive,
 
+                                                         UnifreightStatusCode = a.UnifreightStatusCode,
+
                                                      });
             return query;
         }
