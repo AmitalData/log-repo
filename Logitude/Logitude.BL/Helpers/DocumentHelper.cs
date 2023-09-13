@@ -9,6 +9,7 @@ using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -24,6 +25,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections;
@@ -36,6 +38,7 @@ using System.Text;
 using System.Transactions;
 using System.Web;
 using WebFreight.Web;
+using User = Simplog.Data.CommonDataModel.EntityPOCOs.User;
 
 namespace Logitude.BL.Helpers
 {
@@ -249,15 +252,14 @@ namespace Logitude.BL.Helpers
         
         
 
-        public void StartSignPDFInvoice(ARInvoice invocie, int tenant, ARInvoiceRepository repository)
+        public void StartSignPDFInvoice(ARInvoice invocie, int tenant, ARInvoiceRepository repository,string contactEmail)
         {
 
             try
             {
                 IHSMSignFileService HSMSignFileService = ContainerAccessor.Container.Resolve(typeof(IHSMSignFileService), "HSMSignFileService", new ParameterOverride("", 1)) as IHSMSignFileService;
-
-
                 ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+
                 DocumentRepository documentRepository = new DocumentRepository(commoncontext);
                 DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
                 DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
@@ -265,7 +267,9 @@ namespace Logitude.BL.Helpers
 
                 DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invocie.Id, tenant).FirstOrDefault();
                 Document document = documentRepository.GetSingleDocument(tenant, myDocumentFilings?.DocumentId);
-                var vatNumber = tenantRepository.GetSingleByTenant(tenant).VatNumber;
+                ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+                  var vatNumber = tenantRepository.GetSingleByTenant(tenant).VatNumber;
+
                 if (document != null)
                 {
                     Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
@@ -281,12 +285,12 @@ namespace Logitude.BL.Helpers
                     byte[] filedata = storageservice.Read(fileInfo);
 
                     byte[] signBytes = HSMSignFileService
-                        .SignCustomsRequest(tenant, invocie.Id, filedata, document.FileName, vatNumber);
+                        .SignCustomsRequest(tenant, invocie.Id, filedata, document.FileName, vatNumber, loggedcontact?.Id);
                     //invocie.IsSigned
                     if (signBytes != null)
                     {
                         storageservice.Write(signBytes, fileInfo);
-                        this.HSMSignatureSucceeded(invocie, repository);
+                        this.HSMSignatureSucceeded(invocie, repository, contactEmail, document, myDocumentFilings.Id);
                        
                         
                     }
@@ -320,13 +324,15 @@ namespace Logitude.BL.Helpers
         }
 
 
-        private void HSMSignatureSucceeded(ARInvoice invocie, ARInvoiceRepository repository)
+        private void HSMSignatureSucceeded(ARInvoice invocie, ARInvoiceRepository repository,string contactEmail,Document document,string  DocumentFilingId )
         {
             invocie.IsSigned = "1";
             repository.Update(invocie);
             repository.SubmitChanges();
             this.CreateEvent("HSMS", invocie, "החשבונית נחתמה בהצלחה");
             this.SendEmailAlert("libby@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר" + invocie.InvoiceNumber + "<br /><br />מצורפת השגיאה " );
+            this.SendToEmailContact(contactEmail, invocie, document, DocumentFilingId, repository);
+
         }
         private void CreateEvent(string eventCode,ARInvoice arinvocie, string Notes = null)
         {
@@ -368,6 +374,298 @@ namespace Logitude.BL.Helpers
             };
             Communications.AddEmailCommunicationLogQueue(emailParams, Tenant);
         }
+
+
+        private void SendToEmailContact(string email, ARInvoice arinvocie,Document document,string DocumentFilingId, ARInvoiceRepository repository)
+        {
+            string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+            UserRepository userRepository = new UserRepository(Tenant);
+            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, Tenant, true);
+            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+             EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
+            string htmlstring = "";
+            string userId = null;
+            string LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("ARInvoice");
+            string htmlString = "<html><head><meta http- equiv='Content- Type' content= 'text/html; charset = iso-8859-1' > <style type='text/css' style= 'display: none; '></style></head><body>";
+           
+            htmlString += "</body></html>";
+             
+            byte[] bytedata = Encoding.UTF8.GetBytes(htmlString);
+
+            if (loggedUser != null)
+            {
+                userId = loggedUser.Id;
+            }
+            try {
+                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, Tenant, email, "חשבונית חתומה", null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id, null, null, null);
+                if (!string.IsNullOrEmpty(documentId))
+                {
+                    arinvocie.IsSigned = "3";
+                    repository.Update(arinvocie);
+                    repository.SubmitChanges();
+                }
+                else
+                {
+                    arinvocie.IsSigned = "4";
+                    repository.Update(arinvocie);
+                    repository.SubmitChanges();
+                }
+            }
+            catch(Exception e)
+            {
+                arinvocie.IsSigned = "4";
+                repository.Update(arinvocie);
+                repository.SubmitChanges();
+            }
+        }
+        public string SendHtmlDocument(byte[] htmlData, string internalDocumentId, string externalDocumentId, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string entityId, string objectTableId, string attachments, string entityReference, string from, string replyTo)
+        {
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            //ShipmentsContext shipmentsContext = new ShipmentsContext();
+            DocumentOutRepository internalDocRep = new DocumentOutRepository(context);
+            DocumentRepository documentRep = new DocumentRepository(context);
+
+
+
+            //DocumentType documentType = (from d in context.DocumentTypes
+            //                             where d.Id == documentTypeId && d.Tenant == tenant
+            //                             select d).FirstOrDefault();
+
+
+            DocumentOut internalDocument = internalDocRep.GetSingleDocumentOut(internalDocumentId, tenant);
+            DocumentOutCopyRepository documentoutCopyRep = new DocumentOutCopyRepository(tenant);
+            List<DocumentOutCopy> documentOutCopies = null;
+            if (internalDocument != null)
+            {
+                if (internalDocument.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited)
+                {
+                    documentOutCopies = documentoutCopyRep.GetDocumentOutCopyByDocumentOutId(internalDocument.Id, tenant);
+                }
+
+                //internalDocument.DocumentId = document.Id;
+                internalDocument.IssuedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                internalDocument.IssuedByUserId = userId;
+                internalDocument.Issued = true;
+                internalDocument.DocumentsFiling.UpdatedByUserId = userId;
+                internalDocument.DocumentsFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                internalDocRep.Update(internalDocument);
+            }
+            Simplog.Data.CommonDataModel.EntityPOCOs.Document document = new Simplog.Data.CommonDataModel.EntityPOCOs.Document()
+            {
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                Extension = "html",
+                FileSize = Convert.ToInt32(htmlData.Length),
+                Tenant = Convert.ToInt32(tenant),
+                Id = IdCounter.GetNumber("Document", tenant).ToString(),
+                Folder = "docsout",
+                HasFile = true,
+            };
+            documentRep.Add(document);
+            documentRep.SubmitChanges();
+            internalDocRep.SubmitChanges();
+
+            //if (!WebFreightEntryPoint.UsingAzure)
+            //{
+            //    try
+            //    {
+            //        string filePath = Server.MapPath(".");
+            //        filePath += "\\UserUploads\\";
+            //        filePath += document.Id;
+            //        filePath += ".html";
+
+            //        FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
+            //        BinaryWriter bw = new BinaryWriter(fs);
+            //        bw.Write(htmlData);
+            //        bw.Close();
+            //    }
+            //    catch
+            //    {
+            //    }
+            //}
+            //else // In Azure
+            //{
+            try
+            {
+                string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(document.Id + ".html", document.Folder);
+
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = htmlData.Length,
+
+
+                };
+                storageservice.Write(htmlData, fileInfo);
+                //string filename = document.Id + ".html";
+                // CloudBlobContainer blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
+                //var blobfile = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder));
+
+
+                //using (Stream memstream = blobfile.OpenWrite())
+                //{
+                //    memstream.Write(htmlData, 0, htmlData.Length);
+                //    memstream.Close();
+                //    //memstream.Write(htmlData, 0, htmlData.Length);
+                //    //blobfile.UploadFromStream(memstream);
+                //}
+            }
+            catch
+            {
+            }
+
+            // }
+
+
+
+            // Send Html Document by email
+            // SendHtmlDocumentByEmail(ToEmail, Subject, CC, filePath);
+            //============================
+
+            // Save Html to CommunicationLog
+
+            CommunicationLog log = new CommunicationLog()
+            {
+                Id = IdCounter.GetNumber("CommunicationLog", tenant),
+                InOut = "O",
+                To = toEmail,
+                CC = cc,
+                BCC = bcc,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                DocumentId = document.Id,
+                CreatedByUserId = userId,
+                EntityId = entityId,
+                ObjectTableId = objectTableId,
+                DocumentOutId = internalDocumentId,
+                DocumentsFilingId = externalDocumentId,
+                EntityReference = entityReference,
+                Subject = subject,
+                Tenant = tenant,
+                LastStatusDateUTC = TenantServerConfigration.GetCurrentDateTime(tenant),
+                CreateDateUTC = TenantServerConfigration.GetCurrentDateTime(tenant),
+                LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                CommunicationLogTypeCode = "E",
+                CommunicationStatusTypeCode = "W",
+
+
+            };
+
+            if (!string.IsNullOrEmpty(from) && !string.IsNullOrWhiteSpace(from))
+            {
+                log.From = from;
+            }
+            if (!string.IsNullOrEmpty(replyTo) && !string.IsNullOrWhiteSpace(replyTo))
+            {
+                log.ReplyToList = replyTo;
+            }
+
+
+
+            //EventTracer.CreateTraceEvent(new TraceEvent(), "CRCR", currency.Tenant, contact.Id, currency.Id, null, "Currency", null, null, false);
+
+            context.CommunicationLogs.Add(log);
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception eeee)
+            { }
+
+
+            if (attachments != null)
+            {
+                string[] attachmentsArray = attachments.Split(',');
+                if (attachmentsArray.Count() != 0)
+                {
+                    foreach (string docId in attachmentsArray)
+                    {
+                        if (!String.IsNullOrEmpty(docId))
+                        {
+                            if (internalDocument != null)
+                            {
+                                DocumentOutCopy copy = null;
+                                DocumentType documentType = internalDocument.DocumentsFiling.DocumentType;
+                                if (documentOutCopies == null)
+                                {
+                                    copy = documentoutCopyRep.GetSingleDocumentOutCopy(docId);
+                                }
+                                if (copy != null)
+                                {
+                                    DocumentTypeCopyRepository documentTypeCopyRep = new DocumentTypeCopyRepository(context);
+                                    DocumentTypeCopy typeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(copy.DocumentTypeCopyId);
+                                    DocumentTypeRepository documentTypeRep = new DocumentTypeRepository(context);
+                                    documentType = documentTypeRep.GetSingleDocumentTypes(typeCopy.DocumentTypeId, tenant);
+
+                                }
+
+                                if (documentType.IsDocumentOneTimePrintLimited)
+                                {
+                                    if (copy == null)
+                                    {
+                                        copy = documentOutCopies.Where(d => d.Id == docId).FirstOrDefault();
+                                    }
+                                    if (copy != null && copy.DocumentTypeCopyId == documentType.LimitedPrintCopyId)
+                                    {
+                                        string email = HttpContext.Current.User.Identity.Name;
+                                        UserRepository userRep = new UserRepository(tenant);
+                                        User printedBy = userRep.GetSingleUserByCodeOrEmailForTenant(null, email, tenant, false);
+                                        copy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                        copy.LastPrintedByUserId = printedBy.Id;
+                                        documentoutCopyRep.Update(copy);
+                                        documentoutCopyRep.SubmitChanges();
+                                    }
+
+                                }
+                            }
+
+                            CommunicationAttachment attachment = new CommunicationAttachment()
+                            {
+                                Id = IdCounter.GetNumber("CommunicationAttachment", tenant).ToString(),
+                                CommunicationLogId = log.Id,
+                                DocumentId = docId,
+                                Tenant = tenant,
+                            };
+
+                            context.CommunicationAttachments.Add(attachment);
+                        }
+                    }
+
+                    context.SaveChanges();
+                }
+            }
+            try
+            {
+                DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+                Dictionary<string, string> emailQueueMessage = new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } };
+                
+                queueservice.Send(emailQueueMessage, tenant);
+            }
+            catch (Exception ex)
+            {
+                string ip = "";
+                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                {
+                    string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                    if (string.IsNullOrEmpty(currentIP))
+                    {
+                        currentIP = HttpContext.Current.Request.UserHostAddress;
+                    }
+                    ip = currentIP;
+                }
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "web role", null, ip);
+            }
+
+
+
+
+            return document.Id;
+        }
+
+
+
     }
       
    

@@ -17354,7 +17354,7 @@
         QueryCode="&quot;Draft General Invoices&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;IsSigned&quot;"
-        ColumnWidth="30" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
         IndexOrder="2"
@@ -17455,7 +17455,7 @@
         QueryCode="&quot;Approval General Invoices&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;IsSigned&quot;"
-        ColumnWidth="30" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
         IndexOrder="2"
@@ -17556,7 +17556,7 @@
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;IsSigned&quot;"
-        ColumnWidth="30" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="2"
@@ -17679,7 +17679,7 @@
         QueryCode="&quot;All General Invoices&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;IsSigned&quot;"
-        ColumnWidth="30" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
         IndexOrder="2"
@@ -17782,7 +17782,7 @@
         QueryCode="&quot;Draft Invoices&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;IsSigned&quot;"
-        ColumnWidth="30" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
         IndexOrder="2"
@@ -17880,7 +17880,7 @@
         QueryCode="&quot;Unpaid Invoices&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;IsSigned&quot;"
-        ColumnWidth="30" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
         IndexOrder="2"
@@ -18175,7 +18175,7 @@
         QueryCode="&quot;OpenConstituent&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;IsSigned&quot;"
-        ColumnWidth="30" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
         IndexOrder="2"
@@ -18275,7 +18275,7 @@
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;IsSigned&quot;"
-        ColumnWidth="30" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
         IndexOrder="2"
@@ -18371,7 +18371,7 @@
         QueryCode="&quot;OpenInvoices&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;IsSigned&quot;"
-        ColumnWidth="30" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
         IndexOrder="2"
@@ -18467,7 +18467,7 @@
         QueryCode="&quot;ErrorInTransfer&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;IsSigned&quot;"
-        ColumnWidth="30" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
         IndexOrder="2"

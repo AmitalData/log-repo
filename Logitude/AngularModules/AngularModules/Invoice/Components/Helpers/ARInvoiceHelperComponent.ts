@@ -51,9 +51,9 @@ export class ARInvoiceHelperComponent implements OnDestroy {
     private BuildComponent() {
     }
 
-    get InternalNotes() { return this.EntityPM.InternalNotes; }
+    get InternalNotes() { return this.EntityPM?.InternalNotes; }
     set InternalNotes(value: string) {
-        if (this.EntityPM.InternalNotes != value) {
+        if (this.EntityPM?.InternalNotes != value) {
             this.EntityPM.InternalNotes = value;
         }
     }

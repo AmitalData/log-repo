@@ -161,7 +161,10 @@ export class ARInvoiceList {
 		DigitalPortalSearchFields: string;
 		TotalExamptFortaxReport: number;
 		DocumentTemplateId: string;
-		TotalAmountNotForTaxReport: number;
 		ConcurrencyGUID: string;
+		TotalAmountNotForTaxReport: number;
+		
+		IsSigned: string;
+		IsSignedName: string;
 	
-}
+}

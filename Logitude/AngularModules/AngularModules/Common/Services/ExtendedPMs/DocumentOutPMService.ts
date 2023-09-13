@@ -10,6 +10,7 @@ import {DocumentOutPM} from '../../EntityPMs/DocumentOutPM';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { property } from 'cypress/types/lodash';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 
 
 @Injectable()
@@ -64,7 +65,7 @@ export class DocumentOutPMService {
     }
 
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
 
     getCreateDocumentOut(documentTypeId: string, entityId: string, childEntityId: string, childReference: string, objectTableId: string, tenant: number, documentTypeTemplateId:string = null,signHSM:boolean=false) {
 
@@ -89,6 +90,7 @@ export class DocumentOutPMService {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = entity;
+                this.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
                 return pmresponse;
             }), catchError(ServiceHelper.HandleServiceError));
         }

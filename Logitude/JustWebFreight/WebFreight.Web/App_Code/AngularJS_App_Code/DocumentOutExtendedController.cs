@@ -45,6 +45,7 @@ using Logitude.BL.DataContracts;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using DocumentsFiling = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentsFiling;
+using Logitude.AmitalMessaging.Infrastructure.Transmission;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -321,10 +322,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
             if (invocie != null)
             {
-                if (this.IsSignatureHtmlPresentByBillToId(invocie.BillToId, tenant))
+                string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie.BillToId, tenant);
+                if (!string.IsNullOrEmpty(contactEmail))
                 {
                     this.CreatePdfDoc(documentsFiling, invocie);
-                    documentHelper.StartSignPDFInvoice(invocie, invocie.Tenant, repository);
+                    documentHelper.StartSignPDFInvoice(invocie, invocie.Tenant, repository, contactEmail);
                 }
 
             }
@@ -348,22 +350,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-        private bool IsSignatureHtmlPresentByBillToId(string Billto,int tenant)
+        private string IsSignatureHtmlPresentByBillToId(string Billto,int tenant)
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
 
-            if (string.IsNullOrEmpty(Billto)) return false;
+            if (string.IsNullOrEmpty(Billto)) return "";
             var contactIds = (from card in objectContext.Cards
                               where card.BillToId == Billto
                               join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
                               select cardContact.ContactId).ToList();
-
+            string email = "";
             foreach (var contactId in contactIds)
             {
-                bool isSignatureHtmlPresent = objectContext.Contacts.Any(contact => contact.Id == contactId && contact.SignatureHtml.Equals(default(byte)));
-                return isSignatureHtmlPresent;
+                  email = objectContext.Contacts.Where(contact => contact.Id == contactId && contact.SignatureHtml.Equals(default(byte))).FirstOrDefault().Email;
+                if(!string.IsNullOrEmpty(email))
+                   return email;
             }
-            return false;
+            return email;
         }
         private static void Authentication()
         {

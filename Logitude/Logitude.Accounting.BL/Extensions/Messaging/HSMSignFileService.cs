@@ -147,35 +147,36 @@ namespace Logitude.Accounting.BL.Messaging
             int tenant,
            string invocieId,
            byte[] signBytes,
-           string FileName,
-           string customsAgentId
+           string fileName,
+           string customsAgentId,
+           string personalId
            )
         {
             IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
             FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
-
-            if (string.IsNullOrWhiteSpace(accountingSettings.HSMaddress))
+            FullAccountingSettingPM accountingSettingsTenant0 = query.GetFullAccountingSettingByTenant(0);
+            if (string.IsNullOrWhiteSpace(accountingSettings.HSMaddress ))
             {
                 throw new ArgumentNullException("HSMaddress");
             }
-            if (string.IsNullOrWhiteSpace(accountingSettings.HSMtoken))
+            if (string.IsNullOrWhiteSpace(accountingSettings.HSMtoken ))
             {
                 throw new ArgumentNullException("HSMtoken");
             }
 
 
             var res = this.SignFile(
-                 accountingSettings.HSMaddress,//  @"https://customs.amital.co.il/api/SignHSM",
-                 accountingSettings.HSMtoken,// @"9edYig7zg_b2mBV-72DaOKVMlqtJp-xovFY0k5uBNSRtAzFuY2xcGA==",
+                 accountingSettingsTenant0.HSMaddress,//  @"https://customs.amital.co.il/api/SignHSM",
+                 accountingSettingsTenant0.HSMtoken,// @"9edYig7zg_b2mBV-72DaOKVMlqtJp-xovFY0k5uBNSRtAzFuY2xcGA==",
                  new HSMSignFileService.HSMSignFileParams
                  {
                      companyid = accountingSettings.HSM.ToString(),// "101",
                      token = accountingSettings.HSMtoken,//  "c6f85591-6e4e-4203-95ef-628b826577b8",
                      signprocess = "Accounting",// ""Accounting",
-                     id ="308623615",
+                     id = personalId,
                      companypersonal = "C", // P OR C  
-                     filename = $"{FileName}.PDF",
-                     reference = FileName,
+                     filename = $"{fileName}.PDF",
+                     reference = fileName,
                      companyBN = customsAgentId, //"550221105"
 
                  },
