@@ -149,11 +149,12 @@ namespace Logitude.Accounting.BL.Messaging
            byte[] signBytes,
            string fileName,
            string customsAgentId,
-           string personalId
+           string personalId,
+           FullAccountingSettingPM accountingSettings
            )
         {
             IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
-            FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
+           
             FullAccountingSettingPM accountingSettingsTenant0 = query.GetFullAccountingSettingByTenant(0);
             if (string.IsNullOrWhiteSpace(accountingSettings.HSMaddress ))
             {

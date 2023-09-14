@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Accounting.Def.EntityPMs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ namespace Logitude.Accounting.Def.EntityUpdateServicesExt
            byte[] signBytes,
            string FileName,
            string customsAgentId,
-           string personalId
+           string personalId,
+           FullAccountingSettingPM accountingSettings
 
            );
     }

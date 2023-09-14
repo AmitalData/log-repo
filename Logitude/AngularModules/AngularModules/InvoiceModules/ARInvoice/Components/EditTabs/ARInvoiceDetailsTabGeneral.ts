@@ -148,17 +148,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
 
-            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-
-                if (s == "ResetARInvoiceBaseDeailsTab") {
-                    this.myEntityPMService.get(this.EntityPM.Id).subscribe(res => {
-                        this.EntityPM = res.Result;
-                        this.IsSigned = this.EntityPM.IsSigned;
-                       
-
-                    })
-                }
-            });
+           
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
@@ -172,6 +162,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.BuildScreenData();
+                }
+            });
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "IsSignedChanged") {
+                    this.myEntityPMService.get(this.EntityPM.Id).subscribe(res => {
+                        this.EntityPM = res.Result;
+                        this.IsSigned = this.EntityPM.IsSigned;
+                 })
                 }
             });
             
@@ -588,7 +586,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.myRelativeRateDate = value;
         }
     }
-    get ExchangeRateDate { return this.EntityPM.ExchangeRateDate; }
+    get ExchangeRateDate (){ return this.EntityPM.ExchangeRateDate; }
     set ExchangeRateDate(value: Date) {
         if (this.EntityPM.ExchangeRateDate != value) {
             this.EntityPM.ExchangeRateDate = value;

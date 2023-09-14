@@ -90,7 +90,7 @@ export class DocumentOutPMService {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = entity;
-                this.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
+                this.CurrentSession.FireEvent("IsSignedChanged");
                 return pmresponse;
             }), catchError(ServiceHelper.HandleServiceError));
         }

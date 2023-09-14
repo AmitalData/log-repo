@@ -252,7 +252,7 @@ namespace Logitude.BL.Helpers
         
         
 
-        public void StartSignPDFInvoice(ARInvoice invocie, int tenant, ARInvoiceRepository repository,string contactEmail)
+        public void StartSignPDFInvoice(ARInvoice invocie, int tenant, ARInvoiceRepository repository,string contactEmail, FullAccountingSettingPM accountingSettings)
         {
 
             try
@@ -285,7 +285,7 @@ namespace Logitude.BL.Helpers
                     byte[] filedata = storageservice.Read(fileInfo);
 
                     byte[] signBytes = HSMSignFileService
-                        .SignCustomsRequest(tenant, invocie.Id, filedata, document.FileName, vatNumber, loggedcontact?.Id);
+                        .SignCustomsRequest(tenant, invocie.Id, filedata, document.FileName, vatNumber, loggedcontact?.Id, accountingSettings);
                     //invocie.IsSigned
                     if (signBytes != null)
                     {
