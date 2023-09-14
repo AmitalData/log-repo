@@ -731,7 +731,14 @@ getHeaderCurrency(CurrencyId:string){
         this.lineDate.setDate(this.line_day);
 
         if (!line.ActionCode) line.accDay = this.line_day;
-        line.AccountingDate = new Date(this.line_year, this.line_month-1, line.accDay);
+        line.AccountingDate = this.getDate(this.line_year, this.line_month-1, line.accDay);
+    }
+    getDate(year, month, day) {
+        var d = new Date(year, month, day);
+        if (d.getMonth() == month) {
+            return d;
+        }
+        return new Date(year, +month + 1, 0);
     }
     lineDate: Date;
     headerDate: Date;
@@ -1420,6 +1427,7 @@ class JournalLineModel extends BaseComponent {
             if (day > lastDayOfMonth) {
                 //error
                 this.UIProperties.SetValidity("AccDay", this.ObjectTableName, false, this.accountingDayMustBeInRange);
+                this.AccountingDate = new Date(date.setDate(lastDayOfMonth));
                 this.isValid = false;
                 return false;
                 //var t = setTimeout(() => {
