@@ -1786,6 +1786,7 @@
     <Compile Include="Controllers\AccountingModel\LedgerTransactionsController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconciliationCancelController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconciliationOpController.cs" />
+    <Compile Include="Controllers\AccountingModel\BanksCCExternalRecoController.cs" />
     <Compile Include="Controllers\CommonDataModel\AccountingSettingViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\CustomerProductExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AccountingSettingViewsController.Generated.cs" />
