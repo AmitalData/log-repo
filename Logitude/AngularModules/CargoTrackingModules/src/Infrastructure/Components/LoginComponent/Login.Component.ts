@@ -196,7 +196,7 @@ export class LoginComponent implements OnInit {
         this.errorMessage = "";
         let tenantList = userData.CompanyLogins;
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
-        
+        SessionInfo.DisplayCookies=true;
         if(!LogInToTenant) {
             this.errorMessage = "Login failed! unauthorized user.";
             this.ShowbusyIndicator = false;

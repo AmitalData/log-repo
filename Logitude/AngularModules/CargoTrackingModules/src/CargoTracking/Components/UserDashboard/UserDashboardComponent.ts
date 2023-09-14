@@ -49,7 +49,7 @@ export class UserDashboardComponent implements AfterViewInit, OnInit, OnDestroy 
     UserNameFirstLetters: string;
     currentRoute: string;
     baseURL;
-    isCookieNoticeDismissed = false;
+    displayCookies:boolean=false;
     
     get tenant() {
         return CargoTrackingBrandingData.Tenant;
@@ -215,7 +215,7 @@ export class UserDashboardComponent implements AfterViewInit, OnInit, OnDestroy 
         }
     }
     ngOnInit(): void {
-        this.isCookieNoticeDismissed = false;
+        this.displayCookies =SessionInfo.DisplayCookies;
         this.SubscribeRoutingEvents();
        
 
@@ -265,8 +265,8 @@ export class UserDashboardComponent implements AfterViewInit, OnInit, OnDestroy 
     }
 
     dismissCookieNotice() {
-        this.isCookieNoticeDismissed = true;
-        
+        this.displayCookies = false;
+        SessionInfo.DisplayCookies=false;
     }
 
 
