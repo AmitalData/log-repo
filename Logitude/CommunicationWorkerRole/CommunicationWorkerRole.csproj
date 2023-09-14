@@ -888,10 +888,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
-      <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
-      <Name>WebFreight.Web</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
       <Project>{00e5d96d-dd45-47e8-aaa3-fdbfd8add61a}</Project>
       <Name>Logitude.Accounting.BL</Name>
