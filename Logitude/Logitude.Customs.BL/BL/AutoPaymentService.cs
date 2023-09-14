@@ -545,6 +545,8 @@ namespace Logitude.Customs.BL.BL
 			Requestdate = Requestdate != DateTime.MinValue ? Requestdate : null;
 			paymentPM.FuturePaymentDateTime = Requestdate;
 
+			FillSignData();
+
 			if (!IsFromClient)
 			{
 				if (PaymentMethodsList?.Count() > 0 && PaymentMethodsList[0]?.BanksList?.Count() > 1)
@@ -682,7 +684,7 @@ namespace Logitude.Customs.BL.BL
 				}
 			}
 
-			FillSignData();
+			
 			initDates();
 
 		}
@@ -1170,84 +1172,26 @@ namespace Logitude.Customs.BL.BL
 		{
 
 			// fill user  if the declaration is not payed
-			if (!this.IsError)
+			
+			ICommonDataContext MyContext = CommonDataContext.GetContext(_MyDeclarationPM.Tenant);
+
+			UserRepository userRepository = new UserRepository(MyContext);
+			UserQuery userQuery = new UserQuery(userRepository);
+			UserPM user = userQuery.GetSinglePM(_MyDeclarationPM.SignedByUserId, _tenant);
+			if (user != null)
 			{
-				ICommonDataContext MyContext = CommonDataContext.GetContext(_MyDeclarationPM.Tenant);
-				UserRepository userRepository = new UserRepository(MyContext);
-				UserList entityList = null;
-				User entityPoco = userRepository.GetSingleUser(_MyDeclarationPM.SignedByUserId, _MyDeclarationPM.Tenant);
-
-				if (entityPoco != null)
+				if (user.PersonalId == _MyDeclarationPM.SignerPersonalId)
 				{
-					List<User> singleEntityList = new List<User>();
-					singleEntityList.Add(entityPoco);
-
-					UserQuery userQuery = new UserQuery(userRepository);
-					IQueryable<User> iQueryable = singleEntityList.AsQueryable();
-					//IQueryable<UserList> iQueryableEntityList = userQuery.GetIQueryableEntityList(iQueryable);
-
-
-					IQueryable<UserList> iQueryableEntityList = null;
-
-					string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
-					UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, _MyDeclarationPM.Tenant, true);
-					var isDemo = false;
-					using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-					{
-						SettingRepository mySettingRepository = new SettingRepository();
-						isDemo = mySettingRepository.IsDemoTenant(_MyDeclarationPM.Tenant.ToString());
-						scope.Complete();
-					}
-
-					using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-					{
-						if (loggedUser != null && !loggedUser.IsCustomerCare && isDemo)
-						{
-							iQueryableEntityList = userQuery.GetDemoTenantUserList(iQueryable, loggedUser.Id, _tenant);
-						}
-						else
-						{
-							iQueryableEntityList = userQuery.GetIQueryableEntityList(iQueryable);
-						}
-
-						entityList = iQueryableEntityList.FirstOrDefault();
-						scope.Complete();
-					}
-					UserList user = entityList;
-					if (user != null)
-					{
-						if (user.PersonalId == _MyDeclarationPM.SignerPersonalId)
-						{
-							this.paymentPM.CreatedByUserId = _MyDeclarationPM.SignedByUserId;
-						}
-					}
+					this.paymentPM.CreatedByUserId = _MyDeclarationPM.SignedByUserId;
 				}
 			}
 
 			//fill SignatoryIdentification if the declaration is not payed
-			if (!this.IsError && string.IsNullOrEmpty(_MyDeclarationPM.SignerPersonalId))
+			if (!string.IsNullOrEmpty(_MyDeclarationPM.SignerPersonalId))
 			{ //if payed -> its display only
 				this.paymentPM.SignatoryIdentification = _MyDeclarationPM.SignerPersonalId;
 			}
-			//Only for Courier - Task 54622
-			if (string.IsNullOrEmpty(this.paymentPM.SignatoryIdentification) && _MyDeclarationPM.IsCourierDeclaration)
-			{
-				//if (this.DeclarationPM.Consignments != null && this.DeclarationPM.Consignments.length > 0) {
-				//this.paymentPM.SignatoryIdentification = this.DeclarationPM.Consignments[0].SecondCargoID;
-				ICustomContext MyContext = CustomContext.GetContext(_tenant);
-				CustomsSettingListQueryService customsSettingQuery = new CustomsSettingListQueryService(MyContext);
-				List<CustomsSettingList> result = customsSettingQuery.GetList(_tenant);
 
-				var list = result;
-				//console.log("[response/customsSettingListService.getAll]", list);
-				if (list != null)
-				{
-					var customsSetting = list[0];
-					this.paymentPM.SignatoryIdentification = customsSetting.CustomsAgentId;
-					//this.SignatoryIdentification = customsSetting.CustomsAgentId;
-				}
-
-			}
 		}
 		private void initDates()
 		{
