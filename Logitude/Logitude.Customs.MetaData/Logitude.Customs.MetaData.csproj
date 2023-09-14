@@ -862,6 +862,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
+      <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
+      <Name>WebFreight.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
       <Project>{d2951c0f-8a2b-4ee2-933a-8b6b4134f766}</Project>
       <Name>Logitude.Customs.BL</Name>

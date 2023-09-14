@@ -390,6 +390,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
+      <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
+      <Name>WebFreight.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
       <Project>{00E5D96D-DD45-47E8-AAA3-FDBFD8ADD61A}</Project>
       <Name>Logitude.Accounting.BL</Name>
