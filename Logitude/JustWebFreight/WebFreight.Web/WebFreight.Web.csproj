@@ -1044,6 +1044,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\QuoteGroupSectionViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ProductTypeModificationsController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\OcrDocumentExtendedController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\InternalBorderSiteTypeController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ExportStorageExtendedListController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierDeclarationPendingListExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ContainerizationListExtendedController.cs" />

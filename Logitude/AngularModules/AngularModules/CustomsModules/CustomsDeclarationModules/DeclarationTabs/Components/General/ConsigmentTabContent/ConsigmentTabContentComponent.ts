@@ -37,6 +37,7 @@ import { CargoIdentifireTypeListService } from '../../../../../../Customs/Servic
 import { DeclarationExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { CargoIdentifireTypePM } from '../../../../../../Customs/EntityPMs/CargoIdentifireTypePM';
 import { InternalBorderSiteTypeListService } from 'Customs/Services/StandardLists/InternalBorderSiteTypeListService';
+import { InternalBorderSiteTypePMService } from 'Customs/Services/StandardPMs/InternalBorderSiteTypePMService';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -1325,6 +1326,14 @@ export class ConsignmentInternalTransitionModel extends BaseComponent {
                 this.Parent.EntityPM.AddConsignmentInternalTransition(this.EntityPM);
             }
             this.Parent.AddSiteEnabled = true;
+            if(AppTool.IsNullOrEmpty(this.EntityPM.EntityParentPM.EntityParentPM.AutonomyRegionTypeCode) && this.EntityPM.EntityParentPM.EntityParentPM.IsCourierDeclaration){
+                let internalBorderSiteTypePMService: InternalBorderSiteTypePMService = new InternalBorderSiteTypePMService();
+                internalBorderSiteTypePMService.get(this.SiteCode).subscribe( response =>{
+                    if(!response.HasError){
+                        this.EntityPM.EntityParentPM.EntityParentPM.AutonomyRegionTypeCode = response.Result?.autonomyRegionTypeCode;
+                    }
+                })
+            }
         }
         else {
             this.Parent.AddSiteEnabled = false;

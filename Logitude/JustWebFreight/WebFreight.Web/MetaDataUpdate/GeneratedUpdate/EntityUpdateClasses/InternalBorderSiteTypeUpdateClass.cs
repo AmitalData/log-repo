@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InternalBorderSiteTypeUpdateClass
    {  		
-		public const string HashString = "a994c4a543d7af2a6e88af9251549dc6";
+
+		public const string HashString = "e75e6fbd15db4a7176c739b8d465cf68";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
@@ -257,10 +258,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם אנגלית",
+					  						FullLocalDefaultText =  "שם םנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם אנגלית",
+					  						ListLocalDefaultText =  "שם םנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -444,10 +445,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive ",
-					  						FullLocalDefaultText =  "לא פּעיל",
+					  						FullLocalDefaultText =  "לם פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive ",
-					  						ListLocalDefaultText =  "לא פּעיל",
+					  						ListLocalDefaultText =  "לם פּעיל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -470,7 +471,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "AutonomyRegionTypeCode",
 					  						ObjectTableName =  "Customs.InternalBorderSiteType",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "AutonomyType",
+					  						LookUpTableName =  "Customs.AutonomyType",
 					  						MinLength =  0,
 					  						MaxLength =  4,
 					  						IsRequired =  false,
@@ -507,10 +508,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutonomyRegionTypeCode",
 					  						DefaultText =  "AutonomyRegionTypeCode",
-					  						FullLocalDefaultText =  "קוד אזור אוטונומיה",
+					  						FullLocalDefaultText =  "קוד םזור םוטונומיה",
 					  						ListFieldLable =  "AutonomyRegionTypeCodeListLable",
 					  						ListLableDefaultText =  "Autonomy Region Type Code",
-					  						ListLocalDefaultText =  "קוד אזור אוטונומיה",
+					  						ListLocalDefaultText =  "קוד םזור םוטונומיה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -583,32 +584,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InternalBorderSiteType.HeaderScreen", Name = "Customs.InternalBorderSiteTypeHeaderScreen", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
-      
-             ScreenField CustomsInternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Id,ScreenCode = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.InternalBorderSiteType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-	          
-             ScreenField CustomsInternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Id,ScreenCode = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.InternalBorderSiteType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-	          
-             ScreenField CustomsInternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Id,ScreenCode = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.InternalBorderSiteType.AutonomyRegionTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-	          	
-		    InternalBorderSiteTypeObjectTable.HeaderScreenId = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Id;
-		    InternalBorderSiteTypeObjectTable.HeaderScreenCode = InternalBorderSiteTypeCustomsInternalBorderSiteTypeHeaderScreenScreen0.Code;
 
-	   		  
+	         Screen InternalBorderSiteTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InternalBorderSiteType.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+             ScreenField CustomsInternalBorderSiteTypeInternalBorderSiteTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InternalBorderSiteTypeGeneralTabScreenScreen0.Id,ScreenCode = InternalBorderSiteTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.InternalBorderSiteType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsInternalBorderSiteTypeInternalBorderSiteTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = InternalBorderSiteTypeGeneralTabScreenScreen0.Id,ScreenCode = InternalBorderSiteTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.InternalBorderSiteType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsInternalBorderSiteTypeInternalBorderSiteTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = InternalBorderSiteTypeGeneralTabScreenScreen0.Id,ScreenCode = InternalBorderSiteTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.InternalBorderSiteType.AutonomyRegionTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
 	    {                
+
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable InternalBorderSiteTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InternalBorderSiteType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode InternalBorderSiteTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternalBorderSiteType.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature InternalBorderSiteTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternalBorderSiteType.Tab.General", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteTypeFeatures.INTG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InternalBorderSiteTypeObjectTable);
+			   Feature InternalBorderSiteTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternalBorderSiteType.Tab.General", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteTypeFeatures.INTG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InternalBorderSiteTypeObjectTable);
  
                  
-			   TextCode InternalBorderSiteTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternalBorderSiteType.TH.event", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature InternalBorderSiteTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternalBorderSiteType.Tab.Events", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteTypeFeatures.INTE", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InternalBorderSiteTypeObjectTable);
+			   TextCode InternalBorderSiteTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternalBorderSiteType.TH.event", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature InternalBorderSiteTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternalBorderSiteType.Tab.Events", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteTypeFeatures.INTE", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InternalBorderSiteTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -617,6 +616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INTG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InternalBorderSiteTypeGeneralFeature_TH0.Id,FeatureUniqeCode = InternalBorderSiteTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, TabNameTextCodeId = InternalBorderSiteTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = InternalBorderSiteTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INTE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InternalBorderSiteTypeEventsFeature_TH1.Id,FeatureUniqeCode = InternalBorderSiteTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, TabNameTextCodeId = InternalBorderSiteTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = InternalBorderSiteTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
    
 	    } 
 	

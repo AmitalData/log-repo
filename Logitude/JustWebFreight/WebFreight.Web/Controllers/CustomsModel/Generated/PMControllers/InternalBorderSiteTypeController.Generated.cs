@@ -60,6 +60,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
+                SecurityUtility.CheckContactFeature("Customs.InternalBorderSiteType", "READ", authToken.Tenant);
+	                
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 InternalBorderSiteTypeQueryService internalBorderSiteTypeQuery = new InternalBorderSiteTypeQueryService(MyContext);
 				internalBorderSiteTypeQuery.InitializeSettings();
