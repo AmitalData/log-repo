@@ -246,6 +246,10 @@
       <Project>{15b3e0d2-6217-493a-a690-158c497f5318}</Project>
       <Name>CustomsWorkerRole</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
+      <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
+      <Name>WebFreight.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
       <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
       <Name>Logitude.BL</Name>
