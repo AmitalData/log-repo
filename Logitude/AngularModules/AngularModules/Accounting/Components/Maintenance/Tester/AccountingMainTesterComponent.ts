@@ -1036,10 +1036,10 @@ Line3
     ButtonBanksCCExternalReco_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
-        defaultParam.AccountId = ""
+        defaultParam.AccountId = "1-1234"
         defaultParam.ToAccountingDate = "30.04.2023";
-        defaultParam.Batch = 1;
-        defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
+        defaultParam.Batch = 0;
+      //  defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
         if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
             this._TextBoxParam = JSON.stringify(defaultParam);
             return;
