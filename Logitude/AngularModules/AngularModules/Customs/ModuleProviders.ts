@@ -455,7 +455,6 @@ import { StatusFieldTypeListService } from './Services/StandardLists/StatusField
 import { GTBFUSTATUWebService } from './Services/WebServices/GTBFUSTATUWebService';
 import { ManifestCargoStatusListService } from './Services/StandardLists/ManifestCargoStatusListService';
 import { ServersNamePMService } from './Services/StandardPMs/ServersNamePMService';
-import { InternalBorderSiteTypePMService } from './Services/StandardPMs/InternalBorderSiteTypePMService';
 
 
 export class ModuleProviders {
@@ -814,7 +813,6 @@ export class ModuleProviders {
             case "CustomsAutonomyKeywordPMService": { myResult = new CustomsAutonomyKeywordPMService(); break; }
             case "CourierMasterPMService": { myResult = new CourierMasterPMService(); break; }
             case "CustomDocumentTypePMService": { myResult = new CustomDocumentTypePMService(); break; }
-            case "InternalBorderSiteTypePMService": { myResult = new InternalBorderSiteTypePMService(); break; }
             case "UIMessagePMService": { myResult = new UIMessagePMService(); break; }
             case "InternationalSitePMService": { myResult = new InternationalSitePMService(); break; }
             case "DeclarationCargoSplitPMService": { myResult = new DeclarationCargoSplitPMService(); break; }
