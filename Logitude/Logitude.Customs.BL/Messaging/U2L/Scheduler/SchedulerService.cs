@@ -499,8 +499,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 						LoggingEntityId = _MyDeclarationPM.Id,
 						RequestVIA = SendRequestVIA.WebServiceBatch,
 						SuppressSplitWR = true,
+						AppicationId = _MyDeclarationPM.Id,
 						// LoggingEntityReference = "AutoPayment",
-						UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(autoPaymentService?.PaymentMethodsList[0]?.SelectedBank?.Id)
+						//UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(autoPaymentService?.PaymentMethodsList[0]?.SelectedBank?.Id)
 					};
 
 					if (declarationPaymentPM.FuturePaymentDateTime != null)
