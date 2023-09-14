@@ -1032,6 +1032,38 @@ Line3
 
 
 
+    
+    ButtonBanksCCExternalReco_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.AccountId = "1-1234"
+        defaultParam.ToAccountingDate = "30.04.2023";
+        defaultParam.Batch = 0;
+      //  defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _BanksCCExternalRecoUrl = ServiceHelper.GetLogitudeURL() + '/api/BanksCCExternalReco';
+        let myUrl = _BanksCCExternalRecoUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&accountId=" + objToCheck1.AccountId;
+        myUrl = myUrl + "&toAccountingDate=" + objToCheck1.ToAccountingDate;
+        myUrl = myUrl + "&batch=" + objToCheck1.Batch;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+
+
     ButtonLoadConsolTaxRep_Click() {
         let opr = "ButtonLoadConsolTaxRep_Click";
         let str: string =

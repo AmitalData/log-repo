@@ -1181,4 +1181,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public decimal LocalAmountDebit { get; internal set; }
         public string OpenAmountCurrencyId { get; internal set; }
     }
+
+
+    public class GetNextLTArgs
+    {
+        public int Tenant { get; set; }
+        public string AccountId { get; set; }
+        public string LastCheckedId { get; set; }
+        public DateTime ToAccountingDate { get; set; }
+        public int ThisTimeMadeCount { get; set; }
+        public bool Stop { get; set; }
+
+
+    }
 }
