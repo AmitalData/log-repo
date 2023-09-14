@@ -19,20 +19,20 @@
   LookUp2="&quot;LocalName&quot;"
   KeyPropertyPath="&quot;Code&quot;"
   AutoCompleteSearchWindow="false"
-  IsClosed="true"
+  IsClosed="false"
   CacheOnClient="true"
   EditableFromAutoCompleteWindow="false"
   HasCounter="false"
   EnableAddFromLOV="false"
   IsRestrictable="false"
-  IsMain="false"
+  IsMain="true"
   IsAutoComplete="true"
   EnableEditFromLOV="false"
   SortingByObjectField="&quot;Code&quot;"
   InActive="false"
-  IsSaveButtonVisible="false"
+  IsSaveButtonVisible="true"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
@@ -453,7 +453,7 @@
     IsDeleted="false"
     ObjectTableName="&quot;Customs.InternalBorderSiteType&quot;"
     FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;AutonomyType&quot;"
+    LookUpTableName="&quot;Customs.AutonomyType&quot;"
     MinLength="0"
     MaxLength="4"
     IsRequired="false"
@@ -564,14 +564,53 @@
     <QueryFilters />
   </Query>
   <Screen
-    Name="&quot;Customs.InternalBorderSiteTypeHeaderScreen&quot;"
+    Name="&quot;GeneralTabScreen&quot;"
     ObjectTableName="&quot;Customs.InternalBorderSiteType&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;InternalBorderSiteType.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="3">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;AutonomyRegionTypeCode&quot;"
+        ScreenName="GeneralTabScreen" />
+    </ScreenFields>
   </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    TabLocalName="&quot;כללי&quot;"
+    ObjectTableName="&quot;Customs.InternalBorderSiteType&quot;"
+    Code="&quot;INTG&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    TextCode="&quot;Customs.InternalBorderSiteType.TH.General&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    TabLocalName="&quot;אירועים&quot;"
+    ObjectTableName="&quot;Customs.InternalBorderSiteType&quot;"
+    Code="&quot;INTE&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;Customs.InternalBorderSiteType.TH.event&quot;"
+    IsPackagable="true"
+    IndexOrder="1"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

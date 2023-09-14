@@ -1043,6 +1043,7 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingWatermarkController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\QuoteGroupSectionViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ProductTypeModificationsController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\InternalBorderSiteTypeController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ExportStorageExtendedListController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierDeclarationPendingListExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ContainerizationListExtendedController.cs" />
@@ -1079,6 +1080,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DefaultTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DefaultValueController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GovernmentProcTypeTenantController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\InternalBorderSiteTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\InternationalSiteTenantController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SupplierInvioceExportDefaultController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\UIMessageTenantController.Generated.cs" />

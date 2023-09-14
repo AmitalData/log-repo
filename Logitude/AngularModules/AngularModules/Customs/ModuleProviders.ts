@@ -274,6 +274,7 @@ import { CustomsDocumentPMService } from './Services/StandardPMs/CustomsDocument
 import { CustomsDocumentsTicketPMService } from './Services/StandardPMs/CustomsDocumentsTicketPMService';
 import { CustomsExchangeRatePMService } from './Services/StandardPMs/CustomsExchangeRatePMService';
 import { CustomsHouseTypeAdditionalPMService } from './Services/StandardPMs/CustomsHouseTypeAdditionalPMService';
+import { InternalBorderSiteTypePMService } from './Services/StandardPMs/InternalBorderSiteTypePMService';
 import { CustomsHouseTypePMService } from './Services/StandardPMs/CustomsHouseTypePMService';
 import { CustomsItemPMService } from './Services/StandardPMs/CustomsItemPMService';
 import { CustomsPartnersItemPMService } from './Services/StandardPMs/CustomsPartnersItemPMService';
@@ -463,6 +464,7 @@ export class ModuleProviders {
         switch (name) {
 
             //#region StandardList
+            
             case "AddressContactStateListService": { myResult = new AddressContactStateListService(); break; }
             case "ContainerTypeListService": { myResult = new ContainerTypeListService(); break; }
             case "StuffingSiteTypeListService": { myResult = new StuffingSiteTypeListService(); break; }
@@ -774,6 +776,7 @@ export class ModuleProviders {
             case "CustomsExchangeRatePMService": { myResult = new CustomsExchangeRatePMService(); break; }
             case "CustomsHouseTypeAdditionalPMService": { myResult = new CustomsHouseTypeAdditionalPMService(); break; }
             case "CustomsHouseTypePMService": { myResult = new CustomsHouseTypePMService(); break; }
+            case "InternalBorderSiteTypePMService": { myResult = new InternalBorderSiteTypePMService(); break; }
             case "CustomsItemPMService": { myResult = new CustomsItemPMService(); break; }
             case "CustomsPartnersItemPMService": { myResult = new CustomsPartnersItemPMService(); break; }
             case "CustomsRequestsSheetPMService": { myResult = new CustomsRequestsSheetPMService(); break; }
