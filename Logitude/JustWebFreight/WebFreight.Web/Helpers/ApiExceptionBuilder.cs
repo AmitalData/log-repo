@@ -39,7 +39,7 @@ namespace WebFreight.Web.Helpers
                 apiException = new APIException()
                 {
                     ErrorType = ex.GetType().Name,
-                    ErrorMessage = ErrorMessage,
+                    ErrorMessage = ErrorMessage ,
                     ShortErrorMessage = ShortErrorMessage,
                 };
             }
@@ -57,7 +57,7 @@ namespace WebFreight.Web.Helpers
                 apiException = new APIException()
                 {
                     ErrorType = ex.GetType().Name,
-                    ErrorMessage = errorMessage,
+                    ErrorMessage = errorMessage + " (" + ex.StackTrace + ")",
                     ShortErrorMessage = shortErrorMessage
                 };
             }
