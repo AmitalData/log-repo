@@ -93,11 +93,6 @@
     <Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
-      <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
-      <Name>WebFreight.Web</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
