@@ -320,7 +320,7 @@
                                         <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="openFileUploader()">Upload</button>
                                         <input #myInput  accept=".xlsx, .xls"  type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
                                     </a>
-                                </div>     
+                                </div>
                                 <div style="width: 220px; float: right;">
                                     <!--<SearchTextBox [ObjectTableName]="'ReconcileExternalPage'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>-->
                                 </div>
@@ -337,12 +337,11 @@
                         <tr style="height: 110px;">
                             <td colspan="3" style="height: 250px;">
                                 <div class="CellContent" *ngIf="AmountColHeader">
-                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                        [IsReadOnly]="ReconcileExternalPagePM.StatusCode != '1'"
-                                        [ItemSource]="PageLinesList" (RowEnded)="OnRowEnded($event)"
-                                        [UseVirtuallization]="true"
-                                        [SelectedRow]="SelectedRow"
-                                        (Ondblclick)="OnFocus()">
+
+                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                            [IsReadOnly]="ReconcileExternalPagePM.StatusCode != '1'"
+                                                            [ItemSource]="PageLinesList" (RowEnded)="OnRowEnded($event)"
+                                                            (Ondblclick)="OnFocus()">
 
                                         <!-- LineNumber -->
                                         <log-column
