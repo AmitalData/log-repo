@@ -542,7 +542,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     }
     //#endregion
 
-    public balanceFilterSelectedValue: string = 'filter_All';
+    public balanceFilterSelectedValue: string = 'filter_Debtors';
     public currencyFilterSelectedValue: string = 'filter_OriginalCurr';
     BalanceFilterItemClicked(itemValue: string)
     {
