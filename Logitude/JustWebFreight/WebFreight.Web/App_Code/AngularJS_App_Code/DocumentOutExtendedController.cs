@@ -46,6 +46,9 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using DocumentsFiling = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentsFiling;
 using Logitude.AmitalMessaging.Infrastructure.Transmission;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Accounting.Def.EntityPMs;
+using System.Linq.Dynamic.Core;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -293,11 +296,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 {
                     DocumentHelper documentHelper = new DocumentHelper();
                     documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant, null, createDocumentOutArgs.DocumentTypeTemplateId);
-                    if (createDocumentOutArgs.SignHSM)
+                  if (createDocumentOutArgs.SignHSM)
                     {
+                        IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+                        FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(createDocumentOutArgs.Tenant);
 
+                        if(accountingSettings.AccountingActivated)
 
-                        this.CheckDetailsToHSM(documentOutPM.Id,createDocumentOutArgs.Tenant);
+                        this.CheckDetailsToHSM(documentOutPM.Id,createDocumentOutArgs.Tenant, accountingSettings);
                         
                     }
               
@@ -310,7 +316,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public void CheckDetailsToHSM(string documentOutId,int tenant)
+        public void CheckDetailsToHSM(string documentOutId,int tenant, FullAccountingSettingPM accountingSettings)
         {
             DocumentHelper documentHelper = new DocumentHelper();
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
@@ -326,7 +332,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (!string.IsNullOrEmpty(contactEmail))
                 {
                     this.CreatePdfDoc(documentsFiling, invocie);
-                    documentHelper.StartSignPDFInvoice(invocie, invocie.Tenant, repository, contactEmail);
+                    documentHelper.StartSignPDFInvoice(invocie, invocie.Tenant, repository, contactEmail,  accountingSettings);
                 }
 
             }
@@ -355,14 +361,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
 
             if (string.IsNullOrEmpty(Billto)) return "";
-            var contactIds = (from card in objectContext.Cards
-                              where card.BillToId == Billto
-                              join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
-                              select cardContact.ContactId).ToList();
+            var EmailForSendingSingArinvoice = (from customer in objectContext.Customers
+                                                where customer.Id == Billto
+                                                // join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
+                                                select customer.EmailForSendingSingArinvoice).FirstOrDefault();
             string email = "";
-            foreach (var contactId in contactIds)
+            if (!string.IsNullOrEmpty(EmailForSendingSingArinvoice))
             {
-                  email = objectContext.Contacts.Where(contact => contact.Id == contactId && contact.SignatureHtml.Equals(default(byte))).FirstOrDefault().Email;
+                  email = objectContext.Contacts.Where(contact => contact.Id == EmailForSendingSingArinvoice ).FirstOrDefault().Email;
                 if(!string.IsNullOrEmpty(email))
                    return email;
             }
