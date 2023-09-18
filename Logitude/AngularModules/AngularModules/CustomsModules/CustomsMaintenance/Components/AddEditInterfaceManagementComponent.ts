@@ -226,10 +226,12 @@ export class AddEditInterfaceManagementComponent
         {
             var sendTime = "2022-10-30T02:00:00.000Z"
 
-            var time = sendTime.replace("02:00:00",this.entityPM.SendTime);
+            if(this.entityPM.SendTime.length > 5)
+                this.entityPM.SendTime = this.entityPM.SendTime.substring(0,5);
+            var time = sendTime.replace("02:00",this.entityPM.SendTime);
             return time;    
         }
-        return  null;
+        return  null; 
     
     }
 
