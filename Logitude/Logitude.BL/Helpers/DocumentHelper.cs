@@ -320,7 +320,7 @@ namespace Logitude.BL.Helpers
             repository.Update(invocie);
             repository.SubmitChanges();
              this.CreateEvent("HSMF", invocie, "חתימת החשבונית לא  צלחה");
-            this.SendEmailAlert("libby@amital.co.il","  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+invocie.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex);
+            this.SendEmailAlert("ohad@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+invocie.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex);
         }
 
 
@@ -330,7 +330,7 @@ namespace Logitude.BL.Helpers
             repository.Update(invocie);
             repository.SubmitChanges();
             this.CreateEvent("HSMS", invocie, "החשבונית נחתמה בהצלחה");
-            this.SendEmailAlert("libby@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר" + invocie.InvoiceNumber + "<br /><br />מצורפת השגיאה " );
+         //   this.SendEmailAlert("libby@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר" + invocie.InvoiceNumber + "<br /><br />מצורפת השגיאה " );
             this.SendToEmailContact(contactEmail, invocie, document, DocumentFilingId, repository);
 
         }

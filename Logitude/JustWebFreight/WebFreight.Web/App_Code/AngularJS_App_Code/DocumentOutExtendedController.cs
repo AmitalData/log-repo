@@ -45,6 +45,7 @@ using DocumentsFiling = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentsFiling
 using Logitude.AmitalMessaging.Infrastructure.Transmission;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Accounting.Def.EntityPMs;
+using System.Linq.Dynamic.Core;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -357,14 +358,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
 
             if (string.IsNullOrEmpty(Billto)) return "";
-            var contactIds = (from card in objectContext.Cards
-                              where card.BillToId == Billto
-                              join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
-                              select cardContact.ContactId).ToList();
+            var EmailForSendingSingArinvoice = (from customer in objectContext.Customers
+                                                where customer.Id == Billto
+                                                // join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
+                                                select customer.EmailForSendingSingArinvoice).FirstOrDefault();
             string email = "";
-            foreach (var contactId in contactIds)
+            if (!string.IsNullOrEmpty(EmailForSendingSingArinvoice))
             {
-                  email = objectContext.Contacts.Where(contact => contact.Id == contactId && contact.SignatureHtml.Equals(default(byte))).FirstOrDefault().Email;
+                  email = objectContext.Contacts.Where(contact => contact.Id == EmailForSendingSingArinvoice ).FirstOrDefault().Email;
                 if(!string.IsNullOrEmpty(email))
                    return email;
             }
