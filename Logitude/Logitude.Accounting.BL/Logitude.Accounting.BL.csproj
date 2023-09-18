@@ -235,6 +235,7 @@
     <Compile Include="CoreBL\Batch\BatchGLAccountInterestDeactivationBalanceTask.cs" />
     <Compile Include="CoreBL\Batch\BatchYearlyFIXService.cs" />
     <Compile Include="CoreBL\Batch\GLAccountInterestActivationBalanceTask.cs" />
+    <Compile Include="CoreBL\Batch\GLAccountMultiToCurrencyTask.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\OpenRecoDataValidationService.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\RealOpenAmountService.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\UpdateOpenReconcileService.cs" />
@@ -873,6 +874,7 @@
     <Compile Include="Utils\FutureOpenChequesBatch.cs" />
     <Compile Include="Utils\GLAccountInterestActivationBalanceBatch.cs" />
     <Compile Include="Utils\GLAccountInterestDeactivationBalanceBatch.cs" />
+    <Compile Include="Utils\GLAccountMultiToCurrencyBatch.cs" />
     <Compile Include="Utils\InterestTransactionsCheckARun.cs" />
     <Compile Include="Utils\InterestTransactionsCheckBRun.cs" />
     <Compile Include="Utils\PostDatedChequesRedemptionBatch.cs" />
