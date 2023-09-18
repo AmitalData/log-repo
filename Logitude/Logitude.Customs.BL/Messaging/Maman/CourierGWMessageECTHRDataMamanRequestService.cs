@@ -117,7 +117,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
             if (myCourierMasterPM.EffectiveFlight && isAutomatic)
             {
-                throw new Exception($"Is EffectiveFlight, MAWB:{myCourierMasterPM?.MAWB}");
+                return null;
             }
 
             GWMessageECTHRData myGWMessageECTHRData = CreateCourierHawbMamanMessage(myDeclarationPM, myCourierMasterPM, declarationCourierStatusPM);
