@@ -89,7 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL
                      from aod in accOpenBalanceDescJoin 
                      where aco.Tenant == _Tenant
                      group aod by aco.AccountId into g
-                     select new GLAccountDescMDatasDTO()
+                     select new GLAccountDescMDatasDTO2()
                      {
                          ParentAccId = g.Key,
                          DescBalanceInLocalCurrency = g.Sum(r => r.BalanceInLocalCurrency),
@@ -419,6 +419,14 @@ namespace Logitude.Accounting.BL.CoreBL
     }
 
     public class GLAccountDescMDatasDTO
+    {
+        public string ParentAccId { get; set; }
+        public string DescAccId { get; set; }
+        public decimal DescBalanceInLocalCurrency { get; set; }
+        public decimal DescInterestOpenBalance { get; set; }
+    }
+
+    public class GLAccountDescMDatasDTO2
     {
         public string ParentAccId { get; set; }
         public string DescAccId { get; set; }
