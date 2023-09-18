@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "2658c92214f27bacb8d858a7cae87f23";
+		public const string HashString = "135506d7b77214d6f0c42c7d355ea398";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3248,7 +3248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OppositeAccountLocalName",
 					  						DefaultText =  "Opposite Account Local Name",
-					  						FullLocalDefaultText =  "שם מקומי של חשבון נגדי",
+					  						FullLocalDefaultText =  "חשבון נגדי",
 					  						ListFieldLable =  "OppositeAccountLocalNameListLable",
 					  						ListLableDefaultText =  "Opposite Account Local Name",
 					  						ListLocalDefaultText =  "שם מקומי של חשבון נגדי",
