@@ -39,6 +39,9 @@ using System.Transactions;
 using System.Web;
 using WebFreight.Web;
 using User = Simplog.Data.CommonDataModel.EntityPOCOs.User;
+using WebFreight.Web;
+using Logitude.XSD.CW_API.ABM;
+using Logitude.BL.InvoiceModel.Tools;
 
 namespace Logitude.BL.Helpers
 {
@@ -287,12 +290,21 @@ namespace Logitude.BL.Helpers
                     byte[] signBytes = HSMSignFileService
                         .SignCustomsRequest(tenant, invocie.Id, filedata, document.FileName, vatNumber, loggedcontact?.Id, accountingSettings);
                     //invocie.IsSigned
+
                     if (signBytes != null)
                     {
                         storageservice.Write(signBytes, fileInfo);
+                        APInvoiceHelper.AddCommunicationLog("D", invocie, signBytes.ToString(), "ARInvoice", invocie?.Id, "signBytes is ok", Tenant);
+
                         this.HSMSignatureSucceeded(invocie, repository, contactEmail, document, myDocumentFilings.Id);
                        
                         
+                    }
+                    else
+                    {
+                        APInvoiceHelper.AddCommunicationLog("F", invocie, signBytes.ToString(), "ARInvoice", invocie?.Id, "signBytes is empty", Tenant);
+
+                        throw new HSMException($"{invocie?.Id},response: Result.Content.ReadAsByteArrayAsync().Result is empty", "Fails");
                     }
                 }
                 else
@@ -302,13 +314,17 @@ namespace Logitude.BL.Helpers
             }
             catch(HSMException ex)
             {
+                APInvoiceHelper.AddCommunicationLog("F", invocie, ex.Message, "ARInvoice", invocie.Id, "HSM Signature Failed", tenant);
+
                 this.HSMSignatureFailed(invocie, ex, repository);
                                  
             }
             catch (Exception ex)
             {
+                APInvoiceHelper.AddCommunicationLog("F", invocie, ex.Message, "ARInvoice", invocie.Id, "HSM Signature Failed", tenant);
+
                 //Logger.LogMe($"hSMSignFile({tenant},{invocieId})" + ex.ToString(), true, "CustomsHSMSignWR");
-              //  ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "ProccessHSMSign-MarkExportSignTaskAsDone", "", null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "ProccessHSMSign-MarkExportSignTaskAsDone", "", null);
 
 
             }
@@ -319,13 +335,14 @@ namespace Logitude.BL.Helpers
            invocie.IsSigned = "2";//FALID
             repository.Update(invocie);
             repository.SubmitChanges();
-             this.CreateEvent("HSMF", invocie, "חתימת החשבונית לא  צלחה");
+             this.CreateEvent("HSMF", invocie, "חתימת החשבונית לא  צלחה"+ ex);
             this.SendEmailAlert("ohad@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+invocie.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex);
         }
 
 
         private void HSMSignatureSucceeded(ARInvoice invocie, ARInvoiceRepository repository,string contactEmail,Document document,string  DocumentFilingId )
         {
+
             invocie.IsSigned = "1";
             repository.Update(invocie);
             repository.SubmitChanges();

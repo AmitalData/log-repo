@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.BL.InvoiceModel.Tools;
 using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.Customs.BL.EntityQueryServices;
@@ -37,7 +38,7 @@ namespace Logitude.Accounting.BL.Messaging
 
           )
         {
-
+           
             if (string.IsNullOrWhiteSpace(signHSM_Url))
             {
                 throw new ArgumentNullException("signHSM_Url");
@@ -94,6 +95,7 @@ namespace Logitude.Accounting.BL.Messaging
                                 {
 
                                     var byteRes = task.Result.Content.ReadAsByteArrayAsync().Result;
+
                                     return byteRes;
 
 
@@ -154,36 +156,44 @@ namespace Logitude.Accounting.BL.Messaging
            )
         {
             IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
-           
+
             FullAccountingSettingPM accountingSettingsTenant0 = query.GetFullAccountingSettingByTenant(0);
-            if (string.IsNullOrWhiteSpace(accountingSettings.HSMaddress ))
+            if (string.IsNullOrWhiteSpace(accountingSettings.HSMaddress))
             {
                 throw new ArgumentNullException("HSMaddress");
             }
-            if (string.IsNullOrWhiteSpace(accountingSettings.HSMtoken ))
+            if (string.IsNullOrWhiteSpace(accountingSettings.HSMtoken))
             {
                 throw new ArgumentNullException("HSMtoken");
             }
 
+            try
+            {
+                var res = this.SignFile(
+                     accountingSettingsTenant0.HSMaddress,//  @"https://customs.amital.co.il/api/SignHSM",
+                     accountingSettingsTenant0.HSMtoken,// @"9edYig7zg_b2mBV-72DaOKVMlqtJp-xovFY0k5uBNSRtAzFuY2xcGA==",
+                     new HSMSignFileService.HSMSignFileParams
+                     {
+                         companyid = accountingSettings.HSM.ToString(),// "101",
+                         token = accountingSettings.HSMtoken,//  "c6f85591-6e4e-4203-95ef-628b826577b8",
+                         signprocess = "Accounting",// ""Accounting",
+                         id = personalId,
+                         companypersonal = "C", // P OR C  
+                         filename = $"{fileName}.PDF",
+                         reference = fileName,
+                         companyBN = customsAgentId, //"550221105"
 
-            var res = this.SignFile(
-                 accountingSettingsTenant0.HSMaddress,//  @"https://customs.amital.co.il/api/SignHSM",
-                 accountingSettingsTenant0.HSMtoken,// @"9edYig7zg_b2mBV-72DaOKVMlqtJp-xovFY0k5uBNSRtAzFuY2xcGA==",
-                 new HSMSignFileService.HSMSignFileParams
-                 {
-                     companyid = accountingSettings.HSM.ToString(),// "101",
-                     token = accountingSettings.HSMtoken,//  "c6f85591-6e4e-4203-95ef-628b826577b8",
-                     signprocess = "Accounting",// ""Accounting",
-                     id = personalId,
-                     companypersonal = "C", // P OR C  
-                     filename = $"{fileName}.PDF",
-                     reference = fileName,
-                     companyBN = customsAgentId, //"550221105"
+                     },
+                     signBytes //UTF8Encoding.UTF8.GetBytes(xml)
+                    );
+                return res;
+            }
+            catch(Exception e)
+            {
+                throw new HSMException(e.ToString(), "faild");
+            }
 
-                 },
-                 signBytes //UTF8Encoding.UTF8.GetBytes(xml)
-                );
-            return res;
+            
         }
 
         public class HSMSignFileParams
