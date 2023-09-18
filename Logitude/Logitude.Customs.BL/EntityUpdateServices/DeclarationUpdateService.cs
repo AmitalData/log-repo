@@ -781,13 +781,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 LogPayment("6", entityPM);
 
-                var siteCode = entityPM.Consignments[0]?.ConsignmentInternalTransitions[0]?.SiteCode;
+
+                string siteCode = entityPM.Consignments?.FirstOrDefault()?.ConsignmentInternalTransitions?.FirstOrDefault()?.SiteCode;
+
                 if (entityPM.IsCourierDeclaration && String.IsNullOrEmpty(entityPM.AutonomyRegionTypeCode) && !String.IsNullOrEmpty(siteCode))
                 {
                     InternalBorderSiteTypeQueryService internalBorderSiteTypeQueryService = new InternalBorderSiteTypeQueryService(entityPM.Tenant);
                     entityPM.AutonomyRegionTypeCode = internalBorderSiteTypeQueryService.GetSingle(siteCode, false, true)?.AutonomyRegionTypeCode;
                 }
-                
+
             }
             finally
             {
