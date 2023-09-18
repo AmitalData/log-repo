@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "73bf0d380442c0802865d6545b9c4502";
+		public const string HashString = "11f876930610fbaffe0319da29711764";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5012,7 +5012,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature LedgerTransactionFeature_SalesmanLTRP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SalesmanLTRP", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.SalesmanLTRP", NameTextCodeDefaultText = @"Ledger Transaction Report Salesman Restrictions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable);
 
-		   Feature LedgerTransactionFeature_OppositeAccountNUM = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OppositeAccountNUM", FeatureTypeCode = "OAN", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.OppositeAccountNUM", NameTextCodeDefaultText = @"Displaying the name of the opposite card or the number of the opposite card" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable);
+		   Feature LedgerTransactionFeature_OppositeAccountNUM = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OppositeAccountNUM", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.OppositeAccountNUM", NameTextCodeDefaultText = @"Displaying the name of the opposite card or the number of the opposite card" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable);
 
    
 	    

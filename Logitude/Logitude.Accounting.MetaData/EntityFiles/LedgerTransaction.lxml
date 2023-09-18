@@ -6125,7 +6125,7 @@
       IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;OppositeAccountNUM&quot;"
-      FeatureTypeCode="&quot;OAN&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;LedgerTransaction.Features.OppositeAccountNUM&quot;"
       FeatureDefaultText="&quot;Displaying the name of the opposite card or the number of the opposite card&quot;"
       IsPackagable="true"
