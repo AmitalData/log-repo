@@ -25,7 +25,7 @@ namespace Logitude.Accounting.BL
             {    
                 Code = "2", 
                 Inactive = false, 
-                LocalName = "הוצאות", 
+                LocalName = "הוצאות, מתאפס בהעברת שנה", 
                 EnglishName = "Expense", 
 			});
 			 
@@ -33,7 +33,7 @@ namespace Logitude.Accounting.BL
             {    
                 Code = "3", 
                 Inactive = false, 
-                LocalName = "אחר", 
+                LocalName = "חו''ז , לא מתאפס. יתרה ממשיכה לשנה הבאה", 
                 EnglishName = "Other", 
 			});
 			 
@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL
             {    
                 Code = "1", 
                 Inactive = false, 
-                LocalName = "הכנסות", 
+                LocalName = "הכנסות, מתאפס בהעברת שנה", 
                 EnglishName = "Revenue", 
 			});
 			
