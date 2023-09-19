@@ -156,7 +156,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         select new InterestReportDiff
                         {
                             AccountId = acc.AccountId,
-                            LocalName = acc.LocalName,
+                           // LocalName = acc.LocalName,
                             DisplayNumber = acc.DisplayNumber,
                             Tenant = acc.Tenant,
                             InterestOpenBalance = ad != null ? acc.InterestOpenBalance + ad.DescInterestOpenBalance : acc.InterestOpenBalance, 
