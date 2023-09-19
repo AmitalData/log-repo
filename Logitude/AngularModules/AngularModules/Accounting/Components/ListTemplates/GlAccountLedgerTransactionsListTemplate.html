@@ -156,7 +156,7 @@
     <!-- **** -->
     <!-- Reconcile Window -->
     <div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px 7px;">
-        <CheckBox float-start [IsEnabled]="rowData['InReconcileProgress'] == false" (Checked)="CheckBoxClicked($event)"
+        <CheckBox float-start [IsEnabled]="rowData['InReconcileProgress'] == false && IsCheckBoxEnabled" (Checked)="CheckBoxClicked($event)"
             [IsChecked]="rowData['IsChecked']"></CheckBox>
 
         <svg float-start *ngIf="rowData['AccountId'] == transferAccountId" xmlns="http://www.w3.org/2000/svg"

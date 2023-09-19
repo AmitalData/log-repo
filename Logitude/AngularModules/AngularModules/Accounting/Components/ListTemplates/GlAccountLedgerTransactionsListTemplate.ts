@@ -15,6 +15,7 @@ import { ListComponentArgs } from 'Infrastructure/Args';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { ChildDirective } from 'Controls/Directives/ChildDirective';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 @Component({
 
     templateUrl: "./GlAccountLedgerTransactionsListTemplate.html"
@@ -46,10 +47,14 @@ export class GlAccountLedgerTransactionsListTemplate {
     public isRTL: boolean = false;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private CD: ChangeDetectorRef) {
+    IsMultiWithReconcileMethodCodeEqualOne: boolean = false;
+    constructor(private CD: ChangeDetectorRef,) {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
+        this.IsCheckBoxEnabled = true;
+        this.Listen();
         if (ObjectsLocator.GlobalSetting)
             this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
+
     }
 
     checkBoxState: boolean = false;
@@ -68,7 +73,6 @@ export class GlAccountLedgerTransactionsListTemplate {
 
 
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
-
         this.rowData = rowData;
         if (this.rowData.IsChecked == true) {
             console.log("Oh Yea True");
@@ -81,7 +85,9 @@ export class GlAccountLedgerTransactionsListTemplate {
         //#region Set Icons
 
         this.IconCode = AccountingEntityHelper.getEntityIcon(this.rowData.SourceTypeCode);
-
+        if(GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter&& !GLAccountSecurityLevelService.IsCheckBoxEnabledParameter){
+            this.IsCheckBoxEnabled=false;
+        }
         //#endregion
 
         var isDestroyed: boolean = this.CD["destroyed"];
@@ -143,6 +149,12 @@ export class GlAccountLedgerTransactionsListTemplate {
 
     }
 
+    private Listen() {
+        GLAccountSecurityLevelService.IsCheckBoxEnabled.subscribe(($event) => {
+            this.isCheckBoxEnabled = GLAccountSecurityLevelService.IsCheckBoxEnabledParameter;
+            this.CD.detectChanges();
+        });
+    }
 
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
@@ -176,7 +188,7 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
     CalculateOriginalAmount() {
-        
+
         if (
             !AppTool.IsNullOrEmpty(
                 ReconcileEventManager.GLAccountReconcileMethodCode
@@ -263,6 +275,14 @@ export class GlAccountLedgerTransactionsListTemplate {
         this.ChequeStatusColor = this.ChequeStatusColorDictionary[chequeStatus];
 
         return this.ChequeStatusColor;
+    }
+
+    isCheckBoxEnabled: boolean;
+    get IsCheckBoxEnabled() { return this.isCheckBoxEnabled; }
+    set IsCheckBoxEnabled(value: boolean) {
+        if (this.isCheckBoxEnabled != value) {
+            this.isCheckBoxEnabled = value;
+        }
     }
 
 }
