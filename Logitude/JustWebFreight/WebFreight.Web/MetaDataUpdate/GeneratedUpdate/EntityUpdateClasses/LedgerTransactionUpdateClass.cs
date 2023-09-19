@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "ce91f3876a0e104f92481ade50ca6c4e";
+		public const string HashString = "f56acf952d3fd34509bd5d1f3b1aa990";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5111,6 +5111,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOForeignAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ForeignAmount", DefaultText = "Foreign Amount",LocalDefaultText = "סכום במט''ז", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Currency", DefaultText = "Currency",LocalDefaultText = @"מטבע", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Only", DefaultText = "Only",LocalDefaultText = @"רק", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOWithOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.WithOut", DefaultText = "WithOut",LocalDefaultText = @"ללא", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
