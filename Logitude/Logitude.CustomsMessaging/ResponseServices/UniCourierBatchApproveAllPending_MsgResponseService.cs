@@ -91,7 +91,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var courierStatusPM = qs.GetSingle(decId, true, false);
                     if (courierStatusPM != null && courierStatusPM.DeclarationPendings.Find(d => d.CourierPendingRequireApr == true && d.Approval != true) != null)
                     {
-                        approveAllPending.ApproveAllPending(requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, courierStatusPM);
+                        approveAllPending.ApproveAllPending(requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, courierStatusPM, customResponse);
                     }
                     scopeNewCRS.Complete();
                 }
@@ -132,7 +132,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.context = context;
         }
 
-        public void ApproveAllPending(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationPM> lockedDeclarations, DeclarationCourierStatusPM itemPM)
+        public void ApproveAllPending(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationPM> lockedDeclarations, DeclarationCourierStatusPM itemPM, DCAInUCBApproveAllPendingWithResponseContentHeader customResponse)
         {
 
 
@@ -143,7 +143,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 bool isUpdateDeclaration = true;
                 if (isUpdateDeclaration)
                 {
-                    var declarationPendingList = itemPM.DeclarationPendings.Where(r => r.CourierPendingRequireApr == true && r.Approval != true).ToList();
+                    var declarationPendingList = itemPM.DeclarationPendings.Where(r => r.CourierPendingRequireApr == true && r.Approval != true && r.Status =="A");
+                    if (customResponse.PendingCode != "A" && customResponse.PendingCode != "NotApproved")
+                    {
+                        declarationPendingList = declarationPendingList.Where(r => r.CourierPendingReasonCode == customResponse.PendingCode);
+                    }
+                    declarationPendingList = declarationPendingList.ToList();
                     foreach (var declarationPending in declarationPendingList)
                     {
                         declarationPending.Approval = true;
@@ -154,9 +159,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         itemPM.ApprovedCourierPendingList += "," + declarationPending.CourierPendingReasonCode;
                     }
-                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), itemPM.Tenant);
-                    declarationCourierStatusUpdateService.Update(itemPM, true);
                 }
+                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), itemPM.Tenant);
+                declarationCourierStatusUpdateService.Update(itemPM, true);
+
             }
             catch (System.Exception ee1)
             {

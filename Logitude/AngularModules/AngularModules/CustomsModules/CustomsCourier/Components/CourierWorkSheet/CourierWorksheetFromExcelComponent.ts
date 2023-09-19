@@ -2221,6 +2221,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.CourierMasterId = this.entityPM?.Id;
         currRequestParams.MAWB = this.entityPM?.MAWB;
         currRequestParams.IsWorkSheetFromExcel = true;
+        currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Value);
 
         let text = "הםם לםשר םת כל Pending שלם םושרו בטיסה";
 
@@ -2229,7 +2230,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-                this._CourierMasterService.PostApproveAllPending(currRequestParams)
+                this._CourierMasterService.PostApprovePending(currRequestParams)
 
                     .subscribe((res: any) => {
 
