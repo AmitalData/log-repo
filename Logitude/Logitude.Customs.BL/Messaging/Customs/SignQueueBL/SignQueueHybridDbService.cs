@@ -264,7 +264,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                 VersionByFeatures = signStation.VersionByFeatures,
                 Status = signStation.Status,
                 LastSignAt = signStation.LastAccessedAt,
-                IsOk = signStation.Status.Equals("ok"),
+                IsOk = signStation.Status?.Equals("ok"),
                 SignCertificate = signStation.SignCertificate,
                 LastAccessedAt = signStation.LastAccessedAt,
                  
