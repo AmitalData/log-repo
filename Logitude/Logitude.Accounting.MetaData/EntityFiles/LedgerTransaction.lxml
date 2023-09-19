@@ -3693,7 +3693,7 @@
     FullLocalDefaultText="&quot;חשבון נגדי&quot;"
     ListFieldLable="&quot;OppositeAccountLocalNameListLable&quot;"
     ListLableDefaultText="&quot;Opposite Account Local Name&quot;"
-    ListLocalDefaultText="&quot;שם מקומי של חשבון נגדי&quot;"
+    ListLocalDefaultText="&quot;חשבון נגדי&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
