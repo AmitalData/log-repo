@@ -1,5 +1,11 @@
-﻿using Logitude.Customs.Def.Contracts;
+﻿using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.StimulReport;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.Contracts;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -78,7 +84,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return QuantityTypeCode;
         }
 
-        public string GetQuantityTypeByClassificationWithMultiCustomItems(string classificationCode, int tenant, bool isExport, bool getFromCache=true)
+        public string GetQuantityTypeByClassificationWithMultiCustomItems(string classificationCode, int tenant, bool isExport, bool getFromCache=true, bool sendToCustoms = false)
         {
             if (string.IsNullOrWhiteSpace(classificationCode)) return null;
             if (classificationCode.Length > 10)
@@ -118,6 +124,35 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (measurmentUnit != null)
             {
                 QuantityTypeCode = measurmentUnit.Code;
+            }
+
+            if(string.IsNullOrEmpty(QuantityTypeCode) && sendToCustoms)
+            {
+                var requestParams = new CD_NG_8314_Web01_CustomsItemDetailsRequestParams()
+                {
+
+                    LoggingEnabled = true,
+                    LoggingUserId = AuthenticationUtil.ResolveUserId(tenant),
+                    Tenant = tenant,
+                    RequestVIA = SendRequestVIA.WebServiceInteractive,
+                    InterfaceTypeCode ="8314",
+                    Classification = classificationCode,
+                    ValidToDate = DateTime.Now,
+                    CustomsBookType = isExport ? 2 : 1,
+                    RequestName = "",
+                    ResponseName = "",
+                    LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                    IsFakeResponse = true,
+                    LoggingEntityId = AuthenticationUtil.ResolveUserId(tenant),
+                    SuppressSplitWR = true
+
+                };
+
+                var a = SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.CD_NG_8314_Web01_CustomsItemDetailsRequestParams>(requestParams
+                        , false, DateTime.Now
+                        );
+                
+                //statisticMeasurementUnitExternalID קוד יחידת מידה מהמכס
             }
             return QuantityTypeCode;
         }
