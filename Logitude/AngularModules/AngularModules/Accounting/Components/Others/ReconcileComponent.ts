@@ -36,6 +36,7 @@ import { APPaymentPM } from 'Invoice/EntityPMs/APPaymentPM';
 import { count, delay, expand, takeLast } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 
 export class LineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;
@@ -283,6 +284,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     public entityListService: EntityListService= new EntityListService();
     public IsComponentDestroyed: boolean = false;
+    public IsMultiWithReconcileMethodCodeEqualOne=false;
     SessionEvent;
     showInternalReconcileAPPaymentAlert = false;
     createdPaymentNumber;
@@ -291,11 +293,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public NumberOfFilteredlines = 0;
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     isFullAccounting: boolean = SessionLocator.TenantPM.AccountingActivated;
+    CurrencyFilters: ApiQueryFilters = new ApiQueryFilters();
 
     constructor(public CD: ChangeDetectorRef) {
         super();
-   
-        this.InitComponent();      
+
+        this.InitComponent();  
     }
     
     ngOnDestroy() {
@@ -324,7 +327,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             
             this.GLAccountPM = args.GLAccountPM;
             ReconcileEventManager.GLAccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
-
+            if(!AppTool.IsNullOrEmpty(args.IsMultiWithReconcileMethodCodeEqualOne)){
+                this.IsMultiWithReconcileMethodCodeEqualOne=args.IsMultiWithReconcileMethodCodeEqualOne;
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Reconciliation.O.WarningMultiRecoOne"));
+                this.IsCheckBoxEnabled=false;
+                this.GetTransactionsCurrencies();
+            }
             if (!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId)) {
                 this.CurrencyId = this.GLAccountPM.CurrencyId;
             }
@@ -379,7 +387,23 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     displayNumber;
     paymentTermName;
 
+    GetTransactionsCurrencies(){
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this._LedgerTransactionExtendedListService.GetTransactionsCurrencies(this.GLAccountPM?.Id, false,false)
+            .subscribe((serviceResponse: ServiceResponse) =>
+        {
+            if (serviceResponse.Result) {
+                var result = serviceResponse.Result;
+                console.log("[GetTransactionsCurrencies]", result);
+                var currenciesIds: string[] = result;
 
+                this.CurrencyFilters = new ApiQueryFilters();
+                this.CurrencyFilters.addAdditionalFilter("Id", currenciesIds.join(','), null, null, "InListExact", false, false, false, "string", false, true);
+
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
 
     SetTitle(){
         this.openTransactionLabel = TextCodeTranslator.Translate('Reconciliation.O.OpenTransactions');
@@ -519,12 +543,35 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         } else {
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
         }
+        if(this.IsMultiWithReconcileMethodCodeEqualOne){
+            this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
+            if(this.SelectedLines.Length >0){
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+            }
+        }
     }
 
     ngOnInit() {
+        this.InitTextCodes();
         this.BuildColumns();
         this.Listen();
         //this.ColumnsReady.emit("");
+    }
+
+    OpenAmountTextCode;
+    OriginalAmountTextCode;
+
+    InitTextCodes() {
+        if(this.IsMultiWithReconcileMethodCodeEqualOne){
+            this.OpenAmountTextCode=TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount");
+            this.OriginalAmountTextCode= TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount");
+        }else{
+            this.OpenAmountTextCode=TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?this.TenantPM.CurrencyCode:this.openAmountCurrency) + ')';
+            this.OriginalAmountTextCode= TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount")+ ' (' + (this.GLAccountPM.IsMultiCurrency?'multi':this.originalAmountCurrency) + ')' ;
+        }
+    }
+    ngAfterViewInit(){
+        this.RaiseEvent();
     }
 
     Listen(){
@@ -540,6 +587,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             }
 
         });
+    }
+
+    RaiseEvent(){
+        if(this.IsMultiWithReconcileMethodCodeEqualOne){
+            GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter=true;
+        }
     }
 
     SetDefaultReconcileMethodFromAccountingSettings(){
@@ -572,7 +625,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
     public set isAllSelected(v : boolean) {
         this._isAllSelected = v;
-
         if (v) {
             //this.GetFirst5000LedgerForReconciliation();
 
@@ -603,6 +655,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
             if (!AppTool.IsNullOrEmpty(value)) {
                 this.currencyFilter = new FilterItem("CurrencyId", value, null, null, "Equals", false, false, false, "string", false);
+                if(this.IsMultiWithReconcileMethodCodeEqualOne && this.CurrencyId != null){
+                    GLAccountSecurityLevelService.IsCheckBoxEnabledParameter=true;
+                    GLAccountSecurityLevelService.IsCheckBoxEnabled.emit({});
+                    this.IsCheckBoxEnabled=true;
+                }
+            
             } else {
                 this.currencyFilter = null
             }
@@ -610,6 +668,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         }
     }
 
+    isCheckBoxEnabled: boolean=true;
+    get IsCheckBoxEnabled() { return this.isCheckBoxEnabled; }
+    set IsCheckBoxEnabled(value: boolean) {
+        if (this.isCheckBoxEnabled != value) {
+            this.isCheckBoxEnabled = value;
+        }
+    }
+    
     openAmount: number;
     get OpenAmount() { return this.openAmount; }
     set OpenAmount(value: number) {
@@ -804,6 +870,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
             //Adjust
             if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
+                if(this.IsMultiWithReconcileMethodCodeEqualOne){
+                    errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
+                }
                 //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
                 //this.AdjustButton();
                 var confirmWindow = new ConfirmWindow();
@@ -1040,7 +1109,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     onRowSelected($event) {
-        if($event) {
+        if ($event) {
             const row = $event.rowData;
             const rowId = row.Id;
             const RowIndex = $event.rowIndex;
@@ -1058,6 +1127,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 this.NumberOfselectedlines = this.SelectedLines.Length;
                 this.NumberOfFilteredlines = this.DataSource.rowCount;
             }
+            this.SetUIProperty();
         }
     }
     
@@ -1164,7 +1234,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             FieldName: 'OriginalAmount',
             DataTypeCode: 'String',
             //Display: 'Original Amount (' + this.originalAmountCurrency + ')',
-            Display: TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?'multi':this.originalAmountCurrency) + ')',
+            Display: this.OriginalAmountTextCode,
             Styles: { width: '150px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
@@ -1172,7 +1242,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             ServerSideSortable: true,
             SortByName: 'OriginalAmount',
         });
-       this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount",'Decimal', TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?'multi':this.originalAmountCurrency) + ')'));
+       this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount",'Decimal', this.OriginalAmountTextCode));
 
         //this.columns.push({
         //    FieldName: 'OpenAmountCurrencyCode',
@@ -1184,10 +1254,23 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             // SortByName: 'AccountingDate'
         //});
         this.columns.push({
+            FieldName: 'CurrencyCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.CurrencyId"),
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'CurrencyCode',
+         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CurrencyCode", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.CurrencyId")));
+        
+        this.columns.push({
             FieldName: 'OpenAmount',
             DataTypeCode: 'String',
             //Display: 'Open Amount (' + this.openAmountCurrency + ')',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?this.TenantPM.CurrencyCode:this.openAmountCurrency) + ')',
+            Display: this.OpenAmountTextCode,
             Styles: { width: '114px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
@@ -1195,7 +1278,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             ServerSideSortable: true,
             SortByName: 'OpenAmount'
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OpenAmount",'Decimal', TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount") + ' (' + (this.GLAccountPM.IsMultiCurrency?this.TenantPM.CurrencyCode:this.openAmountCurrency) + ')'));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OpenAmount",'Decimal',this.OpenAmountTextCode));
 
         this.columns.push({
             FieldName: 'Reference1',
@@ -1280,6 +1363,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
                 if (isChecked) {
                     this.PushLine(row, RowIndex);
+                    this.SetUIProperty();
                 } else {
                     this.PopLine(rowId);
                 }
@@ -1304,6 +1388,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     onDataLoaded() {
         //this.CheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
         this.MarkIsChecked.emit({SelectedLines:this.SelectedLines});
+        this.RaiseEvent();
     }
     DataSource = {
         pageSize: 30,

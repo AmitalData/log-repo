@@ -138,22 +138,21 @@ export class NewGLAccountComponent extends BaseComponent {
     set IsMultiCurrency(value: boolean) {
         if (value == true) {
             this.EntityPM.IsMultiCurrency = value;
-            this.ReconcileMethodCode = '0';
+            /*this.ReconcileMethodCode = '0';
             this.CurrencyId = null;
 
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
             this.UIProperties.SetValidity("CurrencyId", this.ObjectTableName, true, "");
             this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, false);
-            //this.UIProperties.SetEnabled("ReconcileMethodCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ReconcileMethodCode", this.ObjectTableName, false);*/
 
             this.CD.detectChanges();
 
         } else if (value == false) {
             this.EntityPM.IsMultiCurrency = value;
-            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+           /* this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
-            this.ReconcileMethodCode = null;
-
+            this.ReconcileMethodCode = null;*/
             this.CD.detectChanges();
         }
     }
@@ -376,13 +375,12 @@ export class NewGLAccountComponent extends BaseComponent {
     OkButtonClicked() {
         var errors: string[] = [];
 
-        if (this.IsMultiCurrency) {
+       /* if (this.IsMultiCurrency) {
             if (this.ReconcileMethodCode != '0') {
                 errors.push(TextCodeTranslator.Translate("GLAccounts.O.LocalCurrencyErr"));
                 //errors.push("The reconcile method for multi currency GLAaccount must be local currency"); // need a textcode to enable translations to hebrew
             }
-        }
-
+        }*/
 
 
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
