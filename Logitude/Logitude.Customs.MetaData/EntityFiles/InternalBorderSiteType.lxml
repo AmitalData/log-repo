@@ -623,22 +623,22 @@
       <QueryColumn
         QueryCode="&quot;InternalBorderSiteType&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;AutonomyRegionTypeLocalName&quot;"
-        ColumnWidth="130" />
-      <QueryColumn
-        QueryCode="&quot;InternalBorderSiteType&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;EnglishName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;InternalBorderSiteType&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;LocalName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;InternalBorderSiteType&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;Inactive&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;InternalBorderSiteType&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;AutonomyRegionTypeLocalName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters />
