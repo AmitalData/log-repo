@@ -26,6 +26,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool Inactive  { get; set; }
        [DataMember]
        public string AutonomyRegionTypeCode  { get; set; }
+       [DataMember]
+       public string AutonomyRegionTypeLocalName  { get; set; }
    }
 
 }

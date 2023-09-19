@@ -30,7 +30,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           SearchFields = a.SearchFields,
                                                           Inactive = a.Inactive,
                                                           AutonomyRegionTypeCode = a.AutonomyRegionTypeCode,
-
+                                                          AutonomyRegionTypeLocalName = a.AutonomyType.LocalName
                                                       });
             return query;
 		}
