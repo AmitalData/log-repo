@@ -116,7 +116,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             );
             return entityLists;
         }
-        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId)
+        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId,bool isExport=false)
         {
             
             MySignStationList availableSignServer = null;
@@ -189,7 +189,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                         }
                         return (null, SignMethodByQueueEnum.None); ;
                     }
-                    else
+                    else if(isExport)
                     {
                         return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
                     }
