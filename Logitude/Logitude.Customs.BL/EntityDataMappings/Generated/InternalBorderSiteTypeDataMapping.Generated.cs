@@ -39,7 +39,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LocalName, 
 	         SearchFields, 
 	         Inactive, 
-	         AutonomyRegionTypeCode,
+	         AutonomyRegionTypeCode, 
+	         AutonomyRegionTypeLocalName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
