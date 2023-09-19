@@ -484,16 +484,18 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
             SignMethodByQueueEnum signMethodByQueueEnum = SignMethodByQueueEnum.None;
             string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(_RequestParams.Tenant);
+            var dbSignQueueService = new SignQueueHybridDbService();
 
+            var isExport = SignQueueHybridDbService.IsCloudExport(_RequestParams.Tenant);
             var signQueueHSMService = new SignQueueHSMService();
             
             if (string.IsNullOrWhiteSpace(availableSignServer) &&
-                 SignQueueHybridDbService.IsCloudExport(_RequestParams.Tenant))
+                 (isExport ||
+                signQueueHSMService.IsHSMSign_IsOn(_RequestParams.Tenant)) )
  
             {
-                var dbSignQueueService = new SignQueueHybridDbService();
                 (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
-                    .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId);
+                    .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId, isExport);
                 if (availableSignServer != null)
                 {
                     if (signMethodByQueueEnum == SignMethodByQueueEnum.HybridDbSignQueue)
