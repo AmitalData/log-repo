@@ -215,7 +215,8 @@ export class UserDashboardComponent implements AfterViewInit, OnInit, OnDestroy 
         }
     }
     ngOnInit(): void {
-        this.displayCookies =SessionInfo.DisplayCookies;
+        
+        this.displayCookies =JSON.parse(sessionStorage.getItem("DisplayCookies"));
         this.SubscribeRoutingEvents();
        
 
@@ -266,7 +267,7 @@ export class UserDashboardComponent implements AfterViewInit, OnInit, OnDestroy 
 
     dismissCookieNotice() {
         this.displayCookies = false;
-        SessionInfo.DisplayCookies=false;
+        sessionStorage.setItem("DisplayCookies",JSON.stringify(false));
     }
 
 

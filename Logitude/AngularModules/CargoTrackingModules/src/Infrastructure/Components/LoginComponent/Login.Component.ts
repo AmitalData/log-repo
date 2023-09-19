@@ -197,6 +197,7 @@ export class LoginComponent implements OnInit {
         let tenantList = userData.CompanyLogins;
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
         SessionInfo.DisplayCookies=true;
+        sessionStorage.setItem("DisplayCookies",JSON.stringify(true));
         if(!LogInToTenant) {
             this.errorMessage = "Login failed! unauthorized user.";
             this.ShowbusyIndicator = false;
@@ -254,8 +255,8 @@ export class LoginComponent implements OnInit {
         SessionInfo.LoggedUserTenant = userData.CurrentTenant;
         SessionInfo.Token = userData.Token;
         SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
-
-    }
+       
+       }
 
     private RouteToMainPage(){
         if (this.authService.redirectUrl) {
