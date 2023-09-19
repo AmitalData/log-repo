@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InternalBorderSiteTypeUpdateClass
    {  		
-
-		public const string HashString = "e75e6fbd15db4a7176c739b8d465cf68";
+		public const string HashString = "80d97b21926aa9444523be721c5f2a61";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -258,10 +257,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם םנגלית",
+					  						FullLocalDefaultText =  "שם אנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם םנגלית",
+					  						ListLocalDefaultText =  "שם אנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -445,10 +444,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive ",
-					  						FullLocalDefaultText =  "לם פּעיל",
+					  						FullLocalDefaultText =  "לא פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive ",
-					  						ListLocalDefaultText =  "לם פּעיל",
+					  						ListLocalDefaultText =  "לא פּעיל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -497,7 +496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "InternalBorderSiteType",
+					  						ValidForQuerySection1 =  "Customs.InternalBorderSiteType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -508,10 +507,72 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutonomyRegionTypeCode",
 					  						DefaultText =  "AutonomyRegionTypeCode",
-					  						FullLocalDefaultText =  "קוד םזור םוטונומיה",
+					  						FullLocalDefaultText =  "קוד אזור אוטונומיה",
 					  						ListFieldLable =  "AutonomyRegionTypeCodeListLable",
 					  						ListLableDefaultText =  "Autonomy Region Type Code",
-					  						ListLocalDefaultText =  "קוד םזור םוטונומיה",
+					  						ListLocalDefaultText =  "קוד אזור אוטונומיה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "AutonomyRegionTypeLocalName",
+					  						ObjectTableName =  "Customs.InternalBorderSiteType",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "AutonomyRegionTypeLocalName",
+					  						ListPropertyPath =  "AutonomyRegionTypeLocalName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.InternalBorderSiteType",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "AutonomyRegionTypeLocalName",
+					  						DefaultText =  "Autonomy Region Type Local Name",
+					  						FullLocalDefaultText =  "סוג אזור אוטונומיה",
+					  						ListFieldLable =  "AutonomyRegionTypeLocalNameListLable",
+					  						ListLableDefaultText =  "Autonomy Region Type Local Name",
+					  						ListLocalDefaultText =  "סוג אזור אוטונומיה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -568,6 +629,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn InternalBorderSiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.InternalBorderSiteType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
 			 QueryColumn InternalBorderSiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.InternalBorderSiteType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn InternalBorderSiteTypeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.InternalBorderSiteType.AutonomyRegionTypeLocalName" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -584,7 +647,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-
 	         Screen InternalBorderSiteTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InternalBorderSiteType.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField CustomsInternalBorderSiteTypeInternalBorderSiteTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InternalBorderSiteTypeGeneralTabScreenScreen0.Id,ScreenCode = InternalBorderSiteTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.InternalBorderSiteType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
@@ -598,7 +660,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
 	    {                
-
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable InternalBorderSiteTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InternalBorderSiteType" && d.Tenant == 0).FirstOrDefault();  
                  
@@ -606,7 +667,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature InternalBorderSiteTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternalBorderSiteType.Tab.General", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteTypeFeatures.INTG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InternalBorderSiteTypeObjectTable);
  
                  
-			   TextCode InternalBorderSiteTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternalBorderSiteType.TH.event", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode InternalBorderSiteTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternalBorderSiteType.TH.event", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature InternalBorderSiteTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternalBorderSiteType.Tab.Events", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteTypeFeatures.INTE", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InternalBorderSiteTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -616,7 +677,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INTG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InternalBorderSiteTypeGeneralFeature_TH0.Id,FeatureUniqeCode = InternalBorderSiteTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, TabNameTextCodeId = InternalBorderSiteTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = InternalBorderSiteTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "INTE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InternalBorderSiteTypeEventsFeature_TH1.Id,FeatureUniqeCode = InternalBorderSiteTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, TabNameTextCodeId = InternalBorderSiteTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = InternalBorderSiteTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
-   
    
 	    } 
 	
