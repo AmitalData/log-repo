@@ -233,8 +233,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 StoreTypeReq = "67",//לפי טבלה B1                יש לשלוח תמיד 67
  
                 Description =  myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription != null ? Regex.Replace(myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription, @"(\-)|(\%)|(\()|(\))|(\.)", "") : "" ,
-                CustomerName = myDeclarationPM.ImporterName != null ? Regex.Replace(myDeclarationPM.ImporterName, @"(\-)|(\%)|(\()|(\))|(\.)", "") : "",
-                CustomerAddress = myDeclarationPM.ImporterAddress != null ? Regex.Replace(myDeclarationPM.ImporterAddress, @"(\-)|(\%)|(\()|(\))|(\.)", ""): "",
+                CustomerName = myDeclarationPM.ImporterName != null ? Regex.Replace(myDeclarationPM.ImporterName, @"(\-)|(\%)|(\()|(\))|(\.)|(\$)|(\{)|(\})", "") : "",
+                CustomerAddress = myDeclarationPM.ImporterAddress != null ? Regex.Replace(myDeclarationPM.ImporterAddress, @"(\-)|(\%)|(\()|(\))|(\.)|(\$)|(\{)|(\})", ""): "",
                  CustomerPhone = myDeclarationPM.CasualImporterTel ?? "",
                 //                DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
                 DestLineDesc = declarationCourierStatusPM.DistributionArea ?? "כללי",// " - שינוי בשדה יעד המטען שליחה של "כללי" כברירת מחדל במקום 1
