@@ -96,11 +96,19 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     sb.AppendLine("ILMMN!!!");
                     var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
                     drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, courierMasterPM);
+                    if(drityMessage == null)
+                    {
+                        return;
+                    }
                     if (!dataHaveChangeSendIt && dbPM != null)
                     {
                         
                         dbMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(dbPM.Id, dbPM.Tenant, dbPM, null);
                         
+                        if(dbMessage == null)
+                        {
+                            return;
+                        }
                         if (!ProxyUtil.ArrayJsonAreEqual(drityMessage, dbMessage,
                             new List<string>() {
                                 "BaldarMessageTime"

@@ -88,7 +88,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         }
 
 
-        public string GetMessage2Maman(string declarationId, int tenant, DeclarationPM paramDeclarationPM, CourierMasterPM courierMasterPM, DeclarationCourierStatusPM declarationCourierStatusPM = null,bool ignoreIfCourierMasterNull=false, bool isAutomatic =  true)
+        public string GetMessage2Maman(string declarationId, int tenant, DeclarationPM paramDeclarationPM, CourierMasterPM courierMasterPM, DeclarationCourierStatusPM declarationCourierStatusPM = null,bool ignoreIfCourierMasterNull=false, bool isAutomatic = true)
         {
             var context = CustomContext.GetContext(tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
