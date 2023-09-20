@@ -936,31 +936,38 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 
                 if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Count > 0)
                 {
-                    ConsignmentPackagePM consignmentPackagePM = new ConsignmentPackagePM()
+                    bool isPackageExists = this._MyDeclarationPM.Consignments[0].ConsignmentPackages
+                    .Any(package => package.PackageMeasureQualifierCode == "3");
+
+                    if(!isPackageExists) 
                     {
-                        DeclarationId = this._MyDeclarationPM.Id,
-                        Tenant = _tenant,
-                        SequenceNumeric = 2,
-                        LineNumber = 2,
-                        PackageMeasureQualifierCode = "3",
-                        PackageTypeCode = this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode ,
-                        PackageQuantity = this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageQuantity,
-                        GrossMassMeasure = this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure,
-                        GrossMassMeasureTypeCode = this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode,
-                        MarksNumbers = this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].MarksNumbers,
-                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ConsignmentPackagePM consignmentPackagePM = new ConsignmentPackagePM()
+                        {
+                            DeclarationId = this._MyDeclarationPM.Id,
+                            Tenant = _tenant,
+                            SequenceNumeric = 2,
+                            LineNumber = 2,
+                            PackageMeasureQualifierCode = "3",
+                            PackageTypeCode = this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode,
+                            PackageQuantity = this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageQuantity,
+                            GrossMassMeasure = this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure,
+                            GrossMassMeasureTypeCode = this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode,
+                            MarksNumbers = this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].MarksNumbers,
+                            ChangeSetOp = ChangeSetOperation.Insert,
 
 
-                    };
+                        };
 
-                    if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
+                        if (this._MyDeclarationPM.Consignments[0].ChangeSetOp != ChangeSetOperation.Insert)
 
-                    {
+                        {
 
-                        this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+
+                        }
+                        this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(consignmentPackagePM);
 
                     }
-                    this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(consignmentPackagePM);
 
                 }
             }
