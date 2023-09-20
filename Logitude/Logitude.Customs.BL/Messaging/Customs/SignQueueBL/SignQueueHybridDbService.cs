@@ -193,6 +193,11 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                     {
                         return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
                     }
+                    else
+                    {
+                        return (availableSignServer.SignCertificate, SignMethodByQueueEnum.None);
+
+                    }
 
                     break;
                 default:
