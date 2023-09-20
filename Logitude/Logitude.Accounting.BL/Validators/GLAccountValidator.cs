@@ -54,8 +54,9 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.SettingOfCurrency", myGLAccountPM.Tenant, showLocals) + " " + myGLAccountPM.DisplayNumber + " " + TextCodesTranslator.TranslateText("GLAccounts.O.InCorrectCorrect", myGLAccountPM.Tenant, showLocals));
             }
-
-            if (myGLAccountPM.IsMultiCurrency == true && !String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId))
+            Boolean isEnableMultiCurrencyWithReconcileMethodCodeEqualOne = FeatureToggleHelper.HasFeatureToggle(toggleCode: "MC1", myGLAccountPM.Tenant);
+            
+            if (myGLAccountPM.IsMultiCurrency == true && !String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId) && !isEnableMultiCurrencyWithReconcileMethodCodeEqualOne)
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.AccountIsaMulti", myGLAccountPM.Tenant, showLocals));
             }
@@ -178,7 +179,7 @@ namespace Logitude.Accounting.BL.Validators
                 }
             }
 
-            if (myGLAccountPM.IsMultiCurrency == true && myGLAccountPM.ReconcileMethodCode != "0")
+            if (myGLAccountPM.IsMultiCurrency == true && myGLAccountPM.ReconcileMethodCode != "0" && !isEnableMultiCurrencyWithReconcileMethodCodeEqualOne)
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.LocalCurrencyErr", myGLAccountPM.Tenant, showLocals));
             }
