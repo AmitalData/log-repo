@@ -247,10 +247,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             var entity = taxReportLineQuery.GetSingle(oneLine.TaxReportId, oneLine.Line, false, false);
                             if (entity != null)
                             {
-                                entity.ChangeSetOp = ChangeSetOperation.Update;
-                                entity.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
-                                if (entity.IsManuallyChanged == false) entity.IsManuallyChanged = null;
-                                duplicateLines.Add(entity);
+                                if (IsCanceledAndInvoiceIsSameMonth(entity)) { }
+                                else 
+                                {                                    
+                                    entity.ChangeSetOp = ChangeSetOperation.Update;
+                                    entity.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
+                                    if (entity.IsManuallyChanged == false) entity.IsManuallyChanged = null;
+                                    duplicateLines.Add(entity);
+                                }
                             }
                         }
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
@@ -602,6 +606,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 };
                 EventTracer.CreateTraceEvent(eventTracerArgs);
             }
+        }
+
+        private bool IsCanceledAndInvoiceIsSameMonth(TaxReportLinePM taxReportLinePM)
+        {            
+            var jornal = new JournalQueryService(taxReportLinePM.Tenant).GetSingle(taxReportLinePM.JournalId, false, false);            
+            bool res = 
+                jornal.ApproveDate.HasValue && 
+                jornal.VoidDate.HasValue && 
+                jornal.ApproveDate.Value.Month == jornal.VoidDate.Value.Month && 
+                jornal.ApproveDate.Value.Year == jornal.VoidDate.Value.Year;
+
+            return res;
         }
     }
 }
