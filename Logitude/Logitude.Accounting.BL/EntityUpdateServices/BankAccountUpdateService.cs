@@ -48,10 +48,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void Trace(BankAccountPM entityPM, BankAccount entityPOCO, string changesXml)
         {
             BankAccountTraceEventService traceEventService = new BankAccountTraceEventService(MainContext as IAccountingContext);
-            if (!entityPM.IsBankPageEvent)
+            if (!entityPM.IsBankPageEvent && entityPOCO.ChequeCounter + 1 != entityPM.ChequeCounter)
             {
-
-
                 traceEventService.Trace(entityPM, entityPOCO, changesXml);
             }
             List<TraceEventResponse> responses = traceEventService.TraceEventResponses;//for later user.
