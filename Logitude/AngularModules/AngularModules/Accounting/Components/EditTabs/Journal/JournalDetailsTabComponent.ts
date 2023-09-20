@@ -62,6 +62,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     Opacity: string = "1";
     referencesDivHeight: number;
     Approved: boolean = false;
+    maxSecurityLevel = 10;
     IsJournalEditableAfterApproval: boolean = false;
     APInvoice: APInvoicePM;
     Voided: boolean = false;
@@ -178,7 +179,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     getAccountingSettingSecurityLevelField() {
-
+    
         if (this.IsJournalSecurityManaged) {
             this.fullAccountingSettingListService.getSingle(SessionLocator.Tenant.toString()).subscribe((response: any) => {
                 this.CurrentSession.StopBusyIndicator();
@@ -209,6 +210,9 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                         this.IsSecurityLevelVisible = false;
                     }
                 }
+
+                if (this.IsSecurityLevelOK)
+                    this.maxSecurityLevel = userSecurityLevel;
             });
         } else {
             this.IsSecurityLevelVisible = false;
@@ -501,7 +505,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     public get SecurityLevel() { return this.EntityPM.SecurityLevel; }
     public set SecurityLevel(value: number) {
         if (this.EntityPM.SecurityLevel != value) {
-            this.EntityPM.SecurityLevel = value;
+           this.EntityPM.SecurityLevel = value;
         }
     }
 

@@ -27,6 +27,7 @@ export class NumberInputComponent implements ControlValueAccessor
 
     @Input() min: number;
     @Input() max: number;
+    @Input() isDisabled: number;
     @Input() allowNull: boolean = false;
     private _value: number;
     public get value(): number
