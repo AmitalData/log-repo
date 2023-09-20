@@ -190,7 +190,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "DCAInUCBApproveAllPending",//אישור PENDING
 "CourierMastersConnected", // קישור הצהרות לטיסה
 "8235T", // תיקון שטעון
-//"8314",//נתוני פרט מכס
+"8314",//נתוני פרט מכס
 "8888",// תשובה לנתוני פרט מכס
 "2791"// אחסנה
             };

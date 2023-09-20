@@ -185,8 +185,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                             if (!string.IsNullOrEmpty(entityPM.ClassificationCode))
                             {
+                                SendToCustoms sendToCustoms = new SendToCustoms()
+                                {
+                                    linenumber = entityPM.LineNumber,
+                                    declarationId = entityPM.DeclarationId,
+                                };
+
                                 CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(entityPM.Tenant);
-                                string quantityType = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(entityPM.ClassificationCode, entityPM.Tenant, true,sendToCustoms : true);
+                                string quantityType = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(entityPM.ClassificationCode, entityPM.Tenant, true,sendToCustoms : sendToCustoms);
                                 if (!string.IsNullOrEmpty(quantityType))
                                 {
                                     entityPM.StatisticQuantityType = quantityType;
@@ -640,7 +646,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-
+        public class SendToCustoms
+        {
+            public int linenumber { get; set; }
+            public string declarationId { get; set; }
+        }
     }
 }
 
