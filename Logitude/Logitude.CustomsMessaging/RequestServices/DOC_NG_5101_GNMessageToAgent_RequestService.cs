@@ -72,7 +72,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             _DOC_NG_5101_GNMessageToAgent.MessageToAgent.RelatedEntity = new ConnectedEntity()
             {
                 entityIdKey1 = decNum,
-                entityType = myDeclarationPM.Direction == "E" ?(myDeclarationPM.DeclarationTypeCode == "3" ? 10404 : 11188) : 1055,
+                entityType = myDeclarationPM.Direction == "E" ? (myDeclarationPM.DeclarationTypeCode == "3" ? 10404 : 11188) : 1055,
             };
 
 
