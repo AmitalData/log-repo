@@ -88,12 +88,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     Boolean raiseEvent = true;
                     if(defaultLex != null)
                     {
+                        raiseEvent = false;
                         List<ConsignmentPackagePM> consignmentPackages = new ConsignmentPackageQueryService(myDbContext).GetConsignmentPackagesForDeclaration(declaration.Id);
                         foreach(ConsignmentPackagePM consignmentPackage in consignmentPackages)
                         {
-                            if (defaultLex.Contains(consignmentPackage.PackageTypeCode))
+                            if (!defaultLex.Contains(consignmentPackage.PackageTypeCode))
                             {
-                                raiseEvent = false;
+                                raiseEvent = true;
                             }
                         }
 
