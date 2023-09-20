@@ -177,6 +177,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
     {
         public bool IsExportClose { get; set; }
         public bool IsTransShipment { get; set; }
-    }
+		public bool IsFromAutoClosing { get; set; }
+	}
 
 }

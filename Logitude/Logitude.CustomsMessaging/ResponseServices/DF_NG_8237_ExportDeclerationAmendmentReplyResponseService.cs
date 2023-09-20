@@ -31,6 +31,7 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.Customs;
 using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
 using Simplog.Data.CommonDataModel;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -78,7 +79,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
                 {
-                    this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                    if(requestParams.IsFromAutoClosing)
+						RaiseEvent(_MyDeclarationPM, null, "CF2");
+
+					this.MyResponseData.ApplicationID = requestParams.AppicationId;
                     this.MyResponseData.Succeeded = true;
                     this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
                     this.MyResponseData.HasException = true;
@@ -1230,5 +1234,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
         }
-    }
+
+
+		class CustomsAutoDecClosing : ICustomsAutoDecClosing
+        {
+            public void Send8235(DeclarationPM decPm) {
+                var requestParamsData = new AmendmentRequestParams();
+
+				var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+				var loggedUserId = AuthenticationUtil.ResolveUserId(decPm.Tenant);
+
+				requestParamsData.Tenant = decPm.Tenant;
+				requestParamsData.AppicationId = decPm.Id;
+				requestParamsData.LoggingEnabled = true;
+				requestParamsData.LoggingEntityId = decPm.Id;
+				requestParamsData.LoggingEntityReference = decPm.DeclarationNumber;
+				requestParamsData.LoggingObjectTableId = objecttableId;
+				requestParamsData.LoggingUserId = loggedUserId;
+				requestParamsData.RequestName = "Export Amendment Declaration Request";
+				requestParamsData.ResponseName = "Amendment Declaration Response";
+				requestParamsData.RequestVIA = SendRequestVIA.WebServiceBatch;
+			    requestParamsData.ForcePersonalSign = false;
+			    requestParamsData.IsExportClose = true;
+			    requestParamsData.IsTransShipment = decPm.DeclarationTypeCode == "3";
+				requestParamsData.IsFromAutoClosing = true;
+
+
+
+			ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
+					  new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
+					  new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
+
+			}
+        }
+		
+
+	}
 }

@@ -1168,6 +1168,7 @@
     <Compile Include="EntityQueryServices\DefaultValueQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCounterQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\GovernmentProcedureTypeTenantQueryService.cs" />
+    <Compile Include="EntityQueryServices\LoadingSiteTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvioceExportDefaultQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientIndicationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
