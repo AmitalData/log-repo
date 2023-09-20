@@ -15,16 +15,27 @@ import { SessionExpirationComponent } from './session-expiration/session-expirat
 import { SessionTimeoutServiceService } from 'src/Infrastructure/Services/session-timeout-service.service';
 import { Subscription } from 'rxjs';
 import { DocumentDownloadTokenUpdateService } from 'src/Infrastructure/Services/document-download-token-update.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
 
 @Component({
     selector: 'UserDashboard',
     templateUrl: './UserDashboardComponent.html',
-    styleUrls: ['./UserDashboardComponent.css']
+    styleUrls: ['./UserDashboardComponent.css'],
+    animations: [
+        trigger('fade', [
+          state('void', style({ opacity: 0, transform: 'scale(0.8)' })),
+          transition(':enter', [
+            animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'scale(1)' }))
+          ]),
+          transition(':leave', [
+            animate('300ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 0, transform: 'scale(0.8)' }))
+          ])
+        ])
+      ]
 })
-export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
-{
+export class UserDashboardComponent implements AfterViewInit, OnInit, OnDestroy {
 
     @ViewChild('input') input: ElementRef;
     isLoading: boolean = false;
@@ -38,13 +49,12 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
     UserNameFirstLetters: string;
     currentRoute: string;
     baseURL;
-
-    get tenant()
-    {
+    displayCookies:boolean=false;
+    
+    get tenant() {
         return CargoTrackingBrandingData.Tenant;
     }
-    set tenant(val: number)
-    {
+    set tenant(val: number) {
         CargoTrackingBrandingData.Tenant = val;
     }
 
@@ -52,8 +62,8 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
         private brandingService: CargoTrackingBrandingDataExtendedService,
         private loginService: LoginExtendedService,
         private location: Location,
-        public sessionTimeoutServiceService:SessionTimeoutServiceService,
-        public documentDownloadTokenUpdateService:DocumentDownloadTokenUpdateService,
+        public sessionTimeoutServiceService: SessionTimeoutServiceService,
+        public documentDownloadTokenUpdateService: DocumentDownloadTokenUpdateService,
         private router: Router,
         public dialog: MatDialog,
         @Inject('BASE_URL') baseUrl: string,
@@ -62,16 +72,14 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
         this.handleSessionTimeOut();
         this.InitComponent();
     }
-    
-    
 
-    private SetDefaultBackgroundColor()
-    {
+
+
+    private SetDefaultBackgroundColor() {
         document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
     }
 
-    private InitComponent()
-    {
+    private InitComponent() {
 
         this.SetDefaultBackgroundColor();
         this.GetBrandingData();
@@ -87,15 +95,14 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
     }
 
 
-    private GetLoggedUserIfNotSet()
-    {
-        if(SessionInfo.LoggedContact){
+    private GetLoggedUserIfNotSet() {
+        if (SessionInfo.LoggedContact) {
             this.UserName = SessionInfo.LoggedContact.EnglishName;
             this.SetFirstUserLetters(SessionInfo.LoggedContact.EnglishName);
-        }else if (SessionInfo.LoggedUserPM) {
+        } else if (SessionInfo.LoggedUserPM) {
             this.UserName = SessionInfo.LoggedUserPM.EnglishName;
             this.SetFirstUserLetters(SessionInfo.LoggedUserPM.EnglishName);
-        } else{
+        } else {
             var tenant = sessionStorage.getItem("LoggedUserTenant");
             var email = sessionStorage.getItem("LoggedUserEmail");
             this.GetLoggedUserPM(email, tenant);
@@ -103,24 +110,20 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
 
     }
 
-    private GetLoggedUserPM(email: any, tenant: any)
-    {
-        this.loginService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) =>
-        {
+    private GetLoggedUserPM(email: any, tenant: any) {
+        this.loginService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) => {
             if (loggedUserPM) {
                 SessionInfo.LoggedUserPM = loggedUserPM;
                 this.UserName = SessionInfo.LoggedUserPM.EnglishName;
                 this.SetFirstUserLetters(SessionInfo.LoggedUserPM.EnglishName);
-            }else{
+            } else {
                 this.GetLoggedContact();
             }
         });
     }
 
-    private GetLoggedContact()
-    {
-        this.brandingService.GetLoggedContact().subscribe((loggedContact: any) =>
-        {
+    private GetLoggedContact() {
+        this.brandingService.GetLoggedContact().subscribe((loggedContact: any) => {
             if (loggedContact) {
                 SessionInfo.LoggedContact = loggedContact;
                 this.UserName = SessionInfo.LoggedContact.EnglishName;
@@ -130,8 +133,7 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
         });
     }
 
-    private SetFirstUserLetters(userName: string)
-    {
+    private SetFirstUserLetters(userName: string) {
         if (userName) {
             var splitted = userName.split(" ");
             if (splitted.length == 1)
@@ -140,19 +142,18 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
                 this.UserNameFirstLetters = this.getFirstCharacter(splitted[0]) + this.getFirstCharacter(splitted[1]);
 
         }
-        if(!this.UserNameFirstLetters || this.UserNameFirstLetters.length == 0)
+        if (!this.UserNameFirstLetters || this.UserNameFirstLetters.length == 0)
             this.UserNameFirstLetters = "Aa";
     }
-    getFirstCharacter(text:string){
+    getFirstCharacter(text: string) {
         var result = '';
-        if(text && text.length > 0 ){
+        if (text && text.length > 0) {
             return text[0];
         }
         return result;
     }
 
-    private Authenticate()
-    {
+    private Authenticate() {
         let token = sessionStorage.getItem("Token");
         if (!token)
             this.router.navigate(["cargo-tracking", "login"]);
@@ -160,14 +161,12 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
 
     isNavOpened = false;
 
-    openNav()
-    {
+    openNav() {
         this.isNavOpened = !this.isNavOpened;
     }
 
 
-    SignOutClicked()
-    {
+    SignOutClicked() {
         this.tenant = +sessionStorage.getItem("LoggedUserTenant");
         sessionStorage.clear();
         if (this.tenant)
@@ -178,41 +177,37 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
     }
 
 
-    public get InvertedLogoURL()
-    {
+    public get InvertedLogoURL() {
         return CargoTrackingBrandingData.InvertedLogoURL;
     }
 
-    public RedirectTo401Page()
-    {
+    public RedirectTo401Page() {
         this.router.navigate(['Error401']);
     }
 
 
-    private GetBrandingData()
-    {
+    private GetBrandingData() {
         if (this.tenant)
             this.IsBrandingDataLoaded = true;
 
 
         this.brandingService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(this.baseURL))
-        .subscribe((response: ServiceResponse) =>
-        {
-            if (response.Result) {
-                if(response?.Result?.ForceHttps)
-                    this.RedirectAppToHttps();
+            .subscribe((response: ServiceResponse) => {
+                if (response.Result) {
+                    if (response?.Result?.ForceHttps)
+                        this.RedirectAppToHttps();
 
-                ServiceHelper.SetCargoTrackingDate(response.Result, this.baseURL);
+                    ServiceHelper.SetCargoTrackingDate(response.Result, this.baseURL);
 
-                this.IsBrandingDataLoaded = true;
-            }
-            else {
-                this.RedirectTo401Page();
-            }
+                    this.IsBrandingDataLoaded = true;
+                }
+                else {
+                    this.RedirectTo401Page();
+                }
 
-        });
+            });
     }
-    RedirectAppToHttps(){
+    RedirectAppToHttps() {
         const isLocally = window.location.origin.indexOf('localhost') > -1;
 
         if (!isLocally && location.protocol === 'http:') {
@@ -220,32 +215,32 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
         }
     }
     ngOnInit(): void {
+        
+        this.displayCookies =JSON.parse(sessionStorage.getItem("DisplayCookies"));
         this.SubscribeRoutingEvents();
+       
+
         // this.sharedService.isAdvancedFilterOpened$.subscribe(x => console.log('isAdvancedFilterOpened$', x));
     }
     private SubscribeRoutingEvents() {
         this.router.events.pipe(
             filter((e: any): e is NavigationEnd => e instanceof NavigationEnd)
-         ).subscribe((e: NavigationEnd) => {
-             this.currentRoute = e.url;
-         });
+        ).subscribe((e: NavigationEnd) => {
+            this.currentRoute = e.url;
+        });
     }
-    ngAfterViewInit()
-    {
+    ngAfterViewInit() {
     }
-    get ComapnyLogo()
-    {
+    get ComapnyLogo() {
         return CargoTrackingBrandingData.ComapnylogoURL;
     }
-    get BrowserIcon()
-    {
+    get BrowserIcon() {
         return CargoTrackingBrandingData.BrowserIconURL;
     }
-    get BackGroundImg()
-    {
+    get BackGroundImg() {
         return CargoTrackingBrandingData.BackgroundURL;
     }
-    get ShipmentHeaderImage(){
+    get ShipmentHeaderImage() {
         return CargoTrackingBrandingData.ShipmentHeaderURL;
     }
 
@@ -253,9 +248,9 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
         this.router.navigate(['cargo-tracking', 'shipments']);
         this.sharedService.updateValue(false);
     }
-    handleSessionTimeOutSubscription:Subscription;
+    handleSessionTimeOutSubscription: Subscription;
     handleSessionTimeOut() {
-        this.handleSessionTimeOutSubscription = this.sessionTimeoutServiceService.onExpirToken.subscribe(e=>{
+        this.handleSessionTimeOutSubscription = this.sessionTimeoutServiceService.onExpirToken.subscribe(e => {
             this.openDialog()
         });
     }
@@ -263,11 +258,20 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
         this.handleSessionTimeOutSubscription.unsubscribe();
     }
     openDialog() {
-        const dialogRef = this.dialog.open(SessionExpirationComponent,{closeOnNavigation:false,disableClose:true});
-    
+        const dialogRef = this.dialog.open(SessionExpirationComponent, { closeOnNavigation: false, disableClose: true });
+
         dialogRef.afterClosed().subscribe(result => {
             this.SignOutClicked();
         });
-      }
+    }
+
+    dismissCookieNotice() {
+        this.displayCookies = false;
+        sessionStorage.setItem("DisplayCookies",JSON.stringify(false));
+    }
+
+
+
+
 
 }
