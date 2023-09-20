@@ -281,7 +281,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customsCountry == null)
                     invalidValuesRemarks += $" FieldJson: buyer_country, FieldName: BuyerCountryCode, InvalidValueReceived: {buyerCountry};";
                 else
-                    mySupplierInvoice.BuyerCountryCode = buyerCountry;
+                    mySupplierInvoice.BuyerCountryCode = customsCountry.Code;
             }
             else if (dic.TryGetValue("shipto_country", out string shiptoCountry))
             {
@@ -290,7 +290,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customsCountry == null)
                     invalidValuesRemarks += $" FieldJson: shipto_country, FieldName: BuyerCountryCode, InvalidValueReceived: {shiptoCountry};";
                 else
-                    mySupplierInvoice.BuyerCountryCode = shiptoCountry;
+                    mySupplierInvoice.BuyerCountryCode = customsCountry.Code;
 
             }
             if (dic.TryGetValue("currency", out string currency))
@@ -300,7 +300,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (CurrencyType == null)
                     invalidValuesRemarks += $" FieldJson: currency, FieldName: InvoiceCurrencyTypeCode, InvalidValueReceived: {currency};";
                 else
-                    mySupplierInvoice.InvoiceCurrencyTypeCode = new string(currency.Where(char.IsLetter).ToArray());
+                    mySupplierInvoice.InvoiceCurrencyTypeCode = CurrencyType.Code;
             }
             if (dic.TryGetValue("invoice_amount", out string invoiceAmount) && decimal.TryParse(invoiceAmount, out decimal amount))
             {
@@ -317,7 +317,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (termsOfSaleType == null)
                     invalidValuesRemarks += $" FieldJson: incoterrns, FieldName: IncotermCode, InvalidValueReceived: {incoterrns};";
                 else
-                    mySupplierInvoice.IncotermCode = incoterrns;
+                    mySupplierInvoice.IncotermCode = termsOfSaleType.Code;
             }
 
             //mapping more from SupplierInvioceExportDefaults
@@ -385,7 +385,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (CustomsCountry == null)
                             invalidValuesRemarks += $" FieldJson: Item_country_of_origin, FieldName: OriginCountryCode, InvalidValueReceived: {itemCountryOfOrigin};";
                         else
-                            supplierInvoiceItemPM.OriginCountryCode = itemCountryOfOrigin;
+                            supplierInvoiceItemPM.OriginCountryCode = CustomsCountry.Code;
                     }
                     if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
                     {
@@ -394,7 +394,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (MeasurmentUnit == null)
                             invalidValuesRemarks += $" FieldJson: Item_unit, FieldName: InvoiceQuantityType, InvalidValueReceived: {ItemUnit};";
                         else
-                            supplierInvoiceItemPM.InvoiceQuantityType = ItemUnit;
+                            supplierInvoiceItemPM.InvoiceQuantityType = MeasurmentUnit.Code;
                     }
                     if(myInvoiceDefaults != null)
                     {
