@@ -26,9 +26,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private IQueryable<LedgerTransactionList> GetIqueryableList(IQueryable<LedgerTransaction> iQueryable)
         {
             IQueryable<LedgerTransactionList> query = (from a in iQueryable.Include("JournalLine").Include("Account").Include("Currency").Include("Journal")
+
+                                                       join b in context.JournalAdditionalDatas.Include("TaxReport")                                                
+                                                       on new { journalId = a.JournalId, line = a.JournalLineNumber } equals new { journalId = b.JournalId, line = b.JournalLineNumber }
+                                                       into jJournalAdditionalData from jad in jJournalAdditionalData.DefaultIfEmpty()
+
                                                        select new LedgerTransactionList()
                                                        {
-                                                           Id = a.Id,
+                                                           Id = a.Id,                                                           
                                                            // Account = a.Account,
                                                            AccountId = a.AccountId,
                                                            AccountingDate = a.AccountingDate,
@@ -88,6 +93,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
                                                            JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
                                                            SecurityLevelFiltering = 1,
+                                                           TaxReportId = jad != null ? jad.TaxReportId : "",
+                                                           TaxReportNumber = jad != null ? jad.TaxReport.TaxReportNumber : ""
                                                        });
 
 

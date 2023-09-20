@@ -81,6 +81,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     public UseTaxreportFilter: boolean = false;
     public GLAccountsFromDateInLocalStorage: any = [];
     isFullAccounting: boolean = SessionLocator.TenantPM.AccountingActivated;
+    isVatInputOrOutput: boolean = false;
+    columnsReady: boolean = false;
+
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -150,7 +153,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     public DateFilterWidth: number;
     SetDateFilterWidth() {
-        if (this.DisplayTaxReportFilter) {
+        if (this.isVatInputOrOutput) {
             this.DateFilterWidth = this.isRTL ? 270 : 340;
         }
         else {
@@ -158,7 +161,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
 
     }
-    DisplayTaxReportFilter: boolean;
+
     GetFullAccountingSettings() {
 
         this._entityListService.getSingle(SessionLocator.Tenant.toString(), "FullAccountingSetting").then((res: any) => {
@@ -168,17 +171,14 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
                     var res = myResponse.Result;
                     this.fullAccountingSetting = res;
-                    if (this.fullAccountingSetting.VATInputsGLAccountId == this.EntityPM.Id || this.fullAccountingSetting.VATOutputGLAccountId == this.EntityPM.Id) {
-                      //  this.UseTaxreportFilter = true;
-                        this.DisplayTaxReportFilter = true;
-                        this.SetDateFilterWidth();
+                    this.isVatInputOrOutput = this.fullAccountingSetting.VATInputsGLAccountId == this.EntityPM.Id || this.fullAccountingSetting.VATOutputGLAccountId == this.EntityPM.Id;
+                    this.SetDateFilterWidth();
+                    if (this.isVatInputOrOutput)
                         this.GetTransmittedTaxReports();
-                    }
-                    else {
-                     //   this.UseTaxreportFilter = false;
-                        this.DisplayTaxReportFilter = false;
-                        this.SetDateFilterWidth();
-                    }
+
+                    this.BuildColumns();
+                    this.columnsReady = true;
+                    this.CD.detectChanges();
                 }
             })
         });
@@ -204,7 +204,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         return month + "." + year;
     }
     ngOnInit() {
-        this.BuildColumns();
+        // this.BuildColumns();
     }
     ngAfterViewInit() {
         //this.RefreshButtonClicked();
@@ -447,7 +447,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     public QueryColumns: QueryColumnPM[] = [];
     BuildColumns() {
         this.columns = [];
-        this.columns.push({
+                this.columns.push({
             FieldName: 'GLAccountIndicator',
             DataTypeCode: 'text',
             Display: '',
@@ -618,6 +618,19 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             IsCustomTemplate: true
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("AccountDisplayNumber", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.AccountDisplayNumber")));
+
+        if(this.isVatInputOrOutput) {
+            this.columns.push({
+                FieldName: 'TaxReportId',
+                DataTypeCode: 'text',
+                Display: TextCodeTranslator.Translate("LedgerTransaction.O.VatRreporting"),
+                Styles: { width: '100px' },
+                HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+                HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+                IsCustomTemplate: true,
+            });
+            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TaxReportId",'Text',TextCodeTranslator.Translate("TaxReport.Q.ALLTAXREPORTS")));
+        }            
 
         this.columns.push({
             FieldName: 'Notes',

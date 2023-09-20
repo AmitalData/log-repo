@@ -120,8 +120,18 @@ export class GlAccountLedgerTransactionsListTemplate {
         });
     }
 
-
-
+    async OpenTaxReportId(id: string) {
+        SessionLocator.DynamicLoader.Load(
+            "./Infrastructure/Components/EditComponent/EditComponent",
+            this.CurrentSession.SessionLocation.viewContainerRef
+        ).then(cmpRef => {
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Run({
+                EntityId: id,
+                ObjectTableName: 'TaxReport'      
+            });
+        });
+    }
 
     OpenManageReconciliations(rowData: any, title: string) {
 
