@@ -102,6 +102,13 @@
         </a>
     </div>
 
+    <!-- TaxReportId -->
+    <div style="padding: 0px 7px;text-align: left;" class="TextTrimming" *ngIf="fieldName == 'TaxReportId'">
+        <a href="javascript:;" (click)="$event.stopPropagation();OpenTaxReportId(rowData['TaxReportId'])" *ngIf="rowData['TaxReportId']">
+            {{ rowData['TaxReportNumber'] }}
+        </a>
+    </div>
+
     <!-- DueDate -->
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'DueDate'">{{
         rowData[fieldName] | DateTimePipe:'SD' }}</div>
