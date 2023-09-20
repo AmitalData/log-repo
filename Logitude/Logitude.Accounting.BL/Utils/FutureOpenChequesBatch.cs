@@ -137,10 +137,14 @@ namespace Logitude.Accounting.BL.Utils
                                                         }
                                                     }
                                                 }
+                                                else
+                                                {
+                                                    moreDataPM.TotalOpenChequesInLocalCur = 0;
+
+                                                }
                                                 var externalTransactions = ledgerQuery.GetExternalTransactionsForAccount(item.GLAccountId, tenant.Id).ToList();
                                                 var externalTransactionsTotal = externalTransactions.Sum(d => d.LocalAmountCredit);
                                                 moreDataPM.TotFutureOpenChequesInLocalCur += externalTransactionsTotal;
-                                                moreDataPM.TotalOpenChequesInLocalCur =0;
                                                 moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                                                 updateService.Update(moreDataPM, true);
                                             }
