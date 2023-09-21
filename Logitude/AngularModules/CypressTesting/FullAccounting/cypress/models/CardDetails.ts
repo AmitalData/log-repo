@@ -3,5 +3,7 @@ export interface CardDetails {
     Address1: string,
     City: string,
     Country: string,
+    State: string,
     Phone: string
+    VatNo: string,
 }

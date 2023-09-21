@@ -25,7 +25,7 @@ Then("the AP Payment should save successfully", () => {
 });
 //#endregion
 
-//#region Approve the AP Invoice
+//#region Approve the AP Payment
 When("approve the AP Payment", () => {
     APPaymentActions.ApproveAPPayment()
 });
@@ -35,7 +35,7 @@ Then("the AP Payment should approve successfully", () => {
 });
 //#endregion
 
-//#region Void AR Payment
+//#region Void AP Payment
 When("void AP Payment", () => {
     APPaymentActions.VoidAPPayment()
 });
