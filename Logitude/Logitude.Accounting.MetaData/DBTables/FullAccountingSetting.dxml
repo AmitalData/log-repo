@@ -281,6 +281,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AllowEditingExchangeRate"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
     ReferencedTable="VatTypes"

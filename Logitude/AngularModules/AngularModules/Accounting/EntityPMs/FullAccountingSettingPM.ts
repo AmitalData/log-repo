@@ -309,6 +309,11 @@ export class FullAccountingSettingPM {
     public set HSMaddress(newValue: string) { if (this.hSMaddress != newValue) { this.hSMaddress = newValue; this.MarkAsDirty("HSMaddress"); } }
        
 	 
+    private allowEditingExchangeRate: boolean;
+    public get AllowEditingExchangeRate() { return this.allowEditingExchangeRate; }
+    public set AllowEditingExchangeRate(newValue: boolean) { if (this.allowEditingExchangeRate != newValue) { this.allowEditingExchangeRate = newValue; this.MarkAsDirty("AllowEditingExchangeRate"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		
