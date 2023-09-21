@@ -1449,9 +1449,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         {
             AppendLogLine("InitSupplierInvoice" + supplierInvoice.DeclarationId);
             AppendLogLine("InitSupplierInvoice" + invoice?.Number);
-			AppendLogLine("InitSupplierInvoice" + invocie?.Number);
-			AppendLogLine("InitSupplierInvoice" + invocie?.Date);
-			AppendLogLine("InitSupplierInvoice" + invocie?.IsEmpty);
+			AppendLogLine("InitSupplierInvoice" + invoice?.Date);
+			AppendLogLine("InitSupplierInvoice" + invoice?.IsEmpty);
 
 			supplierInvoice.VendorId = _AmitalCustomsFile.VendorId;
 			if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.InvoiceNumber))
@@ -1463,11 +1462,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			else
 			{
 				AppendLogLine("else !String.IsNullOrWhiteSpace(_AmitalCustomsFile.InvoiceNumber");
-				if (!invocie.IsEmpty)
+				if (!invoice.IsEmpty)
 				{
 					AppendLogLine("!invocie.IsEmpty");
-                    supplierInvoice.InvoiceNumber=invocie.Number;
-                    supplierInvoice.IssueDate = !String.IsNullOrWhiteSpace( invocie?.Date)? DateTime.Parse(invocie?.Date): supplierInvoice.IssueDate;
+                    supplierInvoice.InvoiceNumber= invoice.Number;
+                    supplierInvoice.IssueDate = !String.IsNullOrWhiteSpace(invoice?.Date)? DateTime.Parse(invoice?.Date): supplierInvoice.IssueDate;
 
 				}
 			}
