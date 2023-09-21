@@ -94,8 +94,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(_MyDeclarationPM.Tenant);
                 DocumentsFilingPM documentIn = documentsFilingQuery.GetSinglePM(this._LogitudeDocs.COM_ID, _MyDeclarationPM.Tenant);
                 var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                var ParentEntityCodeList = new string[] { "Declaration", "ExportDeclarationClosingData" };
 
-                if (documentIn != null)
+				if (documentIn != null)
                 {
                     if (this._LogitudeDocs.DOC_ID == null)
                     {
@@ -112,7 +113,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                             List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMList = myCustomsDocumentPointerQueryService.GetPointersForMultipleTickets(ticketdIds, _MyDeclarationPM.Tenant);
                             if (myCustomsDocumentPointerPMList != null && myCustomsDocumentPointerPMList.Count() > 0)
                             {
-                                var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == _MyDeclarationPM.Id);
+                                var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => ParentEntityCodeList.Contains(o.ParentEntityCode) && o.ParentEntityId == _MyDeclarationPM.Id);
                                 if(myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                                 {
                                     
@@ -211,8 +212,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                         customsDocumentPointerPM.Child2EntityCode = "SupplierInvoiceItem";
                         customsDocumentPointerPM.Child2EntityId = "1";
                     }
+					if (pointerLevel == "C")
+					{
+						customsDocumentPointerPM.ParentEntityCode = "ExportDeclarationClosingData";						
+					}
 
-                    customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
+					customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
                     AppendLogLine("Update pointer, connected entity: " + customsDocumentPointerPM.ParentEntityId);
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 

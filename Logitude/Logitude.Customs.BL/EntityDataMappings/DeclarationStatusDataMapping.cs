@@ -19,7 +19,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(DeclarationStatusPM entityPM, DeclarationStatus entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPOCO.DeclarationId = entityPM.DeclarationId;
+            entityPOCO.LineNumber = entityPM.LineNumber;
+
         }
 
         public void CustomPOCOToPM(DeclarationStatusPM entityPM, DeclarationStatus entityPOCO)

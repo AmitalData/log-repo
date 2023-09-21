@@ -538,6 +538,7 @@
     <Compile Include="EntityPMs\VehiclePM.cs" />
     <Compile Include="EntityPMs\VehicleValidator.cs" />
     <Compile Include="EntityQueryServicesExt\ICreateUD2LTService.cs" />
+    <Compile Include="EntityQueryServicesExt\ICustomsAutoDecClosing.cs" />
     <Compile Include="EntityQueryServicesExt\ICustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\ICustomsRequiredFieldsValidatorExt.cs" />
     <Compile Include="Messaging\Customs\RequestSheetContext.cs" />
