@@ -220,6 +220,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return reconciledLines;
         }
 
+        public TaxReport GetByReportNunber(string reportNunber) =>
+            (from a in context.TaxReports
+                where a.TaxReportNumber == reportNunber
+                select a).FirstOrDefault();        
     }
 
 
