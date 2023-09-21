@@ -33,7 +33,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                ExchangeRateDiffGLAccountId = a.ExchangeRateDiffGLAccountId,
                                                                VATInputsGLAccountId = a.VATInputsGLAccountId,
                                                                Tenant = a.Tenant,
-
+                                                               AllowEditingExchangeRate= a.AllowEditingExchangeRate,
                                                                CustomerControlAccountId = a.CustomerControlAccountId,
                                                                CustomerControlAccountNumber = a.CustomerControlAccount != null ? a.CustomerControlAccount.DisplayNumber : null,
                                                                CustomerControlAccountName = a.CustomerControlAccount != null ? a.CustomerControlAccount.EnglishName : null,

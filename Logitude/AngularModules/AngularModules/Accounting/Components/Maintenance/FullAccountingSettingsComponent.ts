@@ -36,7 +36,6 @@ import { CopyFromTenant0PM } from 'Accounting/EntityPMs/CopyFromTenant0PM';
 import { List } from 'cypress/types/lodash';
 import { CopyFromTenant0PMService } from 'Accounting/Services/StandardPMs/CopyFromTenant0PMService';
 import { any } from 'cypress/types/bluebird';
-
 const DebtorsAndCreditorsChartOfAccountTypeCode = '7';
 @Component({
 
@@ -49,6 +48,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 
     public DataContext: FullAccountingSettingsComponent = this;
+
     //public myForm: ControlGroup;
     public ObjectTableName: string = "FullAccountingSetting";
     public TenantPM: TenantPM;
@@ -65,12 +65,10 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     tenantPMService: TenantPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     public TaxInstitutionGLAccountFilterItems: ApiQueryFilters = new ApiQueryFilters();
-
     disabledCopyFromTenant0 = true
     date = new Date()
     user = "amital "
     private indexHyphenSholudInHSMTokken = [8,13,18,23];
-
 
     constructor(public serviceArgs: ServiceArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
@@ -230,6 +228,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("OceanImportJobControlAccountId", this.ObjectTableName, this.enableAllFields);
         this.UIProperties.SetEnabled("AirExportJobControlAccountId", this.ObjectTableName, this.enableAllFields);
         this.UIProperties.SetEnabled("AirImportJobControlAccountId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("AllowEditingExchangeRate", this.ObjectTableName, this.enableAllFields);
         var UsingSecurityLevelFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAL")[0];
         if (UsingSecurityLevelFeatureToggle) this.activateSecurityLevel = true;
         this.UIProperties.SetEnabled("IsSecurityLevelActivated", this.ObjectTableName, (this.enableAllFields && this.activateSecurityLevel));
@@ -556,6 +555,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     set IsSecurityLevelActivated(value: boolean) {
         if (this.EntityPM.IsSecurityLevelActivated != value) {
             this.EntityPM.IsSecurityLevelActivated = value;
+            this.SetUIProperties();
+        }
+    }
+    get AllowEditingExchangeRate() { return this.EntityPM.AllowEditingExchangeRate; }
+    set AllowEditingExchangeRate(value: boolean) {
+        if (this.EntityPM.AllowEditingExchangeRate != value) {
+            this.EntityPM.AllowEditingExchangeRate = value;
             this.SetUIProperties();
         }
     }
