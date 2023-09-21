@@ -1,44 +1,27 @@
 ﻿<Script DBType="Main" Module="Accounting">
-  <Sql Version="6">
+  <Sql Version="7">
     <![CDATA[
-    IF NOT EXISTS (SELECT 1 FROM CopyFromTenant0 WHERE  Tenant = 0 AND TableName = 'Chart Of Accounts')
-THEN
-  INSERT INTO CopyFromTenant0 (Id, Tenant, TableName) VALUES ('9999-10', 0, 'Chart Of Accounts');
-END IF;
+   INSERT INTO CopyFromTenant0 (Id, Tenant, TableName)
+SELECT *
+FROM (
+    VALUES
+    ('9999-10', 0, 'Chart Of Accounts'),
+    ('9999-20', 0, 'GLAccounts'),
+    ('9999-30', 0, 'Automatic Reconcile Methods'),
+    ('9999-40', 0, 'VatTypes'),
+    ('9999-50', 0, 'Computing Partners'),
+    ('9999-60', 0, 'Vat settings'),
+    ('9999-70', 0, 'Tasks Scheduler'),
+    ('9999-80', 0, 'CountryCities')
+) AS S(Id, Tenant, TableName)
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM CopyFromTenant0
+    WHERE CopyFromTenant0.Tenant = S.Tenant
+    AND CopyFromTenant0.TableName = S.TableName
+	OR CopyFromTenant0.Id = S.Id
+);
 
-IF NOT EXISTS (SELECT 1 FROM CopyFromTenant0 WHERE  Tenant = 0 AND TableName = 'GLAccounts')
-THEN
-insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-20',0,'GLAccounts')
-END IF;
-
-IF NOT EXISTS (SELECT 1 FROM CopyFromTenant0 WHERE  Tenant = 0 AND TableName = 'Automatic Reconcile Methods')
-THEN
-      insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-30',0,'Automatic Reconcile Methods')
-END IF;
-
-IF NOT EXISTS (SELECT 1 FROM CopyFromTenant0 WHERE Tenant = 0 AND TableName = 'VatTypes')
-THEN
-        insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-40',0,'VatTypes')
-END IF;
-
-IF NOT EXISTS (SELECT 1 FROM CopyFromTenant0 WHERE  Tenant = 0 AND TableName = 'Computing Partners')
-THEN
-           insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-50',0,'Computing Partners')
-END IF;
-
-IF NOT EXISTS (SELECT 1 FROM CopyFromTenant0 WHERE  Tenant = 0 AND TableName = 'Vat settings ')
-THEN
-          insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-60',0,'Vat settings ')
-END IF;
-
-IF NOT EXISTS (SELECT 1 FROM CopyFromTenant0 WHERE  Tenant = 0 AND TableName = 'Tasks Scheduler')
-THEN
-       insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-70',0,'Tasks Scheduler')
-END IF;
-IF NOT EXISTS (SELECT 1 FROM CopyFromTenant0 WHERE  Tenant = 0 AND TableName = 'CountryCities')
-THEN
-       insert into CopyFromTenant0(Id,Tenant,TableName)values('9999-80',0,'CountryCities')
-END IF;
 
 
      ]]>
