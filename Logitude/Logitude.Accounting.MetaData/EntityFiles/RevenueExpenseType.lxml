@@ -43,7 +43,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;הכנסות הוצאות&quot;"
   DefaultText="&quot;Revenue Expense Type&quot;"
-  Code="&quot;6932&quot;"
+  Code="&quot;ec90&quot;"
   Name="&quot;RevenueExpenseType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -414,20 +414,20 @@
   </EventTypes>
   <Records>
     <Record
-      Code="&quot;2&quot;"
-      Inactive="false"
-      LocalName="&quot;הוצאות, מתאפס בהעברת שנה&quot;"
-      EnglishName="&quot;Expense&quot;" />
-    <Record
-      Code="&quot;3&quot;"
-      Inactive="false"
-      LocalName="&quot;חו&quot;ז , לא מתאפס. יתרה ממשיכה לשנה הבאה&quot;"
-      EnglishName="&quot;Other&quot;" />
-    <Record
       Code="&quot;1&quot;"
       Inactive="false"
       LocalName="&quot;הכנסות, מתאפס בהעברת שנה&quot;"
       EnglishName="&quot;Revenue&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      LocalName="&quot;הוצאות, מתאפס בהעברת שנה&quot;"
+      EnglishName="&quot;Expense&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;3&quot;"
+      LocalName="&quot;חו&quot;ז , לא מתאפס. יתרה ממשיכה לשנה הבאה&quot;"
+      EnglishName="&quot;Other&quot;"
+      Inactive="false" />
   </Records>
   <DataContracts>
     <DataContract
