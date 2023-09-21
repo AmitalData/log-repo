@@ -50,7 +50,8 @@ namespace WebFreight.Web.WcfApi
                     DeclarationRepository declarationRepository = new DeclarationRepository(objectContext);
                     DeclarationStatusRepository declarationStatusRepository = new DeclarationStatusRepository(objectContext);
                     DeclarationStatusQueryService declarationStatusQueryService = new DeclarationStatusQueryService(objectContext);
-                    DeclarationStatusUpdateService declarationStatusUpdateService = new DeclarationStatusUpdateService(objectContext);
+                    DeclarationStatusUpdateService declarationStatusUpdateService = new DeclarationStatusUpdateService(objectContext, new Dictionary<string, IContext>(), tenant);
+                    StatusCodeRepository StatusCodeRepository = new StatusCodeRepository(objectContext);
 
 
                     Declaration entityPoco = declarationRepository.GetByCustomFileNo(customFileNo, tenant);
@@ -61,16 +62,20 @@ namespace WebFreight.Web.WcfApi
 
                         foreach (DeclarationStatusPM declarationStatus in DeclarationStatusesList)
                         {
-                            var DeclarationStatusPM = new DeclarationStatusPM();
-                            DeclarationStatusPM.StatusID = declarationStatus.StatusID;
-                            DeclarationStatusPM.UnfSequenceNumeric = declarationStatus.UnfSequenceNumeric;
-                            DeclarationStatusPM.Tenant = tenant;
-                            DeclarationStatusPM.DeclarationId = entityPoco.Id;
-                            DeclarationStatusPM.StatusDate = declarationStatus.StatusDate;
-                            DeclarationStatusPM.LineNumber = declarationStatus.LineNumber;
-                            DeclarationStatusPM.StatusRemarks = declarationStatus.StatusRemarks;
-                            DeclarationStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
-                            declarationStatusUpdateService.Update(DeclarationStatusPM,true);
+                            var statusCode = StatusCodeRepository.GetSingleByCode(declarationStatus.StatusID,tenant);
+                            if (statusCode != null)
+                            {
+                                var DeclarationStatusPM = new DeclarationStatusPM();
+                                DeclarationStatusPM.StatusID = statusCode.Id;
+                                DeclarationStatusPM.UnfSequenceNumeric = declarationStatus.UnfSequenceNumeric;
+                                DeclarationStatusPM.Tenant = tenant;
+                                DeclarationStatusPM.DeclarationId = entityPoco.Id;
+                                DeclarationStatusPM.StatusDate = declarationStatus.StatusDate;
+                                DeclarationStatusPM.LineNumber = declarationStatus.LineNumber;
+                                DeclarationStatusPM.StatusRemarks = declarationStatus.StatusRemarks;
+                                DeclarationStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
+                                declarationStatusUpdateService.Update(DeclarationStatusPM, true);
+                            }
                         }
                         if (!response.HasError)
                         {
