@@ -17,7 +17,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2754Valid",
                     Name = "הצהרת יבוא תקינה",
                     Entity="Declaration",
-                     Param1= @"{ ""withSignature"":""false""}",
+                     Param1= @"{ ""withSignature"":""false"" , ""amount"":""99""}",
 
                 },
                  new SincroTestCaseDetail()

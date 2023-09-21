@@ -22,11 +22,12 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
         public ResponseHeader CallWS(GenericRequestParams requestParams, out DF_NG_2754_MSG10004_ImportDeclarationResponse response)
         {
-            UpdateDeclaration(requestParams);
+            dynamic params1 = JObject.Parse(requestParams.TestCase.Param1);
+
+            UpdateDeclaration(requestParams , Convert.ToDecimal(params1.amount));
             UpdateStatus("13");
             response = fakeRespond;
             UpdateFakeResponseContentHeader();
-            dynamic params1 = JObject.Parse(requestParams.TestCase.Param1);
             if (Convert.ToString(params1.withSignature) == "true")
                 AddSign();
             AddResponseHeader();
