@@ -43,7 +43,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;הכנסות הוצאות&quot;"
   DefaultText="&quot;Revenue Expense Type&quot;"
-  Code="&quot;ec90&quot;"
+  Code="&quot;36cd&quot;"
   Name="&quot;RevenueExpenseType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"

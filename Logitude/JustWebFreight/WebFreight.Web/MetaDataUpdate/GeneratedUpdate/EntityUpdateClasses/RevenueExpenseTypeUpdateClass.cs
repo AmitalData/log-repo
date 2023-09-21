@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RevenueExpenseTypeUpdateClass
    {  		
-		public const string HashString = "dc07a9f5d91b43f3fa50f4848862517a";
+		public const string HashString = "86360dfd278daedb29765d16e9ebd025";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הכנסות הוצאות",
 			      				    DefaultText =  "Revenue Expense Type",
-			      				    Code =  "ec90",
+			      				    Code =  "36cd",
 			      				    Name =  "RevenueExpenseType Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "EnglishName",
