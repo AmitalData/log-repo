@@ -8,9 +8,11 @@ Feature: Vendor Create, Search, activate and Edit from Maintenance
             | CompanyName | Testing Vendor Scenario |
             | LocalName   | Testing Vendor Scenario |
             | Phone       | 9999999999              |
+            | Vat No      | 9999999999              |
             | Address1    | 15 Vendor Street        |
-            | City        | Anchorage               |
+            | City        | NEW BABILON             |
             | Country     | United States           |
+            | State       | Alaska                  |  
         When create vendor
         Then the vendor should create successfully
 
@@ -25,11 +27,11 @@ Feature: Vendor Create, Search, activate and Edit from Maintenance
     Scenario: Activate the vendor in accounting system
         Given navigates new account wizerd inside the customer
         And a GL Account with the following details
-            | ChartOfAccounts    | Local Name Modified |
+            | ChartOfAccounts    | 4                   |
             | LocalName          | CurrentDate         |
             | EnglishName        | CurrentDate         |
             | Currency           | NIS                 |
-            | ReconcileMethod    | מטבע מקומי          |
+            | ReconcileMethod    | מטבע מקומי         |
             | RevenueExpenseType | Other               |
         When create GL Account
         Then the GL Account should create successfully

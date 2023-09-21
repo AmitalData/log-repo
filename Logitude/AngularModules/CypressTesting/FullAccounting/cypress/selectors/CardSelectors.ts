@@ -6,6 +6,8 @@ export class CardSelectors {
     public static readonly Address1 = '#Address_Address1';
     public static readonly City = '#Address_City';
     public static readonly Country = '#Address_CountryId';
+    public static readonly State = '#Address_StateId';
+    public static readonly VatNo = '#Address_VatNumber';
     public static readonly Phone = '#Address_PhoneNumber';
     public static readonly CustomerAccountingTab = '#CustomerTHAccounting';
     public static readonly VendorAccountingTab = '#VendorTHAccounting';

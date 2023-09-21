@@ -7,7 +7,7 @@ import { Constants } from "../../constants/Constants";
 import * as VendorActions from '../../actions/CardActions';
 import * as GLAccountsActions from '../../actions/GLAccountsActions';
 import { GLAccountsDetails } from '../../models/GLAccountsDetails';
-import * as gr from '../../../../Base/cypress/actions/GenerateRandoms';
+import * as gr from '../../../../Base/cypress/Actions/GenerateRandoms';
 
 let currentDateTime = gr.GenerateCurrentDatetimeString("")
 

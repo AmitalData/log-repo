@@ -12,18 +12,19 @@ Given("the user logged in and navigates to Full Accounting workspace", () => {
 });
 
 Given("an AR Invoice with the following details", (dataTable) => {
+    debugger
     ARInvoiceActions.NavigatesARInvoiceWizerd()
     let ARInvoiceDetails = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
     ARInvoiceActions.FillARInvoiceDetails(ARInvoiceDetails)
 });
 
-When("create AR Invoice", () => {
-    ARInvoiceActions.CreateARInvoice()
-});
+//   When("create AR Invoice", () => {
+//        ARInvoiceActions.CreateARInvoice()
+//  });
 
-Then("the AR Invoice should get successfully", () => {
-    ARInvoiceActions.AssertCreateARInvoice()
-});
+// Then("the AR Invoice should get successfully", () => {
+//          ARInvoiceActions.AssertCreateARInvoice()
+//  });
 //#endregion
 
 //#region Add new Invoice Line

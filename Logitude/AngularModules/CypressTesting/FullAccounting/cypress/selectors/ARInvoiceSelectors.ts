@@ -22,7 +22,7 @@ export class ARInvoiceSelectors {
     public static readonly CreateCreditNoteARInvoiceButton = '#CreateCreditNote';
     public static readonly CreateARInvoiceButton = '#CreateARInvoice';
     public static readonly ARInvoiceExchangeRate = '#ARInvoice_InvoiceCurrencyExchangeRate';
-    public static readonly OkCreateARInvoiceButton = '#Ok-CreateARInvoice';
+    public static readonly OkCreateARInvoiceButton = '#Ok-AddARInvoice';
     public static readonly ARInvoiceVatType = '#ARInvoice_VatTypeId';
     public static readonly ARInvoiceApproveButton = "button[id^='ARInvoiceBApprove']:last";
     public static readonly ARInvoiceSetAsSentButton = '#ARInvoiceBSetAsSent';

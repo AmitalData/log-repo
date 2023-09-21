@@ -6,17 +6,18 @@ Feature: Journal
         Given the user logged in and navigates to Full Accounting workspace
         And navigate journal workspace
         And a journal line action with the following details
-            | ActionName    | חובה+זכות  |
+            | ActionName    | חובה+זכות |
             | RefDate       | 16/10/2022 |
             | DueDate       | 16/10/2022 |
-            | CreditAccount | KHTest     |
-            | DebitAccount  | KHTest     |
+            | CreditAccount | קטרינג כהן ובניו     |
+            | DebitAccount  | קטרינג כהן ובניו     |
             | Amount        | 100        |
+        And fill "10/08/2023" as accounting date
         When save as draft
         Then the journal should create successfully
 
     Scenario: Approve the Journal
-        When approve the journal
+        When  approve the journal
         Then the journal should approve successfully
 
     Scenario: Print report

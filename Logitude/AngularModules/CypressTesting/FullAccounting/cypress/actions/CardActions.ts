@@ -6,7 +6,7 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
-import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
+import * as gr from '../../../Base/cypress/Actions/GenerateRandoms';
 import { Constants } from "../constants/Constants";
 
 let CardCode = null;
@@ -24,9 +24,11 @@ export function FillCardDetails(cardDetails: CardDetails) {
     let currentDateTime = gr.GenerateCurrentDatetimeString("")
     cy.FillLogTextBox(CardSelectors.CompanyName, currentDateTime)
     cy.FillLogTextBox(CardSelectors.Phone, cardDetails.Phone)
+    cy.FillLogLov(CardSelectors.VatNo, cardDetails.VatNo, true)
     cy.FillLogTextBox(CardSelectors.Address1, cardDetails.Address1)
     cy.FillLogTextBox(CardSelectors.City, cardDetails.City)
     cy.FillLogLov(CardSelectors.Country, cardDetails.Country, true)
+    cy.FillLogLov(CardSelectors.State, cardDetails.State, true)
 }
 
 export function CreateCard() {
