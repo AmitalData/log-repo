@@ -1392,79 +1392,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             ChartOfAccountRepository ChartOfAccountRepository = new ChartOfAccountRepository(context);
             List<ChartOfAccount> chartOfAccount = ChartOfAccountRepository.GetAll(tenatToCopy).Where(t => t.Inactive == false).ToList();
-            List<GLAccount> pocosIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount==true).ToList();
+            //List<GLAccount> pocosIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount==true).ToList();
             List<GLAccount> pocosNotIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
            
-            foreach (var item in pocosIsControlAccount)
-            {
-                GLAccountPM glAccountPM = new GLAccountPM()
-                {
-                    Tenant = tenatToCopy,
-                    AccountTypeCode = item.AccountTypeCode,
-                    DisplayNumber = item.DisplayNumber,
-                    LocalName = item.LocalName,
-                    EnglishName = item.EnglishName,
-                    SearchFields = item.SearchFields,
-                    IsMultiCurrency = item.IsMultiCurrency,
-                    CurrencyId = item.CurrencyId,
-                    RevenueExpenseType = item.RevenueExpenseType,
-                    IsControlAccount = item.IsControlAccount,
-                   ChartOfAccountsId = chartOfAccount?.Where(c=>c.TypeCode== item.ChartOfAccountsTypeCode).FirstOrDefault().Id,
-                    Inactive = item.Inactive,
-                   ChartOfAccountsTypeCode = item.ChartOfAccountsTypeCode,
-                    ReconcileMethodCode = item.ReconcileMethodCode,
-                    ControlAccountId =null,
-                    AutomaticReconcileId = item.AutomaticReconcileId,
-                    PreviousEnglishName = item.PreviousEnglishName,
-                    PreviousLocalName = item.PreviousLocalName,
-                    PreviousNumber = item.PreviousNumber,
-                    PreviousChartOfAccountsId = item.PreviousChartOfAccountsId,
-                    CustomerGLAccountId = item.CustomerGLAccountId,
-                    RevaluationEnabled = item.RevaluationEnabled,
-                    ParentAccountId = item.ParentAccountId,
-                    Category1Id = item.Category1Id,
-                    Category2Id = item.Category2Id,
-                    Category3Id = item.Category3Id,
-                    Category4Id = item.Category4Id,
-                    Category5Id = item.Category5Id,
-                    IsVATExempt = item.IsVATExempt,
-                    DeductionFileTypeId = item.DeductionFileTypeId,
-                    DeductionFileNumber = item.DeductionFileNumber,
-                    AssessingOfficeCode = item.AssessingOfficeCode,
-                    Occupation = item.Occupation,
-                    DeductionTypeId = item.DeductionTypeId,
-                    ConsolidationVat = item.ConsolidationVat,
-                    IsEquipmentVendor = item.IsEquipmentVendor,
-                    ExcludeFromDeductionReport = item.ExcludeFromDeductionReport,
-                  
-                    AllowEditChequePayToName = item.AllowEditChequePayToName,
-                    ActiveForInterest = item.ActiveForInterest,
-                    InterestCalculationStartDate = item.InterestCalculationStartDate,
-                    ActiveForInterestCreditInvoice = item.ActiveForInterestCreditInvoice,
-                    InterestCreditLimit = item.InterestCreditLimit,
-                    NameForPrintingCheques = item.NameForPrintingCheques,
-                    Smallcashbook = item.Smallcashbook,
-                    MinimumInterestInvoiceBilling = item.MinimumInterestInvoiceBilling,
-                    ReportingAsAnotherDocument = item.ReportingAsAnotherDocument,
-                    CreditAllotmentPercentage = item.CreditAllotmentPercentage,
-                    CardsDataId = item.CardsDataId,
-                    PostponedChequesCommission = item.PostponedChequesCommission,
-                    InterestOpenBalance = item.InterestOpenBalance
-
-
-
-
-                };
-
-
-
-
-
-                glAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                service.Update(glAccountPM, true);
-                context.SaveChanges();
-            }
-             pocosIsControlAccount = repository.GetAll(tenatToCopy).Where(t => t.Inactive == false && t.IsControlAccount == true).ToList();
+          
 
 
             foreach (var item in pocosNotIsControlAccount)
@@ -1485,7 +1416,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     Inactive = item.Inactive,
                     ChartOfAccountsTypeCode = item.ChartOfAccountsTypeCode,
                     ReconcileMethodCode = item.ReconcileMethodCode,
-                    ControlAccountId = item.ChartOfAccountsTypeCode == "3" ? pocosIsControlAccount?.Where(t => t?.ChartOfAccountsTypeCode == "3").FirstOrDefault().Id : item.ChartOfAccountsTypeCode == "4" ? pocosIsControlAccount?.Where(t => t?.ChartOfAccountsTypeCode == "4").FirstOrDefault().Id : null,
+                    ControlAccountId = item.ChartOfAccountsTypeCode == "3" ? pocosNotIsControlAccount?.Where(t => t?.ChartOfAccountsTypeCode == "3").FirstOrDefault().Id : item.ChartOfAccountsTypeCode == "4" ? pocosNotIsControlAccount?.Where(t => t?.ChartOfAccountsTypeCode == "4").FirstOrDefault().Id : null,
                     AutomaticReconcileId = item.AutomaticReconcileId,
                     PreviousEnglishName = item.PreviousEnglishName,
                     PreviousLocalName = item.PreviousLocalName,
