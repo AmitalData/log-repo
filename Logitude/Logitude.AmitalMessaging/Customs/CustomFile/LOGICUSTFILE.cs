@@ -203,9 +203,10 @@ public partial class LogitudeCustomsFile
 
     private string UNFCourierField;
 
+    private ExportClosing closingField;
 
-    /// <remarks/>
-    public string CustomFileNo
+	/// <remarks/>
+	public string CustomFileNo
     {
         get
         {
@@ -1187,6 +1188,21 @@ public partial class LogitudeCustomsFile
             this.UNFCourierField = value;
         }
     }
+
+
+	[System.Xml.Serialization.XmlElementAttribute("Closing")]
+
+	public ExportClosing Closing
+	{
+		get
+		{
+			return this.closingField;
+		}
+		set
+		{
+			this.closingField = value;
+		}
+	}
 }
 
 
@@ -1496,5 +1512,99 @@ public class ExportInvoiceItems
     }
 }
 
+
+
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ExportClosing
+{
+	[System.Xml.Serialization.XmlElementAttribute("Closing")]
+
+	private string finalMAWBField;
+
+	private string finalHAWBField;
+
+	private string loadingDateTimeField;
+
+	private string finalLoadingSiteField;
+
+	private string freightCurrencyField;
+
+	private string freightAmountField;
+
+	public string FinalMAWB
+	{
+		get
+		{
+			return this.finalMAWBField;
+		}
+		set
+		{
+			this.finalMAWBField = value;
+		}
+	}
+	public string FinalHAWB
+	{
+		get
+		{
+			return this.finalHAWBField;
+		}
+		set
+		{
+			this.finalHAWBField = value;
+		}
+	}
+
+	public string LoadingDateTime
+	{
+		get
+		{
+			return this.loadingDateTimeField;
+		}
+		set
+		{
+			this.loadingDateTimeField = value;
+		}
+	}
+	public string FinalLoadingSite
+	{
+		get
+		{
+			return this.finalLoadingSiteField;
+		}
+		set
+		{
+			this.finalLoadingSiteField = value;
+		}
+	}
+	public string FreightCurrency
+	{
+		get
+		{
+			return this.freightCurrencyField;
+		}
+		set
+		{
+			this.freightCurrencyField = value;
+		}
+	}
+	public string FreightAmount
+	{
+		get
+		{
+			return this.freightAmountField;
+		}
+		set
+		{
+			this.freightAmountField = value;
+		}
+	}
+
+}
 
 

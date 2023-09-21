@@ -486,31 +486,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
 
 
-                CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
-                List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(_DocumentsFilingPM.Id, declarationPM.Tenant);
-                if (myCustomsDocumentsTicketPMList != null && myCustomsDocumentsTicketPMList.Count() > 0)
-                {
-                    List<string> ticketdIds = myCustomsDocumentsTicketPMList.Select(r => r.Id).ToList();
-                    if (ticketdIds != null && ticketdIds.Count() > 0)
-                    {
-                        CustomsDocumentPointerQueryService myCustomsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(_DocumentsFilingPM.Tenant);
-                        List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMList = myCustomsDocumentPointerQueryService.GetPointersForMultipleTickets(ticketdIds, _DocumentsFilingPM.Tenant);
-                        if (myCustomsDocumentPointerPMList != null && myCustomsDocumentPointerPMList.Count() > 0)
-                        {
-                            var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == declarationPM.Id);
-                            if (myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
-                            {
-                                LogitudeSettings.HandleLogMe("Ticket already Exist for this Document" + logData, false, "CreateUD2LTService", stopLogAt);
-                                Debug.WriteLine("Ticket already Exist for this Document");
-                                return;
-
-                            }
-                        }
-                    }
-                }
-
-
-
                 Debug.WriteLine("CreateCRS");
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
@@ -684,7 +659,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private bool TicketalreadyExistforthisDocument(DeclarationPM declarationPM)
         {
-            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_DocumentsFilingPM.Tenant);
+			var ParentEntityCodeList = new string[] { "Declaration", "ExportDeclarationClosingData" };
+
+			CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_DocumentsFilingPM.Tenant);
             List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
             if (myCustomsDocumentsTicketPMList != null && myCustomsDocumentsTicketPMList.Count() > 0)
             {
@@ -695,7 +672,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMList = myCustomsDocumentPointerQueryService.GetPointersForMultipleTickets(ticketdIds, _DocumentsFilingPM.Tenant);
                     if (myCustomsDocumentPointerPMList != null && myCustomsDocumentPointerPMList.Count() > 0)
                     {
-                        var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == declarationPM.Id);
+                        var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => ParentEntityCodeList.Contains(o.ParentEntityCode) && o.ParentEntityId == declarationPM.Id);
                         if (myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                         {
                             return true;
