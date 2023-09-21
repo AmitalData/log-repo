@@ -78,11 +78,11 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
             foreach (var item in pocos)
             {
-                string vatTypeId=null;
-                vatTypeId = vatTypeRepository.GetSingleVatTypeByCode(item.Code, tenatToCopy).Id;
+                VatTypePM vatType = this.query.GetSinglePMByCode(item.Code, tenatToCopy);
+                string vatTypeId = vatType.Id;
                 if (vatTypeId == null)
                 {
-                    VatTypePM vatType = new VatTypePM()
+                     vatType = new VatTypePM()
                     {
                         Code = item.Code,
                         LocalName = item.LocalName,
@@ -107,20 +107,21 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     };
                     service.Create(vatType);
                     vatTypeId = vatTyperepository.GetSingleVatTypeByCode(vatType.Code, tenatToCopy).Id;
-                    VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetSingleVatTypePercentage(item.Id);
-                    if (vatTypePercentage != null)
+                  
+                }
+                VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetSingleVatTypePercentage(item.Id);
+                if (vatTypePercentage != null)
+                {
+                    VatTypePercentagePM vatTypePercentagePM = new VatTypePercentagePM()
                     {
-                        VatTypePercentagePM vatTypePercentagePM = new VatTypePercentagePM()
-                        {
-                            Tenant = tenatToCopy,
-                            FromDate = vatTypePercentage.FromDate,
-                            Percentage = vatTypePercentage.Percentage,
-                            VatTypeId = vatTypeId
-                        };
+                        Tenant = tenatToCopy,
+                        FromDate = vatTypePercentage.FromDate,
+                        Percentage = vatTypePercentage.Percentage,
+                        VatTypeId = vatTypeId
+                    };
 
 
-                        vatTypePercentageService.Create(vatTypePercentagePM, vatType);
-                    }
+                    vatTypePercentageService.Create(vatTypePercentagePM, vatType);
                 }
             }
             this.context.SaveChanges();
