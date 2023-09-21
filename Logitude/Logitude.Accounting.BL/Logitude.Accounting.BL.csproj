@@ -232,6 +232,7 @@
     <Compile Include="CoreBL\Batch\BatchAPInvoiceStatusUpdateTask.cs" />
     <Compile Include="CoreBL\Batch\BatchBanksCCExternalRecoTask.cs" />
     <Compile Include="CoreBL\Batch\BatchCancelTaxReportTask.cs" />
+    <Compile Include="CoreBL\Batch\BatchClosingTaxReportJournalTask.cs" />
     <Compile Include="CoreBL\Batch\BatchGLAccountInterestDeactivationBalanceTask.cs" />
     <Compile Include="CoreBL\Batch\BatchYearlyFIXService.cs" />
     <Compile Include="CoreBL\Batch\GLAccountInterestActivationBalanceTask.cs" />

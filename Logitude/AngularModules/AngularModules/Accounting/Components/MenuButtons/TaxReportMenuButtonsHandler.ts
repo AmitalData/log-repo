@@ -247,10 +247,12 @@ export class TaxReportMenuButtonsHandler {
                     messageWindow.Show(message);
                     return;
         }
+        this.CurrentSession.StartBusyIndicatorCreating();
 
         this.taxReportExtendedPMService.GetTaxReportReconciledLines(this.EntityPM.Id)
             .subscribe((response: ServiceResponse) =>
             {
+                this.StopBusyIndicator();
                 let reconciledTaxReportLines: any = response?.Result;
                 if (!reconciledTaxReportLines) {
                     var confirmWindow = new ConfirmWindow();
@@ -286,6 +288,10 @@ export class TaxReportMenuButtonsHandler {
                     message.Show(response.ErrorsArray.join('\n'));
                 }else{
                     this.entityArgs.EditComponent.ReloadEntityPM();
+                    const message = new MessageWindow();
+                    message.ShowSuccessIcon = true;
+                    message.Width = 400;
+                    message.Show(TextCodeTranslator.Translate(TextCode.TaxReportCloseJournalRunInBackground) + " " + response);
                 }
             }, (error) =>
             {
@@ -336,4 +342,5 @@ enum TextCode {
     TaxReportCantBeClosedValidationMessage = "TaxReport.O.ClosingJournalValidationMessage",
     TaxReportClosingJournalConfirmationMessage = "TaxReport.O.ClosingJournalConfirmationMessage",
     TaxReportCloseJournalNotSupported = "TaxReport.O.CloseJournalNotSupported",
+    TaxReportCloseJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
 }
