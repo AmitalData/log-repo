@@ -1003,7 +1003,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             }
         });
     }
-    BillTo: CardList;
+
 
     GetConnectedBillTo() {
         if (this.BillToId)
@@ -1015,7 +1015,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     var cardList: CardList = myResponse.Result;
-                    this.BillTo = cardList;
+
                     if (!AppTool.IsNullOrEmpty(cardList.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = cardList.InvoiceCurrencyId;
                         this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
@@ -1023,9 +1023,6 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
                 }
             });
-        }else {
-            this.BillTo = null;
-            
         }
     }
     vendorGLAccount: GLAccountList;

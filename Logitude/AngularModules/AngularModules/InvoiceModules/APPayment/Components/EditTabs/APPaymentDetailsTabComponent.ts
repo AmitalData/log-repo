@@ -939,7 +939,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
     }
 
-    BillTo: CardList;
 
     GetConnectedBillTo() {
         if (this.BillToId)
@@ -951,7 +950,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     var cardList: CardList = myResponse.Result;
-                    this.BillTo = cardList;
                     if (!AppTool.IsNullOrEmpty(cardList.InvoiceCurrencyId)) {
                         this.PaymentCurrencyId = cardList.InvoiceCurrencyId;
                         this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
@@ -959,9 +957,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
                 }
             });
-        }else {
-            this.BillTo = null;
-            
         }
     }
 

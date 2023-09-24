@@ -422,7 +422,6 @@ export class NewAPInvoiceComponent extends BaseComponent {
         }
     }
 
-    BillTo: CardList;
 
     GetConnectedBillTo() {
         if (this.BillToId)
@@ -434,7 +433,6 @@ export class NewAPInvoiceComponent extends BaseComponent {
                 this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     var cardList: CardList = myResponse.Result;
-                    this.BillTo = cardList;
                     if (!AppTool.IsNullOrEmpty(cardList.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = cardList.InvoiceCurrencyId;
                         this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
@@ -442,10 +440,6 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
                 }
             });
-        }else {
-            
-            this.BillTo = null;
-            
         }
     }
     vendorGLAccount: GLAccountList;
