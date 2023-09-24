@@ -40,7 +40,6 @@ import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccoun
 @Component({    
     templateUrl: './APInvoiceDetailsTabNormal.html',
 })
-
 export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestroy {
     public EntityPM: APInvoicePM = null;
     public ObjectTableName = "APInvoice";
@@ -49,7 +48,6 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public LocalCurrencyCode: string = SessionLocator.LocalCurrencyCode;
     private isBaseDataLoaded = false;
     public todayDate: Date;
-    public IsFullAccounting: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     public IsTotalVatVisible: boolean = false;
@@ -57,6 +55,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     private CurrentSession = SessionLocator.SelectedSession;
     QBOAccountingSystemCode = "QBO";
     QBOGlobalAccountingSystemCode = "QBOG";
+    public IsAccountingActivated = false;
     public IsUsingVirtuallization: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
@@ -65,7 +64,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         }
-        this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.todayDate = DateTool.GetCurrentDateAsUtc();
@@ -996,7 +995,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                         //VatTypeId = list.VatTypeId;
                     }
                 }
-                if(this.IsFullAccounting)
+                if(this.IsAccountingActivated)
                 this.GetConnectedGLAccount();
                 else 
                 this.GetConnectedBillTo();
