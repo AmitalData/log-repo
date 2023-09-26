@@ -36,18 +36,20 @@ export function ApproveAPPayment() {
 
 export function AssertApproveAPPayment() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutAPPayments, 200)
-    cy.wait(5000)
+    
 }
 
 export function VoidAPPayment() {
+
     cy.DefineRequestWait(RestAPI.PUT, URLs.APPayments, RequestAliases.APPayments)
     cy.Click(BaseSelectors.MenuButtons, null)
     cy.Click(APPaymentSelectors.VoidButton, null)
     cy.FillLogTextBox(APPaymentSelectors.CancelationNotes, BaseSelectors.ContainsCancel)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+    
 }
 
 export function AssertVoidAPPayment() {
     BaseAssertion.AssertStatusCode(RequestAliases.APPayments, 200)
 }
+
