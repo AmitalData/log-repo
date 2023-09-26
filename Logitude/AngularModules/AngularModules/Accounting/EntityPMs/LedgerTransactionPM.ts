@@ -384,6 +384,11 @@ export class LedgerTransactionPM {
     public set InternalNote(newValue: string) { if (this.internalNote != newValue) { this.internalNote = newValue; this.MarkAsDirty("InternalNote"); } }
        
 	 
+    private amountInNIS: number;
+    public get AmountInNIS() { return this.amountInNIS; }
+    public set AmountInNIS(newValue: number) { if (this.amountInNIS != newValue) { this.amountInNIS = newValue; this.MarkAsDirty("AmountInNIS"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

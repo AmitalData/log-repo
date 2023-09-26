@@ -81,6 +81,7 @@ export class LedgerTransactionList {
 	UpdateDateTime: Date;
 	UpdatedByUserName: string;
 	InternalNote: string;
+	AmountInNIS: number;
 	
 }
  
