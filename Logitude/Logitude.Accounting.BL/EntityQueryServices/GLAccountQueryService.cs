@@ -1472,10 +1472,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<GLAccountMoreData> GLAccountMoreData0 = glAccountMoreDataRepository.GetAll(tenant).ToList();
             List<GLAccount> GLAccountTenant0 = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
             List<GLAccount> GLAccount= repository.GetAll(tenatToCopy).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
+            GLAccountMoreData0 = GLAccountMoreData0.Where(data => GLAccountTenant0.Any(account => account.Id == data.AccountId)).ToList();
+
             foreach (var item in GLAccountMoreData0)
             {
-                var interNumber=GLAccountTenant0.Find(c => c.Id == item.AccountId).InternalNumber;
-                var AccountId=GLAccount.Find(c => c.InternalNumber == interNumber).Id;
+                var interNumber= GLAccountTenant0.Find(c => c.Id == item.AccountId)?.InternalNumber;
+                var AccountId=GLAccount.Find(c => c.InternalNumber == interNumber)?.Id;
                 GLAccountMoreDataPM glAccountMoreDataPM = new GLAccountMoreDataPM()
                 {
                     AccountId= AccountId,
