@@ -31,7 +31,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
             _header = new ResponseContentHeader();
             DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg response = new DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg();
-            UpdateDeclaration(requestParamsData);
+            UpdateDeclaration(requestParamsData,99);
             AddResponseHeader();
             dec = new Declaration();
 

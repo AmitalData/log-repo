@@ -22,7 +22,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         {
             _header = new ResponseContentHeader();
             response = new DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg();
-            UpdateDeclaration(requestParams);
+            UpdateDeclaration(requestParams, 99);
             AddResponseHeader();
             dec = new Declaration();
             CastDeclaration();
