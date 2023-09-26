@@ -39,4 +39,16 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutonomyRegionTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="AutonomyRegionTypeCode"
+    ReferencedTable="AutonomyTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

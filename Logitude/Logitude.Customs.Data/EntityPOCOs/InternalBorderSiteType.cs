@@ -29,6 +29,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [ForeignKey("AutonomyType")]
+        [Column("AutonomyRegionTypeCode")]
+	    public string AutonomyRegionTypeCode { get; set; }
+	      
+        public virtual AutonomyType AutonomyType { get; set; }
     }
 }
 	 

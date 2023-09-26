@@ -780,6 +780,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
                 LogPayment("6", entityPM);
+
+
+                string siteCode = entityPM.Consignments?.FirstOrDefault()?.ConsignmentInternalTransitions?.FirstOrDefault()?.SiteCode;
+
+                if (entityPM.IsCourierDeclaration && String.IsNullOrEmpty(entityPM.AutonomyRegionTypeCode) && !String.IsNullOrEmpty(siteCode))
+                {
+                    InternalBorderSiteTypeQueryService internalBorderSiteTypeQueryService = new InternalBorderSiteTypeQueryService(entityPM.Tenant);
+                    entityPM.AutonomyRegionTypeCode = internalBorderSiteTypeQueryService.GetSingle(siteCode, false, true)?.AutonomyRegionTypeCode;
+                }
+
             }
             finally
             {
@@ -1267,13 +1277,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (entityPM.AutonomyRegionTypeCode != null)
             {
+
                 AutonomyTypeQueryService autonomyTypeQueryService = new AutonomyTypeQueryService(entityPM.Tenant);
                 AutonomyTypePM autonomyType = autonomyTypeQueryService.GetSingle(entityPM.AutonomyRegionTypeCode, false, fromcache);
                 if (autonomyType != null)
                 {
                     entityPM.AutonomyRegionTypeName = autonomyType.LocalName;
-                }
+                } 
+                
             }
+            
             LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step4");
 
             if (entityPM.ImporterEntitlementTypeCode != null)
