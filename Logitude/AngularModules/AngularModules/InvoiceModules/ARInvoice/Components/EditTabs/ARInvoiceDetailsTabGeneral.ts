@@ -168,6 +168,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "IsSignedChanged") {
                     this.myEntityPMService.get(this.EntityPM.Id).subscribe(res => {
+                        this.CurrentSession.CurrentEditComponent.EntityPM=res.Result;
                         this.EntityPM = res.Result;
                         this.IsSigned = this.EntityPM.IsSigned;
                  })
