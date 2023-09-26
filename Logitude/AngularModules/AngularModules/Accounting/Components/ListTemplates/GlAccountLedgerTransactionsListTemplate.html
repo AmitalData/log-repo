@@ -37,15 +37,15 @@
 </style>
 <div>
     <div (click)="$event.stopPropagation();OpenManageReconciliations(rowData,GetGLAccountIndicatorText())"
-        *ngIf="fieldName == 'Indicator' " [attr.title]="GetIndicatorText()"
-        class="circleWrapper CenterCenter">
+        *ngIf="fieldName == 'Indicator' " [attr.title]="GetIndicatorText()" class="circleWrapper CenterCenter">
         <div *ngIf="rowData['OpenAmount'] != 0" class="circleDraw"
             [class.orangeCircle]="(rowData['LocalAmountDebit'] != 0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] != 0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())">
         </div>
         <div *ngIf="rowData['OpenAmount'] == 0" class="whiteCircle"></div>
     </div>
 
-    <div (click)="$event.stopPropagation();OpenManageReconciliations(rowData,GetGLAccountIndicatorText())" *ngIf="ChartOfAccountsTypeCode != ChartOfAccountsTypeBankCode && fieldName == 'GLAccountIndicator' "
+    <div (click)="$event.stopPropagation();OpenManageReconciliations(rowData,GetGLAccountIndicatorText())"
+        *ngIf="ChartOfAccountsTypeCode != ChartOfAccountsTypeBankCode && fieldName == 'GLAccountIndicator' "
         [attr.title]="GetGLAccountIndicatorText()" class="circleWrapper CenterCenter">
         <div *ngIf="rowData['OpenAmount'] != 0" class="circleDraw"
             [class.orangeCircle]="(rowData['LocalAmountDebit'] != 0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] != 0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())">
@@ -124,7 +124,14 @@
         rowData[fieldName] }}</div>
 
 
+    <div *ngIf="fieldName == 'AmountInNIS'">
+        <div class="TextTrimming" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
+            [class.red]='rowData["IsLocalAmountCreditPos"]'>
 
+            {{ rowData[fieldName]| NumbersPipe:'N2' }}
+            <!--{{ CalculatOriginalCurruncy() }} -->
+        </div>
+    </div>
     <!-- ForeignAmountCredit -->
     <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmountCredit'"
         style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
@@ -150,8 +157,8 @@
     <!-- **** -->
     <!-- Reconcile Window -->
     <div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px 7px;">
-        <CheckBox float-start [IsEnabled]="rowData['InReconcileProgress'] == false && IsCheckBoxEnabled" (Checked)="CheckBoxClicked($event)"
-            [IsChecked]="rowData['IsChecked']"></CheckBox>
+        <CheckBox float-start [IsEnabled]="rowData['InReconcileProgress'] == false && IsCheckBoxEnabled"
+            (Checked)="CheckBoxClicked($event)" [IsChecked]="rowData['IsChecked']"></CheckBox>
 
         <svg float-start *ngIf="rowData['AccountId'] == transferAccountId" xmlns="http://www.w3.org/2000/svg"
             version="1.0" style=" float: left; margin: 0 4px; width: 17px;" width="16.000000pt" height="16.000000pt"

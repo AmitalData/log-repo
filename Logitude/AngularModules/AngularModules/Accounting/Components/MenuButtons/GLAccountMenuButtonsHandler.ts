@@ -260,7 +260,7 @@ export class GLAccountMenuButtonsHandler {
                 if (this.EntityPM?.IsMultiCurrency && this.EntityPM?.ReconcileMethodCode == "1"){
                     windowArgs.IsMultiWithReconcileMethodCodeEqualOne = true;
                 }
-                this.FillPaymentTermName(windowArgs);
+                this.FillPaymentTermName(windowArgs); 
 
 
                 logitudeWindow.WindowArgs = windowArgs;

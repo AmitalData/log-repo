@@ -818,6 +818,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             LedgerTransactions.ForEach(rec =>
             {
                 rec.OriginalAmount = ledgerTransactionHelper.CalculateOriginalAmount(rec);
+                rec.AmountInNIS = ledgerTransactionHelper.CalculateAmountInNIS(rec);
                 rec.IconCode = ledgerTransactionHelper.getEntityIcon(rec.SourceTypeCode);
                 rec.Source = rec.IconCode + " " + rec.SourceNumber;
                 rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
