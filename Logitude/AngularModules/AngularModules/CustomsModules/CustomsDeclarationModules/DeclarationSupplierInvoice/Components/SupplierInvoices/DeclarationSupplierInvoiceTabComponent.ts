@@ -190,9 +190,25 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEIN") {
+                            if(FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR"))
+                            {
+                                if (this.EntityPM.IsDirty) {
+                                    this.CurrentSession.CurrentEditComponent.SaveChanges();
+                                    const unsub = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                        this.ReloadMyScreen();
+                                        unsub.unsubscribe();
+                        
+                                    }); 
+                                }
+                                else{
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                    this.ReloadMyScreen();
+                                }
 
-                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                            this.ReloadMyScreen();
+                            }
+                            else
+                                this.ReloadMyScreen();
                         }
                     }
                 })
