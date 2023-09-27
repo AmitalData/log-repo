@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-		public const string HashString = "28544ac601203db1d6586fe6b1532015";
+		public const string HashString = "1fdd5b8dd908cc8def358f099a2fb9b5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7234,6 +7234,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APPaymentTextCode_APPaymentMAlreadyReconciledInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.AlreadyReconciledInvoice", DefaultText = "This payment is already reconciled to the same invoice. To update AP invoice amount line, please cancel reconcile number {0}  before making a new reconcile",LocalDefaultText = @"התשלום כבר מותאם לחשבונית המסומנת . על מנת לבצע התאמה שונה , יש לבטל תחילה את ההתאמה הקיימת שמספרה {0}", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentMPaymentDraftCantBeApproved = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentDraftCantBeApproved", DefaultText = "Payment draft cannot be reconciled until it is approved. Please approve the payment to proceed with the reconciliation",LocalDefaultText = @"לא ניתן לבצע התאמה לתשלום בסטטוס טיוטה יש לאשר את התשלום כדי להמשיך  , לחלופין ניתן להסיר את ההתאמות שסומנו ולשמור את התשלום כטיוטה", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPaymentMFilterInvoicesbyAPPaymentCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.FilterInvoicesbyAPPaymentCurrency", DefaultText = "The Invoices are filtered by AP Payment Currency",LocalDefaultText = @"סינון חשבוניות ספק לפי מטבע", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
