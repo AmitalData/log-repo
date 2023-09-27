@@ -240,11 +240,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     CurrentMilestoneExceptions = shipment.CurrentMilestoneExceptions,
                     IsOperationalClosed = shipment.IsOperationalClosed,
                     SecurityKey = shipment.SecurityKey,
+                    CurrentMilestoneCode = shipment.CurrentMilestoneCode,
 
                     //ForwardingShipmentNumber = shipment.ForwardingShipmentNumber,
 
                     //CustomsShipmentHeaderId = shipment.CustomsShipmentHeaderId,
-                    //CurrentMilestoneCode = shipment.CurrentMilestoneCode,
 
                     //ShipperId = shipment.ShipperId,
                     //DeliveredDate = shipment.DeliveredDate,
@@ -750,6 +750,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 CurrentMilestoneExceptions = shipment.CurrentMilestoneExceptions,
                 IsOperationalClosed = shipment.IsOperationalClosed,
                 SecurityKey = shipment.SecurityKey,
+                CurrentMilestoneCode = shipment.CurrentMilestoneCode,
             });
         }
 
