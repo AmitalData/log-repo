@@ -170,7 +170,7 @@ export class LoginComponent implements OnInit {
             });
         } else {
             this.StartLoginProcess();
-        }
+        }     
     }
     IsShowLoginForm: boolean = false;
 
