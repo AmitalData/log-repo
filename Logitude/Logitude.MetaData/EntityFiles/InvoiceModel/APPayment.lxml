@@ -9301,6 +9301,12 @@
       LocalDefaultText="&quot;לא ניתן לבצע התאמה לתשלום בסטטוס טיוטה יש לאשר את התשלום כדי להמשיך  , לחלופין ניתן להסיר את ההתאמות שסומנו ולשמור את התשלום כטיוטה&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APPayment.M.FilterInvoicesbyAPPaymentCurrency&quot;"
+      DefaultText="&quot;The Invoices are filtered by AP Payment Currency&quot;"
+      LocalDefaultText="&quot;סינון חשבוניות ספק לפי מטבע&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
