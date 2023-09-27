@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml.Serialization;
 
@@ -51,8 +53,16 @@ namespace WebFreight.Web.Services
             memoryStream.Seek(0, SeekOrigin.Begin);
             var reader = new StreamReader(memoryStream);
             string content = reader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            byte[] byteArray = memoryStream.ToArray();
+            string xmlContent = Encoding.UTF8.GetString(byteArray);
+            xmlContent = xmlContent
+           .Replace("&", "&amp;");
+           //.Replace("<", "&lt;")
+          // .Replace(">", "&gt;")
+           //.Replace("\"", "&quot;")
+           //.Replace("'", "&apos;");
+            byteArray = Encoding.UTF8.GetBytes(xmlContent);
+            return byteArray;
         }
     }
 }
