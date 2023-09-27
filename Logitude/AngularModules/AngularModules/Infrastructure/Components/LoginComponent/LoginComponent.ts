@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, OnInit, Output, EventEmitter, isDevMode } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionInfo } from '../../Utilities/SessionInfo';
