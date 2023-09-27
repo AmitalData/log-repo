@@ -24,9 +24,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             IQueryable<LedgerTransactionList> query = (from a in iQueryable.Include("JournalLine").Include("Account").Include("Currency").Include("Journal")
 
-                                                       join b in context.JournalAdditionalDatas.Include("TaxReport")                                                
+                                                       join b in context.JournalAdditionalDatas.Include("TaxReport")
                                                        on new { journalId = a.JournalId, line = a.JournalLineNumber } equals new { journalId = b.JournalId, line = b.JournalLineNumber }
-                                                       into jJournalAdditionalData from jad in jJournalAdditionalData.DefaultIfEmpty()
+                                                       into jJournalAdditionalData
+                                                       from jad in jJournalAdditionalData.DefaultIfEmpty()
 
                                                        select new LedgerTransactionList()
                                                        {
@@ -90,7 +91,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
                                                            JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
                                                            TaxReportId = jad != null ? jad.TaxReportId : "",
-                                                           TaxReportNumber = jad != null ? jad.TaxReport.TaxReportNumber : ""
+                                                           TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : ""
                                                        });
 
 
@@ -332,7 +333,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
 
             IQueryable<LedgerTransaction> inputTransactions;
-            LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(transactionBalanceFilter.Tenant);
+            LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(context);
             if (taxReport != null)
             {
                 List<string> inputTaxReportsJournalsIds = GetTaxReportLinesJournalIds(taxReport, InputOutput.Input);
