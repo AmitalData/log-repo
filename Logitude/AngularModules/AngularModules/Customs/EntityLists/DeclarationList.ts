@@ -237,6 +237,7 @@ export class DeclarationList {
 	VATReshimonFee: number;
 	SecurityFee: number;
 	ComputerFee: number;
+	EffectiveFlight: boolean;
 	
 }
  
