@@ -1,0 +1,12 @@
+﻿<Script DBType="Global" Pre="true" Module="Global">
+
+  <Sql Version="1">
+    <![CDATA[
+    
+    update [TenantManagements]
+    set HeaderColor = '#FFA500'
+    where ChangeHeaderColor = 1
+
+    ]]>
+  </Sql>
+</Script>

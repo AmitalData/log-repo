@@ -23,6 +23,7 @@ export class TenantManagementJS {
     public IsDEXXConnectionEnabled: boolean;
     public ManageLicencesPerUser: boolean;
     public ChangeHeaderColor: boolean;
+    public HeaderColor: string;
     public TrailDaysLeft: number;
     public PaidDaysLeft: number;
     public SuspendDaysLeft: number;

@@ -634,6 +634,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         PaymentChannelCode = entityPM.PaymentChannelCode,
                         BluesnapContractId = entityPM.BluesnapContractId,
                         ChangeHeaderColor = entityPM.ChangeHeaderColor,
+                        HeaderColor = entityPM.HeaderColor,
                         IsCargonautEnabled = entityPM.IsCargonautEnabled,
                         IsDEXXConnectionEnabled = entityPM.IsDEXXConnectionEnabled,
                         IsEAWBOnlyDemo = entityPM.IsEAWBOnlyDemo,
@@ -890,6 +891,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public DateTime? ExpirationDate { get; set; }
         public bool ManageLicencesPerUser { get; set; }
         public bool ChangeHeaderColor { get; set; }
+        public string HeaderColor { get; set; }
         public int TrailDaysLeft { get; set; }
         public int PaidDaysLeft { get; set; }
         public int SuspendDaysLeft { get; set; }

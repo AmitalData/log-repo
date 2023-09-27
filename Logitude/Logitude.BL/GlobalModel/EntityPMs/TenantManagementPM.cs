@@ -246,6 +246,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public int AgentSharedLogisticsStatisticsLastWeek { get; set; }
         public int AgentSharedLogisticsStatisticsLastMonth { get; set; }
         public bool ChangeHeaderColor { get; set; }
+        public string HeaderColor { get; set; }
         public bool DocumentShareAsDefault { get; set; }
         public string StockTypeCode { get; set; }
         public bool IsINTTRAStockPrepaid { get; set; }

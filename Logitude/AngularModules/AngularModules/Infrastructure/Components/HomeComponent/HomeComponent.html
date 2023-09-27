@@ -160,14 +160,6 @@
         text-align: center;
     }
 
-    .AppHeaderBackgroundOrange {
-        background: -moz-linear-gradient(50% 0% -90deg,rgba(235, 235, 235, 0.5) 0%,Orange 100%);
-        background: -webkit-linear-gradient(-90deg, rgba(235, 235, 235, 0.5) 0%, Orange 100%);
-        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(235, 235, 235, 0.5) ),color-stop(1,Orange ));
-        background: -o-linear-gradient(-90deg, rgba(235, 235, 235, 0.5) 0%, Orange 100%);
-        background: linear-gradient(180deg, rgba(235, 235, 235, 0.5) 0%, Orange 100%);
-    }
-
     hr {
         display: block;
         height: 1px;
@@ -184,7 +176,7 @@
                 <div class="MediaFillRelative">
 
                     <!-- Header -->
-                    <div class="AppHeaderBackground" [class.AppHeaderBackgroundOrange]="ChangeHeaderColor === true" style="position: absolute; left:0; right:0; top: 0px; height: 51px;">
+                    <div class="AppHeaderBackground" [ngStyle]="{background: HeaderColor}" style="position: absolute; left:0; right:0; top: 0px; height: 51px;">
                         <table>
                             <tr style="height: 5px;">
                                 <td>
@@ -495,7 +487,7 @@
                                 </ul>
 
 
-                             
+
 
                                 <div *ngIf="IsShowUserDetailsArea" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'" style="height:20px;margin-top:-23px;display:inline">
 
