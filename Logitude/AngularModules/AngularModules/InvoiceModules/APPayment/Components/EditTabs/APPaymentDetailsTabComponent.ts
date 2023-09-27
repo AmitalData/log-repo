@@ -321,10 +321,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.UIProperties.SetEnabled("Account", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CreditCardTypeId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false);
-            if (this.EntityPM.StatusCode == "VD") {
-                
-                this.IsNotVoidPayment=false;
-            }
             if (this.IsFullAccounting) {
                 this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, false);
             }
@@ -360,7 +356,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             if (this.EntityPM.StatusCode == "VD") {
                 
                 this.UIProperties.SetEnabled("PrintNotes", this.ObjectTableName, false);
-                this.IsNotVoidPayment=false;
+              
             }
         }
 
