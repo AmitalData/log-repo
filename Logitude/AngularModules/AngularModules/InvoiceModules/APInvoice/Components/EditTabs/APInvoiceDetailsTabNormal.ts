@@ -999,7 +999,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 this.GetConnectedGLAccount();
                 else 
                 this.GetConnectedBillTo();
-                this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
+                
             }
         });
     }
@@ -1018,7 +1018,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
                     if (!AppTool.IsNullOrEmpty(cardList.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = cardList.InvoiceCurrencyId;
-                        this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
+                        
                     }
 
                 }

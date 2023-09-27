@@ -412,7 +412,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
                                 }
                             }
                             
-                            this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
+
 
                             this.SetPaymentTermFromPartner(list.PaymentTermId);
                         }
@@ -435,7 +435,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
                     var cardList: CardList = myResponse.Result;
                     if (!AppTool.IsNullOrEmpty(cardList.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = cardList.InvoiceCurrencyId;
-                        this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
+
                     }
 
                 }
@@ -459,7 +459,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
                     this.EntityPM.VendorGLAccountId = gla.Id;
                     if (!gla.IsMultiCurrency) {
                         this.InvoiceCurrencyId = gla.CurrencyId;
-                        this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
+                        
                     }
                 }
             });

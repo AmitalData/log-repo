@@ -934,7 +934,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.GetConnectedGLAccount();
             else 
             this.GetConnectedBillTo();
-            this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
+            
 
         }
     }
@@ -952,7 +952,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     var cardList: CardList = myResponse.Result;
                     if (!AppTool.IsNullOrEmpty(cardList.InvoiceCurrencyId)) {
                         this.PaymentCurrencyId = cardList.InvoiceCurrencyId;
-                        this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
+                        
                     }
 
                 }
@@ -979,7 +979,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.EntityPM.VendorGLAccountId = gla.Id;
                     if (!gla.IsMultiCurrency) {
                         this.PaymentCurrencyId = gla.CurrencyId;
-                        this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
                     }
                 }
             });
