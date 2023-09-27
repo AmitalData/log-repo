@@ -170,25 +170,8 @@ export class LoginComponent implements OnInit {
             });
         } else {
             this.StartLoginProcess();
-        }
-
-        if (isDevMode())
-            this.developerLogin();         
+        }     
     }
-
-    async developerLogin() {
-        this.Email = 'izikfr@amital.co.il'
-        this.Password = 'MJUQwdpp75S53Cg';
-        this.LoginClicked();
-
-        while(!this.TenantList?.length)
-            await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
-
-        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1106);
-
-        this.ContinueClicked()
-    }
-
     IsShowLoginForm: boolean = false;
 
     StartLoginProcess() {
