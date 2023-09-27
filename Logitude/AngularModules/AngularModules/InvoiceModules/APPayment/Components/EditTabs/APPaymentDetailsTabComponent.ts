@@ -67,7 +67,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     DisplayLocalFieldsFromList:string;
     VendorLovSizeForFullAccounting:number;
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
-    private _IsNotVoidPayment:boolean =true;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -1137,18 +1136,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.setPaymentCurrencyId(value)
     }
 
-    get IsNotVoidPayment() {
-        if (this.EntityPM == null) {
-            return null;
-        }
-
-        return this._IsNotVoidPayment;
-    }
-    set IsNotVoidPayment(value: boolean) {
-        if(value != this._IsNotVoidPayment){
-            this._IsNotVoidPayment=value
-        }
-    }
     get FilterInvoiceByAPPayment (){
         return this.IsFullAccounting && !( this.vendorGLAccount!=null&& (
             this.vendorGLAccount.IsMultiCurrency &&
