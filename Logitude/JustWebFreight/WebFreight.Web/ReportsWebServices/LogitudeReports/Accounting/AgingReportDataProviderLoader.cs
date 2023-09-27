@@ -20,6 +20,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
     public class AgingReportDataProviderLoader
     {
+        private const string BalanceInLocalCurrencyString = "Balance In Local Currency";
+        private const string BalanceInLocalCurrencyHebrewString = "יתרה במטבע מקומי";
+        private const string BalanceInForeignCurrencyString = "Balance In Foreign Currency";
+        private const string BalanceInForeignCurrencyHebrewString = "יתרה במטבע זר";
+        private const string SummaryPeriodsString = "Summary Periods";
+        private const string SummaryPeriodsHebrewString = "סיכום תקופות";
         private QueryOperations reportQueryOperations;
         private bool showLocals = false;
         private bool isFromGLAccountAgingData = false;
@@ -59,7 +65,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             dataProvider.IsFromGLAccountAgingData = isFromGLAccountAgingData;
 
             SetLocalCurrency(dataProvider);
-            AddTotalBalancePeriods(filteredPeriods, dataProvider);
+            AddTotalBalancePeriods(filteredPeriods, dataProvider); 
+            AddTotalBalanceForiegn(filteredPeriods, dataProvider);
             AddTotalLocalBalancePeriods(filteredPeriods, dataProvider);
             string currencyOriginalLocalValue = GetFilterValue<string>("CurrencyOriginalLocalValue");
             if (currencyOriginalLocalValue == filterReportByLocalCurrency)
@@ -214,10 +221,105 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             bool showDetailedCurrencyAccounts = GetFilterValue<bool> ("Detailed");
             if (showDetailedCurrencyAccounts)
+                groupedPeriodsByAccount = result.GroupBy(d => d.AccountAndCurr).Select(d => new AgingPeriod()
+                {
+                    PeriodName = showLocals ? SummaryPeriodsHebrewString : SummaryPeriodsString,
+                    Total = d.Sum(x => x.Total),
+                    AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
+                    AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
+                    AccountEnglishName = d.First().AccountEnglishName + " / " + d.First().CurrencyCode,
+                    AccountCurrencyCode = d.Where(x => x.CurrencyCode != null).First().CurrencyCode,
+                    AccountPhone = d.First().AccountPhone + " / " + d.First().CurrencyCode,
+                    AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ? d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
+                    CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
+                    BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    BalanceInForeignAccountingDate = d.First().BalanceInForeignAccountingDate,
+                    TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
+                    TotalOpenCheques = d.First().TotalOpenCheques,
+                    TotalOpenShipments = d.First().TotalOpenShipments,
+                    BalanceInLocalCurrency = d.First().BalanceInLocalCurrency,
+                    CustomerVatNumber = d.First().CustomerVatNumber,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,                    
+                    GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
+                    AccountSalesmanName = d.First().AccountSalesmanName,
+                    AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
+                    AccountCollectorName = d.First().AccountCollectorName,
+                    AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                    Category1Name = d.First().Category1Name,
+                    Category2Name = d.First().Category2Name,
+                    Category3Name = d.First().Category3Name,
+                    Category4Name = d.First().Category4Name,
+                    Category5Name = d.First().Category5Name,
+                    Category6Name = d.First().Category6Name,
+                    Category1LocalName = d.First().Category1LocalName,
+                    Category2LocalName = d.First().Category2LocalName,
+                    Category3LocalName = d.First().Category3LocalName,
+                    Category4LocalName = d.First().Category4LocalName,
+                    Category5LocalName = d.First().Category5LocalName,
+                    Category6LocalName = d.First().Category6LocalName,
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+                }).ToList();
+            else
+                groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
+                {
+                    PeriodName = showLocals ? SummaryPeriodsHebrewString : SummaryPeriodsString,
+                    Total = d.Sum(x => x.Total),
+                    AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
+                    AccountLocalName = d.First().AccountLocalName,
+                    AccountEnglishName = d.First().AccountEnglishName,
+                    AccountCurrencyCode = d.First().AccountCurrencyCode,
+                    AccountPhone = d.First().AccountPhone,
+                    AccountDisplayNumber = d.First().AccountDisplayNumber,
+                    CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
+                    BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    BalanceInForeignAccountingDate = d.First().BalanceInForeignAccountingDate,
+                    TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
+                    TotalOpenCheques = d.First().TotalOpenCheques,
+                    TotalOpenShipments = d.First().TotalOpenShipments,
+                    BalanceInLocalCurrency = d.First().BalanceInLocalCurrency,
+                    CustomerVatNumber = d.First().CustomerVatNumber,
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,
+                    GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
+                    AccountSalesmanName = d.First().AccountSalesmanName,
+                    AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
+                    AccountCollectorName = d.First().AccountCollectorName,
+                    AccountCollectorLocalName = d.First().AccountCollectorLocalName,
+                    Category1Name = d.First().Category1Name,
+                    Category2Name = d.First().Category2Name,
+                    Category3Name = d.First().Category3Name,
+                    Category4Name = d.First().Category4Name,
+                    Category5Name = d.First().Category5Name,
+                    Category6Name = d.First().Category6Name,
+                    Category1LocalName = d.First().Category1LocalName,
+                    Category2LocalName = d.First().Category2LocalName,
+                    Category3LocalName = d.First().Category3LocalName,
+                    Category4LocalName = d.First().Category4LocalName,
+                    Category5LocalName = d.First().Category5LocalName,
+                    Category6LocalName = d.First().Category6LocalName,
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+                }).ToList();
+            totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
+            
+        }
+
+    private void AddTotalBalanceForiegn(List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
+        {
+            List<AgingPeriod> groupedPeriodsByAccount;
+
+            bool showDetailedCurrencyAccounts = GetFilterValue<bool> ("Detailed");
+            if (showDetailedCurrencyAccounts)
                 groupedPeriodsByAccount = result.Where(d=> true || d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "סיכום תקופות" : "Foreign",
-                    Total = d.Sum(x => x.Total),
+                    PeriodName = showLocals ? BalanceInForeignCurrencyHebrewString : BalanceInForeignCurrencyString,
+                    Total = d.First().BalanceInForeignAccountingDate,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
                     AccountEnglishName = d.First().AccountEnglishName + " / " + d.First().CurrencyCode,
@@ -264,7 +366,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             else
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "סיכום תקופות" : "Foreign",
+                    PeriodName = showLocals ? BalanceInForeignCurrencyHebrewString : BalanceInForeignCurrencyString,
                     Total = d.First().BalanceInForeignAccountingDate,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
@@ -320,7 +422,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             if (showDetailedCurrencyAccounts) { 
                 groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode == totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה בשח להיום" : "Local",
+                    PeriodName = showLocals ? BalanceInLocalCurrencyHebrewString : BalanceInLocalCurrencyString,
                     Total = d.Sum(x => x.Total),
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
@@ -368,7 +470,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
                 groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה בשח להיום" : "Local",
+                    PeriodName = showLocals ? BalanceInLocalCurrencyHebrewString : BalanceInLocalCurrencyString,
                     Total = d.First().BalanceInLocalAccountingDate,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
@@ -415,7 +517,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             else
                 groupedPeriodsByAccount = result.Where(d => d.Total != null).GroupBy(d => d.AccountId).Distinct().Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה בשח להיום" : "Local",
+                    PeriodName = showLocals ? BalanceInLocalCurrencyHebrewString : BalanceInLocalCurrencyString,
                     Total = d.FirstOrDefault() == null ? 0 : d.FirstOrDefault().BalanceInLocalAccountingDate,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
@@ -518,8 +620,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 groupedPeriodsByAccount = totalData.AgingPeriods.GroupBy(d => d.AccountName).Distinct().Select(d => new AgingPeriod()
                 {
                     PeriodName = showLocals ? "שער מחושב" : "Calculated Rate",
-                    Total = d.Where(x => x.PeriodName == "Local" || x.PeriodName == "יתרה בשח להיום").First().Total == 0 || d.Where(c => c.PeriodName == "Foreign" || c.PeriodName == "סיכום תקופות").First().Total == 0 ? 0
-                    : d.Where(x => x.PeriodName == "Local" || x.PeriodName == "יתרה בשח להיום").First().Total / d.Where(c => c.PeriodName == "Foreign" || c.PeriodName == "סיכום תקופות").First().Total,
+                    Total = d.Where(x => x.PeriodName == BalanceInLocalCurrencyString || x.PeriodName == BalanceInLocalCurrencyHebrewString).First().Total == 0 || d.Where(c => c.PeriodName == "Foreign" || c.PeriodName == SummaryPeriodsHebrewString).First().Total == 0 ? 0
+                    : d.Where(x => x.PeriodName == BalanceInLocalCurrencyString || x.PeriodName == BalanceInLocalCurrencyHebrewString).First().Total / d.Where(c => c.PeriodName == "Foreign" || c.PeriodName == SummaryPeriodsHebrewString).First().Total,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
                     AccountEnglishName = d.First().AccountEnglishName,
@@ -575,8 +677,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             totalData.AgingPeriods.Where(x => x.PeriodName == "Calculated Rate" || x.PeriodName == "שער מחושב").ToList().ForEach((p) =>
             {
-                var localAmountAgingPeriod = totalData.AgingPeriods.Where(l => (l.PeriodName == "Local" || l.PeriodName == "יתרה בשח להיום") && l.AccountName == p.AccountName && l.AccountCurrencyCode == p.AccountCurrencyCode).FirstOrDefault();
-                var foreignAmountAgingPeriod = totalData.AgingPeriods.Where(l => (l.PeriodName == "Foreign" || l.PeriodName == "סיכום תקופות") && l.AccountName == p.AccountName && l.AccountCurrencyCode == p.AccountCurrencyCode).FirstOrDefault();
+                var localAmountAgingPeriod = totalData.AgingPeriods.Where(l => (l.PeriodName == BalanceInLocalCurrencyString || l.PeriodName == BalanceInLocalCurrencyHebrewString) && l.AccountName == p.AccountName && l.AccountCurrencyCode == p.AccountCurrencyCode).FirstOrDefault();
+                var foreignAmountAgingPeriod = totalData.AgingPeriods.Where(l => (l.PeriodName == "Foreign" || l.PeriodName == SummaryPeriodsHebrewString) && l.AccountName == p.AccountName && l.AccountCurrencyCode == p.AccountCurrencyCode).FirstOrDefault();
                 p.Total = foreignAmountAgingPeriod?.Total == 0 ? 0 : localAmountAgingPeriod?.Total / foreignAmountAgingPeriod?.Total;
             });
         }
@@ -585,8 +687,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 foreach (var item in groupedPeriodsByAccount)
                 {
                     totalData.AgingPeriods.Where(x => x.AccountName == item.AccountName &&
-                    x.PeriodName != "Foreign" && x.PeriodName != "סיכום תקופות" &&
-                    x.PeriodName != "Local" && x.PeriodName != "יתרה בשח להיום" &&
+                    x.PeriodName != "Foreign" && x.PeriodName != SummaryPeriodsHebrewString &&
+                    x.PeriodName != BalanceInLocalCurrencyString && x.PeriodName != BalanceInLocalCurrencyHebrewString &&
                     x.PeriodName != "Calculated Rate" && x.PeriodName != "שער מחושב").ToList().ForEach((p) =>
                     {
                         p.Total = p.Total * item.Total;
@@ -596,7 +698,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private void AddTotalSummationFooterPeriod(List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
         {
-            string pname = showLocals ? "יתרה בשח" : "Local";
+            string pname = showLocals ? BalanceInLocalCurrencyHebrewString : BalanceInLocalCurrencyString;
             decimal? summation = totalData.AgingPeriods.Where(d=>d.PeriodName == pname).Sum(d => d.Total);
 
             string totalLabel = showLocals ? "Local Total" : "Totals";
@@ -613,7 +715,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void CalculateReportLocalBalanceTotal (AccountingAgingDataProvider totalData)
         {
-            string pname = showLocals ? "יתרה בשח" : "Local";
+            string pname = showLocals ? BalanceInLocalCurrencyHebrewString : BalanceInLocalCurrencyString;
             decimal? summation = totalData.AgingPeriods.Where(d => d.PeriodName == pname).Sum(d => d.Total);
 
             totalData.ReportLocalBalanceTotal = summation ?? 0;
@@ -632,7 +734,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private static List<AgingPeriod> GetTotalBalancePeriods(AccountingAgingDataProvider totalData, bool showLocals)
         {
-            var balancePeriod = showLocals ? "סיכום תקופות" : "Foreign";
+            var balancePeriod = showLocals ? SummaryPeriodsHebrewString : SummaryPeriodsString;
             List<AgingPeriod> totalBalances = totalData.AgingPeriods.Where(d => d.PeriodName == balancePeriod).ToList();
             return totalBalances;
         }
