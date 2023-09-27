@@ -438,7 +438,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ForwarderFiles, 
 	         ShortProcedure, 
 	         ExportFlightDate, 
-	         UNFCourier,
+	         UNFCourier, 
+	         EffectiveFlight,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
