@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, isDevMode } from '@angular/core';
 
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionInfo } from '../../Utilities/SessionInfo';
@@ -171,7 +171,24 @@ export class LoginComponent implements OnInit {
         } else {
             this.StartLoginProcess();
         }
+
+        if (isDevMode())
+            this.developerLogin();         
     }
+
+    async developerLogin() {
+        this.Email = 'izikfr@amital.co.il'
+        this.Password = 'MJUQwdpp75S53Cg';
+        this.LoginClicked();
+
+        while(!this.TenantList?.length)
+            await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
+
+        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1106);
+
+        this.ContinueClicked()
+    }
+
     IsShowLoginForm: boolean = false;
 
     StartLoginProcess() {
