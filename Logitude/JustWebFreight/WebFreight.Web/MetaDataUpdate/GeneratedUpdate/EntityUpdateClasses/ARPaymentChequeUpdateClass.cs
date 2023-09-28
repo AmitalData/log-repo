@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ARPaymentChequeUpdateClass
    {  		
-		public const string HashString = "ae7d3426346cb0cc9e067cfc75ad5546";
+		public const string HashString = "3e9a16fdb7e95cf05efaab91a89a2eb3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -324,8 +324,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ...",
+					  						FullLocalDefaultText =  "חיפוש",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
+					  						ListLocalDefaultText =  "חיפוש",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -982,10 +984,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignAmount",
 					  						DefaultText =  "Foreign Amount",
-					  						FullLocalDefaultText =  "סך בטבע חוץ",
+					  						FullLocalDefaultText =  "סך במטבע חוץ",
 					  						ListFieldLable =  "ForeignAmountListLable",
 					  						ListLableDefaultText =  "Foreign Amount",
-					  						ListLocalDefaultText =  "סך בטבע חוץ",
+					  						ListLocalDefaultText =  "סך במטבע חוץ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1346,7 +1348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
-					  						IsCustomFilter =  true,
+					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -1579,7 +1581,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn UnRedeemedChequesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARPaymentCheque.LocalAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter UnRedeemedChequesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPaymentCheque.StatusCode", PredefinedValue = "5",PredefinedValue2 = "6", CustomPredefined = false, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, Tenant = 0,Operator = "Custom"}, addedQueryFilters);
+             AdvancedQueryFilter UnRedeemedChequesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPaymentCheque.StatusCode", PredefinedValue = "5",PredefinedValue2 = null, CustomPredefined = false, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter UnRedeemedChequesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPaymentCheque.StatusCode", PredefinedValue = "6",PredefinedValue2 = null, CustomPredefined = false, QueryId = UnRedeemedChequesQuery.Id,QueryCode = UnRedeemedChequesQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
   
 	      
@@ -1622,7 +1627,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn PostponedChequesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PostponedChequesQuery.Id,QueryCode = PostponedChequesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARPaymentCheque.PaymentNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter PostponedChequesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPaymentCheque.ValueDate", PredefinedValue = "#today",PredefinedValue2 = null, CustomPredefined = false, QueryId = PostponedChequesQuery.Id,QueryCode = PostponedChequesQuery.UniqueCode, Tenant = 0,Operator = "GreaterThanOrEqual"}, addedQueryFilters);
+             AdvancedQueryFilter PostponedChequesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARPaymentCheque.ValueDate", PredefinedValue = "#today",PredefinedValue2 = "#today", CustomPredefined = false, QueryId = PostponedChequesQuery.Id,QueryCode = PostponedChequesQuery.UniqueCode, Tenant = 0,Operator = "Between"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
