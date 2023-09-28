@@ -166,6 +166,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this.MyResponseData.UserMessage = TranslateTextsClass.Translate(InvoiceSuccess, customResponse.tenant, true);
                             if (Result.invalidValuesRemarks != null)
                                 this.MyResponseData.Remarks = "Invalid value, not exist in table - " + Result.invalidValuesRemarks;
+                            CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
+                            CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false).FirstOrDefault();
+                            if(requestsSheetPM != null )
+                            {
+                                MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(5));
+                            }
+                            
                         }
                         catch (System.Exception ex)
                         {

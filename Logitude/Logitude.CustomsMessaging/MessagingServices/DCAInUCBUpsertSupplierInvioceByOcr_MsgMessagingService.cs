@@ -65,10 +65,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, Declarationid, null, null, null, true);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, Declarationid, null, null, null, false);
+            DateTime? futureSendDateTime = null;
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
-                return "קיים מסר זהה בתהליך";
+                futureSendDateTime = DateTime.Now.AddDays(1);
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = DCAOCR  !!!");
 
@@ -82,11 +83,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DocumentsFilingId = DocumentsFilingId,
                 LoggingUserId = LoggingUserId,
                 tenant = tenant,
-                ResponseContentHeader = new DefaultResponseContentHeader()
+            };
+            if(futureSendDateTime == null)
+            {
+                myDCAInUCBMultiUpdateWithResponseContentHeader.ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
-                },
-            };
+                };
+            }
 
             var body = XmlGenericUtil<DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader>.SerializeObject(myDCAInUCBMultiUpdateWithResponseContentHeader);
             body = body.Substring(body.IndexOf(Environment.NewLine));
@@ -114,7 +118,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         SelectedFileDownload = fileName,
                         TimStamp = transmitionDateTime
-                    }, xmlESBResponseXmlClass);
+                    }, xmlESBResponseXmlClass,
+                    futureSendDateTime: futureSendDateTime);
 
                     trans.Complete();
                     return "תהליך OCR יתעדכן ברקע";

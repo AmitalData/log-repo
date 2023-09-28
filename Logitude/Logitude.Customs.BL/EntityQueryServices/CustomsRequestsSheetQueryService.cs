@@ -192,7 +192,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8235T", // תיקון שטעון
 "8314",//נתוני פרט מכס
 "8888",// תשובה לנתוני פרט מכס
-"2791"// אחסנה
+"2791",// אחסנה
+"DCAOCR"//פתיחת חשבון יצואן - OCR
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
