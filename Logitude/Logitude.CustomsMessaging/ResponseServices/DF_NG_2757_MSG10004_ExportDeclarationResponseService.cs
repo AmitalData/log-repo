@@ -366,23 +366,48 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (_MyDeclarationPM.DeclarationStatusTypeCode != customResponse.Response.Status[0].NameCode.Value)
                     {
+                        _DateTime = new DateTime();
+                        _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
+                        switch (customResponse.Response.Status[0].NameCode.Value)
+                        {
+                            case "12":
+                                {
+                                    RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "FAI", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                                }
+                                break;
+                            case "45":
+                                {
+                                    RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "H45", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                                }
+                                break;
+                            case "5":
+                                {
+                                     RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "H05", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                                }
+                                break;
+                            case "6":
+                                {
+                                    RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                                    RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "H06", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                                }
+                                break;
+                            case "3":
+                                {
+                                    RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                                 }
+                                break;
+                            default:
+                                break;
+                        }
                         List<string> statusList = new List<string>()
                         {
                             "2","4","22","23","26","35","40","41"
                         };
                         if (statusList.Contains(customResponse.Response.Status[0].NameCode.Value))
                         {
-                            _DateTime = new DateTime();
-                            _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
-
                             RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "WAT", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
                         }
-                        if (customResponse.Response.Status[0].NameCode.Value == "3" || customResponse.Response.Status[0].NameCode.Value == "6")
-                        {
-                            _DateTime = new DateTime();
-                            _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
-                            RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "RDH", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
-                        }
+                  
 
                     }
                 }
