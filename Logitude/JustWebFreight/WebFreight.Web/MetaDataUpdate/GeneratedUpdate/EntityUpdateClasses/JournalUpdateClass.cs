@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "749b43403eb7e6f3051e51482e2471aa";
+		public const string HashString = "5a78e40c48ec4f19f2451dee18205f9a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2357,8 +2357,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityTypeName",
 					  						DefaultText =  "LastActivityTypeName",
+					  						FullLocalDefaultText =  "שם סוג הפעילות האחרונה",
 					  						ListFieldLable =  "LastActivityTypeNameListLable",
 					  						ListLableDefaultText =  "LastActivityTypeName",
+					  						ListLocalDefaultText =  "שם סוג הפעילות האחרונה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2418,8 +2420,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityByUserName",
 					  						DefaultText =  "LastActivityByUserName",
+					  						FullLocalDefaultText =  "פעילות אחרונה לפי שם משתמש",
 					  						ListFieldLable =  "LastActivityByUserNameListLable",
 					  						ListLableDefaultText =  "LastActivityByUserName",
+					  						ListLocalDefaultText =  "פעילות אחרונה לפי שם משתמש",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2479,8 +2483,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityDate",
 					  						DefaultText =  "Last Activity Date",
+					  						FullLocalDefaultText =  "תאריך פעילות אחרון",
 					  						ListFieldLable =  "LastActivityDateListLable",
 					  						ListLableDefaultText =  "Last Activity Date",
+					  						ListLocalDefaultText =  "תאריך פעילות אחרון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2663,6 +2669,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TypeLocalName",
 					  						DefaultText =  "Type",
+					  						FullLocalDefaultText =  "סוג שם מקומי",
+					  						ListFieldLable =  "TypeLocalNameListLable",
+					  						ListLableDefaultText =  "Type Local Name",
+					  						ListLocalDefaultText =  "סוג שם מקומי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2722,6 +2732,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsLedgerCreated",
 					  						DefaultText =  "Is Ledger Created",
+					  						FullLocalDefaultText =  "האם נוצר",
+					  						ListFieldLable =  "IsLedgerCreatedListLable",
+					  						ListLableDefaultText =  "Is Ledger Created",
+					  						ListLocalDefaultText =  "האם נוצר",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3151,6 +3165,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "CurrencyId",
 					  						DefaultText =  "Currency",
 					  						FullLocalDefaultText =  "קוד מטבע",
+					  						ListFieldLable =  "CurrencyIdListLable",
+					  						ListLableDefaultText =  "Currency Id",
+					  						ListLocalDefaultText =  "קוד מטבע",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
