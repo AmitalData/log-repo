@@ -47,6 +47,7 @@ using Logitude.Customs.Data.EntityKeys;
 using static Logitude.Customs.BL.Messaging.Customs.SupplierInvoiceByOcr;
 using static Logitude.CustomsMessaging.ResponseServices.UpsertSupplierInvioceByOcr_MsgResponseService;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Text.RegularExpressions;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -74,7 +75,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 try
                 {
-                    SupplierInvoiceOcr convertJson = JsonConvert.DeserializeObject<SupplierInvoiceOcr>(myOcrDocument.JsonData);//json מיפוי
+                    string pattern = @"[\x00-\x08\x0B\x0C\x0E-\x1F]";
+                    string cleanedJson = Regex.Replace(myOcrDocument.JsonData, pattern, "");
+                    SupplierInvoiceOcr convertJson = JsonConvert.DeserializeObject<SupplierInvoiceOcr>(cleanedJson);//json מיפוי
 
                     if (convertJson != null)
                     {
@@ -167,8 +170,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (Result.invalidValuesRemarks != null)
                                 this.MyResponseData.Remarks = "Invalid value, not exist in table - " + Result.invalidValuesRemarks;
                             CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
-                            CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false).FirstOrDefault();
-                            if(requestsSheetPM != null )
+                            CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
+                            if(requestsSheetPM != null)
                             {
                                 MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(5));
                             }
