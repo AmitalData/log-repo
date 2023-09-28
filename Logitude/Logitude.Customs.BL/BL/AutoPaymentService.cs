@@ -1223,10 +1223,10 @@ namespace Logitude.Customs.BL.BL
 					MyUnifreightEventParam);
 				IsValidSend = false;
 			}
-			//if (!_MyDeclarationPM.AvailabilityDate.HasValue && !(new string[] { "4070001", "4070005", "7070001", "7070005" }.Contains(_MyDeclarationPM.ProcedureCurrentCode)))
-			//{
-			//	IsValidSend = false;
-			//}
+			if (!_MyDeclarationPM.AvailabilityDate.HasValue && !(new string[] { "4070001", "4070005", "7070001", "7070005" }.Contains(_MyDeclarationPM.ProcedureCurrentCode)))
+			{
+				IsValidSend = false;
+			}
 			return IsValidSend;
 		}
 
