@@ -1177,28 +1177,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-		class CustomsAutoDecClosing : ICustomsAutoDecClosing
-        {
-            public void Send8235(DeclarationPM decPm) {
-                var requestParamsData = new AmendmentRequestParams();
+	}
+	public class CustomsAutoDecClosing : ICustomsAutoDecClosing
+	{
+		public void Send8235(DeclarationPM decPm)
+		{
+			var requestParamsData = new AmendmentRequestParams();
 
-				var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-				var loggedUserId = AuthenticationUtil.ResolveUserId(decPm.Tenant);
+			var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+			var loggedUserId = AuthenticationUtil.ResolveUserId(decPm.Tenant);
 
-				requestParamsData.Tenant = decPm.Tenant;
-				requestParamsData.AppicationId = decPm.Id;
-				requestParamsData.LoggingEnabled = true;
-				requestParamsData.LoggingEntityId = decPm.Id;
-				requestParamsData.LoggingEntityReference = decPm.DeclarationNumber;
-				requestParamsData.LoggingObjectTableId = objecttableId;
-				requestParamsData.LoggingUserId = loggedUserId;
-				requestParamsData.RequestName = "Export Amendment Declaration Request";
-				requestParamsData.ResponseName = "Amendment Declaration Response";
-				requestParamsData.RequestVIA = SendRequestVIA.WebServiceBatch;
-			    requestParamsData.ForcePersonalSign = false;
-			    requestParamsData.IsExportClose = true;
-			    requestParamsData.IsTransShipment = decPm.DeclarationTypeCode == "3";
-				requestParamsData.IsFromAutoClosing = true;
+			requestParamsData.Tenant = decPm.Tenant;
+			requestParamsData.AppicationId = decPm.Id;
+			requestParamsData.LoggingEnabled = true;
+			requestParamsData.LoggingEntityId = decPm.Id;
+			requestParamsData.LoggingEntityReference = decPm.DeclarationNumber;
+			requestParamsData.LoggingObjectTableId = objecttableId;
+			requestParamsData.LoggingUserId = loggedUserId;
+			requestParamsData.RequestName = "Export Amendment Declaration Request";
+			requestParamsData.ResponseName = "Amendment Declaration Response";
+			requestParamsData.RequestVIA = SendRequestVIA.WebServiceBatch;
+			requestParamsData.ForcePersonalSign = false;
+			requestParamsData.IsExportClose = true;
+			requestParamsData.IsTransShipment = decPm.DeclarationTypeCode == "3";
+			requestParamsData.IsFromAutoClosing = true;
 
 
 
@@ -1206,9 +1208,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					  new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
 					  new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
 
-			}
-        }
-		
-
+		}
 	}
 }

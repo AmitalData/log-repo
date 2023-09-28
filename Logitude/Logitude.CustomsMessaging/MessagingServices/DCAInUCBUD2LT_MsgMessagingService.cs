@@ -695,5 +695,60 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             return (this._DocumentsFilingPM.ObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration") &&  ( !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.EntityId) || !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.ExternalEntityReference))) || this._DocumentsFilingPM.ExternalEntityName == "EFIFILEM";
         }
-    }
+
+
+
+		
+	}
+    public class CustomCreateTicket : ICustomCreateTicket
+	{
+		public bool CreateTicket(string documentFilingId, string documentFilingCode, string documentTypeCode, int tenant, string declaratinId)
+		{
+			var transmitionDateTime = DateTime.Now;
+			string xmlESBResponseXmlClass = null;
+
+			var myDCAInUCBUD2LTWithResponseContentHeader = new DCAInUCBUD2LTWithResponseContentHeader()
+			{
+				DeclarationId = declaratinId,
+				DocumentsFilingId = documentFilingId,
+				DocumentsFilingCode = documentFilingCode,
+				LoggingUserId = null,
+				//DocumentTypeId=documentsFilingPM.DocumentTypeId,
+				DocumentTypeCode = documentTypeCode,
+
+				tenant = tenant,
+				MyMoreParams = "",
+				ResponseContentHeader = new DefaultResponseContentHeader()
+				{
+					TransmitionDateTime = transmitionDateTime
+				},
+			};
+           // DCAInUCBUD2LT_MsgMessagingService dCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
+
+			var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+			var objectTableId2 = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
+			var genericRequestParams = new GenericRequestParams()
+			{
+				Tenant = myDCAInUCBUD2LTWithResponseContentHeader.tenant,
+				AppicationId = myDCAInUCBUD2LTWithResponseContentHeader.DeclarationId,
+				//RequestVIA = SendRequestVIA.WebServiceBatch,
+				LoggingEnabled = true,
+				InterfaceTypeCode = "UCBUD2LT",
+				MainInterfaceCode = "UCBUD2LT",
+
+
+				LoggingObjectTableId = objectTableId,
+				LoggingEntityId = myDCAInUCBUD2LTWithResponseContentHeader.DeclarationId,
+				LoggingObjectTableId2 = objectTableId2,
+				LoggingEntityId2 = myDCAInUCBUD2LTWithResponseContentHeader.DocumentsFilingId,
+
+				LoggingUserId = myDCAInUCBUD2LTWithResponseContentHeader.LoggingUserId,
+				RequestName = $" UD2LT   קישור מסמך לטיקט" + myDCAInUCBUD2LTWithResponseContentHeader.DocumentsFilingCode + " "
+			};
+
+			UniCourierBatchSendUCBUD2LT_MsgResponseService uniCourierBatchSendUCBUD2LT_MsgResponseService = new UniCourierBatchSendUCBUD2LT_MsgResponseService();
+			bool isSucceeded = uniCourierBatchSendUCBUD2LT_MsgResponseService.UpdateUCBUD2LT(myDCAInUCBUD2LTWithResponseContentHeader, genericRequestParams);
+            return isSucceeded;
+		}
+	}
 }

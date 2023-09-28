@@ -224,7 +224,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
 
-		public IQueryable<CustomsDocumentPointer> GetCustomDocumentPoinersForClosingData(string parentEntityId,int tenant)
+		public IQueryable<CustomsDocumentPointer> GetCustomDocumentPoinersForClosingData(string parentEntityId,int tenant, string documentFilingId)
 		{
 			IQueryable<CustomsDocumentPointer> pointers = (from p in context.CustomsDocumentPointers
 
@@ -232,11 +232,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 														   on p.CustomsDocumentsTicketId equals t.Id
 
-														   join cd in context.CustomsDocuments
-
-														   on t.DocumentsFilingId equals cd.DocumentsFilingId
-
-														   where p.Tenant == tenant && p.ParentEntityId == parentEntityId && p.ParentEntityCode== "ExportDeclarationClosingData" &&  string.IsNullOrEmpty(cd.CustomsDocId) && cd.DocumentStatusCode == "1"
+														   where p.Tenant == tenant && t.DocumentsFilingId == documentFilingId && p.ParentEntityId == parentEntityId 
 
 														   select p);
 			return pointers;

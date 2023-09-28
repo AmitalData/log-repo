@@ -1,4 +1,5 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using System;
@@ -28,5 +29,11 @@ namespace Logitude.Customs.BL.EntityQueryServiceExt
             CustomsDocumentQueryService query = new CustomsDocumentQueryService(tenant);
             return query.GetSingleByDocFileId(id, tenant);
         }
-    }
+
+		public CustomsDocumentPM GetDocumentsByDocsFileIdAndTypeClosing(List<string> docsFileId, int tenant)
+		{
+			CustomsDocumentQueryService query = new CustomsDocumentQueryService(tenant);
+			return query.GetDocumentsByDocsFileIdAndTypeClosing(docsFileId, tenant);
+		}
+	}
 }

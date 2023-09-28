@@ -153,22 +153,28 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
 
-		public CustomsDocumentPointerPM GetCustomDocumentPoinersForClosingData(string parentEntityId, int tenant)
+		public CustomsDocumentPointerPM GetCustomDocumentPoinersForClosingData(string parentEntityId, int tenant,string documentFilingId)
 		{
-			IQueryable<CustomsDocumentPointer> pointers = repository.GetCustomDocumentPoinersForClosingData(parentEntityId, tenant);
+			IQueryable<CustomsDocumentPointer> pointers = repository.GetCustomDocumentPoinersForClosingData(parentEntityId, tenant, documentFilingId);
 
 			CustomsDocumentPointerPM pointerPm = (from a in pointers
 														 select new CustomsDocumentPointerPM()
-														 {
-															 ParentEntityId = a.ParentEntityId,
-															 Child1EntityId = a.Child1EntityId,
-															 Child2EntityId = a.Child2EntityId,
-															 Id = a.Id,
+														 {  
+                                                             Id = a.Id,
 															 Tenant = a.Tenant,
+                                                             ParentEntityCode=a.ParentEntityCode,
+															 ParentEntityId = a.ParentEntityId,
+                                                             Child1EntityCode=a.Child1EntityCode,
+															 Child1EntityId = a.Child1EntityId,
+															 Child2EntityCode = a.Child2EntityCode,
+															 Child2EntityId = a.Child2EntityId,
+															 Child3EntityCode = a.Child3EntityCode,
+															 Child3EntityId = a.Child3EntityId,
+                                                             CustomsDocumentsTicketId = a.CustomsDocumentsTicketId,
+                                                             OriginEntity = a.OriginEntity,
+															
 														 }).FirstOrDefault();
 			return pointerPm;
-
-
 		}
 
 	}
