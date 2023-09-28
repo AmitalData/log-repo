@@ -270,7 +270,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             string ObjectTableId1, string EntityId1,
             string ObjectTableId2, string EntityId2,
             string CustomFileNo,
-            bool displayOnlyMode = false)
+            bool displayOnlyMode = false,
+            string customsRequestsSheetId = null)
         {
             return GetRequestInProgress(new RequestInProgressParams()
             {
@@ -281,7 +282,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 ObjectTableId2 = ObjectTableId2,
                 EntityId2 = EntityId2,
                 CustomFileNo = CustomFileNo,
-                DisplayOnlyMode = displayOnlyMode
+                DisplayOnlyMode = displayOnlyMode,
+                CustomsRequestsSheetId = customsRequestsSheetId
             });
         }
         public List<CustomsRequestsSheetPM> GetRequestInProgress(
@@ -440,7 +442,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 haveFilter = true;
                 q = q.Where(rec => rec.EntityId2 == requestInProgressParams.EntityId2 && rec.ObjectTableId2 == requestInProgressParams.ObjectTableId2);
             }
-            
+
+            if (!string.IsNullOrWhiteSpace(requestInProgressParams.CustomsRequestsSheetId))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.Id != requestInProgressParams.CustomsRequestsSheetId);
+            }
+
             //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('CR1', 'GetRequestInProgress 2715', 'CR1,GetRequestInProgress 2715')
             //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE) VALUES('-1', '1', TO_TIMESTAMP('2020-11-22 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2020-11-22 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'CR1', '1', '0', 'CR1')
 
@@ -911,7 +919,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public string CustomFileNo { get;  set; }
         public bool Include8250IsShaam { get; set; }
         public bool IsWorkSheetFromExcel { get; set; }
-        public string UserId { get; set; }
-
-    }
+        public string UserId { get; set; }  
+        public string CustomsRequestsSheetId { get;  set; }
+    } 
 }
