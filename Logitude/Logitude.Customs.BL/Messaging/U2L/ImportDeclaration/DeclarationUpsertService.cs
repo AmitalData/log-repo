@@ -39,6 +39,9 @@ using Microsoft.Practices.Unity;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Customs.BL.TraceEvents;
 using System.Text;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using System.IdentityModel.Metadata;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
@@ -201,10 +204,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 						MyGenericResponseObj.ApplicationId =
 						_MyDeclarationPM.Id;
 
-					if (_AmitalCustomsFile.Direction == "E" && _AmitalCustomsFile.Closing != null && _MyDeclarationPM.DeclarationStatusTypeCode != "36")
-					{
-						SendClosing();
-					}
+					
 					//<-- Yuval Chalup 04.03.2015 TASK-11617 - CHANGED FROM:
 					//if (this._MyDeclarationPM.PaymentDate != null)
 					//{
@@ -268,11 +268,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				CustomsSettingQueryService settingService = new CustomsSettingQueryService(ResolvedTenant());
 				CustomsSettingPM setting = settingService.GetSettingByTenantN(ResolvedTenant());
 				this._MyDeclarationPM.MarkAsChanged = true; // moran 2.6.15 - Task 13803
-
+				if (_AmitalCustomsFile.Direction == "E" && _AmitalCustomsFile.Closing != null && _MyDeclarationPM.DeclarationStatusTypeCode != "36")
+				{
+					CreateClosing();
+				}
 				MyGenericResponseObj.Stage = "Mapping";
 				if (_AmitalCustomsFile.Direction == "E" && _AmitalCustomsFile.Mode != "NEW")
 				{
 					ExportDeclarationUpdate();
+					if (IseatureClosingAutoExpDec)
+					{
+						SendClosing();
+					}
 					MyGenericResponseObj.Message = "עודכנה הצהרת יצוא";
 					MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
 					MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
@@ -957,27 +964,36 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
 		bool IsNew = false;
 		StringBuilder FieldError = new StringBuilder();
-		private void SendClosing()
+		bool IseatureClosingAutoExpDec = false;
+		private void CreateClosing()
 		{
-			FeatureQuery featureQuery = new FeatureQuery();
+			
+			ICommonDataContext myContextCommon = CommonDataContext.GetContext(ResolvedTenant());
+			FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
+
+			FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
 			var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(ResolvedTenant()), ResolvedTenant());
 			var featureClosingAutoExpDec = features.Features.FirstOrDefault(x => x.Code == "ClosingAutoExpDec");
 
-			if (featureClosingAutoExpDec == null) return;
-		
+			if (featureClosingAutoExpDec == null)   return;
+		    IseatureClosingAutoExpDec = true;
 			FillExportDeclarationClosingDataFromUNF();
 
 			AddModification();
-
 			bool IsExistDocumentForClosingData = CheckDocuments();
+			if (!IsExistDocumentForClosingData) FieldError.AppendLine("document is not exist");
+		}		
+		private void SendClosing()
+		{
 
-			if (IsExistDocumentForClosingData && FieldError.Length == 0) {
+			if (FieldError.Length == 0)
+			{
 				ICustomsAutoDecClosing CustomsAutoDecClosing = ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new ParameterOverride("", 1)) as ICustomsAutoDecClosing;
 				CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
 			}
 			else
 				RaiseEvent(_MyDeclarationPM, null, "CF1", FieldError.ToString());
-		}		
+		}
 		private void FillExportDeclarationClosingDataFromUNF()
 		{
             
@@ -1125,9 +1141,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 						item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
 						_MyDeclarationPM.SupplierInvoices[0].SupplierInvoiceModifications.Add(item);
 
-						_MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-						DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-						declarationUpdateService.Update(_MyDeclarationPM, true);
 
 					}
 				}
@@ -1139,10 +1152,28 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 		{
 			ICustomContext MyContext = CustomContext.GetContext(ResolvedTenant());
 
-			CustomsDocumentPointerQueryService customsDocumentPointerQuery = new CustomsDocumentPointerQueryService(MyContext);
-			CustomsDocumentPointerPM pointer = customsDocumentPointerQuery.GetCustomDocumentPoinersForClosingData(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
+			DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(ResolvedTenant());
+			var documentFilingPM = documentsFilingQuery.GetDocumentsFilingsByExportFile(_MyDeclarationPM.ExportFile, _MyDeclarationPM.Tenant);
+			if (documentFilingPM == null)  return false;
 
-			return pointer != null;
+
+			CustomsDocumentPointerQueryService customsDocumentPointerQuery = new CustomsDocumentPointerQueryService(MyContext);
+			CustomsDocumentPointerPM pointer = customsDocumentPointerQuery.GetCustomDocumentPoinersForClosingData(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant, documentFilingPM.Id);
+			if (pointer == null)
+			{
+				ICustomCreateTicket CustomCreateTicket = ContainerAccessor.Container.Resolve(typeof(ICustomCreateTicket), "CustomCreateTicket", new ParameterOverride("", 1)) as ICustomCreateTicket;
+			    bool isSucceeded = CustomCreateTicket.CreateTicket(documentFilingPM.Id, documentFilingPM.Code, documentFilingPM.DocumentTypeCode, documentFilingPM.Tenant, _MyDeclarationPM.Id);
+				return isSucceeded;
+			}
+			else
+			{
+				pointer.ChangeSetOp = ChangeSetOperation.Update;
+				pointer.ParentEntityCode = "ExportDeclarationClosingData";
+				pointer.ParentEntityId = _MyDeclarationPM.Id;
+				CustomsDocumentPointerUpdateService customsDocumentPointerUpdateService = new CustomsDocumentPointerUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+				customsDocumentPointerUpdateService.Update(pointer,true);
+			}
+			return true;
 		}
 
 	
