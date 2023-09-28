@@ -197,6 +197,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2791",// אחסנה
 "8235", // תיקון הצהרה ברקע
 
+"DCAOCR"//פתיחת חשבון יצואן - OCR
+
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();

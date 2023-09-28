@@ -23,7 +23,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
         object SendSheet(int tenant, string customsRequestsSheetId, SendSheetSignModel SignRecievedModel = null);
-        object ReQueue(int tenant, string customsRequestsSheetId,string ParentId=null);
+        object ReQueue(int tenant, string customsRequestsSheetId,string ParentId=null, DateTime? futureSendDateTime = null);
 
         //string DcaReceivedCustomResponseCorrelationCrashIfNotValid(Logitude.Customs.BL.EntityPMs.InterfaceManagementPM messageDCA, int tenant, string selectedFile, byte[] messageBytes, bool pseudo = false);
         string DcaReceivedCustomResponseCorrelation(Logitude.Customs.Def.EntityPMs.InterfaceManagementPM messageDCA, int tenant,
