@@ -126,7 +126,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         private apInvoicePMService :APInvoicePMService
     ) {
         super();
-
+        this.EntityWarningsList.push("dsds");
         this.fullAccountingSettingListService = new FullAccountingSettingListService();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -176,10 +176,12 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         if (journalSecurityManagedFeature) {
             this.IsJournalSecurityManaged = true;
         }
+
+        this.IsJournalSecurityManaged = true;
     }
 
     getAccountingSettingSecurityLevelField() {
-    
+        debugger;
         if (this.IsJournalSecurityManaged) {
             this.fullAccountingSettingListService.getSingle(SessionLocator.Tenant.toString()).subscribe((response: any) => {
                 this.CurrentSession.StopBusyIndicator();
@@ -360,6 +362,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     FillGrid() {
+        debugger;
         if (this.IsSecurityLevelOK == undefined || this.IsSecurityLevelOK) {
             // if entity in edit mode
             if (this.EntityPM.Id != undefined || this.EntityPM.JournalLines.length > 0) {
@@ -399,6 +402,11 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 this.JournalLines.Insert(line);
 
             }
+        }
+
+        else {
+            this.EntityWarningsList.push("אינך מורשה לצפיה בפקודה מספר " + this.EntityPM.JournalNumber);
+
         }
     }
 
