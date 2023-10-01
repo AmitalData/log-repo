@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FullAccountingSettingUpdateClass
    {
-		public const string HashString = "d46c559cd49566848404f7c3fdce47ce";
+		public const string HashString = "94d7bc4cc520241577e42f2180e3f538";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות הנהלת חשבונות",
 			      				    DefaultText =  "Full Accounting Settings",
-			      				    Code =  "6aca",
+			      				    Code =  "cb31",
 			      				    Name =  "FullAccountingSetting Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Accounting",
