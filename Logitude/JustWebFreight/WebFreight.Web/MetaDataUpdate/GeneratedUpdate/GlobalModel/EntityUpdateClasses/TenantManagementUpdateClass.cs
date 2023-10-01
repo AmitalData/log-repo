@@ -84,12 +84,11 @@ using Logitude.DashboardModule.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class TenantManagementUpdateClass
-   {  		
+   {
 
+       public const string HashString = "0d71a8f84270f55c2aa144b58e4f9213";
 
-		public const string HashString = "e2fc6bdf9856ad7f1b9eeaf85bcf2bc1";
-
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+       public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -12871,10 +12870,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
 
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+
+                FieldName = "HeaderColor",
+                ObjectTableName = "TenantManagement",
+                FieldsDataType = "Text",
+                MinLength = 0,
+                MaxLength = 20,
+                IsRequired = false,
+                CopyToDW = false,
+                DisplayOnLookUp = false,
+                DisplayOnLookUpLocal = false,
+                CanFilter = false,
+                DisplayOnly = false,
+                SystemRequired = false,
+                SystemMaxLength = 20,
+                DisplayInList = false,
+                IsCustomFilter = false,
+                IsListFilter = false,
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                PMPropertyPath = "HeaderColor",
+                ListPropertyPath = "HeaderColor",
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                ValidForQuerySection1 = "TenantManagement",
+                IsRestrictable = false,
+                DisplayInEntityVariables = false,
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInSearchWindowFilters = false,
+                DisplayInSearchWindowFiltersIndex = 0,
+                DisplayInDocumentReferences = false,
+                InActive = false,
+                DisplayLongName = false,
+                FullFieldLable = "HeaderColor",
+                DefaultText = "HeaderColor",
+                IsForeignKey = false,
+                IsMaxLength = false,
+                NoMetaDataField = false,
+                IsFixedLength = false,
+                EnableAutoFill = false,
+                IncludeInSearchField = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                DisplayInAutomationAsEnitity = false,
+                HasTemplate = false,
+                IsCustom = false,
+                EnableFullscreenTextBox = false,
+
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes);
+
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+
+        public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
