@@ -1027,9 +1027,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     ResetDeclarationNumberMethod() {
         this._DeclarationNumberandVersionId = null;//itzik:clear onstart on the house !!!
         if (this.EntityPM.Direction == "E") {
-            this.GetAnyRequestBeforeResetDeclaration("2755E", "לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשה")
+            this.GetAnyRequestBeforeResetDeclaration("2755E", "לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשה");
         } else {
-            this.GetAnyRequestBeforeResetDeclaration("2755", "לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום "))
+            this.GetAnyRequestBeforeResetDeclaration("2755", "לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
         }
     }
     private GetAnyRequestBeforeResetDeclaration(interfaceTypeCode: string, message: string) {
@@ -1063,8 +1063,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ResetDeclaration"));
                 }
 
-            }
-            );
+            });
     }
 
     private UpdateResetDeclarationNumber() {
