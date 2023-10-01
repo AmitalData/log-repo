@@ -181,8 +181,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     getAccountingSettingSecurityLevelField() {
-        debugger;
-        if (this.IsJournalSecurityManaged) {
+      //  if (this.IsJournalSecurityManaged) {
             this.fullAccountingSettingListService.getSingle(SessionLocator.Tenant.toString()).subscribe((response: any) => {
                 this.CurrentSession.StopBusyIndicator();
                 var userSecurityLevel: number = 10;
@@ -216,9 +215,9 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 if (this.IsSecurityLevelOK)
                     this.maxSecurityLevel = userSecurityLevel;
             });
-        } else {
-            this.IsSecurityLevelVisible = false;
-        }
+        //} else {
+        //    this.IsSecurityLevelVisible = false;
+        //}
     }
 
 
@@ -362,7 +361,6 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     FillGrid() {
-        debugger;
         if (this.IsSecurityLevelOK == undefined || this.IsSecurityLevelOK) {
             // if entity in edit mode
             if (this.EntityPM.Id != undefined || this.EntityPM.JournalLines.length > 0) {
