@@ -208,20 +208,38 @@ export class JournalMenuButtonsHandler {
             case "JournalApprove":
                 {
                     this.EntityPM.StatusCode = "2"; // Approved
+                    this.EntityPM.JournalLines?.forEach(x => {
+                        if (x.AccountingDate instanceof Date) {
+                          x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000));
+                        }
+                      });
+                    
+                    this.SaveChenges();    
 
-                    this.EntityPM.UIProperties.SetEnabled("AccountingDate", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Reference1", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Reference2", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Reference3", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Notes", "Journal", false);
-
-                    this.SaveChenges();
+                    this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
+                        if ($event == true) {                           
+                             this.EntityPM.UIProperties.SetEnabled("AccountingDate", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Reference1", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Reference2", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Reference3", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Notes", "Journal", false);
+            
+                        }
+                    });
+                     
+                     
+                   
                     break;
                 }
             case "JournalSaveAsDraft":
                 {
                     this.EntityPM.StatusCode = "0"; // Draft
                     this.EntityPM.IsDirty = true;
+                    this.EntityPM.JournalLines?.forEach(x => {
+                        if (x.AccountingDate instanceof Date) {
+                            x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000));
+                        }
+                    });
                     this.SaveChenges();
                     break;
                 }
