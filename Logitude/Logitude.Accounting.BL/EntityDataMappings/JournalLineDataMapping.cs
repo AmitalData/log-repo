@@ -61,8 +61,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 JournalActionTypeQueryService journalActionTypeQueryService = new JournalActionTypeQueryService(accContext/*entityPOCO.Tenant*/);
                 JournalActionTypePM action = journalActionTypeQueryService.GetSingle(entityPOCO.ActionCode, false, true/*false*/);
-                entityPM.ActionName = action.LocalName;
-                entityPM.ActionTypeCode = action.Code;
+                if (action != null)
+                {
+                    entityPM.ActionName = action.LocalName;
+                    entityPM.ActionTypeCode = action.Code;
+                }
             }
 
 
