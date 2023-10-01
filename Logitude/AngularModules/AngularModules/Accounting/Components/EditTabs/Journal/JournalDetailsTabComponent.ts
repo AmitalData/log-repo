@@ -126,8 +126,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         private apInvoicePMService :APInvoicePMService
     ) {
         super();
-        this.EntityWarningsList.push("dsds");
-        this.fullAccountingSettingListService = new FullAccountingSettingListService();
+         this.fullAccountingSettingListService = new FullAccountingSettingListService();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.JournalLines = new ObservableCollection([]);
