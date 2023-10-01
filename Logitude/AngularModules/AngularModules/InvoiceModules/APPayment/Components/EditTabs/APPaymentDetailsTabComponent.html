@@ -48,6 +48,17 @@
         -ms-animation-iteration-count: 1;
         -ms-transform-origin: 50% 50%;
     }
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 8px;
+        background: #faf5c0;
+        padding: 4px 15px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+        width: fit-content;
+    }
 
     @keyframes animationFrames {
         0% {
@@ -131,6 +142,28 @@
         <td>
             <div class="TableHolder">
                 <table>
+                                        <!--FilterInvoicesbyAPPaymentCurrency-->
+
+                                        <tr  style="height:22px" *ngIf="FilterInvoiceByAPPayment">
+                                            <td colspan="2">
+                                                <table>
+                                                    <tr>
+                                                        <!-- <td style="width:200px" colspan="2"></td>-->
+                                                        <td>
+                                                            <div style="width:500px;margin:0 400px;">
+                                                                <div class="DisbleBox">
+                                                                    
+                                                                    {{'APPayment.M.FilterInvoicesbyAPPaymentCurrency' | TextCodeTranslationPipe }}
+                    
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width:100%"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                    
+                                        </tr>
 
                     <!-- Details-->
                     <tr style="height: 128px">
@@ -283,12 +316,14 @@
                                                     <div></div>
                                                 </td>
                                             </tr>
+                                            
                                         </table>
                                     </td>
 
                                     <td style="width:100px;">
                                         <div></div>
                                     </td>
+                                    
 
                                     <!-- Currency + Rate -->
                                     <td style="width:360px;">
@@ -404,6 +439,7 @@
                                                     </table>
                                                 </td>
                                             </tr>
+                                            
 
                                             <tr *ngIf="VisibleIfCash">
                                                 <td>
