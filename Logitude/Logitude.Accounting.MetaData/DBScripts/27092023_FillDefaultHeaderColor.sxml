@@ -1,4 +1,4 @@
-﻿<Script DBType="Global" Pre="true" Module="Global">
+﻿<Script DBType="Global" Module="Global">
 
   <Sql Version="1">
     <![CDATA[
