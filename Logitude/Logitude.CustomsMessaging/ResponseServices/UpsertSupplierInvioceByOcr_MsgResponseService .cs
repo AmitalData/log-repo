@@ -310,7 +310,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 mySupplierInvoice.IssueDate = date;
             }
-            if (dic.TryGetValue("incoterrns", out string incoterrns))
+            if (dic.TryGetValue("incoterms", out string incoterrns))
             {
                 TermsOfSaleTypeQueryService termsOfSaleTypeQueryService = new TermsOfSaleTypeQueryService(tenant);
                 TermsOfSaleTypePM termsOfSaleType = termsOfSaleTypeQueryService.GetSingle(incoterrns, false, true);
@@ -360,7 +360,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (supplierInvoiceItem.TryGetValue("Product_Code", out string productCode))
                     {
-                        supplierInvoiceItemPM.ItemCode = productCode;
+                        if(productCode.Length>30)
+                        supplierInvoiceItemPM.ItemCode = productCode.Substring(0,30);
                     }
                     if (supplierInvoiceItem.TryGetValue("Quantity", out string quantity) && decimal.TryParse(quantity, out decimal invoiceQuantity))
                     {
