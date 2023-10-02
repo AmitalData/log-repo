@@ -173,184 +173,185 @@ namespace Logitude.Accounting.BL.Utils
                         throw;
                     }
 
+                    //{
+                    //    var _AccountingContext = AccountingContext.GetContext(_Tenant);
 
-                    var _AccountingContext = AccountingContext.GetContext(_Tenant);
+                    //    var myGLAccountRepo = new GLAccountRepository(context);
+                    //    // var myGLAccountMoreDataRepo = new GLAccountMoreDataRepository(context);
 
-                    var myGLAccountRepo = new GLAccountRepository(context);
-                    // var myGLAccountMoreDataRepo = new GLAccountMoreDataRepository(context);
+                    //    //    var myInterestReportRepo = new InterestReportRepository(context);
 
-                    //    var myInterestReportRepo = new InterestReportRepository(context);
+                    //    var myInterestTransactionRepository = new InterestTransactionRepository(context);
 
-                    var myInterestTransactionRepository = new InterestTransactionRepository(context);
+                    //    TenantQuery tenantQuery = new TenantQuery(_Tenant);
+                    //    TenantPM tPM = tenantQuery.GetSinglePM(_Tenant);
+                    //    string accountingCurrencyId = tPM.CurrencyId;
 
-                    TenantQuery tenantQuery = new TenantQuery(_Tenant);
-                    TenantPM tPM = tenantQuery.GetSinglePM(_Tenant);
-                    string accountingCurrencyId = tPM.CurrencyId;
+                    //    //////////////// 
+                    //    /// 1. Compute BalanceInLocalCurrency
+                    //    string totalDateType = "1"; // accounting date 
+                    //    bool SumOpenTransactions = false;
+                    //    bool IncludeRelatedCurrenciesAccount = false;
+                    //    AccountBalanceByDateCodeService ac = new AccountBalanceByDateCodeService(null, _Tenant, gLAccountId, null);
+                    //    ac.ReSetAccountList(false, IncludeRelatedCurrenciesAccount);
+                    //    bool openBalancePlease_ReCalcYearTransfer = //true;//Yaron said this is Default !!!
+                    //        (actionDate.Day == 1 && actionDate.Month == 1);
+                    //    ac.CalculateBalance(
+                    //        openBalancePlease_ReCalcYearTransfer,
+                    //        totalDateType, actionDate, false, true, false,
+                    //        false, SumOpenTransactions);
 
-                    //////////////// 
-                    /// 1. Compute BalanceInLocalCurrency
-                    string totalDateType = "1"; // accounting date 
-                    bool SumOpenTransactions = false;
-                    bool IncludeRelatedCurrenciesAccount = false;
-                    AccountBalanceByDateCodeService ac = new AccountBalanceByDateCodeService(null, _Tenant, gLAccountId, null);
-                    ac.ReSetAccountList(false, IncludeRelatedCurrenciesAccount);
-                    bool openBalancePlease_ReCalcYearTransfer = //true;//Yaron said this is Default !!!
-                        (actionDate.Day == 1 && actionDate.Month == 1);
-                    ac.CalculateBalance(
-                        openBalancePlease_ReCalcYearTransfer,
-                        totalDateType, actionDate, false, true, false,
-                        false, SumOpenTransactions);
-
-                    ac.AccountBalance.LogMessage = null;
-
-
-                    decimal? balance_qm = ac.AccountBalance.GetBalanceOfLocalAmount().GetValueOrDefault();
-                    decimal balance_on_act_date = balance_qm.HasValue ? balance_qm.Value : 0m;
+                    //    ac.AccountBalance.LogMessage = null;
 
 
-
-                    ////////////
-                    /// 2.5. Compute "Before"
-
-                    var calcBeforeInterestTrans =
-                             (
-                                from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
-                                    .Where(intTrans => intTrans.GLAccountId == gLAccountId
-                                    && !intTrans.IsClosed
-                                    && intTrans.InterestValueDate < actionDate)
-                                select new InterestTransactionBeforeDeactivation
-                                {
-                                    Tenant = intTrans.Tenant,
-                                    Id = intTrans.Id,
-                                    LocalAmount = intTrans.LocalAmount,
-                                }
-                             );
-                    decimal amount_before = 0m;
-                    List<InterestTransactionBeforeDeactivation> before_list = calcBeforeInterestTrans.ToList();
-                    if (before_list != null)
-                    {
-                        decimal? amount_before_qm = before_list.Select(c => c.LocalAmount).Sum();
-                        amount_before = amount_before_qm.HasValue ? amount_before_qm.Value : 0m;
-                    }
-
-                    ////////////
-                    /// 2.7. Compute our InterestReportId 
-                    string actionDateStr = actionDate.ToString("dd.MM.yyyy").Replace(".", String.Empty);
-                    string ourInterestReportId = "OPEN_" + actionDateStr;
-
-
-                    ////////////
-                    /// 2.8. Compute "Before" - closed (by other InterestReportId)
-
-                    var calcClosedBeforeInterestTrans =
-                             (
-                                from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
-                                    .Where(intTrans => intTrans.GLAccountId == gLAccountId
-                                    && intTrans.IsClosed && (intTrans.InterestReportId != ourInterestReportId || String.IsNullOrEmpty(intTrans.InterestReportId))
-                                    && intTrans.InterestValueDate < actionDate)
-                                select new InterestTransactionBeforeDeactivation
-                                {
-                                    Tenant = intTrans.Tenant,
-                                    Id = intTrans.Id,
-                                    LocalAmount = intTrans.LocalAmount,
-                                }
-                             );
-                    decimal amount_closed_before = 0m;
-                    List<InterestTransactionBeforeDeactivation> closed_before_list = calcBeforeInterestTrans.ToList();
-                    if (before_list != null)
-                    {
-                        decimal? amount_before_qm = before_list.Select(c => c.LocalAmount).Sum();
-                        amount_before = amount_before_qm.HasValue ? amount_before_qm.Value : 0m;
-                    }
-
-                    ////////////////
-                    /// 3.Compute interestOpenBalance
-                    decimal interestOpenBalance = (amount_before + balance_on_act_date - amount_closed_before) * (-1.00m); // nis
+                    //    decimal? balance_qm = ac.AccountBalance.GetBalanceOfLocalAmount().GetValueOrDefault();
+                    //    decimal balance_on_act_date = balance_qm.HasValue ? balance_qm.Value : 0m;
 
 
 
+                    //    ////////////
+                    //    /// 2.5. Compute "Before"
 
-                    ////////////////
-                    /// 4.Update InterestTransaction
-                    if (before_list != null)
-                    {
-                        int total_count = before_list.Count;
-                        int count = 0;
-                        int each = 100;
-                        InterestTransactionQueryService myInterestTransactionService = new InterestTransactionQueryService(context);
-                        InterestTransactionUpdateService myInterestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), _Tenant);
+                    //    var calcBeforeInterestTrans =
+                    //             (
+                    //                from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
+                    //                    .Where(intTrans => intTrans.GLAccountId == gLAccountId
+                    //                    && !intTrans.IsClosed
+                    //                    && intTrans.InterestValueDate < actionDate)
+                    //                select new InterestTransactionBeforeDeactivation
+                    //                {
+                    //                    Tenant = intTrans.Tenant,
+                    //                    Id = intTrans.Id,
+                    //                    LocalAmount = intTrans.LocalAmount,
+                    //                }
+                    //             );
+                    //    decimal amount_before = 0m;
+                    //    List<InterestTransactionBeforeDeactivation> before_list = calcBeforeInterestTrans.ToList();
+                    //    if (before_list != null)
+                    //    {
+                    //        decimal? amount_before_qm = before_list.Select(c => c.LocalAmount).Sum();
+                    //        amount_before = amount_before_qm.HasValue ? amount_before_qm.Value : 0m;
+                    //    }
 
-                        before_list.ForEach(intt =>
-                        {
-                            count++;
-                            bool commit = (count >= total_count || count % each == 0);
-                            InterestTransactionPM interestTransactionPM = myInterestTransactionService.GetSingle(intt.Id, false, false);
-                            if (interestTransactionPM != null)
-                            {
-                                interestTransactionPM.IsClosed = true;
-                                interestTransactionPM.ChangeSetOp = ChangeSetOperation.Update;
-                                interestTransactionPM.InterestReportId = ourInterestReportId;
-                                myInterestTransactionUpdateService.Update(interestTransactionPM, commit);
-                            }
-                        }
-                            );
-                    }
-
-
-
-                    ////////////////
-                    /// 5.Update GLAccount.InterestOpenBalance
-
-                    GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(context, new Dictionary<string, IContext>(), _Tenant);
-
-                    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
-                    GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(gLAccountId, _Tenant);
-                    gLAccountQueryService.GetComposition(new GLAccountKeys() { Id = gLAccountId }, gLAccountPM);
-                    if (gLAccountPM != null)
-                    {
-                        if (!String.IsNullOrWhiteSpace(gLAccountPM.ParentAccountId))
-                        {
-                            InterestTransactionPM interestTransaction = new InterestTransactionPM()
-                            {
-                                InterestEntityTypeCode = "4", // Open Balance 
-                                EntityId = gLAccountPM.Id,
-                                AccountingEntityCode = "1", // GLAccount ?
-                                OriginalEntityLineNumber = 1,
-                                LocalAmount = interestOpenBalance,
-                                GLAccountId = gLAccountPM.ParentAccountId,
-                                ForeignAmount = interestOpenBalance,
-                                InterestValueDate = actionDate,
-                                Tenant = _Tenant,
-                                ChangeSetOp = ChangeSetOperation.Insert,
-                                CurrencyId = accountingCurrencyId,  // NIS
-                            };
-                            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
-                            interestTransactionUpdateService.Create(interestTransaction);
-
-                            InterestTransactionPM interestTransaction_Desc = new InterestTransactionPM()
-                            {
-                                InterestEntityTypeCode = "4", // Open Balance 
-                                EntityId = gLAccountPM.Id,
-                                AccountingEntityCode = "1", // GLAccount ?
-                                OriginalEntityLineNumber = 1,
-                                LocalAmount = - interestOpenBalance,
-                                GLAccountId = gLAccountPM.Id,
-                                ForeignAmount = - interestOpenBalance,
-                                InterestValueDate = actionDate,
-                                Tenant = _Tenant,
-                                ChangeSetOp = ChangeSetOperation.Insert,
-                                CurrencyId = accountingCurrencyId,  // NIS
-                            };
-                            interestTransactionUpdateService.Create(interestTransaction_Desc);
-
-                        }
+                    //    ////////////
+                    //    /// 2.7. Compute our InterestReportId 
+                    //    string actionDateStr = actionDate.ToString("dd.MM.yyyy").Replace(".", String.Empty);
+                    //    string ourInterestReportId = "OPEN_" + actionDateStr;
 
 
-                        gLAccountPM.InterestOpenBalance = interestOpenBalance;
-                        gLAccountPM.ChangeSetOp = ChangeSetOperation.Update;
-                        gLAccountUpdateService.Update(gLAccountPM, true);
+                    //    ////////////
+                    //    /// 2.8. Compute "Before" - closed (by other InterestReportId)
 
-                    }
+                    //    var calcClosedBeforeInterestTrans =
+                    //             (
+                    //                from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
+                    //                    .Where(intTrans => intTrans.GLAccountId == gLAccountId
+                    //                    && intTrans.IsClosed && (intTrans.InterestReportId != ourInterestReportId || String.IsNullOrEmpty(intTrans.InterestReportId))
+                    //                    && intTrans.InterestValueDate < actionDate)
+                    //                select new InterestTransactionBeforeDeactivation
+                    //                {
+                    //                    Tenant = intTrans.Tenant,
+                    //                    Id = intTrans.Id,
+                    //                    LocalAmount = intTrans.LocalAmount,
+                    //                }
+                    //             );
+                    //    decimal amount_closed_before = 0m;
+                    //    List<InterestTransactionBeforeDeactivation> closed_before_list = calcBeforeInterestTrans.ToList();
+                    //    if (before_list != null)
+                    //    {
+                    //        decimal? amount_before_qm = before_list.Select(c => c.LocalAmount).Sum();
+                    //        amount_before = amount_before_qm.HasValue ? amount_before_qm.Value : 0m;
+                    //    }
+
+                    //    ////////////////
+                    //    /// 3.Compute interestOpenBalance
+                    //    decimal interestOpenBalance = (amount_before + balance_on_act_date - amount_closed_before) * (-1.00m); // nis
+
+
+
+
+                    //    ////////////////
+                    //    /// 4.Update InterestTransaction
+                    //    if (before_list != null)
+                    //    {
+                    //        int total_count = before_list.Count;
+                    //        int count = 0;
+                    //        int each = 100;
+                    //        InterestTransactionQueryService myInterestTransactionService = new InterestTransactionQueryService(context);
+                    //        InterestTransactionUpdateService myInterestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), _Tenant);
+
+                    //        before_list.ForEach(intt =>
+                    //        {
+                    //            count++;
+                    //            bool commit = (count >= total_count || count % each == 0);
+                    //            InterestTransactionPM interestTransactionPM = myInterestTransactionService.GetSingle(intt.Id, false, false);
+                    //            if (interestTransactionPM != null)
+                    //            {
+                    //                interestTransactionPM.IsClosed = true;
+                    //                interestTransactionPM.ChangeSetOp = ChangeSetOperation.Update;
+                    //                interestTransactionPM.InterestReportId = ourInterestReportId;
+                    //                myInterestTransactionUpdateService.Update(interestTransactionPM, commit);
+                    //            }
+                    //        }
+                    //            );
+                    //    }
+
+
+
+                    //    ////////////////
+                    //    /// 5.Update GLAccount.InterestOpenBalance
+
+                    //    GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(context, new Dictionary<string, IContext>(), _Tenant);
+
+                    //    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
+                    //    GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(gLAccountId, _Tenant);
+                    //    gLAccountQueryService.GetComposition(new GLAccountKeys() { Id = gLAccountId }, gLAccountPM);
+                    //    if (gLAccountPM != null)
+                    //    {
+                    //        if (!String.IsNullOrWhiteSpace(gLAccountPM.ParentAccountId))
+                    //        {
+                    //            InterestTransactionPM interestTransaction = new InterestTransactionPM()
+                    //            {
+                    //                InterestEntityTypeCode = "4", // Open Balance 
+                    //                EntityId = gLAccountPM.Id,
+                    //                AccountingEntityCode = "1", // GLAccount ?
+                    //                OriginalEntityLineNumber = 1,
+                    //                LocalAmount = interestOpenBalance,
+                    //                GLAccountId = gLAccountPM.ParentAccountId,
+                    //                ForeignAmount = interestOpenBalance,
+                    //                InterestValueDate = actionDate,
+                    //                Tenant = _Tenant,
+                    //                ChangeSetOp = ChangeSetOperation.Insert,
+                    //                CurrencyId = accountingCurrencyId,  // NIS
+                    //            };
+                    //            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+                    //            interestTransactionUpdateService.Create(interestTransaction);
+
+                    //            InterestTransactionPM interestTransaction_Desc = new InterestTransactionPM()
+                    //            {
+                    //                InterestEntityTypeCode = "4", // Open Balance 
+                    //                EntityId = gLAccountPM.Id,
+                    //                AccountingEntityCode = "1", // GLAccount ?
+                    //                OriginalEntityLineNumber = 1,
+                    //                LocalAmount = -interestOpenBalance,
+                    //                GLAccountId = gLAccountPM.Id,
+                    //                ForeignAmount = -interestOpenBalance,
+                    //                InterestValueDate = actionDate,
+                    //                Tenant = _Tenant,
+                    //                ChangeSetOp = ChangeSetOperation.Insert,
+                    //                CurrencyId = accountingCurrencyId,  // NIS
+                    //            };
+                    //            interestTransactionUpdateService.Create(interestTransaction_Desc);
+
+                    //        }
+
+
+                    //        gLAccountPM.InterestOpenBalance = interestOpenBalance;
+                    //        gLAccountPM.ChangeSetOp = ChangeSetOperation.Update;
+                    //        gLAccountUpdateService.Update(gLAccountPM, true);
+
+                    //    }
+                    //}
 
                     if (!String.IsNullOrEmpty(_AggregateKey))
                     {
