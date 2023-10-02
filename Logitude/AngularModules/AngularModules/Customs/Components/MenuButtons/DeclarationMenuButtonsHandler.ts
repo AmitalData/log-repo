@@ -845,7 +845,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     });
                     confirm.Show("האם לעדכן ספר מכס אוטונומיה לשורות עם שגיאה מס' 12195");
 
-                }else{
+                } else {
                     let window = new MessageWindow();
                     window.Show("אין פרטי מכס לעדכון");
                 }
@@ -1025,8 +1025,16 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     ResetDeclarationNumberMethod() {
         this._DeclarationNumberandVersionId = null;//itzik:clear onstart on the house !!!
+        if (this.EntityPM.Direction == "E") {
+            this.GetAnyRequestBeforeResetDeclaration("2755E", "לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשה");
+        } else {
+            this.GetAnyRequestBeforeResetDeclaration("2755", "לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
+        }
+    }
+    private GetAnyRequestBeforeResetDeclaration(interfaceTypeCode: string, message: string) {
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-        declarationDisplayOnlyChecks.GetAnyRequest("2755", this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
+
+        declarationDisplayOnlyChecks.GetAnyRequest(interfaceTypeCode, this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
             .subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     var requestSheets = response.Result;
@@ -1039,8 +1047,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         var messageWindow = new MessageWindow();
                         messageWindow.Width = 400;
                         messageWindow.Height = 150;
-                        messageWindow.Title = "םיפוס מספר הצהרה";
-                        messageWindow.Show("לם ניתן לםפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
+                        messageWindow.Title = "איפוס מספר הצהרה";
+                        messageWindow.Show(message);
                         return;
                     }
 
@@ -1048,49 +1056,53 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     let confirm = new ConfirmWindow();
                     confirm.WindowClosed.subscribe((event: any) => {
                         if (confirm.Yes) {
-                            this.EntityPM.ResetDeclarationNumber = true;
-                            this.EntityPM.DeclarationNumber = null;
-                            this.EntityPM.VersionId = null;
-                            this.EntityPM.IsSignedVersion = false;
-                            this.EntityPM.DeclarationStatusTypeCode = null;
-                            this.EntityPM.DeclarationNumberandVersionId = null;
-                            if (this.EntityPM.IsCourierDeclaration) { //Reset Courier Fields
-                                this.EntityPM.CourierCustomStatusCode = null;
-                                this.EntityPM.CourierSuspentionReasonCode = null;
-                                //this.EntityPM.AcceptanceStatusCode = null;
-                            }
-                            if (!AppTool.IsNullOrEmpty(this.EntityPM.ExternalDeclarationNumber)) {
-                                if (this.EntityPM.ExternalDeclarationNumber.includes("-")) {
-                                    let index = this.EntityPM.ExternalDeclarationNumber.indexOf("-");
-
-                                    let var1 = this.EntityPM.ExternalDeclarationNumber.substring(index + 1);
-                                    let var2 = //int.Parse(var1)
-                                        Number(var1) + 1;
-
-                                    this.EntityPM.ExternalDeclarationNumber = this.EntityPM.ExternalDeclarationNumber.substring(0, index + 1) + var2.toString();
-
-                                } else {
-                                    this.EntityPM.ExternalDeclarationNumber = this.EntityPM.ExternalDeclarationNumber + "-1";
-                                }
-                                let token = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
-                                    (isSave) => {
-                                        token.unsubscribe()
-                                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                                        if (isSave) {
-                                            this._DeclarationNumberandVersionId = null;
-                                            let window = new MessageWindow();
-                                            window.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationReset"));
-                                        }
-                                    });
-                                this.CurrentSession.CurrentEditComponent.SaveChanges();
-                            }
+                            this.UpdateResetDeclarationNumber();
                         }
                     });
                     confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ResetDeclaration"));
                 }
 
+            });
+    }
+
+    private UpdateResetDeclarationNumber() {
+        this.EntityPM.ResetDeclarationNumber = true;
+        this.EntityPM.DeclarationNumber = null;
+        this.EntityPM.VersionId = null;
+        this.EntityPM.IsSignedVersion = false;
+        this.EntityPM.DeclarationStatusTypeCode = null;
+        this.EntityPM.DeclarationNumberandVersionId = null;
+        if (this.EntityPM.IsCourierDeclaration) { //Reset Courier Fields
+            this.EntityPM.CourierCustomStatusCode = null;
+            this.EntityPM.CourierSuspentionReasonCode = null;
+            //this.EntityPM.AcceptanceStatusCode = null;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ExternalDeclarationNumber)) {
+            if (this.EntityPM.ExternalDeclarationNumber.includes("-")) {
+                let index = this.EntityPM.ExternalDeclarationNumber.indexOf("-");
+
+                let var1 = this.EntityPM.ExternalDeclarationNumber.substring(index + 1);
+                let var2 = //int.Parse(var1)
+                    Number(var1) + 1;
+
+                this.EntityPM.ExternalDeclarationNumber = this.EntityPM.ExternalDeclarationNumber.substring(0, index + 1) + var2.toString();
+
+            } else {
+                this.EntityPM.ExternalDeclarationNumber = this.EntityPM.ExternalDeclarationNumber + "-1";
             }
-            );
+            let token = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(
+                (isSave) => {
+                    token.unsubscribe()
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    if (isSave) {
+                        this._DeclarationNumberandVersionId = null;
+                        let window = new MessageWindow();
+                        window.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationReset"));
+                    }
+                });
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+
     }
     private TransferToCollectorMethod() {
         let confirmWindow = new ConfirmWindow();
