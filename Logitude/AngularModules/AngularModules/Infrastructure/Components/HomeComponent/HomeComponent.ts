@@ -39,6 +39,7 @@ export class HomeComponent implements OnDestroy{
     public Tabs: Array<SessionTabItem>;
     public SelectedTabItem: SessionTabItem;
     public ChangeHeaderColor: boolean = false;
+    public HeaderColor: string = '';
     @Output() SignoutCompleted = new EventEmitter();
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("ApplicationLocation", { read: ViewContainerRef, static: false }) ApplicationLocation: ViewContainerRef;
@@ -58,6 +59,10 @@ export class HomeComponent implements OnDestroy{
         SessionLocator.AllSessions = new Array<SessionComponent>();
         SessionLocator.HomeComponent = this;
         this.ChangeHeaderColor = ObjectsLocator.TenantManagementJS.ChangeHeaderColor;
+        if (this.ChangeHeaderColor)
+        {
+            this.HeaderColor = 'linear-gradient(180deg, rgba(235, 235, 235, 0.5) 0%, ' + ObjectsLocator.TenantManagementJS.HeaderColor + ' 100%)';
+        }
         this.PaymentChanelCode = SessionLocator.TenantManagementJS.PaymentChannelCode;
 
         this.Tabs = [];
@@ -101,7 +106,7 @@ export class HomeComponent implements OnDestroy{
         this.InitializeBluesnapComponents();
         this.InitializeChargifyComponents();
         this.IsCountryIsrael = SessionLocator.TenantManagementJS.CountryName == "Israel";
-        
+
         this.SetIsINTTRAPackage();
         var isNewSignupTenant = false;
 

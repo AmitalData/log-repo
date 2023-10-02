@@ -255,6 +255,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      AgentSharedLogisticsStatisticsLastWeek = a.AgentSharedLogisticsStatisticsLastWeek,
                                                      AgentSharedLogisticsStatisticsLastMonth = a.AgentSharedLogisticsStatisticsLastMonth,
                                                      ChangeHeaderColor = a.ChangeHeaderColor,
+                                                     HeaderColor = a.HeaderColor,
                                                      StockTypeCode = a.StockTypeCode,
                                                      IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                                      PackageCodeSearchField = a.PackageCodeSearchField,
