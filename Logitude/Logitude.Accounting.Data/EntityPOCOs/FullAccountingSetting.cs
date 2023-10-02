@@ -156,6 +156,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string HSMtoken { get; set; }
         [Column("HSMaddress")]
 	    public string HSMaddress { get; set; }
+        [Column("AllowEditingExchangeRate")]
+	    public bool AllowEditingExchangeRate { get; set; }
     }
 }
 	 
