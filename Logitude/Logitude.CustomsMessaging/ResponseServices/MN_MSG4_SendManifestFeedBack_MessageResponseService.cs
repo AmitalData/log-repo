@@ -336,7 +336,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             
-                if (_MyDeclarationPM.ManifestCargoStatusCode=="1" || _MyDeclarationPM.ManifestCargoStatusCode=="2")//MNC its success !
+                if (_MyDeclarationPM.ManifestCargoStatusCode=="1" || _MyDeclarationPM.ManifestCargoStatusCode=="2" && !_MyDeclarationPM.EffectiveFlight)//MNC its success !
                 {
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                     DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, true, false);

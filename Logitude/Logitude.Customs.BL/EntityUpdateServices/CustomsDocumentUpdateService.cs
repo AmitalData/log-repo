@@ -742,6 +742,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var courierSchedulerService = new CourierSchedulerService();
                 date = courierSchedulerService.Send2715Immediate(entityPM.Tenant, declarationId, date);// if date === null  => SendImmediate
 
+                //if is EffectiveFlight : TenantPriority = 98
+                CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(customContext);
+                bool isEffectiveFlight = myCourierMasterQueryService.GetByDeclarationId(declarationId, entityPM.Tenant)?.EffectiveFlight ?? false;
+
+
                 var requestParams = new Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam()
                 {
                     MainInterfaceCode = "2715",
@@ -765,6 +770,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     requestParams.LoggingEntityId = entityPM.ClaimId;//ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
 
 
+                }
+                if (isEffectiveFlight)
+                {
+                    requestParams.TenantPriority = 98;
                 }
                 byte[] byteArray = null;
                 var documentrepository = new DocumentRepository(commonContext);

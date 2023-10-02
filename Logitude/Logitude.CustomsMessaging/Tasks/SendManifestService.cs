@@ -46,6 +46,12 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
                 foreach (var courierMaster in courierMasters)
                 {
+                    if (courierMaster.EffectiveFlight)
+                    {
+                        LogMessagingUtil.Instance.AppendLine("טיסה פקטיבית - לא לשלוח!");
+
+                        return;
+                    } 
                    if( GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMaster.Id, courierMaster.Tenant))
 
                     { 

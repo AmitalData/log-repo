@@ -1448,21 +1448,39 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             CourierDeclarationPM _CourierDeclarationPMPMDiferentMaster = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(_MyDeclarationPM.Id, _tenant);
                             if (_CourierDeclarationPMPMDiferentMaster != null)
                             {
-                                AppendLogLine("try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
-                                LogitudeSettings.HandleLogMe(" try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id, false, "CheckMasterToUpdate", stopLogAt);
-                                _CourierDeclarationPMPMDiferentMaster.ChangeSetOp = ChangeSetOperation.Delete;
+
+                                
+                                
+                                    AppendLogLine("try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                                    LogitudeSettings.HandleLogMe(" try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id, false, "CheckMasterToUpdate", stopLogAt);
+                                    _CourierDeclarationPMPMDiferentMaster.ChangeSetOp = ChangeSetOperation.Delete;
+                                
+
                                 try
                                 {
 
-                                    sbWhyDecNotConnected2Master.AppendLine($"myCourierDeclarationUpdateService.Update:_CourierDeclarationPMPMDiferentMaster-{_CourierDeclarationPMPMDiferentMaster.CourierMasterId}");
+                                    if (_CourierMasterPM.EffectiveFlight)
+                                    {
+                                        CourierMasterPM lastCourierMasterPM = myCourierMasterQueryService.GetSingle(_CourierDeclarationPMPMDiferentMaster.CourierMasterId, false, false);
+                                        if (lastCourierMasterPM != null && !lastCourierMasterPM.EffectiveFlight)
+                                        {
+                                            MyGenericResponseObj.ErrorDescription = "It is not possible to transfer from a non-effective flight to a effective flight";
+                                        }
 
-                                    myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
+                                    }
+                                    else
+                                    {
+                                        sbWhyDecNotConnected2Master.AppendLine($"myCourierDeclarationUpdateService.Update:_CourierDeclarationPMPMDiferentMaster-{_CourierDeclarationPMPMDiferentMaster.CourierMasterId}");
 
-                                 _MAWBHaveChanged = true;
+                                        myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
+
+                                        _MAWBHaveChanged = true;
                                 
-                                    sbWhyDecNotConnected2Master.AppendLine($"myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true)-done");
+                                        sbWhyDecNotConnected2Master.AppendLine($"myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true)-done");
  
 
+                                    }
+                                    
                                     
                                 }
                                 catch (DbEntityValidationException ex)
@@ -1479,6 +1497,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                     LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
                                     return;
                                 }
+                                
 
                                 string prevVal = null;
                                 string currvVal = null;
@@ -1541,9 +1560,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     }
                     else
                     {
+                        
+                        _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
                         sbWhyDecNotConnected2Master.AppendLine($"_CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;");
-                        _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
 
 

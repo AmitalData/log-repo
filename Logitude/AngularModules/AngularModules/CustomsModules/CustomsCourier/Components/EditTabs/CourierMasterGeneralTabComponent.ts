@@ -140,6 +140,13 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get EffectiveFlight() { return this.EntityPM.EffectiveFlight; }
+    set EffectiveFlight(value: boolean) {
+        if (this.EntityPM.EffectiveFlight != value) {
+            this.EntityPM.EffectiveFlight = value;
+        }
+    }
+
     get PackageQuantityInMAWB() { return this.EntityPM.PackageQuantityInMAWB; }
     set PackageQuantityInMAWB(value: number) {
         if (this.EntityPM.PackageQuantityInMAWB != value) { 
@@ -327,6 +334,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("GrossMassMeasure", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("WeightValueCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("TruckerId", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("EffectiveFlight", this.ObjectTableName, !this.IsDisplayOnly);
     }
 
     RefreshEntity() {

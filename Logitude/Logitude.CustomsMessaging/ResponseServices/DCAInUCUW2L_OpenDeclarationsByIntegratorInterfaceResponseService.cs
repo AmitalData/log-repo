@@ -95,6 +95,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.ApplicationID = customFileNo;
                 this.MyResponseData.HasException = false;
                 this.MyResponseData.Succeeded = true;
+                if(!string.IsNullOrEmpty(CommDecService.MyGenericResponseObj.ErrorDescription))
+                    this.MyResponseData.UserMessage = CommDecService.MyGenericResponseObj.ErrorDescription;
 
 
                 this.MyRequestSheetParam = new RequestSheetParam();

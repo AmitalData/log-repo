@@ -65,7 +65,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 List<DeclarationCourierStatus> ServerSplitDeclarationsList
                     = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
-                Create2750CRS(requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList);
+                Create2750CRS(requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList, customResponse.CourierMasterId);
             }
             else
             {
@@ -131,9 +131,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-        private static void Create2750CRS(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPoco)
+        private static void Create2750CRS(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPoco, string courierMasterId)
         {
             var listDeclarationIdCreateCRS = new List<string>();
+
+            //if is EffectiveFlight : TenantPriority = 98
+            var context = CustomContext.GetContext(requestParams.Tenant);
+            CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(context);
+            bool isEffectiveFlight = myCourierMasterQueryService.GetSingle(courierMasterId, false, false)?.EffectiveFlight ?? false;
+
+
             foreach (var itemPM in listPoco)
             {
                 try
@@ -160,6 +167,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             RequestVIA = SendRequestVIA.WebServiceBatch,
                             ParentId = requestParams.CustomsRequestsSheetId,
                         };
+                        if(isEffectiveFlight)
+                        {
+                            requestParams2750.TenantPriority = 98;
+                        }
 
                         SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false);
                         LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");

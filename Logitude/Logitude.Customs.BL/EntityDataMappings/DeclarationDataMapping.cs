@@ -598,6 +598,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 {
                     entityPM.CourierMasterId = courierMasterPM.Id;
                     entityPM.MAWBCourierMaster = courierMasterPM.MAWB;
+                    entityPM.EffectiveFlight = courierMasterPM.EffectiveFlight;
                 }
                 bool fastWithoutCache_NotNeedName = true;
                 if (fastWithoutCache_NotNeedName)

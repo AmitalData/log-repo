@@ -146,6 +146,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             
 
             var realUpdatedList = new List<string>();
+
+            //if is EffectiveFlight : TenantPriority = 98
+            var context = CustomContext.GetContext(requestParams.Tenant);
+            CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(context);
+            bool isEffectiveFlight = myCourierMasterQueryService.GetSingle(customResponse?.CourierMasterId, false, false)?.EffectiveFlight ?? false;
+
             foreach (var itemPoco in listPoco)
             {
 
@@ -194,6 +200,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             UnifreightListOnServerOnly = UnifreightListOnServerOnly_BankeId,
                             ParentId = requestParams.CustomsRequestsSheetId,
                         };
+
+                        if (isEffectiveFlight)
+                        {
+                            requestParams2755.TenantPriority = 98;
+                        }
 
                         SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
                         LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
