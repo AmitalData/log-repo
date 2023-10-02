@@ -131,68 +131,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var mySupplierInvoiceItemUpdateService = new SupplierInvoiceItemUpdateService(dbContext, new Dictionary<string, IContext>(), entityPM.Tenant);
             mySupplierInvoiceItemUpdateService.DeclarationSupplierInvoiceItemsParentsFastDeleteComposition(new Data.EntityKeys.SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey }, dbContext, entityPM.Tenant, isParent);
 
-            /*
-            var mySupplierInvoiceItemsConDeclarUpdateService = new SupplierInvoiceItemsConDeclarUpdateService(dbContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            mySupplierInvoiceItemsConDeclarUpdateService.FastDeleteComposition(new Data.EntityKeys.SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey });
-
-            var mySupplierInvoiceInvoiceItemsDescriptUpdateService = new SupplierInvoiceItemsDescriptUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceInvoiceItemsDescriptUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceItemsModUpdateService = new SupplierInvoiceItemsModUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceItemsModUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceInvoiceItemProcesTypeUpdateService = new SupplierInvoiceItemProcesTypeUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceInvoiceItemProcesTypeUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceInvoiceItemsProdIdentUpdateService = new SupplierInvoiceItemsProdIdentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceInvoiceItemsProdIdentUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceInvoiceItemsSerialNumUpdateService = new SupplierInvoiceItemsSerialNumUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceInvoiceItemsSerialNumUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvioceItemCertificatUpdateService = new SupplierInvioceItemCertificatUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvioceItemCertificatUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceInvoiceItemsTaxUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceInvoiceItemsLevyUpdateService = new SupplierInvoiceItemsLevyUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceInvoiceItemsLevyUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceInvoiceItemVehicleModUpdateService = new SupplierInvoiceItemVehicleModUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceInvoiceItemVehicleModUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceItemVehicleAddUpdateService = new SupplierInvoiceItemVehicleAddUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant); // moran 14.3.16 - AMI-55746
-            mySupplierInvoiceItemVehicleAddUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceInvoiceItemVehicleUpdateService = new SupplierInvoiceItemVehicleUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceInvoiceItemVehicleUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceInvoiceItemModVehicleUpdateService = new SupplierInvoiceItemModVehicleUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceInvoiceItemModVehicleUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceItemUpdateService = new SupplierInvoiceItemUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceItemUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-            */
+          
         }
 
-        //protected override void OnCreating(SupplierInvoicePM entityPM, DeclarationPM entityParentPM)
-        //{
-        //    entityPM.DeclarationId = entityParentPM.Id;
-
-        //    if (!entityParentPM.IsCopiedFromOtherDeclaration)
-        //    {
-        //        int lastKey = 0;
-
-        //        if (entityParentPM.SupplierInvoices.Count > 0)
-        //        {
-        //            lastKey = entityParentPM.SupplierInvoices.Max(d => d.InvoiceCounterKey);
-        //        }
-
-        //        entityPM.InvoiceCounterKey = lastKey + 1;
-        //    }
-        //   // entityPM.InvoiceCounterKey = CodeCounter.GetNumber("Customs.SupplierInvoice", entityPM.Tenant);
-        //}
+        
         protected override void OnUpdating(SupplierInvoicePM entityPM, SupplierInvoice entityPOCO)
         {
             var sIModificationByCustomerCommissionService = new SIModificationByCustomerCommissionService();
@@ -633,6 +575,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
 
             }
+            entityPM.SupplierInvoiceItems.ForEach(x => x.Direction = _DeclarationPM?.Direction);
 
             SupplierInvoiceItemUpdateService supplierInvoiceUpdateService = new SupplierInvoiceItemUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
             supplierInvoiceUpdateService.UpdateMulti(entityPM.SupplierInvoiceItems, entityPM.DeletedSupplierInvoiceItems, entityPM, false);
