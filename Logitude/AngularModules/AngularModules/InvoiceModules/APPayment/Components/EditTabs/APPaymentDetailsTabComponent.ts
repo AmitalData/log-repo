@@ -67,6 +67,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     DisplayLocalFieldsFromList:string;
     VendorLovSizeForFullAccounting:number;
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
+    public FilterInvoiceByAPPayment:boolean= false
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -980,11 +981,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.EntityPM.ExcludeFromDeductionReport = gla.ExcludeFromDeductionReport;
                     this.EntityPM.VendorGLAccountId = gla.Id;
                     if (!gla.IsMultiCurrency) {
+                        if(gla.ReconcileMethodCode!='0')
+                        this.FilterInvoiceByAPPayment=true;
                         this.PaymentCurrencyId = gla.CurrencyId;
                     }
                 }
             });
         }else{
+            this.FilterInvoiceByAPPayment=true;
             this.vendorGLAccount = null;
             this.deductionFileNumber = null;
             this.EntityPM.ExcludeFromDeductionReport = false;
@@ -1156,11 +1160,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.setPaymentCurrencyId(value)
     }
 
-    get FilterInvoiceByAPPayment (){
-        return this.IsFullAccounting && !( this.vendorGLAccount!=null&& (
-            this.vendorGLAccount.IsMultiCurrency &&
-             this.vendorGLAccount.ReconcileMethodCode=='0')) && this.EntityPM.VendorId!=null;
-    }
+    // get FilterInvoiceByAPPayment (){
+    //     return this.IsFullAccounting && !( this.vendorGLAccount!=null&& (
+    //         this.vendorGLAccount.IsMultiCurrency &&
+    //          this.vendorGLAccount.ReconcileMethodCode=='0')) && this.EntityPM.VendorId!=null;
+    // }
 
 
     async setPaymentCurrencyId(value: string) {
