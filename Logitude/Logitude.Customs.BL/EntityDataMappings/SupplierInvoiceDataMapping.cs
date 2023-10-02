@@ -90,9 +90,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
 
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPOCO.Tenant);
-            DeclarationPM declarationPM = declarationQueryService.GetSingleDeclarationById(entityPOCO.DeclarationId, entityPOCO.Tenant);
-            //entityPM.IsValueForCustomsOnly = declarationQueryService.GetIsValueForCustomsOnlyFromDeclaration(entityPOCO.DeclarationId, entityPOCO.Tenant);//
-            entityPM.IsValueForCustomsOnly =  declarationPM != null ? declarationPM.IsValueForCustomsOnly:false;
+            DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPOCO.DeclarationId, false, true);
+          entityPM.IsValueForCustomsOnly = declarationQueryService.GetIsValueForCustomsOnlyFromDeclaration(entityPOCO.DeclarationId, entityPOCO.Tenant);//
+           // entityPM.IsValueForCustomsOnly =  declarationPM != null ? declarationPM.IsValueForCustomsOnly:false;
 
             if (declarationPM != null && declarationPM.Direction == "E")
             {
