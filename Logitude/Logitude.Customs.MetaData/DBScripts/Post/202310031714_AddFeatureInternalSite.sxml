@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+insert into PACKAGEFEATURES
+select '1-' || cast(  (select   max(substr(id,3,LENGTH(id)) )  from PACKAGEFEATURES) +rownum  as varchar(15))     ,  0,'CUSTB', id, FEATUREUNIQECODE
+from FEATURES where
+objecttableid='1-375';commit;
+
+
+insert into ROLEFEATURES
+select '1-' || cast(  (select   max(substr(id,3,LENGTH(id)) )  from ROLEFEATURES) +rownum  as varchar(15))     ,  0,(select id from roles where code ='ADMN'), id, 'OR' , 0, FEATUREUNIQECODE
+from FEATURES where
+objecttableid='1-375';commit;
+
+
+insert into ROLEFEATURES
+select '1-' || cast(  (select   max(substr(id,3,LENGTH(id)) )  from ROLEFEATURES) +rownum  as varchar(15))     ,  0,(select id from roles where code ='FRL1'), f.id, 'OR' , 0, FEATUREUNIQECODE
+from FEATURES f 
+where
+objecttableid='1-375';commit;
+
+    ]]>
+  </Oracle>
+</Script>
