@@ -23,6 +23,8 @@ using System.Runtime.Remoting.Contexts;
 using System.Data.Entity.Infrastructure;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
+using Logitude.Customs.Data.Repsitories;
+using DocumentFormat.OpenXml.InkML;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -81,15 +83,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var commentsVehicleNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.vehicleNumber) ? ", מספר משאית: " + customResponse.TransferDetails.vehicleNumber : "";
                     var commentsCargoWeight = customResponse.General.cargoWeight != null ? ", משקל: " + customResponse.General.cargoWeight.ToString() : "";
                     var comments = commentsStorageSite + commentsContainerNumber + commentsExpectedArrivalSiteNumber + commentsDriverName + commentsDriverIdentityNumber + commentsVehicleNumber;
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(declaration.Tenant);
+                    string defaultLex =defaultValueQueryService.GetDefault("ISRAEL", "CGG_EXITSTS_PCK", "NON", "NON", declaration.Tenant);
+                    Boolean raiseEvent = true;
+                    if(defaultLex != null)
+                    {
+                        raiseEvent = false;
+                        List<ConsignmentPackagePM> consignmentPackages = new ConsignmentPackageQueryService(myDbContext).GetConsignmentPackagesForDeclaration(declaration.Id);
+                        foreach(ConsignmentPackagePM consignmentPackage in consignmentPackages)
+                        {
+                            if (!defaultLex.Contains(consignmentPackage.PackageTypeCode))
+                            {
+                                raiseEvent = true;
+                            }
+                        }
 
-
-
-
+                    }
                     RaiseEvent(requestParams.Tenant, "EXT", "Exit From Storage Site", declaration, customResponse, comments + commentsCargoWeight);
-                    if (customResponse.ReportingDetails.isLastExiOrLasttEntry == true)
-                       
-                        RaiseEvent(requestParams.Tenant, "LEX", "Last Exit From Storage Site", declaration, customResponse, comments);
+                    if (raiseEvent)
+                    {
+                        if (customResponse.ReportingDetails.isLastExiOrLasttEntry == true)
 
+                            RaiseEvent(requestParams.Tenant, "LEX", "Last Exit From Storage Site", declaration, customResponse, comments);
+                    }
                     
                 }
                 else
