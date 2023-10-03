@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.Ransom;
+using System.Runtime.CompilerServices;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -86,6 +87,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     myInsertEventContextTagModel.EventCode = "RDA";
                     myInsertEventContextTagModel.EventRemarks = "Required Document Verified By Customs";
                     myInsertEventContextTagModel.FUStatusRemarks = "דרישת מסמך אומתה " + "\n" + "הערות - " + customResponse.GeneralDetails.remarks;
+                    this.UpdateRequestedCustomsDocId(customResponse, requestParams);
                     break;
                 case 3: // אומת בנוכחות הלקוח
                     myCustomsDocumentsTicketPM.VerificationStatusTypeCode = "5";
@@ -133,6 +135,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.VerificationDecisionType = customResponse.VerificationDecision.verificationDecisionType.ToString();
         }
 
+        private void UpdateRequestedCustomsDocId(VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessage customResponse, RequiredDocumentRequestParams requestParams)
+        {
+            var customContext = CustomContext.GetContext(requestParams.Tenant);
+            var myDeclarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+            var myQueryService = new DeclarationQueryService(requestParams.Tenant);
+            if (customResponse?.ConnectedEntity.Length > 0 && customResponse?.ConnectedEntity[0].entityIdKey1 != null)
+            {
+                var _MyDeclarationPM = myQueryService.GetSingle(customResponse?.ConnectedEntity[0].entityIdKey1, true, false);
+                if (_MyDeclarationPM != null)
+                {
+                    _MyDeclarationPM.RequestedCustomsDocId = 0;
+                    _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                }
+            }
+
+
+        }
         private void InitMyResponseData(VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessage customResponse, RequiredDocumentRequestParams requestParams)
         {
             this.MyResponseData = new RequiredDocumentResponseData();
