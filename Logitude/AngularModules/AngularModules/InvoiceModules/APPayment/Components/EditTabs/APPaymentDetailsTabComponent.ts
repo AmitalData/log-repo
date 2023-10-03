@@ -867,7 +867,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, true);
                     }
                     this.GetCardProperties();
-                    this.LoadData();
+
                     this.LoadTaxPercentage();
                     this.IsTaxUpdated = true;
 
@@ -880,6 +880,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     GetCardProperties() {
         if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
             this.FillDataFromCardList(null);
+            this.LoadData();
             this.EntityPM.VendorPartnerTypeId = null;
         }
         else {
@@ -934,6 +935,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
             if(this.IsFullAccounting)
                 this.GetConnectedGLAccount();
+            else {
+                this.FilterInvoiceByAPPayment=false;
+                this.LoadData();
+            }
 
         }
     }
@@ -956,15 +961,19 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.EntityPM.ExcludeFromDeductionReport = gla.ExcludeFromDeductionReport;
                     this.EntityPM.VendorGLAccountId = gla.Id;
                     if (!gla.IsMultiCurrency) {
-                        if(gla.ReconcileMethodCode!='0')
+                      
                         this.FilterInvoiceByAPPayment=true;
                         this.PaymentCurrencyId = gla.CurrencyId;
                         this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
                     }
+                    else   if(gla.ReconcileMethodCode!='0') this.FilterInvoiceByAPPayment=true;
+                    else this.FilterInvoiceByAPPayment=false;
+                    this.LoadData();
                 }
             });
         }else{
             this.FilterInvoiceByAPPayment=true;
+            this.LoadData();
             this.vendorGLAccount = null;
             this.deductionFileNumber = null;
             this.EntityPM.ExcludeFromDeductionReport = false;
