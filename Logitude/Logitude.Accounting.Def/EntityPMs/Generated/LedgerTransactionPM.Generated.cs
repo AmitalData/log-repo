@@ -1676,6 +1676,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string taxReportId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TaxReportId  
+	   {
+	    
+	     get
+		{
+		   return taxReportId;
+		 }
+		 set
+		 {
+		   if(taxReportId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportId",OldValue=taxReportId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   taxReportId=value;
+		   }
+			
+		 }
+	   }
+	  private string taxReportNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TaxReportNumber  
+	   {
+	    
+	     get
+		{
+		   return taxReportNumber;
+		 }
+		 set
+		 {
+		   if(taxReportNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportNumber",OldValue=taxReportNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   taxReportNumber=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

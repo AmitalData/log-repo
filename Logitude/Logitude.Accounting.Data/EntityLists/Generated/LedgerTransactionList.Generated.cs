@@ -160,6 +160,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string UpdatedByUserName  { get; set; }
        [DataMember]
        public string InternalNote  { get; set; }
+       [DataMember]
+       public string TaxReportId  { get; set; }
+       [DataMember]
+       public string TaxReportNumber  { get; set; }
    }
 
 }

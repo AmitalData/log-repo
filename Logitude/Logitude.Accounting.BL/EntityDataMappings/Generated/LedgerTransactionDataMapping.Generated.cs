@@ -133,7 +133,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AccountLocalName, 
 	         UpdateDateTime, 
 	         UpdatedByUserName, 
-	         InternalNote,
+	         InternalNote, 
+	         TaxReportId, 
+	         TaxReportNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
