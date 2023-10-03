@@ -625,7 +625,17 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         }
     }
 
-
+    private PopAllLineWhenCurrencyIdNull() {
+        if (this.IsMultiWithReconcileMethodCodeEqualOne && this.CurrencyId == null) {
+            this.SelectedLines.Clear();
+            this.CalculateTotals();
+            this._isAllSelected = false;
+            if (this.isFullAccounting) {
+                this.NumberOfFilteredlines = this.DataSource.rowCount;
+                this.NumberOfselectedlines = this.SelectedLines.Length;
+            }
+        }
+    }
 
     public currencyId: string;
     get CurrencyId() { return this.currencyId; }
@@ -645,6 +655,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
             } else {
                 this.currencyFilter = null
+                if (this.IsMultiWithReconcileMethodCodeEqualOne) {
+                    this.PopAllLineWhenCurrencyIdNull();
+                    this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
+                    GLAccountSecurityLevelService.IsCheckBoxEnabledParameter = false;
+                    GLAccountSecurityLevelService.IsCheckBoxEnabled.emit({});
+                    this.IsCheckBoxEnabled = false;
+                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Reconciliation.O.WarningMultiRecoOne"));
+                }
             }
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         }
@@ -845,7 +863,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         if (this.ValidationErrorsList.length == 0) {
 
             //Adjust
-            debugger;
             if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
                 //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
                 //this.AdjustButton();
@@ -1076,7 +1093,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     onRowSelected($event) {
-        if ($event) {
+        if ($event && GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter && GLAccountSecurityLevelService.IsCheckBoxEnabledParameter) {
             const row = $event.rowData;
             const rowId = row.Id;
             const RowIndex = $event.rowIndex;

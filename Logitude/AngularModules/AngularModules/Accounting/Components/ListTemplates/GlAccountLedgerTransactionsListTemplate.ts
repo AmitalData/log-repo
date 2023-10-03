@@ -50,7 +50,6 @@ export class GlAccountLedgerTransactionsListTemplate {
     IsMultiWithReconcileMethodCodeEqualOne: boolean = false;
     constructor(private CD: ChangeDetectorRef,) {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
-        this.IsCheckBoxEnabled = true;
         this.Listen();
         if (ObjectsLocator.GlobalSetting)
             this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
@@ -85,13 +84,13 @@ export class GlAccountLedgerTransactionsListTemplate {
         //#region Set Icons
 
         this.IconCode = AccountingEntityHelper.getEntityIcon(this.rowData.SourceTypeCode);
-        if(GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter&& !GLAccountSecurityLevelService.IsCheckBoxEnabledParameter){
-            this.IsCheckBoxEnabled=false;
+        if (GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter && !GLAccountSecurityLevelService.IsCheckBoxEnabledParameter) {
+            this.IsCheckBoxEnabled = false;
         }
         //#endregion
 
         var isDestroyed: boolean = this.CD["destroyed"];
-        if (!isDestroyed) {
+        if (!isDestroyed) { 
             this.CD.detectChanges();
         }
     }
@@ -186,12 +185,13 @@ export class GlAccountLedgerTransactionsListTemplate {
         //console.log("clicked: ", checked);
         //this.rowData['IsChecked'] = checked;
 
-
-        ReconcileEventManager.CheckBoxChecked.emit({
-            line: this.rowData,
-            isChecked: checked,
-            RowIndex: this.AdditionalData.rowIndex
-        });
+        if (this.IsCheckBoxEnabled) {
+            ReconcileEventManager.CheckBoxChecked.emit({
+                line: this.rowData,
+                isChecked: checked,
+                RowIndex: this.AdditionalData.rowIndex
+            });
+        }
         //ReconcileEventManager.RowUnselected.subscribe(($event) => {
         //    this.rowData = ro
         //});
@@ -287,7 +287,7 @@ export class GlAccountLedgerTransactionsListTemplate {
         return this.ChequeStatusColor;
     }
 
-    isCheckBoxEnabled: boolean;
+    isCheckBoxEnabled: boolean = true;
     get IsCheckBoxEnabled() { return this.isCheckBoxEnabled; }
     set IsCheckBoxEnabled(value: boolean) {
         if (this.isCheckBoxEnabled != value) {
