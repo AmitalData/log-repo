@@ -232,8 +232,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     ?? null;
             bool isNewInvoice = false;
             string invalidValuesRemarks = null;
-
-            if (mySupplierInvoice == null)
+             if (mySupplierInvoice == null)
             {
                 isNewInvoice = true;
                 mySupplierInvoice = new SupplierInvoicePM()
@@ -284,6 +283,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 mySupplierInvoice.BuyerAddress = shiptoAddress;
 
             }
+
+            if (dic.TryGetValue("country_of_origin", out string originCountry))
+            {
+                CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(tenant);
+                CustomsCountryPM customsCountry = customsCountryQueryService.GetSingle(originCountry, false, true);
+                if (customsCountry == null)
+                    invalidValuesRemarks += $" FieldJson: country_of_origin, FieldName: originCountry, InvalidValueReceived: {originCountry};";
+              
+            }
+
             if (dic.TryGetValue("buyer_country", out string buyerCountry))
             {
                 CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(tenant);
@@ -320,7 +329,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 mySupplierInvoice.IssueDate = date;
             }
-            if (dic.TryGetValue("incoterrns", out string incoterrns))
+            if (dic.TryGetValue("incoterms", out string incoterrns))
             {
                 TermsOfSaleTypeQueryService termsOfSaleTypeQueryService = new TermsOfSaleTypeQueryService(tenant);
                 TermsOfSaleTypePM termsOfSaleType = termsOfSaleTypeQueryService.GetSingle(incoterrns, false, true);
@@ -370,7 +379,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (supplierInvoiceItem.TryGetValue("Product_Code", out string productCode))
                     {
-                        supplierInvoiceItemPM.ItemCode = productCode;
+                        if(productCode.Length>30)
+                        supplierInvoiceItemPM.ItemCode = productCode.Substring(0,30);
                     }
                     if (supplierInvoiceItem.TryGetValue("Quantity", out string quantity) && decimal.TryParse(quantity, out decimal invoiceQuantity))
                     {
@@ -395,7 +405,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (CustomsCountry == null)
                             invalidValuesRemarks += $" FieldJson: Item_country_of_origin, FieldName: OriginCountryCode, InvalidValueReceived: {itemCountryOfOrigin};";
                         else
-                            supplierInvoiceItemPM.OriginCountryCode = CustomsCountry.Code;
+
+                            supplierInvoiceItemPM.OriginCountryCode = itemCountryOfOrigin;
+                        if (string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode))
+                        {
+                            supplierInvoiceItemPM.OriginCountryCode = originCountry;
+                        }
                     }
                     if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
                     {

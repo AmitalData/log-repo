@@ -228,8 +228,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             bool isValid = true;
             bool hasRequest = false;
-            DeclarationPM declarationPM = null;
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
+             if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
             {
                 ICustomContext context = this.MainContext as CustomContext;
                 CustomsDocumentsTicketQueryService ticketsQueryService = new CustomsDocumentsTicketQueryService(context);
@@ -278,45 +277,41 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     DeclarationReferantDataUpdate(entityPM);
                 }
 
-                DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                 declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
-
+               
                 if (entityPM.IsItemChanged && !string.IsNullOrWhiteSpace(entityPM.ItemCode))
                 {
-                    //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-                    //if (setting != null)
-                    //{
-                    //if (!setting.IsConnectedToUniFreight)
-                    if (declarationPM == null || (declarationPM != null && !declarationPM.IsConnectedToUnifreight))
+                    var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
+                    if (setting != null && setting.IsConnectedToUniFreight)
                     {
-                        return;
-                    }
-                    //}
 
-                    TransactionScope scope = null;
-                    if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
-                    {
-                        scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
-                    }
-                    try
-                    {
-                        using (var myAmitalContext = AmitalContext.GetContext(entityPM.Tenant))
+
+                        TransactionScope scope = null;
+                        if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
                         {
-                            UpsertCustomsPartnersItems(myAmitalContext, entityPM);
-                            myAmitalContext.SaveChanges();
+                            scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
                         }
-                        if (scope != null)
+                        try
                         {
-                            scope.Complete();
+                            using (var myAmitalContext = AmitalContext.GetContext(entityPM.Tenant))
+                            {
+                                UpsertCustomsPartnersItems(myAmitalContext, entityPM);
+                                myAmitalContext.SaveChanges();
+                            }
+                            if (scope != null)
+                            {
+                                scope.Complete();
+                            }
+                        }
+                        finally
+                        {
+                            if (scope != null)
+                            {
+                                scope.Dispose();
+                            }
                         }
                     }
-                    finally
-                    {
-                        if (scope != null)
-                        {
-                            scope.Dispose();
-                        }
-                    }
+
+                  
                 }
             }
             bool notdeleted = entityPM.SupplierInvioceItemCertificats.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Any();
@@ -343,7 +338,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         if (item.AttachmentTypeCode == "1" || item.AttachmentTypeCode == "2")
                         {
-                            if (declarationPM?.Direction == "E")
+                            if (entityPM.Direction == "E")
                             {
                                 if (string.IsNullOrEmpty(item.CertificateNumber) || string.IsNullOrEmpty(item.ReqConfirmationTypeCode) || string.IsNullOrEmpty(item.ResConfirmationTypeCode) || !string.IsNullOrEmpty(item.CertificateExemptionTypeCode)  )
                                 {
@@ -463,8 +458,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //this.GetAncestor(out entityPOCO, out entityPM, out entityParentPM);
             //myDeclarationPM = (entityPM as DeclarationPM);
             var myQueryService = new DeclarationQueryService(context);
-            myDeclarationPM = myQueryService.GetSingle(supplierInvoiceItem.DeclarationId, true, false);
-
+            myDeclarationPM = myQueryService.GetSingle(supplierInvoiceItem.DeclarationId, false, true);
+            if (!myDeclarationPM.IsConnectedToUnifreight) return;
             if (myDeclarationPM != null)
             {
                 partnerId = myDeclarationPM.CustomerCode;

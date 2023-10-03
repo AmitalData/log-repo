@@ -159,7 +159,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ClassificationCodeSource, 
 	         DocumentFilingId, 
 	         DutyRegimeProtocolCode, 
-	         DutyRegimeProtocolLocalName,
+	         DutyRegimeProtocolLocalName, 
+	         Direction,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
