@@ -5,7 +5,6 @@
     
     update [TenantManagements]
     set HeaderColor = '#FFA500'
-    where ChangeHeaderColor = 1
 
     ]]>
   </Sql>

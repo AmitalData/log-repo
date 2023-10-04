@@ -936,11 +936,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
             if(this.IsFullAccounting)
                 this.GetConnectedGLAccount();
-            else {
+        else {
                 this.GetConnectedBillTo();
                 this.FilterInvoiceByAPPayment=false;
                 this.LoadData();
             }
+            
             
 
         }
@@ -964,10 +965,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
                 }
             });
-
-
-
-        }
+      
+  }
     }
 
     vendorGLAccount: GLAccountList;
