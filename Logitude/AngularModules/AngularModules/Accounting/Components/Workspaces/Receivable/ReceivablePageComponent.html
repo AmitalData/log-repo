@@ -190,7 +190,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="QueriesSection" style="color: #58B8FF;">
+                                            <div class="QueriesSection" style="color: #58B8FF;" *ngIf="IsUnRedeemedChequesVisibile || IsAllChequesVisibile || IsPostponedChequesVisibile">
                                                 <div>{{'Accounting.General.O.ARPaymentCheques' | TextCodeTranslationPipe}}</div>
                                                 <!-- <button id="{{'NewARPayment' | IdGeneratorAsyncPipe | async}}" [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'"  class="Button" style="width:45px;" (click)="NewARPaymentMethod()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button> -->
                                               
@@ -200,17 +200,17 @@
                                                             <td>
                                                                 <table>
                                                                   
-                                                                    <tr>
+                                                                    <tr *ngIf="IsUnRedeemedChequesVisibile">
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" (click)="ViewPaymentChequesQuery('ARPaymentCheque:UnRedeemed Cheques')"> {{'Accounting.General.O.UnRedeemedCheques' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr *ngIf="IsAllChequesVisibile">
                                                                         <td style="width:190px;">
                                                                           <p class="QueryLink" (click)="ViewPaymentChequesQuery('ARPaymentCheque:All Cheques')"> {{'Accounting.General.O.AllCheques' | TextCodeTranslationPipe}}</p>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr *ngIf="IsPostponedChequesVisibile">
                                                                         <td style="width:190px;">
                                                                           <p class="QueryLink" (click)="ViewPaymentChequesQuery('ARPaymentCheque:Postponed Cheques')"> {{'Accounting.General.O.PostponedCheques' | TextCodeTranslationPipe}}</p>
                                                                         </td>

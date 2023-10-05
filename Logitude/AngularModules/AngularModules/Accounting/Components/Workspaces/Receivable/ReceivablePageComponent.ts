@@ -69,6 +69,11 @@ export class ReceivablePageComponent {
     IsNewCreditNoteVisibile: boolean = false;
     RecentGLAccountsCount: number = 0;
 
+    IsUnRedeemedChequesVisibile: boolean = false;
+    IsAllChequesVisibile: boolean = false;
+    IsPostponedChequesVisibile: boolean = false;
+
+
     public isRTL: boolean = false;
     isReady: boolean = false;
     IsNewARInvoiceEnabled: boolean = false;
@@ -500,6 +505,9 @@ export class ReceivablePageComponent {
         this.inactiveCustomersGlaVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "inactiveCustomersGla") ? true : false;
         this.CLIENTGLACCOUNTSGlaVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "CLIENTGLACCOUNTS") ? true : false;
         this.IsNewCreditNoteVisibile = FeatureLocator.HasFeaturePermession("ARInvoice", "NEWCREDITNOTE") ? true : false;
+        this.IsUnRedeemedChequesVisibile = FeatureLocator.HasFeaturePermession("ARPaymentCheque", "ARPaymentCheque.Q.UnRedeemedCheques") ? true : false;
+        this.IsAllChequesVisibile = FeatureLocator.HasFeaturePermession("ARPaymentCheque", "ARPaymentCheque.Q.AllCheques") ? true : false;
+        this.IsPostponedChequesVisibile = FeatureLocator.HasFeaturePermession("ARPaymentCheque", "ARPaymentCheque.Q.PostponedCheques") ? true : false;
     }
 
     public RecentGLAccountsList: GLAccountList[];
