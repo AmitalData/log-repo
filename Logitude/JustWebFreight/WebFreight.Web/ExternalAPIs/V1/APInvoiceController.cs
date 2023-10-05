@@ -6,6 +6,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -166,7 +167,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
                             apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
-                            apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
+                            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
+                            GLAccountPM glaccountPM = gLAccountQuery.GetSinglePMByInternalNumber(apinvoicePM.VendorGLAccountId, tenant);
+
+                            apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant, glaccountPM?.PaymentTermId);
                             CalculateTotalsIfEmpty(apinvoicePM);
                             // SET approved
                             apinvoicePM.SetVoided = false;
