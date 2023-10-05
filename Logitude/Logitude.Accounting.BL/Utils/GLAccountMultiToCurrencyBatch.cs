@@ -412,7 +412,9 @@ namespace Logitude.Accounting.BL.Utils
     {
         public int Tenant { get; set; }
         public string AccountId { get; set; }
+        //public string AccountDisplayNumber { get; set; }
         public string ToCurrencyId { get; set; }
+        //public string ToCurrencyCode { get; set; }
         public bool Batch { get; set; }
         public BatchTaskExecutionPM BatchTask { get; set; }
     }

@@ -14,6 +14,10 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.Security;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Globalization;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -26,7 +30,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
         }
 
 
-        public HttpResponseMessage GetGLAccountMultiToCurrency(int tenant, string accountId, string toAccountingDate, string batch)
+        public HttpResponseMessage GetGLAccountMultiToCurrency(int tenant, string accountId, string accountDisplayNumber, string toCurrencyId, string toCurrencyCode, string batch)
         {
             try
             {
@@ -36,7 +40,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 GLAccountMultiToCurrencyArg args = null;
                 string message = "";
-                bool isSuccess = CreateArgs(tenant, accountId, toAccountingDate, batch, ref args, message);
+                bool isSuccess = CreateArgs(tenant, accountId, accountDisplayNumber, toCurrencyId, toCurrencyCode, batch, ref args, message);
                 if (!isSuccess)
                 {
                     throw new Exception(message);
@@ -87,24 +91,58 @@ namespace WebFreight.Web.Controllers.AccountingModel
         }
 
 
-        private bool CreateArgs(int tenant, string accountId, string toCurrencyId, string batch, ref GLAccountMultiToCurrencyArg args, string message)
+        private bool CreateArgs(int tenant, string accountId, string accountDisplayNumber, string toCurrencyId, string toCurrencyCode, string batch, ref GLAccountMultiToCurrencyArg args, string message)
         {
             bool isSuccess = false;
             bool v_batch = false;
-            if (String.IsNullOrWhiteSpace(accountId))
+            if (String.IsNullOrWhiteSpace(accountId) && String.IsNullOrWhiteSpace(accountDisplayNumber))
             {
-                message = "AccountId is a must";
+                message = "AccountId or DisplayNumber is a must";
                 return isSuccess;
             }
 
+
+            if (String.IsNullOrWhiteSpace(toCurrencyId) && String.IsNullOrWhiteSpace(toCurrencyCode))
+            {
+                message = "CurrencyId or Code is a must";
+                return isSuccess;
+            }
+
+
+
+
+
+            IAccountingContext accContext = AccountingContext.GetContext(tenant);
+            if (String.IsNullOrWhiteSpace(accountId))
+            {
+
+                GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(accContext);
+                List<GLAccountPM> gLAccountPMList = gLAccountQueryService.GetByDisplayNumber(accountDisplayNumber, tenant);
+                if (gLAccountPMList == null || gLAccountPMList.Count == 0)
+                {
+                    message = "Account not found";
+                    return isSuccess;
+                }
+                if (gLAccountPMList.Count > 1)
+                {
+                    message = "More than one account is found";
+                    return isSuccess;
+                }
+                accountId = gLAccountPMList.FirstOrDefault().Id;
+
+            }
 
             if (String.IsNullOrWhiteSpace(toCurrencyId))
             {
-                message = "CurrencyId is a must";
-                return isSuccess;
+                CurrencyQueryService currencyQueryService = new CurrencyQueryService(tenant);
+                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Currency accCurrency = currencyQueryService.GetCurrencyByCode(toCurrencyCode, tenant);
+                if (accCurrency == null)
+                {
+                    message = "Currency not found";
+                    return isSuccess;
+                }
+                toCurrencyId = accCurrency.Id;
             }
-
-
 
             if (!String.IsNullOrEmpty(batch) && (batch == "1" || batch.ToUpperInvariant() == "TRUE"))
             {

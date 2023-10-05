@@ -1065,8 +1065,10 @@ Line3
     ButtonGLAccountMultiToCurrency_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
-        defaultParam.AccountId = "1-1234"
+        defaultParam.AccountId = "";
+        defaultParam.AccountDisplayNumber = "12345678";
         defaultParam.ToCurrencyId = "1-1161";
+        defaultParam.ToCurrencyCode = "USD";
         defaultParam.Batch = 0;
         if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
             this._TextBoxParam = JSON.stringify(defaultParam);
@@ -1076,7 +1078,9 @@ Line3
         let _GLAccountMultiToCurrencyUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountMultiToCurrency';
         let myUrl = _GLAccountMultiToCurrencyUrl + "?tenant=" + objToCheck1.Tenant;
         myUrl = myUrl + "&accountId=" + objToCheck1.AccountId;
+        myUrl = myUrl + "&accountDisplayNumber=" + objToCheck1.AccountDisplayNumber;
         myUrl = myUrl + "&toCurrencyId=" + objToCheck1.ToCurrencyId;
+        myUrl = myUrl + "&toCurrencyCode=" + objToCheck1.ToCurrencyCode;
         myUrl = myUrl + "&batch=" + objToCheck1.Batch;
 
         this.CurrentSession.StartBusyIndicatorCreating();
