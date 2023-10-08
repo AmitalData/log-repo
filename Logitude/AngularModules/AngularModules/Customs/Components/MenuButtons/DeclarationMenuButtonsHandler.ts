@@ -207,6 +207,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     ApplyCheckMenuButtonsState(menuButtons: MenuButtonPM[]) {
         let parentButton: MenuButtonPM;
+        debugger
         if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
 
@@ -434,6 +435,16 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         else {
                             button.IsDisabled = false;
                             button.IsHidden = false;
+                        }
+                    }
+                    if (button.EventCode == "CancelPayment") {
+                        // if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "CancelPaymentFeature") && (this.EntityPM.Direction != "E")) {
+                        debugger
+                        if ((this.EntityPM.Direction != "E")) {
+                            button.IsHidden = false;
+                        }
+                        else {
+                            button.IsHidden = true;
                         }
                     }
                     if (button.EventCode == "CourierPendingReason") {
