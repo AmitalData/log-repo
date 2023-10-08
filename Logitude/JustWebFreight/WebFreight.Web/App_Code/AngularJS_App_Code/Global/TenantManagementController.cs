@@ -50,5 +50,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetShipmentBuildMonth()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                int backMonths = new TenantManagementQuery(authToken.Tenant).GetShipmentBuildMonth(authToken.Tenant);                
+
+                return Request.CreateResponse(HttpStatusCode.OK, backMonths);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

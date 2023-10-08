@@ -45,7 +45,7 @@ ItemClicked(item:CargoTrackingMenuItem){
 
   switch(item.Code){
     case "CargoShipment":{
-      var windowTitle = "Build Cargo Tracking Shipments";
+      var windowTitle = "Build Cargo Tracking Shipments - from branding settings";
       var logWindow = new LogitudeWindow();
       logWindow.Width = 515;
       logWindow.Height = 200;
