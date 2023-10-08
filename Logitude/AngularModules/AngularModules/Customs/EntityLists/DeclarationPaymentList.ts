@@ -17,7 +17,6 @@ export class DeclarationPaymentList {
 	Tenant: number;
 	FuturePaymentDateTime: Date;
 	AutomaticPayment: number;
-	IsRepeatPayment: boolean;
 	
 }
  
