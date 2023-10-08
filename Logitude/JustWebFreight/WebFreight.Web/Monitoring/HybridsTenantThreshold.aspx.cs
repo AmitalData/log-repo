@@ -49,13 +49,13 @@ namespace WebFreight.Web.Monitoring
         private bool AnyFailedStatus(int? tenant, out string message)
         {
             message = string.Empty;
-            bool IsFailed = false;
+            bool IsFailed = true;
 
-            int? WaitingThresold = null;
-            int? FailedThresold = null;
-            int? WaitingQueue = null;
-            int? FailedQueue = null;
-            DateTime? LastUpdate = null;
+            //int? WaitingThresold = null;
+            //int? FailedThresold = null;
+            //int? WaitingQueue = null;
+            //int? FailedQueue = null;
+            //DateTime? LastUpdate = null;
             List<GlobalDB> GlobalDatabases = new List<GlobalDB>();
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
@@ -95,20 +95,22 @@ namespace WebFreight.Web.Monitoring
                                                      b.WaitingQueue,
                                                      b.FailedQueue,
                                                      b.LastUpdateDateTime,
-                                                     IsFailed = ((WaitingQueue > WaitingThresold || FailedQueue > FailedThresold) && ((DateTime.UtcNow - LastUpdate).Value.Hours < 1))
+                                                     oIsFailed = ((b.WaitingQueue >a. WaitingThresold || b.FailedQueue > a.FailedThresold) )
+                                                     
                                                  }).ToList();
                     if (hybridTenantThreshold != null)
                     {
                         //WaitingThresold = hybridTenantThreshold.WaitingThresold;
                         //FailedThresold = hybridTenantThreshold.FailedThresold;
-                        IsFailed = (hybridTenantThreshold.Any(x => x.IsFailed));
+                        IsFailed = (hybridTenantThreshold.Any(x => x.oIsFailed && (DateTime.UtcNow - x.LastUpdateDateTime).TotalHours > 1));
                         if (IsFailed)
                         {
-                            message = string.Join(",", hybridTenantThreshold.Where(x => x.IsFailed).Select(t => t.Tenant.ToString()).ToArray());
+                            message = string.Join(",", hybridTenantThreshold.Where(x => x.oIsFailed && ((DateTime.UtcNow - x.LastUpdateDateTime).TotalHours < 1)).Select(t => t.Tenant.ToString()).ToArray());
                         }
                     }
                 }
 
+                
                 catch (Exception errorInfo)
                 {
                     ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "HybridTenantThreshold", "Bug in AnyWaitingStatus Method : IsFaild = (from a in Context.HybridTenantThresholds ...", null);
