@@ -48,20 +48,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ARExternalId"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="APExternalId"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="Inactive"
     Type="bit">
     <Constraints
@@ -78,6 +64,20 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="APExternalId"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ARExternalId"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="LocalName"
