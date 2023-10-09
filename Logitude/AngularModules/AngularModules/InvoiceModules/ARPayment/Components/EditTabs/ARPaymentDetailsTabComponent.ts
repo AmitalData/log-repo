@@ -32,6 +32,8 @@ import {AccountingPaymentMethodListService} from '../../../../Invoice/Services/S
 import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { FullAccountingSettingPM } from 'Accounting/EntityPMs/FullAccountingSettingPM';
+import { EntityListService } from 'Infrastructure/Services/EntityListService';
 
 @Component({
     
@@ -56,7 +58,8 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private CurrentSession = SessionLocator.SelectedSession;
     public EntityWarningsList: string[] = [];
     public IsUsingVirtuallization: boolean = false;
-    constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
+    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
+    constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService,public entityListService: EntityListService) {
         super();
         this.SetIsUsingVirtuallization();
         if (ObjectsLocator.GlobalSetting) {
@@ -87,6 +90,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
+        this.GetFullAccountingSettings();
         
         this.SetUIProperties();
         this.ComputeRelativeRateDate();
@@ -182,6 +186,24 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         return result;
     }
+    GetFullAccountingSettings() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.entityListService.getSingle(SessionLocator.TenantPM.Id.toString(), "FullAccountingSetting").then((res: any) => {
+        this.CurrentSession.StopBusyIndicator();
+            res.subscribe(myResponse => {
+                if (myResponse != null) {
+
+                
+                    this.FullAccountingSetting =  myResponse.Result;
+                    this.GetRateIsEnabled();
+                }
+            })
+        });
+
+    }
+    get IsRateDisabled (){
+        return (this.FullAccounting && !this.FullAccountingSetting.AllowEditingExchangeRate);
+    }
     SetUIProperties() {
         this.SetUIProperties_Cheque();
         this.SetUIProperties_Invoices();
@@ -274,9 +296,9 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
 
-        this.RateIsEnabled = isEnabled;
-        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled);
-        this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled);        
+        this.RateIsEnabled = isEnabled && !this.IsRateDisabled;
+        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled && !this.IsRateDisabled);
+        this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled );        
     }
     SetUIProperties_Cheque() {
         if (this.FullAccounting && this.AccountingPaymentMethodCode == "CH") {
