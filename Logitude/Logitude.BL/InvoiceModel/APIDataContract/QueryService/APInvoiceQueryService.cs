@@ -1107,9 +1107,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     int daysDifference = apinvoice.PaymentTerm.Days;
                     DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    DateTime dueDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day + daysDifference, 0, 0, 0);
 
-                    apinvoicePM.DueDate = dueDate;
+                    var dueDate = todayDate.AddDays(daysDifference);
+                    DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day, 0, 0, 0);
+
+                    apinvoicePM.DueDate = dueDateFormated;
                 }
             }          
             else
