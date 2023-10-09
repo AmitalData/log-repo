@@ -79,6 +79,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     private declarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     private notificationPMService: NotificationPMService = new NotificationPMService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
+
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -207,7 +209,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     ApplyCheckMenuButtonsState(menuButtons: MenuButtonPM[]) {
         let parentButton: MenuButtonPM;
-        debugger
+        
         if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
 
@@ -440,12 +442,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
                     if (button.EventCode == "CancelPayment") {
                         // if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "CancelPaymentFeature") && (this.EntityPM.Direction != "E")) {
-                        debugger
                         if ((this.EntityPM.Direction != "E")) {
                             button.IsHidden = false;
                         }
                         else {
                             button.IsHidden = true;
+                            if(!this.EntityPM.IsSubmitDeclaration){
+                                button.IsDisabled = true;
+                            }
                         }
                     }
                     if (button.EventCode == "CourierPendingReason") {
@@ -701,6 +705,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                         break;
                     }
+                case "CancelPayment":
+                    {
+                        this.CancelPaymentMethod();
+                        break;
+                    }
 
                 case "Copy":
                     {
@@ -851,7 +860,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                 .subscribe((myResponse: ServiceResponse) => {
                                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                     this.CurrentSession.StopBusyIndicator();
-                                    debugger;
                                 });
                         }
                     });
@@ -1033,7 +1041,43 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         }
     }
 
+    
+    CancelPaymentMethod() {
+       
 
+        const confirm = new ConfirmWindow();
+        confirm.WindowClosed.subscribe((event) => {
+            if (confirm.Yes) {
+                // send massage 2755 like logic on DeclarationPaymentComponent component
+                var params = new CustomFileCreditRequestParams();
+                var ObjectTable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
+
+                debugger
+                params.Tenant = SessionLocator.Tenant;
+                params.AppicationId =  this.EntityPM.Id;
+                params.LoggingEnabled = true;
+                params.LoggingEntityId = this.EntityPM.Id;
+                params.LoggingObjectTableId = ObjectTable.Id;
+                params.LoggingUserId = SessionLocator.LoggedUserId;
+                params.RequestName = "send cancel payment request";
+                params.ResponseName = "send cancel payment response";
+                params.Mode = "Check";
+
+
+                var messageWindow = new MessageWindow();
+                messageWindow.Width = 400;
+                messageWindow.Height = 150;
+                messageWindow.Title = "ביטול הגשה";
+                
+                this.declarationMessagesService.PostSendPaymentOnly(params)
+                .subscribe(res1 => {
+                        // messageWindow.Show(res1.Result);
+                    }
+                );
+            }
+        });
+        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CancelPayment")); 
+    }
 
     ResetDeclarationNumberMethod() {
         this._DeclarationNumberandVersionId = null;//itzik:clear onstart on the house !!!

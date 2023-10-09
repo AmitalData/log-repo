@@ -2004,6 +2004,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 submitRequestParams.TestCase = requestParamsCredit.TestCase;
 
+                submitRequestParams.RequestName = requestParamsCredit.RequestName;
+
                 var messagingService = new
                     DF_NG_2755_MSG12001_SubmitDeclarationMessagingService();
                 INF_MSG_GenericResponseData submitResponseData = messagingService.Send(submitRequestParams);
