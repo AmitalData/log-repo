@@ -189,6 +189,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
                 
                     this.FullAccountingSetting =  myResponse.Result;
+                    this.GetRateIsEnabled();
                 }
             })
         });
@@ -863,8 +864,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
 
 
-        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled);
-        this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled && !this.IsRateDisabled);
+        this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled );
     }
     SetUIProperties_Cheque()
     {
@@ -964,7 +965,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     {
         var result = true;
         if (this.EntityPM != null) {
-            if (this.EntityPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.PaymentCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {
+            if (this.EntityPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.PaymentCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null
+                || this.IsRateDisabled) {
                 result = false;
             }
         }
