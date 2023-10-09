@@ -325,6 +325,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Reconciliation.O.WarningMultiRecoOne"));
                 this.IsCheckBoxEnabled = false;
                 this.GetTransactionsCurrencies();
+                GLAccountSecurityLevelService.IsCheckBoxEnabledParameter=false;
             }
             if (!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId)) {
                 this.CurrencyId = this.GLAccountPM.CurrencyId;
@@ -1093,7 +1094,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     }
 
-    onRowSelected($event) {
+    onRowSelected($event) { 
         if ($event && GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter && GLAccountSecurityLevelService.IsCheckBoxEnabledParameter) {
             const row = $event.rowData;
             const rowId = row.Id;
