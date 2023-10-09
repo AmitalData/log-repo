@@ -174,4 +174,6 @@
     ReferencedTableSchema="Customs" />
   <Index
     Columns="Tenant,RequestStatusCode,RequestCreateDate" />
+	<Index
+   Columns="Tenant,CustomFileNo" />
 </Table>
