@@ -27632,6 +27632,12 @@
       LocalDefaultText="&quot;נא אשר שליחה של מסר ביטול הגשה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Asmbli&quot;"
+      DefaultText="&quot;Asmbli&quot;"
+      LocalDefaultText="&quot;אסמבלי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
