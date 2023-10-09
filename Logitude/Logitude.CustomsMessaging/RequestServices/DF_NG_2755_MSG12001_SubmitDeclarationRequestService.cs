@@ -332,7 +332,7 @@ namespace Logitude.CustomsMessaging.RequestServices
            var DeclarationPaymentQueryService = new DeclarationPaymentQueryService(this.dbContext);
             var declarationPaymentsPM = DeclarationPaymentQueryService.GetSingle(requestParams.AppicationId, true, false);
 
-            myDF_NG_2755_MSG12001_SubmitDeclaration.GeneralData = GetSubmitDeclarationGeneralData(declarationPaymentsPM);
+            myDF_NG_2755_MSG12001_SubmitDeclaration.GeneralData = GetSubmitDeclarationGeneralData(declarationPaymentsPM, requestParams);
             myDF_NG_2755_MSG12001_SubmitDeclaration.AnswerForCollateralRequest = GetSubmitDeclarationCollateralAnswer(declarationPaymentsPM);
 
             //Raise event PHF- Declaration Payment Sent
@@ -341,7 +341,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             return myDF_NG_2755_MSG12001_SubmitDeclaration;
         }
 
-        private DF_NG_2755_MSG12001_SubmitDeclarationGeneralData GetSubmitDeclarationGeneralData(Customs.Def.EntityPMs.DeclarationPaymentPM myDeclarationPaymentsPM)
+        private DF_NG_2755_MSG12001_SubmitDeclarationGeneralData GetSubmitDeclarationGeneralData(Customs.Def.EntityPMs.DeclarationPaymentPM myDeclarationPaymentsPM, GenericRequestParams requestParams)
         {
             var myGeneralData = new DF_NG_2755_MSG12001_SubmitDeclarationGeneralData();
             int signatoryIdentification = 0;
@@ -356,14 +356,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.RequestDescription = "הגשת תשלום " + declarationPM.DeclarationNumber + " " + declarationPM.VersionId;
 
             myGeneralData.declarationID = declarationPM.DeclarationNumber;
-            //if(myDeclarationPaymentsPM.IsRepeatPayment)
-            //{
-            //    myGeneralData.declarationVersion = "99999";
-            //}
-            //else
-            //{
-            //}
-            myGeneralData.declarationVersion = declarationPM.VersionId;
+            if (requestParams.RequestName == "send cancel payment request")
+            {
+                myGeneralData.declarationVersion = "99999";
+            }
+            else
+            {
+                myGeneralData.declarationVersion = declarationPM.VersionId;
+            }
 
             //myGeneralData.AgentFileReferenceID = declarationPM.ExternalDeclarationNumber;
             myGeneralData.AgentFileReferenceID = declarationPM.CustomFileNo;
