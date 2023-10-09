@@ -1082,8 +1082,20 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day , 0, 0, 0);
 
                 apinvoicePM.DueDate = dueDateFormated;
+                if (apinvoice.PaymentTerm == null) {
+                    PaymentTerm paymentTermAPI = null;
+                        paymentTermAPI = new PaymentTerm()
+                        {
+                            Days = myPaymentTerm.Days,
+                            EnglishName = myPaymentTerm.EnglishName,
+                            Id = myPaymentTerm.Id,
+                            LocalName = myPaymentTerm.LocalName,
+                            ExternalId = myPaymentTerm.ExternalId,
+                        };
+                    apinvoice.PaymentTerm = paymentTermAPI;
+                }
             }
-            else if (glAccountPaymentTermId == null && apinvoice.DueDate != null)
+            else if (glAccountPaymentTermId == null && apinvoice.PaymentTerm == null && apinvoice.DueDate != null)
             {
                 double daysDifference = GetDaysDiffernceForDate(apinvoice.DueDate, tenant);
                 var paymentTerm = GetPaymentTermByDaysDifference(tenant, daysDifference);
@@ -1092,7 +1104,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 else
                     apinvoice.PaymentTerm = paymentTerm;
             }
-             
+            else if (FullAccountingTenant && apinvoice.PaymentTerm != null)
+            {
+                int daysDifference = apinvoice.PaymentTerm.Days;
+                DateTime? InvoiceDate = apinvoice.InvoiceDate;
+                var dueDate = InvoiceDate.Value.AddDays(daysDifference);
+                DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day , 0, 0, 0);
+
+                apinvoicePM.DueDate = dueDateFormated;
+            }
             else if (!FullAccountingTenant)
             {
                  if (apinvoice.PaymentTerm != null && apinvoice.DueDate != null)
