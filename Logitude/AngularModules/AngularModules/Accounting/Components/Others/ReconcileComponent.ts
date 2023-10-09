@@ -626,7 +626,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     private PopAllLineWhenCurrencyIdNull() {
-        if (this.IsMultiWithReconcileMethodCodeEqualOne && this.CurrencyId == null) {
+        if (this.IsMultiWithReconcileMethodCodeEqualOne) {
             this.SelectedLines.Clear();
             this.CalculateTotals();
             this._isAllSelected = false;
@@ -646,6 +646,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             if (!AppTool.IsNullOrEmpty(value)) {
                 this.currencyFilter = new FilterItem("CurrencyId", value, null, null, "Equals", false, false, false, "string", false);
                 if (this.IsMultiWithReconcileMethodCodeEqualOne && this.CurrencyId != null) {
+                    this.PopAllLineWhenCurrencyIdNull();
                     this.ValidationErrorsList = [];
                     this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, false);
                     GLAccountSecurityLevelService.IsCheckBoxEnabledParameter = true;
