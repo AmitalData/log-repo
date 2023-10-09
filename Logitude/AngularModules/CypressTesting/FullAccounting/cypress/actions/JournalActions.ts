@@ -15,10 +15,34 @@ export function FillLineActionDetails(journalLineActionDetails: JournalLineActio
     cy.FillLogLov(JournalSelectors.ActionName, journalLineActionDetails.ActionName, true)
     //cy.get(JournalSelectors.ActionRefDate).type(journalLineActionDetails.DueDate)
     //cy.get(JournalSelectors.ActionDueDate).type(journalLineActionDetails.RefDate)
-    FillGLAccountDDL(JournalSelectors.ActionCreditAccount, journalLineActionDetails.CreditAccount)
-    FillGLAccountDDL(JournalSelectors.ActionDebitAccount, journalLineActionDetails.DebitAccount)
-    cy.get(JournalSelectors.ActionAmount).type(journalLineActionDetails.Amount)
+    // FillGLAccountDDL(JournalSelectors.ActionDebitAccount, journalLineActionDetails.DebitAccount)
+    FillDropdownInRowTable('C. Account', journalLineActionDetails.CreditAccount);
+    FillDropdownInRowTable('D. Account', journalLineActionDetails.DebitAccount);
+    //cy.get(JournalSelectors.ActionAmount).type(journalLineActionDetails.Amount)
+    FillInRowTable('Amount (NIS)', journalLineActionDetails.Amount)
+    cy.get(JournalSelectors.AccountingDate).focus();
 }
+
+
+function FillDropdownInRowTable(headerText: string, value: string) {
+    cy.get(`.ag-header-cell div:contains("${headerText}")`).invoke('attr', 'id').then(id => {
+        if (id?.indexOf('HeaderTemplateDiv') > -1) {
+            let i = id.replace('HeaderTemplateDiv', '');
+            FillGLAccountDDL('[index="' + i + '"]', value);
+        }
+    });
+}
+
+
+function FillInRowTable(headerText: string, value: string) {
+    cy.get(`.ag-header-cell div:contains("${headerText}")`).invoke('attr', 'id').then(id => {
+        if (id?.indexOf('HeaderTemplateDiv') > -1) {
+            let i = id.replace('HeaderTemplateDiv', '');
+            FillGLAccountDDL1('[index="' + i + '"]', value,);
+        }
+    });
+}
+
 
 export function FillGLAccountDDL(selector, value) {
     cy.get(selector).type(value)
@@ -26,6 +50,13 @@ export function FillGLAccountDDL(selector, value) {
         a[0].click();
     });
 }
+
+export function FillGLAccountDDL1(selector, value) {
+    cy.get(selector).type(value)
+    
+}
+
+
 
 export function SaveJournal() {
     cy.DefineRequestWait(RestAPI.POST, URLs.Journals, RequestAliases.PostJournal)

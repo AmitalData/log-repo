@@ -46,6 +46,8 @@ export function VoidAPPayment() {
     cy.Click(APPaymentSelectors.VoidButton, null)
     cy.FillLogTextBox(APPaymentSelectors.CancelationNotes, BaseSelectors.ContainsCancel)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+    cy.Click(APPaymentSelectors.ConfirmWindow,null)
+    
     
 }
 
