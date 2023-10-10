@@ -93,6 +93,15 @@ namespace Logitude.Accounting.BL
                 SearchFields = "10,Small Cash APinvoice from the previous month,חשבונית קופה קטנה מחודש קודם", 
                 Inactive = false, 
 			});
+			 
+            all.Add(new TaxReportLineStatusDetails()
+            {    
+                Code = "11", 
+                EnglishName = "Missing confirmation number", 
+                LocalName = "חסר מספר הקצאה", 
+                SearchFields = "11,Missing confirmation number,חסר מספר הקצאה", 
+                Inactive = false, 
+			});
 			
             return all;
        }

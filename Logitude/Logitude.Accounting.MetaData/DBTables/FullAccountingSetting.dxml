@@ -287,6 +287,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AmountForConfirmationNumber"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
     ReferencedTable="VatTypes"

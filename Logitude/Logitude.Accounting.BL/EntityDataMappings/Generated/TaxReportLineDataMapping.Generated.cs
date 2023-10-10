@@ -49,7 +49,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         PreviousReference, 
 	         VatAmountRound, 
 	         LedgerTransactionId, 
-	         SubTotalInLocalCurrency,
+	         SubTotalInLocalCurrency, 
+	         ConfirmationNumber,
 	      }
 
 
@@ -87,7 +88,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         PreviousReference, 
 	         VatAmountRound, 
 	         LedgerTransactionId, 
-	         SubTotalInLocalCurrency,
+	         SubTotalInLocalCurrency, 
+	         ConfirmationNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -224,6 +226,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SubTotalInLocalCurrency))
             {
 				entityPOCO.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConfirmationNumber))
+            {
+				entityPOCO.ConfirmationNumber = entityPM.ConfirmationNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -372,6 +379,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.SubTotalInLocalCurrency = entityPOCO.SubTotalInLocalCurrency;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConfirmationNumber))
+            {
+					entityPM.ConfirmationNumber = entityPOCO.ConfirmationNumber;
+            }
+
 		}
 
 		public void PMToOldPM(TaxReportLinePM entityPM, TaxReportLinePM oldEntityPM)
@@ -508,6 +520,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConfirmationNumber))
+            {
+                oldEntityPM.ConfirmationNumber = entityPM.ConfirmationNumber;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(TaxReportLinePM entityPM)
@@ -520,6 +537,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ConfirmationNumber)) //T4 find type == nText 
+            {
+                entityPM.ConfirmationNumber = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ConfirmationNumber));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

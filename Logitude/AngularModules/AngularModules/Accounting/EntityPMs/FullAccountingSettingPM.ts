@@ -314,6 +314,11 @@ export class FullAccountingSettingPM {
     public set AllowEditingExchangeRate(newValue: boolean) { if (this.allowEditingExchangeRate != newValue) { this.allowEditingExchangeRate = newValue; this.MarkAsDirty("AllowEditingExchangeRate"); } }
        
 	 
+    private amountForConfirmationNumber: number;
+    public get AmountForConfirmationNumber() { return this.amountForConfirmationNumber; }
+    public set AmountForConfirmationNumber(newValue: number) { if (this.amountForConfirmationNumber != newValue) { this.amountForConfirmationNumber = newValue; this.MarkAsDirty("AmountForConfirmationNumber"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		
