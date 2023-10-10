@@ -253,6 +253,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 else
                                 {
                                     gLAccountEntity.InternalNumber = entity.GLAccount.InternalNumber;
+                                    gLAccountEntity.DisplayNumber = entity.GLAccount.InternalNumber;
                                 }
                                 
                                 //EnglishName

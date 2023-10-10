@@ -134,6 +134,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 gLAccountEntity.AccountTypeCode = "3";
                                 gLAccountEntity.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                                 gLAccountEntity.InternalNumber = entity.GLAccount.InternalNumber;
+                                gLAccountEntity.DisplayNumber = entity.GLAccount.InternalNumber;
                                 gLAccountEntity.DeductionFileNumber = string.IsNullOrWhiteSpace(entity.GLAccount.DeductionFileNumber) ? null : entity.GLAccount.DeductionFileNumber;
                                 gLAccountEntity.AssessingOfficeCode = string.IsNullOrWhiteSpace(entity.GLAccount.AssessingOfficeCode) ? null : entity.GLAccount.AssessingOfficeCode;
                                 gLAccountEntity.DeductionFileTypeId = entity.GLAccount.DeductionTypeCode;
