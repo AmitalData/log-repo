@@ -62,7 +62,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         HSM, 
 	         HSMtoken, 
 	         HSMaddress, 
-	         AllowEditingExchangeRate,
+	         AllowEditingExchangeRate, 
+	         AmountForConfirmationNumber,
 	      }
 
 
@@ -126,7 +127,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         HSM, 
 	         HSMtoken, 
 	         HSMaddress, 
-	         AllowEditingExchangeRate,
+	         AllowEditingExchangeRate, 
+	         AmountForConfirmationNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -333,6 +335,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditingExchangeRate))
             {
 				entityPOCO.AllowEditingExchangeRate = entityPM.AllowEditingExchangeRate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountForConfirmationNumber))
+            {
+				entityPOCO.AmountForConfirmationNumber = entityPM.AmountForConfirmationNumber;
 			}
 			}
 
@@ -544,6 +551,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.AllowEditingExchangeRate = entityPOCO.AllowEditingExchangeRate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmountForConfirmationNumber))
+            {
+					entityPM.AmountForConfirmationNumber = entityPOCO.AmountForConfirmationNumber;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -748,6 +760,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditingExchangeRate))
             {
                 oldEntityPM.AllowEditingExchangeRate = entityPM.AllowEditingExchangeRate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountForConfirmationNumber))
+            {
+                oldEntityPM.AmountForConfirmationNumber = entityPM.AmountForConfirmationNumber;
             }
 			
 		}

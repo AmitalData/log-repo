@@ -94,6 +94,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string LedgerTransactionId { get; set; }
         [Column("SubTotalInLocalCurrency")]
 	    public double? SubTotalInLocalCurrency { get; set; }
+        [Column("ConfirmationNumber")]
+	    public string ConfirmationNumber { get; set; }
     }
 }
 	 
