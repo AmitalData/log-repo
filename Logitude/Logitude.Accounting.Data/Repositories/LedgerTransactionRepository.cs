@@ -1412,13 +1412,14 @@ on record.JournalId equals j.Id
             }
         }
 
-        public int getRecoCount(string glAccountId)
+        public int getRecoCount(string glAccountId,int tenant)
         {
             return (from a in context.LedgerTransactions
                     where 
                     a.AccountId == glAccountId 
                     && a.InReconcileProgress == false
                     && a.IsReconciled == false
+                    && a.Tenant == tenant
                     select a).Count();
         }
 

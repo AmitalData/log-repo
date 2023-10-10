@@ -265,7 +265,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 LedgerTransactionRepository LedgerTransactionreop = new LedgerTransactionRepository(authToken.Tenant);
-                var reconcilationCount = LedgerTransactionreop.getRecoCount(accountId);
+                var reconcilationCount = LedgerTransactionreop.getRecoCount(accountId, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, reconcilationCount);
             }
