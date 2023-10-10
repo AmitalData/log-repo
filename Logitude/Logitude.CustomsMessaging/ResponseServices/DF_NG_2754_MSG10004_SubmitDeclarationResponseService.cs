@@ -158,6 +158,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         _MyDeclarationPM.UserNotes = "LoadTest";
                     }
+
+
+                    if (requestParams.RequestName == "send cancel payment request" && customResponse?.Response?.Declaration != null)
+                    {
+                        this._MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.ToString();
+                        this._MyDeclarationPM.PaymentDate = null;
+                        this._MyDeclarationPM.PaymentOrderNumber = null;
+                        this._MyDeclarationPM.PaymentStatusCode = null;
+
+                    }
+
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
                 

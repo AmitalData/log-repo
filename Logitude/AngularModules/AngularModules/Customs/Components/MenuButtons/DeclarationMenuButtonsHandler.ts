@@ -20,7 +20,7 @@ import { CustomsRequestMenuService } from '../../Services/Others/CustomsRequestM
 import { IIGGeneralMessagesService } from '../../Services/WebServices/IIGGeneralMessagesService';
 import { CustomFileCreditRequestParams } from '../../DataContract/RequestParams/CustomFileCreditRequestParams';
 
-import { CustomMessageProgressHelper, CustomMessageProgressComponent } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { CustomMessageProgressHelper, CustomMessageProgressComponent, ShowProgressBarParams } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { DeclarationMessagesService } from '../../Services/WebServices/DeclarationMessagesService';
 import { DeclarationWebService } from '../../Services/WebServices/DeclarationWebService';
 import { CustomFileCreditResponseData } from '../../DataContract/ResponseData/CustomFileCreditResponseData';
@@ -80,6 +80,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     private notificationPMService: NotificationPMService = new NotificationPMService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
+    declarationService: DeclarationPMService = new DeclarationPMService();
 
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -447,7 +448,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                         else {
                             button.IsHidden = true;
-                            if(!this.EntityPM.IsSubmitDeclaration){
+                            if(!AppTool.IsNullOrEmpty(this.EntityPM.PaymentDate)){
                                 button.IsDisabled = true;
                             }
                         }
@@ -1069,14 +1070,53 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 messageWindow.Height = 150;
                 messageWindow.Title = "ביטול הגשה";
                 
+
+                let myShowProgressBarParams = new ShowProgressBarParams();
+                myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
+                    (response: any) => {
+                        let myPaymentResponseData: CustomFileCreditResponseData = response;
+                      
+                    };
+                CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, params.PBId, "ביטול הגשה", false, myShowProgressBarParams).then(res => {
+                    var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
+                    if (ResponseData && ResponseData.ContinueProcessInBackground) {
+                        SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                    }
+                    
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    let myPaymentResponseData: CustomFileCreditResponseData = res;
+                    this.RefreshDeclaration();
+                    SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+                    SessionLocator.SelectedSession.CloseCurrentWindow();
+                    
+                })
+                .catch(err => {
+                    err = err || "PostSendPaymentOnly return Error)";
+                    let messWindow = new MessageWindow();
+                    messWindow.Show(err);
+                    messWindow.WindowClosed.subscribe(() => {
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
+                    });
+                });
+
                 this.declarationMessagesService.PostSendPaymentOnly(params)
-                .subscribe(res1 => {
-                        // messageWindow.Show(res1.Result);
+                    .subscribe(res1 => {
+                        let messWindow = new MessageWindow();
+                        messWindow.Show("ביטול הגשה הסתיים בהצלחה");
+                        messWindow.WindowClosed.subscribe(() => {
+                            SessionLocator.SelectedSession.CloseCurrentWindow();
+                        });
                     }
                 );
             }
         });
         confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CancelPayment")); 
+    }
+
+    RefreshDeclaration() {
+        this.declarationService.get(this.EntityPM.Id).subscribe((res: ServiceResponse) => {
+            this.EntityPM = res.Result;
+        });
     }
 
     ResetDeclarationNumberMethod() {
