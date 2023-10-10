@@ -88,6 +88,19 @@ namespace WebFreight.Web.WcfApi
                     entityPM.Id = ocrDocument.Id;
                 }
 
+                string json="";
+                try
+                {
+                    var blob = Convert.FromBase64String(entityPM.JsonData);
+                     json = Encoding.UTF8.GetString(blob);
+                }
+                catch (Exception)
+                {
+
+                }
+           
+                if(!string.IsNullOrEmpty(json)) entityPM.JsonData=json;
+
 
                 ocrDocumentUpdateService.Update(entityPM, true);
 
