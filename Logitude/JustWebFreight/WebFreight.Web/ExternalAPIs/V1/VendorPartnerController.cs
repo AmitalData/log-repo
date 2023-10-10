@@ -116,6 +116,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
 
                         }
+                        if (entity.GLAccount != null && !string.IsNullOrEmpty(entity.GLAccount.InternalNumber))
+                        {
+                            entityPM.Code = entity.GLAccount.InternalNumber;
+                        }
                         VendorService service = new VendorService(MyContext, tenant);
                         service.Create(entityPM);
 
