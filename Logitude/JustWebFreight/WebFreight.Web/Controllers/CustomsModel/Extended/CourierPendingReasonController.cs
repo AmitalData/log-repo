@@ -69,7 +69,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
+        [HttpDelete]
         public HttpResponseMessage DeleteCourierPendingReasonUnifreightStatus(string courierPendingReasonCode)
         {
             try
