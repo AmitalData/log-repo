@@ -1223,7 +1223,11 @@ namespace Logitude.Customs.BL.BL
 					MyUnifreightEventParam);
 				IsValidSend = false;
 			}
-			if (!_MyDeclarationPM.AvailabilityDate.HasValue && !(new string[] { "4070001", "4070005", "7070001", "7070005" }.Contains(_MyDeclarationPM.ProcedureCurrentCode)))
+
+			DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_tenant);
+			string OridefCIM_AUTO_PAY = defaultValueQueryService.GetDefault("ISRAEL", "CIM_AUTO_PAY", "NON", _MyDeclarationPM.CustomerCode, _tenant);
+
+			if (OridefCIM_AUTO_PAY == "Y" && !_MyDeclarationPM.AvailabilityDate.HasValue && !(new string[] { "4070001", "4070005", "7070001", "7070005" }.Contains(_MyDeclarationPM.ProcedureCurrentCode)))
 			{
 				IsValidSend = false;
 			}
