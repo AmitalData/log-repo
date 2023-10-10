@@ -1040,8 +1040,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					FieldError.AppendLine("FinalMAWB is null ");
 				exportDeclarationClosingDataPM.MAIN_AWB = _AmitalCustomsFile.Closing.FinalMAWB;
 
-				if (string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FinalHAWB))
-					FieldError.AppendLine("FinalHAWB is null ");
+				//if (string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FinalHAWB))
+				//	FieldError.AppendLine("FinalHAWB is null ");
 				exportDeclarationClosingDataPM.SMP = _AmitalCustomsFile.Closing.FinalHAWB;
 
 
