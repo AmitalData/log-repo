@@ -4491,7 +4491,7 @@
     FullFieldLable="&quot;AmountForConfirmationNumber&quot;"
     DefaultText="&quot;Amount For Confirmation Number&quot;"
     FullLocalDefaultText="&quot;כמות לאישור&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"

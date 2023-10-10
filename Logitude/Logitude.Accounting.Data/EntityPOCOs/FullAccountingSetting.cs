@@ -159,7 +159,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("AllowEditingExchangeRate")]
 	    public bool AllowEditingExchangeRate { get; set; }
         [Column("AmountForConfirmationNumber")]
-	    public int AmountForConfirmationNumber { get; set; }
+	    public int? AmountForConfirmationNumber { get; set; }
     }
 }
 	 
