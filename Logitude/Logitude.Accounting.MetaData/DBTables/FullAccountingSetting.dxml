@@ -291,7 +291,7 @@
     Name="AmountForConfirmationNumber"
     Type="int">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
