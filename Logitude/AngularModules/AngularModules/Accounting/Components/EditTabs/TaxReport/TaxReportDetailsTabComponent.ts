@@ -580,7 +580,16 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-
+        this.columns.push({
+            FieldName: 'ConfirmationNumber',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("TaxReportLine.F.ConfirmationNumber"),
+            Styles: { width: '85px' },
+            HtmlListComponentName: 'TaxReportListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true
+        });
         this.columns.push({
             FieldName: 'Buttons;' + this.EntityPM.StatusCode,
             DataTypeCode: 'String',
