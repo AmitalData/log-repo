@@ -441,15 +441,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "CancelPayment") {
-                        // if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "CancelPaymentFeature") && (this.EntityPM.Direction != "E")) {
-                        if ((this.EntityPM.Direction != "E")) {
+                        if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "CancelPaymentFeature") && (this.EntityPM.Direction != "E")) {
                             button.IsHidden = false;
-                        }
-                        else {
-                            button.IsHidden = true;
                             if(!AppTool.IsNullOrEmpty(this.EntityPM.PaymentDate)){
                                 button.IsDisabled = true;
                             }
+                        }
+                        else {
+                            button.IsHidden = true;
                         }
                     }
                     if (button.EventCode == "CourierPendingReason") {
@@ -1043,8 +1042,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     
     CancelPaymentMethod() {
-       
-
         const confirm = new ConfirmWindow();
         confirm.WindowClosed.subscribe((event) => {
             if (confirm.Yes) {
@@ -1052,7 +1049,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 var params = new CustomFileCreditRequestParams();
                 var ObjectTable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
 
-                debugger
+                
                 params.Tenant = SessionLocator.Tenant;
                 params.AppicationId =  this.EntityPM.Id;
                 params.LoggingEnabled = true;
@@ -1062,7 +1059,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 params.RequestName = "send cancel payment request";
                 params.ResponseName = "send cancel payment response";
                 params.Mode = "Check";
-
 
                 var messageWindow = new MessageWindow();
                 messageWindow.Width = 400;

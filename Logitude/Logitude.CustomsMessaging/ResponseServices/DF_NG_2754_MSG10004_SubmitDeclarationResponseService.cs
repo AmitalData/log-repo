@@ -160,14 +160,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
 
 
-                    if (requestParams.RequestName == "send cancel payment request" && customResponse?.Response?.Declaration != null)
-                    {
-                        this._MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.ToString();
-                        this._MyDeclarationPM.PaymentDate = null;
-                        this._MyDeclarationPM.PaymentOrderNumber = null;
-                        this._MyDeclarationPM.PaymentStatusCode = null;
-
-                    }
 
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
@@ -290,9 +282,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var xml = XmlGenericUtil<DF_NG_2754_MSG10004_ImportDeclarationResponse>.SerializeObject(customResponse);
             ser = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse>.DeSerializeObject(xml);
             _DF_NG_2754_MSG10004_ImportDeclarationResponseService = new DF_NG_2754_MSG10004_ImportDeclarationResponseService();
-            _DF_NG_2754_MSG10004_ImportDeclarationResponseService._IsSubmitDeclarationResponse = true;
-            //ITZIK+MIRT _DF_NG_2754_MSG10004_ImportDeclarationResponseService._ResponseHeaderExeption = _ResponseHeaderExeption;
+            
 
+            //ITZIK+MIRT _DF_NG_2754_MSG10004_ImportDeclarationResponseService._ResponseHeaderExeption = _ResponseHeaderExeption;
+            if (requestParams.RequestName == "send cancel payment request")
+            {
+                _DF_NG_2754_MSG10004_ImportDeclarationResponseService._IsCancelPaymentResponse = true;
+                _DF_NG_2754_MSG10004_ImportDeclarationResponseService._IsSubmitDeclarationResponse = false;
+            }
+            else
+            {
+                _DF_NG_2754_MSG10004_ImportDeclarationResponseService._IsCancelPaymentResponse = false;
+                _DF_NG_2754_MSG10004_ImportDeclarationResponseService._IsSubmitDeclarationResponse = true;
+            }
+           
             _DF_NG_2754_MSG10004_ImportDeclarationResponseService.Update(ser, requestParams);
         }
 
