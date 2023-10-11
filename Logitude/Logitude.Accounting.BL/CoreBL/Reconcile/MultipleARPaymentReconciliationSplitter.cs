@@ -68,7 +68,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
 
             AddOppositLines(CloneReconcileLine(line), newReco);
 
-            CommitReconcile(newReco);
+            if (newReco.ReconciliationLines.Count > 0)
+            {
+                CommitReconcile(newReco);
+            }
         }
 
 
@@ -80,7 +83,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
 
             AddOppositLinesZeroGroup(CloneReconcileLine(line), newReco);
 
-            CommitReconcile(newReco);
+            if (newReco.ReconciliationLines.Count > 0)
+            {
+                CommitReconcile(newReco);
+            }
         }
         private ReconciliationLinePM GetNextReconcileLine()
         {
@@ -125,14 +131,28 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
         {
             ReconciliationLinePM oppositeLine = GetOppositLine(recoLine);
 
-            AddReconcileLine(oppositeLine, reconciliation);
-
-            if (SumReconcileLinesTotal(reconciliation) == 0)
-                return;
-            else
+            if (oppositeLine != null)
             {
-                recoLine.ReconciliationAmount += oppositeLine.ReconciliationAmount;
-                AddOppositLines(recoLine, reconciliation);
+                AddReconcileLine(oppositeLine, reconciliation);
+
+                if (SumReconcileLinesTotal(reconciliation) == 0)
+                {
+                    var nonPaymentsRecoLine = nonPaymentsRecoLines.FirstOrDefault(d => d.TransactionId == recoLine.TransactionId);
+                    if (nonPaymentsRecoLine != null)
+                        nonPaymentsRecoLines.Remove(nonPaymentsRecoLine);
+                    else
+                    {
+                        var paymentsRecoLine = paymentsRecoLines.FirstOrDefault(d => d.TransactionId == recoLine.TransactionId);
+                        paymentsRecoLines.Remove(paymentsRecoLine);
+                    }
+
+                    return;
+                }
+                else
+                {
+                    recoLine.ReconciliationAmount += oppositeLine.ReconciliationAmount;
+                    AddOppositLines(recoLine, reconciliation);
+                }
             }
         }
 
@@ -140,14 +160,27 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
         {
             ReconciliationLinePM oppositeLine = GetOppositLineZeroGroup(recoLine);
 
-            AddReconcileLine(oppositeLine, reconciliation);
-
-            if (SumReconcileLinesTotal(reconciliation) == 0)
-                return;
-            else
+            if (oppositeLine != null)
             {
-                recoLine.ReconciliationAmount += oppositeLine.ReconciliationAmount;
-                AddOppositLinesZeroGroup(recoLine, reconciliation);
+                AddReconcileLine(oppositeLine, reconciliation);
+
+                if (SumReconcileLinesTotal(reconciliation) == 0)
+                {
+                    var nonPaymentsRecoLine = nonPaymentsRecoLines.FirstOrDefault(d => d.TransactionId == recoLine.TransactionId);
+                    if (nonPaymentsRecoLine != null)
+                        nonPaymentsRecoLines.Remove(nonPaymentsRecoLine);
+                    else
+                    {
+                        var paymentsRecoLine = paymentsRecoLines.FirstOrDefault(d => d.TransactionId == recoLine.TransactionId);
+                        paymentsRecoLines.Remove(paymentsRecoLine);
+                    }
+                    return;
+                }
+                else
+                {
+                    recoLine.ReconciliationAmount += oppositeLine.ReconciliationAmount;
+                    AddOppositLinesZeroGroup(recoLine, reconciliation);
+                }
             }
         }
 
@@ -157,8 +190,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             if (suitableLine == null)
                 suitableLine = GetNextSuitablePaymentLine(recoLine);
 
-            ReconciliationLinePM refinedLine = RefineAmountToReconcile(suitableLine, recoLine.ReconciliationAmount);
-            return refinedLine;
+            if (suitableLine != null)
+            {
+                ReconciliationLinePM refinedLine = RefineAmountToReconcile(suitableLine, recoLine.ReconciliationAmount);
+                return refinedLine;
+            }
+            else 
+                return null;
         }
 
 
@@ -168,8 +206,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             if (suitableLine == null)
                 suitableLine = GetNextSuitablePaymentLineZeroGroup(recoLine);
 
-            ReconciliationLinePM refinedLine = RefineAmountToReconcile(suitableLine, recoLine.ReconciliationAmount);
-            return refinedLine;
+            if (suitableLine != null)
+            {
+                ReconciliationLinePM refinedLine;
+                refinedLine = RefineAmountToReconcile(suitableLine, recoLine.ReconciliationAmount);
+                return refinedLine;
+            }
+            else 
+                return null;
         }
 
 
