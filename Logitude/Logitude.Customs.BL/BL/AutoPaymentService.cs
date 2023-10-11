@@ -566,7 +566,7 @@ namespace Logitude.Customs.BL.BL
 		{
 
 			paymentPM = GetSingleDeclarationPaymentPM();
-			if (paymentPM != null) { 
+			if (paymentPM != null && paymentPM.DeclarationPaymentMethods?.Count() > 0) { 
 				SetTotalTax();
 				FillGridsData();
 
