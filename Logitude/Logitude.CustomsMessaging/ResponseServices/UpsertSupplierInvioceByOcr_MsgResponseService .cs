@@ -223,6 +223,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public UpsertSupplierInvoiceResult UpsertSupplierInvoiceByOcr(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, string invoiceNumber, Dictionary<string, string> dic, List<Dictionary<string, string>> supplierInvoiceItemsList)
         {
             int tenant = customResponse.tenant;
+            string originCountryField = "";
             ICustomContext context = CustomContext.GetContext(customResponse.tenant);
             SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
             List<SupplierInvoicePM> mySupplierInvoices = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, invoiceNumber, customResponse.tenant, true);
@@ -290,7 +291,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 CustomsCountryPM customsCountry = customsCountryQueryService.GetSingle(originCountry, false, true);
                 if (customsCountry == null)
                     invalidValuesRemarks += $" FieldJson: country_of_origin, FieldName: originCountry, InvalidValueReceived: {originCountry};";
-              
+
+                else
+                    originCountryField = customsCountry.Code;
             }
 
             if (dic.TryGetValue("buyer_country", out string buyerCountry))
@@ -408,11 +411,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             invalidValuesRemarks += $" FieldJson: Item_country_of_origin, FieldName: OriginCountryCode, InvalidValueReceived: {itemCountryOfOrigin};";
                         else
 
-                            supplierInvoiceItemPM.OriginCountryCode = itemCountryOfOrigin;
-                        if (string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode))
-                        {
-                            supplierInvoiceItemPM.OriginCountryCode = originCountry;
-                        }
+                            supplierInvoiceItemPM.OriginCountryCode = CustomsCountry.Code;
                     }
                     if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
                     {
@@ -423,6 +422,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
                             supplierInvoiceItemPM.InvoiceQuantityType = MeasurmentUnit.Code;
                     }
+                    
+                    if (string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode) && !string.IsNullOrEmpty(originCountryField))
+                    {
+                        supplierInvoiceItemPM.OriginCountryCode = originCountryField;
+                    }
+                    
                     if(myInvoiceDefaults != null)
                     {
                         //mapping supplierInvoiceItem from SupplierInvioceExportDefaults
