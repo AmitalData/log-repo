@@ -379,8 +379,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (supplierInvoiceItem.TryGetValue("Product_Code", out string productCode))
                     {
-                        if(productCode.Length>30)
-                        supplierInvoiceItemPM.ItemCode = productCode.Substring(0,30);
+                        if(productCode.Length > 30)
+                            supplierInvoiceItemPM.ItemCode = productCode.Substring(0,30);
+                        else
+                            supplierInvoiceItemPM.ItemCode = productCode;
                     }
                     if (supplierInvoiceItem.TryGetValue("Quantity", out string quantity) && decimal.TryParse(quantity, out decimal invoiceQuantity))
                     {
