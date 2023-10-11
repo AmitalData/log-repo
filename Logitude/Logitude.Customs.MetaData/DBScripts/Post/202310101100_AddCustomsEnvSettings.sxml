@@ -3,7 +3,7 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="1">
+  <Oracle Version="2">
     <![CDATA[
 DECLARE
     v_count NUMBER;
@@ -14,7 +14,7 @@ BEGIN
     WHERE companytype = 'B';
 
     IF v_count > 0 THEN
-        INSERT INTO AMINET_MAIN.CUSTOMSENVIRONMENTSETTINGS (
+        INSERT INTO CUSTOMSENVIRONMENTSETTINGS (
             ID,
             ENVIRONMENTCODE,
             USERABBITMQ,
@@ -38,9 +38,9 @@ BEGIN
             'https://customs.amital.co.il/api/SignHSMGetActiveCertificates',
             'https://customs.amital.co.il/api/SignHSM'
         FROM dual
-        WHERE '1' NOT IN (SELECT ID FROM AMINET_MAIN.CUSTOMSENVIRONMENTSETTINGS);
+        WHERE '1' NOT IN (SELECT ID FROM CUSTOMSENVIRONMENTSETTINGS);
     ELSE
-         INSERT INTO AMINET_MAIN.CUSTOMSENVIRONMENTSETTINGS (
+         INSERT INTO CUSTOMSENVIRONMENTSETTINGS (
             ID,
             ENVIRONMENTCODE,
             USERABBITMQ,
@@ -64,11 +64,10 @@ BEGIN
             'https://customs.amital.co.il/api/SignHSMGetActiveCertificates',
             'https://customs.amital.co.il/api/SignHSM'
         FROM dual
-        WHERE '1' NOT IN (SELECT ID FROM AMINET_MAIN.CUSTOMSENVIRONMENTSETTINGS);     
+        WHERE '1' NOT IN (SELECT ID FROM CUSTOMSENVIRONMENTSETTINGS);     
 
     END IF;
 END;
-/
 
 
     ]]>
