@@ -42,6 +42,8 @@ import { GLAccountListService } from './../../../../Accounting/Services/Standard
 import { AccountingEntityHelper } from './../../../../Accounting/Utilities/AccountingEntityHelper';
 import { PartnerTypeList } from 'Common/EntityLists/PartnerTypeList';
 import { PartnerTypeListService } from 'Common/Services/StandardLists/PartnerTypeListService';
+import { FullAccountingSettingPM } from 'Accounting/EntityPMs/FullAccountingSettingPM';
+import { EntityListService } from 'Infrastructure/Services/EntityListService';
 declare var window: any;
 
 @Component({
@@ -86,6 +88,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public PaymenyAmount: number;
     _AccountingPaymentMethodListService = new AccountingPaymentMethodListService();
     public PartnerTypes: PartnerTypeList[] = [];
+    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     get TextStore()
     {
         return TextStore;
@@ -100,7 +103,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
-    constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService)
+    constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, public entityListService: EntityListService)
     {
         super();
         console.log("[FULL ACCOUNING ARPayment]");
@@ -154,7 +157,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
-
+        this.GetFullAccountingSettings();
         this.SetUIProperties();
         this.ComputeRelativeRateDate();
         this.Listen();
@@ -176,6 +179,24 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
         this.InitializeBillToLov();
         this.getPartnerTypes();
+    }
+    GetFullAccountingSettings() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.entityListService.getSingle(SessionLocator.TenantPM.Id.toString(), "FullAccountingSetting").then((res: any) => {
+        this.CurrentSession.StopBusyIndicator();
+            res.subscribe(myResponse => {
+                if (myResponse != null) {
+
+                
+                    this.FullAccountingSetting =  myResponse.Result;
+                    this.GetRateIsEnabled();
+                }
+            })
+        });
+
+    }
+    get IsRateDisabled (){
+        return (this.isFullAccounting && !this.FullAccountingSetting.AllowEditingExchangeRate);
     }
 
     CreateARPayment() {
@@ -843,8 +864,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
 
 
-        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled);
-        this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled && !this.IsRateDisabled);
+        this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled );
     }
     SetUIProperties_Cheque()
     {
@@ -944,7 +965,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     {
         var result = true;
         if (this.EntityPM != null) {
-            if (this.EntityPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.PaymentCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {
+            if (this.EntityPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.PaymentCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null
+                || this.IsRateDisabled) {
                 result = false;
             }
         }

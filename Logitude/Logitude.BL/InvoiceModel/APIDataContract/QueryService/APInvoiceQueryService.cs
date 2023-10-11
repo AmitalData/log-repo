@@ -1021,7 +1021,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
         public void APInvoiceCustomDataMapping(APInvoice apinvoice, int tenant)
         {
-        
+            
             apinvoice.Tenant = tenant;
             apinvoice.InvoiceExpectedAmount = Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
             apinvoice.AmountInInvoiceCurrency= Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
@@ -1065,10 +1065,37 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             bool isFullAccountingActivated = tenantRepository.GetTenantAccountingActivated(tenant);
             return isFullAccountingActivated;
         }
-        public void PaymentTermMapAndValidate(APInvoice apinvoice, APInvoicePM apinvoicePM, int tenant)
+        public void PaymentTermMapAndValidate(APInvoice apinvoice, APInvoicePM apinvoicePM, int tenant, string glAccountPaymentTermId)
         {
+            
+            
+
             bool FullAccountingTenant = IsFullAccountingActivated(tenant);
-            if (apinvoice.PaymentTerm == null && apinvoice.DueDate != null)
+            if (glAccountPaymentTermId != null && FullAccountingTenant)
+            {
+                var paymentTermRepository = new PaymentTermRepository(tenant);
+                var myPaymentTerm = paymentTermRepository.GetSinglePaymentTerm(glAccountPaymentTermId, tenant);
+
+                int daysDifference = myPaymentTerm.Days;
+                DateTime? InvoiceDate = apinvoice.InvoiceDate;
+                var dueDate = InvoiceDate.Value.AddDays(daysDifference);
+                DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day , 0, 0, 0);
+
+                apinvoicePM.DueDate = dueDateFormated;
+                if (apinvoice.PaymentTerm == null) {
+                    PaymentTerm paymentTermAPI = null;
+                        paymentTermAPI = new PaymentTerm()
+                        {
+                            Days = myPaymentTerm.Days,
+                            EnglishName = myPaymentTerm.EnglishName,
+                            Id = myPaymentTerm.Id,
+                            LocalName = myPaymentTerm.LocalName,
+                            ExternalId = myPaymentTerm.ExternalId,
+                        };
+                    apinvoice.PaymentTerm = paymentTermAPI;
+                }
+            }
+            else if (glAccountPaymentTermId == null && apinvoice.PaymentTerm == null && apinvoice.DueDate != null)
             {
                 double daysDifference = GetDaysDiffernceForDate(apinvoice.DueDate, tenant);
                 var paymentTerm = GetPaymentTermByDaysDifference(tenant, daysDifference);
@@ -1081,9 +1108,10 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
                 int daysDifference = apinvoice.PaymentTerm.Days;
                 DateTime? InvoiceDate = apinvoice.InvoiceDate;
-                DateTime dueDate = new DateTime(InvoiceDate.Value.Year, InvoiceDate.Value.Month, InvoiceDate.Value.Day + daysDifference, 0, 0, 0);
+                var dueDate = InvoiceDate.Value.AddDays(daysDifference);
+                DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day , 0, 0, 0);
 
-                apinvoicePM.DueDate = dueDate;
+                apinvoicePM.DueDate = dueDateFormated;
             }
             else if (!FullAccountingTenant)
             {
@@ -1099,9 +1127,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     int daysDifference = apinvoice.PaymentTerm.Days;
                     DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    DateTime dueDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day + daysDifference, 0, 0, 0);
 
-                    apinvoicePM.DueDate = dueDate;
+                    var dueDate = todayDate.AddDays(daysDifference);
+                    DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day, 0, 0, 0);
+
+                    apinvoicePM.DueDate = dueDateFormated;
                 }
             }          
             else

@@ -85,7 +85,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void AddARPaymentJournal()
         {
-            if (!paymentPM.SetVoided)
+            if (!paymentPM.SetVoided && paymentPM.StatusCode != "CL")
             {
                 ARPaymentsJournalRepository arPaymentsJournalRepository = new ARPaymentsJournalRepository(tenant);
                 ARPaymentsJournal arPaymentsJournal = new ARPaymentsJournal();

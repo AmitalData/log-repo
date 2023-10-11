@@ -61,7 +61,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TaxInstitutionGLAccountId, 
 	         HSM, 
 	         HSMtoken, 
-	         HSMaddress,
+	         HSMaddress, 
+	         AllowEditingExchangeRate,
 	      }
 
 
@@ -124,7 +125,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TaxInstitutionGLAccountId, 
 	         HSM, 
 	         HSMtoken, 
-	         HSMaddress,
+	         HSMaddress, 
+	         AllowEditingExchangeRate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -326,6 +328,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMaddress))
             {
 				entityPOCO.HSMaddress = entityPM.HSMaddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditingExchangeRate))
+            {
+				entityPOCO.AllowEditingExchangeRate = entityPM.AllowEditingExchangeRate;
 			}
 			}
 
@@ -532,6 +539,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.HSMaddress = entityPOCO.HSMaddress;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AllowEditingExchangeRate))
+            {
+					entityPM.AllowEditingExchangeRate = entityPOCO.AllowEditingExchangeRate;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -731,6 +743,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMaddress))
             {
                 oldEntityPM.HSMaddress = entityPM.HSMaddress;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditingExchangeRate))
+            {
+                oldEntityPM.AllowEditingExchangeRate = entityPM.AllowEditingExchangeRate;
             }
 			
 		}

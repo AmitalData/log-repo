@@ -132,6 +132,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.AgentSharedLogisticsStatisticsLastWeek = entityPM.AgentSharedLogisticsStatisticsLastWeek;
             entityPOCO.AgentSharedLogisticsStatisticsLastMonth = entityPM.AgentSharedLogisticsStatisticsLastMonth;
             entityPOCO.ChangeHeaderColor = entityPM.ChangeHeaderColor;
+            entityPOCO.HeaderColor = entityPM.HeaderColor;
             entityPOCO.StockTypeCode = entityPM.StockTypeCode;
             entityPOCO.PackageCodeSearchField = entityPM.PackageCodeSearchField;
             entityPOCO.IsINTTRAStockPrepaid = entityPM.IsINTTRAStockPrepaid;

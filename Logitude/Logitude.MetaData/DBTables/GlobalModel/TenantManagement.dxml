@@ -1107,6 +1107,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="HeaderColor"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

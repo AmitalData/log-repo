@@ -8,6 +8,7 @@ const approvedStatus = '2';
 export class JournalValidator
 {
     private static CurrentSession = SessionLocator.SelectedSession;
+    public static SetAccountingDateInValid = false;
 
 
     public static ValidateJournal(entityPM: any)
@@ -15,10 +16,15 @@ export class JournalValidator
         return [];
     }
 
-    public static ValidateAccountingDate(entityPM: any) {
+    public static ValidateAccountingDate() {
+        var errors = [];
 
+        if(this.SetAccountingDateInValid){
+           errors.push(TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth"));
+        }
+        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList=errors;
 
-        return [];
+        return errors;
     }
 
 
@@ -167,6 +173,9 @@ export class JournalValidator
         //    var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
         //}
 
+        result = JournalValidator.ValidateAccountingDate();
+        this.FillErrorList(result);
+
         for (var line in entityPM.JournalLines) {
             var journalLine = entityPM.JournalLines[line];
             result = JournalValidator.ValidateJournalLines(journalLine);
@@ -176,11 +185,8 @@ export class JournalValidator
 
         // Validate Totals
         result = JournalValidator.ValidateTotals(entityPM)
-        if (result.length > 0) {
-            this.FillErrorList(result);
-            return this.errorList;
-        }
-
+        this.FillErrorList(result);
+      
         return this.errorList ;
     }
 

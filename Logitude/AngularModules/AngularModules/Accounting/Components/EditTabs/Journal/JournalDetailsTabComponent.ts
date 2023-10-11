@@ -120,7 +120,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.JournalLines = new ObservableCollection([]);
-
+      
         this.EntityPM = entityArgs.EntityPM;
 
         this.SetDatesDefaultValues();
@@ -454,8 +454,10 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
 
     }
-    private ValidateDates(value:Date, fieldName:string) {
+    private async ValidateDates(value:Date, fieldName:string) {
         if (fieldName == "AccountingDate") {
+            this.AccountingPeriods=null;
+            await this.GetAccountingPeriods();
             var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
             if (accountingPeriod) {
 
@@ -464,13 +466,12 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 // Valid Month => (ClosedMonth < month <= OpenMonth)
                 if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
 
-                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
+                    JournalValidator.SetAccountingDateInValid=false;
 
                 } else { // invalid (closed month)
 
                     // push the error to errors list
-                    var msg = TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth");
-                    this.UIProperties.SetValidity(fieldName, this.ObjectTableName, false, msg);
+                    JournalValidator.SetAccountingDateInValid=true;
 
                     this.EntityPM.AccountingDate = value;
 
@@ -623,7 +624,7 @@ getHeaderCurrency(CurrencyId:string){
             }
         });
 
-        this.GetAccountingPeriods();
+        //this.GetAccountingPeriods();
         // Current Accouting Period
         //var periodTypeCode = "1" // 1-Regular
         //this.accountingPeriodListService.getByYear(new Date().getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
@@ -667,18 +668,25 @@ getHeaderCurrency(CurrencyId:string){
         this.difference = Math.abs(this.debitTotal - this.creditTotal);
     }
 
-    GetAccountingPeriods() {
-        var filters = new ApiQueryFilters(true);
-        filters.addAdditionalFilter("PeriodTypeCode", "1", null, null, "Equals", false, false, false, "string"); // 1-Regular
-
-        this._AccountingPeriodListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.AccountingPeriods = myResponse.Result;
-                    console.log(">>Accounting Periods: ", myResponse.Result);
+    async GetAccountingPeriods() {
+          
+            var filters = new ApiQueryFilters(true);
+            filters.addAdditionalFilter("PeriodTypeCode", "1", null, null, "Equals", false, false, false, "string"); // 1-Regular   
+             
+        const res = await new Promise<boolean>((resolve, reject) => {   
+            
+            this._AccountingPeriodListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.AccountingPeriods = myResponse.Result;
+                        console.log(">>Accounting Periods: ", myResponse.Result);
+                        resolve(true);
+                    }
                 }
-            }
-        });
+            });
+        })
+       return res;
+
     }
 
     header_year: number;
@@ -723,7 +731,14 @@ getHeaderCurrency(CurrencyId:string){
         this.lineDate.setDate(this.line_day);
 
         if (!line.ActionCode) line.accDay = this.line_day;
-        line.AccountingDate = new Date(this.line_year, this.line_month-1, line.accDay);
+        line.AccountingDate = this.getDate(this.line_year, this.line_month-1, line.accDay);
+    }
+    getDate(year, month, day) {
+        var d = new Date(year, month, day);
+        if (d.getMonth() == month) {
+            return d;
+        }
+        return new Date(year, +month + 1, 0);
     }
     lineDate: Date;
     headerDate: Date;
@@ -1412,6 +1427,7 @@ class JournalLineModel extends BaseComponent {
             if (day > lastDayOfMonth) {
                 //error
                 this.UIProperties.SetValidity("AccDay", this.ObjectTableName, false, this.accountingDayMustBeInRange);
+                this.AccountingDate = new Date(date.setDate(lastDayOfMonth));
                 this.isValid = false;
                 return false;
                 //var t = setTimeout(() => {

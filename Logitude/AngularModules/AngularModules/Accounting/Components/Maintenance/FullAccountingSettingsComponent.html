@@ -422,11 +422,28 @@
                                                         </td>
 
                                                         <td colspan="2">
-                                                            <CheckBox [IsChecked]="CreateRevaluationJournal"
+                                                            <CheckBox 
+                                                            [IsChecked]="CreateRevaluationJournal"
                                                                 (Checked)="CreateRevaluationJournal = $event">
                                                             </CheckBox>
                                                         </td>
                                                     </tr>
+                                                         <!-- AllowEditingExchangeRate-->
+                                                         <tr class="FormFieldRow" >
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'AllowEditingExchangeRate'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+    
+                                                            <td colspan="2">
+                                                                <CheckBox 
+                                                                [IsEnabled]="enableAllFields"
+                                                                [IsChecked]="AllowEditingExchangeRate"
+                                                                    (Checked)="AllowEditingExchangeRate = $event">
+                                                                </CheckBox>
+                                                            </td>
+                                                        </tr>
 
                                                 </table>
                                             </td>

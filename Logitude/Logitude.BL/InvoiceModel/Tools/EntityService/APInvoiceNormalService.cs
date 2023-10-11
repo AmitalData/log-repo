@@ -2207,8 +2207,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
                             Reference1 = theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
-
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
+                            Notes = theEntityPm.InternalNotes,
                             CreditAccountId = theEntityPm.VendorGLAccountId,
                         };
                         totalDebitLines = totalDebitLines + journalLine.LocalAmount;
@@ -2316,3 +2316,4 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
     }
 }
+

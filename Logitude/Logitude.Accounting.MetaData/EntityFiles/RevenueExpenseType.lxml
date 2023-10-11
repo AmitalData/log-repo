@@ -4,11 +4,15 @@
   ObjectTableName="&quot;RevenueExpenseType&quot;"
   IsNew="false"
   DBTableName="&quot;RevenueExpenseTypes&quot;"
-  OldDBTableName="&quot;RevenueExpenseTypes&quot;"
+  DBTableOldNames="RevenueExpenseTypes"
   ObjectTableSingular="&quot;RevenueExpenseType&quot;"
   ObjectTablePlural="&quot;RevenueExpenseTypes&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +43,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;הכנסות הוצאות&quot;"
   DefaultText="&quot;Revenue Expense Type&quot;"
-  Code="&quot;2a3a&quot;"
+  Code="&quot;36cd&quot;"
   Name="&quot;RevenueExpenseType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -48,24 +52,28 @@
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;c490&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;d2de3e68-1d15-419f-b5d1-30924ddc00fe&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -74,7 +82,9 @@
     MinLength="1"
     MaxLength="1"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -82,6 +92,7 @@
     SystemMaxLength="1"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -113,6 +124,7 @@
     ListLocalDefaultText="&quot;קוד&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -126,32 +138,37 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;701b776c-9ab5-43f3-98cc-b33e7cafb71c&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;RevenueExpenseType&quot;"
     FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="30"
+    MaxLength="50"
     IsRequired="false"
-    DisplayOnLookUp="false"
+    CopyToDW="false"
+    DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="30"
+    SystemMaxLength="50"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -183,6 +200,7 @@
     ListLocalDefaultText="&quot;שם מקומי&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -196,16 +214,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;6f03bcdc-27a3-4c18-afba-28d2c28db548&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -214,7 +234,9 @@
     MinLength="0"
     MaxLength="60"
     IsRequired="true"
-    DisplayOnLookUp="true"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -222,10 +244,11 @@
     SystemMaxLength="60"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="true"
+    DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EnglishName&quot;"
     ListPropertyPath="&quot;EnglishName&quot;"
     DisplayInLookUpIndex="1"
@@ -253,6 +276,7 @@
     ListLocalDefaultText="&quot;שם באנגלית&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -266,16 +290,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;969c7ce1-4e24-439d-a770-3dc14ab6aadc&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -284,7 +310,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -292,6 +320,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -322,6 +351,7 @@
     ListLocalDefaultText="&quot;חסום&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -335,12 +365,23 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;RevenueExpenseTypeHeaderScreen&quot;"
+    ObjectTableName="&quot;RevenueExpenseType&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -373,25 +414,26 @@
   </EventTypes>
   <Records>
     <Record
-      Code="&quot;2&quot;"
-      Inactive="false"
-      LocalName="&quot;הוצאות&quot;"
-      EnglishName="&quot;Expense&quot;" />
-    <Record
-      Code="&quot;3&quot;"
-      Inactive="false"
-      LocalName="&quot;אחר&quot;"
-      EnglishName="&quot;Other&quot;" />
-    <Record
       Code="&quot;1&quot;"
       Inactive="false"
-      LocalName="&quot;הכנסות&quot;"
+      LocalName="&quot;הכנסות, מתאפס בהעברת שנה&quot;"
       EnglishName="&quot;Revenue&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      LocalName="&quot;הוצאות, מתאפס בהעברת שנה&quot;"
+      EnglishName="&quot;Expense&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;3&quot;"
+      LocalName="&quot;חו&quot;ז , לא מתאפס. יתרה ממשיכה לשנה הבאה&quot;"
+      EnglishName="&quot;Other&quot;"
+      Inactive="false" />
   </Records>
   <DataContracts>
     <DataContract
       Name="&quot;RevenueExpenseType&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Code&quot;"
         FieldName="&quot;Code&quot;"
@@ -404,7 +446,9 @@
         IsCustomType="false"
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
-        IsCloseField="false" />
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalName&quot;"
         FieldName="&quot;LocalName&quot;"
@@ -417,7 +461,9 @@
         IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
-        IsCloseField="false" />
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;EnglishName&quot;"
         FieldName="&quot;EnglishName&quot;"
@@ -430,7 +476,9 @@
         IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
-        IsCloseField="false" />
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Inactive&quot;"
         FieldName="&quot;Inactive&quot;"
@@ -443,9 +491,11 @@
         IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
-        IsCloseField="false" />
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
-  <AdditionalFeatures />
   <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

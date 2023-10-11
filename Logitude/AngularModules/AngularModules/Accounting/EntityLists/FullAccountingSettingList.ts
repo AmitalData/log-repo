@@ -61,6 +61,7 @@ export class FullAccountingSettingList {
 	HSM: number;
 	HSMtoken: string;
 	HSMaddress: string;
+	AllowEditingExchangeRate: boolean;
 	
 }
  
