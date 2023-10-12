@@ -49,6 +49,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select r).OrderByDescending(o => o.FromDate).FirstOrDefault();
         }
 
+
+        public VatTypePercentage GetVatTypePercentageByVatTypeId(string vatTypeId, int tenant)
+        {
+            return (from r in context.VatTypePercentages.Include("VatType")
+                    where r.VatTypeId == vatTypeId
+                    && r.Tenant == tenant
+                    select r).FirstOrDefault();
+        }
         public void Add(VatTypePercentage entity)
         {
             context.VatTypePercentages.Add(entity);

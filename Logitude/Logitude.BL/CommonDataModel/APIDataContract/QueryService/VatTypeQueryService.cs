@@ -109,7 +109,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     vatTypeId = vatTyperepository.GetSingleVatTypeByCode(vatType.Code, tenatToCopy).Id;
                   
                 }
-                VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetSingleVatTypePercentage(item.Id);
+                VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByVatTypeId(item.Id,tenant);
                 if (vatTypePercentage != null)
                 {
                     VatTypePercentagePM vatTypePercentagePM = new VatTypePercentagePM()
