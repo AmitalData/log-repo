@@ -489,20 +489,20 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     async SendButtonClicked(event: CustomSendOptionsArgs) {
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
-            var msg = " ×©×“×” ×¡×•×’ ×ž×–×”×” ×ž×˜×¢×Ÿ ×©×“×” ×—×•×‘×”";
+            var msg = "סוג מזהה מטען שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
         else {
             if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber)) {
-                var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×¨×�×©×•×Ÿ ×©×“×” ×—×•×‘×”";
+                var msg = "מזהה מטען ראשון שדה חובה";
 
                 this.ValidationErrors.push(msg);
                 this.FillValidationErrors("Errors");
             }
             else {
                 if (AppTool.IsNullOrEmpty(this.FinalSecondCargoId) && !AppTool.IsNullOrEmpty(this.SecondCargoIdPlaceholder)) {
-                    var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™ ×©×“×” ×—×•×‘×”";
+                    var msg = "מזהה מטען שני שדה חובה";
                     this.ValidationErrors.push(msg);
                     this.FillValidationErrors("Errors");
                 }
@@ -512,7 +512,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
                     if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-                        var msg = " ×©×“×” ×ª×�×¨×™×š ×˜×¢×™× ×” ×©×“×” ×—×•×‘×”";
+                        var msg = "תאריך טעינה שדה חובה";
 
                         this.ValidationErrors.push(msg);
                         this.FillValidationErrors("Errors");
@@ -702,7 +702,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
         windowArgs.CancelButtonVisibility = true
-        var windowTitle = "×‘×“×™×§×ª ×¦×™×¨×•×£ ×ª×¢×•×“×•×ª ×ž×§×•×¨";
+        var windowTitle = "התראות- סגירת הצהרה";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
         logWindow.Height = 400;
