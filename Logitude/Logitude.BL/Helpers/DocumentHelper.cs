@@ -336,7 +336,7 @@ namespace Logitude.BL.Helpers
             repository.Update(invocie);
             repository.SubmitChanges();
              this.CreateEvent("HSMF", invocie, "חתימת החשבונית לא  צלחה"+ ex);
-            this.SendEmailAlert("ohad@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+invocie.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex);
+            this.SendEmailAlert("ohad@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+invocie.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex, invocie.Tenant);
         }
 
 
@@ -348,7 +348,7 @@ namespace Logitude.BL.Helpers
             repository.SubmitChanges();
             this.CreateEvent("HSMS", invocie, "החשבונית נחתמה בהצלחה");
          //   this.SendEmailAlert("libby@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר" + invocie.InvoiceNumber + "<br /><br />מצורפת השגיאה " );
-            this.SendToEmailContact(contactEmail, invocie, document, DocumentFilingId, repository);
+            this.SendToEmailContact(contactEmail, invocie, document, DocumentFilingId, repository, invocie.Tenant);
 
         }
         private void CreateEvent(string eventCode,ARInvoice arinvocie, string Notes = null)
@@ -365,11 +365,11 @@ namespace Logitude.BL.Helpers
             });
         }
 
-        private void SendEmailAlert(string email, string subject, string body)
+        private void SendEmailAlert(string email, string subject, string body,int tenant)
         {
-            ICommonDataContext commonContext = CommonDataContext.GetContext(Tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             ContactRepository contactRepository = new ContactRepository(commonContext);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, Tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
 
             StringBuilder HtmlTemplate = new StringBuilder();
             HtmlTemplate.Append("<p style='text-align:left'>");
@@ -387,17 +387,17 @@ namespace Logitude.BL.Helpers
                 Subject = subject,
                 EmailBody = HtmlTemplate.ToString(),
                 LoggingUserId = loggedContact.Id,
-                Tenant = Tenant,
+                Tenant = tenant,
             };
-            Communications.AddEmailCommunicationLogQueue(emailParams, Tenant);
+            Communications.AddEmailCommunicationLogQueue(emailParams, tenant);
         }
 
 
-        private void SendToEmailContact(string email, ARInvoice arinvocie,Document document,string DocumentFilingId, ARInvoiceRepository repository)
+        private void SendToEmailContact(string email, ARInvoice arinvocie,Document document,string DocumentFilingId, ARInvoiceRepository repository,int tenant)
         {
             string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
             UserRepository userRepository = new UserRepository(Tenant);
-            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, Tenant, true);
+            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, true);
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
              EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
             string htmlstring = "";
@@ -414,7 +414,7 @@ namespace Logitude.BL.Helpers
                 userId = loggedUser.Id;
             }
             try {
-                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, Tenant, email, "חשבונית חתומה", null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id, null, null, null);
+                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, "חשבונית חתומה", null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id, null, null, null);
                 if (!string.IsNullOrEmpty(documentId))
                 {
                     arinvocie.IsSigned = "3";
