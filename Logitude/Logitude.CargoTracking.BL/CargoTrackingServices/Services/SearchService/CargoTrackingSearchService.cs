@@ -239,9 +239,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 DateTime shipmetnCreateDate = (DateTime)(tableRow["CreateDateTime"]);
                 DateTime cargTrackingBuildToDate = (DateTime)bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.ToDate;
                 DateTime cargTrackingBuildFromDate = (DateTime)bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.FromDate;
-                int differenceMonthsBetweenBuildToAndFromDate = SetDifferenceMonthsBetweenBuildToAndFromDate(cargTrackingBuildToDate, cargTrackingBuildFromDate);
-                if(differenceMonthsBetweenBuildToAndFromDate>=6)
-                   cargTrackingBuildFromDate = cargTrackingBuildToDate.AddMonths(-differenceMonthsBetweenBuildToAndFromDate);
+                //int differenceMonthsBetweenBuildToAndFromDate = SetDifferenceMonthsBetweenBuildToAndFromDate(cargTrackingBuildToDate, cargTrackingBuildFromDate);
+                //if(differenceMonthsBetweenBuildToAndFromDate>=6)
+                //   cargTrackingBuildFromDate = cargTrackingBuildToDate.AddMonths(-differenceMonthsBetweenBuildToAndFromDate);
                 if (shipmetnCreateDate.Date < cargTrackingBuildFromDate.Date ||
                     shipmetnCreateDate.Date > cargTrackingBuildToDate.Date)
                 {

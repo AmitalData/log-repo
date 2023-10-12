@@ -58,17 +58,14 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
- 
         private string CreateBatchTaskExecution(Logitude.CargoTracking.BL.CoreBL.Batch.CargoTrackingXMLParameters Args, string Subject, string ClassName, int tenant)
         {
             // 1- create BTE record
             BatchTaskExecutionPM taskExe;
-            AddDateRange(Args);
             var stringwriter = new System.IO.StringWriter();
             var serializer = new XmlSerializer(typeof(Logitude.CargoTracking.BL.CoreBL.Batch.CargoTrackingXMLParameters));
             serializer.Serialize(stringwriter, Args);
             string xmlParameters = stringwriter.ToString();
-
 
             taskExe = new BatchTaskExecutionPM()
             {
@@ -76,10 +73,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 Tenant = tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 ClassName = ClassName,
-                CreateDate = DateTime.Now,
-                PrametersXml = xmlParameters,
+                CreateDate = DateTime.Now,                
+                PrametersXml = xmlParameters,                
                 StatusCode = "C",
-
             };
 
 
@@ -99,19 +95,5 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
             return taskExe.Id;
         }
-
-        private void AddDateRange(CargoTrackingXMLParameters Args)
-        {
-            TenantManagementPM tenantManagementPM = new TenantManagementQuery(Args.Tenant.Value).GetSinglePM(Args.Tenant.Value);
-            Args.ToDate = DateTime.Now;
-
-            Args.FromDate = tenantManagementPM.ActivatePrivateSite && tenantManagementPM.PermissionBuildMonths.HasValue ?
-                DateTime.Now.AddMonths(Convert.ToInt32(tenantManagementPM.PermissionBuildMonths.Value) * -1) :
-                DateTime.Now.AddMonths(-6);
-        }
     }
-
-
-
-
 }
