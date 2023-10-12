@@ -216,7 +216,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.AmendmentDontDisplayInList = false;
                     declarationPM.IsAmendment = true;
                     declarationPM.Consignments = GetConsignments(declaration, tenant, declarationPM, context, declarationOrg?.Consignments, isAmendApprove);
-
+                    declarationPM.ExportFlightDate = declarationOrg?.ExportFlightDate;
                     declarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
 

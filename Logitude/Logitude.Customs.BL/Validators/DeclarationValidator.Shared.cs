@@ -32,7 +32,7 @@ namespace Logitude.Customs.BL.Validators
             //if (_DeclarationPM.PaymentDate.HasValue)
             if (_DeclarationPM != null)
             {
-                if (_DeclarationPM.PaymentDate.HasValue && ToUpdateWithPaymentDate != true)
+                if (_DeclarationPM.PaymentDate.HasValue && ToUpdateWithPaymentDate != true && _DeclarationPM.Direction != "E")
                 {
                     errorMessage = "Customs.General.O.NoPaymentDate";
                     if (!string.IsNullOrWhiteSpace(errorMessage))
