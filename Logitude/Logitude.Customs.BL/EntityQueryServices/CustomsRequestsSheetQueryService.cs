@@ -922,4 +922,5 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public string UserId { get; set; }  
         public string CustomsRequestsSheetId { get;  set; }
     } 
+
 }
