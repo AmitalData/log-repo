@@ -279,7 +279,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private List<JournalLine> GetJournalLinesForTransactions(List<LedgerTransactionList> transactions, int tenant)
         {
             List<string> transactionIds = transactions.Select(d => d.Id).ToList();
-            JournalLineRepository journalLineRepository = new JournalLineRepository(tenant);
+            JournalLineRepository journalLineRepository = new JournalLineRepository(context);
             return journalLineRepository.GetJournalLineByLedgerTransactionIdList(transactionIds, tenant);
         }
         private List<LedgerTransactionList> GetCreditLinesFromSelectedTransactionsGroupedByJournalId(List<LedgerTransactionList> outputLines, List<JournalLine> JournalLines)
@@ -1708,7 +1708,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
         public IQueryable<LedgerTransactionList> GetExternalReconciliationsTransactions(int tenant, int? reconciliationNumber)
         {
-            ExternalReconciliationLineRepository lineRepository = new ExternalReconciliationLineRepository(tenant);
+            ExternalReconciliationLineRepository lineRepository = new ExternalReconciliationLineRepository(context);
             var lines = lineRepository.GetAll(tenant);
 
             var ledgerTransactions = (from line in lines.Include("LedgerTransaction")
@@ -1749,7 +1749,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         private IQueryable<LedgerTransaction> GetTransactionsQuery(int tenant)
         {
-            var transactionsRepository = new LedgerTransactionRepository(tenant);
+            var transactionsRepository = new LedgerTransactionRepository(context);
             IQueryable<LedgerTransaction> transactionsQuery = transactionsRepository.GetAll(tenant);
 
             return transactionsQuery;
