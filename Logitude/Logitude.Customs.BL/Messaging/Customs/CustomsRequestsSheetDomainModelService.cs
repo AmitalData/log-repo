@@ -336,6 +336,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
                     if (listRequestInProgress.Count > 0)
                     {
+                        if(listRequestInProgress.Any(r => r.InterfaceTypeCode == "DCAOCR") && requestParams.FutureSendDateTime.HasValue)
+                        {
+                            return;
+                        }
                         var RequestInProgressInterfaceTypeName = listRequestInProgress.First().InterfaceTypeName;
                         ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName);
                         return;
@@ -2851,7 +2855,7 @@ After that Remove file  from DCA  .. ");
         public string OnEndStepAppendLogToCommunicationLog { get; set; }
         public const bool InProgressFeatureIsOn = true;
 
-        public void ReAnalyzeStatusReceivedCreateQ()
+        public void ReAnalyzeStatusReceivedCreateQ(DateTime? futureSendDateTime = null)
         {
 
             CommunicationLogStep communicationLogStep = GetCommunicationLogStep(CustomsStepEnum.AnalyzeResponseData);
@@ -2872,7 +2876,7 @@ After that Remove file  from DCA  .. ");
                             nxtCustomsCommandEnum,
                             this.MyCustomsRequestsSheetPM.Tenant,
                             this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
-                            this.MyCustomsRequestsSheetPM.Id);
+                            this.MyCustomsRequestsSheetPM.Id, futureSendDateTime);
         }
 
 

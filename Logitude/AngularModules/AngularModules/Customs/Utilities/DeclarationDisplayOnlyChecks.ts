@@ -24,7 +24,7 @@ export class DeclarationDisplayOnlyChecks {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
-      this.http = ServiceHelper.HttpClient;
+      this.http = ServiceHelper.HttpClient;    
     }
     private timerToken: any;
     private _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
@@ -254,9 +254,20 @@ export class DeclarationDisplayOnlyChecks {
                             if (editComponentNeedsRefresh == true) {
                                 this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = text;
                             }
-                            serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
+
+                                  if (this.CurrentSession.CurrentEditComponent.SelectedTab.Code =="DCCD" && text.includes('OCR')) {
+            
+                                      serviceResponse.Result = new DisplayOnlyCheckResult(false, "");
+                                      return serviceResponse;
+
+                                  }
+                                  else{
+                                      serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
+                                      return serviceResponse;
+
+                                  }
+                                  
                             
-                            return serviceResponse;
                         };
                         if (requestSheets[0].InterfaceTypeCode == "2755" && requestSheets[0].FutureSendDateTime) {
                             var myFutureSendDateTime: Date;

@@ -14,6 +14,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Microsoft.Practices.Unity;
+using System.Text.RegularExpressions;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -31,8 +32,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
            
             if (!string.IsNullOrEmpty(entityPM?.JsonData))
             {
-
-                SupplierInvoiceOcr convertJson = JsonConvert.DeserializeObject<SupplierInvoiceOcr>(entityPM.JsonData);//json מיפוי
+                string pattern = @"[\x00-\x08\x0B\x0C\x0E-\x1F]";
+                string cleanedJson = Regex.Replace(entityPM.JsonData, pattern, "");
+                SupplierInvoiceOcr convertJson = JsonConvert.DeserializeObject<SupplierInvoiceOcr>(cleanedJson);//json מיפוי
                 entityPM.Reference = convertJson?.pages.FirstOrDefault(page =>
                     page.prediction?.FirstOrDefault(p => p.label == "invoice_number") != null)
                     ?.prediction.FirstOrDefault(p => p.label == "invoice_number")?.ocr_text;
