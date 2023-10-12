@@ -109,41 +109,58 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
 
-
-
-
             IAccountingContext accContext = AccountingContext.GetContext(tenant);
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(accContext);
+            CurrencyQueryService currencyQueryService = new CurrencyQueryService(tenant);
+
+
             if (String.IsNullOrWhiteSpace(accountId))
             {
 
-                GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(accContext);
+
                 List<GLAccountPM> gLAccountPMList = gLAccountQueryService.GetByDisplayNumber(accountDisplayNumber, tenant);
                 if (gLAccountPMList == null || gLAccountPMList.Count == 0)
                 {
-                    message = "Account not found";
+                    message = "Account {accountDisplayNumber} not found";
                     return isSuccess;
                 }
                 if (gLAccountPMList.Count > 1)
                 {
-                    message = "More than one account is found";
+                    message = "More than one account is found - Display Number {accountDisplayNumber}";
                     return isSuccess;
                 }
                 accountId = gLAccountPMList.FirstOrDefault().Id;
-
+            }
+            else
+            {
+                var acc = gLAccountQueryService.GetSingleByAccountId(accountId, tenant);
+                if (acc == null) 
+                {
+                    message = "Account {accountId} not found";
+                    return isSuccess;
+                }
             }
 
             if (String.IsNullOrWhiteSpace(toCurrencyId))
             {
-                CurrencyQueryService currencyQueryService = new CurrencyQueryService(tenant);
+
                 Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Currency accCurrency = currencyQueryService.GetCurrencyByCode(toCurrencyCode, tenant);
                 if (accCurrency == null)
                 {
-                    message = "Currency not found";
+                    message = "Currency {toCurrencyCode} not found";
                     return isSuccess;
                 }
                 toCurrencyId = accCurrency.Id;
             }
-
+            else
+            {
+                var curr = currencyQueryService.GetCurrencyById(toCurrencyId, tenant);
+                if (curr == null)
+                {
+                    message = "Currency {toCurrencyId} not found";
+                    return isSuccess;
+                }
+            }
             if (!String.IsNullOrEmpty(batch) && (batch == "1" || batch.ToUpperInvariant() == "TRUE"))
             {
                 v_batch = true;

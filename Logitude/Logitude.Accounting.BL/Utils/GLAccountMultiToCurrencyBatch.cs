@@ -273,7 +273,7 @@ namespace Logitude.Accounting.BL.Utils
                 using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText =
-                        "UPDATE GLAccounts SET IsMultiCurrency = 0, CurrencyId= @V_currency, ReconcileMethodCode= @V_recoMethod" +
+                        "UPDATE GLAccounts SET IsMultiCurrency = 0, CurrencyId= @V_currency, ReconcileMethodCode= @V_recoMethod " +
                         "WHERE Tenant = @V_tenant and Id = @V_AccountId";
 
 
@@ -310,7 +310,7 @@ namespace Logitude.Accounting.BL.Utils
                 using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText =
-                        "UPDATE Reconciliations SET IsCancelled = 1" +
+                        "UPDATE Reconciliations SET IsCancelled = 1 " +
                         "WHERE Tenant = @V_tenant and AccountId = @V_AccountId and IsCancelled = 0";
 
 
@@ -342,8 +342,8 @@ namespace Logitude.Accounting.BL.Utils
                 {
 
                     command.CommandText =
-                        "UPDATE LedgerTransactions SET IsReconciled = 0, OpenAmountCurrencyId = @V_accountingCurrencyId, OpenAmount = LocalAmountDebit - LocalAmountCredit" +
-                        "WHERE Tenant = @V_tenant and AccountId = @V_AccountId" +
+                        "UPDATE LedgerTransactions SET IsReconciled = 0, OpenAmountCurrencyId = @V_accountingCurrencyId, OpenAmount = LocalAmountDebit - LocalAmountCredit " +
+                        "WHERE Tenant = @V_tenant and AccountId = @V_AccountId " +
                         "AND ((IsReconciled = 1) OR (OpenAmountCurrencyId <> @V_accountingCurrencyId) OR (OpenAmount <> LocalAmountDebit - LocalAmountCredit))";
 
 
@@ -377,8 +377,8 @@ namespace Logitude.Accounting.BL.Utils
                 {
 
                     command.CommandText =
-                        "UPDATE LedgerTransactions SET IsReconciled = 0, OpenAmountCurrencyId = CurrencyId, OpenAmount = ForeignAmountDebit - ForeignAmountCredit" +
-                        "WHERE Tenant = @V_tenant and AccountId = @V_AccountId" +
+                        "UPDATE LedgerTransactions SET IsReconciled = 0, OpenAmountCurrencyId = CurrencyId, OpenAmount = ForeignAmountDebit - ForeignAmountCredit " +
+                        "WHERE Tenant = @V_tenant AND AccountId = @V_AccountId " +
                         "AND ((IsReconciled = 1) OR (OpenAmountCurrencyId <> CurrencyId) OR (OpenAmount <> ForeignAmountDebit - ForeignAmountCredit))";
 
 
