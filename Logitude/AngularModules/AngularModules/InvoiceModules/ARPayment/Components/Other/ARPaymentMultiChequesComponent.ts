@@ -15,6 +15,8 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
 import { ARPaymentPMService } from 'Invoice/Services/StandardPMs/ARPaymentPMService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { JournalValidator } from 'Accounting/Validators/JournalValidator';
 
 declare var window: any;
 
@@ -254,14 +256,91 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         confirmWindow.Width = ReturnChequeWindowWidth;
         var message = TextCodeTranslator.Translate('ARPayment.O.ReturnChequeConfirmMessage');
         confirmWindow.Show(message);
+        
+
+        
         confirmWindow.WindowClosed.subscribe((event) => {
+            
             if (confirmWindow.Yes) {
+                // TODO: check date now hear
+
+                const AccountingDate = new Date();
+                
+                // this.ValidateDates(Date.now(), "DocumentDate");
+                debugger
+
                 this.ReturnChequeToCustomer(cheque);
             }
         });
 
     }
+    AccountingPeriods: AccountingPeriodList[] = [];
 
+    private async ValidateDates(value:Date, fieldName:string) {
+        debugger
+        if (fieldName == "AccountingDate") {
+            this.AccountingPeriods=null;
+            await this.GetAccountingPeriods();
+            var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
+            if (accountingPeriod) {
+
+                var month = value.getMonth() + 1;
+
+                // Valid Month => (ClosedMonth < month <= OpenMonth)
+                if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
+
+                    JournalValidator.SetAccountingDateInValid=false;
+
+                } else { // invalid (closed month)
+
+                    // push the error to errors list
+                    JournalValidator.SetAccountingDateInValid=true;
+
+                    this.EntityPM.AccountingDate = value;
+
+                    return;
+                }
+            }
+        }
+          else  if (fieldName != "DueDate") {
+                //FUTURE DATE VALIDATION
+                if (value > DateTool.GetCurrentDateTimeAsUtc()) {
+                    var msg = TextCodeTranslator.Translate("Journal.M.FutureDateForbidden");
+                    this.UIProperties.SetValidity(fieldName, this.ObjectTableName, false, msg);
+
+                    // push the error to errors list
+                   // this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(msg);
+                    if (fieldName == "AccountingDate") this.EntityPM.AccountingDate = value;
+                    return;
+                } else {
+                  //  this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
+                    this.UIProperties.SetValidity(fieldName, this.ObjectTableName, true, "OK");
+                }
+            }
+
+    }
+    _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
+
+    async GetAccountingPeriods() {
+          
+            var filters = new ApiQueryFilters(true);
+            filters.addAdditionalFilter("PeriodTypeCode", "1", null, null, "Equals", false, false, false, "string"); // 1-Regular   
+            
+        const res = await new Promise<boolean>((resolve, reject) => {   
+            
+            this._AccountingPeriodListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.AccountingPeriods = myResponse.Result;
+                        console.log(">>Accounting Periods: ", myResponse.Result);
+                        resolve(true);
+                    }
+                }
+            });
+        })
+    return res;
+
+    }
 
     GetPayment(){
         this.CurrentSession.StartBusyIndicatorSaving()
