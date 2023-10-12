@@ -1078,7 +1078,7 @@ Line3
         defaultParam.Tenant = 1;
         defaultParam.AccountId = "";
         defaultParam.AccountDisplayNumber = "12345678";
-        defaultParam.ToCurrencyId = "1-1161";
+        defaultParam.ToCurrencyId = "";
         defaultParam.ToCurrencyCode = "USD";
         defaultParam.Batch = 0;
         if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
@@ -1098,8 +1098,8 @@ Line3
         let _http = ServiceHelper.HttpClient;
         _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
             .subscribe(
-                r => { this._LabelLog = JSON.stringify(r); },
-                e => { this._LabelLog = JSON.stringify(e); },
+                r => { this._LabelLog = JSON.stringify(r); this.CurrentSession.StopBusyIndicator(); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator(); },
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
     }
