@@ -79,9 +79,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
                 {
-                    if(requestParams.IsFromAutoClosing)
-						RaiseEvent(_MyDeclarationPM, null, "CF2");
-
+                    if (requestParams.IsFromAutoClosing) 
+                    {
+						var declarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, false, false); ;
+						RaiseEvent(declarationPM, null, "CF2");
+                    }
 					this.MyResponseData.ApplicationID = requestParams.AppicationId;
                     this.MyResponseData.Succeeded = true;
                     this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
