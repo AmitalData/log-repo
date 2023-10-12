@@ -234,7 +234,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             var cargoTrackingDataBaseArgs = updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs;
 
             BulkDataPreperation bulkDataPreperation = InitializeBulkDataPreperation(cargoTrackingDataBaseArgs);
-            using (SqlConnection sourceConnection =
+            using (SqlConnection sourceConnection = 
                                   new SqlConnection(cargoTrackingDataBaseArgs.BuildCargoArgs.SourceConnectionString))
             {
                 sourceConnection.Open();
@@ -252,7 +252,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
                 UpdateCargoTracking(bulkDataPreperation, dataColumnListCols);
                 AfterFinishUpdateCargoTracking(bulkDataPreperation, isUpadteWaterMark);
-
+            
                 //SwapPreOldShipmentsWithOldShipmentsTable(bulkDataPreperation);
 
                 sourceConnection.Close();

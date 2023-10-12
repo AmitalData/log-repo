@@ -33,6 +33,7 @@ import {QueryColumnPM} from 'src/CargoTracking/Services/Others/QueryColumnPM';
 import {ApiQueryFilters} from 'src/CargoTracking/Services/Others/ApiQueryFilters';
 import {LogitudeGridExportToExcelService} from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
 import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
+import { TenantManagementPM } from 'src/CargoTracking/Services/Others/TenantManagementPM';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -97,7 +98,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShipmentDirectionFiltersNoResult: boolean;
     ShipmentTypeFiltersNoResult: boolean;
     InvitedCustomersNoResult: boolean;
-    SearchText: any="";
+    SearchText: any = "";
     backMonths: number;
 
     get tenant() {
@@ -732,7 +733,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         let filter: CargoTrackingShipmentSearchInput = Object.assign({}, this.ShipmentSearchInput);
         if(!SessionInfo.IsAdmin) {filter.CustomersIds =filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds};
         filter.FromDate = await this.getFromDate();
-
         return filter;
     }
 

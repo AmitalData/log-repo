@@ -1595,5 +1595,14 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     TotalPrice = a.TotalPrice,
                 });
         }
+
+        public List<TenantManagement> GetWhereHavePermissionBuildMonths()
+        {
+            var q = from a in repository.context.TenantManagements
+                    where a.PermissionBuildMonths != null
+            select a;
+
+            return q.ToList();
+        }
     }
 }

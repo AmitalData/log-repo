@@ -58,6 +58,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     constructor(
         private cd: ChangeDetectorRef,
         public entityArgs: EntityArgs) {
+
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityId = this.EntityPM.Id;
@@ -244,6 +245,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         }
         this.permissionBuildMonthsInProcess = false;
     }
+
 
     private async showPopupMessage(message: string) {
         const win:MessageWindow = new MessageWindow();

@@ -58,7 +58,7 @@ import { SafePipe } from 'src/Infrastructure/Pipes/SafePipe';
 import { StopLoopPipe } from 'src/Infrastructure/Pipes/StopLoopPipe';
 import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;

@@ -27,14 +27,12 @@ namespace Logitude.CargoTracking.Data.Repositories
 
         public IQueryable<CargoTrackingShipmentSearch> GetShipmentSearchEntities(string searchField, int tenant)
         {
-            DateTime minDate = DateTime.Now.AddDays(-183);
             IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = (from searchEntity in currentContext.CargoTrackingShipmentSearches
                          where 
                             
                             searchEntity.Tenant == tenant &&
                             searchEntity.SearchFields == searchField &&
-                            searchEntity.IsPublic == true && 
-                            searchEntity.ShipmentDate > minDate
+                            searchEntity.IsPublic == true                             
                             orderby searchEntity.ShipmentDate descending
                             select searchEntity
                             
