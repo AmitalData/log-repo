@@ -135,10 +135,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     
                             }
                             else {
-                              externalEntityReferences = new List<string> { ExportFile, referenceNumber };
+                              externalEntityReferences = new List<string> { ExportFile };
                             }
 
-                            if (referenceNumber != null)
+                            if (referenceNumber != null && declarationType!="E")
                             {
                                 documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, externalEntityReferences, authToken.Tenant, declarationType);
                             }
