@@ -1912,6 +1912,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public List<string> AllIdAccounts { get; set; }
         public DateTime? MaxCreateAt { get; set; }
         public List<string> YearTransferLedgerTransactionIds { get; set; }
+        public string GLAccountId { get; set; } 
     }
 
 
