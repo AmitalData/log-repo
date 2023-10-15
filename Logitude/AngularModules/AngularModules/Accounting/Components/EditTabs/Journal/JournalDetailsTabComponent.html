@@ -105,7 +105,7 @@
                     </div></td>
                     <td>
                         <div class="MediaFill">
-                            <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0" [ItemsSource]="EntityWarningsList"></WarningSummary>
+                            <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0" [ItemsSource]="EntityWarningsList" [HideHeader]="true"></WarningSummary>
                         </div>
 
                     </td>
@@ -119,138 +119,162 @@
             <td style="">
               <div [style.opacity]="Opacity" [style.pointer-events]="PointerEvents">
                 <table>
-                  <tr class="FormFieldRow">
-                    <td style="width: 400px;">
-                      <table>
-                        <!-- Date -->
-                        <tr class="FormFieldRow">
-                          <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.AccountingDate' | TextCodeTranslationPipe}}</td>
-
-                          <td style="width: 180px;">
-                            <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                          </td>
-                          <td>
-                            <div></div>
-                          </td>
-                        </tr>
-                        <tr class="FormFieldRow">
-                          <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Journal.F.DocumentDate' | TextCodeTranslationPipe}}</td>
-
-                          <td style="width: 180px;">
-                            <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="DocumentDate"
-                                           [DataContext]="DataContext" [HideColumns]="true" ></LogDatePicker>
-                          </td>
-                          <td>
-                            <div></div>
-                          </td>
-                        </tr>
-
-                        <tr class="FormFieldRow">
-                          <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Journal.F.DueDate' | TextCodeTranslationPipe}}</td>
-
-                          <td style="width: 180px;">
-                            <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="DueDate"
-                                           [DataContext]="DataContext" [HideColumns]="true" ></LogDatePicker>
-                          </td>
-                          <td>
-                            <div></div>
-                          </td>
-                        </tr>
-
-                        <tr class="FormFieldRow">
-                            <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Journal.F.CurrencyId' | TextCodeTranslationPipe}}</td>
-
-                            <td style="width: 180px;">
-                                <LogLov [ObjectFieldName]="'CurrencyId'"
-                                        [ObjectTableName]="'Journal'"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'Currency'"
-                                       [SelectedValue]="CurrencyId"
-                                           (SelectedItemChanged)="Currency = $event"
-                                        [HideColumns]="true">
-                                </LogLov>
-                                <!-- (SelectedItemChanged)="Currency = $event" -->
-                            </td>
-                        </tr>
-
-                        <tr>
-                          <td>
-                            <div></div>
-                          </td>
-                        </tr>
-
-                      </table>
-                    </td>
-                    <td style="width: 200px;">
-                      <div></div>
-                    </td>
-                    <td>
-                      <table>
-                        <!-- References -->
-                        <tr>
-                          <td style="width:200px;">
-                            <div *ngIf="!Approved" style="width:200px">
-                              <table>
+                    <tr class="FormFieldRow">
+                        <td style="width: 400px;">
+                            <table>
+                                <!-- Date -->
                                 <tr class="FormFieldRow">
-                                  <td style="width: 200px">
-                                    <LogTextBox [ObjectFieldName]="'Reference1'" [InputType]="'ntext'" [DataContext]="DataContext"
-                                                [Placeholder]="txt_Reference+ ' 1'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                  </td>
-                                  <td>
-                                    <div></div>
-                                  </td>
+                                    <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.AccountingDate' | TextCodeTranslationPipe}}</td>
+
+                                    <td style="width: 180px;">
+                                        <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName"
+                                                       [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Journal.F.DocumentDate' | TextCodeTranslationPipe}}</td>
+
+                                    <td style="width: 180px;">
+                                        <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="DocumentDate"
+                                                       [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
                                 </tr>
 
                                 <tr class="FormFieldRow">
-                                  <td>
-                                    <LogTextBox [ObjectFieldName]="'Reference2'" [InputType]="'ntext'" [DataContext]="DataContext"
-                                                [Placeholder]="txt_Reference+' 2'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                  </td>
-                                  <td>
-                                    <div></div>
-                                  </td>
+                                    <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Journal.F.DueDate' | TextCodeTranslationPipe}}</td>
+
+                                    <td style="width: 180px;">
+                                        <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="DueDate"
+                                                       [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
                                 </tr>
 
                                 <tr class="FormFieldRow">
-                                  <td>
-                                    <LogTextBox [ObjectFieldName]="'Reference3'" [InputType]="'ntext'" [DataContext]="DataContext"
-                                                [Placeholder]="txt_Reference+' 3'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                  </td>
-                                  <td>
-                                    <div></div>
-                                  </td>
+                                    <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Journal.F.CurrencyId' | TextCodeTranslationPipe}}</td>
+
+                                    <td style="width: 180px;">
+                                        <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                [ObjectTableName]="'Journal'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Currency'"
+                                                [SelectedValue]="CurrencyId"
+                                                (SelectedItemChanged)="Currency = $event"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                        <!-- (SelectedItemChanged)="Currency = $event" -->
+                                    </td>
                                 </tr>
-                              </table>
 
-                            </div>
-                          </td>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
 
-                        </tr>
-
-
-                        <!-- Notes -->
-                        <tr class="FormFieldRow">
-                          <td style="width: 200px;">
-                            <LogTextBox [ObjectFieldName]="'Notes'" [InputType]="'ntext'" [DataContext]="DataContext"
-                                        [Placeholder]="'Accounting.General.O.Notes' | TextCodeTranslationPipe" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                          </td>
-                          <td>
+                            </table>
+                        </td>
+                        <td style="width: 200px;">
                             <div></div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div></div>
-                          </td>
-                        </tr>
+                        </td>
+                        <td>
+                            <table>
+                                <!-- References -->
+                                <tr>
+                                    <td style="width:200px;">
+                                        <div *ngIf="!Approved" style="width:200px">
+                                            <table>
+                                                <tr class="FormFieldRow">
+                                                    <td style="width: 200px">
+                                                        <LogTextBox [ObjectFieldName]="'Reference1'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                    [Placeholder]="txt_Reference+ ' 1'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
 
-                      </table>
-                    </td>
-                    <td>
-                      <div></div>
-                    </td>
-                  </tr>
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <LogTextBox [ObjectFieldName]="'Reference2'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                    [Placeholder]="txt_Reference+' 2'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <LogTextBox [ObjectFieldName]="'Reference3'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                    [Placeholder]="txt_Reference+' 3'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+
+                                <!-- Notes -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 200px;">
+                                        <LogTextBox [ObjectFieldName]="'Notes'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                    [Placeholder]="'Accounting.General.O.Notes' | TextCodeTranslationPipe" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                        <td style="width: 200px;">
+                            <div></div>
+                        </td>
+                        <td *ngIf="IsSecurityLevelVisible" style="width: 210px">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                  
+                            </table>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
                   <tr>
                     <td>
                       <div></div>
@@ -266,20 +290,33 @@
           <!-- Journal Rows -->
           <tr style="height: 20px;">
             <td style="padding: 4px;">
-              <table>
-                <tr>
-                  <td>
-                    <div>
-                      <IconButton [Name]="'Add'" [disabled]="journalDisabled" (click)="AddLine()" [style.float]="isRTL ? 'right' : 'left'"></IconButton>
-                    </div>
-                  </td>
-                  <td>
-                    <div style="float: right; padding: 4px; width: 250px;">
-                      <!--<button class="Button" (click)="Test()">Test</button>-->
-                      <!--<SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>-->
-                    </div>
-                  </td>
-                </tr>
+                <table>
+                    <tr>
+                        <!-- SecurityLevel -->
+
+                        <td>
+                            <div style="float: right; padding: 4px; width: 1400px;">
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width:120px">
+                                <LogLabel [ObjectFieldName]="'SecurityLevel'" [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"></LogLabel>
+                               </div>
+                        </td>
+
+                        <td style="top:10px;">
+                            <div style="width:90px">
+                                <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1" [max]="maxSecurityLevel" [allowNull]="true" [isDisabled]="!IsSecurityLevelOK || journalDisabled"></NumberInput>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <IconButton [Name]="'Add'" [disabled]="journalDisabled" (click)="AddLine()" [style.float]="isRTL ? 'right' : 'left'"></IconButton>
+                            </div>
+                        </td>
+                       
+                    </tr>
               </table>
             </td>
           </tr>

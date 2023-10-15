@@ -216,6 +216,7 @@
     <Content Include="Common\Components\Maintenance\Horse\NewHorseComponent.html" />
     <Content Include="Common\Components\Maintenance\TransmissionLogs\TransmissionLogAuditTabComponent.html" />
     <Content Include="Common\Components\Maintenance\VATSettingsComponent.html" />
+    <Content Include="Controls\All\NumberInput.html" />
     <Content Include="Controls\All\SplitButtonComponent.html" />
     <Content Include="CRMModules\CRMEmployeeGroup\Components\EditTabs\EmployeeGroupGeneralTabComponent.html" />
     <Content Include="CRMModules\CRMEmployeeGroup\Components\NewEntity\NewEmployeeComponent.html" />
@@ -599,6 +600,7 @@
     <TypeScriptCompile Include="Common\Services\StandardPMs\UnassignedEntityPMService.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
     <TypeScriptCompile Include="Common\Validators\CustomerValidator.ts" />
+    <TypeScriptCompile Include="Controls\All\NumberInput.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />

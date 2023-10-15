@@ -22,13 +22,15 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {JournalValidator} from '../../../Validators/JournalValidator';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
-import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {GLAccountListService} from '../../../Services/StandardLists/GLAccountListService'
 import { APInvoicePMService } from '../../../../Invoice/Services/StandardPMs/APInvoicePMService';
 import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
-
+import { FullAccountingSettingListService } from 'Accounting/Services/StandardLists/FullAccountingSettingListService';
+declare var window: any;
 
 @Component({
 
@@ -60,14 +62,21 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     Opacity: string = "1";
     referencesDivHeight: number;
     Approved: boolean = false;
+    maxSecurityLevel = 10;
     IsJournalEditableAfterApproval: boolean = false;
     APInvoice: APInvoicePM;
     Voided: boolean = false;
     private CancelledStatusCode: string = "5";
+    private fullAccountingSettingListService: FullAccountingSettingListService;
+    public IsSecurityLevelVisible: boolean = false;
+    IsJournalSecurityManaged: boolean = false;
+    public IsSecurityLevelOK: boolean = true;
+    public UserSecurityLevel: number = SessionLocator.LoggedUserPM.SecurityLevel;
     AccountingPeriods: AccountingPeriodList[] = [];
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
     ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
     public EntityWarningsList: string[] = [];
+
     OnRowEnded($event) {
         console.log("this.JournalLines.Length : " + this.JournalLines.Length);
         if (($event) == this.JournalLines.Length) {
@@ -117,11 +126,21 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         private apInvoicePMService :APInvoicePMService
     ) {
         super();
+         this.fullAccountingSettingListService = new FullAccountingSettingListService();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.JournalLines = new ObservableCollection([]);
       
         this.EntityPM = entityArgs.EntityPM;
+
+        this.CheckFeatures();
+        this.getAccountingSettingSecurityLevelField();
+        if (this.IsSecurityLevelOK != undefined && !this.IsSecurityLevelOK) {
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Journal.O.ViewingNotAuthorized"));
+
+        }
+
 
         this.SetDatesDefaultValues();
 
@@ -140,7 +159,6 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
         });
 
-
         this.Listen();
     }
     private SetDatesDefaultValues() {
@@ -149,6 +167,62 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
 
     }
+
+    CheckFeatures() {
+     // if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        var table = window.ObjectTables.filter(d => d.Name === 'Journal')[0];
+        var journalSecurityManagedFeature = FeatureLocator.Features.filter(f => (f.Code == "Journal.Feature.ManageSecurity") && f.ObjectTableId == table.Id)[0];
+        if (journalSecurityManagedFeature) {
+            this.IsJournalSecurityManaged = true;
+        }
+
+        this.IsJournalSecurityManaged = true;
+    }
+
+    getAccountingSettingSecurityLevelField() {
+      //  if (this.IsJournalSecurityManaged) {
+            this.fullAccountingSettingListService.getSingle(SessionLocator.Tenant.toString()).subscribe((response: any) => {
+                this.CurrentSession.StopBusyIndicator();
+                var userSecurityLevel: number = 10;
+                if (this.UserSecurityLevel != undefined) {
+                    userSecurityLevel = this.UserSecurityLevel;
+                }
+                var journalSecurityLevel: number = 0;
+                if (this.EntityPM.SecurityLevel != undefined) {
+                    journalSecurityLevel = this.EntityPM.SecurityLevel;
+                }
+                this.IsSecurityLevelOK = true;
+
+                if (response != null) {
+                    var response = response.Result;
+                    if (response.IsSecurityLevelActivated && userSecurityLevel >= 1) {
+                        this.IsSecurityLevelVisible = true;
+                        if (journalSecurityLevel > userSecurityLevel) {
+                            this.IsSecurityLevelOK = false;
+                            this.IsSecurityLevelVisible = false;
+                        }
+                    }
+                    else if (response.IsSecurityLevelActivated && userSecurityLevel == 0 && journalSecurityLevel > 0) {
+                        this.IsSecurityLevelOK = false;
+                        this.IsSecurityLevelVisible = false;
+                    }
+                    else {
+                        this.IsSecurityLevelVisible = false;
+                    }
+                }
+
+                if (this.IsSecurityLevelOK)
+                    this.maxSecurityLevel = userSecurityLevel;
+            });
+        //} else {
+        //    this.IsSecurityLevelVisible = false;
+        //}
+    }
+
+
+
+
+
     public CurrentEditComponentId: string;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
@@ -193,7 +267,18 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
     SetUIProperties() {
         //Display only
-        if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode) { // 3-Voided and 2-Approved
+        if (this.IsSecurityLevelOK != undefined && !this.IsSecurityLevelOK) {
+            //disable controls
+            this.journalDisabled = true;
+            this.PointerEvents = 'none';
+            this.Opacity = "1";
+            this.referencesDivHeight = 0;
+            this.UIProperties.SetVisibility("Reference1", "Journal", false);
+            this.UIProperties.SetVisibility("Reference2", "Journal", false);
+            this.UIProperties.SetVisibility("Reference3", "Journal", false);
+            this.UIProperties.SetVisibility("Notes", "Journal", false);
+        }
+        else if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode) { // 3-Voided and 2-Approved
             //disable controls
             this.journalDisabled = true;
             this.PointerEvents = 'none';
@@ -275,43 +360,49 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     FillGrid() {
-
-        // if entity in edit mode
-        if (this.EntityPM.Id != undefined || this.EntityPM.JournalLines.length>0) {
-            var tempItemSource: JournalLineModel[] = [];
-            if (this.EntityPM.JournalLines != null) {
-                for (var i = 0; i < this.EntityPM.JournalLines.length; i++) {
-                    var line = new JournalLineModel(this.EntityPM.JournalLines[i], this);
-                    tempItemSource.push(line);
-                    //this.JournalLines.Insert(line);
+        if (this.IsSecurityLevelOK == undefined || this.IsSecurityLevelOK) {
+            // if entity in edit mode
+            if (this.EntityPM.Id != undefined || this.EntityPM.JournalLines.length > 0) {
+                var tempItemSource: JournalLineModel[] = [];
+                if (this.EntityPM.JournalLines != null) {
+                    for (var i = 0; i < this.EntityPM.JournalLines.length; i++) {
+                        var line = new JournalLineModel(this.EntityPM.JournalLines[i], this);
+                        tempItemSource.push(line);
+                        //this.JournalLines.Insert(line);
+                    }
+                    this.JournalLines.InsertCollection(tempItemSource);
+                    //for (let item of this.EntityPM.JournalLines) {
+                    //    var line = new JournalLineModel(item, this);
+                    //    this.JournalLines.Insert(line);
+                    //}
                 }
-                this.JournalLines.InsertCollection(tempItemSource);
-                //for (let item of this.EntityPM.JournalLines) {
-                //    var line = new JournalLineModel(item, this);
-                //    this.JournalLines.Insert(line);
-                //}
+                this.CalculateTotals();
+
             }
-            this.CalculateTotals();
+            else {
+                this.EntityPM.StatusCode = "0"; // Draft
+                this.EntityPM.TypeCode = "0"; // Manual
+                this.EntityPM.AccountingEntityCode = "1"; // Journal
 
+                this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+                this.EntityPM.Tenant = SessionLocator.Tenant;
+
+                var journalLine: JournalLinePM = new JournalLinePM(this.EntityPM);
+                journalLine.Line = 1;
+                journalLine.Tenant = this.EntityPM.Tenant;
+                journalLine.DocumentDate = this.DocumentDate;
+                journalLine.DueDate = this.DueDate;
+                journalLine.CurrencyId = this.Currency.Id;
+                this.EntityPM.AddJournalLine(journalLine);
+                var line = new JournalLineModel(journalLine, this);
+                line.Currency = this.Currency;
+                this.JournalLines.Insert(line);
+
+            }
         }
+
         else {
-            this.EntityPM.StatusCode = "0"; // Draft
-            this.EntityPM.TypeCode = "0"; // Manual
-            this.EntityPM.AccountingEntityCode = "1"; // Journal
-
-            this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
-            this.EntityPM.Tenant = SessionLocator.Tenant;
-
-            var journalLine: JournalLinePM = new JournalLinePM(this.EntityPM);
-            journalLine.Line = 1;
-            journalLine.Tenant = this.EntityPM.Tenant;
-            journalLine.DocumentDate = this.DocumentDate;
-            journalLine.DueDate = this.DueDate;
-            journalLine.CurrencyId = this.Currency.Id;
-            this.EntityPM.AddJournalLine(journalLine);
-            var line = new JournalLineModel(journalLine, this);
-            line.Currency = this.Currency;
-            this.JournalLines.Insert(line);
+            this.EntityWarningsList.push("אינך מורשה לצפיה בפקודה מספר " + this.EntityPM.JournalNumber);
 
         }
     }
@@ -414,6 +505,16 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.HeaderCurrency = null;
         }
     }
+
+
+    public get SecurityLevel() { return this.EntityPM.SecurityLevel; }
+    public set SecurityLevel(value: number) {
+        if (this.EntityPM.SecurityLevel != value) {
+           this.EntityPM.SecurityLevel = value;
+        }
+    }
+
+
     get DocumentDate() { return this.EntityPM.DocumentDate; }
     set DocumentDate(value: Date) {
         if (this.EntityPM.DocumentDate != value) {
@@ -1295,6 +1396,7 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.CreditAccountNumber = value;
         }
     }
+
 
     get CurrencyCode() { return this.JournalLinePM.CurrencyCode; }
     set CurrencyCode(value: string) {

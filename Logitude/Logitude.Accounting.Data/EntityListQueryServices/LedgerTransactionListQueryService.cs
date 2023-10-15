@@ -12,6 +12,9 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Data.Enums;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -92,6 +95,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
                                                            TaxReportId = jad != null ? jad.TaxReportId : "",
                                                            TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : ""
+                                                           SecurityLevelFiltering = 1,
                                                        });
 
 
@@ -267,7 +271,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                         CalculatedForeignAmount = ledger.ForeignAmountCredit != 0 ? ledger.ForeignAmountCredit : ledger.ForeignAmountDebit,
                                                                         CalculatedLocalAmount = ledger.LocalAmountCredit != 0 ? ledger.LocalAmountCredit : ledger.LocalAmountDebit,
                                                                         CurrencyId = ledger.CurrencyId,
-                                                                        SearchFields = ledger.SearchFields
+                                                                        SearchFields = ledger.SearchFields,
+
 
                                                                     }).Distinct();
             transactionBalanceFilter.TaxReportTotalCount = journalOutputLines.Count();
@@ -365,10 +370,39 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             QueryOperations customizedQueryOperation = new QueryOperations();
             customizedQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.IsCustom == true).ToList();
             // iQueryable = customFilter.GetFilteredQuery<LedgerTransaction>(customizedQueryOperation, iQueryable);
+            if (queryOperations.QueryFilterItems.Exists(d => d.FieldName == "SecurityLevelFiltering"))
+            {
+                int? userSecurityLevel = GetSecurityLevel(tenant);
+                var q = from lt in iQueryable
+                        join j in context.Journals on lt.JournalId equals j.Id
+                        join fullAccountingSettings in context.FullAccountingSettings on lt.Tenant equals fullAccountingSettings.Tenant
+                        where lt.Tenant == j.Tenant 
+                        && (!fullAccountingSettings.IsSecurityLevelActivated || 
+                                (   !j.SecurityLevel.HasValue || !userSecurityLevel.HasValue || 
+                                    (j.SecurityLevel.HasValue && j.SecurityLevel.Value <= userSecurityLevel.Value)  )   )
+                        select lt;
+
+                iQueryable = q;
+            }
             iQueryable = customFilter.GetFilteredQuery(customizedQueryOperation, iQueryable,tenant);
             return iQueryable;
         }
+        private int? GetSecurityLevel(int tenant)
+        {
+            User loggedUser = GetLoggedUser(tenant);
+            if (loggedUser != null)
+                return loggedUser.SecurityLevel;
+            else
+                return null;
+        }
 
+        private User GetLoggedUser(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            UserRepository userRepository = new UserRepository(tenant);
+            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, false);
+            return loggedUser;
+        }
         private IQueryable<LedgerTransaction> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<LedgerTransaction> iQueryable, int tenant)
         {
             return iQueryable;
