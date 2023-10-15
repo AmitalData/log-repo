@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit;
+using Logitude.Accounting.Data.Enums;
 
 [assembly: InternalsVisibleTo("Your.Test.Assembly.Name")]
 
@@ -126,18 +127,18 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             Storno.AccountingEntityCode = _JournalPM.AccountingEntityCode;
-            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityCode))
+            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityCode) && Storno.AccountingEntityCode != AccountingEntityValues.Revaluation)
             {
                 Storno.AccountingEntityCode = stornoOverrideM.AccountingEntityCode;
             }
             Storno.AccountingEntityId = _JournalPM.AccountingEntityId;
-            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityId))
+            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityId) && Storno.AccountingEntityCode != AccountingEntityValues.Revaluation)
             {
                 Storno.AccountingEntityId = stornoOverrideM.AccountingEntityId;
             }
 
             Storno.AccountingEntityReference = _JournalPM.AccountingEntityReference;
-            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityReference))
+            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityReference) && Storno.AccountingEntityCode != AccountingEntityValues.Revaluation)
             {
                 Storno.AccountingEntityReference = stornoOverrideM.AccountingEntityReference;
             }
