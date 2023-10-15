@@ -17,6 +17,7 @@ import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARP
 import { ARPaymentPMService } from 'Invoice/Services/StandardPMs/ARPaymentPMService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { JournalValidator } from 'Accounting/Validators/JournalValidator';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 declare var window: any;
 
@@ -262,63 +263,53 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         confirmWindow.WindowClosed.subscribe((event) => {
             
             if (confirmWindow.Yes) {
-                // TODO: check date now hear
-
-                const AccountingDate = new Date();
+               
+                const dateObject = this.GetTodayDate();
                 
-                // this.ValidateDates(Date.now(), "DocumentDate");
-                debugger
-
-                this.ReturnChequeToCustomer(cheque);
+                const isOpenMonth = this.ValidateDates(dateObject, "AccountingDate");
+                if(isOpenMonth) {
+                    this.ReturnChequeToCustomer(cheque);
+                }
+                else {
+                    let messWindow = new MessageWindow();
+                    messWindow.Show("חודש סגור");
+                    messWindow.WindowClosed.subscribe(() => {
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
+                    });
+                }
             }
         });
-
+    }
+    
+    private GetTodayDate(): Date {
+        const AccountingDate = new Date();
+        const year = AccountingDate.getFullYear(); // Get the year (e.g., 2023)
+        const month = AccountingDate.getMonth() + 1; // Get the month (0-indexed, so add 1)
+        const day = AccountingDate.getDate(); // Get the day of the month
+        const todayDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+        const dateObject = new Date(todayDate);
+        return dateObject;
     }
     AccountingPeriods: AccountingPeriodList[] = [];
 
     private async ValidateDates(value:Date, fieldName:string) {
-        debugger
-        if (fieldName == "AccountingDate") {
-            this.AccountingPeriods=null;
-            await this.GetAccountingPeriods();
-            var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
-            if (accountingPeriod) {
+        this.AccountingPeriods=null;
+        await this.GetAccountingPeriods();
+        var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
+        if (accountingPeriod) {
 
-                var month = value.getMonth() + 1;
+            var month = value.getMonth() + 1;
 
-                // Valid Month => (ClosedMonth < month <= OpenMonth)
-                if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
-
-                    JournalValidator.SetAccountingDateInValid=false;
-
-                } else { // invalid (closed month)
-
-                    // push the error to errors list
-                    JournalValidator.SetAccountingDateInValid=true;
-
-                    this.EntityPM.AccountingDate = value;
-
-                    return;
-                }
+            // Valid Month => (ClosedMonth < month <= OpenMonth)
+            if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
+                return true;
+            } else { // invalid (closed month)
+                return false;
             }
         }
-          else  if (fieldName != "DueDate") {
-                //FUTURE DATE VALIDATION
-                if (value > DateTool.GetCurrentDateTimeAsUtc()) {
-                    var msg = TextCodeTranslator.Translate("Journal.M.FutureDateForbidden");
-                    this.UIProperties.SetValidity(fieldName, this.ObjectTableName, false, msg);
-
-                    // push the error to errors list
-                   // this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(msg);
-                    if (fieldName == "AccountingDate") this.EntityPM.AccountingDate = value;
-                    return;
-                } else {
-                  //  this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
-                    this.UIProperties.SetValidity(fieldName, this.ObjectTableName, true, "OK");
-                }
-            }
-
+        return false;
     }
+    
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
 
     async GetAccountingPeriods() {
