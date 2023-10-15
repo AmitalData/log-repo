@@ -43,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;7b68&quot;"
+  Code="&quot;c414&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -991,6 +991,11 @@
       Name="&quot;Select More Lines&quot;"
       SearchFields="&quot;SML, Select More Lines&quot;"
       Description="&quot;Select 2000 Lines &quot;" />
+    <Record
+      Code="&quot;MC1&quot;"
+      Name="&quot;IsMulti With ReconcileMethodCode Equal One&quot;"
+      SearchFields="&quot;MC1&quot;"
+      Description="&quot;לאפשר הגדרת כרטיס מולטי ככרטיס שמותאם במטז&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
