@@ -972,6 +972,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SML, Select More Lines", 
                 Description = "Select 2000 Lines ", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "MC1", 
+                Name = "IsMulti With ReconcileMethodCode Equal One", 
+                SearchFields = "MC1", 
+                Description = "לאפשר הגדרת כרטיס מולטי ככרטיס שמותאם במטז", 
+			});
 			
             return all;
        }

@@ -257,7 +257,7 @@ export class GLAccountMenuButtonsHandler {
                 //    logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Reconcile"); //"Reconcile";
                 //  !IsEditComponent && !IsFullScreen && !IsHideWindowMargin
                 logitudeWindow.IsFullScreen = true;
-                if (this.EntityPM?.IsMultiCurrency && this.EntityPM?.ReconcileMethodCode == "1"){
+                if (this.EntityPM?.IsMultiCurrency && this.EntityPM?.ReconcileMethodCode == "1" && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "MC1")[0]){
                     windowArgs.IsMultiWithReconcileMethodCodeEqualOne = true;
                 }
                 this.FillPaymentTermName(windowArgs); 
