@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -78,7 +79,9 @@ namespace Logitude.Accounting.BL.CoreBL
                      {
                          ParentAccId = descendants.ParentAccountId,
                          DescAccId = descendants.Id,
-                     });
+						 DescBalanceInLocalCurrency = 0
+
+					 });
 
 
                 var dbAllDescendants =
@@ -92,7 +95,8 @@ namespace Logitude.Accounting.BL.CoreBL
                      select new GLAccountDescMDatasDTO()
                      {
                          ParentAccId = g.Key,
-                         DescBalanceInLocalCurrency = g.Sum(r => r.BalanceInLocalCurrency),
+						 DescAccId = null,
+						 DescBalanceInLocalCurrency = g.Sum(r => r.BalanceInLocalCurrency),
                          //DescInterestOpenBalance = g.Sum(r => r.InterestOpenBalance),
                      });
 
@@ -129,9 +133,16 @@ namespace Logitude.Accounting.BL.CoreBL
                         select new InterestReportDiff
                         {
                             AccountId = intRep.GLAccountId,
-                            InterestOpenBalance = intRep.OpenBalance.HasValue ? intRep.OpenBalance.Value : 0m,
-                        }
-                     );
+							LocalName = acc.LocalName,
+                            DisplayNumber = acc.DisplayNumber,
+                            Tenant = acc.Tenant,
+							BalanceInLocalCurrency = acc.BalanceInLocalCurrency,
+							InterestOpenBalance = intRep.OpenBalance.HasValue ? intRep.OpenBalance.Value : 0m,
+							FutureInterestTransactionsBalance =  0m,
+							CalculatedInterestBalance = 0m,
+							Difference = 0m,
+						}
+					 );
 
 
                 var calcInterestOpenBalancesDesc =
@@ -143,7 +154,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         select new InterestReportDiffDesc
                         {
                             ParentAccountId = descendants.ParentAccId,
-                            DescInterestOpenBalance = intRep.OpenBalance.HasValue ? intRep.OpenBalance.Value : 0m,
+							DescFutureInterestTransactionsBalance = 0,
+							DescInterestOpenBalance = intRep.OpenBalance.HasValue ? intRep.OpenBalance.Value : 0m,
                         }
                      );
 
@@ -159,9 +171,14 @@ namespace Logitude.Accounting.BL.CoreBL
                             LocalName = acc.LocalName,
                             DisplayNumber = acc.DisplayNumber,
                             Tenant = acc.Tenant,
-                            InterestOpenBalance = ad != null ? acc.InterestOpenBalance + ad.DescInterestOpenBalance : acc.InterestOpenBalance, 
-                        }
-                     );
+							BalanceInLocalCurrency = acc.BalanceInLocalCurrency,
+
+							InterestOpenBalance = ad != null ? acc.InterestOpenBalance + ad.DescInterestOpenBalance : acc.InterestOpenBalance,
+							FutureInterestTransactionsBalance = acc != null ? acc.FutureInterestTransactionsBalance : 0m,
+							CalculatedInterestBalance = 0m,
+							Difference = 0m,
+						}
+					 );
 
 
 
@@ -181,8 +198,15 @@ namespace Logitude.Accounting.BL.CoreBL
                         select new InterestReportDiff
                         {
                             AccountId = g.Key,
-                            FutureInterestTransactionsBalance = g.Sum(r => r.LocalAmount)
-                        }
+							LocalName = "",
+							DisplayNumber = "",
+							Tenant = _Tenant,
+							BalanceInLocalCurrency = 0,
+							InterestOpenBalance = 0,
+							FutureInterestTransactionsBalance = g.Sum(r => r.LocalAmount),
+							CalculatedInterestBalance = 0m,
+							Difference = 0m,
+						}
                      );
 
 
@@ -196,9 +220,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         select new InterestReportDiffDesc
                         {
                             ParentAccountId = g.Key,
-                            DescFutureInterestTransactionsBalance = g.Sum(r => r.LocalAmount)
-                        }
-                     );
+							DescFutureInterestTransactionsBalance = g.Sum(r => r.LocalAmount),
+							DescInterestOpenBalance =  0m,
+						}
+					 );
 
                 var calcFutureInterestTransInclDesc =
                      (
@@ -212,8 +237,15 @@ namespace Logitude.Accounting.BL.CoreBL
                             LocalName = acc.LocalName,
                             DisplayNumber = acc.DisplayNumber,
                             Tenant = acc.Tenant,
-                            FutureInterestTransactionsBalance = ad != null ? acc.FutureInterestTransactionsBalance + ad.DescFutureInterestTransactionsBalance : acc.FutureInterestTransactionsBalance,
-                        }
+							BalanceInLocalCurrency = acc.BalanceInLocalCurrency,
+							InterestOpenBalance = acc.InterestOpenBalance,
+							FutureInterestTransactionsBalance = ad != null ? acc.FutureInterestTransactionsBalance + ad.DescFutureInterestTransactionsBalance : acc.FutureInterestTransactionsBalance,
+							CalculatedInterestBalance = 0m,
+							Difference = 0m,
+						}
+
+
+						
                      );
 
 
@@ -238,7 +270,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         Tenant = acc.Tenant,
                         BalanceInLocalCurrency = acc.BalanceInLocalCurrency,
                         InterestOpenBalance = ao != null ? ao.InterestOpenBalance : 0m,
-                    });
+						FutureInterestTransactionsBalance = ao != null ? ao.FutureInterestTransactionsBalance : 0m,
+						CalculatedInterestBalance = 0m,
+						Difference = 0m,
+					});
 
                 var qAccOpenFuture = (
                     from aco in qAccOpen
@@ -255,7 +290,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         BalanceInLocalCurrency = aco.BalanceInLocalCurrency,
                         InterestOpenBalance = aco.InterestOpenBalance,
                         FutureInterestTransactionsBalance = aof != null ? aof.FutureInterestTransactionsBalance : 0m,
-                    });
+						CalculatedInterestBalance = 0m,
+						Difference = 0m,
+					});
 
 
                 ////////////////
