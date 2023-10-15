@@ -26,11 +26,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(LedgerTransactionPM entityPM, EntityPM entityParentPM)
         {
-          if (entityPM.IsReconciled == null)
+            if (entityPM.IsReconciled == null)
             {
                 entityPM.IsReconciled = false;
             }
-           //this.UpdateBankAccount(entityPM);
+            //this.UpdateBankAccount(entityPM);
 
         }
 
@@ -48,6 +48,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     entityPM.Reference2 = journal.JournalNumber;
                 }
+            }
+            if (entityPM.Mark == true && (entityPM.IsReconciled || entityPM.InReconcileProgress))
+            {
+                entityPM.Mark = false;
             }
 
         }
