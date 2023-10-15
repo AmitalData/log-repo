@@ -1006,6 +1006,11 @@ class JournalLineModel extends BaseComponent {
         if (this.JournalLinePM.CurrencyId != "Multi") {
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
         }
+        
+        // When copy journal- check if AmountsAndCurrencies is false and SetEnabled True on CurrencyId LOV Input 
+        if(this.EntityPM.Copied && !this.EntityPM.AmountsAndCurrencies && AppTool.IsNullOrEmpty(this.JournalLinePM.CurrencyId)){
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+        }
     }
 
     get AccountingDate() { return this.JournalLinePM.AccountingDate; }
