@@ -1085,7 +1085,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             //
 
             LedgerTransactionRepository repo = new LedgerTransactionRepository(tenant);
-            int count = repo.getRecoCount(glAccountId);
+            int count = repo.getRecoCount(glAccountId,tenant);
             return count;
         }
 
