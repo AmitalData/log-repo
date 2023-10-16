@@ -184,11 +184,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      into originalDeclarations
                                                      from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
 
-                                                     join recDisplayDeclarations in context.Declarations.Where(x => x.AmendmentDontDisplayInList != true && !string.IsNullOrEmpty(x.AmendmentOriginalDeclartation))
-                                                    .Select(x => new { x.DeclarationNumber, x.AmendmentOriginalDeclartation })
-                                                    on a.AmendmentOriginalDeclartation equals recDisplayDeclarations.AmendmentOriginalDeclartation
-                                                    into displayDeclarations
-                                                     from myJoinDisplayDeclarations in displayDeclarations.DefaultIfEmpty()
+                                                    // join recDisplayDeclarations in context.Declarations.Where(x => x.AmendmentDontDisplayInList != true && !string.IsNullOrEmpty(x.AmendmentOriginalDeclartation))
+                                                    //.Select(x => new { x.DeclarationNumber, x.AmendmentOriginalDeclartation })
+                                                    //on a.AmendmentOriginalDeclartation equals recDisplayDeclarations.AmendmentOriginalDeclartation
+                                                    //into displayDeclarations
+                                                    // from myJoinDisplayDeclarations in displayDeclarations.DefaultIfEmpty()
 
                                                      join AmendmentRequestStatus in context.AmendmentRequestStatuses
                                                      .Select(x => new { x.Code, x.LocalName })
@@ -204,7 +204,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          CustomerName = a.IsCourierDeclaration ? a.ImporterName : (a.CustomerCard.LocalName != null ? a.CustomerCard.LocalName : a.CustomerCard.EnglishName),
                                                          CustomFileNo = a.CustomFileNo,
                                                          DealValue = a.DealValue,
-                                                         DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : (!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
+                                                        DeclarationNumber = !string.IsNullOrEmpty(a.DeclarationNumber) ? a.DeclarationNumber : myJoinOriginalDeclaration.DeclarationNumber,//(!string.IsNullOrEmpty(myJoinOriginalDeclaration.DeclarationNumber) ? myJoinOriginalDeclaration.DeclarationNumber : myJoinDisplayDeclarations.DeclarationNumber),
                                                          ReferentUserName = a.ReferentUser == null ? null : a.ReferentUser.Code,
                                                          ReferentUserId = a.ReferentUserId,
                                                          EntitleImporterCountryName = a.EntitleImporterCountry.LocalName,

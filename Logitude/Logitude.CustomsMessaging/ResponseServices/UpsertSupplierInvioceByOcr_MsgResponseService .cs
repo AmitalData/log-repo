@@ -47,6 +47,7 @@ using Logitude.Customs.Data.EntityKeys;
 using static Logitude.Customs.BL.Messaging.Customs.SupplierInvoiceByOcr;
 using static Logitude.CustomsMessaging.ResponseServices.UpsertSupplierInvioceByOcr_MsgResponseService;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Text.RegularExpressions;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -74,7 +75,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 try
                 {
-                    SupplierInvoiceOcr convertJson = JsonConvert.DeserializeObject<SupplierInvoiceOcr>(myOcrDocument.JsonData);//json מיפוי
+                    string pattern = @"[\x00-\x08\x0B\x0C\x0E-\x1F]";
+                    string cleanedJson = Regex.Replace(myOcrDocument.JsonData, pattern, "");
+                    SupplierInvoiceOcr convertJson = JsonConvert.DeserializeObject<SupplierInvoiceOcr>(cleanedJson);//json מיפוי
 
                     if (convertJson != null)
                     {
@@ -166,6 +169,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this.MyResponseData.UserMessage = TranslateTextsClass.Translate(InvoiceSuccess, customResponse.tenant, true);
                             if (Result.invalidValuesRemarks != null)
                                 this.MyResponseData.Remarks = "Invalid value, not exist in table - " + Result.invalidValuesRemarks;
+                            CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
+                            CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
+                            if(requestsSheetPM != null)
+                            {
+                                MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(5));
+                            }
+                            
                         }
                         catch (System.Exception ex)
                         {
@@ -293,7 +303,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customsCountry == null)
                     invalidValuesRemarks += $" FieldJson: buyer_country, FieldName: BuyerCountryCode, InvalidValueReceived: {buyerCountry};";
                 else
-                    mySupplierInvoice.BuyerCountryCode = buyerCountry;
+                    mySupplierInvoice.BuyerCountryCode = customsCountry.Code;
             }
             else if (dic.TryGetValue("shipto_country", out string shiptoCountry))
             {
@@ -302,7 +312,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customsCountry == null)
                     invalidValuesRemarks += $" FieldJson: shipto_country, FieldName: BuyerCountryCode, InvalidValueReceived: {shiptoCountry};";
                 else
-                    mySupplierInvoice.BuyerCountryCode = shiptoCountry;
+                    mySupplierInvoice.BuyerCountryCode = customsCountry.Code;
 
             }
             if (dic.TryGetValue("currency", out string currency))
@@ -312,7 +322,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (CurrencyType == null)
                     invalidValuesRemarks += $" FieldJson: currency, FieldName: InvoiceCurrencyTypeCode, InvalidValueReceived: {currency};";
                 else
-                    mySupplierInvoice.InvoiceCurrencyTypeCode = new string(currency.Where(char.IsLetter).ToArray());
+                    mySupplierInvoice.InvoiceCurrencyTypeCode = CurrencyType.Code;
             }
             if (dic.TryGetValue("invoice_amount", out string invoiceAmount) && decimal.TryParse(invoiceAmount, out decimal amount))
             {
@@ -329,7 +339,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (termsOfSaleType == null)
                     invalidValuesRemarks += $" FieldJson: incoterrns, FieldName: IncotermCode, InvalidValueReceived: {incoterrns};";
                 else
-                    mySupplierInvoice.IncotermCode = incoterrns;
+                    mySupplierInvoice.IncotermCode = termsOfSaleType.Code;
             }
 
             //mapping more from SupplierInvioceExportDefaults
@@ -409,7 +419,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (MeasurmentUnit == null)
                             invalidValuesRemarks += $" FieldJson: Item_unit, FieldName: InvoiceQuantityType, InvalidValueReceived: {ItemUnit};";
                         else
-                            supplierInvoiceItemPM.InvoiceQuantityType = ItemUnit;
+                            supplierInvoiceItemPM.InvoiceQuantityType = MeasurmentUnit.Code;
                     }
                     
                     if (string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode) && !string.IsNullOrEmpty(originCountryField))

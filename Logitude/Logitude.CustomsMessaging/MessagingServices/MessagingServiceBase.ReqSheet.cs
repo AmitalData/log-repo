@@ -244,7 +244,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
 
         }
-        public object ReQueue(int tenant, string customsRequestsSheetId,string parentId=null)
+        public object ReQueue(int tenant, string customsRequestsSheetId,string parentId=null, DateTime? futureSendDateTime = null)
         {
 
             using (var scope = TransactionFactory.GetTransaction())
@@ -256,7 +256,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     case SheetStatusEnum.Received:
                     case SheetStatusEnum.AnalyzeFailed:
-                        _CustomsRequestsSheetService.ReAnalyzeStatusReceivedCreateQ();
+                        _CustomsRequestsSheetService.ReAnalyzeStatusReceivedCreateQ(futureSendDateTime);
 
                         break;
 
@@ -1705,11 +1705,12 @@ Exception:" + ee.Message
                     if (futureSendDateTime != null)
                     {
                         defaultRequestParamsFromCustomsResponse.FutureSendDateTime = futureSendDateTime;
-
                     }
+                    
+                    defaultRequestParamsFromCustomsResponse.TransmitionDateTime = selectedDCAFile.TimStamp;
+                    
                     defaultRequestParamsFromCustomsResponse.LoggingEnabled = true;
 
-                    defaultRequestParamsFromCustomsResponse.TransmitionDateTime = selectedDCAFile.TimStamp;
 
                     if (customsResponse.GetResponseContentHeader() == null)
                     {

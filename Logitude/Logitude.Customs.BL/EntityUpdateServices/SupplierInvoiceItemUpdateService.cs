@@ -26,6 +26,7 @@ using System.Data.Entity;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
+using Logitude.Customs.Data.EntityMapping;
 /*using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;*/
@@ -181,6 +182,22 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 entityPM.ItemDescription = clientItem?.ItemDescription;
                             if (string.IsNullOrEmpty(entityPM.OriginCountryCode))
                                 entityPM.OriginCountryCode = clientItem?.OriginCountryCode;
+
+                            if (!string.IsNullOrEmpty(entityPM.ClassificationCode))
+                            {
+
+                                CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(entityPM.Tenant);
+                                string quantityType = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(entityPM.ClassificationCode, entityPM.Tenant, true);
+                                if (!string.IsNullOrEmpty(quantityType))
+                                {
+                                    entityPM.StatisticQuantityType = quantityType;
+                                    entityPM.StatisticQuantity = entityPM?.InvoiceQuantity;
+                                    entityPM.ItemAdditionalStatus = true;
+                                    if (string.IsNullOrEmpty(entityPM.InvoiceQuantityType))
+                                        entityPM.InvoiceQuantityType = quantityType;
+
+                                }
+                            }
                         }
                     }
 
@@ -197,6 +214,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
 
                     }
+                   
                 }
           
                
