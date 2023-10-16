@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "3fdafcb1b8561c681cfebaf6168a92c2";
+		public const string HashString = "022f6aeb37c7c9ff72e82eaba83ede72";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -11562,6 +11562,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Obligo",
 					  						DefaultText =  "Obligo",
+					  						FullLocalDefaultText =  "אובליגו",
 					  						ListFieldLable =  "ObligoListLable",
 					  						ListLableDefaultText =  "Obligo",
 					  						ListLocalDefaultText =  "אובליגו",
