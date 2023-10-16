@@ -3463,7 +3463,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     }
                 }
 
-                CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false, tenant);
+                CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingleByDocFileId(extDocPm.Id,tenant);
                 if (customsDoc != null)
                 {
                     extDocPm.CustomsDocumentTypeName = customsDoc.DocumentTypeName;
@@ -3471,6 +3471,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     extDocPm.IsMetaDataReady = customsDoc.IsMetaDataReady;
                     extDocPm.CustomsDocumentStatusCode = customsDoc.DocumentStatusCode;
                     extDocPm.ExternalAttachmentId = customsDoc.ExternalAttachmentId;
+                    extDocPm.OcrStatusCode = customsDoc.OcrStatusCode;
+                    extDocPm.OcrScore = customsDoc.OcrScore;
+                    extDocPm.OcrReference = customsDoc.OcrReference;
+                    extDocPm.OcrNotConnect = customsDoc.OcrNotConnect;
+
                 }
 
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValuesList;//.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
