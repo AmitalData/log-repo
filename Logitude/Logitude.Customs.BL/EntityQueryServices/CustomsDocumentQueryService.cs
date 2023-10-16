@@ -399,14 +399,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
 		public CustomsDocumentPM GetDocumentsByDocsFileIdAndTypeClosing(List<string> docsFileId, int tenant)
-		{
-			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+		{			
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+			CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(tenant);
+
+			var customDocumentTypes = customDocumentTypeQueryService.GetCustomDocumentTypesByTenant(tenant).Where(c=>c.PointerLevel == "C").Select(x=>x.Code);
 
 			var customsDocumentPM =
 				  (from cd in context.CustomsDocuments
-				   join cdt in context.CustomDocumentTypes 
-                   on cd.DocumentTypeCode equals cdt.Code 
-				   where cd.Tenant == tenant && docsFileId.Contains(cd.DocumentsFilingId) && cdt.PointerLevel == "C" && !string.IsNullOrEmpty(cd.CustomsDocId) && cd.DocumentStatusCode == "1"
+				   join cdt in customDocumentTypes
+				   on cd.DocumentTypeCode equals cdt 
+				   where cd.Tenant == tenant && docsFileId.Contains(cd.DocumentsFilingId)  && !string.IsNullOrEmpty(cd.CustomsDocId) && cd.DocumentStatusCode == "1"
 				   select new CustomsDocumentPM
                    {
 					   Tenant = cd.Tenant,

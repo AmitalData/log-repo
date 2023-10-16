@@ -37,15 +37,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-        //public List<CustomDocumentTypePM> GetCustomDocumentTypes(List<string> codes)
-        //{
-        //    var customDocumentTypes = repository.GetAll().Where(x => codes.Contains(x.Code)).ToList();
-        //    return customDocumentTypes.Select(poco => this.GetEntityPM(poco)).ToList();
+		//public List<CustomDocumentTypePM> GetCustomDocumentTypes(List<string> codes)
+		//{
+		//    var customDocumentTypes = repository.GetAll().Where(x => codes.Contains(x.Code)).ToList();
+		//    return customDocumentTypes.Select(poco => this.GetEntityPM(poco)).ToList();
 
-        //}
+		//}
+		public List<CustomDocumentTypePM> GetCustomDocumentTypesByTenant(int tenant)
+		{		
+			var customDocumentTypes = repository.GetAll().ToList();
+			return customDocumentTypes.Select(poco => this.GetEntityPM(poco)).ToList();
 
-
-    }
+		}
+	
+	}
 
 }
 	 
