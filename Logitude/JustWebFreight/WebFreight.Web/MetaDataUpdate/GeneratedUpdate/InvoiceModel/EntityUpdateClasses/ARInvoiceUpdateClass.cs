@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "ade070ecab524d1c113748efc1170378";
+		public const string HashString = "9b1558a1442362d6b301cbaa60a3e5ca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6776,7 +6776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
-					  						MultiLine =  false,
+					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RequestedPaymentMethodID",
@@ -6802,6 +6802,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestedPaymentMethodID",
 					  						DefaultText =  "Requested Payment Method",
+					  						FullLocalDefaultText =  "שיטת תשלום מבוקשת",
+					  						ListFieldLable =  "RequestedPaymentMethodIDListLable",
+					  						ListLableDefaultText =  "RequestedPaymentMethod",
+					  						ListLocalDefaultText =  "שיטת תשלום מבוקשת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
