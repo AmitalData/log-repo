@@ -570,11 +570,7 @@
                                     <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                         <span>{{item.CreditAccountNumber}}</span>
                                     </div>
-                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                        <LogDatePicker [ObjectFieldName]="'CreditAccountNumber'" [ObjectTableName]="ObjectTableName"
-                                                    [DataContext]="item" [HideColumns]="true" [FocusOnMe]="true"></LogDatePicker>
-
-                                    </div>
+                             
                                 </log-cell-template>
                             </ng-template>
                         </log-column>
@@ -621,11 +617,7 @@
                                     <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                         <span>{{item.DebitAccountNumber}}</span>
                                     </div>
-                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                        <LogDatePicker [ObjectFieldName]="'DebitAccountNumber'" [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="item" [HideColumns]="true" [FocusOnMe]="true"></LogDatePicker>
-
-                                    </div>
+                                 
                                 </log-cell-template>
                             </ng-template>
                         </log-column>
