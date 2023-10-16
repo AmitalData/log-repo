@@ -489,6 +489,34 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     async SendButtonClicked(event: CustomSendOptionsArgs) {
         
 
+        debugger
+        if (this.ModificationsList.Length > 0) {
+
+
+            let counter = 0;
+            this.ModificationsList.Collection.forEach((mod) => {
+                counter+=1;
+                if(!AppTool.IsNullOrEmpty(mod.InvoiceNumber)){
+                    if( AppTool.IsNullOrEmpty(mod.TypeName)){
+                        var msg = `Line ${counter}- ` ;
+                        msg += TextCodeTranslator.Translate("Customs.ExportClosindData.O.TypeName");
+                        this.ValidationErrors.push(msg);
+                    }
+                    if( AppTool.IsNullOrEmpty(mod.CurrencyTypeCode)){
+                        var msg = `Line ${counter}- ` ;
+                        msg += TextCodeTranslator.Translate("Customs.ExportClosindData.O.CurrencyTypeCode");
+                        this.ValidationErrors.push(msg);
+                    }
+                    if(AppTool.IsNullOrEmpty(mod.Amount)){
+                        var msg = `Line ${counter}- ` ;
+                        msg +=  TextCodeTranslator.Translate("Customs.ExportClosindData.O.Amount");
+                        this.ValidationErrors.push(msg);
+                    }
+                    this.FillValidationErrors("Errors");
+                }
+            });
+        }
+
         if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
             var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypMandatory")
 
