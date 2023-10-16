@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "42007f73f86798e5a74b4d8cc9d01f40";
+		public const string HashString = "7bf7ba552155cb3d930f0803c27ce152";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "123b",
+			      				    Code =  "5e14",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2193,12 +2193,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsExportClosindDataOCheckingAttachmentCertificates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportClosindData.O.CheckingAttachmentCertificates", DefaultText = "Checking the attachment of certificates of origin",LocalDefaultText = @"בדיקת צירוף תעודות מקור", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsSpecialActivityRequestFLoadingDateTimeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SpecialActivityRequest.F.LoadingDateTimeMandatory", DefaultText = "Loading Date Time field is mandatory",LocalDefaultText = @"תאריך טעינה הוא שדה חובה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CustomsGeneralTextCode_CustomsExportClosindDataOTypeName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportClosindData.O.TypeName", DefaultText = "TypeName field is mandatory",LocalDefaultText = @"קוד סוג הוא שדה חובה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CustomsGeneralTextCode_CustomsExportClosindDataOCurrencyTypeCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportClosindData.O.CurrencyTypeCode", DefaultText = "CurrencyTypeCode field is mandatory",LocalDefaultText = @"סוג מטבע הוא שדה חובה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CustomsGeneralTextCode_CustomsExportClosindDataOAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportClosindData.O.Amount", DefaultText = "Amount field is mandatory",LocalDefaultText = @"סכום הוא שדה חובה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

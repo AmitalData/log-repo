@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;123b&quot;"
+  Code="&quot;5e14&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5721,24 +5721,6 @@
       Code="&quot;Customs.SpecialActivityRequest.F.LoadingDateTimeMandatory&quot;"
       DefaultText="&quot;Loading Date Time field is mandatory&quot;"
       LocalDefaultText="&quot;תאריך טעינה הוא שדה חובה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.ExportClosindData.O.TypeName&quot;"
-      DefaultText="&quot;TypeName field is mandatory&quot;"
-      LocalDefaultText="&quot;קוד סוג הוא שדה חובה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.ExportClosindData.O.CurrencyTypeCode&quot;"
-      DefaultText="&quot;CurrencyTypeCode field is mandatory&quot;"
-      LocalDefaultText="&quot;סוג מטבע הוא שדה חובה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.ExportClosindData.O.Amount&quot;"
-      DefaultText="&quot;Amount field is mandatory&quot;"
-      LocalDefaultText="&quot;סכום הוא שדה חובה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
