@@ -307,7 +307,7 @@
 
                         <td style="top:10px;">
                             <div style="width:90px">
-                                <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1" [max]="maxSecurityLevel" [allowNull]="true" [isDisabled]="!IsSecurityLevelOK || journalDisabled"></NumberInput>
+                                <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1" [max]="maxSecurityLevel" [allowNull]="true" [isDisabled]="!IsSecurityLevelOK || journalDisabled || !IsSecurityLevelVisible"></NumberInput>
                             </div>
                         </td>
                         <td>

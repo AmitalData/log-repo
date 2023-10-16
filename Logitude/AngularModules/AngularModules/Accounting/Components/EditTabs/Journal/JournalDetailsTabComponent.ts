@@ -195,28 +195,25 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
                 if (response != null) {
                     var response = response.Result;
+
+                    this.IsSecurityLevelVisible = response.IsSecurityLevelActivated;
+
                     if (response.IsSecurityLevelActivated && userSecurityLevel >= 1) {
-                        this.IsSecurityLevelVisible = true;
                         if (journalSecurityLevel > userSecurityLevel) {
                             this.IsSecurityLevelOK = false;
-                            this.IsSecurityLevelVisible = false;
-                        }
+                         }
                     }
                     else if (response.IsSecurityLevelActivated && userSecurityLevel == 0 && journalSecurityLevel > 0) {
                         this.IsSecurityLevelOK = false;
-                        this.IsSecurityLevelVisible = false;
-                    }
+                     }
                     else {
-                        this.IsSecurityLevelVisible = false;
-                    }
+                     }
                 }
 
                 if (this.IsSecurityLevelOK)
                     this.maxSecurityLevel = userSecurityLevel;
             });
-        //} else {
-        //    this.IsSecurityLevelVisible = false;
-        //}
+     
     }
 
 
