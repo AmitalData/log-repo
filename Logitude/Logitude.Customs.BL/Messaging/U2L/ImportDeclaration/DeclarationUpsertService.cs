@@ -1097,7 +1097,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			if (!string.IsNullOrEmpty(IncotermCode))
 			{
 				var incotemrsFileValidationList = incotemrsFileValidationQueryService.GetAllFromCache();
-				var incotemrsFileValidationPM = incotemrsFileValidationList.Where(x => x.Tenant == _MyDeclarationPM.Tenant && !x.Inactive && x.LeadDocumentTypeID == "2" && x.EnglishName == IncotermCode && x.IsFreightCharge).FirstOrDefault();
+				var incotemrsFileValidationPM = incotemrsFileValidationList.Where(x => !x.Inactive && x.LeadDocumentTypeID == "2" && x.EnglishName == IncotermCode && x.IsFreightCharge).FirstOrDefault();
 
 				if (incotemrsFileValidationPM != null)
 				{
