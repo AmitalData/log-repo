@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "d3890b522979577509038c3e7838b020";
+		public const string HashString = "022f6aeb37c7c9ff72e82eaba83ede72";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -854,10 +854,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevenueExpenseType",
 					  						DefaultText =  "Revenue/Expense ",
-					  						FullLocalDefaultText =  "סוג חשבון",
+					  						FullLocalDefaultText =  "האם מתאפס בהעברת שנה?",
 					  						ListFieldLable =  "RevenueExpenseTypeListLable",
 					  						ListLableDefaultText =  "Revenue/Expense ",
-					  						ListLocalDefaultText =  "סוג חשבון",
+					  						ListLocalDefaultText =  "האם מתאפס בהעברת שנה?",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "RevenueExpenseType",
 					  						NavigationPropertyName =  "RevenueExpense",
@@ -11562,6 +11562,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Obligo",
 					  						DefaultText =  "Obligo",
+					  						FullLocalDefaultText =  "אובליגו",
 					  						ListFieldLable =  "ObligoListLable",
 					  						ListLableDefaultText =  "Obligo",
 					  						ListLocalDefaultText =  "אובליגו",
