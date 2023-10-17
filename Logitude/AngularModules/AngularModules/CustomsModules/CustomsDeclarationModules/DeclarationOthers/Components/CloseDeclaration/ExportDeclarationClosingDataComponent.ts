@@ -108,7 +108,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
     SetWindowArgs(args: any) {
-        this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.ExportDeclarationClosingData").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceModification").subscribe((response: any) => {
                 this.DecPM = args.EntityPM;
                 this.declarationExtendedPMService.GetSingleFullData(this.DecPM.Id).subscribe((response1: ServiceResponse) => {
