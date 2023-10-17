@@ -1138,7 +1138,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 							item.Amount = Convert.ToDecimal(_AmitalCustomsFile.Closing.FreightAmount);
 						}
 
-						item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+						item.ChangeSetOp = ChangeSetOperation.Insert;
+						_MyDeclarationPM.SupplierInvoices[0].ChangeSetOp = ChangeSetOperation.Update;
 						_MyDeclarationPM.SupplierInvoices[0].SupplierInvoiceModifications.Add(item);
 
 
