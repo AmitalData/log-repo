@@ -39,7 +39,7 @@
   NewWizardControlName="&quot;&quot;"
   LocalDefaultText="&quot;ExportDeclarationClosingData&quot;"
   DefaultText="&quot;ExportDeclarationClosingData&quot;"
-  Code="&quot;ee03&quot;"
+  Code="&quot;f0e8&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -1291,19 +1291,19 @@
   <DataContracts />
   <AdditionalTextCodes>
     <TextCode
-      Code="&quot;Customs.General.O.TypeName&quot;"
+      Code="&quot;Customs.ExportDeclarationClosingData.O.TypeName&quot;"
       DefaultText="&quot;TypeName field is mandatory&quot;"
       LocalDefaultText="&quot;קוד סוג הוא שדה חובה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.General.O.CurrencyTypeCode&quot;"
+      Code="&quot;Customs.ExportDeclarationClosingData.O.CurrencyTypeCode&quot;"
       DefaultText="&quot;CurrencyTypeCode field is mandatory&quot;"
       LocalDefaultText="&quot;סוג מטבע הוא שדה חובה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.General.O.Amount&quot;"
+      Code="&quot;Customs.ExportDeclarationClosingData.O.Amount&quot;"
       DefaultText="&quot;Amount field is mandatory&quot;"
       LocalDefaultText="&quot;סכום הוא שדה חובה&quot;"
       TextCodeTypeCode="&quot;O&quot;"

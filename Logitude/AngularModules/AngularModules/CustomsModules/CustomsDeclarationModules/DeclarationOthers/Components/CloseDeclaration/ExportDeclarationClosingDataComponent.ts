@@ -108,7 +108,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
     SetWindowArgs(args: any) {
-        this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.ExportDeclarationClosingData").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceModification").subscribe((response: any) => {
                 this.DecPM = args.EntityPM;
                 this.declarationExtendedPMService.GetSingleFullData(this.DecPM.Id).subscribe((response1: ServiceResponse) => {
@@ -488,8 +488,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
     async SendButtonClicked(event: CustomSendOptionsArgs) {
         
-
-        debugger
+       
         if (this.ModificationsList.Length > 0) {
 
 
@@ -499,24 +498,23 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 if(!AppTool.IsNullOrEmpty(mod.InvoiceNumber)){
                     if( AppTool.IsNullOrEmpty(mod.TypeName)){
                         var msg = `Line ${counter}- ` ;
-                        msg += TextCodeTranslator.Translate("Customs.ExportClosindData.O.TypeName");
+                        msg += TextCodeTranslator.Translate("Customs.ExportDeclarationClosingData.O.TypeName");
                         this.ValidationErrors.push(msg);
                     }
                     if( AppTool.IsNullOrEmpty(mod.CurrencyTypeCode)){
                         var msg = `Line ${counter}- ` ;
-                        msg += TextCodeTranslator.Translate("Customs.ExportClosindData.O.CurrencyTypeCode");
+                        msg += TextCodeTranslator.Translate("Customs.ExportDeclarationClosingData.O.CurrencyTypeCode");
                         this.ValidationErrors.push(msg);
                     }
                     if(AppTool.IsNullOrEmpty(mod.Amount)){
                         var msg = `Line ${counter}- ` ;
-                        msg +=  TextCodeTranslator.Translate("Customs.ExportClosindData.O.Amount");
+                        msg +=  TextCodeTranslator.Translate("Customs.ExportDeclarationClosingData.O.Amount");
                         this.ValidationErrors.push(msg);
                     }
                     this.FillValidationErrors("Errors");
                 }
             });
         }
-
         if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
             var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypMandatory")
 
