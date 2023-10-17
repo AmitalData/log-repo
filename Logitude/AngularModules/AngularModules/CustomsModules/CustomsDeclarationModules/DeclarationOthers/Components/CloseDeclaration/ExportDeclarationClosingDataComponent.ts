@@ -488,7 +488,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
     async SendButtonClicked(event: CustomSendOptionsArgs) {
         
-        debugger
+       
         if (this.ModificationsList.Length > 0) {
 
 
@@ -498,17 +498,17 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 if(!AppTool.IsNullOrEmpty(mod.InvoiceNumber)){
                     if( AppTool.IsNullOrEmpty(mod.TypeName)){
                         var msg = `Line ${counter}- ` ;
-                        msg += TextCodeTranslator.Translate("Customs.ExportClosindData.O.TypeName");
+                        msg += TextCodeTranslator.Translate("Customs.ExportDeclarationClosingData.O.TypeName");
                         this.ValidationErrors.push(msg);
                     }
                     if( AppTool.IsNullOrEmpty(mod.CurrencyTypeCode)){
                         var msg = `Line ${counter}- ` ;
-                        msg += TextCodeTranslator.Translate("Customs.ExportClosindData.O.CurrencyTypeCode");
+                        msg += TextCodeTranslator.Translate("Customs.ExportDeclarationClosingData.O.CurrencyTypeCode");
                         this.ValidationErrors.push(msg);
                     }
                     if(AppTool.IsNullOrEmpty(mod.Amount)){
                         var msg = `Line ${counter}- ` ;
-                        msg +=  TextCodeTranslator.Translate("Customs.ExportClosindData.O.Amount");
+                        msg +=  TextCodeTranslator.Translate("Customs.ExportDeclarationClosingData.O.Amount");
                         this.ValidationErrors.push(msg);
                     }
                     this.FillValidationErrors("Errors");
@@ -516,20 +516,23 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             });
         }
         if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
-            var msg = " ×©×“×” ×¡×•×’ ×ž×–×”×” ×ž×˜×¢×Ÿ ×©×“×” ×—×•×‘×”";
+            var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypMandatory")
+
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
         else {
             if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber)) {
-                var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×¨×�×©×•×Ÿ ×©×“×” ×—×•×‘×”";
+                var msg =  TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey1Mandatory")//" שדה מזהה מטען ראשון שדה חובה";
+
 
                 this.ValidationErrors.push(msg);
                 this.FillValidationErrors("Errors");
             }
             else {
                 if (AppTool.IsNullOrEmpty(this.FinalSecondCargoId) && !AppTool.IsNullOrEmpty(this.SecondCargoIdPlaceholder)) {
-                    var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™ ×©×“×” ×—×•×‘×”";
+                    var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey2Mandatory") //" ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™ ×©×“×” ×—×•×‘×”";
+
                     this.ValidationErrors.push(msg);
                     this.FillValidationErrors("Errors");
                 }
@@ -539,7 +542,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
                     if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-                        var msg = " ×©×“×” ×ª×�×¨×™×š ×˜×¢×™× ×” ×©×“×” ×—×•×‘×”";
+                        var msg =  TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.LoadingDateTimeMandatory");
+
 
                         this.ValidationErrors.push(msg);
                         this.FillValidationErrors("Errors");
@@ -729,7 +733,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
         windowArgs.CancelButtonVisibility = true
-        var windowTitle = "×‘×“×™×§×ª ×¦×™×¨×•×£ ×ª×¢×•×“×•×ª ×ž×§×•×¨";
+        var windowTitle = TextCodeTranslator.Translate("Customs.ExportClosindData.O.CheckingAttachmentCertificates");
+
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
         logWindow.Height = 400;
