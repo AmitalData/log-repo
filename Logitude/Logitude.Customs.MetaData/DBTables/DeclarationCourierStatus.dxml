@@ -224,6 +224,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ClassificationApproved"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"

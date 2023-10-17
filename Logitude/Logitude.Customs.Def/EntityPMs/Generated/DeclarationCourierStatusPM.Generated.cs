@@ -1780,6 +1780,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool classificationApproved ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ClassificationApproved  
+	   {
+	    
+	     get
+		{
+		   return classificationApproved;
+		 }
+		 set
+		 {
+		   if(classificationApproved != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClassificationApproved",OldValue=classificationApproved,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   classificationApproved=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -202,6 +202,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string StorageSiteStatusCodeText  { get; set; }
        [DataMember]
        public string IntegratorName  { get; set; }
+       [DataMember]
+       public bool ClassificationApproved  { get; set; }
    }
 
 }

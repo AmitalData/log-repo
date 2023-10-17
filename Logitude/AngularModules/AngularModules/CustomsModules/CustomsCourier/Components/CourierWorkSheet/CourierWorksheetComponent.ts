@@ -2725,6 +2725,27 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             this.RefreshButtonClicked();
         });
     }
+    
+    ClassificationApprove() {
+        if (FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "ClassificationApprovedFromMasterCourier")) {
+            debugger
+        }
+        debugger
+        var confirm = new ConfirmWindow();
+        confirm.Width = 320;
+        confirm.Height = 180;
+        confirm.Title =  "אישור סיווג";
+        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        confirm.ShowNoButton = true;
+        confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+        confirm.Show("נא אשר סיווג לכל הטיסה");
+        confirm.WindowClosed.subscribe((event: any) => {
+            if (confirm.Yes) {
+                debugger
+            }
+            confirm.Close();
+        });
+    }
 
 }
 
