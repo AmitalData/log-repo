@@ -9,6 +9,9 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Logitude.Accounting.Data.EntityLists;
+using Simplog.Data.Helpers;
+using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -20,8 +23,60 @@ namespace Logitude.Accounting.Data.Repositories
             
 			throw new NotImplementedException();
         }
+        public List<LedgerTransactionList> GetAllChecks(string billToId, int tenant, bool isFuture, bool showLocal = true)
+        {
 
-   }
+            DateTime today = GetCurrentDate(tenant);
+
+            var query
+                = (from a in context.AllARPaymentChequesViews
+                   where a.Tenant == tenant && a.BillToId == billToId
+                   && ((isFuture && a.ValueDate > today) || (!isFuture && a.ValueDate <= today))
+                   select new LedgerTransactionList()
+                   {
+                       PaymentValueDate = a.ValueDate,
+                       PaymentChequeStatus = showLocal ? a.LocalName : a.EnglishName,
+                       Source = a.AccountingEntityReference,
+                       SourceType = a.AccountingEntityCode,
+                       SourceNumber = a.AccountingEntityReference,
+                       LocalAmountCredit = a.LocalAmountCredit,
+                       ForeignAmountCredit = a.ForeignAmountCredit,
+                       Reference1 = a.Reference1,
+                       Reference2 = a.Reference2,
+                       Reference3 = a.Reference3,
+                       JournalNumber = a.Journalnumber,
+                       Notes = a.Notes,
+                       AccountId = a.GLAccountId,
+                       // InternalNote = transaction.InternalNote,
+                       //UpdateDateTime = transaction.UpdateDateTime,
+                       //UpdatedByUserName = transaction.UpdatedByUserName,
+                       SourceId = a.AccountingEntityId,
+                       SourceTypeCode = a.Type == "C" ? AccountingEntityValues.ARPayment : AccountingEntityValues.Journal,
+                       JournalId = a.journalId,
+                       IconCode = a.Type == "C" ? "PY" : "JR",
+                       IsForeignAmountCreditPos = a.ForeignAmountCredit != 0,
+                       IsLocalAmountCreditPos = a.LocalAmountCredit != 0,
+                       CalculatedForeignAmount = a.ForeignAmountCredit != 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
+                       CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
+                       //CurrencySign = transaction.Currency.Sign,
+                       Tenant = a.Tenant
+                   });
+
+
+
+            return query.ToList();
+
+
+        }
+
+        private static DateTime GetCurrentDate(int tenant)
+        {
+            DateTime today = TenantServerConfigration.GetCurrentDateTime(tenant);
+            today = new DateTime(today.Year, today.Month, today.Day, 11, 59, 59);
+            return today;
+        }
+
+    }
 
 }
    

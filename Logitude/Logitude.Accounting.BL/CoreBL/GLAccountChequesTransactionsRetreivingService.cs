@@ -2,6 +2,7 @@
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Interfaces;
 using Logitude.Server.Tools;
@@ -32,12 +33,15 @@ namespace Logitude.Accounting.BL.CoreBL
             _IsUnpaidChecks = isUnpaidChecks;
         }
 
-        public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId, string sortBy, string sortDirection)
+        public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId, string sortBy, string sortDirection,string cardId = "")
         {
-            List<LedgerTransactionList> arPaymentTransactions = GetARPaymentLedgerTransactions(accountId).Distinct().ToList();
-            List<LedgerTransactionList> externalTransactions = GetExternalTransactionsForAccount(accountId, tenant);
+            GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
 
-            arPaymentTransactions.AddRange(externalTransactions);
+            List<LedgerTransactionList> arPaymentTransactions = gLAccountMoreDataRepository.GetAllChecks(cardId, tenant, _IsFutureOpenCheques,showLocal
+                );/*GetARPaymentLedgerTransactions(accountId).Distinct().ToList();*/
+            //List<LedgerTransactionList> externalTransactions = GetExternalTransactionsForAccount(accountId, tenant);
+
+            //arPaymentTransactions.AddRange(externalTransactions);
             if (sortDirection == "Descending")
             {
                 arPaymentTransactions = arPaymentTransactions.OrderByDescending(a => a.GetType().GetProperty(sortBy).GetValue(a, null)).ToList();

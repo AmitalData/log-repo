@@ -197,6 +197,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ProductItem.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PostalCode.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\AllARPaymentChequesView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TotalOpenTransInBankView.cs" />
     <Compile Include="CommonDataModel\Mapping\CarrierServiceLineMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerGroupMap.cs" />
