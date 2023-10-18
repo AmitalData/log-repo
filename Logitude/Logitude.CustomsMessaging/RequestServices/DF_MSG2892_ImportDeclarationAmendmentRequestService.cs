@@ -905,6 +905,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var declarationGoodsShipmentList = new List<DeclarationGoodsShipment>();
             //declarationGoodsShipmentList
             // declarationPM\
+            bool isFirstSupplierInvoice = true;
 
 
 
@@ -954,9 +955,14 @@ namespace Logitude.CustomsMessaging.RequestServices
                 };
 
                 declarationGoodsShipment.CustomsValuation = GetcustomsValuation(supplierInvoicePM).ToArray();
-                if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment)
+                if (isFirstSupplierInvoice && !declarationPM.ExcludeConsignment)
                 {
                     declarationGoodsShipment.Consignment = GetDeclarationConsignment(declarationPM).ToArray();
+                }
+
+                if (isFirstSupplierInvoice)
+                {
+                    isFirstSupplierInvoice = false;
                 }
                 declarationGoodsShipment.AdditionalDocument = GetDeclarationGoodsShipmentAdditionalDocument(supplierInvoicePM);
                 declarationGoodsShipment.GovernmentAgencyGoodsItem = GetDeclarationGoodsItems(supplierInvoicePM).ToArray();
