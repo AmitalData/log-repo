@@ -255,12 +255,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
             GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(billTo.GLAccountId, cheque.Tenant);
             GLAccountMoreDataPM moreDataPM = gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);
+            moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
 
             if (allChecks != null && allChecks.Count != 0)
             {
                 var sum = allChecks.Sum(x => x.CalculatedLocalAmount);
 
-                moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                 if (isFuture)
                 {
                     moreDataPM.TotFutureOpenChequesInLocalCur = sum;
