@@ -243,9 +243,9 @@
                                                                         <td style="width:8px"><div></div></td>
                                                                         <td style="width:50px;height:22px;text-align:left"><button id="{{'SendMessageTobtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsSendEditMode || IsOpenWidnow" (click)="OpenEmailsBox()" style="width:40px;background-color:#E6E6E6;height:22px;" class="Button">To...</button></td>
                                                                         <td style="width:5px"><div></div></td>
-                                                                        <td>
+                                                                        <td [style.text-align]="isRTL ? 'right' : 'left'">
                                                                             <div>
-                                                                                <EmailSearchTextBox [EmailsText]="ToEmail" [AllowFreeEmails]="true" [DontInCludeInactive]="true" (EmailsTextChanged)="ToEmail = $event" [IsDisabled]="IsToEmailIsDisabled"></EmailSearchTextBox>
+                                                                                <EmailSearchTextBox [EmailsText]="ToEmail" [AllowFreeEmails]="true" [DontInCludeInactive]="true" (EmailsTextChanged)="ToEmail = $event" [IsDisabled]="IsToEmailIsDisabled" [isRTL]="isRTL"></EmailSearchTextBox>
                                                                             </div>
                                                                         </td>
                                                                         <td style="width:10px"><div></div></td>
@@ -258,7 +258,7 @@
                                                                         <td style="width:5px"><div></div></td>
                                                                         <td>
                                                                             <div>
-                                                                                <EmailSearchTextBox [EmailsText]="Cc" [AllowFreeEmails]="true" [DontInCludeInactive]="true" (EmailsTextChanged)="Cc = $event" [IsDisabled]="!IsSendEditMode"></EmailSearchTextBox>
+                                                                                <EmailSearchTextBox [EmailsText]="Cc" [AllowFreeEmails]="true" [DontInCludeInactive]="true" (EmailsTextChanged)="Cc = $event" [IsDisabled]="!IsSendEditMode" [isRTL]="isRTL"></EmailSearchTextBox>
                                                                             </div>
                                                                         </td>
                                                                         <td style="width:10px"><div></div></td>
@@ -271,7 +271,7 @@
                                                                         <td style="width:5px"><div></div></td>
                                                                         <td>
                                                                             <div>
-                                                                                <EmailSearchTextBox [EmailsText]="Bcc" [AllowFreeEmails]="true" [DontInCludeInactive]="true" (EmailsTextChanged)="Bcc = $event" [IsDisabled]="!IsSendEditMode"></EmailSearchTextBox>
+                                                                                <EmailSearchTextBox [EmailsText]="Bcc" [AllowFreeEmails]="true" [DontInCludeInactive]="true" (EmailsTextChanged)="Bcc = $event" [IsDisabled]="!IsSendEditMode" [isRTL]="isRTL"></EmailSearchTextBox>
                                                                             </div>
                                                                         </td>
                                                                         <td style="width:10px"><div></div></td>
@@ -279,7 +279,7 @@
 
 
                                                                     <tr *ngIf="!IsHideBccCcLinkArea && IsSendEditMode">
-                                                                        <td colspan="4" style="text-align:left;">
+                                                                        <td colspan="4" [style.text-align]="isRTL ? 'right' : 'left'">
                                                                             <div style="margin-left:63px;margin-top:5px">
                                                                                 <a *ngIf="!IsShowCcBox" style="font-size:11px;color:#0094ff" (click)="AddCcClick()">Add Cc</a>
                                                                                 <a *ngIf="!IsShowBccBox" style="margin-left:10px;color:#0094ff;font-size:11px;" (click)="AddBccClick()">Add Bcc</a>

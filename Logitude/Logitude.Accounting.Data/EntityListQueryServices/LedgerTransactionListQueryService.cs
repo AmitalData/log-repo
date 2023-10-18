@@ -95,7 +95,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
                                                            SecurityLevelFiltering = 1,
                                                            TaxReportId = jad != null ? jad.TaxReportId : "",
-                                                           TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : ""
+                                                           TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : "",
+                                                           SecurityLevelFiltering = 1,
                                                        });
 
 

@@ -5298,6 +5298,18 @@
       LocalDefaultText="&quot;מקדם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.SecurityHigherThanUsers&quot;"
+      DefaultText="&quot;Cannot set Journal Viewing Security Level higher than the User Security Level&quot;"
+      LocalDefaultText="&quot;לא ניתן לתת רמת אבטחת לצפיה בפקודת היומן שגבוהה מרמת האבטחה שקיימת למשתמש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.ViewingNotAuthorized&quot;"
+      DefaultText="&quot;You are not authorized to view Journal No. &quot;"
+      LocalDefaultText="&quot;אינך מורשה לצפיה בפקודה מספר &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

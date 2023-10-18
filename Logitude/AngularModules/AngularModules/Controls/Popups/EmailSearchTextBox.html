@@ -104,11 +104,9 @@
         height: 18px;
         min-height: 18px;
         line-height: 18px;
-        margin-left: 2px;
         margin-top: 1px;
         border: 1px solid #83A5D2;
         display: inline-block;
-        float: left;
         padding-left: 2px;
         padding-right: 2px;
         box-sizing: border-box;
@@ -179,11 +177,13 @@
             <div [attr.id]="ComponentId" class="LogitudeEmailSearchTextBox" [class.EmailBoxDisabled]="IsDisabled">
 
                 <!-- Selected Items -->
-                <div [attr.id]="ContainerId" class="LogitudeEmailSearchTextBoxItem" *ngFor="let item of SelectedItems">
+                <div [attr.id]="ContainerId" [style.float]="isRTL ? 'right' : 'left'" [style.marginRight.px]="isRTL ? 2 : null"
+                [style.marginLeft.px]="isRTL ? null : 2" class="LogitudeEmailSearchTextBoxItem" *ngFor="let item of SelectedItems">
 
-                    <div [style.color]="item.InActive && DontInCludeInactive ?'red':'black'" style="float: left; line-height: 16px;">{{item.EnglishName}}</div>
+                    <div [style.color]="item.InActive && DontInCludeInactive ?'red':'black'"  [style.float]="isRTL ? 'right' : 'left'" style="line-height: 16px;">{{item.EnglishName}}</div>
 
-                    <div style="float: left; line-height: 16px; margin-left: 5px; margin-top: 1px;" class="LogitudeEmailSearchXButton" (mousedown)="RemoveItem(item)">
+                    <div [style.float]="isRTL ? 'right' : 'left'" [style.marginRight.px]="isRTL ? 5 : null"
+                    [style.marginLeft.px]="isRTL ? null : 5" style="line-height: 16px;margin-top: 1px;" class="LogitudeEmailSearchXButton" (mousedown)="RemoveItem(item)">
                         <div class="InnerControl CenterCenter">
                             <img src="./Images/Tab.X.Gray.png" class="CenterCenter" />
                         </div>
