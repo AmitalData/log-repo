@@ -90,8 +90,9 @@ namespace WebFreight.Web.DataProviders
         public DateTime? TodayLocal { get; set; }
         public string TotalPaymentInWordFR { get; set; }
         public string BankAccountEnglishName { get; set; }
+		public string GLAccountDisplayNumber { get; set; }
 
-        public List<ReportAPInvoicePayments> PaidAPInvoicesList { get; set; }
+		public List<ReportAPInvoicePayments> PaidAPInvoicesList { get; set; }
 
         public class ReportAPInvoicePayments
         {
