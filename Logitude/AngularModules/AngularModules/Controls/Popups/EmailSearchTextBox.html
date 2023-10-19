@@ -191,11 +191,11 @@
                 </div>
 
                 <!-- Separator -->
-                <div [attr.id]="SeparatorId" style="width: 1px; height: 20px; float: left; display: inline-block;"></div>
+                <div [attr.id]="SeparatorId" [style.float]="isRTL ? 'right' : 'left'" style="width: 1px; height: 20px; display: inline-block;"></div>
 
                 <!-- TextArea -->
                 <!-- [class.LogitudeEmailSearchInputFocus]="IsFocused || SelectedItems.length > 0" -->
-                <div [attr.id]="InputId" style="height: 20px; position:absolute; left:0; right:0; top:0; bottom:0;">
+                <div [attr.id]="InputId" [style.float]="isRTL ? 'right' : 'left'" style="height: 20px; left:0; right:0; top:0; bottom:0;">
                     <input class="LogitudeEmailSearchInput"
                            [class.LogitudeEmailSearchInputFocus]="IsFocused"
                            [attr.id]="TextAreaId"
