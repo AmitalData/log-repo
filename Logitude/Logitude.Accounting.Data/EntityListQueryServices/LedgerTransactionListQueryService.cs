@@ -96,7 +96,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            SecurityLevelFiltering = 1,
                                                            TaxReportId = jad != null ? jad.TaxReportId : "",
                                                            TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : "",
-                                                           SecurityLevelFiltering = 1,
                                                        });
 
 
