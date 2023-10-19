@@ -23,15 +23,15 @@ namespace Logitude.Accounting.Data.Repositories
             
 			throw new NotImplementedException();
         }
-        public List<LedgerTransactionList> GetAllChecks(string billToId, int tenant, bool isFuture, bool showLocal = true)
+        public List<LedgerTransactionList> GetAllChecks(string billToId, int tenant, bool isFuture, bool showLocal = true, bool fromScheduler = false)
         {
 
             DateTime today = GetCurrentDate(tenant);
 
             var query
                 = (from a in context.AllARPaymentChequesViews
-                   where a.Tenant == tenant && a.BillToId == billToId
-                   && ((isFuture && a.ValueDate > today) || (!isFuture && a.ValueDate <= today))
+                   where a.BillToId == billToId
+                   && (fromScheduler || (isFuture && a.ValueDate > today && a.Tenant == tenant) || (!isFuture && a.ValueDate <= today && a.Tenant == tenant))
                    select new LedgerTransactionList()
                    {
                        PaymentValueDate = a.ValueDate,
@@ -68,7 +68,49 @@ namespace Logitude.Accounting.Data.Repositories
 
 
         }
+        public IQueryable<LedgerTransactionList> GetAllChecksToScheduler(string billToId)
+        {
 
+
+            var query
+                = (from a in context.AllARPaymentChequesViews
+                  where a.BillToId == billToId
+                   select new LedgerTransactionList()
+                   {
+                       PaymentValueDate = a.ValueDate,
+                       PaymentChequeStatus = a.LocalName,
+                       Source = a.AccountingEntityReference,
+                       SourceType = a.AccountingEntityCode,
+                       SourceNumber = a.AccountingEntityReference,
+                       LocalAmountCredit = a.LocalAmountCredit,
+                       ForeignAmountCredit = a.ForeignAmountCredit,
+                       Reference1 = a.Reference1,
+                       Reference2 = a.Reference2,
+                       Reference3 = a.Reference3,
+                       JournalNumber = a.Journalnumber,
+                       Notes = a.Notes,
+                       AccountId = a.GLAccountId,
+                       // InternalNote = transaction.InternalNote,
+                       //UpdateDateTime = transaction.UpdateDateTime,
+                       //UpdatedByUserName = transaction.UpdatedByUserName,
+                       SourceId = a.AccountingEntityId,
+                       SourceTypeCode = a.Type == "C" ? AccountingEntityValues.ARPayment : AccountingEntityValues.Journal,
+                       JournalId = a.journalId,
+                       IconCode = a.Type == "C" ? "PY" : "JR",
+                       IsForeignAmountCreditPos = a.ForeignAmountCredit != 0,
+                       IsLocalAmountCreditPos = a.LocalAmountCredit != 0,
+                       CalculatedForeignAmount = a.ForeignAmountCredit != 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
+                       CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
+                       //CurrencySign = transaction.Currency.Sign,
+                       Tenant = a.Tenant
+                   });
+
+
+
+            return query;
+
+
+        }
         private static DateTime GetCurrentDate(int tenant)
         {
             DateTime today = TenantServerConfigration.GetCurrentDateTime(tenant);

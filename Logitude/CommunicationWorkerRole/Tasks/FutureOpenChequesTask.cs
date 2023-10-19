@@ -44,7 +44,7 @@ namespace CommunicationWorkerRole.Tasks
                     try
                     {
                         var FutureOpenChequesBatch = new FutureOpenChequesBatch();
-                        FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency();
+                        FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency(this.Task.Tenant);
                         string responseText = FutureOpenChequesBatch.ResponseText();
                         _SB.Append(DateTime.Now.ToString()).Append("responseText:").Append(responseText).AppendLine();
                     }

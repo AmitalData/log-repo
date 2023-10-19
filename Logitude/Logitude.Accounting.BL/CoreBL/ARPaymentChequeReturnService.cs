@@ -251,7 +251,7 @@ namespace Logitude.Accounting.BL.CoreBL
             IAccountingContext MyContext = AccountingContext.GetContext(arguments.Tenant);
 
             bool isFuture = cheque.ValueDate > DateTime.Today ? true : false;
-            List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(billTo.Id, cheque.Tenant, isFuture);
+            List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(billTo.Id, cheque.Tenant, isFuture: isFuture);
 
             GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(billTo.GLAccountId, cheque.Tenant);
             GLAccountMoreDataPM moreDataPM = gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);

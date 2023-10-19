@@ -350,7 +350,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(_Tenant);
                 GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_Tenant);
                 bool isFuture = arPayment.ValueDate > DateTime.Today ? true : false;
-                List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(arPayment.BillToId, _Tenant, isFuture);
+                List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(arPayment.BillToId, _Tenant, isFuture: isFuture);
                 if (allChecks != null && allChecks.Count != 0)
                 {
                     var sum = allChecks.Sum(x => x.CalculatedLocalAmount);
