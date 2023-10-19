@@ -102,6 +102,7 @@ export class DeclarationCourierStatusList {
 	NotApprovedPendingList: string;
 	StorageSiteStatusCodeText: string;
 	IntegratorName: string;
+	ClassificationApproved: boolean;
 	
 }
  

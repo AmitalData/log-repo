@@ -448,6 +448,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return q;
 
         }
+        public List<DeclarationCourierStatusPM> GetDeclarationCourierStatusByDeclarationIdList(List<string> declarationIdList, int tenant)
+        {
+            var q = repository.GetDeclarationsByIds(declarationIdList, tenant);
+            var pocos = q.ToList();
+            return pocos.Select(r => this.GetEntityPM(r)).ToList();
+
+        }
     }
 
 

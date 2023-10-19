@@ -5618,6 +5618,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EffectiveFlight&quot;"
     ListPropertyPath="&quot;EffectiveFlight&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6615,6 +6616,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.UpdateDistributionStatus&quot;"
       FeatureDefaultText="&quot;Update Distribution Status&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ClassificationApprovedFromMasterCourier&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.ClassificationApprovedFromMasterCourier&quot;"
+      FeatureDefaultText="&quot;Classification Approved From Master Courier&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

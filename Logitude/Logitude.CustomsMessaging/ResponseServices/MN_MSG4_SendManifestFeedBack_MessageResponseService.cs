@@ -359,7 +359,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         using (var trans = TransactionFactory.GetNewTransaction())// I PREFERRED WITHOUT TRANS BUT  (TO 1345- 1415). .
                         {
-                            OnSucceededSendDeclarationDelay1Min(requestParams);
+                            var featuresList = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
+                            var isFeature = featuresList.Features.FirstOrDefault(x => x.Code == "ClassificationApprovedFromMasterCourier");
+
+                            if (isFeature != null)
+                            {
+                                if (declarationCourierStatusPM.ClassificationApproved)
+                                {
+                                    OnSucceededSendDeclarationDelay1Min(requestParams);
+                                }
+                            }
+                            else
+                            {
+                                OnSucceededSendDeclarationDelay1Min(requestParams);
+                            }
                             trans.Complete();
                         }
                     }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "483de4af38e1c20d69d2ab510b90baee";
+		public const string HashString = "677b613f696d49eca9fc7e93a0e6b0b2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4606,6 +4606,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EffectiveFlight",
 					  						ListPropertyPath =  "EffectiveFlight",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4869,6 +4870,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CourierMasterFeature_AllowDelayForm = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowDelayForm", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.AllowDelayForm", NameTextCodeDefaultText = @"AllowDelayForm" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
 		   Feature CourierMasterFeature_UpdateDistributionStatus = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UpdateDistributionStatus", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.UpdateDistributionStatus", NameTextCodeDefaultText = @"Update Distribution Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+
+		   Feature CourierMasterFeature_ClassificationApprovedFromMasterCourier = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ClassificationApprovedFromMasterCourier", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.ClassificationApprovedFromMasterCourier", NameTextCodeDefaultText = @"Classification Approved From Master Courier" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
    
 	    

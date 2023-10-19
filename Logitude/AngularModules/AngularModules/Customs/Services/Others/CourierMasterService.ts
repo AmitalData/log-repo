@@ -19,6 +19,7 @@ import { SendALLDelayFormParams } from '../../DataContract/RequestParams/SendALL
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { GenericRequestParams } from 'Customs/DataContract/RequestParams/GenericRequestParams';
 
 
 @Injectable()
@@ -349,6 +350,32 @@ export class CourierMasterService {
 
         });
     }
+    PostSend2750AndUpdaeClassificationByCourierMaster(requestParams: GenericRequestParams) {
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSend2750AndUpdaeClassificationByCourierMaster/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
+
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
+
+
+                    return serviceResponse;
+                }),catchError(ServiceHelper.HandleServiceError));
+            ;
+
+        });
+    }
+
     PostSendALLTerminal(requestParams: SendALLCorrectRequestParams) {
 
         return defer(() => {

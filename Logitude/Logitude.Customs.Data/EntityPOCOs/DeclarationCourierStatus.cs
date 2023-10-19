@@ -98,6 +98,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string MissedDocumentStatusCode { get; set; }
         [Column("NotApprovedPendingList")]
 	    public string NotApprovedPendingList { get; set; }
+        [Column("ClassificationApproved")]
+	    public bool ClassificationApproved { get; set; }
     }
 }
 	 

@@ -434,6 +434,11 @@ export class DeclarationCourierStatusPM {
     public set IntegratorName(newValue: string) { if (this.integratorName != newValue) { this.integratorName = newValue; this.MarkAsDirty("IntegratorName"); } }
        
 	 
+    private classificationApproved: boolean;
+    public get ClassificationApproved() { return this.classificationApproved; }
+    public set ClassificationApproved(newValue: boolean) { if (this.classificationApproved != newValue) { this.classificationApproved = newValue; this.MarkAsDirty("ClassificationApproved"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
