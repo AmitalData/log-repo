@@ -94,8 +94,9 @@ namespace WebFreight.Web.DataProviders
         public string ARPaymentField10 { get; set; }
         public string BillToBankAccountNumber { get; set; }
         public string BillToBankName { get; set; }
+		public string GLAccountDisplayNumber { get; set; }
 
-        public class InvoicePayments
+		public class InvoicePayments
         {
             public string ProjectNumber { get; set; }
             public string InvoiceNumber { get; set; }
