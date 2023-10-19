@@ -90,7 +90,7 @@ import { ClientItemPM } from 'Customs/EntityPMs/ClientItemPM';
 export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public CurrencyTypeCode: any;
     public OriginCountryCode: any;
-
+    hasOcr = false;
     public InvoiceTypeFocus: boolean;
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.SupplierInvoice";
@@ -205,6 +205,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     }
     ngOnInit() {
+        this.hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
         if (this.allowExport) {
             this.TooltipCopy = "שכפל שורה";
             this.TooltipCertificate = "םישורים"
@@ -1525,36 +1526,34 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         });
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/UpdateProcessCodeComponent');
     }
+
     UpdateClassificationCodeClicked() {
-        var windowArgs: any = {};
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 700;
-        logWindow.Height = 500;
-        logWindow.ShowCloseButton = true;
-        windowArgs.SupplierInvoicePM = this.EntityPM;
-        windowArgs.UpdateField = 'ClassificationCode';
-        windowArgs.ValidateClassificationCode = SupplierInvoiceItemLine.validateClassificationCode
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateClassificationCode");
-        logWindow.ComponentLoaded.subscribe(comp => {
-            logWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    this.SelectionOriginCompleted(comp);
-                }
-            });
-        });
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/UpdateSupplierInvoiceGeneralFieldComponent');
+        let title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateClassificationCode");
+        var args={
+            UpdateField : 'ClassificationCode',
+            ValidateClassificationCode: SupplierInvoiceItemLine.validateClassificationCode
+        };
+        this.UpdateSupplierInvoiceGeneralField(args, title);
     }
+
     UpdateCountryOfOriginClicked() {
+        let title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateCountryOfOrigin");
+        var args={
+            UpdateField : 'OriginCountryCode'
+        };
+        this.UpdateSupplierInvoiceGeneralField(args, title);
+    }
+
+    UpdateSupplierInvoiceGeneralField(args, title){
         var windowArgs: any = {};
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
         logWindow.Height = 500;
         logWindow.ShowCloseButton = true;
         windowArgs.SupplierInvoicePM = this.EntityPM;
-        windowArgs.UpdateField = 'OriginCountryCode';
+        windowArgs = Object.assign(windowArgs,args);
         logWindow.WindowArgs = windowArgs;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateCountryOfOrigin");
+        logWindow.Title = title;
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -1564,6 +1563,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         });
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/UpdateSupplierInvoiceGeneralFieldComponent');
     }
+
     private _CustomsCountryListService: CustomsCountryListService = new CustomsCountryListService();
     SelectionOriginCompleted(args) {
         if (args.ItemsSource != null) {
@@ -4199,36 +4199,34 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
 
 
-    async ClassificationCodeChanged(item: SupplierInvoiceItemLine, logCellTemplate: any, classificationTextBox: any) {
-        if (item.valid) {
+    async ClassificationCodeChanged(logCellTemplate: any, classificationTextBox: any) {
+        if (this.valid) {
             SessionLocator.SustainFocusOnCell = false;
 
-            if (!AppTool.IsNullOrEmpty(item.ItemCode)) {
+            if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
 
                 //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponentByDirection(item.ItemCode, item.Parent.declarationPM.Direction);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponentByDirection(this.ItemCode, this.Parent.declarationPM.Direction);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
                 if (itemCodeDetails == null) {
-
-
-                    item.AdditemCodeDetail();
+                    this.AdditemCodeDetail();
 
                 }
                 else {
 
-                    if (itemCodeDetails.ClassificationCode != item.ClassificationCode || itemCodeDetails.ItemDescription != this.ItemDescription) {
-                        itemCodeDetails.ClassificationCode = item.ClassificationCode;
-                        itemCodeDetails.ItemDescription = item.ItemDescription;
-                        itemCodeDetails.VendorNumber = item.Parent.vendorNumber;
+                    if (itemCodeDetails.ClassificationCode != this.ClassificationCode || itemCodeDetails.ItemDescription != this.ItemDescription) {
+                        itemCodeDetails.ClassificationCode = this.ClassificationCode;
+                        itemCodeDetails.ItemDescription = this.ItemDescription;
+                        itemCodeDetails.VendorNumber = this.Parent.vendorNumber;
                         if (GITITEMCacheService.Instance.IsUnitPURForItems) {
 
-                            itemCodeDetails.InvoiceQuantityType = item.InvoiceQuantityType;
+                            itemCodeDetails.InvoiceQuantityType = this.InvoiceQuantityType;
                         }
                         if (GITITEMCacheService.Instance.IsCountryPURForItems) {
-                            itemCodeDetails.OriginCountryCode = item.OriginCountryCode;
-                            itemCodeDetails.OriginCountryName = item.OriginCountryName;
-                            itemCodeDetails.TariffID = item.TradeAgreementCode;
+                            itemCodeDetails.OriginCountryCode = this.OriginCountryCode;
+                            itemCodeDetails.OriginCountryName = this.OriginCountryName;
+                            itemCodeDetails.TariffID = this.TradeAgreementCode;
                         }
-                        for (let inner of item.GITITEMCRs) {
+                        for (let inner of this.GITITEMCRs) {
                             itemCodeDetails.GITITEMCRs.push(new GITITEMCR(inner.COUNTER, inner.REQCERT, inner.REMARKS));
                             var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == inner.REQCERT.replace(/^0+/, ''))[0];
                             if (!exist) {
@@ -4287,7 +4285,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         this.ClassificationCode = res.ClassificationCode;
         classificationTextBox.TextValue = this.ClassificationCode;
         this.valid = res.valid;
-        this.ClassificationCodeChanged(this, logCellTemplate, classificationTextBox);
+        this.ClassificationCodeChanged(logCellTemplate, classificationTextBox);
     }
 
     private AdditemCodeDetail() {

@@ -16,7 +16,6 @@ import { CustomsCountryPM } from '../../../../../Customs/EntityPMs/CustomsCountr
 
 export class UpdateSupplierInvoiceGeneralFieldComponent extends BaseComponent {
     DataContext: any = this;
-    valid: boolean = true;
     public ItemsSource: ObservableCollection;
     SupplierInvoicePM: SupplierInvoicePM;
     ValidateClassificationCode: any;
@@ -56,7 +55,6 @@ export class UpdateSupplierInvoiceGeneralFieldComponent extends BaseComponent {
         }
         this.ClassificationCode = res.ClassificationCode;
         classificationTextBox.TextValue = this.ClassificationCode;
-        this.valid = res.valid;
     }
 
     BuildActualInvoiceLines() {
