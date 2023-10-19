@@ -1041,6 +1041,7 @@
                                 <button id="Update" (click)="UpdateProcessClicked()" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateProcessCode' |TextCodeTranslationPipe }}</button>
                                 <button id="ikea" *ngIf="ikeaFeature" (click)="UpdateCertificatesButtonClicked()" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateCertificates' |TextCodeTranslationPipe }}</button>
                                 <button id="UpdateCountryOfOrigin" (click)="UpdateCountryOfOriginClicked()" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateCountryOfOrigin' |TextCodeTranslationPipe }}</button>
+                                <button *ngIf="hasOcr" id="UpdateClassificationCode" (click)="UpdateClassificationCodeClicked()" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateClassificationCode' |TextCodeTranslationPipe }}</button>
                             </div>
                         </div>
                     </td>

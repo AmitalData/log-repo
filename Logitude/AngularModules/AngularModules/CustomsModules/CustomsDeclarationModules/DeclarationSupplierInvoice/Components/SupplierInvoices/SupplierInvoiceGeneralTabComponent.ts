@@ -90,7 +90,7 @@ import { ClientItemPM } from 'Customs/EntityPMs/ClientItemPM';
 export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public CurrencyTypeCode: any;
     public OriginCountryCode: any;
-
+    hasOcr = false;
     public InvoiceTypeFocus: boolean;
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.SupplierInvoice";
@@ -152,8 +152,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     old_vendor;
 
     public addedVehicles: any[] = [];
-    clientIndicationListService:ClientIndicationListService = new ClientIndicationListService();
-    clientIndicationList:Array<ClientIndicationPM> = new Array<ClientIndicationPM>();
+    clientIndicationListService: ClientIndicationListService = new ClientIndicationListService();
+    clientIndicationList: Array<ClientIndicationPM> = new Array<ClientIndicationPM>();
     private CurrentSession = SessionLocator.SelectedSession;
     public tradeAgreementFilter: ApiQueryFilters = null as any;
     public ModificationAndDiscountTypeList = new Map<string, string>();
@@ -205,6 +205,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     }
     ngOnInit() {
+        this.hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
         if (this.allowExport) {
             this.TooltipCopy = "שכפל שורה";
             this.TooltipCertificate = "םישורים"
@@ -226,7 +227,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             });
 
         }
-        this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.subscribe(() => this.GetDifferenceAndTotalForeignCurrency())      
+        this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.subscribe(() => this.GetDifferenceAndTotalForeignCurrency())
     }
 
 
@@ -618,8 +619,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     this.SetDepositionStatus();
                     //this.GetExchagneRates();
 
-                
-              });
+
+                });
             });
         });
 
@@ -1454,8 +1455,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
 
     CopyNowClicked() {
-
-
         var confirm = new ConfirmWindow();
 
         confirm.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateAndOverride");
@@ -1527,15 +1526,34 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         });
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/UpdateProcessCodeComponent');
     }
+
+    UpdateClassificationCodeClicked() {
+        let title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateClassificationCode");
+        var args={
+            UpdateField : 'ClassificationCode',
+            ValidateClassificationCode: SupplierInvoiceItemLine.validateClassificationCode
+        };
+        this.UpdateSupplierInvoiceGeneralField(args, title);
+    }
+
     UpdateCountryOfOriginClicked() {
+        let title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateCountryOfOrigin");
+        var args={
+            UpdateField : 'OriginCountryCode'
+        };
+        this.UpdateSupplierInvoiceGeneralField(args, title);
+    }
+
+    UpdateSupplierInvoiceGeneralField(args, title){
         var windowArgs: any = {};
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
         logWindow.Height = 500;
         logWindow.ShowCloseButton = true;
         windowArgs.SupplierInvoicePM = this.EntityPM;
+        windowArgs = Object.assign(windowArgs,args);
         logWindow.WindowArgs = windowArgs;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateCountryOfOrigin");
+        logWindow.Title = title;
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -1543,30 +1561,32 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 }
             });
         });
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/UpdateCountryOfOriginComponent');
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/UpdateSupplierInvoiceGeneralFieldComponent');
     }
+
     private _CustomsCountryListService: CustomsCountryListService = new CustomsCountryListService();
     SelectionOriginCompleted(args) {
         if (args.ItemsSource != null) {
             if (args.UpdateAll) {
                 for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                    if (item.OriginCountryCode != args.OriginCountryCode) {
-                        this.UpdateOriginCountry(item, args.OriginCountryCode);
+                    if (item[args.UpdateField] != args) {
+                        this.updateProcess(item, args);
+
                     }
                 }
             } else {
                 if (args.UpdateItemsWithNoValue) {
                     for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                        if (item.OriginCountryCode == "" || item.OriginCountryCode == null) {
-                            this.UpdateOriginCountry(item, args.OriginCountryCode);
+                        if (item[args.UpdateField] == "" || item[args.UpdateField] == null) {
+                            this.updateProcess(item, args);
                         }
                     }
                 } else {
                     if (args.ItemsSource) {
                         for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                            var number = args.ItemsSource.Collection.filter(d => d.Number == item.SequenceNumeric)[0];
+                            var number = args.ItemsSource.Collection.filter(d => d.Number == item.SequenceNumeric)[0];                            
                             if (number) {
-                                this.UpdateOriginCountry(item, args.OriginCountryCode);
+                                this.updateProcess(item, args);
                             }
                         }
                     }
@@ -1574,15 +1594,31 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             }
         }
     }
-    UpdateOriginCountry(item, code) {
-        this._CustomsCountryListService.getSingle(code).subscribe((res) => {
-            var entity = res.Result;
-            if (entity) {
-                item.OriginCountryCode = code;
-                item.OriginCountryName = entity.LocalName;
+    updateProcess(item:SupplierInvoiceItemPM, args) {
+        var updateField=args.UpdateField;
+        var value= args[args.UpdateField];
+        switch (updateField) {
+            case 'OriginCountryCode': {
+                this._CustomsCountryListService.getSingle(value).subscribe((res) => {
+                    var entity = res.Result;
+                    if (entity) {
+                        item.OriginCountryCode = value;
+                        item.OriginCountryName = entity.LocalName;
+                    }
+                });
+                break;
             }
-        });
+            case 'ClassificationCode': {
+                item.ClassificationCode = value;
+                var lineItem = this.ItemsSource.Collection[item.SequenceNumeric - 1];
+                if (lineItem) {
+                    lineItem.GetQuantityType();
+                }
+                break;
+            }
+        }
     }
+
     SelectionCompleted(args) {
 
         if (args.UpdateAll) {
@@ -1850,8 +1886,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.SumDifference += this.EntityPM.SupplierInvoiceItems.reduce((acc, cur) => acc + cur.ItemPrice, 0);
 
 
-         this.Parent.Difference = Math.round(Math.abs(this.InvoiceAmount - this.SumDifference) *100 ) / 100; 
- 
+            this.Parent.Difference = Math.round(Math.abs(this.InvoiceAmount - this.SumDifference) * 100) / 100;
+
 
             SumTotalForeignCurrency += this.EntityPM.SupplierInvoiceItems.reduce((acc, cur) => acc + cur.ItemPrice, 0);
 
@@ -3196,51 +3232,51 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
 
         var IsAutoInsuranceExportSubmitFeature = FeatureLocator.Features.filter(f => (f.Code == "IsAutoInsuranceExportSubmit") && f.ObjectTableId == table.Id)[0];
-       
+
         if (AppTool.IsNullOrEmpty(IsAutoInsuranceExportSubmitFeature)) {
-            
-        if (!this.EntityPM.IsDirty) return;
 
-        if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
+            if (!this.EntityPM.IsDirty) return;
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.InvoiceCurrencyTypeCode) || AppTool.IsNullOrEmpty(this.EntityPM.InvoiceAmount) || AppTool.IsNullOrEmpty(this.EntityPM.IncotermCode)) return;
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
 
-        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-            .subscribe(
-                (mess: UnifreightMessageM) => {
-                    var IsMatchUnifreightCallbackCommand = (
-                        mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                        mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
-                        mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance");
-                    if (IsMatchUnifreightCallbackCommand) {
-                        sub.unsubscribe();
-                        SessionLocator.SelectedSession.StopBusyIndicator();
-                        let ApprovalToInsure = ""; ApprovalToInsure = UnifreightMessageM.GetStringValue(mess, "ApprovalToInsure");
-                        this.ActivateInsurance(ApprovalToInsure)
+            if (AppTool.IsNullOrEmpty(this.EntityPM.InvoiceCurrencyTypeCode) || AppTool.IsNullOrEmpty(this.EntityPM.InvoiceAmount) || AppTool.IsNullOrEmpty(this.EntityPM.IncotermCode)) return;
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
+                            mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance");
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let ApprovalToInsure = ""; ApprovalToInsure = UnifreightMessageM.GetStringValue(mess, "ApprovalToInsure");
+                            this.ActivateInsurance(ApprovalToInsure)
+                        }
                     }
-                }
-            );
+                );
 
 
-        var unifreightMessageM =
-            AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.EntityPM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance", "BFIFILE");
-        unifreightMessageM.Requset.push(["AmountToInsure", this.EntityPM.InvoiceAmount.toString()]);
-        unifreightMessageM.Requset.push(["Currency", this.EntityPM.InvoiceCurrencyTypeCode]);
-        unifreightMessageM.Requset.push(["Incoterms", this.EntityPM.IncotermCode]);
-        unifreightMessageM.Requset.push(["CustomerUNF", ""]);
-        unifreightMessageM.Requset.push(["DefineToInsure", "Yes"]);
-        unifreightMessageM.Requset.push(["ApprovalToInsure", ""]);
-        unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
-        unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
-        var PossibleOpenInsurance = TextCodeTranslator.Translate("Customs.Declaration.O.PossibleOpenInsurance");
-        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-            "AmitalGatewayUtil.CustomExportApprovalToInsurance",
-            "BFIHMAIN.LogitudeTask",
-            "CustomExportApprovalToInsurance",
-            unifreightMessageM,
-            PossibleOpenInsurance);
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.EntityPM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance", "BFIFILE");
+            unifreightMessageM.Requset.push(["AmountToInsure", this.EntityPM.InvoiceAmount.toString()]);
+            unifreightMessageM.Requset.push(["Currency", this.EntityPM.InvoiceCurrencyTypeCode]);
+            unifreightMessageM.Requset.push(["Incoterms", this.EntityPM.IncotermCode]);
+            unifreightMessageM.Requset.push(["CustomerUNF", ""]);
+            unifreightMessageM.Requset.push(["DefineToInsure", "Yes"]);
+            unifreightMessageM.Requset.push(["ApprovalToInsure", ""]);
+            unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
+            unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
+            var PossibleOpenInsurance = TextCodeTranslator.Translate("Customs.Declaration.O.PossibleOpenInsurance");
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "AmitalGatewayUtil.CustomExportApprovalToInsurance",
+                "BFIHMAIN.LogitudeTask",
+                "CustomExportApprovalToInsurance",
+                unifreightMessageM,
+                PossibleOpenInsurance);
 
         }
     }
@@ -3344,69 +3380,69 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         }
 
     }
-   
-    ShowIndication(){
 
-       
-      this.entityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
-         var table = window.ObjectTables.filter(d => d.Name === 'Customs.ClientIndication')[0];
+    ShowIndication() {
 
-         var IsIndicationsClientFeature = FeatureLocator.Features.filter(f => (f.Code == "IndicationsClient") && f.ObjectTableId == table.Id)[0];
-         if (IsIndicationsClientFeature) {
-            
-            if(this.IsPreference && this.allowExport){
-    
-                if (!AppTool.IsNullOrEmpty(this.declarationPM.ImporterId)) {  
-                    var msg = new MessageWindow();
-                    msg.RTL = true;
-    
-                    let filters = new ApiQueryFilters();
-    
-    
-                    filters.PageSize = 200;
-                    filters.PageIndex = 0;
-                    filters.GetAll = false;
-                    filters.GetCount = true;           
-                       
-                    filters.addAdditionalFilter("ClientId", this.declarationPM.ImporterId , null, null, "Equals", false, false, false, "string", false);
-                    filters.addAdditionalFilter("Tenant", this.declarationPM.Tenant, null, null, "Equals", true, false, false, "string");
-                   
-            
-                    return this.clientIndicationListService.getByFilters(filters)
-                        .subscribe(r => {
-                           this.clientIndicationList=r.Result
-                       
-                           if(this.clientIndicationList.length > 0) {
-                           
-                              if(this.clientIndicationList.filter(x=>x.CustomerIndicationTypeID =="2").length > 0){
-                                  var d=new Date();
-                                  var date=Date.parse(d.toString())                                                              
-                                  var IsExporterExpire=this.clientIndicationList.find(x=>x.CustomerIndicationTypeID =="2"&&Date.parse(x.StartDate.toString())<date&&Date.parse(x.EndDate.toString())>date);
-                                 
-                                  if(!IsExporterExpire){
-                                       msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.DeclareInCustomsExpired"));
-                                  }
-                              }
-                              else{
-                                  msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.NotDeclareInCustoms"));
-    
-                              }
-                           }
-                           else{
-                                 msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.UpdatDataImpExp"));
-    
-                           }
-                        });
+
+        this.entityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
+            var table = window.ObjectTables.filter(d => d.Name === 'Customs.ClientIndication')[0];
+
+            var IsIndicationsClientFeature = FeatureLocator.Features.filter(f => (f.Code == "IndicationsClient") && f.ObjectTableId == table.Id)[0];
+            if (IsIndicationsClientFeature) {
+
+                if (this.IsPreference && this.allowExport) {
+
+                    if (!AppTool.IsNullOrEmpty(this.declarationPM.ImporterId)) {
+                        var msg = new MessageWindow();
+                        msg.RTL = true;
+
+                        let filters = new ApiQueryFilters();
+
+
+                        filters.PageSize = 200;
+                        filters.PageIndex = 0;
+                        filters.GetAll = false;
+                        filters.GetCount = true;
+
+                        filters.addAdditionalFilter("ClientId", this.declarationPM.ImporterId, null, null, "Equals", false, false, false, "string", false);
+                        filters.addAdditionalFilter("Tenant", this.declarationPM.Tenant, null, null, "Equals", true, false, false, "string");
+
+
+                        return this.clientIndicationListService.getByFilters(filters)
+                            .subscribe(r => {
+                                this.clientIndicationList = r.Result
+
+                                if (this.clientIndicationList.length > 0) {
+
+                                    if (this.clientIndicationList.filter(x => x.CustomerIndicationTypeID == "2").length > 0) {
+                                        var d = new Date();
+                                        var date = Date.parse(d.toString())
+                                        var IsExporterExpire = this.clientIndicationList.find(x => x.CustomerIndicationTypeID == "2" && Date.parse(x.StartDate.toString()) < date && Date.parse(x.EndDate.toString()) > date);
+
+                                        if (!IsExporterExpire) {
+                                            msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.DeclareInCustomsExpired"));
+                                        }
+                                    }
+                                    else {
+                                        msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.NotDeclareInCustoms"));
+
+                                    }
+                                }
+                                else {
+                                    msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.UpdatDataImpExp"));
+
+                                }
+                            });
+                    }
+
                 }
-            
+
+
             }
-        
-   
-         }
-      });
+        });
     }
 
-   
+
     //#endregion
 }
 
@@ -3727,7 +3763,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public get DutyRegimeProtocolCode() { return this.entityPM.DutyRegimeProtocolCode; }
     public set DutyRegimeProtocolCode(newValue: string) {
         this.entityPM.DutyRegimeProtocolCode = newValue;
-        this.tradeAgreementProtocolListService.getSingle(newValue).subscribe((res) => 
+        this.tradeAgreementProtocolListService.getSingle(newValue).subscribe((res) =>
             this.DutyRegimeProtocolLocalName = res?.Result?.LocalName);
     }
 
@@ -3880,7 +3916,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
         else {
             this.NotForAccumaltion = false;
-         }
+        }
 
     }
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
@@ -3904,14 +3940,14 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             .then((res) => {
                 if (res) {
                     ResponseData = res;
-                    
+
                     if (!ResponseData.HasError)
                         this.GetQuantityType(true, true)
                 }
 
             }
- 
-                
+
+
             ).catch((err) => {
 
 
@@ -3923,9 +3959,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             });
 
 
-            }
+    }
 
-    
+
     public pointers: CustomsDocumentPointerPM[];
     DeleteButtonClicked() {
         this.pointers = this.Parent.Pointers;
@@ -4100,84 +4136,70 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
 
     ClassificationKeyUp(event, logCellTemplate: any, classificationTextBox: any) {
-
         var key = event.keyCode;
         if (key == 13) {
             this.OnClassificationLostFocus(logCellTemplate, classificationTextBox);
         }
     }
 
-    async OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
+    public static validateClassificationCode(classificationCode: any) {
+        var checkDigit, digit;
+        var newValue = classificationCode;
+        let result = {
+            valid: true,
+            errorDescription: '',
+            ClassificationCode: classificationCode
+        };
 
-        var newValue = this.ClassificationCode;
-        this.valid = true;
-        this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
-
-        if (AppTool.IsNullOrEmpty(newValue)) {
-            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
-        }
-        else if (newValue.toString().length > 11) {
-            this.valid = false;
-            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
-
-        }
-        else if (newValue.toString().length < 8) {
-            this.valid = false;
-            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
-
-        }
-        else if (newValue.toString().length == 8) {
-            newValue = newValue + "00";
-            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
-            newValue = newValue + this.checkDigit;
-            this.valid = true;;
-
-        }
-        else if (newValue.toString().length == 9) {
-            this.digit = newValue.toString().substring(8);
-
-            newValue = newValue.toString().substring(0, 8) + "00" + newValue.toString().substring(8);
-            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.substring(0, 10));
-
-            if (this.digit != this.checkDigit.toString()) {
-                this.valid = false;
-                this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
+        if (!AppTool.IsNullOrEmpty(classificationCode)) {
+            if (newValue.toString().length > 11) {
+                result.valid = false;
+                result.errorDescription = TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong");
+            }
+            else if (newValue.toString().length < 8) {
+                result.valid = false;
+                result.errorDescription = TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort");
 
             }
-            else {
-                this.valid = true;
-            }
-
-        }
-        else if (newValue.toString().length == 10) {
-            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
-            newValue = newValue + "" + this.checkDigit;
-            this.valid = true;
-
-        }
-        else if (newValue.toString().length == 11) {
-            this.digit = newValue.toString().substring(10);
-            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.toString().substring(0, 10));
-            if (this.digit != this.checkDigit.toString()) {
-                this.valid = false;
-                this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
+            else if (newValue.toString().length == 8) {
+                newValue = newValue + "00";
+                checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+                newValue = newValue + checkDigit;
+                result.valid = true;;
 
             }
-            else {
-                this.valid = true;
+            else if (newValue.toString().length == 9) {
+                digit = newValue.toString().substring(8);
+
+                newValue = newValue.toString().substring(0, 8) + "00" + newValue.toString().substring(8);
+                checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.substring(0, 10));
+
+                if (digit != checkDigit.toString()) {
+                    result.valid = false;
+                    result.errorDescription = TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString();
+
+                }
             }
+            else if (newValue.toString().length == 10) {
+                checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+                newValue = newValue + "" + checkDigit;
+            }
+            else if (newValue.toString().length == 11) {
+                digit = newValue.toString().substring(10);
+                checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.toString().substring(0, 10));
+                if (digit != checkDigit.toString()) {
+                    result.valid = false;
+                    result.errorDescription = TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString();
 
-
+                }
+            }
         }
+        result.ClassificationCode = newValue;
+        return result;
+    }
 
-        else {
-            this.valid = true;
-            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
-        }
 
-        this.ClassificationCode = newValue;
-        classificationTextBox.TextValue = newValue;
-
+    async ClassificationCodeChanged(logCellTemplate: any, classificationTextBox: any) {
         if (this.valid) {
             SessionLocator.SustainFocusOnCell = false;
 
@@ -4186,8 +4208,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
                 var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponentByDirection(this.ItemCode, this.Parent.declarationPM.Direction);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
                 if (itemCodeDetails == null) {
-
-
                     this.AdditemCodeDetail();
 
                 }
@@ -4206,9 +4226,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                             itemCodeDetails.OriginCountryName = this.OriginCountryName;
                             itemCodeDetails.TariffID = this.TradeAgreementCode;
                         }
-                        for (let item of this.GITITEMCRs) {
-                            itemCodeDetails.GITITEMCRs.push(new GITITEMCR(item.COUNTER, item.REQCERT, item.REMARKS));
-                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT.replace(/^0+/, ''))[0];
+                        for (let inner of this.GITITEMCRs) {
+                            itemCodeDetails.GITITEMCRs.push(new GITITEMCR(inner.COUNTER, inner.REQCERT, inner.REMARKS));
+                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == inner.REQCERT.replace(/^0+/, ''))[0];
                             if (!exist) {
                                 var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(this.entityPM);
                                 SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
@@ -4216,7 +4236,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                 SupplierInvioceItemCertificat.LineNumber = this.entityPM.LineNumber;
                                 SupplierInvioceItemCertificat.Tenant = this.entityPM.Tenant;
                                 //SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
-                                SupplierInvioceItemCertificat.ReqConfirmationTypeCode = item.REQCERT.replace(/^0+/, '');
+                                SupplierInvioceItemCertificat.ReqConfirmationTypeCode = inner.REQCERT.replace(/^0+/, '');
                                 this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
                                 var multiCertificateUpdateComponent: MultiCertificateUpdateComponent = new MultiCertificateUpdateComponent();
                                 multiCertificateUpdateComponent.UpdateCertStatusAlaaMethod(SupplierInvioceItemCertificat, this.entityPM);
@@ -4254,6 +4274,20 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
 
+    async OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
+        var res = SupplierInvoiceItemLine.validateClassificationCode(this.ClassificationCode);
+        if (res.valid) {
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
+        }
+        else {
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, res.errorDescription);
+        }
+        this.ClassificationCode = res.ClassificationCode;
+        classificationTextBox.TextValue = this.ClassificationCode;
+        this.valid = res.valid;
+        this.ClassificationCodeChanged(logCellTemplate, classificationTextBox);
+    }
+
     private AdditemCodeDetail() {
         var originCountryCode: string = null;
         var originCountryName: string = null;
@@ -4271,7 +4305,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         tariffID = this.TradeAgreementCode
         //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType));
         GITITEMCacheService.Instance. /*ItemCode_LocalCache.push*/AddItemCodeComponent(
-            new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode, tariffID, this.GITITEMCRs,this.Parent.declarationPM.Direction));
+            new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode, tariffID, this.GITITEMCRs, this.Parent.declarationPM.Direction));
     }
 
     OnOriginCountryCodeLostFocus(logCellTemplate: any, originCountryCodeLov: any) {
@@ -4301,111 +4335,108 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         //if (this.Parent.Parent.ItemCode_LocalCache != null && this.Parent.Parent.ItemCode_LocalCache.length > 0) {
         //if (GITITEMCacheService.Instance.ItemCode_LocalCache != null && GITITEMCacheService.Instance.ItemCode_LocalCache.length > 0)
         {
-            if(this.Parent.declarationPM.Direction != "E" ){
-                 //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-            var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponentByDirection(this.ItemCode,this.Parent.declarationPM.Direction);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-            if (itemCodeDetails != null) {
-                let b = true;
-                if (b) {
-                    GITITEMCacheService.Instance.OnItemCodeAdd(this.entityPM, itemCodeDetails)
-                        .then(myOnItemCodeAddResult => {
-                            switch (myOnItemCodeAddResult) {
+            if (this.Parent.declarationPM.Direction != "E") {
+                //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponentByDirection(this.ItemCode, this.Parent.declarationPM.Direction);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                if (itemCodeDetails != null) {
+                    let b = true;
+                    if (b) {
+                        GITITEMCacheService.Instance.OnItemCodeAdd(this.entityPM, itemCodeDetails)
+                            .then(myOnItemCodeAddResult => {
+                                switch (myOnItemCodeAddResult) {
 
-                                case 2/*OnItemCodeAddResult.AddTaskToUpdateDB*/:
-                                    {
-                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(
-                                            new ItemCodeComponent(
-                                                this.ItemCode,
-                                                this.ClassificationCode,
-                                                this.ItemDescription,
-                                                this.Parent.vendorNumber,
-                                                this.OriginCountryCode,
-                                                this.OriginCountryName, true,
-                                                this.InvoiceQuantityType,
-                                                this.Parent.declarationPM.CustomerCode,
-                                                this.TariffID,
-                                                this.GITITEMCRs,
-                                                this.Parent.declarationPM.Direction
-                                            )
-                                        );
-                                    }
-                                    break;
-                                //case OnItemCodeAddResult.OverwriteRowFromDB:
-                                //case OnItemCodeAddResult.voidDoNothing:
-                                default:
-                                    {
-                                        itemCodeDetails.IsNew = true;
-                                        this.ClassificationCode = itemCodeDetails.ClassificationCode;
-                                        this.ItemDescription = itemCodeDetails.ItemDescription;
-                                        if (GITITEMCacheService.Instance.IsUnitPURForItems) {
-
-                                            this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
+                                    case 2/*OnItemCodeAddResult.AddTaskToUpdateDB*/:
+                                        {
+                                            GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(
+                                                new ItemCodeComponent(
+                                                    this.ItemCode,
+                                                    this.ClassificationCode,
+                                                    this.ItemDescription,
+                                                    this.Parent.vendorNumber,
+                                                    this.OriginCountryCode,
+                                                    this.OriginCountryName, true,
+                                                    this.InvoiceQuantityType,
+                                                    this.Parent.declarationPM.CustomerCode,
+                                                    this.TariffID,
+                                                    this.GITITEMCRs,
+                                                    this.Parent.declarationPM.Direction
+                                                )
+                                            );
                                         }
-                                        if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
-                                            this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
-                                            this.OriginCountryName = itemCodeDetails.OriginCountryName;
-                                            this.TradeAgreementCode = itemCodeDetails.TariffID;
-                                        }
-                                        //this.entityPM.AddSupplierInvioceItemCertificat()
+                                        break;
+                                    //case OnItemCodeAddResult.OverwriteRowFromDB:
+                                    //case OnItemCodeAddResult.voidDoNothing:
+                                    default:
+                                        {
+                                            itemCodeDetails.IsNew = true;
+                                            this.ClassificationCode = itemCodeDetails.ClassificationCode;
+                                            this.ItemDescription = itemCodeDetails.ItemDescription;
+                                            if (GITITEMCacheService.Instance.IsUnitPURForItems) {
 
-                                        for (let item of itemCodeDetails.GITITEMCRs) {
-                                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT.replace(/^0+/, ''))[0];
-                                            if (!exist) {
-                                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(this.entityPM);
-                                                SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
-                                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.entityPM.CounterKey;
-                                                SupplierInvioceItemCertificat.LineNumber = this.entityPM.LineNumber;
-                                                SupplierInvioceItemCertificat.Tenant = this.entityPM.Tenant;
-                                                //SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
-                                                SupplierInvioceItemCertificat.ReqConfirmationTypeCode = item.REQCERT.replace(/^0+/, '');
-                                                this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
-                                                var multiCertificateUpdateComponent: MultiCertificateUpdateComponent = new MultiCertificateUpdateComponent();
-                                                multiCertificateUpdateComponent.UpdateCertStatusAlaaMethod(SupplierInvioceItemCertificat, this.entityPM);
+                                                this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
                                             }
+                                            if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                                                this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
+                                                this.OriginCountryName = itemCodeDetails.OriginCountryName;
+                                                this.TradeAgreementCode = itemCodeDetails.TariffID;
+                                            }
+                                            //this.entityPM.AddSupplierInvioceItemCertificat()
+
+                                            for (let item of itemCodeDetails.GITITEMCRs) {
+                                                var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT.replace(/^0+/, ''))[0];
+                                                if (!exist) {
+                                                    var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(this.entityPM);
+                                                    SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
+                                                    SupplierInvioceItemCertificat.InvoiceCounterKey = this.entityPM.CounterKey;
+                                                    SupplierInvioceItemCertificat.LineNumber = this.entityPM.LineNumber;
+                                                    SupplierInvioceItemCertificat.Tenant = this.entityPM.Tenant;
+                                                    //SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
+                                                    SupplierInvioceItemCertificat.ReqConfirmationTypeCode = item.REQCERT.replace(/^0+/, '');
+                                                    this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
+                                                    var multiCertificateUpdateComponent: MultiCertificateUpdateComponent = new MultiCertificateUpdateComponent();
+                                                    multiCertificateUpdateComponent.UpdateCertStatusAlaaMethod(SupplierInvioceItemCertificat, this.entityPM);
+                                                }
+                                            }
+                                            this.GITITEMCRs = itemCodeDetails.GITITEMCRs;
+                                            this.SetCertificateStatusVisibility();
+                                            this.GetQuantityType();
                                         }
-                                        this.GITITEMCRs = itemCodeDetails.GITITEMCRs;
-                                        this.SetCertificateStatusVisibility();
-                                        this.GetQuantityType();
-                                    }
-                                    break;
-                            }
-                            return;
-                        });
+                                        break;
+                                }
+                                return;
+                            });
+                    }
+
+
+
+
+                    return;
                 }
-
-
-
-
-                return;
             }
-            }
-            else if(FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR"))
-            {
-                if(AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode) && !AppTool.IsNullOrEmpty(this.Parent.declarationPM.ExporterImporterCode) && !AppTool.IsNullOrEmpty(this.ItemCode))
-                {
+            else if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR")) {
+                if (AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode) && !AppTool.IsNullOrEmpty(this.Parent.declarationPM.ExporterImporterCode) && !AppTool.IsNullOrEmpty(this.ItemCode)) {
                     var clientItemExtendedPMService: ClientItemExtendedPMService = new ClientItemExtendedPMService();
                     clientItemExtendedPMService.GetClientItemPM(this.ItemCode, this.Parent.declarationPM.ExporterImporterCode, SessionLocator.Tenant)
                         .subscribe((response: ServiceResponse) => {
-                            if(response?.Result){
-                                var clientItemPM : ClientItemPM = response.Result;
-                                this.entityPM.ClassificationCode = clientItemPM?.ClassificationCode; 
-                                if(AppTool.IsNullOrEmpty(this.entityPM.ItemDescription))
+                            if (response?.Result) {
+                                var clientItemPM: ClientItemPM = response.Result;
+                                this.entityPM.ClassificationCode = clientItemPM?.ClassificationCode;
+                                if (AppTool.IsNullOrEmpty(this.entityPM.ItemDescription))
                                     this.entityPM.ItemDescription = clientItemPM?.ItemDescription;
-                                if(AppTool.IsNullOrEmpty(this.entityPM.OriginCountryCode))
-                                {
-                                    this.entityPM.OriginCountryCode = clientItemPM?.OriginCountryCode;     
-                                    this.entityPM.OriginCountryName = clientItemPM?.OriginCountryName;  
+                                if (AppTool.IsNullOrEmpty(this.entityPM.OriginCountryCode)) {
+                                    this.entityPM.OriginCountryCode = clientItemPM?.OriginCountryCode;
+                                    this.entityPM.OriginCountryName = clientItemPM?.OriginCountryName;
                                 }
-                                       
-                                            
+
+
                             }
 
-                    })
+                        })
                 }
             }
-           
+
         }
-        
+
         this.declarationWebService.GetGITITEMPartnersItemListByItemCode(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, false)
             .subscribe((response: ServiceResponse) => {
                 var res = response.Result;
@@ -4520,7 +4551,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
     PartnerItemsSelectionCompleted(item, partnersItem) {
-        
+
         if (!AppTool.IsNullOrEmpty(partnersItem)) {
             console.log("Response returned: ", partnersItem);
             if (!AppTool.IsNullOrEmpty(partnersItem.ItemCode) || !AppTool.IsNullOrEmpty(partnersItem.ClassificationCode)) {
@@ -4592,7 +4623,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                         item.GITITEMCRs = partnersItem.GITITEMCRs;
                                         this.SetCertificateStatusVisibility();
                                         //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType));
-                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode, item.TariffID, item.GITITEMCRs,this.Parent.declarationPM.Direction));
+                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode, item.TariffID, item.GITITEMCRs, this.Parent.declarationPM.Direction));
                                         this.GetQuantityType();
 
                                         //item.IsNew = true;
@@ -4920,20 +4951,20 @@ export class ModificationItemModel extends BaseComponent {
             this.DeleteButton = true;
             this.currencyType = value;
             /* if (this.code == "67") {
-                 this.parent.InsruanceCurrencyTypeCode = value.Code;
-             }
-             if (this.code == "144") {
-                 this.AddFreightToLists();
-                 var OldCurrency = this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode;
-                 if (OldCurrency != null && OldCurrency != value.Code) {
-                     this.deletSupplierInvoiceFreightAmountPMWithCode(OldCurrency);
-                     this.setSupplierInvoiceFreightAmountPMWithCode(value.Code);
-                 }
-                 if (OldCurrency == null) {
-                     this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode = value.Code;
-                 }
-                 this.parent.FreightCurrencyTypeCode = value.Code;
-             }*/
+                this.parent.InsruanceCurrencyTypeCode = value.Code;
+            }
+            if (this.code == "144") {
+                this.AddFreightToLists();
+                var OldCurrency = this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode;
+                if (OldCurrency != null && OldCurrency != value.Code) {
+                    this.deletSupplierInvoiceFreightAmountPMWithCode(OldCurrency);
+                    this.setSupplierInvoiceFreightAmountPMWithCode(value.Code);
+                }
+                if (OldCurrency == null) {
+                    this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode = value.Code;
+                }
+                this.parent.FreightCurrencyTypeCode = value.Code;
+            }*/
             this.CurrencyTypeCode = value.Code;
             this.CurrencyTypeName = value.LocalName;
             this.parent.CalculateExportModificationAmount();
@@ -5239,7 +5270,7 @@ export class ItemCodeComponent extends BaseComponent {
     private _GITITEMCRs: GITITEMCR[] = [];
     private _Direction: string;
 
-    constructor( itemCode: string, classificationCode: string, itemDescription: string, vendorNumber: string, originCountryCode: string, originCountryName: string, isNew: boolean, invoiceQuantityType: string, private _CustomerCode: string, tariffID: string, public gITITEMCRs: GITITEMCR[],  direction:string) {
+    constructor(itemCode: string, classificationCode: string, itemDescription: string, vendorNumber: string, originCountryCode: string, originCountryName: string, isNew: boolean, invoiceQuantityType: string, private _CustomerCode: string, tariffID: string, public gITITEMCRs: GITITEMCR[], direction: string) {
         super();
 
         this.ItemCode = itemCode;
@@ -5252,7 +5283,7 @@ export class ItemCodeComponent extends BaseComponent {
         this.IsNew = isNew;
         this.GITITEMCRs = gITITEMCRs;
         this.TariffID = tariffID;
-        this._Direction=direction;
+        this._Direction = direction;
     }
     public get GITITEMCRs() { return this._GITITEMCRs; }
     public set GITITEMCRs(newValue: GITITEMCR[]) { this._GITITEMCRs = newValue; }
