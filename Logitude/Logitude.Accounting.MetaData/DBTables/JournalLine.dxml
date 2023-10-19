@@ -165,6 +165,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ConfirmationNumber"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="JournalId"
     ReferencedTable="Journals"
