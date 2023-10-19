@@ -87,7 +87,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             foreach (var prediction in page.prediction)
                             {
-                                if (prediction.label.ToUpper() != label && !dic.ContainsKey(prediction.label))
+                                if (prediction.label.ToUpper() != label && !dic.ContainsKey(prediction.label) && !string.IsNullOrEmpty(prediction.ocr_text))
                                 {
                                     dic.Add(prediction.label, prediction.ocr_text);
                                 }
@@ -112,7 +112,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             supplierInvoiceItemsList.Add(dicItems);
                                             dicItems = new Dictionary<string, string>();
                                         }
-                                        if (!dicItems.ContainsKey(cell.label) && cell.label != ExpensesAmount && cell.label != ExpensesName)
+                                        if (!dicItems.ContainsKey(cell.label) && !string.IsNullOrEmpty(cell.text) && cell.label != ExpensesAmount && cell.label != ExpensesName)
                                             dicItems.Add(cell.label, cell.text);
                                         row = cell.row;
                                     }
