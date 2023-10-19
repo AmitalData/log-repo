@@ -268,6 +268,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage PostSend2750AndUpdaeClassificationByCourierMaster(SendALLCorrectRequestParams requestParamsData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                var messagingService = new DCAInUCBAC_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel?requestParamsData.LoggingUserId:null, requestParamsData);
+
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage PostSendALLChangeStorageSiteCode(SendALLStorageSiteRequestParams requestParamsData)
         {
@@ -364,6 +386,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
 
         public HttpResponseMessage PostSendPayReadyLow2755(SendPayReadyLowRequestParams requestParamsData)
         {

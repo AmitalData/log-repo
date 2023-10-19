@@ -2773,6 +2773,25 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "",
                 InterfaceType = "B",
                 //  NeedSignature = false
+            }); 
+            
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCBAC",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "אישור סיווג ושידור מסר הצהרה",// "Unifreight Courier *UCBAC* Batch Send",
+                DcaPrefixName = "UnifreightCourier_UCBAC_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+                //  NeedSignature = false
             });
 
             all.Add(new InterfaceManagementDetails()

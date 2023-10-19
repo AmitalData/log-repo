@@ -156,6 +156,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2750",//,Batch Send 2750 per CourierMasterId
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 1170 per CourierMasterId
+"UCBAC",//,Batch Send UCBAC per CourierMasterId
 "UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
 "UCB8250",//,Batch Send 8250 per CourierMasterId
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
@@ -313,6 +314,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2750",//,Batch Send 2750 per CourierMasterId
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 1170 per CourierMasterId
+"UCBAC",//,Batch Send UCBAC per CourierMasterId
 "UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
 "UCB8250",//,Batch Send 8250 per CourierMasterId
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
@@ -474,6 +476,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2750",//,Batch Send 2750 per CourierMasterId
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 2750 per CourierMasterId
+"UCBAC",//,Batch Send UCBAC per CourierMasterId
 "UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
 "UCBCMSS",//,Batch Send change StorageSite per CourierMasterId
 "1170", // - מסר מצהר
