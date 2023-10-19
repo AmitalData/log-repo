@@ -24,6 +24,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.MainEntityReference).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.MainEntityId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConfirmationNumber).HasMaxLength(30).IsUnicode(false);
+
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
@@ -145,6 +147,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.IsEquipment).HasColumnName("IsEquipment");
             this.Property(t => t.ConnectedPaymentsNumbers).HasColumnName("ConnectedPaymentsNumbers");
             this.Property(t => t.TotalEquation).HasColumnName("TotalEquation");
+            this.Property(t => t.ConfirmationNumber).HasColumnName("ConfirmationNumber");
+
 
             // Relationships
             this.HasRequired(t => t.Status).WithMany().HasForeignKey(d => d.StatusCode);
