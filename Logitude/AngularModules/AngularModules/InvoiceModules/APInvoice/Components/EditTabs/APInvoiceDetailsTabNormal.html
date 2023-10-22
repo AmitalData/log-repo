@@ -624,7 +624,30 @@
                                 </li>
                             </ul>
                         </td>
+                        <td style="width: 20px;" *ngIf="IsAccountingActivated">
+                            <div class="VerticalLine"></div>
+                        </td>
 
+                        <td style="width: 250px; min-width: 250px;" *ngIf="IsAccountingActivated">
+                            <div class="MediaFill">
+                                <table>
+                                
+                                    <tr style="height: 1px;">
+                                        <td class="TabSummaryTitle">
+                                            {{'APInvoice.F.Notes' | TextCodeTranslationPipe}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <LogTextBox [ObjectFieldName]="'InternalNotes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
                     </tr>
                 </table>
             </TabSummary>
