@@ -2727,55 +2727,47 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         });
     }
     
+    public isAllowClassificationApproveFeature = false;
     ClassificationApprove() {
         if (FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "ClassificationApprovedFromMasterCourier")) {
-            debugger
-        }
-        var confirm = new ConfirmWindow();
-        confirm.Width = 320;
-        confirm.Height = 180;
-        confirm.Title =  "אישור סיווג";
-        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-        confirm.ShowNoButton = true;
-        confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-        confirm.Show("נא אשר סיווג לכל הטיסה");
-        confirm.WindowClosed.subscribe((event: any) => {
-            if (confirm.Yes) {
-                
-                debugger
-                var currRequestParams = new SendALLCorrectRequestParams();
-                currRequestParams.LoggingEnabled = true;
-                currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-                currRequestParams.Tenant = SessionLocator.Tenant;
-                currRequestParams.CourierMasterId = this.entityPM.Id;
-                currRequestParams.HAWB = this.entityPM.HAWB;
-                if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
-                    currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-                }
-        
-                // currRequestParams.CourierDeclarationStatusCode = courierDeclarationStatusCode;
-                // currRequestParams.SelectedAvailableValue = this._SelectedAvailableValue;
-                // currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
-                // currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
-                // currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
-                // currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
-                // currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
-                // currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
-        
-        
-                this._CourierMasterService.PostSend2750AndUpdaeClassificationByCourierMaster(currRequestParams)
-                    .subscribe((res: any) => {
-        
-                        SessionLocator.SelectedSession.StopBusyIndicator();
-                        var myMessageWindow = new MessageWindow();
-                        myMessageWindow.Show(res.Result);
-                        myMessageWindow.WindowClosed.subscribe(s => {
-                            this.RefreshButtonClicked();
+            this.isAllowClassificationApproveFeature = true;
+            var confirm = new ConfirmWindow();
+            confirm.Width = 320;
+            confirm.Height = 180;
+            confirm.Title =  "אישור סיווג";
+            confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirm.ShowNoButton = true;
+            confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+            confirm.Show("נא אשר סיווג לכל הטיסה");
+            
+            confirm.WindowClosed.subscribe((event: any) => {
+                if (confirm.Yes) {
+                    
+                    var currRequestParams = new SendALLCorrectRequestParams();
+                    currRequestParams.LoggingEnabled = true;
+                    currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+                    currRequestParams.Tenant = SessionLocator.Tenant;
+                    currRequestParams.CourierMasterId = this.entityPM.Id;
+                    currRequestParams.HAWB = this.entityPM.HAWB;
+                    if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+                        currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+                    }
+                    this._CourierMasterService.PostSend2750AndUpdaeClassificationByCourierMaster(currRequestParams)
+                        .subscribe((res: any) => {
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            var myMessageWindow = new MessageWindow();
+                            myMessageWindow.Show(res.Result);
+                            myMessageWindow.WindowClosed.subscribe(s => {
+                                this.RefreshButtonClicked();
+                            });
                         });
-                    });
-            }
-            confirm.Close();
-        });
+                }
+                confirm.Close();
+            });
+        }
+        else {
+            this.isAllowClassificationApproveFeature = false;
+        }
     }
 
 }
