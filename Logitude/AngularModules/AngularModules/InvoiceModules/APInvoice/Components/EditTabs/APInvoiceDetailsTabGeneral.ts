@@ -766,6 +766,12 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     private OnInvoiceDateChangedLoad() {
         this.UpdateData();
     }
+    get InternalNotes() { return this.EntityPM.InternalNotes; }
+    set InternalNotes(value: string) {
+        if (this.EntityPM.InternalNotes != value) {
+            this.EntityPM.InternalNotes = value;
+        }
+    }
 
     get SubTotalInLocalCurrency() { return this.EntityPM.SubTotalInLocalCurrency; }
     set SubTotalInLocalCurrency(value: number) {

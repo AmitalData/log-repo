@@ -602,6 +602,12 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         return myResult;
     }
+    get InternalNotes() { return this.EntityPM.InternalNotes; }
+    set InternalNotes(value: string) {
+        if (this.EntityPM.InternalNotes != value) {
+            this.EntityPM.InternalNotes = value;
+        }
+    }
 
     private isTotalInLocalCurrency: boolean = false;
     get IsTotalInLocalCurrency() { return this.isTotalInLocalCurrency; }
