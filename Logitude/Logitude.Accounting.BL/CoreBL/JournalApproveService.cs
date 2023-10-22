@@ -349,23 +349,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(_Tenant);
                 GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_Tenant);
-                bool isFuture = arPayment.ValueDate > DateTime.Today ? true : false;
-                List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(arPayment.BillToId, _Tenant, isFuture: isFuture);
+                List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(arPayment.BillToId, _Tenant, false, withoutDate: true);
                 if (allChecks != null && allChecks.Count != 0)
                 {
-                    var sum = allChecks.Sum(x => x.CalculatedLocalAmount);
                     GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(allChecks[0].AccountId, _Tenant);
                     GLAccountMoreDataPM moreDataPM =  gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);
 
                     moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                    if (isFuture)
-                    {
-                        moreDataPM.TotFutureOpenChequesInLocalCur = sum;
-                    }
-                    else
-                    {
-                        moreDataPM.TotalOpenChequesInLocalCur = sum;
-                    }
+                    moreDataPM.TotFutureOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate > DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
+                    moreDataPM.TotalOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate <= DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
+
 
                     GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _Tenant);
                     gLAccountMoreDataUpdateService.Update(moreDataPM, true);
