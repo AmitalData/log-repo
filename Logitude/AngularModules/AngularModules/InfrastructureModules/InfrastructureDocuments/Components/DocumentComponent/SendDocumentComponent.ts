@@ -78,7 +78,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     public AreaAttachmentMargin: any;
     public AreaAttachmentWidth: string = "600px";
     public CommunicationAttachmentPMs: CommunicationAttachmentPM[];
-
+    public isRTL: boolean = false;
 
     public CommunicationLogs: CommunicationLogPMViewModel[];
 
@@ -150,7 +150,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     public IsToEmailIsDisabled: boolean = false;
 
     constructor(public _communicationLogExtendedPMService: CommunicationLogExtendedPMService, public _communicationAttachmentExtendedPMService: CommunicationAttachmentExtendedPMService, public _documentOutPMService: DocumentOutPMService, public _documentExtendedService: DocumentExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService, public _documentTypePMService: DocumentTypePMExtendedService, private cd: ChangeDetectorRef, public _documentTypeListService: DocumentTypeListService) {
-
+        
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
 
