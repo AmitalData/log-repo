@@ -1966,6 +1966,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         //public decimal BeginOfYearLocalAmountBalance { get; set; }
         public List<CallBackBalance> StartBalanceForeignList { get; set; }
         public List<CallBackBalance> EndBalanceForeignList { get; set; }
+        public decimal? EndBalanceForeign { get; set; }
+
 
 
     }
