@@ -59,7 +59,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingEntityReference = customsResponse.master,
 
                 LoggingUserId = customsResponse.LoggingUserId,
-                RequestName = $" שידור מצהר בלדר " + customsResponse.master + " "
+                RequestName = $" אישור סיווג ושידור מסר הצהרה " + customsResponse.master + " "
             };
 
             if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
