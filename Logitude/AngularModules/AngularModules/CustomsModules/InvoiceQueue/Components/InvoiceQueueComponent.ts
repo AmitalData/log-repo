@@ -71,7 +71,7 @@ export class InvoiceQueueComponent
     private GetData() {
         this.ResetVariables();
        this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
-        //this._declarationPMService.get("1-1000113").subscribe(data => {
+       //this._declarationPMService.get("1-1000140").subscribe(data => {
 
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
