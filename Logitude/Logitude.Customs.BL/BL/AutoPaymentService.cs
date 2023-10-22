@@ -549,7 +549,7 @@ namespace Logitude.Customs.BL.BL
 
 			if (!IsFromClient)
 			{
-				if (PaymentMethodsList?.Count() > 0 && PaymentMethodsList[0]?.BanksList?.Count() > 1)
+				if (PaymentMethodsList?.Count() > 0 && PaymentMethodsList[0]?.BanksList?.Count() > 1 && PaymentMethodsList[0]?.BanksList?.FindAll(x => !x.InActive && x.PayerTypeCode == PaymentMethodsList[0].PayerActivityTypeCode).Count() > 1)
 				{
 					throw new Exception("ישנם ריבוי בנקים");
 
@@ -2318,6 +2318,14 @@ public class PaymentMethodModel : DeclarationPaymentMethodPM
 				"0" //יבואן / יצואן
 
 			);
+		}
+		else if (this.parent.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ALL_KUPA")
+		{
+			this.updateDefaultPaymentMethod(
+							"2",/*קופה*/
+							"0" //יבואן / יצואן
+
+						);
 		}
 		else if (_UsingDsvPayKupa)
 		{
