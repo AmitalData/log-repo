@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "ed1be250094bc133c4c88ef701bb9549";
+		public const string HashString = "4ccc62b5ff1b0340a889c2fc6b5bd02e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -103,7 +103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  true,
-			      				    HasHelper =  true,
+			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  true,
@@ -9239,6 +9239,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APInvoiceTextCode_APInvoiceOCantVoidWithInactiveGLA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CantVoidWithInactiveGLA", DefaultText = "You can't void an invoice that is connected to an Inactive GL Account",LocalDefaultText = @"לא ניתן לבטל חשבונית שמחוברת לכרטסת חסומה", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APInvoiceTextCode_ApinvoiceOTotalVATwithQBO = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Apinvoice.O.TotalVATwithQBO", DefaultText = "Total VAT option is not compatible with QBO , if they you want to transfer this invoice to Quickbooks, please disable the total vat and make sure each invoice line has a VAT",LocalDefaultText = @"Total VAT option is not compatible with QBO , if they you want to transfer this invoice to Quickbooks, please disable the total vat and make sure each invoice line has a VAT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APInvoiceTextCode_APInvoiceFNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.F.Notes", DefaultText = "Notes",LocalDefaultText = null, ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
