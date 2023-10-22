@@ -261,12 +261,23 @@
                                                                         <td>
                                                                             <LogLabel [ObjectFieldName]="'ChangeHeaderColor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
-                                                                        <td style="width: 10%;">
-                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'ChangeHeaderColor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                        </td>
                                                                         <td>
-                                                                            <input [disabled]="!ChangeHeaderColor" type="color" [(ngModel)]="HeaderColor" class="colorPicker" id="color" value="">
+
+                                                                            <table>
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 20px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'ChangeHeaderColor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                    </td>
+            
+                                                                                    <td>
+                                                                                        <input [disabled]="!ChangeHeaderColor" type="color" [(ngModel)]="HeaderColor" class="colorPicker" id="color" value="" >
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                            
+                                                                            
                                                                         </td>
+                                                                       
                                                                     </tr>
 
 
