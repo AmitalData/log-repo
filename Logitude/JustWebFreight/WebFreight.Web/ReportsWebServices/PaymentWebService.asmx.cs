@@ -202,7 +202,7 @@ namespace WebFreight.Web.ReportsWebServices
                         paymentDataProvider.BillToWebsite = billToCard.Website != null ? billToCard.Website  : "";
                         paymentDataProvider.BillToBankAccountNumber = billToCard.AccountNumber != null ? billToCard.AccountNumber : "";
                         paymentDataProvider.BillToBankName = billToCard.BankName != null ? billToCard.BankName : "";
-						if (string.IsNullOrEmpty(billToCard.GLAccountId))
+						if (!string.IsNullOrEmpty(billToCard.GLAccountId))
 						{
 
 							var CurrentGLAccount = billToCard.GLAccountId;

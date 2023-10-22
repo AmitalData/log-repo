@@ -170,7 +170,7 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.VendorWebsite = paidToCard.Website;
 
 
-                        if (string.IsNullOrEmpty(paidToCard.GLAccountId)) 
+                        if (!string.IsNullOrEmpty(paidToCard.GLAccountId)) 
                         {
 
                             var CurrentGLAccount = paidToCard.GLAccountId;
