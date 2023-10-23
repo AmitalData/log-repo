@@ -17536,10 +17536,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Query
-    Code="&quot;Draft General Invoices&quot;"
-    TextCode="&quot;Draft Invoices&quot;"
-    LocalTextCode="&quot;חשבוניות בסטטוס טיוטה&quot;"
   <field
     Id="&quot;c3cb27ce-c416-4e1e-9288-0a40981ee4fd&quot;"
     FieldName="&quot;ConfirmationNumber&quot;"
@@ -17568,6 +17564,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ConfirmationNumber&quot;"
     ListPropertyPath="&quot;ConfirmationNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -17615,7 +17612,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-    Code="&quot;All Invoices&quot;"
+    Code="&quot;Draft General Invoices&quot;"
     TextCode="&quot;All Invoices&quot;"
     LocalTextCode="&quot;כל החשבוניות&quot;"
     QueryGroupCode="&quot;INVC&quot;"
