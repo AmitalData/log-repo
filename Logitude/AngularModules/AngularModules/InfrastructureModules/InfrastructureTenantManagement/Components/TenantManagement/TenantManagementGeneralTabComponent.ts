@@ -42,7 +42,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public IsMainAdditionalPackageApplied: boolean = false;
     private tenantLoginPolicyPMService: TenantLoginPolicyPMService;
     private CurrentSession = SessionLocator.SelectedSession;
-
+    public isRTL: boolean = false;
     public IsLogBoxTenant: boolean = false;
 
     private headerColor = "";
@@ -58,6 +58,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     }
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = this.entityArgs.EntityPM;
         this.headerColor = this.EntityPM.HeaderColor;
         this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
