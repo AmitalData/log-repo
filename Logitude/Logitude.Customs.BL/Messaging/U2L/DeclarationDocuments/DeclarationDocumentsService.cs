@@ -182,7 +182,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     {
                         customsDocumentsTicketPM.DocumentTypeCode = myDocumentTypeCustomsData.CustomsDoucumentTypeCode;
                         var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(dbContext);
-                        var myCustomDocumentType = myCustomDocumentTypeQueryService.GetSingle(myDocumentTypeCustomsData.CustomsDoucumentTypeCode, true, true);
+                        var myCustomDocumentType = myCustomDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(myDocumentTypeCustomsData.CustomsDoucumentTypeCode, _MyDeclarationPM.Tenant);
                         if (myCustomDocumentType != null && !String.IsNullOrWhiteSpace(myCustomDocumentType.PointerLevel))
                         {
                             pointerLevel = myCustomDocumentType.PointerLevel;
