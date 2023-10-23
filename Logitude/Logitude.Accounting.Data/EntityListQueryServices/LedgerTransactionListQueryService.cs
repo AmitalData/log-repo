@@ -12,6 +12,9 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Data.Enums;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -91,7 +94,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
                                                            JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
                                                            TaxReportId = jad != null ? jad.TaxReportId : "",
-                                                           TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : ""
+                                                           TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : "",
+                                                           SecurityLevelFiltering = 1,
                                                        });
 
 
@@ -267,7 +271,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                         CalculatedForeignAmount = ledger.ForeignAmountCredit != 0 ? ledger.ForeignAmountCredit : ledger.ForeignAmountDebit,
                                                                         CalculatedLocalAmount = ledger.LocalAmountCredit != 0 ? ledger.LocalAmountCredit : ledger.LocalAmountDebit,
                                                                         CurrencyId = ledger.CurrencyId,
-                                                                        SearchFields = ledger.SearchFields
+                                                                        SearchFields = ledger.SearchFields,
+
 
                                                                     }).Distinct();
             transactionBalanceFilter.TaxReportTotalCount = journalOutputLines.Count();
@@ -279,7 +284,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private List<JournalLine> GetJournalLinesForTransactions(List<LedgerTransactionList> transactions, int tenant)
         {
             List<string> transactionIds = transactions.Select(d => d.Id).ToList();
-            JournalLineRepository journalLineRepository = new JournalLineRepository(tenant);
+            JournalLineRepository journalLineRepository = new JournalLineRepository(context);
             return journalLineRepository.GetJournalLineByLedgerTransactionIdList(transactionIds, tenant);
         }
         private List<LedgerTransactionList> GetCreditLinesFromSelectedTransactionsGroupedByJournalId(List<LedgerTransactionList> outputLines, List<JournalLine> JournalLines)
@@ -365,10 +370,39 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             QueryOperations customizedQueryOperation = new QueryOperations();
             customizedQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.IsCustom == true).ToList();
             // iQueryable = customFilter.GetFilteredQuery<LedgerTransaction>(customizedQueryOperation, iQueryable);
+            if (queryOperations.QueryFilterItems.Exists(d => d.FieldName == "SecurityLevelFiltering"))
+            {
+                int? userSecurityLevel = GetSecurityLevel(tenant);
+                var q = from lt in iQueryable
+                        join j in context.Journals on lt.JournalId equals j.Id
+                        join fullAccountingSettings in context.FullAccountingSettings on lt.Tenant equals fullAccountingSettings.Tenant
+                        where lt.Tenant == j.Tenant 
+                        && (!fullAccountingSettings.IsSecurityLevelActivated || 
+                                (   !j.SecurityLevel.HasValue || !userSecurityLevel.HasValue || 
+                                    (j.SecurityLevel.HasValue && j.SecurityLevel.Value <= userSecurityLevel.Value)  )   )
+                        select lt;
+
+                iQueryable = q;
+            }
             iQueryable = customFilter.GetFilteredQuery(customizedQueryOperation, iQueryable,tenant);
             return iQueryable;
         }
+        private int? GetSecurityLevel(int tenant)
+        {
+            User loggedUser = GetLoggedUser(tenant);
+            if (loggedUser != null)
+                return loggedUser.SecurityLevel;
+            else
+                return null;
+        }
 
+        private User GetLoggedUser(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            UserRepository userRepository = new UserRepository(tenant);
+            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, false);
+            return loggedUser;
+        }
         private IQueryable<LedgerTransaction> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<LedgerTransaction> iQueryable, int tenant)
         {
             return iQueryable;
@@ -1051,7 +1085,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             //
 
             LedgerTransactionRepository repo = new LedgerTransactionRepository(tenant);
-            int count = repo.getRecoCount(glAccountId);
+            int count = repo.getRecoCount(glAccountId,tenant);
             return count;
         }
 
@@ -1708,7 +1742,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
         public IQueryable<LedgerTransactionList> GetExternalReconciliationsTransactions(int tenant, int? reconciliationNumber)
         {
-            ExternalReconciliationLineRepository lineRepository = new ExternalReconciliationLineRepository(tenant);
+            ExternalReconciliationLineRepository lineRepository = new ExternalReconciliationLineRepository(context);
             var lines = lineRepository.GetAll(tenant);
 
             var ledgerTransactions = (from line in lines.Include("LedgerTransaction")
@@ -1749,7 +1783,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         private IQueryable<LedgerTransaction> GetTransactionsQuery(int tenant)
         {
-            var transactionsRepository = new LedgerTransactionRepository(tenant);
+            var transactionsRepository = new LedgerTransactionRepository(context);
             IQueryable<LedgerTransaction> transactionsQuery = transactionsRepository.GetAll(tenant);
 
             return transactionsQuery;
@@ -1912,6 +1946,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public List<string> AllIdAccounts { get; set; }
         public DateTime? MaxCreateAt { get; set; }
         public List<string> YearTransferLedgerTransactionIds { get; set; }
+        public string GLAccountId { get; set; } 
     }
 
 

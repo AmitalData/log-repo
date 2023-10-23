@@ -87,6 +87,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ActionId { get; set; }
 	      
         public virtual JournalActionType JournalActionType { get; set; }
+        [Column("ConfirmationNumber")]
+	    public string ConfirmationNumber { get; set; }
     }
 }
 	 

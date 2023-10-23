@@ -229,6 +229,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string PaymentReferences { get; set; }
         public string SATCancelReasonCode { get; set; }
         public string TotalEquation { get; set; }
-
+        public string ConfirmationNumber { get; set; }
     }
 }

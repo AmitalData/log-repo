@@ -633,10 +633,10 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference",'Text',TextCodeTranslator.Translate("TaxReportLine.F.Reference")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferecneGroup",'Text',TextCodeTranslator.Translate("TaxReportLine.F.ReferecneGroup")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferenceDate",'DateTime',TextCodeTranslator.Translate("TaxReportLine.F.ReferenceDate")));
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TotalInvoiceAmount",'Number',TextCodeTranslator.Translate("TaxReportLine.F.TotalInvoiceAmount")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TotalInvoiceAmount",'Decimal',TextCodeTranslator.Translate("TaxReportLine.F.TotalInvoiceAmount")));
         //ameerah
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("SubTotalInLocalCurrency",'Number',TextCodeTranslator.Translate("ARInvoice.F.SubTotalInLocalCurrency")));
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("VatAmount",'Number',TextCodeTranslator.Translate("TaxReportLine.F.VatAmount")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("SubTotalInLocalCurrency",'Decimal',TextCodeTranslator.Translate("ARInvoice.F.SubTotalInLocalCurrency")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("VatAmount",'Decimal',TextCodeTranslator.Translate("TaxReportLine.F.VatAmount")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.
             GetQueryColumn(SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusEnglishName' : 'StatusLocalName','Text',TextCodeTranslator.Translate("TaxReportLine.F.StatusEnglishName")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("JournalNumber",'Text',TextCodeTranslator.Translate("TaxReportLine.F.JournalNumber")));

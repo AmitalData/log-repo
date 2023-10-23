@@ -306,7 +306,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                     IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
                     GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
-                    if (myAccountingIntegrityResult.TotalOpenReconciliationResult.Count > 0)
+                    if (myAccountingIntegrityResult?.TotalOpenReconciliationResult?.Count() > 0)
                     {
                         myAccountingIntegrityResult.TotalOpenReconciliationResult.ForEach(r =>
                         {

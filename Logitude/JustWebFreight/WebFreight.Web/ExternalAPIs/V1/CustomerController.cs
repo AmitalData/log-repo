@@ -210,7 +210,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
                         }
-
+                        if(entity.GLAccount != null && !string.IsNullOrEmpty(entity.GLAccount.InternalNumber))
+                        {
+                            entityPM.Code = entity.GLAccount.InternalNumber;
+                        }
                         CustomerService service = new CustomerService(MyContext, entityPM);
                         service.Create();
                         service.Submit();
@@ -253,6 +256,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 else
                                 {
                                     gLAccountEntity.InternalNumber = entity.GLAccount.InternalNumber;
+                                    gLAccountEntity.DisplayNumber = entity.GLAccount.InternalNumber;
                                 }
                                 
                                 //EnglishName

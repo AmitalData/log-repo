@@ -2482,6 +2482,22 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
                     var fields: string[] = this.DisplayFieldsFromList.split(',');
                     lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
+                    lookupFields.sort((a, b) => {
+                        const indexA = fields.indexOf(a.FieldName);
+                        const indexB = fields.indexOf(b.FieldName);
+                      
+                        // If both fields are found in DisplayFieldsFromList, compare their indices
+                        if (indexA !== -1 && indexB !== -1) {
+                          return indexA - indexB;
+                        }
+                      
+                        // If one of the fields is not found, place it after the one found
+                        if (indexA === -1) {
+                          return 1;
+                        } else {
+                          return -1;
+                        }
+                      });
                 }
                 else {
                     //if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){

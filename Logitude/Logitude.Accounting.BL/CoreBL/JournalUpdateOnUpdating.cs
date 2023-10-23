@@ -26,6 +26,7 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 
 namespace Logitude.Accounting.BL
 {
@@ -86,9 +87,8 @@ namespace Logitude.Accounting.BL
                 throw new ApplicationException("Journal is voided (Change is not Allowed)");
             }
 
-
-            /// 
-            foreach (var jl in journalPM.JournalLines)
+                /// 
+                foreach (var jl in journalPM.JournalLines)
             {
                 var JournalUpdateOnCreatingLine = CreateJournalLineOnUpdate();
                 //jl.EnsureAllDecimalPrecisionIfChangeChangeUpdate();
@@ -117,6 +117,37 @@ namespace Logitude.Accounting.BL
             journalPM.UpdateDate = DateTime.Now;
 
             journalPM.AccountingDate = journalPM.AccountingDate.Date; //Eyal:Time No Meaning (create+update Have  Time have Meaning )
+
+            // The FullAccountingSettings,IsSecurityLevelActivated is not checked here - INTENTIONALLY 
+            // Also, the CheckFeature("Journal", "Journal.Feature.ManageSecurity") is not performed 
+            if (!String.IsNullOrEmpty(loggedContactId) && 
+                ((journalPM.SecurityLevel.HasValue && !JournalPOCO.SecurityLevel.HasValue) ||
+             // (!journalPM.SecurityLevel.HasValue && JournalPOCO.SecurityLevel.HasValue) ||
+                (journalPM.SecurityLevel.HasValue && JournalPOCO.SecurityLevel.HasValue && journalPM.SecurityLevel.Value != JournalPOCO.SecurityLevel.Value)))
+            {
+                UserQuery userQuery = new UserQuery(JournalPOCO.Tenant);
+                
+                var loggedUser = userQuery.GetSinglePM(loggedContactId, JournalPOCO.Tenant);
+                if (loggedUser != null)
+                {
+                    if (!loggedUser.SecurityLevel.HasValue || journalPM.SecurityLevel.Value > loggedUser.SecurityLevel.Value)
+                    {
+                        bool useLocal = true;
+                        string msg = TranslateTextsClassTranslate("Accounting.O.CantVoidJouranlItDidntTurnedToTransactions", 0, useLocal);
+                        // לא ניתן לתת רמת אבטחת לצפיה בפקודת היומן שגבוהה מרמת האבטחה שקיימת למשתמש
+
+                        if (String.IsNullOrEmpty(msg))
+                            msg = "Cannot set Journal Viewing Security Level higher than the User Security Level";
+
+                        string name = !String.IsNullOrEmpty(loggedUser.LocalName) ? loggedUser.LocalName : loggedUser.EnglishName;
+                        msg = msg + " - " + name;
+
+                        throw new ApplicationException(msg);
+
+                    }
+                }
+
+            }
 
 
             if (JournalPOCO.StatusCode == journalPM.StatusCode)

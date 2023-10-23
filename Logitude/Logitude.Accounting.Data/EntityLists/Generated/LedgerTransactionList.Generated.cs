@@ -164,6 +164,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string TaxReportId  { get; set; }
        [DataMember]
        public string TaxReportNumber  { get; set; }
+       [DataMember]
+       public int SecurityLevelFiltering  { get; set; }
    }
 
 }
