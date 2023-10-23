@@ -100,5 +100,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string GlobalTaxCalculation { get; set; }
         public bool IsEquipment { get; set; }
         public string ConnectedPaymentsNumbers { get; set; }
+        public string ConfirmationNumber { get; set; }
     }
 }

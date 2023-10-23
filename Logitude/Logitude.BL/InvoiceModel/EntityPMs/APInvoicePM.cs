@@ -1,7 +1,11 @@
-﻿using Simplog.Server.Infrastructure.DataContracts;
+﻿using Logitude.Accounting.Def.Validators;
+using Logitude.BL.Validators;
+using Logitude.Server.Tools;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using System.ServiceModel.DomainServices.Server;
 
 namespace Logitude.BL.InvoiceModel.EntityPMs
@@ -354,5 +358,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsEquipment { get; set; }
         public string ConnectedPaymentsNumbers { get; set; }
         public string TotalEquation { get; set; }
+        public string ConfirmationNumber { get; set; }
     }
 }

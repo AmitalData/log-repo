@@ -35,7 +35,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 return;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository();
+                HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(iCommonDataContext);
                 var hybridPartner = hybridPartnerRepository.GetHybridPartnersByPartnerTenant(tenant).FirstOrDefault();
                 if(hybridPartner == null)
                 {

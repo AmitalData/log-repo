@@ -15,5 +15,6 @@ namespace WebFreight.Web.DataContracts
         public int Tenant { get; set; }
         public string DocumentTypeTemplateId { get; set; }
 
+        public bool SignHSM { get; set; }
     }
 }

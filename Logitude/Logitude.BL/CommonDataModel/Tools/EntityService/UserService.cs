@@ -51,6 +51,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private List<UserPermittedBranchPM> userPermittedBranchPMChangeSet;
         private List<UserPermittedProductPM> userPermittedProductPMChangeSet;
+        private string _DisableOldContactId;
         public void SetChangeSet(List<UserPermittedBranchPM> userPermittedBranchPMChangeSet)
         {
             this.userPermittedBranchPMChangeSet = userPermittedBranchPMChangeSet;
@@ -258,6 +259,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPm.UserRoles = this.ComputeUpdatedUserRoles();
             CheckDocumentFilingInbox(entityPM, Poco);
             ContactService service = new ContactService(objectContext, entityPM.Tenant);
+            if (!String.IsNullOrWhiteSpace(this._DisableOldContactId))
+            {
+                //update contacts  set inactive=1, computedkey  = id  where id='1-10622'
+                contact.ExternalId = service.DisableOldContact(this._DisableOldContactId, entityPM.Tenant);//UPDATE  CONTACTS SET   externalid ='1439'  WHERE   EMAIL ='a59mix_tk4@amitaly.co.il' OR ID IN ('1-10628','1-10627')
+            }
             MapUserToContact(entityPM, contact);
             service.Update(contact);
 
@@ -348,6 +354,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 GlobalContact globalContact = globalContactRepository.GetSingleGlobalContact(entityPm.Id);
                 if (globalContact != null)
                 {
+                    ChangeContactToCurrentUserRemoveOldGlobalContact(globalContactRepository, globalContact);
                     globalContact.Email = entityPm.Email;
                     globalContact.InActive = entityPm.InActive;
                     globalContactRepository.Update(globalContact);
@@ -389,7 +396,34 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 scope.Complete();
             }
         }
+        private void ChangeContactToCurrentUserRemoveOldGlobalContact(GlobalContactRepository globalContactRepository, GlobalContact globalContact)
+        {
+            if ( globalContact.Email != entityPm.Email)
+            {
+                if (!string.IsNullOrWhiteSpace(entityPm.Email) && LogitudeSettings.IsCostomsDeploy)
+                {
+                    var qoldContact = globalContactRepository
+                        .GetContactByEmail(entityPm.Email)
+                        .Where(r => r.IsUser == false)
+                        .Where(r => r.Id != entityPm.Id);
+                    var oldContact = qoldContact.FirstOrDefault();
 
+
+                    if (oldContact != null)
+                    {
+                        this._DisableOldContactId = oldContact.Id;
+
+                        oldContact.Email = entityPm.Id + entityPm.Email;
+                        oldContact.Email = oldContact.Email ?? "";
+                        oldContact.Email = oldContact.Email.Substring(0, Math.Min(70, oldContact.Email.Length));
+                        globalContactRepository.Update(oldContact);//globalContactRepository.Remove(oldContact);
+                        globalContactRepository.SubmitChanges();
+                    }
+
+
+                }
+            }
+        }
         private void MapUserToContact(UserPM user, Contact contact)
         {
             contact.Anniversary = user.Anniversary;

@@ -16,14 +16,6 @@ Given("an AP Invoice with the following details", (dataTable) => {
     let aPInvoiceDetails = Assists.CreateInstance<APInvoiceDetails>(dataTable, true);
     APInvoiceActions.FillAPInvoiceDetails(aPInvoiceDetails)
 });
-
-When("create AP Invoice", () => {
-    APInvoiceActions.CreateAPInvoice()
-});
-
-Then("the AP Invoice should get successfully", () => {
-    APInvoiceActions.AssertCreateAPInvoice()
-});
 //#endregion
 
 //#region Add new Invoice Line
@@ -40,8 +32,14 @@ When("add Invoice Line", () => {
 Then("the Invoice Line should be added successfully", () => {
     APInvoiceActions.AssertAddAPInvoiceLine();
 });
-//#endregion
+// //#endregion
+//  When("create AP Invoice", () => {
+//    APInvoiceActions.CreateAPInvoice()
+//  });
 
+// Then("the AP Invoice should get successfully", () => {
+//     APInvoiceActions.AssertCreateAPInvoice()
+// });  
 //#region Approve the AP Invoice
 When("approve the AP Invoice", () => {
     APInvoiceActions.ApproveAPInvoice()

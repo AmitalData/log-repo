@@ -502,7 +502,7 @@
                                                                     {{'GLAccounts.O.filter_due' |
                                                                     TextCodeTranslationPipe}}
                                                                 </li>
-                                                                <li *ngIf="DisplayTaxReportFilter"
+                                                                <li *ngIf="isVatInputOrOutput"
                                                                     (click)="FilterItemClicked('filter_Tax')"
                                                                     style="height: 22px;"
                                                                     [class.SelectedFilter]="filterSelectedValue === 'filter_Tax'">
@@ -514,7 +514,7 @@
                                                             <div></div>
                                                         </td>
                                                         <td style="width:100px"
-                                                            *ngIf="DisplayTaxReportFilter&& filterSelectedValue === 'filter_Tax'">
+                                                            *ngIf="isVatInputOrOutput&& filterSelectedValue === 'filter_Tax'">
                                                             <div style="width:100px">
                                                                 <ComboBox [ItemsSource]="TaxReportLists"
                                                                     [IsDisabled]="NotIncludedInAnyTaxReport"
@@ -842,7 +842,7 @@
 
     <!-- grid -->
     <div style="flex-grow: 1000;">
-        <div class="GeneratedGridContainer">
+        <div class="GeneratedGridContainer" *ngIf="columnsReady">
             <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
                 [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
                 [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"

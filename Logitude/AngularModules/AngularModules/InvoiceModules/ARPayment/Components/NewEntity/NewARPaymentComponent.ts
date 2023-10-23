@@ -219,11 +219,12 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (this.invoicePm != null) {
             this.IsCreatedFromInvoiceSide = true;
             this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
             if (!this.accountingActivated) {
                 this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
+
             }
         }
     }

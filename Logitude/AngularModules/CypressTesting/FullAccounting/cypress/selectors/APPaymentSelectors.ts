@@ -14,4 +14,5 @@ export class APPaymentSelectors {
     public static readonly EditShipmentLine = 'button[id^="Edit_"]';
     public static readonly VoidButton = '#APPaymentBVoid';
     public static readonly CancelationNotes = '#APPayment_CancelationNotes';
+    public static readonly ConfirmWindow = '.ConfirmWindow .RedButton'
 }

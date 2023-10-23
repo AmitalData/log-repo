@@ -199,6 +199,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual GLAccountCardsData GLAccountCardsData { get; set; }
         [Column("PostponedChequesCommission")]
 	    public decimal? PostponedChequesCommission { get; set; }
+        [Column("DateFormat")]
+        public string DateFormat { get; set; }
     }
 }
 	 

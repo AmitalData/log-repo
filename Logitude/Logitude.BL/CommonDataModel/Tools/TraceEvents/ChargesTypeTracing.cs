@@ -253,7 +253,7 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                     chargesGroupQuery = new ChargesGroupQuery(poco.Tenant);
                     var OldChargesGroup = chargesGroupQuery.GetSinglePM(poco.ChargesGroupId, poco.Tenant);
                     var NewChargesGroup = chargesGroupQuery.GetSinglePM(entityPM.ChargesGroupId, entityPM.Tenant);
-                    notes = TranslateTextsClass.Translate("ChargesType.F.ChargesGroupId", poco.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", poco.Tenant) + (OldChargesGroup.Name ?? OldChargesGroup.LocalName) + TranslateTextsClass.Translate("Accounting.General.O.NewValue", poco.Tenant) + (NewChargesGroup.Name ?? NewChargesGroup.LocalName);
+                    notes = TranslateTextsClass.Translate("ChargesType.F.ChargesGroupId", poco.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", poco.Tenant) + (OldChargesGroup?.Name ?? OldChargesGroup?.LocalName) + TranslateTextsClass.Translate("Accounting.General.O.NewValue", poco.Tenant) + (NewChargesGroup.Name ?? NewChargesGroup.LocalName);
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
                         Tenant = entityPM.Tenant,

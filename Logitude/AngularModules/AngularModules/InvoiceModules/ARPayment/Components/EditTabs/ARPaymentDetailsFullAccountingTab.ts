@@ -42,6 +42,8 @@ import { GLAccountListService } from './../../../../Accounting/Services/Standard
 import { AccountingEntityHelper } from './../../../../Accounting/Utilities/AccountingEntityHelper';
 import { PartnerTypeList } from 'Common/EntityLists/PartnerTypeList';
 import { PartnerTypeListService } from 'Common/Services/StandardLists/PartnerTypeListService';
+import { FullAccountingSettingPM } from 'Accounting/EntityPMs/FullAccountingSettingPM';
+import { EntityListService } from 'Infrastructure/Services/EntityListService';
 declare var window: any;
 
 @Component({
@@ -86,6 +88,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public PaymenyAmount: number;
     _AccountingPaymentMethodListService = new AccountingPaymentMethodListService();
     public PartnerTypes: PartnerTypeList[] = [];
+    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     get TextStore()
     {
         return TextStore;
@@ -100,7 +103,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
-    constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService)
+    constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, public entityListService: EntityListService)
     {
         super();
         console.log("[FULL ACCOUNING ARPayment]");
@@ -155,7 +158,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
-
+        this.GetFullAccountingSettings();
         this.SetUIProperties();
         this.ComputeRelativeRateDate();
         this.Listen();
@@ -172,11 +175,29 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         //#endregion
         if (!this.PrintNotes) this.PrintNotes = TextCodeTranslator.Translate("ARPayment.S.ShortTitle");
 
-        this.GetData();
+        this.ReloadGLAccount();
 
         // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
         this.InitializeBillToLov();
         this.getPartnerTypes();
+    }
+    GetFullAccountingSettings() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.entityListService.getSingle(SessionLocator.TenantPM.Id.toString(), "FullAccountingSetting").then((res: any) => {
+        this.CurrentSession.StopBusyIndicator();
+            res.subscribe(myResponse => {
+                if (myResponse != null) {
+
+                
+                    this.FullAccountingSetting =  myResponse.Result;
+                    this.GetRateIsEnabled();
+                }
+            })
+        });
+
+    }
+    get IsRateDisabled (){
+        return (this.isFullAccounting && !this.FullAccountingSetting.AllowEditingExchangeRate);
     }
 
     CreateARPayment() {
@@ -762,7 +783,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.UIProperties.SetEnabled("ChequeAmount", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("BankTransferAmount", this.ObjectTableName, true);
 
-            if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId) && !SessionLocator.TenantPM.AccountingActivated) {
                 this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             }
 
@@ -845,8 +866,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
 
 
-        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled);
-        this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled && !this.IsRateDisabled);
+        this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled );
     }
     SetUIProperties_Cheque()
     {
@@ -946,7 +967,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     {
         var result = true;
         if (this.EntityPM != null) {
-            if (this.EntityPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.PaymentCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {
+            if (this.EntityPM.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.PaymentCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null
+                || this.IsRateDisabled) {
                 result = false;
             }
         }
@@ -1194,7 +1216,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			if (myResponse != null) {
 				if (!myResponse.HasError) {
 					var list: CardList = myResponse.Result;
-					this.SelectedPartnerType = partnerTypes.filter(d => d.Id == list.PartnerTypeId)[0];
+                    if(list!=null)
+                    this.SelectedPartnerType = partnerTypes.filter(d => d.Id == list.PartnerTypeId)[0];
 				}
 			}
 		});
@@ -1226,68 +1249,77 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (this.EntityPM.BillToId != value) {
                 this.EntityPM.BillToId = value;
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
-                    this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
-                }
+        if (value) {
+            console.log('[!] BillTo changed, reload GLAccount.  ', value);
+            this.ReloadGLAccount();
+        }
 
-                else {
-                    this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, true);
-                }
+        if(AppTool.IsNullOrEmpty(this.EntityPM.Id))
+            this.GetCardProperties();
 
-                this.LoadData();
+        else
+        {
 
-                if (value) {
-                    console.log('[!] BillTo changed, reload GLAccount.  ', value);
-                    this.ReloadGLAccount();
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
+                this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
+            }
+
+            else {
+                this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, true);
+            }
+
+            this.LoadData();
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
+                this.BillToAddressId = null;
+                this.EntityPM.BillToName = null;
+                this.EntityPM.BillToPartnerTypeId = null;
+                this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+            }
+
+            else {
+                var myService: CardListService = new CardListService();
+                myService.getSingle(this.EntityPM.BillToId).subscribe((myResponse: ServiceResponse) =>
+                {
+                    if (!myResponse.HasError) {
+                        var list: CardList = myResponse.Result;
+                        if (list) {
+                            this.EntityPM.BillToName = list.EnglishName;
+                            this.EntityPM.BillToPartnerTypeId = list.PartnerTypeId;
+                            this.EntityPM.BillToAddressId = list.Id;
 
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
-                    this.BillToAddressId = null;
-                    this.EntityPM.BillToName = null;
-                    this.EntityPM.BillToPartnerTypeId = null;
-                    this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
-                }
+                            if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
+                                this.PaymentCurrencyId = list.InvoiceCurrencyId;
+                            }
 
-                else {
-                    var myService: CardListService = new CardListService();
-                    myService.getSingle(this.EntityPM.BillToId).subscribe((myResponse: ServiceResponse) =>
-                    {
-                        if (!myResponse.HasError) {
-                            var list: CardList = myResponse.Result;
-                            if (list) {
-                                this.EntityPM.BillToName = list.EnglishName;
-                                this.EntityPM.BillToPartnerTypeId = list.PartnerTypeId;
+                            this.LoadAddress();
+                            if (this.isFullAccounting) {
+                                if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
+                                    var myGLAccountPMService = new GLAccountPMService();
+                                    myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) =>
+                                    {
+                                        if (!myResponse.HasError) {
+                                            var glaccount: GLAccountPM = myResponse.Result;
+                                            this.EntityPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
+                                            this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
+                                            this.SetAmountCurrencyCode();
+                                            this.ComputeLocalAmount();
+                                            this.SetPaymentAmount();
 
-                                if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
-                                    this.PaymentCurrencyId = list.InvoiceCurrencyId;
-                                }
-
-                                this.LoadAddress();
-                                if (this.isFullAccounting) {
-                                    if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
-                                        var myGLAccountPMService = new GLAccountPMService();
-                                        myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) =>
-                                        {
-                                            if (!myResponse.HasError) {
-                                                var glaccount: GLAccountPM = myResponse.Result;
-                                                this.EntityPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
-                                                this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
-                                                this.SetAmountCurrencyCode();
-                                                this.ComputeLocalAmount();
-                                                this.SetPaymentAmount();
-
-                                                if (glaccount != null && !glaccount.IsMultiCurrency) {
-                                                    this.PaymentCurrencyId = glaccount.CurrencyId;
-                                                }
+                                            if (glaccount != null && !glaccount.IsMultiCurrency) {
+                                                this.PaymentCurrencyId = glaccount.CurrencyId;
                                             }
-                                        });
-                                    }
+                                        }
+                                    });
                                 }
                             }
                         }
-                    });
-                }
+                    }
+                });
+            }
+        }
+
 
             }
         }
@@ -1347,6 +1379,135 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
         });
     }
+
+/******************************************* new ARPayment - BillToAddressId ******************************************************************/
+    GetCardProperties() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
+            this.FillDataFromCardList(new CardList());
+        }
+
+        else {
+            var myService: CardListService = new CardListService();
+            myService.getSingle(this.EntityPM.BillToId).subscribe((resp: ServiceResponse) => {
+                if (resp != null) {
+                    if (!resp.HasError) {
+                        var cardList = resp.Result;
+                        if (cardList != null) {
+                            this.billtoCard = cardList;
+                            this.FillDataFromCardList(cardList);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    FillDataFromCardList(list: CardList) {
+        if (list == null) {
+            this.BillToAddressId = null;
+            this.EntityPM.BillToName = null;
+            this.AccountingPaymentMethodId = null;
+            this.AccountingPaymentMethodCode = null;
+            this.SATPaymentMethodCode = null;
+            if(!this.EntityPM.BankTransferPaymentArguments || (this.EntityPM.BankTransferPaymentArguments && !this.EntityPM.BankTransferPaymentArguments.CurrencyId))
+                this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+            this.EntityPM.BillToPartnerTypeId = null;
+        }
+
+        else {
+            if(!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId) && (
+                !this.EntityPM.BankTransferPaymentArguments || (this.EntityPM.BankTransferPaymentArguments && !this.EntityPM.BankTransferPaymentArguments.CurrencyId)
+                )){
+                this.PaymentCurrencyId = list.InvoiceCurrencyId;
+            }
+            if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
+               // this.ARPaymentMethodCode = list.SATPaymentMethodCode;
+            }
+
+            this.EntityPM.BillToPartnerTypeId = list.PartnerTypeId;
+            this.EntityPM.BillToName = list.EnglishName;
+            this.LoadAddressForNewARPayment();
+
+            if (SessionLocator.TenantPM.AccountingActivated == true) {
+                if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
+                    var myGLAccountPMService = new GLAccountPMService();
+                    myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var glaccount: GLAccountPM = myResponse.Result;
+                            if (glaccount != null && !glaccount.IsMultiCurrency && (this.EntityPM.BankTransferPaymentArguments && !this.EntityPM.BankTransferPaymentArguments.CurrencyId)) {
+                                this.PaymentCurrencyId = glaccount.CurrencyId;
+                            }
+                        }
+                    });
+                }
+            }
+            //if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
+            //    this.SATPaymentMethodCode = list.SATPaymentMethodCode;
+            //}
+        }
+    }
+
+    LoadAddressForNewARPayment() {
+        var myService: PartnersDomainService = new PartnersDomainService();
+        myService.GetAddressByCardAndType(this.EntityPM.BillToId, "B").subscribe((resp: any) => {
+            var billingAddress = resp;
+            if (billingAddress != null) {
+                var item = billingAddress;
+                this.BillToAddressId = item.Id;
+            }
+
+            else {
+                this.GetBillingAddress();
+            }
+
+        });
+    }
+
+    GetBillingAddress() {
+        var myService: PartnersDomainService = new PartnersDomainService();
+        myService.GetBillingAddressListByCardId(this.EntityPM.BillToId).subscribe((resp: any) => {
+            var billingAddress = resp;
+            if (billingAddress != null) {
+                this.BillToAddressId = billingAddress.Id;
+            }
+
+            else {
+                var myService: PartnersDomainService = new PartnersDomainService();
+                myService.GetAddressByCardAndType(this.EntityPM.BillToId, "M").subscribe((resp: any) => {
+                    if (resp != null) {
+                        var mainAddress = resp;
+                        if (mainAddress != null) {
+                            var item = mainAddress;
+                            this.BillToAddressId = item.Id;
+                        }
+                        else {
+
+                            this.GetMainAddressListByCardId();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    GetMainAddressListByCardId() {
+        var myService: PartnersDomainService = new PartnersDomainService();
+        myService.GetMainAddressListByCardId(this.EntityPM.BillToId).subscribe((resp: any) => {
+            if (resp != null) {
+                var mainAddress = resp;
+                if (mainAddress != null) {
+                    this.BillToAddressId = mainAddress.Id;
+                }
+
+                else {
+                    this.BillToAddressId = null;
+                }
+            }
+        });
+    }
+
+/************************************************************************************************************/
+
 
     // Currency
     get PaymentCurrencyId() { return this.EntityPM.PaymentCurrencyId; }

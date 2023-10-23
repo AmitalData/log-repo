@@ -1,14 +1,14 @@
 export class ARPaymentSelectors {
     public static readonly NewARPaymentButton = '#NewARPayment';
-    public static readonly Partner = '#ARPayment_PartnerId';
+    public static readonly Partner = '#ARPayment_BillToId';
     public static readonly PaymentCurrency = '#ARPayment_PaymentCurrencyId';
     public static readonly PaymentMethod = '#ARPayment_AccountingPaymentMethodId';
     public static readonly PaymentAmount = '#ARPayment_AmountInPaymentCurrency';
     public static readonly PaymentBranch = '#ARPayment_BranchId';
-    public static readonly RegisterDate = '#RegisterDate';
+    public static readonly RegisterDate = '#date_ARPayment_ValueDate';
 
     public static readonly ARPaymentTabInsideShipment = '#ARInvoiceTHARPayments';
-    public static readonly OkAddARPayment = '#ok-AddARPayment';
+    public static readonly OkAddARPayment = '#ARPaymentBApprove';
     public static readonly ARPaymentSave = '#ARPayment-Save';
     public static readonly ARPaymentBApprove = '#ARPaymentBApprove';
     public static readonly ARPaymentCurrency = '#ARPayment_PaymentCurrencyId';

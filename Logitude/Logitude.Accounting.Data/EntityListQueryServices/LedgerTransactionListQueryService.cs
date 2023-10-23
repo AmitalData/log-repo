@@ -26,9 +26,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private IQueryable<LedgerTransactionList> GetIqueryableList(IQueryable<LedgerTransaction> iQueryable)
         {
             IQueryable<LedgerTransactionList> query = (from a in iQueryable.Include("JournalLine").Include("Account").Include("Currency").Include("Journal")
+
+                                                       join b in context.JournalAdditionalDatas.Include("TaxReport")
+                                                       on new { journalId = a.JournalId, line = a.JournalLineNumber } equals new { journalId = b.JournalId, line = b.JournalLineNumber }
+                                                       into jJournalAdditionalData
+                                                       from jad in jJournalAdditionalData.DefaultIfEmpty()
+
                                                        select new LedgerTransactionList()
                                                        {
-                                                           Id = a.Id,
+                                                           Id = a.Id,                                                           
                                                            // Account = a.Account,
                                                            AccountId = a.AccountId,
                                                            AccountingDate = a.AccountingDate,
@@ -88,6 +94,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
                                                            JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
                                                            SecurityLevelFiltering = 1,
+                                                           TaxReportId = jad != null ? jad.TaxReportId : "",
+                                                           TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : "",
                                                        });
 
 
@@ -276,7 +284,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private List<JournalLine> GetJournalLinesForTransactions(List<LedgerTransactionList> transactions, int tenant)
         {
             List<string> transactionIds = transactions.Select(d => d.Id).ToList();
-            JournalLineRepository journalLineRepository = new JournalLineRepository(tenant);
+            JournalLineRepository journalLineRepository = new JournalLineRepository(context);
             return journalLineRepository.GetJournalLineByLedgerTransactionIdList(transactionIds, tenant);
         }
         private List<LedgerTransactionList> GetCreditLinesFromSelectedTransactionsGroupedByJournalId(List<LedgerTransactionList> outputLines, List<JournalLine> JournalLines)
@@ -330,7 +338,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
 
             IQueryable<LedgerTransaction> inputTransactions;
-            LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(transactionBalanceFilter.Tenant);
+            LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(context);
             if (taxReport != null)
             {
                 List<string> inputTaxReportsJournalsIds = GetTaxReportLinesJournalIds(taxReport, InputOutput.Input);
@@ -852,6 +860,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             LedgerTransactions.ForEach(rec =>
             {
                 rec.OriginalAmount = ledgerTransactionHelper.CalculateOriginalAmount(rec);
+                rec.AmountInNIS = ledgerTransactionHelper.CalculateAmountInNIS(rec);
                 rec.IconCode = ledgerTransactionHelper.getEntityIcon(rec.SourceTypeCode);
                 rec.Source = rec.IconCode + " " + rec.SourceNumber;
                 rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
@@ -1077,7 +1086,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             //
 
             LedgerTransactionRepository repo = new LedgerTransactionRepository(tenant);
-            int count = repo.getRecoCount(glAccountId);
+            int count = repo.getRecoCount(glAccountId,tenant);
             return count;
         }
 
@@ -1734,7 +1743,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
         public IQueryable<LedgerTransactionList> GetExternalReconciliationsTransactions(int tenant, int? reconciliationNumber)
         {
-            ExternalReconciliationLineRepository lineRepository = new ExternalReconciliationLineRepository(tenant);
+            ExternalReconciliationLineRepository lineRepository = new ExternalReconciliationLineRepository(context);
             var lines = lineRepository.GetAll(tenant);
 
             var ledgerTransactions = (from line in lines.Include("LedgerTransaction")
@@ -1775,7 +1784,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         private IQueryable<LedgerTransaction> GetTransactionsQuery(int tenant)
         {
-            var transactionsRepository = new LedgerTransactionRepository(tenant);
+            var transactionsRepository = new LedgerTransactionRepository(context);
             IQueryable<LedgerTransaction> transactionsQuery = transactionsRepository.GetAll(tenant);
 
             return transactionsQuery;

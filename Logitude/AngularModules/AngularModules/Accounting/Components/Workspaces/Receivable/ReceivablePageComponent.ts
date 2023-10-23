@@ -34,6 +34,7 @@ import { ARInvoicePM } from 'Invoice/EntityPMs/ARInvoicePM';
 import {CurrencyList} from "../../../../Common/EntityLists/CurrencyList";
 import {CurrencyListService} from "../../../../Common/Services/StandardLists/CurrencyListService";
 import {InvoiceTool} from "../../../../Invoice/Tools";
+import { PartnersDomainService } from 'Common/Services/PartnersDomainService';
 
 
 @Component({
@@ -67,6 +68,11 @@ export class ReceivablePageComponent {
     //#endregion
     IsNewCreditNoteVisibile: boolean = false;
     RecentGLAccountsCount: number = 0;
+
+    IsUnRedeemedChequesVisibile: boolean = false;
+    IsAllChequesVisibile: boolean = false;
+    IsPostponedChequesVisibile: boolean = false;
+
 
     public isRTL: boolean = false;
     isReady: boolean = false;
@@ -220,6 +226,8 @@ export class ReceivablePageComponent {
          {
             var entity = new ARPaymentPM();
             entity.IsFullAccounting = true;
+            entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
+
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
@@ -244,7 +252,7 @@ export class ReceivablePageComponent {
             //    });
          }
 
-    }
+    }   
     filterAgrs: ApiQueryFilters;
     private getAutoNewName() {
         var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
@@ -256,6 +264,52 @@ export class ReceivablePageComponent {
     }
 
     ViewInvoiceQuery(args: string) {
+        if (args != null) {
+
+            var backButtonTitle = "Accounting";
+            var objectTableName = args.split(':')[0];
+            var queryCode = args.split(':')[1];
+            var displayTitle = queryCode;
+            this.filterAgrs = new ApiQueryFilters();
+
+            var ObjectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];
+            var query = window.Queries.filter(q => q.ObjectTableId == ObjectTable.Id && q.Code == queryCode)[0];
+
+            if (window.PreDefinedFilters.filter(d => d.queryCode == query.Code) != null) {
+                var predefinedFilters = window.PreDefinedFilters.filter(d => d.queryCode == query.Code);
+
+                predefinedFilters.forEach((filter, key) => {
+                    var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
+                    var value1 = filter.PredefinedValue;
+                    var value2 = filter.PredefinedValue2;
+                    if (value2 != null) {
+                        filterOperator = "Between";
+                    }
+                    this.filterAgrs.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, filter.IsCustomFilter, filter.DisplayInList, false, filter.DataTypeCode);
+                });
+            }
+
+            this.filterAgrs.ObjectTableName = query.ObjectTableName;
+
+            var listArgs = new ListComponentArgs();
+            listArgs.Filters = this.filterAgrs;
+            listArgs.QueryCode = queryCode;
+            listArgs.ObjectTableName = objectTableName;
+            listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Receivables");
+            //listArgs.DisplayTitle = displayTitle;
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run(listArgs);
+                        this.CurrentSession.AddMenuReference(cmpRef);
+                    });
+            });
+        }
+    }
+
+    // // TODO: change the logic for ViewPayment Cheques
+    ViewPaymentChequesQuery(args: string) {
         if (args != null) {
 
             var backButtonTitle = "Accounting";
@@ -376,10 +430,12 @@ export class ReceivablePageComponent {
             var entity = new ARInvoicePM();
             entity.ARInvoiceTypeCode = type;
             entity.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
+            entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
+            entity.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
             this.GetCurrenciesExchangeRateByValueDate(entity);
             return;
         }
-
+      
 
 
         //var str = TextCodeTranslator.Translate("General.O.NewEntity");
@@ -449,6 +505,9 @@ export class ReceivablePageComponent {
         this.inactiveCustomersGlaVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "inactiveCustomersGla") ? true : false;
         this.CLIENTGLACCOUNTSGlaVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "CLIENTGLACCOUNTS") ? true : false;
         this.IsNewCreditNoteVisibile = FeatureLocator.HasFeaturePermession("ARInvoice", "NEWCREDITNOTE") ? true : false;
+        this.IsUnRedeemedChequesVisibile = FeatureLocator.HasFeaturePermession("ARPaymentCheque", "ARPaymentCheque.Q.UnRedeemedCheques") ? true : false;
+        this.IsAllChequesVisibile = FeatureLocator.HasFeaturePermession("ARPaymentCheque", "ARPaymentCheque.Q.AllCheques") ? true : false;
+        this.IsPostponedChequesVisibile = FeatureLocator.HasFeaturePermession("ARPaymentCheque", "ARPaymentCheque.Q.PostponedCheques") ? true : false;
     }
 
     public RecentGLAccountsList: GLAccountList[];

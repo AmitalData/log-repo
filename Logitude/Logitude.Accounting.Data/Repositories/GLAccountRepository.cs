@@ -135,12 +135,6 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).ToList();
         }
 
-        public GLAccount GetByGLAccountsDisplayNumber(string displayNumber, int tenant)
-        {
-            return (from a in context.GLAccounts
-                    where a.DisplayNumber == displayNumber && a.Tenant == tenant
-                    select a).FirstOrDefault();
-        }
         public IQueryable<GLAccount> GetQAllControlAccount(int tenant)
         {
             return (from a in context.GLAccounts

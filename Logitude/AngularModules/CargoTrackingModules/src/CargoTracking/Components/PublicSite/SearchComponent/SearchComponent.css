@@ -102,6 +102,9 @@ li a {
 .mobile-header-title {
     display: none;
 }
+.page-title {
+    text-align: left;
+}
 
 .order-icon {
     position: absolute;
@@ -156,12 +159,6 @@ li a {
         font-size: 19px;
         padding: 10px 26px;
         display: inline-block;
-    }
-
-    .page-title {
-        margin-top: 70px !important;
-        text-align: left;
-
     }
 
     .column {
@@ -672,11 +669,6 @@ li a {
     .no-result-div {
         padding-top: 0px !important;
     }
-
-    .vertical-center {
-        padding-top: 70px;
-    }
-
 }
 
 .more-mobile {

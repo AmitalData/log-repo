@@ -43,29 +43,29 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CardPM cardPM = cardQueryService.GetSinglePM(entityPM.CustomerId, entityPM.Tenant);
                 if (cardPM != null && !String.IsNullOrEmpty(cardPM.GLAccountId))
                 {
-                    //GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
-                    //GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(cardPM.GLAccountId, entityPM.Tenant);
-                    //if (gLAccountPM != null)
-                    //{
-                    //    InterestReportQueryService interestReportQueryService = new InterestReportQueryService(entityPM.Tenant);
-                    //    List<InterestReportPM> interestReportPMs = interestReportQueryService.GetInterestReportsForCustomer(entityPM.CustomerId, cardPM.GLAccountId, entityPM.Tenant);
-                    //    if (interestReportPMs == null || interestReportPMs.Count == 0)
-                    //    {
-                    //        if (gLAccountPM.InterestOpenBalance == null)
-                    //        {
-                    //            bool showLocal = false;
-                    //            //show local 
-                    //            ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
-                    //            if (loggedContact != null) showLocal = !loggedContact.DontShowLocal;
+                    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
+                    GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(cardPM.GLAccountId, entityPM.Tenant);
+                    if (gLAccountPM != null)
+                    {
+                        InterestReportQueryService interestReportQueryService = new InterestReportQueryService(entityPM.Tenant);
+                        List<InterestReportPM> interestReportPMs = interestReportQueryService.GetInterestReportsForCustomer(entityPM.CustomerId, cardPM.GLAccountId, entityPM.Tenant);
+                        if (interestReportPMs == null || interestReportPMs.Count == 0)
+                        {
+                            if (gLAccountPM.InterestOpenBalance == null)
+                            {
+                                bool showLocal = false;
+                                //show local 
+                                ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
+                                if (loggedContact != null) showLocal = !loggedContact.DontShowLocal;
 
-                    //            string errorText = TextCodesTranslator.TranslateText("InterestReport.O.OpeningBalanceNotCalculated", entityPM.Tenant, showLocal);
-                    //            if (String.IsNullOrEmpty(errorText)) errorText = "Opening balance for interest has not been calculated";
-                    //            throw new ApplicationException($"GLAccount {gLAccountPM.InternalNumber} {errorText}" );
-                    //        }
+                                string errorText = TextCodesTranslator.TranslateText("InterestReport.O.OpeningBalanceNotCalculated", entityPM.Tenant, showLocal);
+                                if (String.IsNullOrEmpty(errorText)) errorText = "Opening balance for interest has not been calculated";
+                                throw new ApplicationException($"GLAccount {gLAccountPM.InternalNumber} {errorText}");
+                            }
 
-                    //        entityPM.OpenBalance = gLAccountPM.InterestOpenBalance;
-                    //    }
-                    //}
+                            entityPM.OpenBalance = gLAccountPM.InterestOpenBalance;
+                        }
+                    }
                 }
             }
 

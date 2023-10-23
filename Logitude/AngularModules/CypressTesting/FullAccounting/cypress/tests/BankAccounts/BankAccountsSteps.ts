@@ -49,3 +49,13 @@ Then("the Bank Account should create successfully", () => {
     BankAccountsActions.AssertCreateBankAccount();
 });
 //#endregion
+
+//#region Approve the Bank Account
+When("Approve the AR Payment", () => {
+    BankAccountsActions.CreateBankAccount()
+});
+
+Then("the AR Payment should approve successfully", () => {
+    BankAccountsActions.AssertCreateBankAccount()
+});
+//#endregion

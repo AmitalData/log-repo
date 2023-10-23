@@ -39,7 +39,8 @@ namespace WebFreight.Web.DataProviders
         public string AccountSalesmanLocalName { get; set; }
         public string AccountCollectorName { get; set; }
         public string AccountCollectorLocalName { get; set; }
-        public string ChartOfAccountLocalName { get; set; }
+		public string CustomerVatNumber { get; set; }
+		public string ChartOfAccountLocalName { get; set; }
         public string CurrencyCode { get; set; }
         public string Category1Name { get; set; }
         public string Category2Name { get; set; }

@@ -84,6 +84,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (ledgerTransactionReconciled) 
                 {
                     throw new ApplicationException("ישנם תנועות שסומנו אך הותאמו במקביל על ידי משתמש או בסשן אחר , יש לבצע רענון למסך.");
+
                 }
             }
             

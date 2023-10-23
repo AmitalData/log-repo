@@ -1,4 +1,3 @@
-
 <!-- Web Header -->
 <div class="web-header-wrapper" [class.tablet-nav-opened]="isNavOpened">
     <div class="web-header hide-mobile">
@@ -8,8 +7,8 @@
             </div>
         </div>
         <div style="width:auto;">
-          
-        
+
+
         </div>
 
         <div class="nav">
@@ -49,10 +48,11 @@
 
         <div class="signout " style="cursor: pointer;" (click)="SignOutClicked()">Sign Out</div>
 
-        <div  class=" " style="height: 20px;"></div>
+        <div class=" " style="height: 20px;"></div>
 
         <div class="">
-            <a routerLinkActive="active" routerLink="shipments" (click)="openNav(); sharedService.updateValue(false);">Shipments</a>
+            <a routerLinkActive="active" routerLink="shipments"
+                (click)="openNav(); sharedService.updateValue(false);">Shipments</a>
             <!--<a routerLinkActive="active" routerLink="favorites">Favorite</a>
             <a routerLinkActive="active" routerLink="Reports">Reports</a>
             <a routerLinkActive="active" routerLink="Price">Price Offers</a>
@@ -67,7 +67,8 @@
         <!-- <img src="./assets/images/logo/path3410@1x.png" routerLinkActive="active" routerLink="/search" alt="" /> -->
     </div>
 
-    <div *ngIf="currentRoute && currentRoute !== '/cargo-tracking/shipments' || (sharedService.isAdvancedFilterOpened$ | async)" class="action-buttons left-button mobile-only" (click)="BackLinkClicked()">
+    <div *ngIf="currentRoute && currentRoute !== '/cargo-tracking/shipments' || (sharedService.isAdvancedFilterOpened$ | async)"
+        class="action-buttons left-button mobile-only" (click)="BackLinkClicked()">
         <img src="./assets/images/icons/arrow.svg" alt="" />
 
     </div>
@@ -82,3 +83,28 @@
 <div class="content">
     <router-outlet *ngIf="IsBrandingDataLoaded"></router-outlet>
 </div>
+
+<div  class="mobile-cookies" *ngIf="displayCookies" id="cookie-notice" style="position: fixed; bottom: 20px; left: 20px;" [@fade]>
+    <div>
+      
+        <h2 style="color: white !important;text-align: left;">
+            <img style="height: 20px" src="./assets/images/icons/cookie.png" alt="">    Privacy Notice</h2>
+    </div>
+
+    <div style="padding-left: 30px;text-align: left;">
+        <span>This website uses cookies to improve your <br> web experience. By using the site, you <br> agree to the
+            use of cookies.</span>
+        <br>
+        <div style="height: 40px">
+            <button (click)="dismissCookieNotice()" id="dismiss-btn">DISMISS</button>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- <div *ngIf="show"  [ngClass]="['snackbar-warp']">
+    <p class="snackbar-text">
+       {{message}}
+    </p>
+  </div> -->

@@ -1359,7 +1359,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             AccountingEntityId = r.APInvoiceId,
                             LocalAmountToReconcile = Convert.ToDecimal(r.LocalAmount.GetValueOrDefault()) * -1,
-                            ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()),
+                            ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()) *-1,
                             ForeignCurrencyIdReconcile = r.ForeignCurrencyId,
 
 

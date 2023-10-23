@@ -1331,6 +1331,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool allowEditingExchangeRate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AllowEditingExchangeRate  
+	   {
+	    
+	     get
+		{
+		   return allowEditingExchangeRate;
+		 }
+		 set
+		 {
+		   if(allowEditingExchangeRate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowEditingExchangeRate",OldValue=allowEditingExchangeRate,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   allowEditingExchangeRate=value;
+		   }
+			
+		 }
+	   }
+	  private int? amountForConfirmationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? AmountForConfirmationNumber  
+	   {
+	    
+	     get
+		{
+		   return amountForConfirmationNumber;
+		 }
+		 set
+		 {
+		   if(amountForConfirmationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmountForConfirmationNumber",OldValue=amountForConfirmationNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   amountForConfirmationNumber=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

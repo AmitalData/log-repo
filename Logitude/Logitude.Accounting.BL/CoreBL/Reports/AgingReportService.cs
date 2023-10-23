@@ -651,14 +651,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
 
             //_notMultiCurrencyAccountListId = _GLAccounts.Where(rec => !rec.IsMultiCurrency.GetValueOrDefault()).Select(rec => rec.Id).ToList();
+            var _AccountListId_PleaseTake_ForeignAmountList = _AccountListId_PleaseTake_ForeignAmount.ToList();
+
             var qTotalByMonthAcc_NOTMultiCurrencySooGet_ForeignAmount = ///GLAccount that is not multi Currency Get Foreign 
                     qTotalByMonthAcc
-                .Where(rec => _AccountListId_PleaseTake_ForeignAmount.Contains(rec.AccountId));
+                .Where(rec => _AccountListId_PleaseTake_ForeignAmountList.Contains(rec.AccountId));
 
 
             var qTotalByMonthAcc_ISMultiCurrencySooGet_LocalAmount = ///GLAccount that is not multi Currency Get Foreign 
                     qTotalByMonthAcc
-                .Where(rec => !_AccountListId_PleaseTake_ForeignAmount.Contains(rec.AccountId));
+                .Where(rec => _AccountListId_PleaseTake_ForeignAmountList.Contains(rec.AccountId));
 
 
 
@@ -766,9 +768,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 var _6 = qOpenTransactionsFutureDueDate_InForeign.ToList();
             }
             var theDBList = qPeriodInLocalAmount.Union(qLessThanExclusiveBasicInLocal)
-                .Union(qPeriodInForeign).Union(qLessThanExclusiveBasicInForeign)
-                .Union(qOpenTransactionsFutureDueDate_InLocal).Union(qOpenTransactionsFutureDueDate_InForeign)
-                .ToList();
+              .Union(qPeriodInForeign).Union(qLessThanExclusiveBasicInForeign)
+              .Union(qOpenTransactionsFutureDueDate_InLocal).Union(qOpenTransactionsFutureDueDate_InForeign)
+              .ToList();
             theDBList = theDBList.OrderBy(rec => rec.AccountId).ThenBy(rec => rec.OrderDate).ThenBy(rec => rec.CurrencyId)
 .ToList();
             return theDBList;

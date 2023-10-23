@@ -22,6 +22,8 @@ using System.Web;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices
 { 
@@ -62,7 +64,10 @@ namespace WebFreight.Web.ReportsWebServices
             IWebFreightContext webFreighContext = WebFreightContext.GetContext(tenant);
             APPayment currentPayment = paymentRep.GetSingleAPPayment(paymentId, tenant);
             AddressRepository addressRepository = new AddressRepository(tenant);
-            Contact loggedContact = GetLoggedContact(tenant);
+			GLAccountCurrencyQueryService accountcurrencyQueryService = new GLAccountCurrencyQueryService(tenant);
+			GLAccountRepository GLAccountRepository = new GLAccountRepository(tenant);
+
+			Contact loggedContact = GetLoggedContact(tenant);
             BankAccount bankAccount = GetBankAccountById(currentPayment.BankAccountId, currentPayment.Tenant);
             if (currentPayment != null)
             {
@@ -164,7 +169,22 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.PaidToCode = paidToCard.Code;
                         apPaymentDataProvider.VendorWebsite = paidToCard.Website;
 
-                        Address address = addressRepository.GetSingleAddress(currentPayment.VendorAddressId, tenant);
+
+                        if (!string.IsNullOrEmpty(paidToCard.GLAccountId)) 
+                        {
+
+                            var CurrentGLAccount = paidToCard.GLAccountId;
+							GLAccountCurrencyPM gLAccountCurrencyPM = accountcurrencyQueryService.GetEntityByCurrencyAndGLAccountId(paidToCard.GLAccountId, currentPayment.PaymentCurrencyId, tenant);
+                            if (gLAccountCurrencyPM != null)
+                            {
+								CurrentGLAccount = gLAccountCurrencyPM.GLAccountId.ToString();
+
+							}
+                          var GLAccount = GLAccountRepository.GetSingle(CurrentGLAccount, tenant);
+
+							apPaymentDataProvider.GLAccountDisplayNumber = GLAccount.DisplayNumber;
+						}
+						Address address = addressRepository.GetSingleAddress(currentPayment.VendorAddressId, tenant);
                         if (address != null)
                         {
                             apPaymentDataProvider.PaidToAddress = DataProviders.General.GetAddress(address);

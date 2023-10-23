@@ -229,13 +229,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
-                entityPM.ChequeNumber = entityPM.ChequeNumber == null?  bankAccount.ChequeCounter.ToString() : entityPM.ChequeNumber;
-                entityPM.UniqueField = entityPM.ChequeNumber;
+                if (string.IsNullOrEmpty(entityPM.ChequeNumber))
+                {
+                    entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
+                    entityPM.UniqueField = entityPM.ChequeNumber;
 
-                BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                bankAccount.ChequeCounter += 1;
-                bankAccount.ChangeSetOp = ChangeSetOperation.Update;
-                bankAccountUpdateService.Update(bankAccount, true);
+                    BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                    bankAccount.ChequeCounter += 1;
+                    bankAccount.ChangeSetOp = ChangeSetOperation.Update;
+                    bankAccountUpdateService.Update(bankAccount, true);
+                }
+                else
+                {
+                    entityPM.UniqueField = entityPM.ChequeNumber;
+                }
             }
 
             return bankAccount;

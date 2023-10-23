@@ -396,11 +396,17 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="BillToId"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DocumentId"
     ReferencedTable="Documents"
     ReferencedColumn="Id"
-    Ignore="true"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ChildObjectTableId"
@@ -484,8 +490,10 @@
     Columns="ChildEntityId" />
   <Index
     Columns="Tenant,IsDeleted,IsTransferdToQBO" />
-  <UniqueConstraint Env="logbox"
+  <UniqueConstraint
+    Env="logbox"
     Columns="Tenant,ComputedForwarderDocumentId" />
-  <UniqueConstraint Env="cloud"
+  <UniqueConstraint
+    Env="cloud"
     Columns="Tenant,CustomerTenantNumber,ComputedCustomerDocumentId" />
 </Table>

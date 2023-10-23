@@ -143,5 +143,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual User ReceivedByByContact { get; set; }
         public string ReceivedByByContactId { get; set; }
         public string ReceivedByPartner { get; set; }
+        public string BillToId { get; set; }
     }
 }

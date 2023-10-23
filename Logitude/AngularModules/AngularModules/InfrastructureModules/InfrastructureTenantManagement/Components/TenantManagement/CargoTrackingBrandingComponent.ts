@@ -49,8 +49,11 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     isGenerateClicked = false;
     isGenerateEnabled = true;
     private iGlobalDomainService: GlobalDomainService;
+
     previousPermissionBuildMonthsValue: any;
-    showPermissionBuildMonths: boolean = true;
+    showPermissionBuildMonths: boolean = true;    
+    permissionBuildMonthsInProcess: boolean = false;
+    showPermissionBuildMonthsInProcess: boolean = true;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -63,16 +66,23 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.InitializeImageIds();
         this.SetColorsFromEntity();
         this.CheckDigtialPortalAddsOnPackage();
+        this.setPreviousPermissionBuildMonthsValue();
         this.Listen();
     }
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
+
+    private setPreviousPermissionBuildMonthsValue() {
+        this.previousPermissionBuildMonthsValue = this.PermissionBuildMonths;
+    }
+
     private Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.setPreviousPermissionBuildMonthsValue();
                     this.CustomerURL = this.EntityPM.CustomerURL;
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
@@ -212,19 +222,30 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         return this.EntityPM.PermissionBuildMonths;
     }
 
+
     set PermissionBuildMonths(value: any) {
-        if (!(value < 84 && value > 0) && (value !== null && value !== '')) {            
-            this.showPopupMessage(TextCodeTranslator.Translate("TenantManagement.TH.PermissionBuildMonthsLimit"));
+        this.setPermissionBuildMonths(value);    
+    }
+
+    private async setPermissionBuildMonths(value: any) {
+        if(this.permissionBuildMonthsInProcess) return;
+
+        if ((value > 84 || value < 0) && (value !== null && value !== '')) {
+            this.permissionBuildMonthsInProcess = true;
+            await this.showPopupMessage(TextCodeTranslator.Translate("TenantManagement.TH.PermissionBuildMonthsLimit"));
+            this.permissionBuildMonthsInProcess = false;
             this.PermissionBuildMonths = this.previousPermissionBuildMonthsValue;
-            this.showPermissionBuildMonths = false;
+            this.showPermissionBuildMonthsInProcess = false;
             this.cd.detectChanges();
-            this.showPermissionBuildMonths = true;
+            this.showPermissionBuildMonthsInProcess = true;
             this.cd.detectChanges();
         } else {
-            this.previousPermissionBuildMonthsValue = value;
             this.EntityPM.PermissionBuildMonths = value;
-        }    
+            this.cd.detectChanges();
+        }
+        this.permissionBuildMonthsInProcess = false;
     }
+
 
     private async showPopupMessage(message: string) {
         const win:MessageWindow = new MessageWindow();

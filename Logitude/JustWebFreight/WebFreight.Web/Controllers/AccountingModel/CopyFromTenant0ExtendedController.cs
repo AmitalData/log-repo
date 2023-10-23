@@ -129,6 +129,12 @@ namespace WebFreight.Web.Controllers.AccountingModel
                                 break;
                             }
                       
+                        case "CountryCities":
+                            {
+                                CountryCityQuery countryCityQuery = new CountryCityQuery(authToken.Tenant);
+                                countryCityQuery.CopyFromTenant0(0, authToken.Tenant);
+                                break;
+                            }
                         case "ComputingPartners":
                             {
                                 ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);

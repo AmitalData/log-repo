@@ -964,6 +964,22 @@ namespace Logitude.Infrastructure.BL
                 Description = "Update GLA Aging Data using WR", 
                 Name = "Update GLA Aging Data using WR", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SML", 
+                Name = "Select More Lines", 
+                SearchFields = "SML, Select More Lines", 
+                Description = "Select 2000 Lines ", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "MC1", 
+                Name = "IsMulti With ReconcileMethodCode Equal One", 
+                SearchFields = "MC1", 
+                Description = "לאפשר הגדרת כרטיס מולטי ככרטיס שמותאם במטז", 
+			});
 			
             return all;
        }

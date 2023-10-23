@@ -78,6 +78,8 @@
     <Content Include="DBScripts\20220721_164759_ARInvoiceOppositeJournalCreditLinesNewLogic.axml" />
     <Content Include="DBScripts\202207041224_ARInvoiceOppositeJournalCreditLines.axml" />
     <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
+    <None Include="DBScripts\202308211244_UpdateInterestReportSearchFields.sxml" />
+    <None Include="DBScripts\202308141215_UpdateInterestReportSearchFields.sxml" />
     <None Include="DBScripts\20221213_UpdateChartOfAccountTypesOrders.sxml" />
     <None Include="DBScripts\202208081221_UpdateSearchFieldsForInterestReports.sxml" />
     <None Include="DBScripts\202206201224_UpdateInterestTransactionsGLAccountIfInvIsNotMultiCurrency.sxml" />
@@ -142,6 +144,7 @@
     <None Include="DBScripts\2023030_CreateIndexInLedgerTransactions_AccountIdMarkTenant.sxml" />
     <None Include="DBScripts\20230619_QueuePeekJouranlApprovalSetUpdateDate.dxml" />
     <None Include="DBScripts\20230619_SetTenantIdleProcedure.dxml" />
+    <None Include="DBScripts\27092023_FillDefaultHeaderColor.sxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
@@ -152,7 +155,6 @@
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />
     <None Include="DBTables\AccountingNote.dxml" />
     <None Include="DBTables\AccountingPeriod.dxml" />
-    <None Include="DBTables\ARInvoicesSignedStatus.dxml" />
     <None Include="DBTables\ARPaymentCheque.dxml" />
     <None Include="DBTables\ARPaymentChequeStatus.dxml" />
     <None Include="DBTables\ARPaymentsJournal.dxml" />
@@ -246,7 +248,6 @@
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
     <None Include="EntityFiles\AccountingEntityJournal.lxml" />
     <None Include="EntityFiles\AccountingNote.lxml" />
-    <None Include="EntityFiles\ARInvoicesSignedStatus.lxml" />
     <None Include="EntityFiles\ARPaymentsJournal.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />

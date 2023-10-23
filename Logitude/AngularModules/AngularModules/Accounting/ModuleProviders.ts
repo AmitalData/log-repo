@@ -149,6 +149,8 @@ import { UserDefinedReportPMService } from './Services/StandardPMs/UserDefinedRe
 import { CalculatedChartsLineTypeListService } from './Services/StandardLists/CalculatedChartsLineTypeListService';
 import { ARPaymentChequeOperationsService } from './Services/Others/ARPaymentChequeOpService';
 import { InterestTransactionListService } from './Services/StandardLists/InterestTransactionListService';
+import { ARPaymentChequeListService } from './Services/StandardLists/ARPaymentChequeListService';
+import { ARPaymentChequeStatusListService } from './Services/StandardLists/ARPaymentChequeStatusListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -162,6 +164,10 @@ export class ModuleProviders {
             case "AccountingEntityListService": { myResult = new AccountingEntityListService(); break; }
             case "AccountingPeriodListService": { myResult = new AccountingPeriodListService(); break; }
             case "AutomaticReconcileListService": { myResult = new AutomaticReconcileListService(); break; }
+            
+            case "ARPaymentChequeListService": { myResult = new ARPaymentChequeListService(); break; }
+            case "ARPaymentChequeStatusListService": { myResult = new ARPaymentChequeStatusListService(); break; }
+
             case "AutomaticReconcileMethodListService": { myResult = new AutomaticReconcileMethodListService(); break; }
             case "Category1ListService": { myResult = new Category1ListService(); break; }
             case "Category2ListService": { myResult = new Category2ListService(); break; }

@@ -1815,7 +1815,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             #endregion
 
             // Warehouse Leg 
-            shipmentPM.WarehouseLegWarehouseName = shipment.WarehouseLegCard.EnglishName;
+            shipmentPM.WarehouseLegWarehouseName = shipment.WarehouseLegCard?.EnglishName;
 			shipmentPM.WarehouseLegWarehouseId = shipment.WarehouseLegWarehouseId;
 			shipmentPM.WarehouseLegAddressId = shipment.WarehouseLegAddressId;
             shipmentPM.WarehouseLegTerminalCode = shipment.WarehouseLegTerminalCode;

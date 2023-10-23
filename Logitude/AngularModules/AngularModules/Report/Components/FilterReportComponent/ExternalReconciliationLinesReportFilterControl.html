@@ -126,7 +126,7 @@
 
 
                     <td style="width: 20px;"> </td>
-                    <td class="Label" [style.text-align]="isRTL? 'right': 'left'"  style="width: 90px;"> {{'LedgerTransaction.O.SortBy' | TextCodeTranslationPipe}}:</td>
+                    <td class="Label" [style.text-align]="isRTL? 'right': 'left'"  style="width: 199px;"> {{'LedgerTransaction.O.SortBy' | TextCodeTranslationPipe}}:</td>
                     <td style="width:380px">
                       <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL">
                         <li    
@@ -187,7 +187,7 @@
                           <LogDatePicker [NoObjectField]="true" [IsDisabled]="ExternalReconciliationNumber" [ObjectTableName]="ObjectTableName" [HideColumns]="true" [ObjectFieldName]="'REFToDate'" [DataContext]="DataContext"></LogDatePicker>
                         </td>
 
-                        <td style="width:20px;"></td>
+                        <td style="width:79px;"></td>
                         <td class="Label" [style.text-align]="isRTL? 'right': 'left'"  style="width: 200px;"> {{'ExternalReconciliation.O.ShowCrossYearLabel' | TextCodeTranslationPipe}}:</td>
                         <td style="width:210px">
                           <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL">
@@ -257,7 +257,7 @@
 
                     <td style="width:70px"></td>
 
-                    <td [style.width]="isRTL? '100px': '170px'"  >
+                    <td [style.width]="isRTL? '207px': '209px'"  >
                           <LogLabel [NoObjectField]="true" [Text] ="'LedgerTransaction.O.IncludesTransferGlaccount' | TextCodeTranslationPipe"
                           [DataContext]="DataContext"></LogLabel>
                    </td>

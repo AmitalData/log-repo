@@ -1,5 +1,7 @@
-﻿  
- 
+﻿
+
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
@@ -7,6 +9,7 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -38,6 +41,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
         {
             TenantRepository tenantRepository = new TenantRepository(0);
             CargoTrackingArguments = GetCargoTrackingArgs();
+
             try
             {
                 UpdateIsIncrementalRunning(tenantRepository,true);
@@ -45,7 +49,6 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
                 AddAllTablesToThread(CargoTrackingTableList.GetCargoTrackingTableList());
                 UpdateIsIncrementalRunning(tenantRepository,false);
             }
-
             catch (Exception e)
             {
                 UpdateIsIncrementalRunning(tenantRepository,false);
@@ -69,6 +72,14 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
             XmlSerializer serializer = new XmlSerializer(typeof(CargoTrackingXMLParameters));
             CargoTrackingXMLParameters  Args = serializer.Deserialize(stringReader) as CargoTrackingXMLParameters;
+
+            List<DateTime> fromDateList = new List<DateTime>() { DateTime.Now.AddMonths(-6).Date };
+            fromDateList.AddRange(new TenantManagementQuery(0).GetWhereHavePermissionBuildMonths().Select(x => x.ActivatePrivateSite ?
+                    DateTime.Now.AddMonths(Convert.ToInt32(x.PermissionBuildMonths.Value) * -1) :
+                    DateTime.Now.AddMonths(-6).Date));
+            Args.FromDate = fromDateList.Min();
+            Args.ToDate = DateTime.Now.Date;
+
             return Args;
         }
 
@@ -98,9 +109,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
         {
             foreach (CargoTrackingTable table in CargoTableLists)
             {
-
                 UpdateCargoDataBase(table);
-
             }
         }
 
@@ -161,7 +170,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
 
             }
             return result;
-        }
+        }        
     }
 
     

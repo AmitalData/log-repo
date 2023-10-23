@@ -169,7 +169,7 @@
                                                                 <LogTextBox [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [Text]="InvoiceCurrencyExchangeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DigitsAfterPoint]="5"></LogTextBox>
                                                             </td>
 
-                                                            <td style="width: 36px;">
+                                                            <td style="width: 36px;" >
                                                                 <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible">
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="UpdateCurrencyRateClicked()" [disabled]="!RateIsEnabled"></IconButton>
 
@@ -286,6 +286,16 @@
                                             </tr>
                                         </table>
                                     </td>
+                                    <td style="width: 500px;">
+    
+                                    </td>
+                               
+                            
+                                        <td *ngIf="IsSigned=='1' || IsSigned=='3'||IsSigned=='4' ">
+                                            <img  src="./Images/Icons/DigitalSignature.png" />
+                                        </td>
+                                   
+                                  
                                 </tr>
                             </table>
                         </td>

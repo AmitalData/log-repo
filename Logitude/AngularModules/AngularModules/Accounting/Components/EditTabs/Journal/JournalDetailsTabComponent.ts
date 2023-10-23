@@ -62,6 +62,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     Opacity: string = "1";
     referencesDivHeight: number;
     Approved: boolean = false;
+    maxSecurityLevel = 10;
     IsJournalEditableAfterApproval: boolean = false;
     APInvoice: APInvoicePM;
     Voided: boolean = false;
@@ -125,8 +126,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         private apInvoicePMService :APInvoicePMService
     ) {
         super();
-
-        this.fullAccountingSettingListService = new FullAccountingSettingListService();
+         this.fullAccountingSettingListService = new FullAccountingSettingListService();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.JournalLines = new ObservableCollection([]);
@@ -175,13 +175,15 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         if (journalSecurityManagedFeature) {
             this.IsJournalSecurityManaged = true;
         }
+
+        this.IsJournalSecurityManaged = true;
     }
 
     getAccountingSettingSecurityLevelField() {
-        if (this.IsJournalSecurityManaged) {
+      //  if (this.IsJournalSecurityManaged) {
             this.fullAccountingSettingListService.getSingle(SessionLocator.Tenant.toString()).subscribe((response: any) => {
                 this.CurrentSession.StopBusyIndicator();
-                var userSecurityLevel: number = 0;
+                var userSecurityLevel: number = 10;
                 if (this.UserSecurityLevel != undefined) {
                     userSecurityLevel = this.UserSecurityLevel;
                 }
@@ -193,25 +195,25 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
                 if (response != null) {
                     var response = response.Result;
+
+                    this.IsSecurityLevelVisible = response.IsSecurityLevelActivated;
+
                     if (response.IsSecurityLevelActivated && userSecurityLevel >= 1) {
-                        this.IsSecurityLevelVisible = true;
                         if (journalSecurityLevel > userSecurityLevel) {
                             this.IsSecurityLevelOK = false;
-                            this.IsSecurityLevelVisible = false;
-                        }
+                         }
                     }
                     else if (response.IsSecurityLevelActivated && userSecurityLevel == 0 && journalSecurityLevel > 0) {
                         this.IsSecurityLevelOK = false;
-                        this.IsSecurityLevelVisible = false;
-                    }
+                     }
                     else {
-                        this.IsSecurityLevelVisible = false;
-                    }
+                     }
                 }
+
+                if (this.IsSecurityLevelOK)
+                    this.maxSecurityLevel = userSecurityLevel;
             });
-        } else {
-            this.IsSecurityLevelVisible = false;
-        }
+     
     }
 
 
@@ -395,6 +397,11 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
             }
         }
+
+        else {
+            this.EntityWarningsList.push("אינך מורשה לצפיה בפקודה מספר " + this.EntityPM.JournalNumber);
+
+        }
     }
 
     txt_Reference: string = TextCodeTranslator.Translate("Accounting.General.O.Reference");
@@ -500,7 +507,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     public get SecurityLevel() { return this.EntityPM.SecurityLevel; }
     public set SecurityLevel(value: number) {
         if (this.EntityPM.SecurityLevel != value) {
-            this.EntityPM.SecurityLevel = value;
+           this.EntityPM.SecurityLevel = value;
         }
     }
 
@@ -822,7 +829,14 @@ getHeaderCurrency(CurrencyId:string){
         this.lineDate.setDate(this.line_day);
 
         if (!line.ActionCode) line.accDay = this.line_day;
-        line.AccountingDate = new Date(this.line_year, this.line_month-1, line.accDay);
+        line.AccountingDate = this.getDate(this.line_year, this.line_month-1, line.accDay);
+    }
+    getDate(year, month, day) {
+        var d = new Date(year, month, day);
+        if (d.getMonth() == month) {
+            return d;
+        }
+        return new Date(year, +month + 1, 0);
     }
     lineDate: Date;
     headerDate: Date;
@@ -988,6 +1002,11 @@ class JournalLineModel extends BaseComponent {
 
         if (this.JournalLinePM.CurrencyId != "Multi") {
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+        }
+        
+        // When copy journal- check if AmountsAndCurrencies is false and SetEnabled True on CurrencyId LOV Input 
+        if(this.EntityPM.Copied && !this.EntityPM.AmountsAndCurrencies && AppTool.IsNullOrEmpty(this.JournalLinePM.CurrencyId)){
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
         }
     }
 
@@ -1512,6 +1531,7 @@ class JournalLineModel extends BaseComponent {
             if (day > lastDayOfMonth) {
                 //error
                 this.UIProperties.SetValidity("AccDay", this.ObjectTableName, false, this.accountingDayMustBeInRange);
+                this.AccountingDate = new Date(date.setDate(lastDayOfMonth));
                 this.isValid = false;
                 return false;
                 //var t = setTimeout(() => {

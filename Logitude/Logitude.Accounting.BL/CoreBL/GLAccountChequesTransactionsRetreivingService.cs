@@ -1,6 +1,8 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Interfaces;
 using Logitude.Server.Tools;
@@ -20,21 +22,26 @@ namespace Logitude.Accounting.BL.CoreBL
         const string paymentIconCode = "PY";
         const string journalIconCode = "JR";
         bool _IsFutureOpenCheques = false;
+        bool _IsUnpaidChecks = false;
 
-        public GLAccountChequesTransactionsRetreivingService(int Tenant, IAccountingContext context, bool isFutureOpenCheques = false)
+        public GLAccountChequesTransactionsRetreivingService(int Tenant, IAccountingContext context, bool isFutureOpenCheques = false, bool isUnpaidChecks = false)
         {
             tenant = Tenant;
             this.accountingContext = context;
             this.showLocal = GetLoggedContactShowLocal(tenant);
             _IsFutureOpenCheques = isFutureOpenCheques;
+            _IsUnpaidChecks = isUnpaidChecks;
         }
 
-        public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId, string sortBy, string sortDirection)
+        public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId, string sortBy, string sortDirection,string cardId = "")
         {
-            List<LedgerTransactionList> arPaymentTransactions = GetARPaymentLedgerTransactions(accountId).Distinct().ToList();
-            List<LedgerTransactionList> externalTransactions = GetExternalTransactionsForAccount(accountId, tenant);
+            GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
 
-            arPaymentTransactions.AddRange(externalTransactions);
+            List<LedgerTransactionList> arPaymentTransactions = gLAccountMoreDataRepository.GetAllChecks(cardId, tenant, isFuture: _IsFutureOpenCheques,showLocal: showLocal);
+            /*GetARPaymentLedgerTransactions(accountId).Distinct().ToList();*/
+            //List<LedgerTransactionList> externalTransactions = GetExternalTransactionsForAccount(accountId, tenant);
+
+            //arPaymentTransactions.AddRange(externalTransactions);
             if (sortDirection == "Descending")
             {
                 arPaymentTransactions = arPaymentTransactions.OrderByDescending(a => a.GetType().GetProperty(sortBy).GetValue(a, null)).ToList();
@@ -91,12 +98,17 @@ namespace Logitude.Accounting.BL.CoreBL
                         CalculatedLocalAmount = transaction.LocalAmountCredit != 0 ? transaction.LocalAmountCredit : transaction.LocalAmountDebit,
                         CurrencySign =transaction.Currency.Sign,
                         Tenant = transaction.Tenant
-                    }).Distinct();
+                    });
 
             if (_IsFutureOpenCheques) {
                 query = query.Where(x => x.PaymentValueDate > today);
             }
-            return query.ToList();
+            if (_IsUnpaidChecks)
+            {
+                query = query.Where(x => x.PaymentValueDate <= today);
+            }
+
+            return query.Distinct().ToList();
         }
 
         private List<LedgerTransactionList> GetExternalTransactionsForAccount(string accountId, int tenant)
@@ -141,6 +153,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 query = query.Where(x => x.PaymentValueDate > today);
             }
+
             return query.ToList();
         }
         public int GetAccountChequesTransactionsCount(string accountId)
@@ -223,7 +236,13 @@ namespace Logitude.Accounting.BL.CoreBL
             if (_IsFutureOpenCheques) {
                 query1 = query1.Where(x => x.PaymentValueDate > today);
                 query2 = query2.Where(x => x.PaymentValueDate > today);
-            } 
+            }
+
+            if (_IsUnpaidChecks)
+            {
+                query1 = query1.Where(x => x.PaymentValueDate <= today);
+                query2 = query2.Where(x => x.PaymentValueDate <= today);
+            }
             return query1.Count() + query2.Count();
         }
 

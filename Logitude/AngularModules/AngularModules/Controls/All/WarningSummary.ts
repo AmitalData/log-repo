@@ -1,4 +1,5 @@
-﻿import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'WarningSummary',
@@ -6,22 +7,26 @@
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
-    `
+        `
     <table style="min-height: 25px;">
         <tr>
             <td>
                 <div class="WarningSummary">
                     <table>
                         <tr>
-                            <td *ngIf="!HideHeader" style="width: 120px; vertical-align: top; text-align: left; padding-left: 8px; padding-top: 4px; color: #D8770E; font-size: 12px;">
+                            <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'"
+                                *ngIf="!HideHeader" style="width: 120px; vertical-align: top;  padding-top: 4px; color: #D8770E; font-size: 12px;"
+                                [ngStyle]="LayoutDirection == 'rtl' ? {'padding-right': '8px'} : {'padding-left': '8px'}">
                                 {{ErrorsCount}} Warnings Found:
                             </td>
 
                             <td style="position: relative; vertical-align:top; padding-top: 2px;">
                                 <ul>
-                                    <li class="ValidationItem" [ngStyle]="{width: ItemWidth}" *ngFor="let item of ItemsSource">
-                                        <img class="LeftCenter" src="./Images/WarningIcon.png" />
-                                        <span class="LeftCenter" style="margin-left: 20px;">{{item}}</span>
+                                    <li class="ValidationItem" [ngStyle]="{width: ItemWidth}" *ngFor="let item of ItemsSource" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                                        <img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="./Images/WarningIcon.png" />
+                                        <span [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" 
+                                          [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '20px'} : {'margin-left': '20px'}">{{item}}</span>
+
                                     </li>
                                 </ul>
                             </td>
@@ -40,7 +45,7 @@
     `,
 
     styles:
-    [`
+        [`
     .WarningSummary span {
         text-align: left;
         width: calc(100% - 25px);
@@ -86,8 +91,10 @@ export class WarningSummary implements OnInit {
     public HideHeader: boolean = false;
     public ErrorsCount: number;
     public ItemWidth: string = "50%";
-
+    LayoutDirection: string = 'ltr';
     ngOnInit() {
+        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+
         if (this.SingleLine) {
             this.ItemWidth = "100%";
         }

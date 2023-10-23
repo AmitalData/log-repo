@@ -1,3 +1,4 @@
+import { EventEmitter } from '@angular/core';
 import { SessionInfo } from './../../Infrastructure/Utilities/SessionInfo';
 import { FullAccountingSettingList } from "Accounting/EntityLists/FullAccountingSettingList";
 import { GLAccountList } from "Accounting/EntityLists/GLAccountList";
@@ -10,6 +11,10 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 
 export class GLAccountSecurityLevelService{
+
+    static IsCheckBoxEnabled: EventEmitter<any> = new EventEmitter();
+    static IsMultiWithReconcileMethodCodeEqualOneParameter:boolean=false;
+    static IsCheckBoxEnabledParameter:boolean=false;
 
     public static CheckLevel(glaccountId: string){
 

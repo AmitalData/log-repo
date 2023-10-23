@@ -384,6 +384,21 @@ export class LedgerTransactionPM {
     public set InternalNote(newValue: string) { if (this.internalNote != newValue) { this.internalNote = newValue; this.MarkAsDirty("InternalNote"); } }
        
 	 
+    private taxReportId: string;
+    public get TaxReportId() { return this.taxReportId; }
+    public set TaxReportId(newValue: string) { if (this.taxReportId != newValue) { this.taxReportId = newValue; this.MarkAsDirty("TaxReportId"); } }
+       
+	 
+    private taxReportNumber: string;
+    public get TaxReportNumber() { return this.taxReportNumber; }
+    public set TaxReportNumber(newValue: string) { if (this.taxReportNumber != newValue) { this.taxReportNumber = newValue; this.MarkAsDirty("TaxReportNumber"); } }
+       
+	 
+    private amountInNIS: number;
+    public get AmountInNIS() { return this.amountInNIS; }
+    public set AmountInNIS(newValue: number) { if (this.amountInNIS != newValue) { this.amountInNIS = newValue; this.MarkAsDirty("AmountInNIS"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

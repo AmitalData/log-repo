@@ -16,6 +16,9 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -56,6 +59,7 @@ namespace Logitude.Accounting.BL.CoreBL
             UpdateChequeStatusAsReturnedToCustomer(cheque);
             UpdateCashbookTotal(cheque);
             CreateJournal();
+            CalculateTotalFutureOpenChequesForCreditGlAccount(cheque);
         }
 
         private void ReturnChequeValidation()
@@ -111,7 +115,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 CreatedByUserId = paymentPM.CreatedByUserId,
                 UpdateDate = GetCurrentDateTime(),
                 UpdatedByUserId = paymentPM.UpdatedByUserId,
-                AccountingDate = paymentPM.RegisterDate.Value,
+                AccountingDate = DateTime.Now,
                 TypeCode = JournalTypeValues.Regular,
                 StatusCode = JournalStatusTypeValues.Approved,
                 AccountingEntityId = paymentPM.Id,
@@ -140,7 +144,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 Tenant = arguments.Tenant,
                 Line = 1,
                 ActionCode = "1",
-                AccountingDate = paymentPM.RegisterDate.Value,
+                AccountingDate = DateTime.Now,
                 DocumentDate = paymentPM.RegisterDate.Value,
                 DueDate = cheque.ValueDate,
                 LocalAmount = cheque.LocalAmount,
@@ -164,7 +168,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 Tenant = arguments.Tenant,
                 Line = 2,
                 ActionCode = "2",
-                AccountingDate = paymentPM.RegisterDate.Value,
+                AccountingDate = DateTime.Now,
                 DocumentDate = paymentPM.RegisterDate.Value,
                 DueDate = cheque.ValueDate,
                 LocalAmount = cheque.LocalAmount,
@@ -238,6 +242,49 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             CashBookQueryService cashbookQuery = new CashBookQueryService(arguments.Tenant);
             return cashbookQuery.GetByPaymentAndCurrencyAndBranch(paymentPM.PaymentCurrencyId, ChequePaymentMethodCode, paymentPM.BranchId, arguments.Tenant);
+        }
+
+        private void CalculateTotalFutureOpenChequesForCreditGlAccount(ARPaymentChequePM cheque)
+        {
+            GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(cheque.Tenant);
+            GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(cheque.Tenant);
+            IAccountingContext MyContext = AccountingContext.GetContext(arguments.Tenant);
+
+            bool isFuture = cheque.ValueDate > DateTime.Today ? true : false;
+            List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(billTo.Id, cheque.Tenant, isFuture: isFuture);
+
+            GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(billTo.GLAccountId, cheque.Tenant);
+            GLAccountMoreDataPM moreDataPM = gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);
+            moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
+
+            if (allChecks != null && allChecks.Count != 0)
+            {
+                var sum = allChecks.Sum(x => x.CalculatedLocalAmount);
+
+                if (isFuture)
+                {
+                    moreDataPM.TotFutureOpenChequesInLocalCur = sum;
+                }
+                else
+                {
+                    moreDataPM.TotalOpenChequesInLocalCur = sum;
+                }
+
+                
+            }
+            else
+            {
+                if (isFuture)
+                {
+                    moreDataPM.TotFutureOpenChequesInLocalCur = 0;
+                }
+                else
+                {
+                    moreDataPM.TotalOpenChequesInLocalCur = 0;
+                }
+            }
+            GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), cheque.Tenant);
+            gLAccountMoreDataUpdateService.Update(moreDataPM, true);
         }
     }
     public class ARPaymentChequeReturnServiceArguments

@@ -210,5 +210,11 @@ namespace Logitude.BL.InvoiceModel.EntityLists
 
         public string ReportUrl { get; set; }
         public bool IsAutoCredited { get; set; }
+        public string IsSigned { get; set; }
+
+        public string IsSignedName { get; set; }
+
+        public string ConfirmationNumber { get; set; }
+
     }
 }

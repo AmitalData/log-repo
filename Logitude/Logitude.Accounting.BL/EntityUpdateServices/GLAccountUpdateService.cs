@@ -60,7 +60,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             if (!string.IsNullOrWhiteSpace(EntityPM.ExternalDisplayNumber))
             {
-                entityPM.DisplayNumber = EntityPM.ExternalDisplayNumber;
+                    entityPM.DisplayNumber = EntityPM.ExternalDisplayNumber;
             }
             else
             {

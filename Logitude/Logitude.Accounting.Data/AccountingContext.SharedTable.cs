@@ -20,6 +20,7 @@ namespace Logitude.Accounting.Data
         public IDbSet<Contact> Contacts { get; set; }
         public IDbSet<Tenant> Tenants { get; set; }
         public IDbSet<TotalOpenTransInBankView> TotalOpenTransInBankViews { get; set; }
+        public IDbSet<AllARPaymentChequesView> AllARPaymentChequesViews { get; set; }
 
     }
     public partial interface IAccountingContext : IContext
@@ -32,6 +33,7 @@ namespace Logitude.Accounting.Data
         IDbSet<Tenant> Tenants { get; set; }
         IDbSet<Contact> Contacts { get; set; }
         IDbSet<TotalOpenTransInBankView> TotalOpenTransInBankViews { get; set; }
+        IDbSet<AllARPaymentChequesView> AllARPaymentChequesViews { get; set; }
 
 
 

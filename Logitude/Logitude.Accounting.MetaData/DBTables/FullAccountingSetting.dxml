@@ -270,7 +270,7 @@
   <Column
     Name="HSMtoken"
     Type="varchar"
-    Size="36">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -278,6 +278,18 @@
     Name="HSMaddress"
     Type="varchar"
     Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AllowEditingExchangeRate"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AmountForConfirmationNumber"
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>

@@ -87,8 +87,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         }
         public void AddEventRemarks(EventTypePM theEntityPm)
         {
-            if (IsFullAccountingActivated(theEntityPm.Tenant))
-            {
+            //if (IsFullAccountingActivated(theEntityPm.Tenant))
+            //{
                 EventRemarkQueryService service = new EventRemarkQueryService(theEntityPm.Tenant);
                 EventRemarkRepository eventRemarkRepository = new EventRemarkRepository(objectContext);
 
@@ -105,7 +105,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         }
                     }
                 }
-            }
+            //}
         }
 
         public bool IsFullAccountingActivated(int tenant)

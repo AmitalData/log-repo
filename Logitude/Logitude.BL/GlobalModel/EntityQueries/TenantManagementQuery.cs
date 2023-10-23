@@ -119,6 +119,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return domain;
         }
+
+        public int GetShipmentBuildMonth(int tenant)
+        {
+            double? res = (from a in repository.context.TenantManagements 
+            where a.Id == tenant && a.ActivatePrivateSite
+            select a.PermissionBuildMonths).ToList().FirstOrDefault();
+            
+            return res != null ? (int)res.Value : 6;
+        }
+
         public TenantManagementPM GetSinglePM(int id)
         {
             string entityName = "TenantManagementPM" + id;
@@ -255,6 +265,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      AgentSharedLogisticsStatisticsLastWeek = a.AgentSharedLogisticsStatisticsLastWeek,
                                                      AgentSharedLogisticsStatisticsLastMonth = a.AgentSharedLogisticsStatisticsLastMonth,
                                                      ChangeHeaderColor = a.ChangeHeaderColor,
+                                                     HeaderColor = a.HeaderColor,
                                                      StockTypeCode = a.StockTypeCode,
                                                      IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                                      PackageCodeSearchField = a.PackageCodeSearchField,
@@ -899,7 +910,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     ShowMoneyOrder = entity.ShowMoneyOrder,
                     CargoTrackingPublicShowEvents = entity.CargoTrackingPublicShowEvents,
                     CargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents,
-                    LogoURL = entity.LogoURL,
+                     LogoURL = entity.LogoURL,
                     ServiceAgreementURL = entity.ServiceAgreementURL,
                 };
             }
@@ -1583,6 +1594,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     Price = a.Price,
                     TotalPrice = a.TotalPrice,
                 });
+        }
+
+        public List<TenantManagement> GetWhereHavePermissionBuildMonths()
+        {
+            var q = from a in repository.context.TenantManagements
+                    where a.PermissionBuildMonths != null
+            select a;
+
+            return q.ToList();
         }
     }
 }

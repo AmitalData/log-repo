@@ -13,7 +13,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
     
     templateUrl: './EmailSearchTextBox.html',
     selector: "EmailSearchTextBox",
-    inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult', 'DontInCludeInactive', 'AllowFreeEmails'],
+    inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult', 'DontInCludeInactive', 'AllowFreeEmails','isRTL'],
 
 })
 
@@ -35,6 +35,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
     }
     public IsUsersList: boolean = false;
     public AllowFreeEmails: boolean = false;
+    public isRTL: boolean = false;
     public DropDownHeight: number = 200;
     public DropDownWidth: number = 300;
     public ItemsSource: EmailSearchTextBoxItem[] = [];
@@ -55,6 +56,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
     private userService: UserListService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
+        
         var idIndex = this.CurrentSession.GetNewId("EmailSearchTextBox");
         this.ComponentId = "EmailSearchTextBox_" + idIndex;
         this.SeparatorId = "EmailSearchTextBox_Separator_" + idIndex;
@@ -72,6 +74,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
     }
 
     FillEmailSearch() {
+
         if (this.IsLoad) {
             this.Placeholder = this.Watermark;
             if (!AppTool.IsNullOrEmpty(this.EmailsText)) {

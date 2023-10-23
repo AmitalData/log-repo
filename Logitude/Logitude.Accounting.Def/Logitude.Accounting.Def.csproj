@@ -74,7 +74,6 @@
     <Compile Include="EntityPMs\Generated\AccountingIntegrityCheckPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingNotePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingPeriodPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ARInvoicesSignedStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentChequePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentChequeStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentsJournalPM.Generated.cs" />
@@ -198,6 +197,7 @@
     <Compile Include="EntityUpdateServicesExt\IAPPaymentInvoicesTransactionFetcherExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\GLAccountCardsDataUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServicesExt\IHSMSignFileService.cs" />
     <Compile Include="EntityUpdateServicesExt\IInterestReportsConnectedInvoiceUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IInterestReportUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IBankCodeUpdateServiceExt.cs" />

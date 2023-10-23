@@ -26,11 +26,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(LedgerTransactionPM entityPM, EntityPM entityParentPM)
         {
-          if (entityPM.IsReconciled == null)
+            if (entityPM.IsReconciled == null)
             {
                 entityPM.IsReconciled = false;
             }
-           //this.UpdateBankAccount(entityPM);
+            //this.UpdateBankAccount(entityPM);
 
         }
 
@@ -48,6 +48,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     entityPM.Reference2 = journal.JournalNumber;
                 }
+            }
+            if (entityPM.Mark == true && (entityPM.IsReconciled || entityPM.InReconcileProgress))
+            {
+                entityPM.Mark = false;
             }
 
         }
@@ -276,7 +280,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         if (item.InReconcileProgress)
                         {
-                            throw new ApplicationException("Already InReconcileProgress");
+                            throw new ApplicationException("יש התאמות בתהליך");
                         }
                     }
                     item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
@@ -303,7 +307,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (item.InProgressExternalReconcile)
                     {
-                        throw new ApplicationException("Already InReconcileProgress");
+                        throw new ApplicationException("יש התאמות בתהליך");
                     }
                 }
                 item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;

@@ -13,6 +13,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.InvoiceNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.BillToId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BillToAddressId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConfirmationNumber).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.VatNumber).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.PrintByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IssuedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
@@ -220,6 +221,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.PaidStatus).HasColumnName("PaidStatus");
             this.Property(t => t.TotalEquation).HasColumnName("TotalEquation");
             this.Property(t => t.DocumentTemplateId).HasColumnName("DocumentTemplateId");
+            this.Property(t => t.ConfirmationNumber).HasColumnName("ConfirmationNumber");
 
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);

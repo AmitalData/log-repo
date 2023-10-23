@@ -15,6 +15,9 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
 import { ARPaymentPMService } from 'Invoice/Services/StandardPMs/ARPaymentPMService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { JournalValidator } from 'Accounting/Validators/JournalValidator';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 declare var window: any;
 
@@ -254,14 +257,81 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         confirmWindow.Width = ReturnChequeWindowWidth;
         var message = TextCodeTranslator.Translate('ARPayment.O.ReturnChequeConfirmMessage');
         confirmWindow.Show(message);
+        
+
+        
         confirmWindow.WindowClosed.subscribe((event) => {
+            
             if (confirmWindow.Yes) {
-                this.ReturnChequeToCustomer(cheque);
+               
+                const dateObject = this.GetTodayDate();
+                
+                const isOpenMonth = this.ValidateDates(dateObject, "AccountingDate");
+                if(isOpenMonth) {
+                    this.ReturnChequeToCustomer(cheque);
+                }
+                else {
+                    let messWindow = new MessageWindow();
+                    messWindow.Show("חודש סגור");
+                    messWindow.WindowClosed.subscribe(() => {
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
+                    });
+                }
             }
         });
+    }
+    
+    private GetTodayDate(): Date {
+        const AccountingDate = new Date();
+        const year = AccountingDate.getFullYear(); // Get the year (e.g., 2023)
+        const month = AccountingDate.getMonth() + 1; // Get the month (0-indexed, so add 1)
+        const day = AccountingDate.getDate(); // Get the day of the month
+        const todayDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+        const dateObject = new Date(todayDate);
+        return dateObject;
+    }
+    AccountingPeriods: AccountingPeriodList[] = [];
+
+    private async ValidateDates(value:Date, fieldName:string) {
+        this.AccountingPeriods=null;
+        await this.GetAccountingPeriods();
+        var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
+        if (accountingPeriod) {
+
+            var month = value.getMonth() + 1;
+
+            // Valid Month => (ClosedMonth < month <= OpenMonth)
+            if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
+                return true;
+            } else { // invalid (closed month)
+                return false;
+            }
+        }
+        return false;
+    }
+    
+    _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
+
+    async GetAccountingPeriods() {
+          
+            var filters = new ApiQueryFilters(true);
+            filters.addAdditionalFilter("PeriodTypeCode", "1", null, null, "Equals", false, false, false, "string"); // 1-Regular   
+            
+        const res = await new Promise<boolean>((resolve, reject) => {   
+            
+            this._AccountingPeriodListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.AccountingPeriods = myResponse.Result;
+                        console.log(">>Accounting Periods: ", myResponse.Result);
+                        resolve(true);
+                    }
+                }
+            });
+        })
+    return res;
 
     }
-
 
     GetPayment(){
         this.CurrentSession.StartBusyIndicatorSaving()

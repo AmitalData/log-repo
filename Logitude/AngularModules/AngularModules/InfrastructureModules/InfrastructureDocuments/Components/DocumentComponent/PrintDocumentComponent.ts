@@ -53,7 +53,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     public Items: DocumentCopiesViewModel[];
     HtmlEditEditor: string;
     public documentCopieViewModelSelected: DocumentCopiesViewModel;
-
+    public Signed:boolean=false;
     public DocumentTypeCustomFieldLists: DocumentTypeCustomFieldPM[];
     public Title: string;
     BuildButtonIsEnabled: boolean = true;
@@ -107,9 +107,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
+        
         var entityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         var IsFromInterestBatchInvoice = false;
-        if((this.ObjectTableName == "ARInvoice") && entityPM.IsFromInterestBatchInvoice) {
+        this.Signed=entityPM?.IsSigned!=null && entityPM?.IsSigned!=2?true:false;
+        if( entityPM.IsFromInterestBatchInvoice) {
             IsFromInterestBatchInvoice = true;
         }
         if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && IsFromInterestBatchInvoice == false && SessionLocator.TenantPM.AccountingActivated && this.DataContext.invoiceType != "IT") {
@@ -1064,7 +1066,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
     BuildCurrentCopies(copies: Array<DocumentCopiesViewModel>, mode: string) {
-
+        if(!this.ObjectTableName) {
+            this.StopBusyIndicator();
+            return;
+        }
         this.IsDocumentBuildSucceeded = false;
         this.IsDocumentBuildFailed = false;
 

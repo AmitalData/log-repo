@@ -15,6 +15,7 @@ import { ListComponentArgs } from 'Infrastructure/Args';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { ChildDirective } from 'Controls/Directives/ChildDirective';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 @Component({
 
     templateUrl: "./GlAccountLedgerTransactionsListTemplate.html"
@@ -46,10 +47,13 @@ export class GlAccountLedgerTransactionsListTemplate {
     public isRTL: boolean = false;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private CD: ChangeDetectorRef) {
+    IsMultiWithReconcileMethodCodeEqualOne: boolean = false;
+    constructor(private CD: ChangeDetectorRef,) {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
+        this.Listen();
         if (ObjectsLocator.GlobalSetting)
             this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
+
     }
 
     checkBoxState: boolean = false;
@@ -68,7 +72,6 @@ export class GlAccountLedgerTransactionsListTemplate {
 
 
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
-
         this.rowData = rowData;
         if (this.rowData.IsChecked == true) {
             console.log("Oh Yea True");
@@ -81,11 +84,13 @@ export class GlAccountLedgerTransactionsListTemplate {
         //#region Set Icons
 
         this.IconCode = AccountingEntityHelper.getEntityIcon(this.rowData.SourceTypeCode);
-
+        if (GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter && !GLAccountSecurityLevelService.IsCheckBoxEnabledParameter) {
+            this.IsCheckBoxEnabled = false;
+        }
         //#endregion
 
         var isDestroyed: boolean = this.CD["destroyed"];
-        if (!isDestroyed) {
+        if (!isDestroyed) { 
             this.CD.detectChanges();
         }
     }
@@ -114,8 +119,18 @@ export class GlAccountLedgerTransactionsListTemplate {
         });
     }
 
-
-
+    async OpenTaxReportId(id: string) {
+        SessionLocator.DynamicLoader.Load(
+            "./Infrastructure/Components/EditComponent/EditComponent",
+            this.CurrentSession.SessionLocation.viewContainerRef
+        ).then(cmpRef => {
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Run({
+                EntityId: id,
+                ObjectTableName: 'TaxReport'      
+            });
+        });
+    }
 
     OpenManageReconciliations(rowData: any, title: string) {
 
@@ -143,6 +158,12 @@ export class GlAccountLedgerTransactionsListTemplate {
 
     }
 
+    private Listen() {
+        GLAccountSecurityLevelService.IsCheckBoxEnabled.subscribe(($event) => {
+            this.isCheckBoxEnabled = GLAccountSecurityLevelService.IsCheckBoxEnabledParameter;
+            this.CD.detectChanges();
+        });
+    }
 
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
@@ -164,19 +185,20 @@ export class GlAccountLedgerTransactionsListTemplate {
         //console.log("clicked: ", checked);
         //this.rowData['IsChecked'] = checked;
 
-
-        ReconcileEventManager.CheckBoxChecked.emit({
-            line: this.rowData,
-            isChecked: checked,
-            RowIndex: this.AdditionalData.rowIndex
-        });
+        if (this.IsCheckBoxEnabled) {
+            ReconcileEventManager.CheckBoxChecked.emit({
+                line: this.rowData,
+                isChecked: checked,
+                RowIndex: this.AdditionalData.rowIndex
+            });
+        }
         //ReconcileEventManager.RowUnselected.subscribe(($event) => {
         //    this.rowData = ro
         //});
     }
 
     CalculateOriginalAmount() {
-        
+
         if (
             !AppTool.IsNullOrEmpty(
                 ReconcileEventManager.GLAccountReconcileMethodCode
@@ -263,6 +285,14 @@ export class GlAccountLedgerTransactionsListTemplate {
         this.ChequeStatusColor = this.ChequeStatusColorDictionary[chequeStatus];
 
         return this.ChequeStatusColor;
+    }
+
+    isCheckBoxEnabled: boolean = true;
+    get IsCheckBoxEnabled() { return this.isCheckBoxEnabled; }
+    set IsCheckBoxEnabled(value: boolean) {
+        if (this.isCheckBoxEnabled != value) {
+            this.isCheckBoxEnabled = value;
+        }
     }
 
 }

@@ -79,7 +79,6 @@
                             </div>
                         </td>
                     </tr>
-
                     <!-- Filters -->
                     <tr style="height: 32px;">
                         <td style="padding: 15px 0px;">
@@ -87,10 +86,25 @@
                                 <tr class="FormFieldRow">
                                     <td>
                                         <table>
+                                            <tr *ngIf="ObjectTableName=='GLAccount'" class="FormFieldRow">
+                                         
+                                                <td style="width: 100px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'GLAccount.F.DateFormat' | TextCodeTranslationPipe}}:</td>
+                                                <td style="width: 30px;"><div></div></td>
 
+                                                <td tyle="width: 140px;">  
+                                                    <LogTextBox [ObjectFieldName]="'DateFormat'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td style="width: 30px;"><div></div></td>
+                                                <td></td>
+                                                <td style="width: 140px;">
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
                                             <!-- Date -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 100px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.Datefrom' | TextCodeTranslationPipe}}:</td>
+                                                <td style="width: 30px;"><div></div></td>
 
                                                 <td style="width: 140px;">
                                                     <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ReconcilePageTable"

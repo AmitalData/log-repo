@@ -1021,7 +1021,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
         public void APInvoiceCustomDataMapping(APInvoice apinvoice, int tenant)
         {
-        
+            
             apinvoice.Tenant = tenant;
             apinvoice.InvoiceExpectedAmount = Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
             apinvoice.AmountInInvoiceCurrency= Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
@@ -1059,10 +1059,43 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
        
         }
-
-        public void PaymentTermMapAndValidate(APInvoice apinvoice, APInvoicePM apinvoicePM, int tenant)
+        public bool IsFullAccountingActivated(int tenant)
         {
-            if (apinvoice.PaymentTerm == null && apinvoice.DueDate != null)
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            bool isFullAccountingActivated = tenantRepository.GetTenantAccountingActivated(tenant);
+            return isFullAccountingActivated;
+        }
+        public void PaymentTermMapAndValidate(APInvoice apinvoice, APInvoicePM apinvoicePM, int tenant, string glAccountPaymentTermId)
+        {
+            
+            
+
+            bool FullAccountingTenant = IsFullAccountingActivated(tenant);
+            if (glAccountPaymentTermId != null && FullAccountingTenant)
+            {
+                var paymentTermRepository = new PaymentTermRepository(tenant);
+                var myPaymentTerm = paymentTermRepository.GetSinglePaymentTerm(glAccountPaymentTermId, tenant);
+
+                int daysDifference = myPaymentTerm.Days;
+                DateTime? InvoiceDate = apinvoice.InvoiceDate;
+                var dueDate = InvoiceDate.Value.AddDays(daysDifference);
+                DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day , 0, 0, 0);
+
+                apinvoicePM.DueDate = dueDateFormated;
+                if (apinvoice.PaymentTerm == null) {
+                    PaymentTerm paymentTermAPI = null;
+                        paymentTermAPI = new PaymentTerm()
+                        {
+                            Days = myPaymentTerm.Days,
+                            EnglishName = myPaymentTerm.EnglishName,
+                            Id = myPaymentTerm.Id,
+                            LocalName = myPaymentTerm.LocalName,
+                            ExternalId = myPaymentTerm.ExternalId,
+                        };
+                    apinvoice.PaymentTerm = paymentTermAPI;
+                }
+            }
+            else if (glAccountPaymentTermId == null && apinvoice.PaymentTerm == null && apinvoice.DueDate != null)
             {
                 double daysDifference = GetDaysDiffernceForDate(apinvoice.DueDate, tenant);
                 var paymentTerm = GetPaymentTermByDaysDifference(tenant, daysDifference);
@@ -1071,22 +1104,36 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 else
                     apinvoice.PaymentTerm = paymentTerm;
             }
-            else if (apinvoice.PaymentTerm != null && apinvoice.DueDate != null)
-            {
-                double daysDifference = GetDaysDiffernceForDate(apinvoice.DueDate, tenant);
-                if (apinvoice.PaymentTerm.Days != daysDifference)
-                {
-                    apinvoice.PaymentTerm = GetManuallySetPaymentTerm(tenant);
-                }
-            }
-            else if (apinvoice.PaymentTerm != null && apinvoice.DueDate == null)
+            else if (FullAccountingTenant && apinvoice.PaymentTerm != null)
             {
                 int daysDifference = apinvoice.PaymentTerm.Days;
-                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                DateTime dueDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day + daysDifference, 0, 0, 0);
+                DateTime? InvoiceDate = apinvoice.InvoiceDate;
+                var dueDate = InvoiceDate.Value.AddDays(daysDifference);
+                DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day , 0, 0, 0);
 
-                apinvoicePM.DueDate = dueDate;
+                apinvoicePM.DueDate = dueDateFormated;
             }
+            else if (!FullAccountingTenant)
+            {
+                 if (apinvoice.PaymentTerm != null && apinvoice.DueDate != null)
+                {
+                    double daysDifference = GetDaysDiffernceForDate(apinvoice.DueDate, tenant);
+                    if (apinvoice.PaymentTerm.Days != daysDifference)
+                    {
+                        apinvoice.PaymentTerm = GetManuallySetPaymentTerm(tenant);
+                    }
+                }
+                else if (apinvoice.PaymentTerm != null && apinvoice.DueDate == null)
+                {
+                    int daysDifference = apinvoice.PaymentTerm.Days;
+                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                    var dueDate = todayDate.AddDays(daysDifference);
+                    DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day, 0, 0, 0);
+
+                    apinvoicePM.DueDate = dueDateFormated;
+                }
+            }          
             else
             {
                 throw new ApplicationException("Neither Due Date nor Payment Term is provided!");
@@ -1095,7 +1142,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             if (apinvoicePM.PaymentTermId == null)
                 apinvoicePM.PaymentTermId = apinvoice.PaymentTerm?.Id;
         }
-
         private static PaymentTerm GetManuallySetPaymentTerm(int tenant)
         {
             PaymentTermQuery paymentTermQuery = new PaymentTermQuery(tenant);

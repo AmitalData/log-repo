@@ -253,7 +253,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 AccountSalesmanLocalName = customerPeriods.First().AccountSalesmanLocalName,
                 AccountCollectorName = customerPeriods.First().AccountCollectorName,
                 AccountCollectorLocalName = customerPeriods.First().AccountCollectorLocalName,
-                Category1Name = customerPeriods.First().Category1Name,
+				CustomerVatNumber = customerPeriods.First().CustomerVatNumber,
+
+				Category1Name = customerPeriods.First().Category1Name,
                 Category2Name = customerPeriods.First().Category2Name,
                 Category3Name = customerPeriods.First().Category3Name,
                 Category4Name = customerPeriods.First().Category4Name,

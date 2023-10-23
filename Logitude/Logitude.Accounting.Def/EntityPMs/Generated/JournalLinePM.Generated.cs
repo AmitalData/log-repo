@@ -965,6 +965,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string confirmationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConfirmationNumber  
+	   {
+	    
+	     get
+		{
+		   return confirmationNumber;
+		 }
+		 set
+		 {
+		   if(confirmationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConfirmationNumber",OldValue=confirmationNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   confirmationNumber=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

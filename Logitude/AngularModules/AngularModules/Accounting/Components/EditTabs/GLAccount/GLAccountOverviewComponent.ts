@@ -750,9 +750,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     DisplayChequelistClicked(id) {
-
+        
        var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
+        windowArgs.IsUnpaidChecks = true;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1100;
         logWindow.Height = 600;

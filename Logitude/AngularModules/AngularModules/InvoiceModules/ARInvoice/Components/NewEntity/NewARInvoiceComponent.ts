@@ -926,6 +926,8 @@ export class NewARInvoiceComponent extends BaseComponent {
         if (loadingDate == null) {
             loadingDate = DateTool.GetCurrentDateAsUtc();
         }
+        this.EntityPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
+ 
 
         this.myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.LocalCurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
 

@@ -120,6 +120,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string HSMtoken  { get; set; }
        [DataMember]
        public string HSMaddress  { get; set; }
+       [DataMember]
+       public bool AllowEditingExchangeRate  { get; set; }
    }
 
 }

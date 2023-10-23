@@ -1111,6 +1111,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pocos;
         }
 
+        public List<LedgerTransactionPM> GetByJournalIdAndForeignAmountDebitNotEqualZero(string journalId, int tenant)
+        {
+            List<LedgerTransaction> ledgerTransactionPOCOs = null;
+            ledgerTransactionPOCOs = repository.GetByJournalIdAndForeignAmountDebitNotEqualZero(journalId, tenant).ToList();
+            List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
+            return pms;
+        }
+
     }
     public class JournalLineLedgerDTO
     {
@@ -1172,5 +1180,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public decimal ForeignAmountDebit { get; internal set; }
         public decimal LocalAmountDebit { get; internal set; }
         public string OpenAmountCurrencyId { get; internal set; }
+    }
+
+
+    public class GetNextLTArgs
+    {
+        public int Tenant { get; set; }
+        public string AccountId { get; set; }
+        public string LastCheckedId { get; set; }
+        public DateTime ToAccountingDate { get; set; }
+        public int ThisTimeMadeCount { get; set; }
+        public bool Stop { get; set; }
+
+
     }
 }

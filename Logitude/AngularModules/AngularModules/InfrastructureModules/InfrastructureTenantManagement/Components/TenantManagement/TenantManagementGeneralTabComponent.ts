@@ -24,7 +24,7 @@ import { TenantLoginPolicyPM } from '../../../../Common/EntityPMs/TenantLoginPol
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 @Component({
-    
+
     selector: 'TenantManagementGeneralTabComponent',
     templateUrl: './TenantManagementGeneralTabComponent.html',
 })
@@ -42,18 +42,25 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public IsMainAdditionalPackageApplied: boolean = false;
     private tenantLoginPolicyPMService: TenantLoginPolicyPMService;
     private CurrentSession = SessionLocator.SelectedSession;
-
+    public isRTL: boolean = false;
     public IsLogBoxTenant: boolean = false;
 
-
-
-
-
-
-
+    private headerColor = "";
+    get HeaderColor() {
+        return this.headerColor;
+    }
+    set HeaderColor(newValue: string) {
+        if (this.EntityPM.HeaderColor != newValue) {
+            this.headerColor = newValue;
+            this.EntityPM.IsDirty = true;
+            this.EntityPM.HeaderColor = newValue;
+        }
+    }
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = this.entityArgs.EntityPM;
+        this.headerColor = this.EntityPM.HeaderColor;
         this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
         this.iGlobalDomainService = new GlobalDomainService();
         this.tenantLoginPolicyPMService = new TenantLoginPolicyPMService();
@@ -134,7 +141,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
         this.SetUIProperties_Distributor();
         this.SetUIProperties_NumberOfUsers();
-        this.SetUIProperties_ManageLicencesPerUser(); 
+        this.SetUIProperties_ManageLicencesPerUser();
         this.SetUIProperties_ScheduledTasksLimitPerReport();
 
         if (this.isTenantManagementEditable) {
@@ -145,7 +152,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.SetUIProperties_TemporalPackage();
             this.SetUIProperties_TenantType();
             this.SetUIProperties_ParentTenant();
-            this.SetUIProperties_TotalPrice();  
+            this.SetUIProperties_TotalPrice();
         }
 
         else {
@@ -185,7 +192,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("TenantTypeCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("TenantConnectedToAirlineCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsParentTenant", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, false);            
+            this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, false);
         }
 
         if (SessionLocator.Tenant == 0) {
@@ -265,9 +272,9 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     private SetUIProperties_ScheduledTasksLimitPerReport() {
 
         if (AppTool.IsNullOrEmpty(this.ScheduledTasksLimitPerReport)) {
-            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, true); 
+            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, true);
         } else {
-            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, false); 
+            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, false);
         };
 
     }
@@ -632,7 +639,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set ScheduledTasksLimitPerReport(newValue) {
         if (this.EntityPM.ScheduledTasksLimitPerReport != newValue) {
             this.EntityPM.ScheduledTasksLimitPerReport = newValue;
-             
+
         }
     }
 
@@ -1077,7 +1084,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
         else {
             this.entityResourceService.getEntityResourceByTableName("TenantManagementLicense").subscribe((res1: any) => {
-                itemViewModel.SetOldData();                
+                itemViewModel.SetOldData();
                 logeWindow.DataContext = itemViewModel;
                 logeWindow.Show("./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/AddEditLicenceComponent");
                 logeWindow.WindowClosed.subscribe(s => {
@@ -1087,7 +1094,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                     }
                 });
             });
-        }        
+        }
     }
     DeletePackage(itemViewModel: PackageItem) {
         var confirmWindow = new ConfirmWindow();
@@ -1396,7 +1403,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.MainAdditionalPackageApplied = false;
             this.SetUIProperties_NumberOfUsers();
             this.BuildPackagesList();
-        }        
+        }
     }
 
     get MainAdditionalPackageApplied() { return this.EntityPM.MainAdditionalPackageApplied; }
@@ -1417,7 +1424,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             }
         }
     }
-    
+
     get TotalNumberOfUsers() { return this.EntityPM.TotalNumberOfUsers; }
     set TotalNumberOfUsers(newValue: number) {
         if (this.EntityPM.TotalNumberOfUsers != newValue) {

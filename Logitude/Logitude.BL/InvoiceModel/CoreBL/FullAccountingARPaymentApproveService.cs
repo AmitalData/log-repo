@@ -85,7 +85,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void AddARPaymentJournal()
         {
-            if (!paymentPM.SetVoided)
+            if (!paymentPM.SetVoided && paymentPM.StatusCode != "CL")
             {
                 ARPaymentsJournalRepository arPaymentsJournalRepository = new ARPaymentsJournalRepository(tenant);
                 ARPaymentsJournal arPaymentsJournal = new ARPaymentsJournal();
@@ -293,7 +293,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private int GetInitialLineNumberForBankTransfer(ARPaymentPM arpaymentPM)
         {
             int LineNumberCounter = 1;
-            if (!isNewEntity && !IsDraft)
+            if (!isNewEntity && !IsDraft && arpaymentPM.ARPaymentBankTranfers!= null && arpaymentPM.ARPaymentBankTranfers.Count()>0)
                 LineNumberCounter = arpaymentPM.ARPaymentBankTranfers.Max(d => d.LineNumber) + 1;
             return LineNumberCounter;
         }

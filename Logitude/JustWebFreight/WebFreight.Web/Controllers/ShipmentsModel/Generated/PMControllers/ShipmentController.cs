@@ -748,10 +748,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "tenant not found");
 
             var tenantManagement = new TenantManagementQuery().GetSinglePM(tenant.Value);
-            byte[] filedata = new Uploader().DownloadFile(tenantManagement.ComapnylogoId, "jpg", "images", tenant.Value);
+            byte[] filedata = new Uploader().DownloadFile("smalllogo" + tenant.Value, "jpg", "logos", tenant.Value);
             string logo = "data:image/jpg;base64," + Convert.ToBase64String(filedata);
-
-            return Request.CreateResponse(new { url = tenantManagement.LogoURL, logo = logo });
+            
+            return Request.CreateResponse(new { url = tenantManagement.LogoURL, logo = logo, serviceAgreementURL = tenantManagement.ServiceAgreementURL });
         }
 
         private static void AddWhatsAppMessagingPhoneNumberToResponseHeader(int tenant)

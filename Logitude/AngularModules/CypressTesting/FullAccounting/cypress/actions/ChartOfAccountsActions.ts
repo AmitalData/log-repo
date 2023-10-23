@@ -25,6 +25,7 @@ export function CreateChartOfAccount() {
 }
 
 export function AssertCreateChartOfAccount() {
+    debugger
     let intercept = cy.wait("@" + RequestAliases.PostChartOfAccount);
     intercept.then((interception) => {
         let statusCode = interception.response.statusCode;
