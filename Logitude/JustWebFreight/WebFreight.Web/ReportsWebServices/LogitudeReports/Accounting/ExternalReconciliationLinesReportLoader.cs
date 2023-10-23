@@ -133,6 +133,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             };
             return ledgerTransactionBalanceFilter;
         }
+
         private List<TransactionBalance> GetTransactionBalancesList()
         {
             transactionsBalances = new List<TransactionBalance>();
@@ -149,7 +150,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     {
                         BankAccountId = period.BankAccountId,
                         GLAccountId = period.GLAccountId,
-                        TotalInLocalCurrency = transactionsBalanceByFiltersResult.ledgerTransactionBalanceService.Response.EndBalanceLocal
+                        TotalInLocalCurrency = transactionsBalanceByFiltersResult.ledgerTransactionBalanceService.Response.EndBalanceLocal,
+                        TotalInForiegnCurrency = transactionsBalanceByFiltersResult.ledgerTransactionBalanceService.Response.EndBalanceForeign,
                     };
                     transactionsBalances.Add(transactionBalance);
                 }
@@ -189,6 +191,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                             BankTotalClosed = externalReconciliationsPeriods == null ? 0 : externalReconciliationsPeriods.Where(s => s.BankAccountId == a.Id && s.EnglishType == "Bank" && s.IsRecomncile == true).Sum(b => b.Amount),
 
                                             TotalInLocalCurrency = transactionsBalances.Where(d => d.BankAccountId == a.Id).FirstOrDefault() != null ? transactionsBalances.Where(d => d.BankAccountId == a.Id).FirstOrDefault().TotalInLocalCurrency : null,
+                                            TotalInForiegnCurrency = transactionsBalances.Where(d => d.BankAccountId == a.Id).FirstOrDefault() != null ? transactionsBalances.Where(d => d.BankAccountId == a.Id).FirstOrDefault().TotalInForiegnCurrency : null,
                                         })
                                         .Where(s => s.ExternalReconciliationPeriods.Count > 0)
                                         .ToList();
@@ -729,4 +732,5 @@ class TransactionBalance
     public string BankAccountId { get; set; }
     public string GLAccountId { get; set; }
     public decimal? TotalInLocalCurrency { get; set; }
+    public decimal? TotalInForiegnCurrency { get; set; }
 }
