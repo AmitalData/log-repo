@@ -1412,7 +1412,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             {
                                                 Id = a.Id,
                                                 IsEquipment = a.IsEquipment,
-                                                InvoiceNumber = a.InvoiceNumber
+                                                InvoiceNumber = a.InvoiceNumber,
+                                                ConfirmationNumber = a.ConfirmationNumber,
                                             }).ToList();
 
             return invoicePMs;
@@ -1507,6 +1508,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                 PaidDate = a.PaidDate,
                                                 ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                                                 TotalEquation = a.TotalEquation,
+                                                ConfirmationNumber=a.ConfirmationNumber,
                                             }).ToList();
             return invoicePMs;
         }
