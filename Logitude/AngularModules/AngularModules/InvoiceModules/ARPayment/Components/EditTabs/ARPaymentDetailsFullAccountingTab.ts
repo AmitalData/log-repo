@@ -86,6 +86,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public bankTransferAmount: number;
     public InvoiceAmountCurrency: string = TextCodeTranslator.Translate("Accounting.O.ARP.InvoiceAmount") + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
     public PaymenyAmount: number;
+    public BankAccountsFilterItems: ApiQueryFilters;
     _AccountingPaymentMethodListService = new AccountingPaymentMethodListService();
     public PartnerTypes: PartnerTypeList[] = [];
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
@@ -114,7 +115,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
-
+        this.BankAccountsFilterItems = new ApiQueryFilters();
         this.EntityPM = entityArgs.EntityPM;
         if( this.EntityPM.StatusCode==null)
             this.CreateARPayment();
@@ -1202,9 +1203,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         {
             var partnerTypes: PartnerTypeList[] = res.Result || [];
             this.PartnerTypes = partnerTypes.filter(d => this.AllowedPartnerTypesCodes.indexOf(d.Id) > -1); // filter
-            if( this.EntityPM.StatusCode=="DR")
+            //if( this.EntityPM.StatusCode=="DR")
                 this.SelectedPartnerType = partnerTypes.filter(d => d.Id == 'CS')[0]; // default
-            this.getSelectedPartnerTypes(partnerTypes);
+            //this.getSelectedPartnerTypes(partnerTypes);
         });
     }
 
@@ -1542,7 +1543,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             });
 
             if (this.isFullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
+                this.BankAccountsFilterItems = new ApiQueryFilters();
+                this.BankAccountsFilterItems.addAdditionalFilter("CurrencyId", this.EntityPM.PaymentCurrencyId, null, null, "Equals", false, false, false, "string");
                 this.CheckGLAccountCurrencyId();
+            } else {
+                this.BankAccountsFilterItems = new ApiQueryFilters();
             }
         }
     }
