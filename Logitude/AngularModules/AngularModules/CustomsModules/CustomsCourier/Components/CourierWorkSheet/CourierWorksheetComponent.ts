@@ -243,7 +243,11 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     }
 
+    public isAllowClassificationApproveFeature = false;
+
     SetWindowArgs(windowArgs) {
+        FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "ClassificationApprovedFromMasterCourier") ? this.isAllowClassificationApproveFeature = true : this.isAllowClassificationApproveFeature = false; 
+        
         this.entityPM = windowArgs.CurrentEntity;
         this._SelectedTabFilter = this._TabFilterList[0];
         this.CheckRequiredFields();
@@ -2726,48 +2730,41 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             this.RefreshButtonClicked();
         });
     }
-    
-    public isAllowClassificationApproveFeature = false;
-    ClassificationApprove() {
-        if (FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "ClassificationApprovedFromMasterCourier")) {
-            this.isAllowClassificationApproveFeature = true;
-            var confirm = new ConfirmWindow();
-            confirm.Width = 320;
-            confirm.Height = 180;
-            confirm.Title =  "אישור סיווג";
-            confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            confirm.ShowNoButton = true;
-            confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-            confirm.Show("נא אשר סיווג לכל הטיסה");
-            
-            confirm.WindowClosed.subscribe((event: any) => {
-                if (confirm.Yes) {
-                    
-                    var currRequestParams = new SendALLCorrectRequestParams();
-                    currRequestParams.LoggingEnabled = true;
-                    currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-                    currRequestParams.Tenant = SessionLocator.Tenant;
-                    currRequestParams.CourierMasterId = this.entityPM.Id;
-                    currRequestParams.HAWB = this.entityPM.HAWB;
-                    if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
-                        currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-                    }
-                    this._CourierMasterService.PostSend2750AndUpdaeClassificationByCourierMaster(currRequestParams)
-                        .subscribe((res: any) => {
-                            SessionLocator.SelectedSession.StopBusyIndicator();
-                            var myMessageWindow = new MessageWindow();
-                            myMessageWindow.Show(res.Result);
-                            myMessageWindow.WindowClosed.subscribe(s => {
-                                this.RefreshButtonClicked();
-                            });
-                        });
+       
+    ClassificationApprove() {       
+        this.isAllowClassificationApproveFeature = true;
+        var confirm = new ConfirmWindow();
+        confirm.Width = 320;
+        confirm.Height = 180;
+        confirm.Title =  "אישור סיווג";
+        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        confirm.ShowNoButton = true;
+        confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+        confirm.Show("נא אשר סיווג לכל הטיסה");
+        
+        confirm.WindowClosed.subscribe((event: any) => {
+            if (confirm.Yes) {
+                var currRequestParams = new SendALLCorrectRequestParams();
+                currRequestParams.LoggingEnabled = true;
+                currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+                currRequestParams.Tenant = SessionLocator.Tenant;
+                currRequestParams.CourierMasterId = this.entityPM.Id;
+                currRequestParams.HAWB = this.entityPM.HAWB;
+                if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+                    currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
                 }
-                confirm.Close();
-            });
-        }
-        else {
-            this.isAllowClassificationApproveFeature = false;
-        }
+                this._CourierMasterService.PostSend2750AndUpdaeClassificationByCourierMaster(currRequestParams)
+                    .subscribe((res: any) => {
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        var myMessageWindow = new MessageWindow();
+                        myMessageWindow.Show(res.Result);
+                        myMessageWindow.WindowClosed.subscribe(s => {
+                            this.RefreshButtonClicked();
+                        });
+                    });
+            }
+            confirm.Close();
+        });
     }
 
 }
