@@ -92,7 +92,7 @@ using Simplog.Data.InvoiceModel;
 				   temp.InvoiceCurrencyExchangeRate = MyEntityPM.InvoiceCurrencyExchangeRate;
 				   temp.InvoiceDate = MyEntityPM.InvoiceDate;
 				   temp.AccountingDate = MyEntityPM.AccountingDate; 
-
+				   temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
 			  
 				   if(MyEntityPM.PaymentTermId != null)
 				   {
@@ -198,6 +198,7 @@ using Simplog.Data.InvoiceModel;
 				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;
 				   temp.InvoiceExpectedAmount = MyEntityPM.InvoiceExpectedAmount;
 				   temp.EntityReference = MyEntityPM.MainEntityReference;
+                   temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
 				   temp.VendorGLAccount = MyEntityPM.VendorGLAccountId;
 				if(MyEntityPM.TotalVATs != null && MyEntityPM.TotalVATs.Count > 0)
 				{
@@ -327,19 +328,27 @@ using Simplog.Data.InvoiceModel;
 					{							
 						temp.InvoiceCurrencyExchangeRate = MyEntity.InvoiceCurrencyExchangeRate;
 
-										}  
+										}
 
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.InvoiceDate = MyEntity.InvoiceDate;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
+					if (!IsUpdate)
+					{
+					    temp.InvoiceDate = MyEntity.InvoiceDate;
+
+                                        }
+
+
+
+                    if (!IsUpdate)
+                    {
+                        temp.ConfirmationNumber = MyEntity.ConfirmationNumber;
+
+                                        }
+
+
+
+                    if (!IsUpdate)
 					{							
 						temp.AccountingDate = MyEntity.AccountingDate;
 
