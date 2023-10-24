@@ -87,7 +87,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             foreach (var prediction in page.prediction)
                             {
-                                if (prediction.label.ToUpper() != label && !dic.ContainsKey(prediction.label))
+                                if (prediction.label.ToUpper() != label && !dic.ContainsKey(prediction.label) && !string.IsNullOrEmpty(prediction.ocr_text))
                                 {
                                     dic.Add(prediction.label, prediction.ocr_text);
                                 }
@@ -112,7 +112,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             supplierInvoiceItemsList.Add(dicItems);
                                             dicItems = new Dictionary<string, string>();
                                         }
-                                        if (!dicItems.ContainsKey(cell.label) && cell.label != ExpensesAmount && cell.label != ExpensesName)
+                                        if (!dicItems.ContainsKey(cell.label) && !string.IsNullOrEmpty(cell.text) && cell.label != ExpensesAmount && cell.label != ExpensesName)
                                             dicItems.Add(cell.label, cell.text);
                                         row = cell.row;
                                     }
@@ -182,6 +182,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this.MyResponseData.Succeeded = false;
                             this.MyResponseData.HasException = true;
                             this.MyResponseData.UserMessage = ex.Message + " : " + " "+ TranslateTextsClass.Translate("Customs.OcrDocument.O.ErrorCreatingInvoice", customResponse.tenant, true) +" ";
+                            CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
+                            CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
+                            if (requestsSheetPM != null)
+                            {
+                                MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(5));
+                            }
                             return;
                         }
 
@@ -193,6 +199,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.Succeeded = false;
                     this.MyResponseData.HasException = true;
                     this.MyResponseData.UserMessage = ex.Message + " : " + " "+ TranslateTextsClass.Translate("Customs.OcrDocument.O.ErrorInReceivingData", customResponse.tenant, true) + " ";
+                    CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
+                    CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
+                    if (requestsSheetPM != null)
+                    {
+                        MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(5));
+                    }
                 }
 
 
@@ -213,6 +225,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         string.IsNullOrEmpty(myOcrDocument.Reference) ? message + "," + TranslateTextsClass.Translate("Customs.OcrDocument.O.MissingInvoiceNumber", customResponse.tenant, true)
                         : message + "," + TranslateTextsClass.Translate("Customs.OcrDocument.O.JSONFileNotReceived", customResponse.tenant, true);
                 }
+
+                CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
+                CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
+                if (requestsSheetPM != null)
+                {
+                    MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(5));
+                }
+
             }
         }
 

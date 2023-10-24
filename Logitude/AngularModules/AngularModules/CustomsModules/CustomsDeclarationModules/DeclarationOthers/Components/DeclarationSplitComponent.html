@@ -494,16 +494,24 @@
                                                                     </div>
                                                                 </td>
                                                                 <td
-                                                                    style="vertical-align:top;float:left; margin-top:5px; margin-left:9px;">
+                                                                    style="vertical-align:top;float:left; margin-top:5px; margin-left:1px;">
+                                                                    
+                                                                    <!-- ocr Document -->
+                                                                    <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode"
+                                                                        style="width: 25px;position: absolute;top: 3px;left: 1px;"
+                                                                        src="./Images/Ocr.png"
+                                                                    />
                                                                     <img [src]="relatedDoc.Extension | AttatchmentIconPipe"
-                                                                        style="width:22px;height:25px;margin-left:5px; margin-top:3px; cursor:pointer;"
+                                                                        style="width:22px;height:25px; margin-top:3px; cursor:pointer;"
+                                                                        [ngStyle]="{'margin-left': relatedDoc.documentsFilingPM.OcrStatusCode ? '30px' : '5px' }" 
                                                                         (click)="DownloadDocumentFile(relatedDoc.Id)"
                                                                         (mouseenter)="IsMouseOverDownload = true"
                                                                         (mouseleave)="IsMouseOverDownload = false" />
 
                                                                     <!-- sign mark -->
                                                                     <img *ngIf="relatedDoc.documentsFilingPM.IsDigitallySigned"
-                                                                        style="width: 23px;position: absolute;top: 5px;left: -15px;"
+                                                                        style="width: 23px;position: absolute;top: 2px;"
+                                                                        [ngStyle]="{'left': relatedDoc.documentsFilingPM.OcrStatusCode ? '48px' : '25px' }" 
                                                                         src="./Images/medalicon.png"
                                                                         [attr.title]="relatedDoc.documentsFilingPM.SignersList" />
 
@@ -517,9 +525,20 @@
                                                         <table>
                                                             <tr>
                                                                 <td>
-                                                                    <div class="TextTrimming"
-                                                                        style="font-size:10px;color:#312C31;margin-right:6px;float:right;width:170px;">
+                                                                    <div  class="TextTrimming"
+                                                                    style="font-size:10px;color:#312C31;margin-right:6px;float:right;width:170px;">
+
+                                                                    <span *ngIf="!relatedDoc.documentsFilingPM.OcrReference" style="font-size:10px;">
                                                                         {{relatedDoc.DocumentTypeName}}
+                                                                    </span>
+                                                                    <span *ngIf="relatedDoc.documentsFilingPM.OcrReference" style="font-size:10px;">
+                                                                        {{relatedDoc.documentsFilingPM.OcrReference}}
+                                                                    </span>
+                                                                    <span 
+                                                                    *ngIf="relatedDoc.documentsFilingPM.OcrScore != -1 && (relatedDoc.documentsFilingPM.OcrStatusCode == '2' || relatedDoc.documentsFilingPM.OcrStatusCode == '4')" 
+                                                                    style ="position: absolute;left: 4px;top: 1px;font-weight: bold">
+                                                                        {{relatedDoc.documentsFilingPM.OcrScore * 100}}%
+                                                                    </span>  
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -590,7 +609,20 @@
                                                                     style="float:right;margin-right:3px; font-size:11px;overflow:hidden; width:80px;">
                                                                     {{relatedDoc.Code}}
                                                                 </span>
+
                                                             </div>
+                                                            <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '1' || relatedDoc.documentsFilingPM.OcrStatusCode == '3'"
+                                                            style="width: 17px;position: absolute;left: 4px;top: 4px;"
+                                                            src="./Images/in_progress@2x.png"
+                                                             />
+                                                            <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '2' || relatedDoc.documentsFilingPM.OcrStatusCode == '4'"
+                                                            style="width: 17px;position: absolute;left: 4px;top: 4px;"
+                                                            src="./Images/Successful_process@2x.png"
+                                                             /> 
+                                                            <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '7' || relatedDoc.documentsFilingPM.OcrStatusCode == '8' || relatedDoc.documentsFilingPM.OcrStatusCode == '9'"
+                                                             style="width: 17px;position: absolute;left: 4px;top: 4px;"
+                                                             src="./Images/process_failed@2x.png"
+                                                              /> 
                                                         </div>
 
                                                     </td>
