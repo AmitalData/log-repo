@@ -897,7 +897,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                             var exists = [];
                                 exists = this.ModificationsList.Collection.filter(d => d.TypeCode == typeCode && d.InvoiceCounterKey == mod.InvoiceCounterKey);
                             if (exists.length > 1) {
-                                var txt = TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª";
+                                var txt = TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType");
                                 if (!validationErrors.includes(txt)) {
                                     validationErrors.push(txt);
                                     if (!this.ValidationErrors.includes(txt)) {
@@ -1106,7 +1106,7 @@ export class ModificationItemModel extends BaseComponent {
             if (value == "I02") {
                 this.ModificationPM.TypeCode = value;
                 this.isValid = false;
-                this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.CalculatedFee") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª");
+                this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.CalculatedFee"));
             } else {
                 var exists_prev = [];
                 if (this.entityParentPM.SupplierInvoiceModifications.length != 0) {
@@ -1122,7 +1122,7 @@ export class ModificationItemModel extends BaseComponent {
                 if (exists) {
                     this.ModificationPM.TypeCode = value;
                     this.isValid = false;
-                    this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - ×”×¤×—×ª×•×ª/×”×ª×�×ž×•×ª");
+                    this.parent.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType"));
                 } else {
                     this.ModificationPM.TypeCode = value;
                     this.isValid = true;
