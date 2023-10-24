@@ -24,7 +24,6 @@ import { DocumentsFilingExtendedPMService } from '../../../Common/Services/Exten
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { ConsilidationInvoiceDomainService } from '../../Services/ConsilidationInvoiceDomainService'; 
 import { ShipmentDomainService } from '../../../Shipment/Services/ShipmentDomainService';
-import { BuildDocumentComponent } from 'Accounting/Utilities/BuildDocumentComponent';
 
 export class ARInvoiceMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;

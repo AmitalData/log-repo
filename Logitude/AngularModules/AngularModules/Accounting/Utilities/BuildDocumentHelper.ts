@@ -1,7 +1,5 @@
 declare var window: any;
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
-import {BaseComponent} from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
@@ -10,7 +8,6 @@ import {DocumentTypePMExtendedService} from '../../Common/Services/ExtendedPMs/D
 import {ExportDocumentService} from '../../Common/Services/DocumentServices/ExportDocumentService';
 import {DocumentTypeTemplateListExtendedService} from '../../Common/Services/ExtendedLists/DocumentTypeTemplateListExtendedService';
 import {DocumentTypeCustomFieldService} from '../../Common/Services/ExtendedPMs/DocumentTypeCustomFieldService';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {HtmlEditorService} from '../../Common/Services/DocumentServices/HtmlEditorService';
 import {DocumentOutPM} from '../../Common/EntityPMs/DocumentOutPM';
 import {DocumentTypePM} from '../../Common/EntityPMs/DocumentTypePM';
@@ -18,17 +15,13 @@ import {DocumentTypeCustomFieldPM} from '../../Common/EntityPMs/DocumentTypeCust
 import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
-import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {DownloadManager} from '../../Infrastructure/Utilities/DownloadManager';
 import {ExportDocumentArgs} from '../../Infrastructure/DataContracts/ExportDocumentArgs';
 import {DocumentsExecutionLogList} from '../../Common/EntityLists/DocumentsExecutionLogList';
 import {DocumentsExecutionLogListExtendedService} from '../../Common/Services/ExtendedLists/DocumentsExecutionLogListExtendedService';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
-declare var Base64ToString: any;
-import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
 import {ObjectsLocator} from "../../Infrastructure/Locators/ObjectsLocator";
 import { DocumentCopiesViewModel } from 'InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentCopiesViewModel';
 import { DocumentTypeTemplateViewModel } from 'InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentTypeTemplateViewModel';
@@ -37,12 +30,8 @@ import { DocsOutDataViewModel } from 'InfrastructureModules/InfrastructureDocume
 import { FroalaEditorFilters } from 'InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/FroalaEditorFilters';
 
 
-@Component({
-    selector: 'BuildDocument',
-    providers: [DocumentTypePMExtendedService, DocumentTypeCustomFieldService, DocumentOutPMService, ExportDocumentService, DocumentTypeTemplateListExtendedService, HtmlEditorService],
-})
 
-export class BuildDocumentComponent{
+export class BuildDocumentHelper{
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public ItemsSource: DocumentCopiesViewModel[];
     public AddedDocumentTypeCopyViewModels: DocumentCopiesViewModel[];

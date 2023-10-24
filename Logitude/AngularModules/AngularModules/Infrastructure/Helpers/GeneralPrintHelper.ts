@@ -19,7 +19,7 @@ import {DocumentOutPMService} from '../../Common/Services/ExtendedPMs/DocumentOu
 import {DocsOutDataViewModel} from '../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocsOutDataViewModel';
 import { ARInvoicePMService } from '../../Invoice/Services/StandardPMs/ARInvoicePMService';
 import { ARInvoicePM } from '../../Invoice/EntityPMs/ARInvoicePM';
-import { BuildDocumentComponent } from 'Accounting/Utilities/BuildDocumentComponent';
+import { BuildDocumentHelper } from 'Accounting/Utilities/BuildDocumentHelper';
 
 
 export class GeneralPrintHelper {
@@ -198,7 +198,7 @@ export class GeneralPrintHelper {
             });
         } else{
             if(this.IsHaveARInvoicePrintToogleFeature()) {
-                new BuildDocumentComponent(SelectedInternalDocument,StatusCode,ApprovedDate);
+                new BuildDocumentHelper(SelectedInternalDocument,StatusCode,ApprovedDate);
             }
             
         }
