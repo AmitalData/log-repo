@@ -59,7 +59,6 @@ namespace Logitude.Accounting.BL.CoreBL
             UpdateChequeStatusAsReturnedToCustomer(cheque);
             UpdateCashbookTotal(cheque);
             CreateJournal();
-            CalculateTotalFutureOpenChequesForCreditGlAccount(cheque);
         }
 
         private void ReturnChequeValidation()
@@ -244,48 +243,6 @@ namespace Logitude.Accounting.BL.CoreBL
             return cashbookQuery.GetByPaymentAndCurrencyAndBranch(paymentPM.PaymentCurrencyId, ChequePaymentMethodCode, paymentPM.BranchId, arguments.Tenant);
         }
 
-        private void CalculateTotalFutureOpenChequesForCreditGlAccount(ARPaymentChequePM cheque)
-        {
-            GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(cheque.Tenant);
-            GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(cheque.Tenant);
-            IAccountingContext MyContext = AccountingContext.GetContext(arguments.Tenant);
-
-            bool isFuture = cheque.ValueDate > DateTime.Today ? true : false;
-            List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(billTo.Id, cheque.Tenant, isFuture: isFuture);
-
-            GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(billTo.GLAccountId, cheque.Tenant);
-            GLAccountMoreDataPM moreDataPM = gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);
-            moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
-
-            if (allChecks != null && allChecks.Count != 0)
-            {
-                var sum = allChecks.Sum(x => x.CalculatedLocalAmount);
-
-                if (isFuture)
-                {
-                    moreDataPM.TotFutureOpenChequesInLocalCur = sum;
-                }
-                else
-                {
-                    moreDataPM.TotalOpenChequesInLocalCur = sum;
-                }
-
-                
-            }
-            else
-            {
-                if (isFuture)
-                {
-                    moreDataPM.TotFutureOpenChequesInLocalCur = 0;
-                }
-                else
-                {
-                    moreDataPM.TotalOpenChequesInLocalCur = 0;
-                }
-            }
-            GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), cheque.Tenant);
-            gLAccountMoreDataUpdateService.Update(moreDataPM, true);
-        }
     }
     public class ARPaymentChequeReturnServiceArguments
     {

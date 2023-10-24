@@ -204,8 +204,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else
                 {
-                    CardRepository cardRepository = new CardRepository();
-                    string accountId = cardRepository.GetSingleCard(billToId, tenant)?.GLAccountId;
+                    CardRepository cardRepository = new CardRepository(tenant);
+                    string accountId = cardRepository.GetCard(billToId, tenant)?.GLAccountId;
                     if (accountId != null)
                     {
                         GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(accountId, tenant);
