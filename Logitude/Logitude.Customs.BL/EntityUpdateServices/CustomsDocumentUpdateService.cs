@@ -126,7 +126,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             ICustomContext context = MainContext as CustomContext;
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
-            CustomDocumentTypePM docType = docTypeQuery.GetSingle(entityPM.DocumentTypeCode, false, false);
+            CustomDocumentTypePM docType = docTypeQuery.GetSingleCustomDocumentTypeWithTenant(entityPM.DocumentTypeCode, entityPM.Tenant);
             DocumentsFilingMetaDataValuePM MyDocumentMetaDataValues = null;
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             var myDocumentsFilingService = new DocumentsFilingService(commonContext, entityPM.Tenant);
@@ -976,7 +976,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
 
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
-            CustomDocumentTypePM docType = docTypeQuery.GetSingle(entityPM.DocumentTypeCode, false, false);
+            CustomDocumentTypePM docType = docTypeQuery.GetSingleCustomDocumentTypeWithTenant(entityPM.DocumentTypeCode, entityPM.Tenant);
             if (docType != null && docType.IsCourierManadatory)
             //if (entityPM.DocumentTypeCode == "380")
             {
