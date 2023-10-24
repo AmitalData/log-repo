@@ -22,7 +22,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 		public CustomDocumentType GetSingleCustomDocumentType(EntityKeyFields entityKeys)
 		{
-			InterfaceManagementKeys keys = entityKeys as InterfaceManagementKeys;
+			CustomDocumentTypeKeys keys = entityKeys as CustomDocumentTypeKeys;
 			return (from a in context.CustomDocumentTypes
 					where a.Code == keys.Code
 					select a).FirstOrDefault();
