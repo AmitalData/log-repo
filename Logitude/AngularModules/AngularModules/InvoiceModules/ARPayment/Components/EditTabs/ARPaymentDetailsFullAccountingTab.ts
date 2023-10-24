@@ -44,6 +44,7 @@ import { PartnerTypeList } from 'Common/EntityLists/PartnerTypeList';
 import { PartnerTypeListService } from 'Common/Services/StandardLists/PartnerTypeListService';
 import { FullAccountingSettingPM } from 'Accounting/EntityPMs/FullAccountingSettingPM';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
+import { BankAccountListService } from 'Accounting/Services/StandardLists/BankAccountListService';
 declare var window: any;
 
 @Component({
@@ -114,8 +115,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
 
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-
-        this.BankAccountsFilterItems = new ApiQueryFilters();
+        
         this.EntityPM = entityArgs.EntityPM;
         if( this.EntityPM.StatusCode==null)
             this.CreateARPayment();
@@ -140,7 +140,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         //#region old
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
-
+        this.BankAccountsFilterItems = new ApiQueryFilters();
+        if(this.EntityPM.PaymentCurrencyId && this.EntityPM.AccountingPaymentMethodCode == "BT") {
+            this.BankAccountsFilterItems.addAdditionalFilter("CurrencyId", this.EntityPM.PaymentCurrencyId, null, null, "Equals", false, false, false, "string");
+            this.loadBankAccounts(this.BankAccountsFilterItems);
+        }
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EnableMultiCurrency")) {
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyARPayments) {
                 this.IsMultiCurrency = true;
@@ -214,6 +218,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.EntityPM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
         this.EntityPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
         this.EntityPM.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+        // if(this.EntityPM.PaymentCurrencyId && this.EntityPM.AccountingPaymentMethodCode == "BT") {
+        //     this.BankAccountsFilterItems = new ApiQueryFilters();
+        //     this.BankAccountsFilterItems.addAdditionalFilter("CurrencyId", this.EntityPM.PaymentCurrencyId, null, null, "Equals", false, false, false, "string");
+        //     this.loadBankAccounts(this.BankAccountsFilterItems);
+        // }
         this.EntityPM.PaymentCurrencyExchangeRate = 1;
         this.loadPartnerTypesFilter();
         this.SetDefalutPaymentMethod();
@@ -1506,7 +1515,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
     // Currency
-    get PaymentCurrencyId() { return this.EntityPM.PaymentCurrencyId; }
+    get PaymentCurrencyId() { 
+        return this.EntityPM.PaymentCurrencyId;
+     }
     set PaymentCurrencyId(value: string)
     {
         if (this.EntityPM.PaymentCurrencyId != value) {
@@ -1543,15 +1554,18 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             });
 
             if (this.isFullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
-                this.BankAccountsFilterItems = new ApiQueryFilters();
-                this.BankAccountsFilterItems.addAdditionalFilter("CurrencyId", this.EntityPM.PaymentCurrencyId, null, null, "Equals", false, false, false, "string");
                 this.CheckGLAccountCurrencyId();
-            } else {
-                this.BankAccountsFilterItems = new ApiQueryFilters();
             }
+            this.filterBankAccountsUsingPaymentCurrencyId();
         }
     }
-
+    filterBankAccountsUsingPaymentCurrencyId(){
+        this.BankAccountsFilterItems = new ApiQueryFilters();
+        if (this.isFullAccounting == true && this.AccountingPaymentMethodCode == "BT" && this.EntityPM.PaymentCurrencyId) {
+            this.BankAccountsFilterItems.addAdditionalFilter("CurrencyId", this.EntityPM.PaymentCurrencyId, null, null, "Equals", false, false, false, "string");
+            this.loadBankAccounts(this.BankAccountsFilterItems);
+        }
+    }
     get PaymentCurrencyCode() { return this.EntityPM.PaymentCurrencyCode; }
     set PaymentCurrencyCode(value: string)
     {
@@ -1757,6 +1771,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.EntityPM.AccountingPaymentMethodCode = value;
 
                 this.CheckARPaymentCashBook();
+                this.filterBankAccountsUsingPaymentCurrencyId();
             }
         }
     }
@@ -2263,7 +2278,20 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
         }
     }
+    loadBankAccounts(filters: ApiQueryFilters) {
+        var myService: BankAccountListService = new BankAccountListService();
+        filters.addAdditionalFilter("Inactive", false, null, null, "Equals", false, false, false, "Boolean");
+        filters.PageSize = 50;
+        myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
 
+                var bankAccounts = myResponse.Result;
+                if(bankAccounts && bankAccounts.length == 1) {
+                    this.BankAccountId = bankAccounts[0].Id;
+                }
+            }
+        });
+    }
     bankAccount: BankAccountPM;
     public GLAccountNumber: string = "";
     public IsGLAccountCurrencyDifferent = false;
