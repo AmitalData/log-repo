@@ -608,7 +608,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
     get HSM(){return this.EntityPM.HSM;}
     set HSM(hsm:number){
-        var validateHsmResult=this.ValidateHsm(this.HSM);
+        var validateHsmResult=this.ValidateHsm(hsm);
         this.UIProperties.SetValidity("HSM", this.ObjectTableName, validateHsmResult.valid, validateHsmResult.errorMsg);
 
         if(this.EntityPM.HSM != hsm) {
