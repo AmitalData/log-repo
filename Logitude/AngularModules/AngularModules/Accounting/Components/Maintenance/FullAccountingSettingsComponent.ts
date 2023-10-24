@@ -670,7 +670,6 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             errorMsg:''
         };
         if(hsm != null) {
-            //console.log("test length "+hsm.toString().length );
             if (hsm.toString().length >15) {
                 res.valid=false;
                 res.errorMsg="HSM maximum size can be 15 digits";
