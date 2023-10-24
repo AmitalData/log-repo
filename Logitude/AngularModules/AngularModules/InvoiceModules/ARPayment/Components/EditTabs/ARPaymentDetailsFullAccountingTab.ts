@@ -218,11 +218,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.EntityPM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
         this.EntityPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
         this.EntityPM.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
-        // if(this.EntityPM.PaymentCurrencyId && this.EntityPM.AccountingPaymentMethodCode == "BT") {
-        //     this.BankAccountsFilterItems = new ApiQueryFilters();
-        //     this.BankAccountsFilterItems.addAdditionalFilter("CurrencyId", this.EntityPM.PaymentCurrencyId, null, null, "Equals", false, false, false, "string");
-        //     this.loadBankAccounts(this.BankAccountsFilterItems);
-        // }
         this.EntityPM.PaymentCurrencyExchangeRate = 1;
         this.loadPartnerTypesFilter();
         this.SetDefalutPaymentMethod();
@@ -1212,9 +1207,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         {
             var partnerTypes: PartnerTypeList[] = res.Result || [];
             this.PartnerTypes = partnerTypes.filter(d => this.AllowedPartnerTypesCodes.indexOf(d.Id) > -1); // filter
-            //if( this.EntityPM.StatusCode=="DR")
+            if( this.EntityPM.StatusCode=="DR")
                 this.SelectedPartnerType = partnerTypes.filter(d => d.Id == 'CS')[0]; // default
-            //this.getSelectedPartnerTypes(partnerTypes);
+            this.getSelectedPartnerTypes(partnerTypes);
         });
     }
 
