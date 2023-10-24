@@ -137,18 +137,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             
                             if(Result.isNewInvoice)// update CustomsDocumentPointer
                             {
+                                LogMessagingUtil.Instance.Clear();
+                                LogMessagingUtil.Instance.AppendLine("Is New Invoice: " + myOcrDocument.Reference);
+
                                 CustomsDocumentsTicketQueryService customsDocumentsTicketQuery = new CustomsDocumentsTicketQueryService(customResponse.tenant);
                                 CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(customResponse.Declarationid, "", "", "", customResponse.tenant, "Declaration")
                                     ?.Where(x => x.DocumentsFilingId == customResponse.DocumentsFilingId)?.FirstOrDefault();
                                 CustomsDocumentsTicketUpdateService customsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), customResponse.tenant);
-                                
+                                LogMessagingUtil.Instance.AppendLine("find DocumentTicket where docFilingId: " + customResponse.DocumentsFilingId);
+                                LogMessagingUtil.Instance.AppendLine("is find: " + customsDocumentsTicketPM == null ? "NO" : "YES");
                                 SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
                                 var invoiceCounterKey = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, myOcrDocument.Reference, customResponse.tenant, false)?[0]?.InvoiceCounterKey;
+                                LogMessagingUtil.Instance.AppendLine("find invoiceCounterKey by DeclarationId and InvoiceNumber: " + customResponse.Declarationid +" , "+ myOcrDocument.Reference);
+                                LogMessagingUtil.Instance.AppendLine("find invoiceCounterKey: " + invoiceCounterKey);
                                 if (customsDocumentsTicketPM != null && invoiceCounterKey != null)
                                 {
                                     customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
+                                    LogMessagingUtil.Instance.AppendLine("customsDocumentsTicketPM -UPDATE");
+
                                     foreach (var CustomsDocumentPointer in customsDocumentsTicketPM.CustomsDocumentPointers)
                                     {
+                                        LogMessagingUtil.Instance.AppendLine("CustomsDocumentPointer - UPDATE");
+
                                         CustomsDocumentPointer.ChangeSetOp = ChangeSetOperation.Update;
                                         CustomsDocumentPointer.Child1EntityCode = "SupplierInvoice";
                                         CustomsDocumentPointer.Child1EntityId = invoiceCounterKey.ToString();
