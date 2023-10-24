@@ -77,7 +77,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             byte[] customRequestSignedByteArry = null;
             if (_CustomsRequestsSheetService.StartCustomsRequestStepEnum > CustomsStepEnum.CustomRequestSign)
             {
-                LogMessagingUtil.Instance.AppendLine("if (_CustomsRequestsSheetService.StartCustomsRequestStepEnum > CustomsStepEnum.CustomRequestSign):" + _CustomsRequestsSheetService.StartCustomsRequestStepEnum);
 
                 customRequestSignedByteArry = _CustomsRequestsSheetService.GetCustomsRequestSign();
                 if (customRequestSignedByteArry == null)
@@ -88,7 +87,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 if (customRequestSignedByteArry != null)
                 {
-                    LogMessagingUtil.Instance.AppendLine("CustomRequestSignedByteArry revive");
 
                     SetRequestSheetContextCurrentX509Certificate(customRequestSignedByteArry);
                     //_CustomRequestSignedByteArry = customRequestSignedByteArry;
@@ -109,27 +107,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
             DateTime startAt = TenantServerConfigration.GetCurrentDateTime(requestParams.Tenant);//DateTime.Now;20150909
             if (_SignRecievedModel == null)
             {
- 
-                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-.AppendLine("if (_SignRecievedModel == null)");
-
                 if (SignQueue.Instance.IsPasiveSignMode() && !IsInteractiveHSM())
                  {
 
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-    .AppendLine("if (SignQueue.Instance.IsPasiveSignMode() && !IsIneractiveHSM())");
                     availableSignServer = _CustomsRequestsSheetService.GetAvailableSignServer(out personId, out SignatureBy, out noAvailableSignServerErrorText);
 
                     if (!string.IsNullOrWhiteSpace(availableSignServer))
                     {
 
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-        .AppendLine(" if (!string.IsNullOrWhiteSpace(availableSignServer))");
                         Nullable<CustomsCommandEnum> curComm = null;
                         if (_CustomsStateMachineProcess != null)
                         {
-                            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-        .AppendLine("if (_CustomsStateMachineProcess != null)");
                             curComm = _CustomsStateMachineProcess.CurrentCommand;
                         }
                         _CustomsRequestsSheetService.StartStep(CustomsStepEnum.CustomRequestSign, curComm);
@@ -145,8 +133,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         {
                             throw new Exception("RequestParams.SignType is must !!");
                         }
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-     .AppendLine("isignMethodBy :" + signMethodBy);
                         switch (signMethodBy)
                         {
                           
@@ -194,12 +180,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             else if (_SignRecievedModel != null)
             {
 
- 
-                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-     .AppendLine("else if (_SignRecievedModel != null):" + _SignRecievedModel.CustomsRequestsSheetId);
-
- 
-
                  DateTime startAtD = DateTime.MinValue;
                 SignQueue.Instance.GetStartAt(requestParams.Tenant, requestParams.CustomsRequestsSheetId, out startAtD);
                 if (startAtD != DateTime.MinValue)
@@ -213,7 +193,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ;
                 if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskQueueId))
                 {
-                    LogMessagingUtil.Instance.AppendLine("if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskQueueId))");
 
                     var queueservice = new Server.Tools.QueueService.DbQueueService("How Care ", requestParams.Tenant);
                     if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskMarkAsFailedMessage))
