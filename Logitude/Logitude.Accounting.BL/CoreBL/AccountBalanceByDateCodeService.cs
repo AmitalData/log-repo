@@ -233,6 +233,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     AccountBalance.Totals = totals;
                     AccountBalance.TotalLocalAmountDebit = AccountBalance.Totals.Sum(r => r.LocalAmountDebit);
                     AccountBalance.TotalLocalAmountCredit = AccountBalance.Totals.Sum(r => r.LocalAmountCredit);
+                    AccountBalance.TotalForiegnAmountDebit = AccountBalance.Totals.Sum(r => r.ForeignAmountDebit);
+                    AccountBalance.TotalForiegnAmountCredit = AccountBalance.Totals.Sum(r => r.ForeignAmountCredit);
 
 
                     var mustDue = true;//https://startbigthinksmall.wordpress.com/2009/05/04/the-transaction-has-aborted-tricky-net-transactionscope-behavior/
@@ -345,8 +347,9 @@ namespace Logitude.Accounting.BL.CoreBL
         public List<CurrencySum> Totals { get; set; }
 
         public decimal? TotalLocalAmountDebit { get; set; }
-
         public decimal? TotalLocalAmountCredit { get; set; }
+        public decimal? TotalForiegnAmountDebit { get; set; }
+        public decimal? TotalForiegnAmountCredit { get; set; }
         public List<string> YearTransferLedgerTransactionIds { get; internal set; }
         public string OpenAmountCurrencyId { get; set; }
         public decimal StartTotalOpenAmount { get; set; }
@@ -387,6 +390,21 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             return (tot.LocalAmountDebit - tot.LocalAmountCredit);
         }
+
+        internal decimal? GetBalanceOfForeignAmount(string currencyId)
+        {
+            if (string.IsNullOrWhiteSpace(currencyId))
+            {
+                throw new ApplicationException("string.IsNullOrWhiteSpace(currencyId)");
+            }
+            var tot = Totals.Where(r => r.CurrencyId == currencyId).FirstOrDefault();
+            if (tot == null)
+            {
+                return null;
+            }
+            return (tot.ForeignAmountDebit - tot.ForeignAmountCredit);
+        }
+
         public decimal? GetBalanceOfCurrency(string currencyId)
         {
             if (string.IsNullOrWhiteSpace(currencyId))
@@ -415,11 +433,8 @@ namespace Logitude.Accounting.BL.CoreBL
             return (TotalLocalAmountDebit.GetValueOrDefault() - TotalLocalAmountCredit.GetValueOrDefault());
         }
 
-
-
-
-
-
+        public decimal? GetBalanceOfForiegnAmount() =>
+            TotalForiegnAmountDebit.GetValueOrDefault() - TotalForiegnAmountCredit.GetValueOrDefault();
     }
 
     public class AccountBalanceverboseM

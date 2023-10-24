@@ -61,5 +61,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     public string ActionCode { get; set; }
     
     public string ExternalReconcileNumber { get; set; }
+    
+    public string ConfirmationNumber { get; set; }
     }
 } 

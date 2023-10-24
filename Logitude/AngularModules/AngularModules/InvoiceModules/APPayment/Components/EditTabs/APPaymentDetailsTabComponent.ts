@@ -36,6 +36,7 @@ import { LedgerTransactionExtendedListService } from './../../../../Accounting/S
 import { ReconciliationExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { JournalExtendedPMService } from 'Accounting/Services/ExtendedPMs/JournalExtendedPMService';
 import { JournalPM } from 'Accounting/EntityPMs/JournalPM';
+import { BankAccountListService } from 'Accounting/Services/StandardLists/BankAccountListService';
 
 @Component({
     templateUrl: './APPaymentDetailsTabComponent.html',
@@ -56,6 +57,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public PaymentChequeActivated: boolean = true;
     public IsMultiCurrency: boolean = false;
     public LocalCurrencyCode = "";
+    public BankAccountsFilterItems: ApiQueryFilters;
     ReconcileInternalTrans:LedgerTransactionPM[];
     private CurrentSession = SessionLocator.SelectedSession;
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
@@ -80,7 +82,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.InitializeBillToLov()
         this.EntityPM = entityArgs.EntityPM;
         this.ReconcileInternalTrans = this.EntityPM.ReconcileInternalTrans;
-        console.log('ayed', entityArgs)
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
         this.GetFullAccountingSettings();
@@ -89,7 +90,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.IsChequeLinkVisibile = true;
 
         }
-
+        this.BankAccountsFilterItems = new ApiQueryFilters();
+        
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EnableMultiCurrency")) {
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyAPPayments) {
                 this.IsMultiCurrency = true;
@@ -1211,8 +1213,18 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.LoadPaymentInvoices_IsMatched();
                 }
             }
-        }}
-
+        }
+        this.filterBankAccountsUsingPaymentCurrencyId();
+    }
+    filterBankAccountsUsingPaymentCurrencyId(){
+        if (this.IsFullAccounting == true && this.PaymentMethodCode == "BT" && this.EntityPM.PaymentCurrencyId) {
+            this.BankAccountsFilterItems = new ApiQueryFilters();
+            this.BankAccountsFilterItems.addAdditionalFilter("CurrencyId", this.EntityPM.PaymentCurrencyId, null, null, "Equals", false, false, false, "string");
+            this.loadBankAccounts(this.BankAccountsFilterItems);
+        } else {
+            this.BankAccountsFilterItems = new ApiQueryFilters();
+        }
+    }
     get PaymentCurrencyExchangeRate() {
         if (this.EntityPM == null) {
             return null;
@@ -1366,6 +1378,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
                     item.SetUIProperties();
                 });
+                this.filterBankAccountsUsingPaymentCurrencyId();
             }
         }
     }
@@ -1715,7 +1728,22 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
     }
+    loadBankAccounts(filters: ApiQueryFilters) {
+        var myService: BankAccountListService = new BankAccountListService();
+        filters.addAdditionalFilter("Inactive", false, null, null, "Equals", false, false, false, "Boolean");
+        filters.PageSize = 50;
+        myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
 
+                var bankAccounts = myResponse.Result;
+                if(bankAccounts && bankAccounts.length == 1) {
+                    this.BankAccountId = bankAccounts[0].Id;
+                } else if(bankAccounts && bankAccounts.length > 1 && this.BankAccountId && bankAccounts.filter(x=>x.Id == this.BankAccountId).length == 0 ) {
+                    this.BankAccountId = null;
+                }
+            }
+        });
+    }
     UpdateLineCreatedFromInvoice() {
         if (this.createdFromInvoiceLine) {
             this.createdFromInvoiceLine.UpdateAmountToPay();

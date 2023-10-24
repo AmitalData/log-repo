@@ -71,7 +71,8 @@ using Logitude.Accounting.Data;
 				   temp.Notes = item.Notes;
 				   temp.ExternalOpenAmount = item.ExternalOpenAmount;
 				   temp.ActionCode = item.ActionCode;
-				   temp.ExternalReconcileNumber = item.ExternalReconcileNumber;					
+				   temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
+				   temp.ConfirmationNumber = item.ConfirmationNumber;					
 					MyList.Add(temp);
 				}
 					
@@ -137,7 +138,8 @@ using Logitude.Accounting.Data;
 					temp.Notes = item.Notes;
 					temp.ExternalOpenAmount = item.ExternalOpenAmount;
 					temp.ActionCode = item.ActionCode;
-					temp.ExternalReconcileNumber = item.ExternalReconcileNumber;					   
+					temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
+					temp.ConfirmationNumber = item.ConfirmationNumber;					   
 						MyList.Add(temp);
 					}
 						

@@ -194,5 +194,13 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                   select a.PaymentNo).FirstOrDefault();
             return arpaymentno;
         }
+
+        public string GetBillToId(string id, int tenant)
+        {
+            string arpaymentno = (from a in context.ARPayments
+                                  where a.Tenant == tenant && a.Id == id
+                                  select a.BillToId).FirstOrDefault();
+            return arpaymentno;
+        }
     }
 }
