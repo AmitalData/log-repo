@@ -20,8 +20,15 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+		public CustomDocumentType GetSingleCustomDocumentType(EntityKeyFields entityKeys)
+		{
+			CustomDocumentTypeKeys keys = entityKeys as CustomDocumentTypeKeys;
+			return (from a in context.CustomDocumentTypes
+					where a.Code == keys.Code
+					select a).FirstOrDefault();
+		}
 
-   }
+	}
 
 }
    

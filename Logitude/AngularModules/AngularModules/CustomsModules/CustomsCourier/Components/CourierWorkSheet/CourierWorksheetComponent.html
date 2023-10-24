@@ -253,6 +253,7 @@
                                                             (click)="PrioritizeFlightRequestsMethod()">תעדוף בקשות
                                                             לטיסה</button>
                                                         <button style="text-align:right"
+                                                            *ngIf="isAllowClassificationApproveFeature"
                                                             (click)="ClassificationApprove()">אישור סיווג</button>
 
 

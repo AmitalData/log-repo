@@ -48,7 +48,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 Tenant = customsResponse.tenant,
                 AppicationId = customsResponse.CourierMasterId,
-                //RequestVIA = SendRequestVIA.WebServiceBatch,
                 LoggingEnabled = true,
                 InterfaceTypeCode = this.MainInterfaceCode,
                 MainInterfaceCode = this.MainInterfaceCode,
@@ -59,7 +58,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingEntityReference = customsResponse.master,
 
                 LoggingUserId = customsResponse.LoggingUserId,
-                RequestName = $" שידור מצהר בלדר " + customsResponse.master + " "
+                RequestName = $" אישור סיווג ושידור מסר הצהרה " + customsResponse.master + " "
             };
 
             if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
@@ -90,14 +89,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        public string CreateCRS(int tenant, string LoggingUserId,
-            //string CourierMasterId, string master, string courierDeclarationStatusCode, List<string> DeclarationsList = null)
-            SendALLCorrectRequestParams requestParamsData)
+        public string CreateCRS(int tenant, string LoggingUserId, SendALLCorrectRequestParams requestParamsData)
         {
             var courierMasterQueryService = new CourierMasterQueryService(tenant);
             ICustomContext MyContext = CustomContext.GetContext(tenant);
             CourierMasterUpdateService service = new CourierMasterUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-
 
             if (!requestParamsData.IsWorkSheetFromExcel)
             {
@@ -107,22 +103,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 service.Update(master, true);
             }
 
-
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, requestParamsData.CourierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
-
                 return "קיים מסר זהה בתהליך";
-
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBAC  !!!");
-
-
-
-
-
 
             string uniComm = null;
             string fileName = null;
@@ -168,17 +156,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
             transTime += transmitionDateTime.Millisecond.ToString();
 
             fileName = "DcaPrefixName.IL941079089." + transTime + "." + extrenalId + ".PLT.xml";
-            //var messService = new Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService();
-            //var responseData = messService.SendSheet(genericRequestParams);
-
+           
             var ourRef = "";
             using (var trans = TransactionFactory.GetNewTransaction())
             {
                 try
                 {
-
-
-
                     var InterfaceManagementQS = new InterfaceManagementQueryService(tenant);
                     var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
                         this.MainInterfaceCode, tenant);
@@ -189,8 +172,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         TimStamp = transmitionDateTime
 
                     }, xmlESBResponseXmlClass);
-
-
 
                     trans.Complete();
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
@@ -214,14 +195,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBAC SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
                     return "קיים מסר זהה בתהליך";
-                    //throw;
                 }
             }
-
-
-
         }
-
     }
 
 

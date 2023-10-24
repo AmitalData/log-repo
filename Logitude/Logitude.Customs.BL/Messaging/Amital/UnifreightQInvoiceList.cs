@@ -193,6 +193,7 @@ warehouse=</Comments>
 <GeneralDetails>
  <Forwarder>ORIAN</Forwarder>
  <TypeOfDelivery/>
+<TransportResponsibility>חברה + חיוב</TransportResponsibility>
 </GeneralDetails>
 ";
             if (!String.IsNullOrWhiteSpace(resXML))
@@ -284,7 +285,7 @@ warehouse=</Comments>
         {
             public string Forwarder { get; set; }
             public string TypeOfDelivery { get; set; }
-
+            public string TransportResponsibility { get; set; }
         }
 
 

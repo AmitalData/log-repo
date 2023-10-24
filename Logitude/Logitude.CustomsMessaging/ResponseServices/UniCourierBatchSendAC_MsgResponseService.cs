@@ -47,7 +47,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private Customs.Def.EntityPMs.DeclarationPM _MyDeclarationPM;
         public override void Update(DCAInUCBACWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
-
             var mess = new StringBuilder();
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
@@ -69,7 +68,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 List<DeclarationCourierStatusPM> ServerSplitDeclarationsList
                     = repo.GetDeclarationCourierStatusByDeclarationIdList(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
 
-                CreateCRS1170UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList);
+                CreateCRS_AC_UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList);
             }
             else
             {
@@ -97,39 +96,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode != "P")).ToList();
                     }
                    
-                        
                     if (listPoco.Count == 0)
                     {
                         mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");
                     }
                     else
                     {
-
                         listPoco.Select(r=>r.DeclarationId).ToList().ChunkBy(100)
-    .ForEach(list100 =>
-    {
-        customResponse.ServerSplitDeclarationsList = list100;
-        customResponse.LoggingUserId = requestParams.LoggingUserId;
+                        .ForEach(list100 =>
+                        {
+                            customResponse.ServerSplitDeclarationsList = list100;
+                            customResponse.LoggingUserId = requestParams.LoggingUserId;
 
-        var CreateDCAInUCBAC_MsgMessagingService = new CRSUtil();
-        CreateDCAInUCBAC_MsgMessagingService
-        .CreateCRS_DCAIn<DCAInUCBACWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
+                            var CreateDCAInUCBAC_MsgMessagingService = new CRSUtil();
+                            CreateDCAInUCBAC_MsgMessagingService
+                            .CreateCRS_DCAIn<DCAInUCBACWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
 
-    });
+                        });
                     }
-
-
-
                 }
             }
 
-            
-
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
-
-            //this.MyRequestSheetParam.RequestDescription = "Build Custom Zip File";
-            ///LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject(false, true);
-
             this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
             this.MyResponseData.UserMessage = mess.ToString();
             this.MyResponseData.Succeeded = true;
@@ -183,7 +171,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return listPM;
         }
 
-        private static void CreateCRS1170UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatusPM> listPM)
+        private static void CreateCRS_AC_UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatusPM> listPM)
         {
             var context = CustomContext.GetContext(requestParams.Tenant);
 
@@ -225,17 +213,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
                 }
             }
-//            listDeclarationIdCreateCRS.ChunkBy(100)
-//.ForEach(list100 =>
-//{
-//    string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
-//    string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
-
-//    CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-//});
         }
-
-
 
         public static void RealSetDeclarationCourierManifestStatusCode(int tenant, string declarationId)
         {
@@ -255,7 +233,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     oracleCommand.ExecuteNonQuery();
                     con.Close();
                 }
-
             }
             else
             {

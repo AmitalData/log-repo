@@ -172,7 +172,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (!string.IsNullOrWhiteSpace(dirtyEntityPM.DocumentTypeCode))
             {
                 CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(dirtyEntityPM.Tenant);
-                CustomDocumentTypePM customDocumentType = customDocumentTypeQueryService.GetSingle(dirtyEntityPM.DocumentTypeCode, false, false);
+                CustomDocumentTypePM customDocumentType = customDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(dirtyEntityPM.DocumentTypeCode, dirtyEntityPM.Tenant);
                 desc = desc + "\n" + "סוג מסמך-" + customDocumentType.LocalName;
             }
             if (!string.IsNullOrWhiteSpace(dirtyEntityPM.CustomsDocId))

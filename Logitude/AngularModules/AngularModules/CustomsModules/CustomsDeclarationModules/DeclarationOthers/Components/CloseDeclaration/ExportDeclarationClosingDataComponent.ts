@@ -486,12 +486,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     OnDocumentsWindowClosed(event) {
         this.entityArgs.SkipCtor = false;
     }
+    
     async SendButtonClicked(event: CustomSendOptionsArgs) {
-        
-       
         if (this.ModificationsList.Length > 0) {
-
-
             let counter = 0;
             this.ModificationsList.Collection.forEach((mod) => {
                 counter+=1;
@@ -511,9 +508,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         msg +=  TextCodeTranslator.Translate("Customs.ExportDeclarationClosingData.O.Amount");
                         this.ValidationErrors.push(msg);
                     }
-                    this.FillValidationErrors("Errors");
                 }
-            });
+            });    
         }
         if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
             var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypMandatory")
@@ -556,8 +552,14 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                             this.FillValidationErrors("Errors");
                         }
                         else {
-                            if (this.ValidationErrors.length > 0)
-                                this.FillValidationWarnings("Warnings");
+                            if (this.ValidationErrors.length > 0){
+                                if(this.ModificationsList.Length > 0){
+                                    this.FillValidationErrors("Errors");
+                                }
+                                else {
+                                    this.FillValidationWarnings("Warnings");
+                                }
+                            }
                             else
                                 this.CheckDocuments();
                         }
