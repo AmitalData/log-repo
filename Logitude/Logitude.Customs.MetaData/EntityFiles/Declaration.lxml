@@ -21562,6 +21562,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -27973,6 +27974,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.WorkSheetFromExcel&quot;"
       FeatureDefaultText="&quot;מסך עבודה-הטענת אקסל&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ClosingAutoExpDec&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.ClosingAutoExpDec&quot;"
+      FeatureDefaultText="&quot;Closing an automatic export declaration&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

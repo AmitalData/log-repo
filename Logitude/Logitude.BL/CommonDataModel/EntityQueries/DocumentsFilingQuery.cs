@@ -3963,8 +3963,34 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
+		public DocumentsFilingPM GetDocumentsFilingsByExportFile(string exportFile, int tenant)
+		{
 
-    }
+			List<DocumentsFilingPM> documentsFilingList = (from a in repository.context.DocumentsFilings
+
+													   where a.Tenant == tenant && a.ExternalEntityReference == exportFile && (a.ExternalEntityName == "EFIFILEM" || a.ExternalEntityName == "MFIFILEM")
+														 select new DocumentsFilingPM()
+														 {
+															 Id = a.Id,
+                                                             Code = a.Code,
+															 DocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : null,
+															 EntityId = a.EntityId,
+															 Tenant = a.Tenant,	
+														 }).ToList();
+
+
+
+
+			if (documentsFilingList == null || documentsFilingList.Count() == 0) return null;
+
+            List<string> docsField = documentsFilingList.Select(x => x.Id).ToList();
+			ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
+			CustomsDocumentPM customsDoc = customsDocumentQueryService.GetDocumentsByDocsFileIdAndTypeClosing(docsField, tenant);
+            var documentsFiling = documentsFilingList.Where(x => x.Id == customsDoc?.DocumentsFilingId).FirstOrDefault();
+
+			return documentsFiling;
+		}
+	}
 
 
 }

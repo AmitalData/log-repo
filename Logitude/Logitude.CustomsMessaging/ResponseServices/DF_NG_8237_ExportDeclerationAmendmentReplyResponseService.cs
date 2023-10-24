@@ -31,6 +31,8 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.Customs;
 using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
 using Simplog.Data.CommonDataModel;
+using Logitude.Customs.Def.EntityQueryServicesExt;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -78,7 +80,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
                 {
-                    this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                    if (requestParams.IsFromAutoClosing) 
+                    {
+						var declarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, false, false);
+                        var comments = "";
+                        customResponse.ResponseContentHeader.Exception.ForEach(x => comments += x.ExeptionDescription);
+						RaiseEvent(declarationPM, null, "CF2", comments);
+                    }
+					this.MyResponseData.ApplicationID = requestParams.AppicationId;
                     this.MyResponseData.Succeeded = true;
                     this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
                     this.MyResponseData.HasException = true;
@@ -1194,7 +1203,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return true;
         }
 
-        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id)
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id,string comments = "")
         {
             //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
             string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
@@ -1208,7 +1217,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 Tenant = dirtyDeclarationPM.Tenant,
                 objectTableName = "Customs.Declaration",
                 EventCode = status_id,
-                notes = "",
+                notes = comments,
                 CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
                 EntityId = dirtyDeclarationPM.Id,
                 UserId = loggingUserId,
@@ -1222,7 +1231,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     xml_status = "new",
                     status_id = status_id,
                     status_DateTime = DateTime.Now,
-                    comments = "",
+                    comments = comments,
                 }
             };
 
@@ -1230,5 +1239,39 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
         }
-    }
+
+
+	}
+	public class CustomsAutoDecClosing : ICustomsAutoDecClosing
+	{
+		public void Send8235(DeclarationPM decPm)
+		{
+			var requestParamsData = new AmendmentRequestParams();
+
+			var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+			var loggedUserId = AuthenticationUtil.ResolveUserId(decPm.Tenant);
+
+			requestParamsData.Tenant = decPm.Tenant;
+			requestParamsData.AppicationId = decPm.Id;
+			requestParamsData.LoggingEnabled = true;
+			requestParamsData.LoggingEntityId = decPm.Id;
+			requestParamsData.LoggingEntityReference = decPm.DeclarationNumber;
+			requestParamsData.LoggingObjectTableId = objecttableId;
+			requestParamsData.LoggingUserId = loggedUserId;
+			requestParamsData.RequestName = "Export Amendment Declaration Request";
+			requestParamsData.ResponseName = "Amendment Declaration Response";
+			requestParamsData.RequestVIA = SendRequestVIA.WebServiceBatch;
+			requestParamsData.ForcePersonalSign = false;
+			requestParamsData.IsExportClose = true;
+			requestParamsData.IsTransShipment = decPm.DeclarationTypeCode == "3";
+			requestParamsData.IsFromAutoClosing = true;
+
+
+
+			ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
+					  new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
+					  new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
+
+		}
+	}
 }

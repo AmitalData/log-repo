@@ -438,7 +438,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         LogitudeSettings.HandleLogMe("   if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))" + documentTypeCustomsDataPM?.CustomsDoucumentTypeCode, false, "SendBondedCustomDocument", stopLogAt);
 
                         CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
-                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, false);
+                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, _DocumentsFilingPM.Tenant);
 
                         if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
                         {
@@ -476,7 +476,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
 
                 var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
-                var myCustomDocumentTypePM = myCustomDocumentTypeQueryService.GetSingle(myDocumentsFilingMetaDataValueReferenceAsDocType, true, true);
+                var myCustomDocumentTypePM = myCustomDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(myDocumentsFilingMetaDataValueReferenceAsDocType, _DocumentsFilingPM.Tenant);
             if (myCustomDocumentTypePM == null)
             {
                 LogitudeSettings.HandleLogMe("myDocumentsFilingMetaDataValueReferenceAsDocType " + myDocumentsFilingMetaDataValueReferenceAsDocType + " but not found" + _DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
