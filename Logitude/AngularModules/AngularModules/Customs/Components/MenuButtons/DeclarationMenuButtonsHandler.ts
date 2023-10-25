@@ -1095,7 +1095,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 });
 
                 this.declarationMessagesService.PostSendPaymentOnly(params)
-                    .subscribe(res => {
+                    .subscribe( res => {
                         if(!res.Result.HasException){
                             let messWindow = new MessageWindow();
                             messWindow.Show("ביטול הגשה הסתיים בהצלחה");
