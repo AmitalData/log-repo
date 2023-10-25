@@ -115,7 +115,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string TaxInstitutionGLAccountId  { get; set; }
        [DataMember]
-       public int? HSM  { get; set; }
+       public string HSM  { get; set; }
        [DataMember]
        public string HSMtoken  { get; set; }
        [DataMember]
