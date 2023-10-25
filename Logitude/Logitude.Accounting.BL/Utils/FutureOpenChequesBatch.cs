@@ -69,16 +69,21 @@ namespace Logitude.Accounting.BL.Utils
 
                     GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(card.GLAccountId, card.Tenant);
                     GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetEntityPM(glAccountMoreData);
-                    moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                    if (moreDataPM != null) 
+                    {
+                        moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
 
-                    moreDataPM.TotFutureOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate > DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
-                    moreDataPM.TotalOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate <= DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
+                        moreDataPM.TotFutureOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate > DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
+                        moreDataPM.TotalOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate <= DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
 
 
-                    GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), card.Tenant);
-                    gLAccountMoreDataUpdateService.Update(moreDataPM, true);
-                
-                
+                        GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), card.Tenant);
+                        gLAccountMoreDataUpdateService.Update(moreDataPM, true);
+
+                    }
+
+
+
 
 
             }
