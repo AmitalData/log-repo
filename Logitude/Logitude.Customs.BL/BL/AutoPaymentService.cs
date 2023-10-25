@@ -108,6 +108,13 @@ namespace Logitude.Customs.BL.BL
 				throw new Exception(ErrorMessage);
 
 			}
+			if (_MyDeclarationPM.DeclarationStatusTypeCode == "12")
+			{
+
+				ErrorMessage = "טיוטה שגויה";
+				throw new Exception(ErrorMessage);
+
+			}
 			CheckTotals();
 			if (_MyDeclarationPM.AmendmentMessage != null && _MyDeclarationPM.AmendmentMessage != "")
 			{
@@ -191,7 +198,7 @@ namespace Logitude.Customs.BL.BL
 
 			if (displayOnlyCheckResult != null && displayOnlyCheckResult.Count() > 0)
 			{
-				CustomsRequestsSheetPM customsRequestsSheetPM = displayOnlyCheckResult.FindAll(r => r.InterfaceTypeCode == "DCAMU")[0];
+				CustomsRequestsSheetPM customsRequestsSheetPM = displayOnlyCheckResult.FindAll(r => r.InterfaceTypeCode == "DCAMU").FirstOrDefault();
 				if (customsRequestsSheetPM != null)
 				{
 
@@ -463,6 +470,7 @@ namespace Logitude.Customs.BL.BL
 		public PaymentMethodModel paymentMethodModelMax;
 		public List<PaymentMethodModel> PaymentMethodsList = new List<PaymentMethodModel>();
 		public List<DeclarationPaymentProtestPM> PaymentProtestsList = new List<DeclarationPaymentProtestPM>();
+		public List<string> ListMethodType = new List<string> { "2", "79" };
 		public DeclarationPaymentPM CreateDeclarationPaymentByLogic(bool IsFromClient)
 		{
 			
@@ -549,7 +557,7 @@ namespace Logitude.Customs.BL.BL
 
 			if (!IsFromClient)
 			{
-				if (PaymentMethodsList?.Count() > 0 && PaymentMethodsList[0]?.BanksList?.Count() > 1 && PaymentMethodsList[0]?.BanksList?.FindAll(x => !x.InActive && x.PayerTypeCode == PaymentMethodsList[0].PayerActivityTypeCode).Count() > 1)
+				if (PaymentMethodsList?.Count() > 0 && PaymentMethodsList[0]?.BanksList?.Count() > 1 && PaymentMethodsList[0]?.BanksList?.FindAll(x => !x.InActive && x.PayerTypeCode == PaymentMethodsList[0].PayerActivityTypeCode).Count() > 1 && !(ListMethodType.Contains( PaymentMethodsList[0].MethodTypeCode)))
 				{
 					throw new Exception("ישנם ריבוי בנקים");
 
@@ -2110,6 +2118,9 @@ public class PaymentMethodModel : DeclarationPaymentMethodPM
 								//console.log("אם קופה או ניצול העברת זהב - שדה בנק לאפס ");
 								BankCode = null;
 								InternalBankName = null;
+								BranchCode = null;
+								AccountNumber = null;
+								InternalBankId = null;
 							}
 							else
 							{
@@ -2444,6 +2455,9 @@ public class PaymentMethodModel : DeclarationPaymentMethodPM
 			//console.log("אם קופה או ניצול העברת זהב - שדה בנק לאפס ");
 			BankCode = null;
 			InternalBankName = null;
+			BranchCode = null;
+			AccountNumber = null;
+			InternalBankId = null;
 		}
 	}
 	private void LoadBanks()
@@ -2489,7 +2503,7 @@ public class PaymentMethodModel : DeclarationPaymentMethodPM
 						{
 							SetInternalBankId(agentBanks[0].Id);
 							//this.InternalBankId = this.agentBanks[0].Id;
-							if (!BankIsNull || MethodTypeCode != "2")
+							if (MethodTypeCode != "2" && MethodTypeCode != "79")
 							{
 
 								SelectedBank = agentBanks[0];
