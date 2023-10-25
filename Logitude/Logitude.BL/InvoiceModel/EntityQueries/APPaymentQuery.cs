@@ -116,6 +116,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ExternalPaymentDate = a.ExternalPaymentDate,
                                        ExternalPaymentNotes = a.ExternalPaymentNotes,
                                        ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
+                                       VendorGLAccountId = a.VendorCard.GLAccountId,
                                    }).FirstOrDefault();
 
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant);
