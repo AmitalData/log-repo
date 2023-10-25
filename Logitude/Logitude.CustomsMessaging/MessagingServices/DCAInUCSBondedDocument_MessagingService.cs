@@ -128,6 +128,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             if (RequestInProgressList != null && RequestInProgressList.Count > 0 )
             {
+                LogitudeSettings.HandleLogMe("cresteCRS - קיים מסר זהה בתהליך", false, "sendOcrDocument", DateTime.MinValue);
+
                 LogMessagingUtil.Instance.AppendLine("קיים מסר זהה בתהליך");
                 ///throw new System.Exception("Requestsheet  with Interface Type  = UCBUCBNDCD  already in progress  !!!");
                 return "קיים מסר זהה בתהליך";
@@ -143,6 +145,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                    objectTableDocumentsFilingId, documentsFilingPM.Id, null, true);
             if (RequestInProgressList2715 != null && RequestInProgressList2715.Count > 0)
             {
+                LogitudeSettings.HandleLogMe("cresteCRS -2715 קיים מסר זהה בתהליך", false, "sendOcrDocument", DateTime.MinValue);
+
                 LogMessagingUtil.Instance.AppendLine("2715 קיים מסר זהה בתהליך");
                 return " 2715 קיים מסר זהה בתהליך";
             }
@@ -155,6 +159,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             if(customDoc != null && !string.IsNullOrEmpty( customDoc.CustomsDocId))
             {
+                LogitudeSettings.HandleLogMe("cresteCRS - קיים סימוכין מכס", false, "sendOcrDocument", DateTime.MinValue);
+
                 LogMessagingUtil.Instance.AppendLine("קיים סימוכין מכס");
                 return "קיים סימוכין מכס";
 
@@ -223,6 +229,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                     trans.Complete();
+                    LogitudeSettings.HandleLogMe("cresteCRS - המסר נבנה בהצלחה וישלח בתהליך רקע", false, "sendOcrDocument", DateTime.MinValue);
+
                     LogMessagingUtil.Instance.AppendLine("המסר נבנה בהצלחה וישלח בתהליך רקע");
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
@@ -238,6 +246,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBUCBNDCD SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                    LogitudeSettings.HandleLogMe("cresteCRS - קיים מסר זהה בתהליך LINE 249", false, "sendOcrDocument", DateTime.MinValue);
+
                     return "קיים מסר זהה בתהליך";
                     //throw;
                 }
@@ -371,6 +381,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 else
                 {
+                    LogitudeSettings.HandleLogMe("!interactive before cresteCRS", false, "sendOcrDocument", stopLogAt);
+
                     string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
                     using (var disposableToken =
                         ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key,
@@ -384,6 +396,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             _DocumentsFilingPM,
                             myDocumentsFilingMetaDataValueReferenceAsDocType);
                         logData = LogMessagingUtil.Instance.ToString();
+                        LogitudeSettings.HandleLogMe("after cresteCRS", false, "sendOcrDocument", stopLogAt);
+
                         LogitudeSettings.HandleLogMe(crs + " " + logData + _DocumentsFilingPM.Code, false, "CreateUCBNDCDService.OK" , stopLogAt);
 
                     }

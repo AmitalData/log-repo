@@ -512,22 +512,24 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             });    
         }
         if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
-            var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypMandatory")
+
+            var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypMandatory");
 
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
         else {
             if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber)) {
-                var msg =  TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey1Mandatory")//" שדה מזהה מטען ראשון שדה חובה";
-
+                var msg =  TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey1Mandatory");//" שדה מזהה מטען ראשון שדה חובה";
 
                 this.ValidationErrors.push(msg);
                 this.FillValidationErrors("Errors");
             }
             else {
                 if (AppTool.IsNullOrEmpty(this.FinalSecondCargoId) && !AppTool.IsNullOrEmpty(this.SecondCargoIdPlaceholder)) {
-                    var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey2Mandatory") //" ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™ ×©×“×” ×—×•×‘×”";
+
+                    var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey2Mandatory"); //" ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™ ×©×“×” ×—×•×‘×”";
+
 
                     this.ValidationErrors.push(msg);
                     this.FillValidationErrors("Errors");
@@ -538,6 +540,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
                     if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
+
                         var msg =  TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.LoadingDateTimeMandatory");
 
 
@@ -735,6 +738,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
         windowArgs.CancelButtonVisibility = true
+
         var windowTitle = TextCodeTranslator.Translate("Customs.ExportClosindData.O.CheckingAttachmentCertificates");
 
         var logWindow = new LogitudeWindow();
