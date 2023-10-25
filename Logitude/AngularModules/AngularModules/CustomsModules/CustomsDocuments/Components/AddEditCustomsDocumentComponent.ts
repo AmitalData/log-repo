@@ -183,6 +183,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         super();
     }
 
+    public isRequireDocumentTicket: string = null;
+
     SetWindowArgs(windowArgs) {
         this.WindowArgs = windowArgs;
 
@@ -200,6 +202,9 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         if (this.CustomsDocument) {
             this.CustomsDocument.CloneMe();
         }
+        
+        this.isRequireDocumentTicket = windowArgs.RequestedDocumentId;
+        
         this.ParentEntityCode = windowArgs.ParentEntityCode;
         this.ParentEntityId = windowArgs.ParentEntityId;
         this.Child1EntityCode = windowArgs.Child1EntityCode;
@@ -590,7 +595,9 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         }
 
         //*********************************************************//
-
+        if(this.isRequireDocumentTicket){
+            this.IsDocumentTypeEnabled = false;
+        }
         this.UIProperties.SetEnabled("DocumentTypeCode", "Customs.CustomsDocument", this.IsDocumentTypeEnabled);
     }
 
