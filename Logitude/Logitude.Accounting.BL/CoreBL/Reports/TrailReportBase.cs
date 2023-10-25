@@ -70,9 +70,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             _FromBeginOfMonth = new DateTime(_TrailReportParam.FromDate.Year, _TrailReportParam.FromDate.Month, 1);
 
             _ToBeginOfMonth = new DateTime(_TrailReportParam.ToDate.Year, _TrailReportParam.ToDate.Month, 1);
-            using (var transactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)) //snapshot isolation performance
-                )
-            {
 
 
 
@@ -124,7 +121,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 DbLog = "";// _DbLogger.ToString();
                 return myOutputReport;
-            }
+        
         }
         private void CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy()
         {
