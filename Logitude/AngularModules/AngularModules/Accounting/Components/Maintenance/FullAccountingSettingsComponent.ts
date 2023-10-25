@@ -593,7 +593,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     // Signed 
 
     get HSM(){return this.EntityPM.HSM;}
-    set HSM(hsm:number){
+    set HSM(hsm:string){
         var validateHsmResult=this.ValidateHsm(hsm);
         this.UIProperties.SetValidity("HSM", this.ObjectTableName, validateHsmResult.valid, validateHsmResult.errorMsg);
 
@@ -669,7 +669,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             errorMsg:''
         };
         if(hsm != null) {
-            if (hsm.toString().length >15) {
+            if (hsm.length >15) {
                 res.valid=false;
                 res.errorMsg="HSM maximum size can be 15 digits";
             }
