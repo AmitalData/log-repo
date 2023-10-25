@@ -119,7 +119,7 @@ export class SendDeclarationComponent implements OnDestroy {
     }
     reloadEvent: any;
     ButtonText: string;
-    OnCustomSendOptionsButtonClick(event: CustomSendOptionsArgs) {
+    OnCustomSendOptionsButtonClick(event: CustomSendOptionsArgs) {      
         this._SendDeclarationService._TestCase = null;
         if (event.TestCase) {
 
@@ -756,7 +756,7 @@ export class SendDeclarationService implements OnDestroy {
 
     CheckMandatoryTickets() {
         //this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
-
+        
         this.DeclarationService.GetDeclarationMandatoryTicketList(this.EntityPM.Id, "Declaration").subscribe((myResponse: ServiceResponse) => {
             var myCustomsDocumentPMList: any[] = myResponse.Result;
             if (!myCustomsDocumentPMList) {
@@ -835,7 +835,7 @@ export class SendDeclarationService implements OnDestroy {
         });
     }
 
-    DocumetsUploadedCheckClosed(event) {
+    DocumetsUploadedCheckClosed(event) {        
         this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
         this.ValidationErrors = [];
         switch (event) {
@@ -852,7 +852,7 @@ export class SendDeclarationService implements OnDestroy {
 
     DocumetsTicketUploadedCheckClosed(event) {
         this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
-        this.ValidationErrors = [];
+        this.ValidationErrors = [];            
         switch (event) {
             case "ok": {
                 this.CheckFreightByIncoterm();
@@ -865,7 +865,7 @@ export class SendDeclarationService implements OnDestroy {
         }
     }
 
-    FreightByIncotermUploadedCheckClosed(event) {
+    FreightByIncotermUploadedCheckClosed(event) {        
         this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
         this.ValidationErrors = [];
         switch (event) {
@@ -880,7 +880,7 @@ export class SendDeclarationService implements OnDestroy {
         }
     }
 
-    CheckCertificateStatusClosed(event) {
+    CheckCertificateStatusClosed(event) {            
         this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
         this.ValidationErrors = [];
         switch (event) {
@@ -896,7 +896,7 @@ export class SendDeclarationService implements OnDestroy {
     }
     public OnSuccessSendMethod: (response: any) => void;
 
-    SendAmendmentDeclaration() {
+    SendAmendmentDeclaration() {      
         this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
         var searchParams: GenericRequestParams = new GenericRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
@@ -973,99 +973,119 @@ export class SendDeclarationService implements OnDestroy {
         });
 
     }
+
     SendDeclaration() {
-
-        if (this.EntityPM.IsAmendment) {
-            this.SendAmendmentDeclaration();
-            return;
-        }
-        this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
-        var searchParams: GenericRequestParams = new GenericRequestParams();
-        searchParams.Tenant = SessionLocator.Tenant;
-        searchParams.AppicationId = this.EntityPM.Id;
-        searchParams.LoggingEnabled = true;
-        searchParams.LoggingEntityId = this.EntityPM.Id;
-        searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
-        searchParams.LoggingObjectTableId = this.ObjectTable.Id;
-        searchParams.LoggingUserId = SessionLocator.LoggedUserId;
-        searchParams.RequestName = "Declaration Request";
-        searchParams.ResponseName = "Declaration Response";
-        searchParams.RequestVIA = this.RequestVIA;
-        searchParams.ForcePersonalSign = this.ForcePersonalSign;
-        searchParams.TestCase = this._TestCase;
-
-        let myShowProgressBarParams: ShowProgressBarParams = null;
-
-        if (this.CourierWorksheetmode) {
-            myShowProgressBarParams = new ShowProgressBarParams();
-            myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
-                (response: any) => {
-
-                    let myResponseData = response;
-                    if (myResponseData) {
-                        if (myResponseData.HasException || !myResponseData.Succeeded) {
-                            //do not close Win !!
-
-                        } else {
-
-                            //if OK then  close Win !!
-                            this.OnSuccessSendMethod(this.ResponseData);
+        if (this.EntityPM.IsAmendment && this.EntityPM.Direction == "E" ) {
+            var invoiceWithoutItems = false;
+            for (let index = 0; index < this.EntityPM.SupplierInvoices.length; index++) {
+                const i = this.EntityPM.SupplierInvoices[index];
+                this.supplierInvoicePMService.get(i.DeclarationId, i.InvoiceCounterKey).subscribe(res => {
+                    if (res.Result.supplierInvoiceItems.length < 1) {
+                        invoiceWithoutItems = true;
+                        this.StopMyBusyIndicator();
+                        this.ValidationErrors.push("קיים חשבון ללא פריטי מכס");
+                        this.FillValidationErrors("Errors");
+                        return;
+                    } 
+                    else {
+                        if (!invoiceWithoutItems && index == this.EntityPM.SupplierInvoices.length-1) {
+                            this.SendAmendmentDeclaration();
                         }
                     }
-                };
+                });
+            }
         }
-        var title = "שליחת הצהרת יבוא";
-        if (this.EntityPM.Direction == "E") {
-            title = "שליחת הצהרת יצוא";
+        else if(this.EntityPM.IsAmendment){
+            this.SendAmendmentDeclaration();
         }
-        CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession, searchParams.PBId,
-                title, false
-                , myShowProgressBarParams)
-            .then((res) => {
-                this.ResponseData = res;
-                if (this.CourierWorksheetmode) {
-
-                } else {
-                    if (this.ResponseData && this.ResponseData.ContinueProcessInBackground) {
-                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
-                    }
-                    else if (this.Option == 'WB' || this.Option == 'D') { // work around itzik shall fix the undefined problem.
-                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
-                    }
-                    var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
-                    myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
-
-
-
-                    if (!this.CurrentSession.SessionTabItem.IsSelected) {
-                        let token = this.CurrentSession.SessionSeleced.subscribe((isSel) => {
-                            token.unsubscribe();
-                            this.ChangeAnswerTab();
-                        });
+        else {
+            this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
+            var searchParams: GenericRequestParams = new GenericRequestParams();
+            searchParams.Tenant = SessionLocator.Tenant;
+            searchParams.AppicationId = this.EntityPM.Id;
+            searchParams.LoggingEnabled = true;
+            searchParams.LoggingEntityId = this.EntityPM.Id;
+            searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
+            searchParams.LoggingObjectTableId = this.ObjectTable.Id;
+            searchParams.LoggingUserId = SessionLocator.LoggedUserId;
+            searchParams.RequestName = "Declaration Request";
+            searchParams.ResponseName = "Declaration Response";
+            searchParams.RequestVIA = this.RequestVIA;
+            searchParams.ForcePersonalSign = this.ForcePersonalSign;
+            searchParams.TestCase = this._TestCase;
+    
+            let myShowProgressBarParams: ShowProgressBarParams = null;
+    
+            if (this.CourierWorksheetmode) {
+                myShowProgressBarParams = new ShowProgressBarParams();
+                myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
+                    (response: any) => {
+    
+                        let myResponseData = response;
+                        if (myResponseData) {
+                            if (myResponseData.HasException || !myResponseData.Succeeded) {
+                                //do not close Win !!
+    
+                            } else {
+    
+                                //if OK then  close Win !!
+                                this.OnSuccessSendMethod(this.ResponseData);
+                            }
+                        }
+                    };
+            }
+            var title = "שליחת הצהרת יבוא";
+            if (this.EntityPM.Direction == "E") {
+                title = "שליחת הצהרת יצוא";
+            }
+            CustomMessageProgressComponent
+                .ShowProgressBar(this.CurrentSession, searchParams.PBId,
+                    title, false
+                    , myShowProgressBarParams)
+                .then((res) => {
+                    this.ResponseData = res;
+                    if (this.CourierWorksheetmode) {
+    
                     } else {
-                        this.ChangeAnswerTab()
+                        if (this.ResponseData && this.ResponseData.ContinueProcessInBackground) {
+                            this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                        }
+                        else if (this.Option == 'WB' || this.Option == 'D') { // work around itzik shall fix the undefined problem.
+                            this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                        }
+                        var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+                        myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
+    
+    
+    
+                        if (!this.CurrentSession.SessionTabItem.IsSelected) {
+                            let token = this.CurrentSession.SessionSeleced.subscribe((isSel) => {
+                                token.unsubscribe();
+                                this.ChangeAnswerTab();
+                            });
+                        } else {
+                            this.ChangeAnswerTab()
+                        }
                     }
                 }
+                ).catch((err) => {
+                    this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                    this.ValidationErrors.push(err);
+                    this.FillValidationErrors("Errors");
+                });
+    
+            if (this.EntityPM.DeclarationTypeCode == '3')             
+                this.DeclarationService.PostSendTransshipmenDeclaration(searchParams).subscribe();
+            else if (this.EntityPM.Direction == "E") {            
+                this.DeclarationService.PostSendExportDeclaration(searchParams).subscribe((response: ServiceResponse) => {
+                    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                });
+            } else {
+                this.DeclarationService.PostSendDeclaration(searchParams).subscribe((response: ServiceResponse) => {
+                    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                });        
             }
-            ).catch((err) => {
-                this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-                this.ValidationErrors.push(err);
-                this.FillValidationErrors("Errors");
-            });
-
-        if (this.EntityPM.DeclarationTypeCode == '3')             
-            this.DeclarationService.PostSendTransshipmenDeclaration(searchParams).subscribe();
-        else if (this.EntityPM.Direction == "E") {            
-            this.DeclarationService.PostSendExportDeclaration(searchParams).subscribe((response: ServiceResponse) => {
-                //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            });
-        } else {
-            this.DeclarationService.PostSendDeclaration(searchParams).subscribe((response: ServiceResponse) => {
-                //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            });        
         }
-
     }
 
     ChangeAnswerTab() {
