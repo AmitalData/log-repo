@@ -1096,12 +1096,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 });
 
                 this.declarationMessagesService.PostSendPaymentOnly(params)
-                    .subscribe(res1 => {
-                        let messWindow = new MessageWindow();
-                        messWindow.Show("ביטול הגשה הסתיים בהצלחה");
-                        messWindow.WindowClosed.subscribe(() => {
-                            SessionLocator.SelectedSession.CloseCurrentWindow();
-                        });
+                    .subscribe( res => {
+                        if(!res.Result.HasException){
+                            let messWindow = new MessageWindow();
+                            messWindow.Show("ביטול הגשה הסתיים בהצלחה");
+                            messWindow.WindowClosed.subscribe(() => {
+                                SessionLocator.SelectedSession.CloseCurrentWindow();
+                            });
+                        }
                     }
                 );
             }
