@@ -1377,6 +1377,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool numberingByChartOfAccount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool NumberingByChartOfAccount  
+	   {
+	    
+	     get
+		{
+		   return numberingByChartOfAccount;
+		 }
+		 set
+		 {
+		   if(numberingByChartOfAccount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberingByChartOfAccount",OldValue=numberingByChartOfAccount,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   numberingByChartOfAccount=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
