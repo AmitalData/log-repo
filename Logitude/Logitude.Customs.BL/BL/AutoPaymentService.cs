@@ -2573,6 +2573,10 @@ public class PaymentMethodModel : DeclarationPaymentMethodPM
 									SelectedBank = bank;
 									SetSelectedBank(bank);
 								}
+								else
+								{
+									PayerActivityTypeCode = "0";
+								}
 
 								if (agentBanks.Count() > 0)
 									setBankis_ABOVE_MSVLK_agent(agentBanks.FindAll(x => !x.InActive && x.PayerTypeCode == "3").FirstOrDefault());
