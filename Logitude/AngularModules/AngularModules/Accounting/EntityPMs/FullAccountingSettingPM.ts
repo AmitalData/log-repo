@@ -314,6 +314,11 @@ export class FullAccountingSettingPM {
     public set AllowEditingExchangeRate(newValue: boolean) { if (this.allowEditingExchangeRate != newValue) { this.allowEditingExchangeRate = newValue; this.MarkAsDirty("AllowEditingExchangeRate"); } }
        
 	 
+    private numberingByChartOfAccount: boolean;
+    public get NumberingByChartOfAccount() { return this.numberingByChartOfAccount; }
+    public set NumberingByChartOfAccount(newValue: boolean) { if (this.numberingByChartOfAccount != newValue) { this.numberingByChartOfAccount = newValue; this.MarkAsDirty("NumberingByChartOfAccount"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		
