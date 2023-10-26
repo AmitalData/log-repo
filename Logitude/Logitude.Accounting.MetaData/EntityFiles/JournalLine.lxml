@@ -39,11 +39,7 @@
   ParentTableName="Journal"
   LocalDefaultText="&quot;שורת פקודה&quot;"
   DefaultText="&quot;Journal Line&quot;"
-<<<<<<< Updated upstream
-  Code="&quot;a386&quot;"
-=======
   Code="&quot;ef37&quot;"
->>>>>>> Stashed changes
   Name="&quot;JournalLine Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
