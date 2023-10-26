@@ -443,7 +443,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     if (button.EventCode == "CancelPayment") {
                         if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "CancelPaymentFeature") && (this.EntityPM.Direction != "E")) {
                             button.IsHidden = false;
-                            if(!AppTool.IsNullOrEmpty(this.EntityPM.PaymentDate)){
+                            if(AppTool.IsNullOrEmpty(this.EntityPM.PaymentDate)){
                                 button.IsDisabled = true;
                             }
                         }

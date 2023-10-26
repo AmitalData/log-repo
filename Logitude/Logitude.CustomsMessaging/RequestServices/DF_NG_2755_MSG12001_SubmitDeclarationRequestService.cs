@@ -358,7 +358,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGeneralData.declarationID = declarationPM.DeclarationNumber;
             if (requestParams.RequestName == "send cancel payment request")
             {
-                myGeneralData.declarationVersion = "99999";
+                myGeneralData.declarationVersion = "9999";
             }
             else
             {
