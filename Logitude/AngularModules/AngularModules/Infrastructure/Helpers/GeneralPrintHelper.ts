@@ -174,7 +174,7 @@ export class GeneralPrintHelper {
                         this.IsStartPrint = false;
                         this.CurrentSession.StopBusyIndicator();
                     }
-                        this.LoadPrintControl(StatusCode, ApprovedDate,ShowPrintWindow);
+                    
                     
                     
                 }
