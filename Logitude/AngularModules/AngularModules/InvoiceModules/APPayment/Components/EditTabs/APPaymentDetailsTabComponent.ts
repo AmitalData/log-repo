@@ -1740,6 +1740,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.BankAccountId = bankAccounts[0].Id;
                 } else if(bankAccounts && bankAccounts.length > 1 && this.BankAccountId && bankAccounts.filter(x=>x.Id == this.BankAccountId).length == 0 ) {
                     this.BankAccountId = null;
+                } else if(bankAccounts.length == 0) {
+                    this.BankAccountId = null;
                 }
             }
         });
