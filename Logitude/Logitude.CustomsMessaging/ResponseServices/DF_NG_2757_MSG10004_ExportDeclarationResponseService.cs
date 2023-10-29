@@ -283,6 +283,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
                 }
+
+                else
+                {
+                    if(customResponse?.Response?.Status[0]?.NameCode?.Value == "36" && _MyDeclarationPM?.DeclarationStatusTypeCode != "36")
+                    {
+                        SendDeclarationPrint(requestParams);
+                    }
+                }
             }
 
             //לא רלוונטי ליצוא
@@ -2288,6 +2296,49 @@ namespace Logitude.CustomsMessaging.ResponseServices
             AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true);
 
 
+        }
+
+        public bool SendDeclarationPrint(GenericRequestParams requestParams)
+        {
+            LogMessagingUtil.Instance.AppendLine("SendDeclarationPrint");
+            string decNum =_MyDeclarationPM.DeclarationNumber;
+            var decNumList = new List<string>();
+            decNumList.Add(decNum);
+
+            string LoggingUserId = requestParams.LoggingUserId;
+            ICommonDataContext commonDbContext = CommonDataContext.GetContext(requestParams.Tenant);
+            UserRepository userRepository = new UserRepository(commonDbContext);
+            var user = userRepository.GetSingleUserByCode("MEHES", requestParams.Tenant, true);
+            if (user != null)
+            {
+                LoggingUserId = user.Id;
+            }
+
+            DF_NG_8302_Web03_DeclarationPrintRequestParams searchParams = new DF_NG_8302_Web03_DeclarationPrintRequestParams()
+            {
+                LoggingEnabled = true,
+                CustomFileNo = this._MyDeclarationPM.CustomFileNo,
+                DeclarationNumber = decNumList, //declarationPM.DeclarationNumber,
+                Tenant = this._MyDeclarationPM.Tenant,
+                RequestName = "Declaration Print(8373)",
+                ResponseName = "Declaration Print(8373)",
+                LoggingEntityId =  _MyDeclarationPM.Id,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+
+
+                LoggingUserId = LoggingUserId //requestParams.LoggingUserId ,//HD CALL#298426
+            };
+
+            var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();
+            var resData = myRequestMessagingService.Send(searchParams);
+           
+            if (!resData.Succeeded)
+            {
+                LogMessagingUtil.Instance.AppendLine("Declaration Print Request Failed " + resData.CustomsRequestsSheetId + ", Message: " + resData.UserMessage);
+                return false;
+            }
+            LogMessagingUtil.Instance.AppendLine("Declaration Print Request Succeeded " + resData.CustomsRequestsSheetId);
+            return true;
         }
 
     }
