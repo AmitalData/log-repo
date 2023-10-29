@@ -20,6 +20,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.AgentPaymentReplyServiceReference;
 using Logitude.Server.Tools.Utils;
+using System.Configuration;
+using System.Globalization;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -61,7 +63,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(TSH_MSG7_AgentPaymentReply customResponse, GenericRequestParams requestParams)
         {
             //Analyze message 3052- Answer to the agent request for changing existing payment
-
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20231029T110400.LogUntilDateyyyyMMdd"];
+            DateTime stopLogAt = DateTime.MinValue;
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+            LogitudeSettings.HandleLogMe("start update Agent Payment", false, "AgentPayment", stopLogAt);
 
             customResponse.PrintedPaymentForm = customResponse.PrintedPaymentForm ?? new TSH_MSG7_AgentPaymentReplyPrintedPaymentForm();//compatibility backward
 
@@ -88,8 +99,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", "על מנת לשלם את ההוראה העדכנית יש לבצע לפני כן שחזור הוראת תשלום");
                 }
                 LogMessagingUtil.Instance.AppendLine("Exception for payment " + requestParams.AppicationId + ". " + customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription);
+                LogitudeSettings.HandleLogMe("Exception for payment " + requestParams.AppicationId + ". " + customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription, false, "AgentPayment", stopLogAt);
+
+
                 return;
             }
+
+            LogitudeSettings.HandleLogMe("No Exception for payment", false, "AgentPayment", stopLogAt);
+
 
             string userMessage = "תשלום הוראה " + customResponse.AgentPaymentReply.paymentID;
             if (this.MyRequestSheetParam == null || string.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -102,7 +119,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 requestParams.AppicationId = paymentOrderQueryService.GetIdByPaymentNumber(customResponse.AgentPaymentReply.paymentID.ToString(), requestParams.Tenant);
             }
-
+            LogitudeSettings.HandleLogMe("ApplicationId:" + requestParams.AppicationId , false, "AgentPayment", stopLogAt);
             _PaymentOrderPM = paymentOrderQueryService.GetSingle(requestParams.AppicationId, true, true);
             if (_PaymentOrderPM == null)
             {
@@ -114,9 +131,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     UserMessage = "Cann't find Payment Order" + requestParams.AppicationId,
                 };
                 LogMessagingUtil.Instance.AppendLine("Cann't find Payment Order " + customResponse.AgentPaymentReply.paymentID);
+                LogitudeSettings.HandleLogMe("cann't find payment order", false, "AgentPayment", stopLogAt);
                 return; //if not found exit  
             }
-
+            LogitudeSettings.HandleLogMe("payment order id:" + _PaymentOrderPM.Id , false, "AgentPayment", stopLogAt);
             bool isAddConnectionToAccountingFile = false;
             if (!string.IsNullOrWhiteSpace(_PaymentOrderPM.AccountingCustomFile))
             {
@@ -166,9 +184,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 paymentOrderConnectionTablePM.ConnectedEntityId = declarationId;
                 _PaymentOrderPM.PaymentOrderConnectionTables.Add(paymentOrderConnectionTablePM);
             }
+            LogitudeSettings.HandleLogMe("if Payment is not closed && status = 3" + customResponse.AgentPaymentReply.status, false, "AgentPayment", stopLogAt);
 
             if (!_PaymentOrderPM.IsClosed && customResponse.AgentPaymentReply.status == 3)
             {
+                LogitudeSettings.HandleLogMe("Payment is not closed && status = 3", false, "AgentPayment", stopLogAt);
+
                 LogMessagingUtil.Instance.AppendLine("Start compring between the records in DB and the records in message");
                 _PaymentOrderPM.ChangeSetOp = ChangeSetOperation.Update;
                 var myInsertEventContextTagModel = new EventContextTagModel() // Indication to Create Unifreight Status "POP"
@@ -183,8 +204,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                  + "\n" + "התהליך היוצר:" + _PaymentOrderPM.PaymentProcessName,
                 };
                 LogMessagingUtil.Instance.AppendLine("requestParams.DCAFileName = " + requestParams.DCAFileName ?? "NULL");
+
+                LogitudeSettings.HandleLogMe("requestParams.DCAFileName = " + requestParams.DCAFileName ?? "NULL", false, "AgentPayment", stopLogAt);
                 if (!string.IsNullOrWhiteSpace(requestParams.DCAFileName) && requestParams.DCAFileName.Contains("SendTSH_MSG7_AgentPaymentReply_Out"))
                 {
+
+                    LogitudeSettings.HandleLogMe("UnifreighTaskCode = LE2U ", false, "AgentPayment", stopLogAt);
                     myInsertEventContextTagModel.UnifreighTaskCode = "LE2U";
                 }
                 _PaymentOrderPM.CurrentContextTag = myInsertEventContextTagModel;
