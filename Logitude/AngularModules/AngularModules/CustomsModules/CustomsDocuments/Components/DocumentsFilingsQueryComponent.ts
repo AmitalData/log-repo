@@ -186,6 +186,7 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
 
         if(this.declarationPM != null && this.declarationPM.Direction == 'E' && windowArgs.IsClose) {
             this.SearchText = this.declarationPM?.ExportFile;
+            this.SearchFieldsFilter = new FilterItem("SearchFields", this.SearchText, null, null, "Contains", false, false, false, "string", false);
         }
         this.searchOrExportFile=this.declarationPM?.Direction == 'E'?'חיפוש /תיק יצוא:':this.searchOrExportFile;
     }
