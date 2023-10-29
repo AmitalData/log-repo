@@ -105,6 +105,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
             )
         {
 
+
+            DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220227T155633.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var objectTableDocumentsFilingId = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
@@ -128,7 +138,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             if (RequestInProgressList != null && RequestInProgressList.Count > 0 )
             {
-                LogitudeSettings.HandleLogMe("cresteCRS - קיים מסר זהה בתהליך", false, "sendOcrDocument", DateTime.MinValue);
+                LogitudeSettings.HandleLogMe("cresteCRS - קיים מסר זהה בתהליך", false, "sendOcrDocument", stopLogAt);
 
                 LogMessagingUtil.Instance.AppendLine("קיים מסר זהה בתהליך");
                 ///throw new System.Exception("Requestsheet  with Interface Type  = UCBUCBNDCD  already in progress  !!!");
@@ -145,7 +155,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                    objectTableDocumentsFilingId, documentsFilingPM.Id, null, true);
             if (RequestInProgressList2715 != null && RequestInProgressList2715.Count > 0)
             {
-                LogitudeSettings.HandleLogMe("cresteCRS -2715 קיים מסר זהה בתהליך", false, "sendOcrDocument", DateTime.MinValue);
+                LogitudeSettings.HandleLogMe("cresteCRS -2715 קיים מסר זהה בתהליך", false, "sendOcrDocument", stopLogAt);
 
                 LogMessagingUtil.Instance.AppendLine("2715 קיים מסר זהה בתהליך");
                 return " 2715 קיים מסר זהה בתהליך";
@@ -159,7 +169,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             if(customDoc != null && !string.IsNullOrEmpty( customDoc.CustomsDocId))
             {
-                LogitudeSettings.HandleLogMe("cresteCRS - קיים סימוכין מכס", false, "sendOcrDocument", DateTime.MinValue);
+                LogitudeSettings.HandleLogMe("cresteCRS - קיים סימוכין מכס", false, "sendOcrDocument", stopLogAt);
 
                 LogMessagingUtil.Instance.AppendLine("קיים סימוכין מכס");
                 return "קיים סימוכין מכס";
@@ -229,7 +239,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                     trans.Complete();
-                    LogitudeSettings.HandleLogMe("cresteCRS - המסר נבנה בהצלחה וישלח בתהליך רקע", false, "sendOcrDocument", DateTime.MinValue);
+                    LogitudeSettings.HandleLogMe("cresteCRS - המסר נבנה בהצלחה וישלח בתהליך רקע", false, "sendOcrDocument", stopLogAt);
 
                     LogMessagingUtil.Instance.AppendLine("המסר נבנה בהצלחה וישלח בתהליך רקע");
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
@@ -246,7 +256,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBUCBNDCD SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
-                    LogitudeSettings.HandleLogMe("cresteCRS - קיים מסר זהה בתהליך LINE 249", false, "sendOcrDocument", DateTime.MinValue);
+                    LogitudeSettings.HandleLogMe("cresteCRS - קיים מסר זהה בתהליך LINE 249", false, "sendOcrDocument", stopLogAt);
 
                     return "קיים מסר זהה בתהליך";
                     //throw;
@@ -408,6 +418,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 logData = LogMessagingUtil.Instance.ToString();
                 LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "SendBondedCustomDocument" , stopLogAt);
+                LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "sendOcrDocumentError", stopLogAt);
                 throw;
             }
             finally
