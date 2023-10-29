@@ -309,11 +309,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
     public class SendBondedCustomDocumentService : ISendBondedCustomDocumentService
     {
         private DocumentsFilingPM _DocumentsFilingPM;
+		Stopwatch _Stopwatch;
 
-        public void
+		public void
             JustDoIt(object documentsFilingPM)
         {
-			Stopwatch _Stopwatch;
 
 			DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220227T155633.LogUntilDateyyyyMMdd"];
@@ -416,7 +416,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                         LogitudeSettings.HandleLogMe(crs + " " + logData + _DocumentsFilingPM.Code, false, "CreateUCBNDCDService.OK" , stopLogAt);
 
-						LogitudeSettings.HandleLogMe(Environment.NewLine + "1 Took: " + _Stopwatch.Elapsed.ToString(), false, "CheckLogTime-SendMeces", stopLogAt); _Stopwatch.Restart();
 
 
 					}
@@ -431,10 +430,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             finally
             {
+				LogitudeSettings.HandleLogMe(Environment.NewLine + "1 Took: " + _Stopwatch.Elapsed.ToString(), false, "CheckLogTime-SendMeces", stopLogAt); _Stopwatch.Restart();
 
-            }
+			}
 
-        }
+		}
 
         private bool CheckIsSendByDocType(string logData)
         {
