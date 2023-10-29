@@ -6,6 +6,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -22,6 +23,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -47,131 +49,49 @@ namespace Logitude.Accounting.BL.Utils
             return _StatusCode;
         }
 
-        public void SetTotalFutureOpenChequesInLocalCurrency()
+        public void SetTotalFutureOpenChequesInLocalCurrency(int tenant = 0)
         {
-            List<GlobalTenant> globalTenants;
-            using (var scope = TransactionFactory.GetNewTransaction())
-            {
-                globalTenants = GlobalTenantRepository.GetGlobalTenants();
-                scope.Complete();
-            }
 
-            using (var scope = TransactionFactory.GetNewTransaction())
+            
+            CardRepository cardRepository = new CardRepository(tenant);
+            List<Card> cards = cardRepository.GetAllActivityCardByTenant(tenant);
+
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+
+            GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
+            GLAccountMoreDataQueryService moreDataQueryService = new GLAccountMoreDataQueryService(tenant);
+
+            foreach (var card in cards)
             {
-                if (globalTenants != null)
-                {
-                    GlobalTenant tenantZero = globalTenants.Where(d => d.Id == 0).FirstOrDefault();
-                    List<GlobalTenant> upgradableTenants = (from a in globalTenants
-                                                            where a.IsActive == true
-                                                            select a).ToList();
-                    if (upgradableTenants.Count > 0)
+                
+                    List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(card.Id, 0, isFuture: false, withoutDate: true);
+
+
+                    GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(card.GLAccountId, card.Tenant);
+                    GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetEntityPM(glAccountMoreData);
+                    if (moreDataPM != null) 
                     {
-                        foreach (GlobalTenant tenant in upgradableTenants)
-                        {
-                            try
-                            {
+                        moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
 
-                                FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant.Id);
-                                FullAccountingSettingPM fullAccountingSettingPM = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant.Id);
-                                if (fullAccountingSettingPM != null && fullAccountingSettingPM.AccountingActivated)
-                                {
-                                    List<ARPaymentChequePM> aRPaymentChequePMs = null;
-                                    ARPaymentChequeQueryService queryService = new ARPaymentChequeQueryService(tenant.Id);
-                                    //aRPaymentCheques = queryService.GetOpenARPaymentCheques(tenant.Id);
-                                    //ARPaymentRepository repo = new ARPaymentRepository(tenant.Id);
-                                    //CardRepository cardRepo = new CardRepository(tenant.Id);
-                                    GLAccountMoreDataQueryService moreDataQueryService = new GLAccountMoreDataQueryService(tenant.Id);
-                                    //List<string> paymentIds = new List<string>();
-                                    //paymentIds = aRPaymentCheques.Where(d=> d.PaymentId != null).Select(d => d.PaymentId).ToList();
-                                    //List<string> cardIds = repo.GetCardIdsFromPayments(paymentIds, tenant.Id);
-                                    //List<string> glAccountIds = cardRepo.GetGLAccountIdssByCardIds(cardIds, tenant.Id);
-                                    //List<GLAccountMoreDataPM> gLAccountMoreDataPMs = moreDataQueryService.GetByGLAccountsIdList(glAccountIds, tenant.Id);
-                                    IAccountingContext MyContext = AccountingContext.GetContext(tenant.Id);
-                                    GLAccountMoreDataUpdateService updateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), tenant.Id);
-                                    List<ARPaymentChequeFutureData> data = moreDataQueryService.GetARPaymentChequeFutureData(tenant.Id);
-                                    LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(MyContext);
-                                    List<string> glAccountIds = new List<string>();
-                                    foreach (ARPaymentChequeFutureData item in data)
-                                    {
-
-                                        if (glAccountIds.Contains(item.GLAccountId))
-                                        {
-                                            continue;
-                                        }
-                                        else
-                                        {
-                                            glAccountIds.Add(item.GLAccountId);
-                                            GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetSingle(item.GLAccountId, false, false);
-                                            if (moreDataPM != null)
-                                            {
-                                                moreDataPM.TotFutureOpenChequesInLocalCur = 0;
-                                                if (item.PaymentId != null)
-                                                {
-                                                    moreDataPM.TotalOpenChequesInLocalCur = 0;
-                                                    List<string> paymentIds = data.Where(d => d.GLAccountId == item.GLAccountId).Select(d => d.PaymentId).ToList();
-
-                                                    List<ARPaymentCheque> aRPaymentCheque = (from a in MyContext.ARPaymentCheques
-                                                                                              join j in MyContext.Journals
-                                                                                              on a.PaymentId equals j.AccountingEntityId
-                                                                                              join transaction in MyContext.LedgerTransactions
-                                                                                              on j.Id equals transaction.JournalId
-                                                                                              where paymentIds.Contains(a.PaymentId) && a.Tenant == tenant.Id && transaction.Reference2 == a.ChequeNumber
-                                                                                              select a).Distinct().ToList();
+                        moreDataPM.TotFutureOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate > DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
+                        moreDataPM.TotalOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate <= DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
 
 
-                                                    aRPaymentChequePMs = aRPaymentCheque.Select(r => queryService.GetEntityPM(r)).ToList();
-                                                    foreach (ARPaymentChequePM paymentCheque in aRPaymentChequePMs)
-                                                    {
-                                                        if (moreDataPM.TotalOpenChequesInLocalCur == null) moreDataPM.TotalOpenChequesInLocalCur = 0;
-                                                        if (moreDataPM.TotFutureOpenChequesInLocalCur == null) moreDataPM.TotFutureOpenChequesInLocalCur = 0;
-                                                        if (paymentCheque.StatusCode != ARPaymentChequeStatusValues.Redeemed && paymentCheque.StatusCode != ARPaymentChequeStatusValues.ReturnedToCustomer)
-                                                        {
-                                                            if (paymentCheque.ValueDate > TenantServerConfigration.GetCurrentDateTime(tenant.Id))
-                                                            {
-                                                                moreDataPM.TotFutureOpenChequesInLocalCur += paymentCheque.LocalAmount;
-                                                            }
-                                                            else
-                                                            {
-                                                                moreDataPM.TotalOpenChequesInLocalCur += paymentCheque.LocalAmount;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    moreDataPM.TotalOpenChequesInLocalCur = 0;
-
-                                                }
-                                                var externalTransactions = ledgerQuery.GetExternalTransactionsForAccount(item.GLAccountId, tenant.Id).ToList();
-                                                var externalTransactionsTotal = externalTransactions.Sum(d => d.LocalAmountCredit);
-                                                moreDataPM.TotFutureOpenChequesInLocalCur += externalTransactionsTotal;
-                                                moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                                                updateService.Update(moreDataPM, true);
-                                            }
-                                        }
-
-
-                                    }
-
-
-                                }
-
-                            }
-
-                            catch (Exception ex)
-                            {
-
-                            }
-
-                        }
-
-
+                        GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), card.Tenant);
+                        gLAccountMoreDataUpdateService.Update(moreDataPM, true);
 
                     }
-                }
 
-                scope.Complete();
+
+
+
+
             }
+
+
+
+
+
 
         }
 

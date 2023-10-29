@@ -2,8 +2,6 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
@@ -23,7 +21,7 @@ namespace Logitude.Accounting.BL.CoreBL
         int tenant;
         DateTime endOfTodayDate;
         GLAccountPM _mainCardGLA = new GLAccountPM();
-        List<GLAccountMoreDataPM> _glaccountMoreDatas =new List<GLAccountMoreDataPM>();
+        List<GLAccountMoreDataPM> _glaccountMoreDatas = new List<GLAccountMoreDataPM>();
         GLAccountMoreDataPM _mainGlaccountMoreData = new GLAccountMoreDataPM();
         List<string> _splittedGlaccountIds = new List<string>();
 
@@ -36,12 +34,13 @@ namespace Logitude.Accounting.BL.CoreBL
         public void RecalculateChequesTotalForBillToAccount(string billToAccountId)
         {
             _mainCardGLA = GetCardGLAccount(billToAccountId, tenant);
-            _glaccountMoreDatas = GetGLAccountMoreDataConnectedToBillToAccount(tenant);       
+            _glaccountMoreDatas = GetGLAccountMoreDataConnectedToBillToAccount(tenant);
             ResetChequesTotals(_glaccountMoreDatas);
             LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
-            foreach (var glMoreData in _glaccountMoreDatas) {
-                var totalOpenChequesInLocalCur = transactionsQuery.GetTotalOpenChequesLocalAmount(glMoreData.AccountId)??0;
-                var totFutureOpenChequesInLocalCur = transactionsQuery.GetTotFutureOpenChequesLocalAmount(glMoreData.AccountId, endOfTodayDate)??0;
+            foreach (var glMoreData in _glaccountMoreDatas)
+            {
+                var totalOpenChequesInLocalCur = transactionsQuery.GetTotalOpenChequesLocalAmount(glMoreData.AccountId) ?? 0;
+                var totFutureOpenChequesInLocalCur = transactionsQuery.GetTotFutureOpenChequesLocalAmount(glMoreData.AccountId, endOfTodayDate) ?? 0;
                 glMoreData.TotalOpenChequesInLocalCur = totalOpenChequesInLocalCur;
                 glMoreData.TotFutureOpenChequesInLocalCur = totFutureOpenChequesInLocalCur;
                 SubmiGLAccountMoreData(tenant, glMoreData);
@@ -64,9 +63,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
             _mainGlaccountMoreData = GetGLAccountMoreDataPM(tenant, _mainCardGLA.Id);
             _glaccountMoreDatas.Add(_mainGlaccountMoreData);
-            foreach (var splittedGLAId in _splittedGlaccountIds) {
+            foreach (var splittedGLAId in _splittedGlaccountIds)
+            {
                 _glaccountMoreDatas.Add(GetGLAccountMoreDataPM(tenant, splittedGLAId));
-            }     
+            }
             return _glaccountMoreDatas;
         }
 
@@ -83,10 +83,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 var gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(MyContext);
                 var glAccountCurrencies = gLAccountCurrencyQueryService.GetRelatedCurrenciesAccounts(tenant, glaAccount.Id).ToList();
-                if (glAccountCurrencies.Count > 0) {
+                if (glAccountCurrencies.Count > 0)
+                {
                     _splittedGlaccountIds = glAccountCurrencies;
                 }
-                
+
             }
             return glaAccount;
         }

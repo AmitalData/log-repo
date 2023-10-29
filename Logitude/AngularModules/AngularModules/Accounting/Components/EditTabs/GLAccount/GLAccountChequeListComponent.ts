@@ -262,6 +262,7 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
         }
 
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+        this.filterAgrs.addAdditionalFilter("CardId", this.EntityPM.CardId, null, null, "Equals", false, false, false, "string");
         this.filterAgrs.addAdditionalFilter("IsFutureOpenCheques", this.IsFutureOpenCheques, null, null, "Equals", true, false, false, "Boolean");
         this.filterAgrs.addAdditionalFilter("IsUnpaidChecks", this.IsUnpaidChecks, null, null, "Equals", true, false, false, "Boolean");
 

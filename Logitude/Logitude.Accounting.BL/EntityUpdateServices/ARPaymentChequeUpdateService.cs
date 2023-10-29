@@ -2,6 +2,9 @@
 using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -13,6 +16,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,6 +32,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(ARPaymentChequePM entityPM, Data.EntityPOCOs.ARPaymentCheque entityPOCO)
         {
+
             //TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             //TenantPM tenant = tenantQuery.GetSinglePM(entityPM.Tenant);
             //if (tenant.AccountingActivated)
@@ -63,7 +68,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //                string GLAccountId = card.GLAccountId;
 
             //                GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetSingle(GLAccountId, false, false);
-                        
+
             //            if ((entityPM.StatusCode == "1" || entityPM.StatusCode == "2") && entityPM.ValueDate > DateTime.Today)
             //            {
             //                    moreDataPM.TotFutureOpenChequesInLocalCur = aRPaymentChequePMs.Sum(d => d.LocalAmount);
@@ -110,6 +115,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void AfterUpdating(ARPaymentChequePM chequePM, EntityPM entityParentPM)
         {
+            this.CalculateTotalFutureOpenChequesForCreditGlAccount(chequePM.PaymentId, chequePM.ValueDate, chequePM.Tenant);
+
             //bool isAccountingActivated = CheckIfAccountingIsActivated(chequePM.Tenant);
             //if (isAccountingActivated)
             //{
@@ -119,7 +126,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //        GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(chequePM.Tenant);
             //        chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(payment.BillToId);
             //    }
-           
+
             //}
         }
 
@@ -160,7 +167,68 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             base.SubmitChanges();
         }
-        
+        public void CalculateTotalFutureOpenChequesForCreditGlAccount(string paymentId, DateTime valueDate, int tenant)
+        {
+            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
+            string billToId = aRPaymentRepository.GetBillToId(paymentId, tenant);
+            if (billToId != null)
+            {
+                GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
+                GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(tenant);
+                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+
+                bool isFuture = valueDate > DateTime.Today ? true : false;
+                List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(billToId, tenant, isFuture: isFuture);
+
+
+                if (allChecks != null && allChecks.Count != 0)
+                {
+                    GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(allChecks[0].AccountId, tenant);
+                    GLAccountMoreDataPM moreDataPM = gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);
+                    moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
+
+
+                    var sum = allChecks.Sum(x => x.CalculatedLocalAmount);
+
+                    if (isFuture)
+                    {
+                        moreDataPM.TotFutureOpenChequesInLocalCur = sum;
+                    }
+                    else
+                    {
+                        moreDataPM.TotalOpenChequesInLocalCur = sum;
+                    }
+                    GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                    gLAccountMoreDataUpdateService.Update(moreDataPM, true);
+
+                }
+                else
+                {
+                    CardRepository cardRepository = new CardRepository(tenant);
+                    string accountId = cardRepository.GetCard(billToId, tenant)?.GLAccountId;
+                    if (accountId != null)
+                    {
+                        GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(accountId, tenant);
+                        GLAccountMoreDataPM moreDataPM = gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);
+                        moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                        if (isFuture)
+                        {
+                            moreDataPM.TotFutureOpenChequesInLocalCur = 0;
+                        }
+                        else
+                        {
+                            moreDataPM.TotalOpenChequesInLocalCur = 0;
+                        }
+                        GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                        gLAccountMoreDataUpdateService.Update(moreDataPM, true);
+                    }
+
+                }
+
+            }
+        }
+
 
     }
 }

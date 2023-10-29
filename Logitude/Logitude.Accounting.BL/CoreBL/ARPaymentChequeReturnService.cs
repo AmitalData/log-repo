@@ -16,6 +16,9 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -239,6 +242,7 @@ namespace Logitude.Accounting.BL.CoreBL
             CashBookQueryService cashbookQuery = new CashBookQueryService(arguments.Tenant);
             return cashbookQuery.GetByPaymentAndCurrencyAndBranch(paymentPM.PaymentCurrencyId, ChequePaymentMethodCode, paymentPM.BranchId, arguments.Tenant);
         }
+
     }
     public class ARPaymentChequeReturnServiceArguments
     {

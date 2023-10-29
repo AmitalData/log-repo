@@ -528,7 +528,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-
+        public Card GetCard(string id, int tenant)
+        {
+            
+                return (from a in context.Cards
+                    where a.Id == id && a.Tenant == tenant
+                    select a).FirstOrDefault();
+            
+            
+        }
 
 
         public IQueryable<Card> GetCards(List<string> allCardsId, int tenant)
@@ -748,5 +756,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return billToIds;
         }
+
+        public List<Card> GetAllActivityCardByTenant(int tenant)
+        {
+            List<Card> cards = ((from a in context.Cards
+                                        where !a.InActive && !string.IsNullOrEmpty(a.GLAccountId)  && (tenant == 0 || a.Tenant == tenant)
+                                        select a).ToList());
+
+            return cards;
+        }
+
     }
 }

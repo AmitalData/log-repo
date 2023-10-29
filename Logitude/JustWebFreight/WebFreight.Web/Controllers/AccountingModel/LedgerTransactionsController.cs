@@ -156,12 +156,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             try
             {
                 string accountId = GetGLAccountFilterValueFromQueryOperations(filters, tenant);
+                string cardId = GetCardIdFilterValueFromQueryOperations(filters, tenant);
                 string isFutureOpenCheques = GetIsFutureOpenChequesFilterValueFromQueryOperations(filters, tenant);
 
                 string isUnpaidChecks = GetIsUnpaidChecksFilterValueFromQueryOperations(filters, tenant);
 
 
-                List<LedgerTransactionList> tranactions = GetAccountChequesTransactions(tenant, accountId, isFutureOpenCheques, isUnpaidChecks, filters.SortBy, filters.SortDirection);
+                List<LedgerTransactionList> tranactions = GetAccountChequesTransactions(tenant, accountId, cardId, isFutureOpenCheques, isUnpaidChecks, filters.SortBy, filters.SortDirection);
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
@@ -187,6 +188,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             return accountId;
         }
 
+        private static string GetCardIdFilterValueFromQueryOperations(ApiQueryFilters filters, int tenant)
+        {
+            QueryOperations queryOperations = BuildQueryOperationsForLedgerTransactions(filters, tenant);
+            string cardId = GetCardIdFilterValue(queryOperations);
+            return cardId;
+        }
+
         private static string GetIsFutureOpenChequesFilterValueFromQueryOperations(ApiQueryFilters filters, int tenant)
         {
             QueryOperations queryOperations = BuildQueryOperationsForLedgerTransactions(filters, tenant);
@@ -203,11 +211,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             return isUnpaidChecks;
         }
 
-        private static List<LedgerTransactionList> GetAccountChequesTransactions(int tenant, string accountId, string isFutureOpenCheques, string isUnpaidChecks, string sortBy, string sortDirection)
+        private static List<LedgerTransactionList> GetAccountChequesTransactions(int tenant, string accountId,string cardId, string isFutureOpenCheques, string isUnpaidChecks, string sortBy, string sortDirection)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, MyContext, isFutureOpenCheques == "True", isUnpaidChecks == "True");
-            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(accountId, sortBy, sortDirection);
+            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(accountId, sortBy, sortDirection, cardId);
             return tranactions;
         }
 
@@ -275,6 +283,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         private static string GetGLAccountFilterValue(QueryOperations queryOperations)
         {
             QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == "GLAccountId");
+            return filterItem?.FieldValue.ToString();
+
+        }
+
+        private static string GetCardIdFilterValue(QueryOperations queryOperations)
+        {
+            QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == "CardId");
             return filterItem?.FieldValue.ToString();
 
         }
