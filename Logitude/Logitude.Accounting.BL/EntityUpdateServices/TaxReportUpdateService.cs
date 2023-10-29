@@ -191,117 +191,73 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
-        private void MarkDuplicateLines(TaxReportPM taxReportPM)
+        public void MarkDuplicateLines(TaxReportPM taxReportPM)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
             TaxReportQueryService taxReportQuery = new TaxReportQueryService(accountingContext);
             TaxReportLineQueryService taxReportLineQuery = new TaxReportLineQueryService(accountingContext);
-            var taxReportLines = taxReportQuery.GetSpecificReportLines(taxReportPM.Id, taxReportPM.Tenant);
-            if (taxReportLines != null && taxReportLines.Count > 0)
+
+            List<int> notToSendKeyList = new List<int>();
+            List<int> duplicateKeyList = new List<int>();
+            List<DuplicateRows> duplicateRows = taxReportQuery.GetDuplicateRows(taxReportPM.Id, taxReportPM.Tenant);            
+
+            duplicateRows.GroupBy(x => x.VatNumber + "_" + x.Reference)
+                .ToList().ForEach((group) =>
             {
-                var dup = taxReportLines.GroupBy(ln =>
-                new
-                {
-                    VatNumber = ln.VatNumber,
-                    Reference = ln.Reference
-                }).OrderByDescending(g => g.Key.VatNumber).ThenBy(g => g.Key.Reference);
+                DuplicateRows firstRow = group.First();
 
-                List<DupLines> duplicates = null;
+                bool notToSend = (firstRow.AccountingEntityCode == "1" || firstRow.AccountingEntityCode == "4") &&
+                    group.Any(x => x.IsVoided.HasValue && x.IsVoided.Value) &&
+                    group.Any(x => !x.IsVoided.HasValue || !x.IsVoided.Value) &&
+                    group.All(x => x.AccountingEntityCode == firstRow.AccountingEntityCode &&
+                        x.AccountingEntityId == firstRow.AccountingEntityId &&
+                        x.ReferenceDate.HasValue && firstRow.ReferenceDate.HasValue &&
+                        x.ReferenceDate.Value.Month == firstRow.ReferenceDate.Value.Month &&
+                        x.ReferenceDate.Value.Year == firstRow.ReferenceDate.Value.Year);
 
-                var duplicates_indicative = dup.Select(g => new DupLines
-                {
-                    VatNumber = g.Key.VatNumber,
-                    Reference = g.Key.Reference,
-                    LineNumbers = g.OrderBy(x => x.Line).Skip(1).Select(x => x.Line)
-                })
-                .Where(r => r.LineNumbers.Count() >= 1).Select(r => r.VatNumber + "~" + r.Reference).ToList();
+                List<int> lineList = group.Select(x => x.Line).ToList();
 
-                if (duplicates_indicative != null && duplicates_indicative.Count > 0) 
+                if (notToSend)
+                    notToSendKeyList.AddRange(lineList);
+                else 
+                    duplicateKeyList.AddRange(lineList);
+            });
+
+            var taxReportLines = taxReportQuery.GetReportLines(taxReportPM.Id, taxReportPM.Tenant).ToList().Select(x => taxReportLineQuery.GetEntityPM(x,true)).ToList();
+            List<TaxReportLinePM> updateList = new List<TaxReportLinePM>();
+            taxReportLines.ForEach(row =>
+            {
+                bool isUpdate = false;
+
+                if (duplicateKeyList.Contains(row.Line))
                 {
-                    duplicates = dup.Where(g => duplicates_indicative.Contains(g.Key.VatNumber + "~" + g.Key.Reference)).Select(g => new DupLines
-                    {
-                        VatNumber = g.Key.VatNumber,
-                        Reference = g.Key.Reference,
-                        LineNumbers = g.OrderBy(x => x.Line).Select(x => x.Line)
-                    })
-                    .Where(r => r.LineNumbers.Count() >= 1).ToList();
+                    isUpdate = true;
+                    row.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
+                }
+                else if (notToSendKeyList.Contains(row.Line))
+                {                    
+                    isUpdate = true;
+                    row.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitforthisreport;
+                }
+                else if (
+                    !notToSendKeyList.Contains(row.Line) &&
+                    !duplicateKeyList.Contains(row.Line) &&
+                    row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
+                {
+                    isUpdate = true;
+                    row.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
                 }
 
-                List<TaxReportLinePM> removeDupLines = new List<TaxReportLinePM>();
-                TaxReportLineUpdateService taxReportLineUpdateService; 
-
-                if (duplicates != null && duplicates.Count > 0)
+                if (isUpdate)
                 {
-
-                    List<int> all_dup_line_nos = new List<int>();
-                    foreach (var item in duplicates)
-                    {
-                        all_dup_line_nos.AddRange(item.LineNumbers);
-                    }
-
-                    List<TaxReportLinePM> duplicateLines = new List<TaxReportLinePM>();
-
-                    foreach (var oneLine in taxReportLines)
-                    {
-                        if (all_dup_line_nos.Contains(oneLine.Line))
-                        {
-                            var entity = taxReportLineQuery.GetSingle(oneLine.TaxReportId, oneLine.Line, false, false);
-                            if (entity != null)
-                            {
-                                entity.ChangeSetOp = ChangeSetOperation.Update;
-                                entity.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
-                                if (entity.IsManuallyChanged == false) entity.IsManuallyChanged = null;
-                                duplicateLines.Add(entity);
-                            }
-                        }
-                        else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
-                        {
-                            var entity = taxReportLineQuery.GetSingle(oneLine.TaxReportId, oneLine.Line, false, false);
-                            if (entity != null)
-                            {
-                                entity.ChangeSetOp = ChangeSetOperation.Update;
-                                entity.StatusCode = "6";
-                                if (entity.IsManuallyChanged == false) entity.IsManuallyChanged = null;
-                                removeDupLines.Add(entity);
-                            }
-                        }
-                    }
-
-                    if (duplicateLines.Count > 0 || removeDupLines.Count > 0)
-                    {
-                        accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
-                        taxReportLineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
-                        if (duplicateLines.Count > 0) taxReportLineUpdateService.UpdateMulti(duplicateLines, new List<TaxReportLinePM>(), taxReportPM, true);
-                        if (removeDupLines.Count > 0) taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
-                    }
+                    row.ChangeSetOp = ChangeSetOperation.Update;
+                    if (row.IsManuallyChanged == false) row.IsManuallyChanged = null;
+                    updateList.Add(row);
                 }
-                else
-                {
-                    foreach (var linePM in taxReportLines)
-                    {
-                        if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
-                        {
-                            var entity = taxReportLineQuery.GetSingle(linePM.TaxReportId, linePM.Line, false, false);
-                            if (entity != null)
-                            {
-                                entity.ChangeSetOp = ChangeSetOperation.Update;
-                                entity.StatusCode = "6";
-                                if (entity.IsManuallyChanged == false) entity.IsManuallyChanged = null;
-                                removeDupLines.Add(entity);
-                            }
+            });
 
-                        }
-                    }
-                    if (removeDupLines.Count > 0)
-                    {
-                        accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
-                        taxReportLineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
-                        taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
-                    }
-
-                }
-            }
-
+            new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant)
+                .UpdateMulti(updateList, new List<TaxReportLinePM>(), taxReportPM, true);
         }
         private class DupLines
         {
@@ -500,18 +456,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
 
 
-            TaxReportQueryService reportQuery = new TaxReportQueryService(entityPM.Tenant);
-
-            string taxReportNumber = entityPM.TaxReportNumber.Length == 5 ? "0" + entityPM.TaxReportNumber : entityPM.TaxReportNumber;
-            int month = int.Parse(taxReportNumber.Substring(0, 2));
-            int year = int.Parse(taxReportNumber.Substring(2, 4));
-
-            //// Construct a DateTime object
-            DateTime taxReportDate = new DateTime(year, month, 1);
-
-            List<TaxReport> futureReports = reportQuery.GetFutureActiveReports(taxReportDate, entityPM.Tenant);
-
-            if (futureReports.Any())
+            TaxReportQueryService reportQuery = new TaxReportQueryService(entityPM.Tenant);            
+            List<TaxReport> futureReports = reportQuery.GetFutureActiveReportsByTaxReportMonth(entityPM.TaxReportMonth, entityPM.Tenant);
+           if (futureReports.Any())
                 throw new ApplicationException(TextCodesTranslator.TranslateText("TaxReport.O.CancelLaterReports", entityPM.Tenant, showLocal));
         }
 
