@@ -104,8 +104,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             string CustomsDoucumentTypeCode
             )
         {
+			Stopwatch _Stopwatch1;
 
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+			var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var objectTableDocumentsFilingId = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
 
@@ -212,10 +213,20 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 try
                 {
+					DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
+					string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220227T155633.LogUntilDateyyyyMMdd"];
+					if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+					{
+						stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+															"yyyyMMdd",
+															CultureInfo.InvariantCulture,
+															DateTimeStyles.None);
+					}
+
+					_Stopwatch1 = Stopwatch.StartNew();
 
 
-
-                    var InterfaceManagementQS = new InterfaceManagementQueryService(tenant);
+					var InterfaceManagementQS = new InterfaceManagementQueryService(tenant);
                     var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
                         this.MainInterfaceCode, tenant);
                     fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
@@ -226,9 +237,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     }, xmlESBResponseXmlClass);
 
+					LogitudeSettings.HandleLogMe(Environment.NewLine + "2 Took: " + _Stopwatch1.Elapsed.ToString(), false, "CheckLogTime-SendMeces", stopLogAt); _Stopwatch1.Restart();
 
 
-                    trans.Complete();
+					trans.Complete();
                     LogitudeSettings.HandleLogMe("cresteCRS - המסר נבנה בהצלחה וישלח בתהליך רקע", false, "sendOcrDocument", DateTime.MinValue);
 
                     LogMessagingUtil.Instance.AppendLine("המסר נבנה בהצלחה וישלח בתהליך רקע");
@@ -301,7 +313,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public void
             JustDoIt(object documentsFilingPM)
         {
-            DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
+			Stopwatch _Stopwatch;
+
+			DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220227T155633.LogUntilDateyyyyMMdd"];
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
             {
@@ -310,8 +324,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                                                     CultureInfo.InvariantCulture,
                                                     DateTimeStyles.None);
             }
-
-            Debug.WriteLine("SendBondedCustomDocument");
+           
+			Debug.WriteLine("SendBondedCustomDocument");
             string logData = "";
             try
             {
@@ -389,7 +403,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         "UCBNDCD.CRS", true)
                         )
                     {
-                        var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCSBondedDocument_MessagingService();
+						_Stopwatch = Stopwatch.StartNew();
+						
+						var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCSBondedDocument_MessagingService();
                         string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(
                             _DocumentsFilingPM.Tenant, 
                             loggingUserId,
@@ -400,7 +416,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                         LogitudeSettings.HandleLogMe(crs + " " + logData + _DocumentsFilingPM.Code, false, "CreateUCBNDCDService.OK" , stopLogAt);
 
-                    }
+						LogitudeSettings.HandleLogMe(Environment.NewLine + "1 Took: " + _Stopwatch.Elapsed.ToString(), false, "CheckLogTime-SendMeces", stopLogAt); _Stopwatch.Restart();
+
+
+					}
                 }
 
             }
