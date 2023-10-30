@@ -59,7 +59,7 @@ namespace WebFreight.Web.DataProviders
                 if (!BalanceInLocalCurrency.HasValue && !TotalFutureOpenCheques.HasValue) {
                     return null;
                 }
-                return (BalanceInLocalCurrency.HasValue ? BalanceInLocalCurrency.Value : 0) - (TotalFutureOpenCheques.HasValue ? TotalFutureOpenCheques.Value : 0); 
+                return (BalanceInLocalCurrency.HasValue ? BalanceInLocalCurrency.Value : 0) + (TotalFutureOpenCheques.HasValue ? TotalFutureOpenCheques.Value : 0); 
             }
         }
 
