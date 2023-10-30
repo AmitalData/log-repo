@@ -1432,7 +1432,9 @@ export class ARInvoiceMenuButtonsHandler {
             myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
 
             if (SessionLocator.TenantPM.AccountingActivated == true) {
+
                 this.PrintFullAccountingInvoice(showController,ShowPrintWindow);
+
             }
             else {
 
@@ -1520,7 +1522,9 @@ export class ARInvoiceMenuButtonsHandler {
 
 
     }
+
     private PrintFullAccountingInvoice(showController: boolean = true,ShowPrintWindow:Boolean = true) {
+
         var StatusCode: string = null;
         var ApprovedDate: Date = null;
         if (this.EntityPM != null) {
@@ -1538,7 +1542,9 @@ export class ARInvoiceMenuButtonsHandler {
             }
         }
         else {
+
             this.StartPrinting(this.EntityPM.Id, null, "ARInvoice", null, "999G", !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber, StatusCode, ApprovedDate, showController,ShowPrintWindow);
+
         }
     }
 
