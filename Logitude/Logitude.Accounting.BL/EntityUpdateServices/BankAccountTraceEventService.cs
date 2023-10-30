@@ -345,32 +345,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public string GetEventNotes(BankAccountPM bankAccountPM,BankAccount bankAccount)
         {
-            string myEventNotes = "";
-            if (bankAccountPM.LocalName != bankAccount.LocalName && (!string.IsNullOrEmpty(bankAccountPM.LocalName) || !string.IsNullOrEmpty(bankAccount.LocalName)))
-            {
-                //myEventNotes = "Previous Local Name: " + (entityPOCO.LocalName == null ? "" : entityPOCO.LocalName);
-                //myEventNotes += " Local Name Changed" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.LocalName 
-                //                              + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.LocalName + ". ";
-                myEventNotes += GetOldNewEventNote("Local Name", bankAccount.LocalName, bankAccountPM.LocalName);
-            }
-            if (bankAccountPM.EnglishName != bankAccount.EnglishName && (!string.IsNullOrEmpty(bankAccountPM.EnglishName) || !string.IsNullOrEmpty(bankAccount.EnglishName)))
-            {
-                //myEventNotes += " English Name Changed" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.EnglishName
-                //                              + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.EnglishName + ". ";
-                myEventNotes += GetOldNewEventNote("English Name", bankAccount.EnglishName, bankAccountPM.EnglishName);
-            }
-
-            if (bankAccountPM.BranchNumber != bankAccount.BranchNumber && (!string.IsNullOrEmpty(bankAccountPM.BranchNumber) || !string.IsNullOrEmpty(bankAccount.BranchNumber)))
-            {
-                myEventNotes += GetOldNewEventNote("Branch Number", bankAccount.BranchNumber, bankAccountPM.BranchNumber);
-            }
-
-            if (bankAccountPM.AccountNumber != bankAccount.AccountNumber && (!string.IsNullOrEmpty(bankAccountPM.AccountNumber) || !string.IsNullOrEmpty(bankAccount.AccountNumber)))
-            {
-                myEventNotes += GetOldNewEventNote("Account Number", bankAccount.AccountNumber, bankAccountPM.AccountNumber);
-            }
+            string myEventNotes = "";            
+            myEventNotes += AddNote(bankAccountPM.LocalName, bankAccount.LocalName, "Local Name");
+            myEventNotes += AddNote(bankAccountPM.EnglishName, bankAccount.EnglishName, "English Name");
+            myEventNotes += AddNote(bankAccountPM.BranchNumber, bankAccount.BranchNumber, "Branch Number");
+            myEventNotes += AddNote(bankAccountPM.AccountNumber, bankAccount.AccountNumber, "Account Number");
+            myEventNotes += AddNote(Convert.ToString(bankAccountPM.ChequeCounter), Convert.ToString(bankAccount.ChequeCounter), "Cheque Counter");
 
             return myEventNotes;
+        }
+
+        private string AddNote(string pmValue, string pocoValue, string fieldName)
+        {
+            if (pmValue != pocoValue && (!string.IsNullOrEmpty(pmValue) || !string.IsNullOrEmpty(pocoValue)))
+                return GetOldNewEventNote(fieldName, pocoValue, pmValue);
+
+            return "";
         }
 
         public void CreateTraceEventForUpdate(BankAccountPM bankAccountPM, ContactPM loggedContact,string eventNotes)
