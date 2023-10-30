@@ -95,14 +95,12 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,public _imageLibraryService: ImageLibraryService) {
         super();
-       
         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationConstraint").subscribe((response:any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
                     this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
-                           
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {                          
                             this.EntityPM = this.entityArgs.EntityPM;
                             this.IsCourierDeclaration = this.EntityPM.IsCourierDeclaration;
                             //this.DepositionStatusCode = this.EntityPM.DepositionStatusCode;
@@ -564,7 +562,6 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
 
     BuildDeclarationErrorsWithConstraintsList(declarationErrors: DeclarationErrorView[]) {
-
         var errorsList = [];
         var warningList = [];
 
@@ -628,7 +625,9 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         }
 
         this.CurrentSession.StopBusyIndicator();
-
+        if(this.SelectedRowB4Refresh != null) {
+            this.SelectedRow = (this.Errorslist.Collection as unknown as DeclarationErrorView[]).filter(d => d.Field == this.SelectedRowB4Refresh.Field && d.LineNumber == this.SelectedRowB4Refresh.LineNumber)[0];
+        }
     }
 
     isResourcesLoaded: boolean = false;
@@ -764,9 +763,11 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     //#region XML Errors
 
+    public SelectedRow: DeclarationErrorView = null;
+    public SelectedRowB4Refresh: DeclarationErrorView = null;
     EditEntity(declarationError: DeclarationErrorView) {
-
- 
+        this.SelectedRow = declarationError;
+        this.SelectedRowB4Refresh = this.SelectedRow;
         if (AppTool.IsNullOrEmpty(declarationError)) {
             console.warn("[!] There is no declaraion error for the constraint!");
         } else {
