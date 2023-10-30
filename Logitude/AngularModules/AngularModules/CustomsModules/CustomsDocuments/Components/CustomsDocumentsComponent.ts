@@ -36,7 +36,6 @@ import { CustomDocumentTypeMetaDataList } from 'Customs/EntityLists/CustomDocume
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { OcrDocumentExtendedListService } from 'Customs/Services/ExtendedLists/OcrDocumentExtendedListService';
 import { TruckerList } from 'Common/EntityLists/TruckerList';
-import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 
 @Component({
 
@@ -549,23 +548,6 @@ export class CustomsDocumentsComponent
       
     });
   
-    }
-
-    LoadLogo(){
-            this._ImageLibraryService.DownloadFile("minilogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res: any) => {
-            var pmResponse: ServiceResponse = res;
-            this.CurrentSession.StopBusyIndicator();
-             if (!pmResponse.HasError) {
-                var result = pmResponse.Result;
-                
-                if (result) {
-                    this.src=result;
-                } 
-
-            } 
-          
-        });
-      
     }
 
     SortCustomsDocumentTickets() {
