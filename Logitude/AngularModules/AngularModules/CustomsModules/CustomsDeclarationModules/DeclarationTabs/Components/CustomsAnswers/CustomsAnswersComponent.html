@@ -248,7 +248,8 @@
                                                 [ItemSource]="Errorslist"
                                                 [UseVirtuallization]="true"
                                                 [IsDarkHeader]="true"
-                                                (SelectedItemChanged)="EditEntity($event)">
+                                                (SelectedItemChanged)="EditEntity($event)"
+                                                [SelectedRow]="SelectedRow">
 
                                 <!-- Description -->
                                 <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
