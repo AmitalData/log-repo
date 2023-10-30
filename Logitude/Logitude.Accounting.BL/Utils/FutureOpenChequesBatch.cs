@@ -64,7 +64,7 @@ namespace Logitude.Accounting.BL.Utils
             foreach (var card in cards)
             {
                 
-                    List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(card.Id, 0, isFuture: false, withoutDate: true);
+                    List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(card.Id, card.Tenant, isFuture: false, withoutDate: true);
 
 
                     GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(card.GLAccountId, card.Tenant);
