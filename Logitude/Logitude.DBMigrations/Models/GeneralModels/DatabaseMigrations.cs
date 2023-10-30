@@ -100,27 +100,30 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                foreach (var index in CurrentTable.Indexes)
+                if (ToolArguments.IsArgumentProvided(Arguments.INCLUDEINDEXDROP))
                 {
-                    if (!IsIndexInDXMLTable(index))
+                    foreach (var index in CurrentTable.Indexes)
                     {
-                        string tablePrimaryKeyColumns = CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Any() ? string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => c.Name).ToArray()) : null;
-                        if (index.Columns.Split(',').Where(c => c.StartsWith("cdrop_")).Any() && tablePrimaryKeyColumns != index.Columns)
+                        if (!IsIndexInDXMLTable(index))
                         {
-                            tableIndexesScript += GetDropIndexScript(index);
-                        }
-                        else
-                        {
-                            MissingIndexesWarnings += "Warning: Missing Index In DXML File " + DXMLFileName + ", The Found Index On DB Is " + index.IndexName + ", The Index Should Added To The DXML File\n";
+                            string tablePrimaryKeyColumns = CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Any() ? string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => c.Name).ToArray()) : null;
+                            if (index.Columns.Split(',').Where(c => c.StartsWith("cdrop_")).Any() && tablePrimaryKeyColumns != index.Columns)
+                            {
+                                tableIndexesScript += GetDropIndexScript(index);
+                            }
+                            else
+                            {
+                                MissingIndexesWarnings += "Warning: Missing Index In DXML File " + DXMLFileName + ", The Found Index On DB Is " + index.IndexName + ", The Index Should Added To The DXML File\n";
+                            }
                         }
                     }
-                }
 
-                foreach (var index in DXMLTable.Indexes)
-                {
-                    if (!IsIndexInCurrentTable(index))
+                    foreach (var index in DXMLTable.Indexes)
                     {
-                        tableIndexesScript += GetCreateIndexScript(index);
+                        if (!IsIndexInCurrentTable(index))
+                        {
+                            tableIndexesScript += GetCreateIndexScript(index);
+                        }
                     }
                 }
             }
