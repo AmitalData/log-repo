@@ -283,6 +283,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         private void MapLines(APInvoice apinvoice, int tenant, APInvoicePM apinvoicePM)
         {
+            GLAccountQueryService gLAccountService = new GLAccountQueryService(tenant);
             foreach (APInvoiceLinePM line in apinvoicePM.InvoiceLines)
             {
                 line.Tenant = apinvoice.Tenant;
@@ -342,12 +343,33 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                 if (string.IsNullOrWhiteSpace(line.Description))
                     line.Description = charge.EnglishName;
-                
 
-                line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
+                this.mapPayableDebitGLAcountId(line, charge, gLAccountService, tenant);
+
             }
 
           
+        }
+
+        private void mapPayableDebitGLAcountId(APInvoiceLinePM line, ChargesTypePM charge, GLAccountQueryService gLAccountService, int tenant)
+        {
+            if (string.IsNullOrEmpty(line.ChargeTypeGLAccountId))
+            {
+                line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
+            }
+            else
+            {
+                GLAccountPM gLAccountPM = gLAccountService.GetByInternalNumber(line.ChargeTypeGLAccountId, tenant);
+                if (gLAccountPM != null)
+                {
+                    line.ChargeTypeGLAccountId = gLAccountPM.Id;
+                }
+                else
+                {
+                    throw new ApplicationException("GLAccount with internal number "+ line.ChargeTypeGLAccountId +"doesn't exist");
+                }
+
+            }
         }
       
 
