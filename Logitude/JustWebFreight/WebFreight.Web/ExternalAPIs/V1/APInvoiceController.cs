@@ -366,7 +366,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
                 else
                 {
-                    throw new ApplicationException("GLAccount with internal number "+ line.ChargeTypeGLAccountId +"doesn't exist");
+                    throw new ApplicationException("GLAccount with internal number "+ line.ChargeTypeGLAccountId +" doesn't exist");
                 }
 
             }
