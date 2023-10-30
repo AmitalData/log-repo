@@ -2288,6 +2288,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 var bankAccounts = myResponse.Result;
                 if(bankAccounts && bankAccounts.length == 1) {
                     this.BankAccountId = bankAccounts[0].Id;
+                } else if(bankAccounts && bankAccounts.length > 1 && this.BankAccountId && bankAccounts.filter(x=>x.Id == this.BankAccountId).length == 0 ) {
+                    this.BankAccountId = null;
+                } else if(bankAccounts.length == 0) {
+                    this.BankAccountId = null;
                 }
             }
         });

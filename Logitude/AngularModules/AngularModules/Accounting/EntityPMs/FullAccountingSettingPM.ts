@@ -294,9 +294,9 @@ export class FullAccountingSettingPM {
     public set TaxInstitutionGLAccountId(newValue: string) { if (this.taxInstitutionGLAccountId != newValue) { this.taxInstitutionGLAccountId = newValue; this.MarkAsDirty("TaxInstitutionGLAccountId"); } }
        
 	 
-    private hSM: number;
+    private hSM: string;
     public get HSM() { return this.hSM; }
-    public set HSM(newValue: number) { if (this.hSM != newValue) { this.hSM = newValue; this.MarkAsDirty("HSM"); } }
+    public set HSM(newValue: string) { if (this.hSM != newValue) { this.hSM = newValue; this.MarkAsDirty("HSM"); } }
        
 	 
     private hSMtoken: string;
@@ -317,6 +317,9 @@ export class FullAccountingSettingPM {
     private amountForConfirmationNumber: number;
     public get AmountForConfirmationNumber() { return this.amountForConfirmationNumber; }
     public set AmountForConfirmationNumber(newValue: number) { if (this.amountForConfirmationNumber != newValue) { this.amountForConfirmationNumber = newValue; this.MarkAsDirty("AmountForConfirmationNumber"); } }
+    private numberingByChartOfAccount: boolean;
+    public get NumberingByChartOfAccount() { return this.numberingByChartOfAccount; }
+    public set NumberingByChartOfAccount(newValue: boolean) { if (this.numberingByChartOfAccount != newValue) { this.numberingByChartOfAccount = newValue; this.MarkAsDirty("NumberingByChartOfAccount"); } }
        
 	 
 
@@ -347,4 +350,4 @@ export class FullAccountingSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

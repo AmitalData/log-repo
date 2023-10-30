@@ -27,6 +27,7 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Accounting.BL.CloseTables;
+using System.Globalization;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -455,9 +456,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
 
 
-            TaxReportQueryService reportQuery = new TaxReportQueryService(entityPM.Tenant);
-            List<TaxReport> futureReports = reportQuery.GetFutureActiveReports(entityPM.CreateDate, entityPM.Tenant);
-            if (futureReports.Any())
+            TaxReportQueryService reportQuery = new TaxReportQueryService(entityPM.Tenant);            
+            List<TaxReport> futureReports = reportQuery.GetFutureActiveReportsByTaxReportMonth(entityPM.TaxReportMonth, entityPM.Tenant);
+           if (futureReports.Any())
                 throw new ApplicationException(TextCodesTranslator.TranslateText("TaxReport.O.CancelLaterReports", entityPM.Tenant, showLocal));
         }
 

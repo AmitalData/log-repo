@@ -89,6 +89,30 @@
     font-size: 11px;
     color: #4F4F4F;
   }
+
+  .add-line{
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 5px;
+  }
+
+  .add-btn{
+    display: table-cell;
+  }
+
+  .last-col{
+    vertical-align: top;
+  }
+
+  .number-input-wrapper{
+    width: 90px;
+    display: inline-block;
+  }
+
+  .add-line-wrapper{
+    display: inline-block;
+    vertical-align: top;
+  }
 </style>
 
 
@@ -247,34 +271,20 @@
 
                             </table>
                         </td>
-                        <td style="width: 200px;">
-                            <div></div>
+                        <td class="last-col">
+                            <div>
+                                <div class="number-input-wrapper">
+                                    <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1" [max]="maxSecurityLevel"
+                                        [allowNull]="true" [isDisabled]="!IsSecurityLevelOK || journalDisabled || !IsSecurityLevelVisible">
+                                    </NumberInput>
+                                </div>
+                                <div class="add-line-wrapper">
+                                    <div class="add-line">{{'JournalLine.O.AddLine' | TextCodeTranslationPipe}}</div>
+                                    <IconButton [Name]="'Add'" [disabled]="journalDisabled" (click)="AddLine()" class="add-btn"></IconButton>
+                                </div>
+                            </div>
                         </td>
-                        <td *ngIf="IsSecurityLevelVisible" style="width: 210px">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-
-                  
-                            </table>
-                        </td>
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
+                  </tr>
                   <tr>
                     <td>
                       <div></div>
@@ -288,38 +298,6 @@
 
           <!--<tr style="height: 20px;"><td><div></div></td></tr>-->
           <!-- Journal Rows -->
-          <tr style="height: 20px;">
-            <td style="padding: 4px;">
-                <table>
-                    <tr>
-                        <!-- SecurityLevel -->
-
-                        <td>
-                            <div style="float: right; padding: 4px; width: 1400px;">
-                            </div>
-                        </td>
-                        <td>
-                            <div style="width:120px">
-                                <LogLabel [ObjectFieldName]="'SecurityLevel'" [ObjectTableName]="ObjectTableName"
-                                          [DataContext]="DataContext"></LogLabel>
-                               </div>
-                        </td>
-
-                        <td style="top:10px;">
-                            <div style="width:90px">
-                                <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1" [max]="maxSecurityLevel" [allowNull]="true" [isDisabled]="!IsSecurityLevelOK || journalDisabled || !IsSecurityLevelVisible"></NumberInput>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <IconButton [Name]="'Add'" [disabled]="journalDisabled" (click)="AddLine()" [style.float]="isRTL ? 'right' : 'left'"></IconButton>
-                            </div>
-                        </td>
-                       
-                    </tr>
-              </table>
-            </td>
-          </tr>
 
           <tr>
             <!--<td colspan="2">

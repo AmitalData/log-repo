@@ -267,8 +267,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 Category4LocalName = customerPeriods.First().Category4LocalName,
                 Category5LocalName = customerPeriods.First().Category5LocalName,
                 Category6LocalName = customerPeriods.First().Category6LocalName,
-
-            };
+                SumTotalCredit = sumTotalCredit
+			};
             return customerStatus;
         }
 
@@ -304,8 +304,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             };
             return statusPeriod;
         }
-
-        private List<PeriodCurrencySummary> GetCurrencyPeriodsSummaries(List<PeriodMExtended> currencyPeriods)
+        decimal sumTotalCredit = 0;
+		private List<PeriodCurrencySummary> GetCurrencyPeriodsSummaries(List<PeriodMExtended> currencyPeriods)
         {
             var periodCurrencySummaries = new List<PeriodCurrencySummary>();
 
@@ -318,7 +318,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     TotalDebit = currencyPeriod.OpenDebit,
                     CurrencyCode = currencyPeriod.CurrencyCode
                 };
-                periodCurrencySummaries.Add(summary);
+                sumTotalCredit += summary.TotalCredit;
+
+				periodCurrencySummaries.Add(summary);
             }
 
             return periodCurrencySummaries;

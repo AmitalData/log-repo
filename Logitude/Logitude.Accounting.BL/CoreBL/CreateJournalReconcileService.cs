@@ -9,6 +9,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -70,11 +71,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     decimal totReconciliationAmountFromUnknownCurrency = ReconciliationLines.Sum(r => r.ReconciliationAmount);
                     if (totReconciliationAmountFromUnknownCurrency == 0)
                     {
-                        throw new ApplicationException("Total ReconciliationAmount is zero");
+                        bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                        var msg = TextCodesTranslator.TranslateText("JournalReconcile.O.TotalReconciliationAmountIsZero", tenant, showLocals);
+                        throw new ApplicationException(msg);
                     }
                     if (ReconciliationLines.Select(r => r.CurrencyId).Distinct().Count() > 1)
                     {
-                        throw new ApplicationException("לא אופיין התאמת תנועות  ליוצר ממטבע אחד");
+                        throw new ApplicationException("לא אופיין התאמת תנועות  ליותר ממטבע אחד");
                     }
                     DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
                     var qs = new GLAccountQueryService(_AccountingContext);

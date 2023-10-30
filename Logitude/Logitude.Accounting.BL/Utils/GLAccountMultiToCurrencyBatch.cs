@@ -161,7 +161,7 @@ namespace Logitude.Accounting.BL.Utils
                     bool othercurr = ledgerTransactionQueryService.CheckIfLedgerTransactionOtherCurrencyExist(myGLAccountId, toCurrencyId, tenant);
                     if (othercurr)
                     {
-                      //  this.AddErrorRow($"GLAccount id={gLAccountPM} display={gLAccountPM.DisplayNumber} has transactions not in {currency.Code}");
+                        this.AddErrorRow($"GLAccount {gLAccountPM.DisplayNumber} Id={gLAccountPM} has transactions not in {currency.Code}");
                       //  _errors = true;
                         only_part_2 = true;
                         recoMethod = gLAccountPM.ReconcileMethodCode;
@@ -250,7 +250,7 @@ namespace Logitude.Accounting.BL.Utils
 
                 string updated = _AccMade > 0 ? "Account Updated, " : "";
 
-                _ResponseText = $"{updated} Made Reconciliations: {_RecosMade}, Transactions: {_TransactionsMade}, Errors: {String.Join(", \n", _badList.ToArray())}";
+                _ResponseText = $"{updated} Made Reconciliations: {_RecosMade}, Transactions: {_TransactionsMade}, Errors/Messages: {String.Join(", \n", _badList.ToArray())}";
             }
             catch
             {

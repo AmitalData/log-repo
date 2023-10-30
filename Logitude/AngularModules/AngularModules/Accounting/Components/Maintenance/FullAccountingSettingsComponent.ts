@@ -307,6 +307,15 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    get NumberingByChartOfAccount() { return this.EntityPM.NumberingByChartOfAccount; }
+    set NumberingByChartOfAccount(value: boolean) {
+        if (this.EntityPM.NumberingByChartOfAccount != value) {
+            this.EntityPM.NumberingByChartOfAccount = value;
+
+            this.SetUIProperties();
+        }
+    }
+
     get DeductionFileNumber() { return this.EntityPM.DeductionFileNumber; }
     set DeductionFileNumber(value: string) {
         if (this.EntityPM.DeductionFileNumber != value) {
@@ -607,8 +616,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     // Signed 
 
     get HSM(){return this.EntityPM.HSM;}
-    set HSM(hsm:number){
-        var validateHsmResult=this.ValidateHsm(this.HSM);
+    set HSM(hsm:string){
+        var validateHsmResult=this.ValidateHsm(hsm);
         this.UIProperties.SetValidity("HSM", this.ObjectTableName, validateHsmResult.valid, validateHsmResult.errorMsg);
 
         if(this.EntityPM.HSM != hsm) {
@@ -683,7 +692,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             errorMsg:''
         };
         if(hsm != null) {
-            if (hsm.toString().length >15) {
+            if (hsm.length >15) {
                 res.valid=false;
                 res.errorMsg="HSM maximum size can be 15 digits";
             }

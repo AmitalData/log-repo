@@ -528,7 +528,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-
+        public Card GetCard(string id, int tenant)
+        {
+            
+                return (from a in context.Cards
+                    where a.Id == id && a.Tenant == tenant
+                    select a).FirstOrDefault();
+            
+            
+        }
 
 
         public IQueryable<Card> GetCards(List<string> allCardsId, int tenant)

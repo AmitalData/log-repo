@@ -492,7 +492,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
             return pms;
         }
-
+        public List<LedgerTransactionPM> GetByJournalIdAndForeignAmountCreditNotEqualZero(string journalId, int tenant)
+        {
+            List<LedgerTransaction> ledgerTransactionPOCOs = null;
+            ledgerTransactionPOCOs = repository.GetByJournalIdAndForeignAmountCreditNotEqualZero(journalId, tenant).ToList();
+            List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
+            return pms;
+        }
         public IQueryable<LedgerTransaction> GetIQueryableLedgerTransactionsByGLAccountIdsList(List<string> GLAccountIdsList, int tenant)
         {
             IQueryable<LedgerTransaction> ledgerTransactionPOCOs = null;

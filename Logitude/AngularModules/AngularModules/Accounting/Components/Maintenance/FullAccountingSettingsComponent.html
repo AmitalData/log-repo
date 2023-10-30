@@ -680,6 +680,18 @@
                                                             </LogTextBox>
                                                         </td>
                                                     </tr>
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width:180px; ">
+                                                            <LogLabel [ObjectFieldName]="'NumberingByChartOfAccount'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+    
+                                                        <td colspan="2">
+                                                            <CheckBox [IsChecked]="NumberingByChartOfAccount"
+                                                                (Checked)="NumberingByChartOfAccount = $event"></CheckBox>
+                                                        </td>
+                                                    </tr>
                                                 </table>
                                             </td>
                                         </tr>
@@ -926,29 +938,29 @@
                                                 <tr class="FormFieldRow">
                                                     <td style="width:180px; ">
                                                         <LogLabel [ObjectFieldName]="'IsPaymentChequesActivated'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"></LogLabel>
+                                                                  [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"></LogLabel>
                                                     </td>
 
                                                     <td colspan="2">
                                                         <CheckBox [IsChecked]="IsPaymentChequesActivated"
-                                                            (Checked)="IsPaymentChequesActivated = $event"></CheckBox>
+                                                                  (Checked)="IsPaymentChequesActivated = $event"></CheckBox>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width:180px; vertical-align:top">
                                                         <LogLabel [ObjectFieldName]="'PaymentChequesLogoId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"></LogLabel>
+                                                                  [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"></LogLabel>
                                                     </td>
 
                                                     <td style="vertical-align:top">
                                                         <div style="width:100px;height:100px">
                                                             <ImageComponent [WidthImage]="'95px'" [HeightImage]="'95px'"
-                                                                [ImageId]="ImageId" [EntityId]="EntityId"
-                                                                [EntityName]="ObjectTableName"
-                                                                (UploadCompleted)="ImageUploadedCompleted($event)"
-                                                                style="height:72px;width:72px"> </ImageComponent>
+                                                                            [ImageId]="ImageId" [EntityId]="EntityId"
+                                                                            [EntityName]="ObjectTableName"
+                                                                            (UploadCompleted)="ImageUploadedCompleted($event)"
+                                                                            style="height:72px;width:72px"> </ImageComponent>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1121,7 +1133,7 @@
 
                                                     <td colspan="2" style="width:200px">
                                                         <LogTextBox [ObjectFieldName]="'HSM'" [ObjectTableName]="ObjectTableName"
-                                                        [InputType]="'integer'" [DataContext]="DataContext"></LogTextBox>
+                                                        [InputType]="'text'" [DataContext]="DataContext"></LogTextBox>
 
                                                     </td>
                                                    
