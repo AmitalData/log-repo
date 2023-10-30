@@ -30,9 +30,9 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
-import { Guid } from 'Infrastructure/Utilities/Guid';
-import { ImageLibraryService } from 'Common/Services/Others/ImageLibraryService';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { ImageLibraryService } from 'Common/Services/Others/ImageLibraryService';
+import { Guid } from 'Infrastructure/Utilities/Guid';
  
 @Component({    
     templateUrl: './CustomsAnswersComponent.html',
@@ -148,10 +148,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         
         this.LoadLogo()
         this.SetFilter();
-      
     }
-
-
     LoadLogo(){
        
         this._imageLibraryService.DownloadFile("minilogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res: any) => {
@@ -171,6 +168,9 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         });
       
     }
+
+
+
      SetFilter() {
         var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
         if (myDeclarationEditComponentController.CustomsAnswersShowManifest) {
@@ -1002,10 +1002,10 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                         logWindow.Width = 1000;
                                         logWindow.Height = 600;
                                         //if (supplierInvoicePM.ClassificationCode != null) {
-                                        //    logWindow.Title = "אישורים לפרט מכס" + " " + supplierInvoicePM.ClassificationCode;
+                                        //    logWindow.Title = "םישורים לפרט מכס" + " " + supplierInvoicePM.ClassificationCode;
                                         //}
                                         //else {
-                                        //    logWindow.Title = "אישורים לפרט מכס";
+                                        //    logWindow.Title = "םישורים לפרט מכס";
                                         //}
                                         logWindow.ShowCloseButton = false;
                                         logWindow.WindowArgs = windowArgs;
@@ -1647,7 +1647,7 @@ export class ConstraintLineModel extends BaseComponent {
             var window = new LogitudeWindow();
             window.Width = 600;
             window.Height = 500;
-            window.Title = "פרטי אילוץ";
+            window.Title = "פרטי םילוץ";
             window.WindowArgs = {
                 DeclarationError: this.declarationError,
                 ConstraintPM: this.constraintPM,

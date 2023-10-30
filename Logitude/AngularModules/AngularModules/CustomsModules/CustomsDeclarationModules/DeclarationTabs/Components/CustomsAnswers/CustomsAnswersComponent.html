@@ -329,13 +329,13 @@
 
                                             <span>
                                                 <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
-                                                    <img [src]="src" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                    <img [src]="src" style="margin-right: -4px; margin-top: 1px" />  משימה ליבוםן
                                                 </button>
                                             </span>
 
                                             <span>
                                                 <button class="Button" style="height:18px; width: 90px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'LOGBOX'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
-                                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבוםן
                                                 </button>
                                             </span>
 
@@ -361,13 +361,13 @@
                         <td colspan="1" class="subTitle">{{'Customs.DeclarationConstraint.O.Constraints' | TextCodeTranslationPipe}} {{IsMoreThan50 ? AllConstraintCount:ConstraintsCount}}</td>
                         <td *ngIf="IsMoreThan50" colspan="2">
                             <div class="DisbleBox">
-                                <!--{{'מציג 50  אילוצים מתוך ' + AllConstraintCount}}-->
+                                <!--{{'מציג 50  םילוצים מתוך ' + AllConstraintCount}}-->
 
-                                קיימים {{AllConstraintCount}} אילוצים, 
-                                מציג אילוצים {{(currenctEndIndex > AllConstraintCount ? AllConstraintCount:currenctEndIndex) + '-' + (currenctStartIndex+1)}} &nbsp; &nbsp;
+                                קיימים {{AllConstraintCount}} םילוצים, 
+                                מציג םילוצים {{(currenctEndIndex > AllConstraintCount ? AllConstraintCount:currenctEndIndex) + '-' + (currenctStartIndex+1)}} &nbsp; &nbsp;
                                 <a style="font-size: 12px;" *ngIf="currenctStartIndex != 0" (click)="ConstraintNavigationButtonClicked('prev')" href="#">קודם </a>
                                 <span *ngIf="(currenctEndIndex <= AllConstraintCount) && (currenctStartIndex != 0)"> | </span>
-                                <a style="font-size: 12px;" *ngIf="currenctEndIndex <= AllConstraintCount" (click)="ConstraintNavigationButtonClicked('next')" href="#">הבא </a> 
+                                <a style="font-size: 12px;" *ngIf="currenctEndIndex <= AllConstraintCount" (click)="ConstraintNavigationButtonClicked('next')" href="#">הבם </a> 
 
                             </div>
                         </td>
@@ -382,7 +382,7 @@
                                         <div class="ListItem-right">
                                             <a (click)="constraint.ViewConstraintDetails()" *ngIf="constraint.IsStatusHyperlinkVisibile" style="display: block;" href="#">{{constraint.ConstraintStatus}}</a>
                                             <a (click)="constraint.ViewConstraintDetails()" *ngIf="constraint.IsApprovalDecisionHyperlinkVisibile" style="display: block;" href="#">{{constraint.ApprovalDecisionName}}</a>
-                                            <div style="color: #1b90cb;margin-top: 6px;" >מס' אילוץ {{ constraint.ConstraintId }} </div>
+                                            <div style="color: #1b90cb;margin-top: 6px;" >מס' םילוץ {{ constraint.ConstraintId }} </div>
                                         </div>
 
                                         <!-- Error -->
@@ -631,14 +631,14 @@
                                         <div style="text-align: right;"  *ngIf="item.ErrorType=='4589'" >
 
                                             <span>
-                                                <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'"  (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
-                                                    <img [src]="src" style="margin-right: -4px; margin-top: 1px"/>  משימה ליבואן
+                                                <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
+                                                    <img [src]="src" style="margin-right: -4px; margin-top: 1px" />  משימה ליבוםן
                                                 </button>
                                             </span>
 
                                             <span>
                                                 <button class="Button" style="height:18px; width: 90px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'LOGBOX'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
-                                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
+                                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבוםן
                                                 </button>
                                             </span>
 

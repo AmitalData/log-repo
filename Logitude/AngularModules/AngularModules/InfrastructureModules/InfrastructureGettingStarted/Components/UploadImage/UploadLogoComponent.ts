@@ -27,7 +27,7 @@ export class UploadLogoComponent implements AfterViewInit {
     MobilelogoHtmlId: string = Guid.newGuid();
     logoHtmlId: string = Guid.newGuid();
     SmalllogoHtmlId: string = Guid.newGuid();
-    miniLogoHtmlId: string = Guid.newGuid();
+    MiniLogoHtmlId: string = Guid.newGuid();
 
     MobileLogoFileHtmlId: string = Guid.NewRandomString();
     SharedLogisticsLogoFileHtmlId: string = Guid.NewRandomString();
@@ -58,7 +58,7 @@ export class UploadLogoComponent implements AfterViewInit {
         if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
             this.DemoMessageVisibility = true;
        
-            if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
+            if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com”") {
                 this.DemoMessageVisibility = false;
              
             }
@@ -122,22 +122,21 @@ export class UploadLogoComponent implements AfterViewInit {
                     } else HideImage(this.SmalllogoHtmlId);
 
                 } else HideImage(this.SmalllogoHtmlId);
-              
-                    this._imageLibraryService.DownloadFile("minilogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res: any) => {
-                        var pmResponse: ServiceResponse = res;
-                        
-                        this.CurrentSession.StopBusyIndicator();
-            
-                        if (!pmResponse.HasError) {
-                            var result = pmResponse.Result;
-                            if (result) {
-                                SetImage(this.miniLogoHtmlId, result, false);
-                            } else HideImage(this.miniLogoHtmlId);
+                this._imageLibraryService.DownloadFile("minilogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+                    var pmResponse: ServiceResponse = res;
+                    
+                    this.CurrentSession.StopBusyIndicator();
         
-                        } else HideImage(this.miniLogoHtmlId);
-                      
-                      
-                    });
+                    if (!pmResponse.HasError) {
+                        var result = pmResponse.Result;
+                        if (result) {
+                            SetImage(this.MiniLogoHtmlId, result, false);
+                        } else HideImage(this.MiniLogoHtmlId);
+    
+                    } else HideImage(this.MiniLogoHtmlId);
+                  
+                  
+                });
                   
                
 
@@ -292,6 +291,7 @@ export class UploadLogoComponent implements AfterViewInit {
                     if (filename == "logo") {
                         this.SendBlockToServer(filter.Base64String, "smalllogo", 150, 150, "jpg");
                         this.SendBlockToServer(filter.Base64String, "minilogo", 30, 15, "jpg");
+
                     }
                     else {
 
