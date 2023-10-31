@@ -95,6 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     myInsertEventContextTagModel.EventCode = "RDA";
                     myInsertEventContextTagModel.EventRemarks = "Required Document Verified By Customs";
                     myInsertEventContextTagModel.FUStatusRemarks = "דרישת מסמך אומתה " + "\n" + "הערות - " + customResponse.GeneralDetails.remarks;
+                    this.UpdateRequestedCustomsDocId(customResponse, requestParams);
                     break;
                 case 4: // נדחה
                     myCustomsDocumentsTicketPM.VerificationStatusTypeCode = "6";
@@ -138,6 +139,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void UpdateRequestedCustomsDocId(VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessage customResponse, RequiredDocumentRequestParams requestParams)
         {
             var customContext = CustomContext.GetContext(requestParams.Tenant);
+            var CustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+
             var myDeclarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var myQueryService = new DeclarationQueryService(requestParams.Tenant);
             if (customResponse?.ConnectedEntity.Length > 0 && customResponse?.ConnectedEntity[0].entityIdKey1 != null)
@@ -145,9 +148,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var _MyDeclarationPM = myQueryService.GetSingle(customResponse?.ConnectedEntity[0].entityIdKey1, true, false);
                 if (_MyDeclarationPM != null)
                 {
-                    _MyDeclarationPM.RequestedCustomsDocId = 0;
-                    _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                    var IsThereRequestCustomDoc = CustomsDocumentsTicketQueryService.GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(_MyDeclarationPM.Id);
+                    if (!IsThereRequestCustomDoc) {
+                        _MyDeclarationPM.RequestedCustomsDocId = 0;
+                        _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                        myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                    }
                 }
             }
 
