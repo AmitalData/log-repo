@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimUpdateClass
    {  		
-		public const string HashString = "f88ca9b1a89249c3c75b3ffedae55807";
+		public const string HashString = "01013ca355a4641c0c736244c88eb23f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4363,7 +4363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ClaimTextCode_CustomsClaimTHCustomAnswer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.CustomAnswer", DefaultText = "Customs Answer",LocalDefaultText = @"תשובת המכס", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimOImporterAffidavitRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ImporterAffidavitRequired", DefaultText = "If field improve declar 3 is not empty text field must contain value",LocalDefaultText = @"אם שדה תצהיר יבואן 3 מכיל ערך חובה להוסיף טקסט", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimOImporterAffidavitRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ImporterAffidavitRequired", DefaultText = "If field improve declar 3 is not empty text field must contain value",LocalDefaultText = @"אם שדה תצהיר יבואן 3 מכיל ערך, חובה להוסיף טקסט", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
