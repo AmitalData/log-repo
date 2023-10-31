@@ -201,8 +201,7 @@ export class DeclarationReferantDataFiltersMenuComponent
         //this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
         this.ApplyTransportSelectedStyle();
         if (this.myViewChildrenMultiSelectLOVComponent != null) {
-            this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
-            this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
+            this.myViewChildrenMultiSelectLOVComponent.forEach(x=>x.Invalidate());
         }
         this._CD.detectChanges();
         this.apiQueryFiltersChanged = false;
