@@ -22,7 +22,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.ToTable("OceanInsightsStatusLogs");
             this.Property(t => t.Id).HasColumnName("Id"); 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
-            this.Property(t => t.OceanInsigntRequestId).HasColumnName("OceanInsigntId");
+            this.Property(t => t.OceanInsigntRequestId).HasColumnName("OceanInsigntRequestId");
 			this.Property(t => t.XML).HasColumnName("XML");
 			this.Property(t => t.CreateDate).HasColumnName("CreateDate");
           
