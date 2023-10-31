@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankDepositUpdateClass
    {  		
-		public const string HashString = "47b2838d7c0de7a61091283d0742739e";
+		public const string HashString = "45f97969c1b51cab69faaf80bda93ff1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2608,7 +2608,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode BankDepositTextCode_BankDepositOAlreadyDeposited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.AlreadyDeposited", DefaultText = "There is a cheques was already deposited, please reload the screen",LocalDefaultText = @"קיים בהפקדה שיק שכבר הופקד. ( יש לרענן את המסך)", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode BankDepositTextCode_BankDepositOCancelOrderInCashbookStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.CancelOrderInCashbookStatus", DefaultText = "In order to cancel a deposit, all cheqes must be at status ''in cashbook",LocalDefaultText = "על מנת לבטל הפקדה על כל השקים להיות בסטאטוס ''בקופה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode BankDepositTextCode_BankDepositOCancelOrderInCashbookStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.CancelOrderInCashbookStatus", DefaultText = "A deposit cannot be canceled when one or more of the bags are not in the bank",LocalDefaultText = @"לא ניתן לבטל הפקדה כאשר אחד או יותר מהשקים אינם בבנק", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

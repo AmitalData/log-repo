@@ -3011,8 +3011,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;BankDeposit.O.CancelOrderInCashbookStatus&quot;"
-      DefaultText="&quot;In order to cancel a deposit, all cheqes must be at status &quot;in cashbook&quot;"
-      LocalDefaultText="&quot;על מנת לבטל הפקדה על כל השקים להיות בסטאטוס &quot;בקופה&quot;"
+      DefaultText="&quot;A deposit cannot be canceled when one or more of the bags are not in the bank&quot;"
+      LocalDefaultText="&quot;לא ניתן לבטל הפקדה כאשר אחד או יותר מהשקים אינם בבנק&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
