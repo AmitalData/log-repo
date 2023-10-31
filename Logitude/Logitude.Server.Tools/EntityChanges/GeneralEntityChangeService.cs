@@ -124,7 +124,7 @@ namespace Logitude.Server.Tools.EntityChanges
 
         private string GetShipmentTableName(object entityPM)
         {
-            string shipmentLevelCode = entityPM.GetType().GetProperty("ShipmentLevelCode")?.GetValue(entityPM)?.ToString();
+            string shipmentLevelCode = entityPM?.GetType()?.GetProperty("ShipmentLevelCode")?.GetValue(entityPM)?.ToString();
             string shipmentTableName = shipmentLevelCode == "C" ? "Master" : shipmentLevelCode == "H" ? "Shipment" : "MasterAndHouse";
             return shipmentTableName;
         }
