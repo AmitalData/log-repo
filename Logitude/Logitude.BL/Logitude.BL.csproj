@@ -836,6 +836,9 @@
     <Compile Include="ShipmentsModel\APIDataContract\VizionModels.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\DigitalPortalCustomFilter.cs" />
     <Compile Include="ShipmentsModel\EntityOtherServices\ContainerShipmentUpdateService.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusLogPM.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsStatusLogMapping.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsStatusLogService.cs" />
     <Compile Include="ShipmentsModel\Tools\ExternalService\ShipmentAdditionalDataService.cs" />
     <Compile Include="ShipmentsModel\EntityLists\DigitalShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentDigitalFieldList.cs" />
