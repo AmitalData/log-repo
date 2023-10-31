@@ -336,7 +336,7 @@ namespace Logitude.BL.Helpers
             repository.Update(invocie);
             repository.SubmitChanges();
              this.CreateEvent("HSMF", invocie, "חתימת החשבונית לא  צלחה"+ ex);
-            this.SendEmailAlert("ohad@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+invocie.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex, invocie.Tenant);
+            this.SendEmailAlert("ohad@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+invocie.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex, invocie.Tenant, invocie.Id);
         }
 
 
@@ -365,7 +365,7 @@ namespace Logitude.BL.Helpers
             });
         }
 
-        private void SendEmailAlert(string email, string subject, string body,int tenant)
+        private void SendEmailAlert(string email, string subject, string body,int tenant,string entityId)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             ContactRepository contactRepository = new ContactRepository(commonContext);
@@ -388,6 +388,10 @@ namespace Logitude.BL.Helpers
                 EmailBody = HtmlTemplate.ToString(),
                 LoggingUserId = loggedContact.Id,
                 Tenant = tenant,
+                LoggingEntityId= entityId,
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("ARInvoice")
+,
+
             };
             Communications.AddEmailCommunicationLogQueue(emailParams, tenant);
         }
