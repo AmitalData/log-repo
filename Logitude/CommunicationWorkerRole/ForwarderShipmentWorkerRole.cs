@@ -288,7 +288,7 @@ namespace CommunicationWorkerRole
                                                 var result = client.PostAsync(ImporterShipmentsURI, content);
 
                                                 result.Wait();
-												LogitudeSettings.HandleLogMe("Step 4" + result?.Result?.StatusCode.ToString() + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
+												LogitudeSettings.HandleLogMe("Step 4"  + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
 
 												if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                 {
