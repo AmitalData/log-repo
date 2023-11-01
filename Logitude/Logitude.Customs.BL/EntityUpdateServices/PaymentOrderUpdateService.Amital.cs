@@ -28,6 +28,8 @@ using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
+using System.Configuration;
+using System.Globalization;
 //using Logitude.Customs.BL.EntityPMs;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
@@ -40,7 +42,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private PaymentOrderPM _DirtyEntityPM;
         private string _LoggingUserId;
 
-        private void UpdateUnifreight(PaymentOrderPM dirtyEntityPM)
+        DateTime stopLogAt = DateTime.MinValue;
+        string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220227T155633.LogUntilDateyyyyMMdd"];
+            
+    private void UpdateUnifreight(PaymentOrderPM dirtyEntityPM)
         {
             bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyEntityPM.Tenant).IsConnectedToUniFreight;
             this._DirtyEntityPM = dirtyEntityPM;
@@ -255,6 +260,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private void UpdateUnifreightPaymentOrder(PaymentOrderPM dirtyEntityPM, DeclarationPM connectedDeclarationPM, string loggingUserId)
         {
             //return;
+            
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+            LogitudeSettings.HandleLogMe("start UpdateUnifreightPaymentOrder", false, "UniPaymentOrder", stopLogAt);
             LogMessagingUtil.Instance.AppendLine("!UpdateUnifreightBilling>FileState=" + dirtyEntityPM.PaymentStatusCode ?? "NULL");
             if (dirtyEntityPM.PaymentOrderMethods == null || dirtyEntityPM.PaymentOrderMethods.Count == 0)
             { // moran 7.6.15 - Task 12424 - add checks for not null or zero //Mirit 27/9/18 Remove: dirtyEntityPM.PaymentOrderMethods[0].CustomerActivityTypeCode != "3"
@@ -292,6 +306,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //TO:
             if (dirtyEntityPM.PaymentOrderSelectedLabel == "AccountingCustomFile" && (dirtyEntityPM.AccountingCustomFile == connectedDeclarationPM.CustomFileNo || dirtyEntityPM.CustomFiles == connectedDeclarationPM.CustomFileNo))
             {
+                LogitudeSettings.HandleLogMe("get to OpenUnifreighTask line 309", false, "UniPaymentOrder", stopLogAt);
                 myFile.LogitudePaymentOrder.FirstOrDefault().AccountingCard = null;
                 var xml = XmlGenericUtil<LOGIPAYORD>.SerializeObject(myFile, true);
                 OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile,connectedDeclarationPM, "LA2U", "POP", true, xml, dirtyEntityPM.Tenant);
@@ -301,6 +316,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 if (dirtyEntityPM.PaymentOrderSelectedLabel == "PaymentOrderAccCard" && !string.IsNullOrWhiteSpace(dirtyEntityPM.AccountingCustomFile)) // moran 10.5.16 - task 19778 add NOT to IsNullOrWhiteSpace check
                 {
+                    LogitudeSettings.HandleLogMe("get to OpenUnifreighTask line 319", false, "UniPaymentOrder", stopLogAt);
                     myFile.LogitudePaymentOrder.FirstOrDefault().Primary = null;
                     var xml = XmlGenericUtil<LOGIPAYORD>.SerializeObject(myFile, true);
                     OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile,connectedDeclarationPM, "LA2U", "POP", false, xml, dirtyEntityPM.Tenant);
@@ -308,6 +324,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 else // moran 18.7.16 - Task 21934
                 {
+                    LogitudeSettings.HandleLogMe("get to OpenUnifreighTask line 327", false, "UniPaymentOrder", stopLogAt);
                     myFile.LogitudePaymentOrder.FirstOrDefault().AccountingCard = null;
                     var xml = XmlGenericUtil<LOGIPAYORD>.SerializeObject(myFile, true);
                     OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile,connectedDeclarationPM, "LA2U", "POP", true, xml, dirtyEntityPM.Tenant);
@@ -479,6 +496,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         // moran 4.6.15 - Task 12424 -->
         private void OpenUnifreighTask(string accountingCustomFile, DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlReq, int tenant)
         {
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+            LogitudeSettings.HandleLogMe("start OpenUnifreighTask", false, "UniPaymentOrder", stopLogAt);
             var sw = Stopwatch.StartNew();
             var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
             TransactionScope scope = null;
@@ -564,6 +589,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 else
                 {
+                    LogitudeSettings.HandleLogMe("update YCULTASK", false, "UniPaymentOrder", stopLogAt);
                     var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
                     myYCULTASKUpdateService.DontAddTransaction = true;
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
@@ -588,7 +614,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         //GSTRING1 = string.IsNullOrWhiteSpace(dirtyDeclarationPM.CustomFileNo) ? "NO_LOCK" : "",
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
-
+                    LogitudeSettings.HandleLogMe("update GGGQ", false, "UniPaymentOrder", stopLogAt);
                     var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
                     myGGGQUpdateService.DontAddTransaction = true;
                     myGGGQUpdateService.Update(myGGGQPM, true);
@@ -596,14 +622,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if (scope != null)
                 {
+                    LogitudeSettings.HandleLogMe("scope.complete", false, "UniPaymentOrder", stopLogAt);
                     scope.Complete();
                 }
 
             }
             finally
             {
+                LogitudeSettings.HandleLogMe("scope", false, "UniPaymentOrder", stopLogAt);
                 if (scope != null)
                 {
+                    LogitudeSettings.HandleLogMe("scope.disponse", false, "UniPaymentOrder", stopLogAt);
                     scope.Dispose();
                 }
             }
