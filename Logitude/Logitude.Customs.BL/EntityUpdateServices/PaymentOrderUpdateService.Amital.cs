@@ -504,6 +504,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                                     DateTimeStyles.None);
             }
             LogitudeSettings.HandleLogMe("start OpenUnifreighTask", false, "UniPaymentOrder", stopLogAt);
+            LogitudeSettings.HandleLogMe("parameters : taskType" + taskType + "xmlReq" + xmlReq + "tanant" + tenant, false, "UniPaymentOrder", stopLogAt);
             var sw = Stopwatch.StartNew();
             var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
             TransactionScope scope = null;
@@ -526,6 +527,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var requestData = "";
 
                 var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(tenant);
+                LogitudeSettings.HandleLogMe("unifreightUser " + unifreightUser, false, "UniPaymentOrder", stopLogAt);
                 if (raiseStatus == true)
                 {
                     //var myDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, null, null);
@@ -626,6 +628,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     scope.Complete();
                 }
 
+            }
+            catch (Exception ex)
+            {
+                LogitudeSettings.HandleLogMe("exception :" + ex.ToString(), false, "UniPaymentOrder", stopLogAt);
             }
             finally
             {
