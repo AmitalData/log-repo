@@ -28,7 +28,8 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             var AccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AccountId").FirstOrDefault().FieldValue.ToString();
             var IsFutureOpenCheques = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsFutureOpenCheques").FirstOrDefault().FieldValue.ToString();
             GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, accountingContext, IsFutureOpenCheques == "True");
-            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(AccountId, queryOperations.SortByColumnName, queryOperations.SortDirectin);
+            var cardId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CardId").FirstOrDefault()?.FieldValue.ToString();
+            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(AccountId, queryOperations.SortByColumnName, queryOperations.SortDirectin,cardId);
             MapLedgerTransactionnList(tranactions);
             return tranactions;
         }
