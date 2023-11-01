@@ -479,7 +479,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             }
 
-            if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
+             if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
             {
 
                 this.Response.StartBalanceLocal = startAccountBalanceService.GetBalanceOfLocalAmount(_Param.CurrencyId).GetValueOrDefault();
@@ -488,12 +488,15 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 this.Response.StartBalanceForeignList = startAccountBalanceService.GetCallBackBalanceOfCurrency(_Param.CurrencyId);
                 this.Response.EndBalanceForeignList = endAccountBalanceService.GetCallBackBalanceOfCurrency(_Param.CurrencyId);
+                this.Response.EndBalanceForeign = endAccountBalanceService.GetBalanceOfForeignAmount(_Param.CurrencyId).GetValueOrDefault();
 
             }
             else
             {
                 this.Response.StartBalanceForeignList = startAccountBalanceService.GetCallBackBalance();
                 this.Response.EndBalanceForeignList = endAccountBalanceService.GetCallBackBalance();
+                this.Response.EndBalanceForeign = endAccountBalanceService.GetBalanceOfForiegnAmount().GetValueOrDefault();
+
 
 
                 this.Response.StartBalanceLocal = startAccountBalanceService.GetBalanceOfLocalAmount().GetValueOrDefault();
