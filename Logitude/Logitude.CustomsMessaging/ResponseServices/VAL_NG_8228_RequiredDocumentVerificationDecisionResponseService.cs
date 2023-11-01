@@ -145,7 +145,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myQueryService = new DeclarationQueryService(requestParams.Tenant);
             if (customResponse?.ConnectedEntity.Length > 0 && customResponse?.ConnectedEntity[0].entityIdKey1 != null)
             {
-                var _MyDeclarationPM = myQueryService.GetSingle(customResponse?.ConnectedEntity[0].entityIdKey1, true, false);
+                var customfileno = myQueryService.GetCustomFileNoByDeclarationNumber(customResponse?.ConnectedEntity[0].entityIdKey1, requestParams.Tenant);
+                var _MyDeclarationPM = myQueryService.GetAcceptDeclarationAmendmentByCustomsFile(customfileno, requestParams.Tenant);
                 if (_MyDeclarationPM != null)
                 {
                     var IsThereRequestCustomDoc = CustomsDocumentsTicketQueryService.GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(_MyDeclarationPM.Id);
