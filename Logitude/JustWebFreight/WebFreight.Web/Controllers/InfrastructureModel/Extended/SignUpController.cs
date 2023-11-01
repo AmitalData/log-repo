@@ -103,7 +103,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             byte[] bytearray = memstream.ToArray();
 
             SignUpHelper signUpHelper = new SignUpHelper();
-            signUpHelper.SendMessageToQueue(bytearray);
+            signUpHelper.SendMessageToQueue(bytearray, signupInfo);
         }
     }
 }

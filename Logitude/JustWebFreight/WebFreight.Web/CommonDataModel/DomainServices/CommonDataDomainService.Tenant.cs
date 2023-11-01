@@ -199,7 +199,14 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             {
                 throw new ApplicationException("You are not authorized to do this operation");
             }
-
+            Setting setting;
+            using (TransactionScope setScope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 0, 0)))
+            {
+                SettingRepository settingRepository = new SettingRepository();
+                setting = settingRepository.GetSingleSetting("1");
+                setScope.Complete();
+            }
+            if(setting.WorkEnvironment != "customs")
             TenantValidating.Validate(currentTenant);
 
             if (CacheManager.CacheWrapper.Get(entityName) != null)
@@ -223,10 +230,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 CommonDataDomainService service = new CommonDataDomainService();
                 currentTenant.CurrencyId = service.GetTenantCurrency(currentTenant.CurrencyId, currentTenant.Id);
             }
-
-            SettingRepository settingRepository = new SettingRepository();
-
-       var     setting = settingRepository.GetSingleSetting("1");
+           
 
 
             if (!string.IsNullOrEmpty(currentTenant.ProfitCurrencyId) && setting.WorkEnvironment!="customs")
