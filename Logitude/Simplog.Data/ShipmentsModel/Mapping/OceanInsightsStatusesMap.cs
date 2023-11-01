@@ -18,16 +18,18 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CommunicationLogId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ContentDocumentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OceanInsightsRequestId).HasMaxLength(15).IsUnicode(false);
+			this.Property(t => t.XML).IsMaxLength().IsUnicode(true);
 
-            this.ToTable("OceanInsightsStatuses");
+			this.ToTable("OceanInsightsStatuses");
             this.Property(t => t.Id).HasColumnName("Id"); 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.CommunicationLogId).HasColumnName("CommunicationLogId");
             this.Property(t => t.ContentDocumentId).HasColumnName("ContentDocumentId");
             this.Property(t => t.OceanInsightsRequestId).HasColumnName("OceanInsightsRequestId");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+			this.Property(t => t.XML).HasColumnName("XML");
 
-            this.HasRequired(t => t.CommunicationLog)
+			this.HasRequired(t => t.CommunicationLog)
              .WithMany()
              .HasForeignKey(d => d.CommunicationLogId)
              .WillCascadeOnDelete(false);

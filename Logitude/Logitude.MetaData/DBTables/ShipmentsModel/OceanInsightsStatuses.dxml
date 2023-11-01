@@ -45,6 +45,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+  Name="XML"
+  Type="nvarchar"
+  Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="OceanInsightsRequestId"
     ReferencedTable="OceanInsightsRequests"

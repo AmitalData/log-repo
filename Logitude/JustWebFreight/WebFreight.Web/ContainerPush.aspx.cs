@@ -334,8 +334,10 @@ namespace WebFreight.Web
                     Id = IdCounter.GetNumber("OceanInsightsStatuses", TempRec.Tenant),
                     Tenant = TempRec.Tenant,
                     OceanInsightsRequestId = TempRec.Id,
-                    CreateDate = DateTime.Now
-                };
+                    CreateDate = DateTime.Now,
+					XML = data
+
+				};
                 //-------------------------------------------------------------------------
 
                 int tenant = OceanInsightsRequest.Tenant;
