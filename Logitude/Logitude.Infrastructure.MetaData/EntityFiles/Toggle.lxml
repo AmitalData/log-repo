@@ -43,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;7b68&quot;"
+  Code="&quot;f333&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -991,6 +991,11 @@
       Name="&quot;Select More Lines&quot;"
       SearchFields="&quot;SML, Select More Lines&quot;"
       Description="&quot;Select 2000 Lines &quot;" />
+    <Record
+      Code="&quot;UQD&quot;"
+      Name="&quot;Update Quote Documents&quot;"
+      SearchFields="&quot;UQD,Update Quote Documents&quot;"
+      Description="&quot;Update Quote Documents&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

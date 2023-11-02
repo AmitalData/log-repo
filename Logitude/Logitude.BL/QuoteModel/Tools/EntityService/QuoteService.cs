@@ -46,6 +46,9 @@ using System.Reflection;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools.CustomFields;
 using Logitude.BL.AnalyticTableServices;
+using Newtonsoft.Json;
+using System.Text;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.QuoteModel.Tools.EntityService
 {
@@ -262,7 +265,18 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 this.UpdateQuoteChargesCollection();
                 this.UpdateQuoteFollowUpsCollection();
                 this.UpdateQuotePackageCollection();
-                this.UpdateQuoteDocumentVersionCollection();
+                if (FeatureToggleHelper.HasFeatureToggle("UQD", tenant))
+                {
+                    string communicationLogId = WriteEntityPMOnCommunicationLog(entityPM);
+                    IQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("DocumentsExecutionQueue", entityPM.Tenant);
+                    queueservice.Send(new Dictionary<string, string>() { { "Tenant", entityPM.Tenant.ToString() }, { "communicationLogId", communicationLogId } }, entityPM.Tenant, null, null);
+                    entityPM.CommunicationLogId = communicationLogId;
+                }
+                else {
+                    this.UpdateQuoteDocumentVersionCollection();
+                }
+                
                 this.UpdateTotalVats();
 
                 QuoteTracing.Trace(entityPM, entityPoco, initializer.LoggedContactId, isNewEntity);
@@ -334,7 +348,23 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.quoteFollowUpUpdateService = new QuoteFollowUpUpdateService(entityPM, entityPM.Tenant);
             quoteFollowUpUpdateService.RefreshFollowUps();
         }
-
+        private string WriteEntityPMOnCommunicationLog(QuotePM quotePM)
+        {
+            string jsonString = JsonConvert.SerializeObject(quotePM);
+            byte[] xmlFile = Encoding.UTF8.GetBytes(jsonString);
+            return Communications.AddCommunicationLog(new CommunicationsParams()
+            {
+                LoggingEntityId = quotePM.Id,
+                Tenant = quotePM.Tenant,
+                CommunicationLogTypeCode = "Q",
+                Priority = 1,
+                InOut = "O",
+                Status = "W",
+                Subject = "Update Quote Document",
+                FolderName = "Other",
+                ByteData = xmlFile
+            });
+        }
         public QuotePM DisconnectQuoteFromOpportunity(string quoteId)
         {
             if (string.IsNullOrEmpty(quoteId))
@@ -1310,6 +1340,14 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        public void UpdateQuoteDocuments(QuotePM quotePM) 
+        {
+            this.entityPM = quotePM;
+            this.tenant = quotePM.Tenant;
+            this.quoteDocumentVersionChangeSet = quotePM.QuoteDocumentVersions;
+            this.UpdateQuoteDocumentVersionCollection();
         }
         private void UpdateQuoteDocumentVersionCollection()
         {

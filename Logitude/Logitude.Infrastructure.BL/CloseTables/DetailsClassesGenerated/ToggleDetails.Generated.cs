@@ -964,6 +964,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SML, Select More Lines", 
                 Description = "Select 2000 Lines ", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "UQD", 
+                Name = "Update Quote Documents", 
+                SearchFields = "UQD,Update Quote Documents", 
+                Description = "Update Quote Documents", 
+			});
 			
             return all;
        }

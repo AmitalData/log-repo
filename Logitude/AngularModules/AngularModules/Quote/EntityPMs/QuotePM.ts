@@ -1872,7 +1872,7 @@ export class QuotePM {
     public get CustomChildEntities() { return this.customChildEntities; }
     public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
 
-	 
+	public CommunicationLogId: string; 
 
     public OldEntityPM: QuotePM;
 		
