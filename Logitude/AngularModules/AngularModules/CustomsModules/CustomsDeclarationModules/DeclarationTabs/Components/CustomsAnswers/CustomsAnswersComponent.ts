@@ -37,6 +37,7 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 })
 
 export class CustomsAnswersComponent extends BaseComponent implements AfterViewInit {
+    public AnswerType= AnswerType; 
     public EntityPM: DeclarationPM;
     public ObjectTableName: string = "Customs.Declaration";
     public DataContext: any = this;
@@ -535,7 +536,6 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     BuildDeclarationErrorsWithConstraintsList(declarationErrors: DeclarationErrorView[]) {
         var errorsList = [];
         var warningList = [];
-
         // reset grids
         this.Errorslist.Clear();
         this.Warninglist.Clear();
@@ -596,8 +596,17 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         }
 
         this.CurrentSession.StopBusyIndicator();
-        if(this.SelectedRowB4Refresh != null) {
-            this.SelectedRow = (this.Errorslist.Collection as unknown as DeclarationErrorView[]).filter(d => d.Field == this.SelectedRowB4Refresh.Field && d.LineNumber == this.SelectedRowB4Refresh.LineNumber)[0];
+    
+        var currentError=this.SelectedRowsByType.get(AnswerType.Error);
+        if(currentError){
+            var newMatchedError=(this.Errorslist.Collection as unknown as DeclarationErrorView[]).filter(d => d.Field == currentError.Field && d.LineNumber == currentError.LineNumber)[0];
+            this.SelectedRowsByType.set(AnswerType.Error,newMatchedError);
+        }
+
+        var currentWarning=this.SelectedRowsByType.get(AnswerType.Warning);
+        if(currentWarning){
+            var newMatchedWarning=(this.Warninglist.Collection as unknown as DeclarationErrorView[]).filter(d => d.Field == currentWarning.Field && d.LineNumber == currentWarning.LineNumber)[0];
+            this.SelectedRowsByType.set(AnswerType.Warning,newMatchedWarning);  
         }
     }
 
@@ -732,12 +741,17 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
 
     //#region XML Errors
+    public SelectedConstraint: DeclarationErrorView;
+    public SelectedRowsByType= new Map<AnswerType, DeclarationErrorView>();
+    EditEntity(error: any,answerType:AnswerType) {
+        let declarationError=error;
 
-    public SelectedRow: DeclarationErrorView = null;
-    public SelectedRowB4Refresh: DeclarationErrorView = null;
-    EditEntity(declarationError: DeclarationErrorView) {
-        this.SelectedRow = declarationError;
-        this.SelectedRowB4Refresh = this.SelectedRow;
+        if(answerType==AnswerType.Constraint){
+            declarationError=error.hasNoError? null: error.declarationError;
+            this.SelectedConstraint=error;
+        }else{
+            this.SelectedRowsByType.set(answerType, declarationError);
+        }
         if (AppTool.IsNullOrEmpty(declarationError)) {
             console.warn("[!] There is no declaraion error for the constraint!");
         } else {
@@ -1226,7 +1240,11 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
     //#endregion
 }
-
+export enum AnswerType {
+    Error,
+    Constraint,
+    Warning
+};
 export class ConstraintLineModel extends BaseComponent {
 
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
