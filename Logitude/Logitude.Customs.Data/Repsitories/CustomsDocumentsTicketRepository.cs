@@ -243,7 +243,7 @@ FROM ( SELECT DISTINCT
         public Boolean GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(string declarationId) {
             var result = (from pointer in context.CustomsDocumentPointers
                           join ticket in context.CustomsDocumentsTickets on pointer.CustomsDocumentsTicketId equals ticket.Id
-                          where pointer.ParentEntityId == declarationId && ticket.RequestedCustomsDocId != null && (ticket.VerificationStatusTypeCode != "4" || ticket.VerificationStatusTypeCode != "5")
+                          where pointer.ParentEntityId == declarationId && ticket.RequestedCustomsDocId != null && (ticket.VerificationStatusTypeCode != "4" && ticket.VerificationStatusTypeCode != "5")
                           select ticket).Any();
             return result;
 
