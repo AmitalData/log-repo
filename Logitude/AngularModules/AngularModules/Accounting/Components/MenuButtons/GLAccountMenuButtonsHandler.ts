@@ -216,16 +216,23 @@ export class GLAccountMenuButtonsHandler {
                 var gLAccount: GLAccountList = response.Result as GLAccountList;
 
                 if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) {
-                    this.EntityPM.Inactive = inactive;
-                    if (inactive) {
-                        this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
-                    }
-                    this.SaveChenges();
+                    this.SetReactivateAccount;
                 } else {
+                    if (!inactive){
+                        this.SetReactivateAccount;
+                    }
                     this.entityArgs.EditComponent.ValidationErrorsList = [];
                     this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
                 }
             });
+    }
+    
+    private SetReactivateAccount(inactive) {
+        this.EntityPM.Inactive = inactive;
+                    if (inactive) {
+                        this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
+                    }
+                    this.SaveChenges();
     }
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
