@@ -16,4 +16,5 @@ export class AccountingURLs {
     public static readonly DocumentTypeTemplateExtended="**/DocumentTypeTemplateExtended/getdocumenttypetemplatelistsfordocumenttype/**"
     public static readonly DocumentTypeExtended="**/DocumentTypeExtended/getsingledocumenttype/**"
     public static readonly DocumentTypeCustomField="**/DocumentTypeCustomField/**"
+    public static readonly CargoSerialData='**/declarations'
 }
