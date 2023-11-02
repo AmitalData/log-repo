@@ -298,5 +298,5 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <UniqueConstraint
-    Columns="Tenant,AirlineId,MAWB" />
+    Columns="Tenant,AirlineId,MAWB,HAWB" />
 </Table>
