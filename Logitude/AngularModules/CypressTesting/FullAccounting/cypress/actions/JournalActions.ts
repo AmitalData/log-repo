@@ -13,13 +13,9 @@ export function NavigatesJournalWorkspace() {
 
 export function FillLineActionDetails(journalLineActionDetails: JournalLineActionDetails) {
     cy.FillLogLov(JournalSelectors.ActionName, journalLineActionDetails.ActionName, true)
-    //cy.get(JournalSelectors.ActionRefDate).type(journalLineActionDetails.DueDate)
-    //cy.get(JournalSelectors.ActionDueDate).type(journalLineActionDetails.RefDate)
-    // FillGLAccountDDL(JournalSelectors.ActionDebitAccount, journalLineActionDetails.DebitAccount)
-    FillDropdownInRowTable('C. Account', journalLineActionDetails.CreditAccount);
-    FillDropdownInRowTable('D. Account', journalLineActionDetails.DebitAccount);
-    //cy.get(JournalSelectors.ActionAmount).type(journalLineActionDetails.Amount)
-    FillInRowTable('Amount (NIS)', journalLineActionDetails.Amount)
+    FillDropdownInRowTable('חשבון זכות', journalLineActionDetails.CreditAccount);
+    FillDropdownInRowTable('חשבון חובה', journalLineActionDetails.DebitAccount);
+    FillInRowTable('סכום (NIS)', journalLineActionDetails.Amount)
     cy.get(JournalSelectors.AccountingDate).focus();
 }
 
