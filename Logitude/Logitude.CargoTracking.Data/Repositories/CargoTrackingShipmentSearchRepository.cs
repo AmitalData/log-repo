@@ -33,6 +33,7 @@ namespace Logitude.CargoTracking.Data.Repositories
                             
                             searchEntity.Tenant == tenant &&
                             searchEntity.SearchFields == searchField &&
+                            searchEntity.ShipmentDate > minDate &&
                             searchEntity.IsPublic == true                             
                             orderby searchEntity.ShipmentDate descending
                             select searchEntity
