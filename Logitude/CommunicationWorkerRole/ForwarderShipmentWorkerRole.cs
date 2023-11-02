@@ -24,11 +24,14 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -92,7 +95,17 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
+				DateTime stopLogAt = DateTime.MinValue;
+				string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20231101T142700.LogUntilDateyyyyMMdd"];
+				if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+				{
+					stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+														"yyyyMMdd",
+														CultureInfo.InvariantCulture,
+														DateTimeStyles.None);
+				}
+
+				APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
                 {
                     PrimaryKey = "8eb9c6e4-c1ca-43e5-8061-87a7adcdc5f8",
                     SecondaryKey = "c2dd0ebf-20bf-4d44-916c-7f9000dce4ec"
@@ -187,8 +200,9 @@ namespace CommunicationWorkerRole
                             {
                                 if (!string.IsNullOrEmpty(ShipmentId))
                                 {
+									LogitudeSettings.HandleLogMe("Step 1 !string.IsNullOrEmpty(ShipmentId)" + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
 
-                                    apiLogsService = new APILogsService(webFreightContext, tenant);
+									apiLogsService = new APILogsService(webFreightContext, tenant);
                                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                                     ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
@@ -196,7 +210,9 @@ namespace CommunicationWorkerRole
                                     var ForwarderShipment = shipmentQuery.GetSinglePM(ShipmentId, tenant);
                                     if (ForwarderShipment != null)
                                     {
-                                        var Objecttable = objectTabelRepository.GetObjectTableByName("Shipment", tenant, true);
+										LogitudeSettings.HandleLogMe("Step 2 if (ForwarderShipment != null)" + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
+
+										var Objecttable = objectTabelRepository.GetObjectTableByName("Shipment", tenant, true);
                                         LogPM.ObjectTableId = Objecttable.Id;
                                         LogPM.EntityId = ForwarderShipment.Id;
                                         LogPM.Refrence = ForwarderShipment.ShipmentNumber;
@@ -253,7 +269,9 @@ namespace CommunicationWorkerRole
 
                                             if (ForwarderShipment.DirectionId.ToUpper() == "E")
                                             {
-                                                ExporterShipmentAMMappingService exporterShipmentMappingServie = new ExporterShipmentAMMappingService(ForwarderShipment);
+												LogitudeSettings.HandleLogMe("Step 3 if (ForwarderShipment.DirectionId.ToUpper() == E)" + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
+
+												ExporterShipmentAMMappingService exporterShipmentMappingServie = new ExporterShipmentAMMappingService(ForwarderShipment);
                                                 object NewExportShipmentAM = exporterShipmentMappingServie.GetMappedExportShipmentAM();
 
                                                 LogPM.Subject = LogSubject;
@@ -270,18 +288,25 @@ namespace CommunicationWorkerRole
                                                 var result = client.PostAsync(ImporterShipmentsURI, content);
 
                                                 result.Wait();
+												LogitudeSettings.HandleLogMe("Step 4"  + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
 
-                                                if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+												if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                 {
-                                                    var responseData = result.Result.Content.ReadAsStringAsync().Result;
+													LogitudeSettings.HandleLogMe("Step 5 if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)" + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
+
+													var responseData = result.Result.Content.ReadAsStringAsync().Result;
                                                     msg = "Shipment sent To Forwarder " + DateTime.Now;
                                                     APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(NewExportShipmentAM, true), responseData, null, "");
                                                     queue.Complete();
                                                 }
                                                 else
                                                 {
-                                                    APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
-                                                    if (EXC != null)
+													LogitudeSettings.HandleLogMe("Step 6 else if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)" + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
+
+													APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+													LogitudeSettings.HandleLogMe("Step 7 " + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
+
+													if (EXC != null)
                                                     {
                                                         var Failmsg = EXC.ErrorType + " Fail To Send Shipment To Forwarder Tenant " + DateTime.Now;
                                                         APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
@@ -292,8 +317,9 @@ namespace CommunicationWorkerRole
                                             }
                                             else
                                             {
+												LogitudeSettings.HandleLogMe("Step 8 else if (ForwarderShipment.DirectionId.ToUpper() == E)" + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
 
-                                                ShipmentAM shipmentAM = new ShipmentAM()
+												ShipmentAM shipmentAM = new ShipmentAM()
                                                 {
                                                     Id = ForwarderShipment.Id,
                                                     ImporterTenant = tenant,
@@ -418,15 +444,21 @@ namespace CommunicationWorkerRole
                                                 result.Wait();
                                                 if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                 {
-                                                    var temp1 = result.Result.Content.ReadAsStringAsync().Result;
+													LogitudeSettings.HandleLogMe("Step 9  if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)" + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
+
+													var temp1 = result.Result.Content.ReadAsStringAsync().Result;
                                                     msg = "Shipment sent To Forwarder " + DateTime.Now;
                                                     APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(shipmentAM), temp1, null, "");
                                                     queue.Complete();
                                                 }
                                                 else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                 {
-                                                    APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
-                                                    if (EXC != null)
+													LogitudeSettings.HandleLogMe("Step 10 else if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)" + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
+
+													APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+													LogitudeSettings.HandleLogMe("Step 11 else if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)" + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
+
+													if (EXC != null)
                                                     {
                                                         var Failmsg = EXC.ErrorType + " Fail To Send Shipment To Forwarder Tenant " + DateTime.Now;
                                                         APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
@@ -444,11 +476,18 @@ namespace CommunicationWorkerRole
                                 }
 
                                 LogDoneItemInMemory();
-                            }
-                            catch (Exception ex)
+								LogitudeSettings.HandleLogMe("Step 12 FINISH" + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
+
+							}
+							catch (Exception ex)
                             {
-                                #region HandleException
-                                ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "WorkerRole", "", null);
+								LogitudeSettings.HandleLogMe("Step 11 catch (Exception ex)" + ShipmentId, false, "SendShipmentToForwarder", stopLogAt);
+                                var logData = LogMessagingUtil.Instance.ToString();
+								LogitudeSettings.HandleLogMe(ex.ToString() + logData + ShipmentId, true, "SendShipmentToForwarder", stopLogAt);
+								
+
+								#region HandleException
+								ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "WorkerRole", "", null);
                                 if (response.MessageValues.Keys.Contains("ShipmentId"))
                                 {
                                     //if (IsNewLog)
