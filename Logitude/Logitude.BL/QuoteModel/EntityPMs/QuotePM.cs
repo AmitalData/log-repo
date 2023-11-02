@@ -802,6 +802,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string ConsigneeCountryCode { get; set; }
         public bool IsExpired { get; set; }
         public string SalesmanEmail { get; set; }
+        public string CommunicationLogId { get; set; }
 
         public double? TotalVATInSalesCurrency { get; set; }
         public List<CustomChildEntity> CustomChildEntities { get; set; }

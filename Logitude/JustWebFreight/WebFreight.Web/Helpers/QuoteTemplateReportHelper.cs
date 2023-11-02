@@ -789,7 +789,13 @@ namespace Logitude.BL.Helpers
             int tenant = quoteTemplateBuildArges.Tenant;
             int? userTenant = quoteTemplateBuildArges.UserTenant;
             string pricingSectionType = quoteTemplateBuildArges.SectionTypeCode;
-            string email = HttpContext.Current.User.Identity.Name;
+            string email = "";
+            if (HttpContext.Current != null) {
+                email = HttpContext.Current.User.Identity.Name;
+            } else {
+                email = "system@tenant" + tenant + ".com";
+            }
+            
             int tenantNumber = userTenant != null ? (int)userTenant : tenant;
             LocalCurrencyCode = GetLocalCurrencyCode(tenantNumber, email);
 

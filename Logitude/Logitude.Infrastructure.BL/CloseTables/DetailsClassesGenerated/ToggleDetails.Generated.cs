@@ -978,7 +978,15 @@ namespace Logitude.Infrastructure.BL
                 Code = "MC1", 
                 Name = "IsMulti With ReconcileMethodCode Equal One", 
                 SearchFields = "MC1", 
-                Description = "לאפשר הגדרת כרטיס מולטי ככרטיס שמותאם במטז", 
+                Description = "לםפשר הגדרת כרטיס מולטי ככרטיס שמותםם במטז", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "UQD", 
+                Name = "Update Quote Documents", 
+                SearchFields = "UQD,Update Quote Documents", 
+                Description = "Update Quote Documents", 
 			});
 			
             return all;

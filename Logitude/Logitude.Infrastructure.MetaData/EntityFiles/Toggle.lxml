@@ -43,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;c414&quot;"
+  Code="&quot;f333&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -1001,6 +1001,11 @@
       Name="&quot;IsMulti With ReconcileMethodCode Equal One&quot;"
       SearchFields="&quot;MC1&quot;"
       Description="&quot;לאפשר הגדרת כרטיס מולטי ככרטיס שמותאם במטז&quot;" />
+    <Record
+      Code="&quot;UQD&quot;"
+      Name="&quot;Update Quote Documents&quot;"
+      SearchFields="&quot;UQD,Update Quote Documents&quot;"
+      Description="&quot;Update Quote Documents&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
