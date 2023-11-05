@@ -120,7 +120,7 @@
     <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS900.sxml" />
     <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS903.sxml" />
     <None Include="DBScripts\Post\202307201232_AddCOURIERPENDINGREASONS908.sxml" />
-    <None Include="DBScripts\Post\202310031714_AddFeatureInternalSite.sxml" />
+    <None Include="DBScripts\Post\202310031714_DeleteDeclarationStatusFieldC.sxml" />
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
@@ -171,7 +171,6 @@
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
-    <None Include="DBScripts\Pre\202005210106_DropUnneededTables_SystemLogs.sxml" />
     <None Include="DBScripts\Pre\202005210107_TablesBackup.sxml" />
     <None Include="DBScripts\Pre\202005210108_AddMetadataColumns.sxml" />
     <None Include="DBScripts\Pre\202005210109_ColorIndexScripts.sxml" />
