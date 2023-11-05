@@ -3986,8 +3986,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             List<string> docsField = documentsFilingList.Select(x => x.Id).ToList();
 			ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
 			CustomsDocumentPM customsDoc = customsDocumentQueryService.GetDocumentsByDocsFileIdAndTypeClosing(docsField, tenant);
-            var documentsFiling = documentsFilingList.Where(x => x.Id == customsDoc?.DocumentsFilingId).FirstOrDefault();
-
+            var documentsFiling = documentsFilingList.Where(x => x.Id == customsDoc?.DocumentsFilingId)?.Select(y => new DocumentsFilingPM
+			{ 
+                Id = y.Id,
+                Code = y.Code,
+                DocumentTypeCode = y.DocumentTypeCode,
+                EntityId = y.EntityId,
+                Tenant = y.Tenant,
+				IsNotCustomsDocId = string.IsNullOrEmpty(customsDoc?.CustomsDocId) ? true : false,
+			}).FirstOrDefault();
+		
 			return documentsFiling;
 		}
 	}

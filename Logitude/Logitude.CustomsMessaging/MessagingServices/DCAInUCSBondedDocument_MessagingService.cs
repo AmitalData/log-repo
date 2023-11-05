@@ -98,10 +98,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
         public  string CreateCRS(
-            int tenant, 
+            int tenant,
             string LoggingUserId,
             DocumentsFilingPM documentsFilingPM,
-            string CustomsDoucumentTypeCode
+            string CustomsDoucumentTypeCode        
             )
         {
 
@@ -196,7 +196,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     TransmitionDateTime = transmitionDateTime
                 },
-            };
+				IsSendFromAutoClosing = documentsFilingPM.IsNotCustomsDocId,
+			};
 
 
 
@@ -297,10 +298,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string DOCUMENTTYPEID { get; set; }
         public string DocumentTypeCode { get; set; }
         public string LoggingEntityReference { get;  set; }
+		public bool IsSendFromAutoClosing { get; set; }
 
-        //public string DocumentTypeId { get; set; }
+		//public string DocumentTypeId { get; set; }
 
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 
 
@@ -340,7 +342,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 var DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(_DocumentsFilingPM.Tenant);
                 var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", _DocumentsFilingPM.Tenant);
                 var myDocumentsFilingMetaDataValueReferenceAsDocType = "";
-                if (!CheckIsSendByDocType(logData) && string.IsNullOrEmpty(_DocumentsFilingPM.OcrStatusCode))
+                if (!(CheckIsSendByDocType(logData) || _DocumentsFilingPM.IsNotCustomsDocId) && string.IsNullOrEmpty(_DocumentsFilingPM.OcrStatusCode))
                 {
                     if (ENDOC == null)
                     {
@@ -585,7 +587,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             string DocumentsFilingPMId,
            CustomsDocumentPM customsDocumentPM,
 
-           string CustomsDoucumentTypeCode)
+           string CustomsDoucumentTypeCode,
+           bool IsSendFromAutoClosing = false)
         {
             if (customsDocumentPM == null)
             {
@@ -617,8 +620,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     var context1 = CustomContext.GetContext(Tenant);//context each CRS TRANS
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(context1, new Dictionary<string, IContext>(), customsDocumentPM.Tenant);
+					myCustomsDocumentUpdateService.IsSendFromAutoClosing = IsSendFromAutoClosing;
 
-                    customsDocumentPM.IsSendToQueue = false;
+					customsDocumentPM.IsSendToQueue = false;
                     myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
@@ -628,7 +632,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         r.ChangeSetOp = ChangeSetOperation.None;
                     });
                     customsDocumentPM.IsSendToQueue = true;
-                    myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+					myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                     LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({DocumentsFilingPMId})");
 
