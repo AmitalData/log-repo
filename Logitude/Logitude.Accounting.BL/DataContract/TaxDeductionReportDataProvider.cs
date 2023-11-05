@@ -134,7 +134,11 @@ namespace Logitude.Accounting.BL.DataContract
                 id = payment.Id;
                 TaxDeductionReportLine taxDeductionReportline = new TaxDeductionReportLine();
                 taxDeductionReportline.VendorId = payment.VendorCard!= null? payment.VendorCard.GLAccountId: null;
-                
+                if (taxDeductionReportline.VendorId == null)
+                {
+                    throw new ApplicationException("הוראת תשלום מספר :"+payment.PaymentNo+"\n"+ " VendorCard.GLAccountId = null ");
+
+                }
                 taxDeductionReportline.MonthOfRegisterDate = cancelled? payment.AccountingCancelationDate.Value.Month : payment.RegisterDate.Value.Month;
                 taxDeductionReportline.AmountInLocalCurrency = cancelled ?  payment.AmountInLocalCurrency*-1 : payment.AmountInLocalCurrency;
                 taxDeductionReportline.AmountInLocalCurrency = Math.Round((double)taxDeductionReportline.AmountInLocalCurrency, 0);
