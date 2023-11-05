@@ -43,14 +43,14 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     Level: string = "GLAccount";
     // ToDate: Date = new Date();
     DataContext: any = this;
-    showlocal: boolean;
+    showLocal: boolean;
     constructor(private CD: ChangeDetectorRef) {
 
         super();
         this.chartofaccounttypeHtmlinputId = Guid.newGuid();
         this.GLAccountHtmlinputId = Guid.newGuid();
         this.ChartofaccountHtmlinputId = Guid.newGuid();
-        this.showlocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
         var date = new Date();
         this.ToDate = new Date();
         date.setDate(1);
