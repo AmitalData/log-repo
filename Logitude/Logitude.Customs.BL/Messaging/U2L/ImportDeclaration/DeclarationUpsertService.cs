@@ -965,6 +965,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 		bool IsNew = false;
 		StringBuilder FieldError = new StringBuilder();
 		bool IseatureClosingAutoExpDec = false;
+		DocumentsFilingPM documentsFilingPM = null;
 		private void CreateClosing()
 		{
 			
@@ -980,16 +981,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			FillExportDeclarationClosingDataFromUNF();
 
 			AddModification();
-			bool IsExistDocumentForClosingData = CheckDocuments();
-			if (!IsExistDocumentForClosingData) FieldError.AppendLine("document is not exist");
+			documentsFilingPM = CheckDocuments();
+			if (documentsFilingPM == null) FieldError.AppendLine("document is not exist");
 		}		
 		private void SendClosing()
 		{
 
 			if (FieldError.Length == 0)
 			{
-				ICustomsAutoDecClosing CustomsAutoDecClosing = ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new ParameterOverride("", 1)) as ICustomsAutoDecClosing;
-				CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
+				if (documentsFilingPM.IsNotCustomsDocId)
+				{
+					ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", documentsFilingPM.Tenant)) as ISendBondedCustomDocumentService;
+					myISendBondedCustomDocumentService.JustDoIt(documentsFilingPM);
+				}
+				else 
+				{
+				   ICustomsAutoDecClosing CustomsAutoDecClosing = ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new ParameterOverride("", 1)) as ICustomsAutoDecClosing;
+				   CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
+				}
 			}
 			else
 				RaiseEvent(_MyDeclarationPM, null, "CF1", FieldError.ToString());
@@ -1149,13 +1158,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
 		}
 
-		private bool CheckDocuments()
+		private DocumentsFilingPM CheckDocuments()
 		{
 			ICustomContext MyContext = CustomContext.GetContext(ResolvedTenant());
 
 			DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(ResolvedTenant());
 			var documentFilingPM = documentsFilingQuery.GetDocumentsFilingsByExportFile(_MyDeclarationPM.ExportFile, _MyDeclarationPM.Tenant);
-			if (documentFilingPM == null)  return false;
+			if (documentFilingPM == null)  return null;
 
 
 			CustomsDocumentPointerQueryService customsDocumentPointerQuery = new CustomsDocumentPointerQueryService(MyContext);
@@ -1164,7 +1173,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			{
 				ICustomCreateTicket CustomCreateTicket = ContainerAccessor.Container.Resolve(typeof(ICustomCreateTicket), "CustomCreateTicket", new ParameterOverride("", 1)) as ICustomCreateTicket;
 			    bool isSucceeded = CustomCreateTicket.CreateTicket(documentFilingPM.Id, documentFilingPM.Code, documentFilingPM.DocumentTypeCode, documentFilingPM.Tenant, _MyDeclarationPM.Id);
-				return isSucceeded;
+				return isSucceeded ? documentFilingPM : null;
 			}
 			else
 			{
@@ -1174,7 +1183,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				CustomsDocumentPointerUpdateService customsDocumentPointerUpdateService = new CustomsDocumentPointerUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
 				customsDocumentPointerUpdateService.Update(pointer,true);
 			}
-			return true;
+			return documentFilingPM;
 		}
 
 	

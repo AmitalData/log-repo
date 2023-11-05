@@ -10,6 +10,8 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
     {
         public string DeclaretionId { get; set; }
         public string DocumentsFilingId { get; set; }
-        public string DocumentsTicketId { get; set; }   
-    }
+        public string DocumentsTicketId { get; set; }
+		public bool IsFromAutoClosing { get; set; }
+
+	}
 }

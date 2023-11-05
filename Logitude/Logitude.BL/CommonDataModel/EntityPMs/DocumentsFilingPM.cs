@@ -171,7 +171,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public decimal OcrScore { get; set; }
         public string OcrReference { get; set; }
         public bool OcrNotConnect { get; set; }
+		public bool IsNotCustomsDocId { get; set; }
 
-
-    }
+	}
 }
