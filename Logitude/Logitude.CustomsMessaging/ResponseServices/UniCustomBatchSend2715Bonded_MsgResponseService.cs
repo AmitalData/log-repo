@@ -54,7 +54,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
             var myCustomsDocumentQueryService = new CustomsDocumentQueryService(dbContext);
             var customsDocumentPM = myCustomsDocumentQueryService.GetSingle(customResponse.DocumentsFilingId, true, false);
-            customsDocumentPM.DeclarationId = customResponse.DeclarationId;
+            customsDocumentPM.DeclarationId = customResponse?.DeclarationId;
 			(new Send2715Bonded()).Send(
                    requestParams.Tenant,
                    customResponse.DocumentsFilingId,
