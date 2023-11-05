@@ -1,21 +1,25 @@
 
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
-import {Component, OnInit,ChangeDetectorRef}  from '@angular/core';
-import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
-import {ReportFliter} from '../../Components/Filters/ReportFliter';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {CodeNameClass} from '../../../Infrastructure/DataContracts/CodeNameClass';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ReportsPreviewComponent } from '../../Components/ReportsPreviewComponent';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
+import { ReportFliter } from '../../Components/Filters/ReportFliter';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { UIProperties, UIProperty } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import { DateTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { ChartOfAccountsTypeListService } from 'Accounting/Services/StandardLists/ChartOfAccountsTypeListService';
+import { ChartOfAccountListService } from 'Accounting/Services/StandardLists/ChartOfAccountListService';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 
 
 @Component({
-    
+
     selector: 'RevenueExpenseFilterComponent',
     templateUrl: './RevenueExpenseFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -23,8 +27,12 @@ import { DateTool } from '../../../Infrastructure/Tools';
 
 
 
-export class RevenueExpenseFilterComponent extends BaseComponent{
-    public ReportsPreview: ReportsPreviewComponent;     
+export class RevenueExpenseFilterComponent extends BaseComponent {
+    public ReportsPreview: ReportsPreviewComponent;
+    chartOfAccountsTypeListService: ChartOfAccountsTypeListService = new ChartOfAccountsTypeListService();
+    chartOfAccountListService: ChartOfAccountListService = new ChartOfAccountListService();
+    entityResourceService: EntityResourceService = new EntityResourceService();
+
     GLAccountHtmlinputId: string;
     ChartofaccountHtmlinputId: string;
     chartofaccounttypeHtmlinputId: string;
@@ -33,7 +41,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
     public ValidationErrorsList: string[] = [];
     queryFilterItem: QueryFilterItem;
     Level: string = "GLAccount";
- // ToDate: Date = new Date();
+    // ToDate: Date = new Date();
     DataContext: any = this;
     showlocal: boolean;
     constructor(private CD: ChangeDetectorRef) {
@@ -48,17 +56,23 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
         date.setDate(1);
         date.setMonth(0);
         this.fromDate = date;
+
+
+        this.GetDropDownItemsData();
+
+        this.LoadResources();
+
     }
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
-        this.ReportsPreview = myReportsPreview;    
+        this.ReportsPreview = myReportsPreview;
         this.BuildFilterList();
     }
     public BalanceOptionsFilterList: CodeNameClass[];
     private BuildFilterList() {
         this.BalanceOptionsFilterList = [];
-        this.BalanceOptionsFilterList.push(new CodeNameClass("WITHOUT", "Without Transactions","בלי תנועות"));
+        this.BalanceOptionsFilterList.push(new CodeNameClass("WITHOUT", "Without Transactions", "בלי תנועות"));
         this.BalanceOptionsFilterList.push(new CodeNameClass("WITH", "With Transactions", "עם תנועות"));
-      
+
         this.SelectedBalanceOptionFilter = this.BalanceOptionsFilterList.filter(d => d.Code == "WITHOUT")[0];
     }
 
@@ -69,7 +83,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
             this.selectedBalanceOptionFilter = value;
         }
     }
-    
+
     private useBalanceFilter: boolean;
     get UseBalanceFilter() { return this.useBalanceFilter; }
     set UseBalanceFilter(value: boolean) {
@@ -77,14 +91,14 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
             this.useBalanceFilter = value;
         }
     }
-  
+
     private fromDate: Date;
-  public get FromDate() { return this.fromDate; }
-  public set FromDate(value: Date) {
-    if (this.fromDate != value) {
-        this.fromDate = value;
-            this.Validate("FromDate");     
-    }
+    public get FromDate() { return this.fromDate; }
+    public set FromDate(value: Date) {
+        if (this.fromDate != value) {
+            this.fromDate = value;
+            this.Validate("FromDate");
+        }
     }
 
     private toDate: Date = new Date()
@@ -92,13 +106,13 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
     public set ToDate(value: Date) {
         if (this.toDate != value) {
             this.toDate = value;
-                this.Validate("ToDate");
-           
+            this.Validate("ToDate");
+
         }
     }
 
     Validate(dateFieldName) {
-        if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate,true)) {
+        if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
 
             setTimeout(() => {
                 this.UIProperties.SetValidity("ToDate", null, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
@@ -138,78 +152,263 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
         //        this.UIProperties.SetValidity(dateFieldName, null, true, null);
         //        this.CD.detectChanges();
         //    }, 200);
-            
+
         //}
     }
-  public FilterSelectedValue: string = 'GLAccount';
-  FilterItemClicked(itemValue: string) {
-    if (this.FilterSelectedValue != itemValue) {
-      this.FilterSelectedValue = itemValue;
-      this.Level = itemValue;
- 
-    }
-  }
+    public FilterSelectedValue: string = 'GLAccount';
+    FilterItemClicked(itemValue: string) {
+        if (this.FilterSelectedValue != itemValue) {
+            this.FilterSelectedValue = itemValue;
+            this.Level = itemValue;
 
+        }
+    }
+    chartOfAccounts: any[] = [];
+    chartOfAccountsTypes: any[] = [];
+    selectedChartOfAccounts: any[] = [];
+    selectedChartOfAccountsTypes: any[] = [];
+    isChartOfAccountsTypesDisabled: boolean = false;
+    isChartOfAccountsDisabled: boolean = false;
+    isOpened: boolean = false;
+
+    private chartOfAccountsTypeComboboxValue: string;
+    public get ChartOfAccountsTypeComboboxValue(): string {
+        return this.chartOfAccountsTypeComboboxValue;
+    }
+    public set ChartOfAccountsTypeComboboxValue(v: string) {
+        this.chartOfAccountsTypeComboboxValue = v;
+
+        if (this.chartOfAccountsTypeComboboxValue == "All") {
+            this.idFilter = null;
+            this.getChartOfAccounts();
+        }
+    }
+
+    private chartOfAccountsComboBoxValue: string;
+    public get ChartOfAccountsComboBoxValue(): string {
+        return this.chartOfAccountsComboBoxValue;
+    }
+    public set ChartOfAccountsComboBoxValue(v: string) {
+        this.chartOfAccountsComboBoxValue = v;
+        this.SetChartOfAccountsFilterProperties();
+    }
+
+
+    isReady = false;
+    private LoadResources() {
+        this.entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => { });
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
+            this.isReady = true;
+        });
+    }
+
+    GetDropDownItemsData() {
+
+        this.getChartOfAccounts();
+        this.getChartOfAccountsTypes();
+    }
+
+
+    private isRevenueExpenseFilter: boolean = false;
+    private getChartOfAccounts() {
+
+        this.isRevenueExpenseFilter = true;
+        let apiQueryFilters = new ApiQueryFilters(true);
+
+        if (!AppTool.IsNullOrEmpty(this.idFilter)) {
+            apiQueryFilters.addAdditionalFilter("isRevenueExpenseFilter", this.idFilter, null, null, "Equals", true, false, false, "boolean");
+        }
+
+        this.chartOfAccountListService.getByFilters(apiQueryFilters)
+            .subscribe((arg: any) => {
+                this.chartOfAccounts = arg.Result;
+                this.chartOfAccounts = this.chartOfAccounts.map(item => { return { ...item, Name: item.LocalName || item.EnglishName } });
+            });
+    }
+
+    private getChartOfAccountsTypes() {
+
+        let apiQueryFilters = new ApiQueryFilters(true);
+        apiQueryFilters.addAdditionalFilter("isRevenueExpenseFilter", false, null, null, "Equals", true, false, false, "boolean");
+        this.chartOfAccountsTypeListService.getByFilters(apiQueryFilters)
+            .subscribe((arg: any) => {
+
+                this.chartOfAccountsTypes = arg.Result;
+                this.chartOfAccountsTypes = this.chartOfAccountsTypes.map(item => { return { ...item, Name: item.LocalName || item.EnglishName } });
+            });
+    }
+
+    OnChartOfAccountsTypeItemClicked(items) {
+        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked == true);
+        this.idFilter = this.selectedChartOfAccountsTypes.length == 1 ? this.selectedChartOfAccountsTypes[0].Code : null;
+        this.getChartOfAccounts();
+    }
+
+    private idFilter: string = null;
+
+    private DisableChartOfAccountField(haveSelectedItems: boolean) {
+        this.isChartOfAccountsDisabled = haveSelectedItems;
+        this.chartOfAccountsComboBoxValue = null;
+    }
+
+    OnChartOfAccountsItemClicked(items) {
+        this.selectedChartOfAccounts = this.chartOfAccounts.filter(item => item.Checked == true);
+
+        const haveSelectedItems = this.selectedChartOfAccounts.length > 0;
+        this.DisableChartOfAccountsTypesField(haveSelectedItems);
+        this.DisableCategoryFields(haveSelectedItems);
+
+    }
+
+    SetChartOfAccountsFilterProperties() {
+        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked == true);
+        let haveSelectedItems = this.selectedChartOfAccountsTypes.length > 0;
+        this.DisableChartOfAccountField(haveSelectedItems);
+        this.DisableCategoryFields(haveSelectedItems);
+
+        this.selectedChartOfAccounts = this.chartOfAccounts.filter(item => item.Checked == true);
+        haveSelectedItems = this.selectedChartOfAccounts.length > 0;
+        this.DisableChartOfAccountsTypesField(haveSelectedItems);
+        this.DisableCategoryFields(haveSelectedItems);
+    }
+    private DisableChartOfAccountsTypesField(haveSelectedItems: boolean) {
+        this.isChartOfAccountsTypesDisabled = haveSelectedItems;
+        this.selectedChartOfAccountsTypes = null;
+    }
+    private DisableCategoryFields(haveSelectedItems: boolean) {
+        this.IsCategoryDisabled = haveSelectedItems;
+        if (haveSelectedItems) {
+            this.SelectedCategory = null;
+            this.Category1 = null;
+            this.Category2 = null;
+            this.Category3 = null;
+            this.Category4 = null;
+            this.Category5 = null;
+        }
+    }
+    //#region Category fields
+    IsCategoryDisabled: boolean = false;
+    CategoriesList: string[] = [
+        'Category 1',
+        'Category 2',
+        'Category 3',
+        'Category 4',
+        'Category 5'
+    ];
+    SelectedCategory: string;
+    SelectedItemChanged(item) {
+        this.SelectedCategory = item;
+    }
+
+
+    private category1: string;
+    public get Category1() { return this.category1; }
+    public set Category1(value: string) {
+        if (this.category1 != value) {
+            this.category1 = value;
+        }
+    }
+
+    private category2: string;
+    public get Category2() { return this.category2; }
+    public set Category2(value: string) {
+        if (this.category2 != value) {
+            this.category2 = value;
+        }
+    }
+
+    private category3: string;
+    public get Category3() { return this.category3; }
+    public set Category3(value: string) {
+        if (this.category3 != value) {
+            this.category3 = value;
+        }
+    }
+
+    private category4: string;
+    public get Category4() { return this.category4; }
+    public set Category4(value: string) {
+        if (this.category4 != value) {
+            this.category4 = value;
+        }
+    }
+
+    //row 4
+    private category5: string;
+    public get Category5() { return this.category5; }
+    public set Category5(value: string) {
+        if (this.category5 != value) {
+            this.category5 = value;
+        }
+    }
     RunReport() {
-       
+        debugger
         this.ValidationErrorsList = this.ValidateFilters();
         if (this.ValidationErrorsList.length == 0) {
 
             this.queryFilterItems = new Array<QueryFilterItem>();
 
-           
-                this.queryFilterItem = new QueryFilterItem();
-                this.queryFilterItem.DisplayInList = false;
-                this.queryFilterItem.FieldName = "CreateDate";
-                this.queryFilterItem.FieldValue = this.ToDate;
-                this.queryFilterItem.FieldDataType = "Date";
-                this.queryFilterItem.Operator = "LessThanOrEqual";
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "CreateDate";
+            this.queryFilterItem.FieldValue = this.ToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItem.Operator = "LessThanOrEqual";
             this.queryFilterItems.push(this.queryFilterItem);
             this.queryFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
 
-          if (!this.Level) this.Level = "GLAccount";
-          this.queryFilterItems.push(new QueryFilterItem("Level", this.Level));
-                if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
-                    this.queryFilterItems.push(new QueryFilterItem("CardFilter", "0"));
-                 
-                }
 
-                else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT"){
-                    this.queryFilterItems.push(new QueryFilterItem("CardFilter", "2"));
-                }
-                else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITH") {
-                    this.queryFilterItems.push(new QueryFilterItem("CardFilter", "1"));
-                }
+            if (this.selectedChartOfAccountsTypes)
+                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList", this.selectedChartOfAccountsTypes.map(item => item.Code).join(','), "String"));
+            if (this.selectedChartOfAccounts)
+                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.selectedChartOfAccounts.map(item => item.Id).join(','), "String"));
 
 
-               
-              
 
-                this.reportFliter = new ReportFliter();
-               // this.reportFliter.Level = this.Level;
-                this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-                this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
-                this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-               
-                this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-                this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-                this.reportFliter.NumberOfPage = 1;
-                this.reportFliter.ProcessType = "GenerateReport";
+            if (!this.Level) this.Level = "GLAccount";
+            this.queryFilterItems.push(new QueryFilterItem("Level", this.Level));
+            if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
+                this.queryFilterItems.push(new QueryFilterItem("CardFilter", "0"));
 
-                this.ReportsPreview.CleanPartnersObslist();
+            }
 
-               
+            else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
+                this.queryFilterItems.push(new QueryFilterItem("CardFilter", "2"));
+            }
+            else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITH") {
+                this.queryFilterItems.push(new QueryFilterItem("CardFilter", "1"));
+            }
 
 
-                this.ReportsPreview.GenerateReport(this.reportFliter, true);
-            
-           
+
+
+
+            this.reportFliter = new ReportFliter();
+            // this.reportFliter.Level = this.Level;
+            this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+
+            this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+            this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+            this.reportFliter.NumberOfPage = 1;
+            this.reportFliter.ProcessType = "GenerateReport";
+
+            this.ReportsPreview.CleanPartnersObslist();
+
+
+
+            debugger
+            this.ReportsPreview.GenerateReport(this.reportFliter, true);
+
+
         }
 
     }
 
     ValidateFilters() {
-        this.ValidationErrorsList = [];    
+        this.ValidationErrorsList = [];
         var FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         if (this.ToDate > new Date()) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FutureDate"));
@@ -225,10 +424,10 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
         if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
         }
-       
+
         return this.ValidationErrorsList;
     }
 
 
-    }
+}
 
