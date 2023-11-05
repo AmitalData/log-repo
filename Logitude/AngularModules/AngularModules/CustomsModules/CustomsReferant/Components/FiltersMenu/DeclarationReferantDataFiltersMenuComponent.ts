@@ -68,7 +68,6 @@ export class DeclarationReferantDataFiltersMenuComponent
         this.FilterChangeSubject.pipe(debounceTime(500)).subscribe((res:any)=>{
             this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
         });
-        debugger;
 
         var featureDeclarationStatusFilters = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DeclarationStatusFilters");
         if(featureDeclarationStatusFilters){
