@@ -185,7 +185,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var myDCAInUCSBondedWithResponseContentHeader = new DCAInUCSBondedWithResponseContentHeader()
             {
-                DeclarationId = documentsFilingPM.EntityId,
+                DeclarationId = documentsFilingPM.IsNotCustomsDocId ? documentsFilingPM.DeclarationId: documentsFilingPM.EntityId,
                 DocumentsFilingId = documentsFilingPM.Id,
                 CustomsDoucumentTypeCode = CustomsDoucumentTypeCode,
                 LoggingUserId = LoggingUserId,
