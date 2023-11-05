@@ -162,7 +162,7 @@
                   <td style="width:250px">{{'Accounting.General.O.WithZeroBalance' | TextCodeTranslationPipe}}</td>
 
                   <td style="width:200px; min-width: 200px;">
-                    <ComboBox [ItemsSource]="BalanceOptionsFilterList" [Binding]="showlocal ? 'LocalName' : 'Name'" [SelectedItem]="SelectedBalanceOptionFilter" (SelectedItemChanged)="SelectedBalanceOptionFilter = $event"></ComboBox>
+                    <ComboBox [ItemsSource]="BalanceOptionsFilterList" [Binding]="showLocal ? 'LocalName' : 'Name'" [SelectedItem]="SelectedBalanceOptionFilter" (SelectedItemChanged)="SelectedBalanceOptionFilter = $event"></ComboBox>
                   </td>
 
                   <td style="width:70px"></td>
