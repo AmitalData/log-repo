@@ -514,6 +514,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             try
             {
+                LogitudeSettings.HandleLogMe("start try", false, "UniPaymentOrder", stopLogAt);
+
                 if (isConnectedToUniFreight)
                 {
                     _AmitalContext = AmitalContext.GetContext(tenant);
@@ -530,6 +532,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogitudeSettings.HandleLogMe("unifreightUser " + unifreightUser, false, "UniPaymentOrder", stopLogAt);
                 if (raiseStatus == true)
                 {
+                    LogitudeSettings.HandleLogMe("raiseStatus == true", false, "UniPaymentOrder", stopLogAt);
+
                     //var myDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, null, null);
                     //requestData = myDeclarationUpdateService.GetMyFUStatusXML(status, status, "", "new", DateTime.Now, true);
                     // moran 22.7.15 - Task 14521 - all statuses for tasks should have user MEHES -->
@@ -541,19 +545,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         _LoggingUserId = user.Id;
                     }
                     // moran 22.7.15 - Task 14521 - all statuses for tasks should have user MEHES <--
+                    LogitudeSettings.HandleLogMe("GetMyFUStatusXML", false, "UniPaymentOrder", stopLogAt);
                     requestData = GetMyFUStatusXML(status, status, "", "new", DateTime.Now, tenant, true);
                 }
                 if (xmlReq != null)
                 {
+                    LogitudeSettings.HandleLogMe("xmlReq != null", false, "UniPaymentOrder", stopLogAt);
+
                     if (requestData != null)
                     {
                         requestData = "<requestData>" + Environment.NewLine + xmlReq + Environment.NewLine + requestData + Environment.NewLine + "</requestData>";
+                        LogitudeSettings.HandleLogMe("requestData != null - line 555" + requestData, false, "UniPaymentOrder", stopLogAt);
+
                     }
                     else
                     {
                         requestData = xmlReq;
+                        LogitudeSettings.HandleLogMe("requestData == null - line 561", false, "UniPaymentOrder", stopLogAt);
+
                     }
                 }
+                LogitudeSettings.HandleLogMe("before YCULTASKPM", false, "UniPaymentOrder", stopLogAt);
 
                 var myYCULTASKPM = new YCULTASKPM()
                 {
@@ -572,6 +584,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
                 if (!isConnectedToUniFreight)
                 {
+                    LogitudeSettings.HandleLogMe("!isConnectToUnifreight - line 580", false, "UniPaymentOrder", stopLogAt);
+
                     var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                     {
 
@@ -598,6 +612,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 if (isConnectedToUniFreight)
                 {
+                    LogitudeSettings.HandleLogMe("start GGGQPM", false, "UniPaymentOrder", stopLogAt);
+
                     var myGGGQPM = new GGGQPM()
                     {
                         ChangeSetOp = ChangeSetOperation.Insert,
@@ -627,6 +643,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LogitudeSettings.HandleLogMe("scope.complete", false, "UniPaymentOrder", stopLogAt);
                     scope.Complete();
                 }
+                LogitudeSettings.HandleLogMe("end try", false, "UniPaymentOrder", stopLogAt);
 
             }
             catch (Exception ex)
@@ -635,7 +652,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             finally
             {
-                LogitudeSettings.HandleLogMe("scope", false, "UniPaymentOrder", stopLogAt);
+                LogitudeSettings.HandleLogMe("finally", false, "UniPaymentOrder", stopLogAt);
                 if (scope != null)
                 {
                     LogitudeSettings.HandleLogMe("scope.disponse", false, "UniPaymentOrder", stopLogAt);
