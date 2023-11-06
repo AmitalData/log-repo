@@ -5434,7 +5434,7 @@
     <TextCode
       Code="&quot;Customs.Claim.O.ImporterAffidavitRequired&quot;"
       DefaultText="&quot;If field improve declar 3 is not empty text field must contain value&quot;"
-      LocalDefaultText="&quot;אם שדה תצהיר יבואן 3 מכיל ערך חובה להוסיף טקסט&quot;"
+      LocalDefaultText="&quot;אם שדה תצהיר יבואן 3 מכיל ערך, חובה להוסיף טקסט&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
