@@ -21,7 +21,14 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public ClientItem GetSingleWithTenant(string itemcode, string clientcode, int tenant)
+        {
+            return (from a in context.ClientItems
+                    where a.ItemCode == itemcode && a.ClientCode == clientcode && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+    }
 
 }
    

@@ -28,7 +28,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ClassificationCode, 
 	         ItemCode, 
 	         OriginCountryCode, 
-	         ClientCode,
+	         ClientCode, 
+	         Id,
 	      }
 
 
@@ -42,7 +43,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ItemCode, 
 	         OriginCountryCode, 
 	         OriginCountryName, 
-	         ClientCode,
+	         ClientCode, 
+	         Id,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -115,6 +117,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClientCode))
             {
 					entityPM.ClientCode = entityPOCO.ClientCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
             }
 
 		}
