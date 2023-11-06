@@ -32,6 +32,10 @@ namespace Logitude.Customs.Data.EntityLists
        [Key]
        [DataMember]
        public string ClientCode  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
    }
 
 }
