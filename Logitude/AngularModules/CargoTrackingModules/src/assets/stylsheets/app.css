@@ -237,7 +237,7 @@ h3 {
 
 
 .tooltip-popup{
-    max-width: 300px !important;
+    max-width: 700px !important;
     min-height: 35px;
     max-height: 200px !important;
     min-width: 100px;
@@ -246,6 +246,8 @@ h3 {
     border-radius: 3px;
     padding: 6px 10px;
     display: block !important;
+    text-align: right;
+   
 }
 
 .tooltip-popup svg{
@@ -290,9 +292,8 @@ h3 {
     background-color: white;
 }
 .word-break-all{
-    word-break: break-all;
+    overflow-wrap: break-word;
 }
-
 .animate:active {
     transform: scale(0.96);
 }
