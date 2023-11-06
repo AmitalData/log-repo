@@ -620,8 +620,15 @@ export class CustomsDocumentsComponent
         }
     }
 
+    private isRequireDocumentTicket: string = null;
+
     EditCustomsDocumentsTicket(customsDocumentsTicket: CustomsDocumentTicketViewModel) {
         
+        if(customsDocumentsTicket.RequestedDocumentId)
+            this.isRequireDocumentTicket = customsDocumentsTicket.RequestedDocumentId; 
+        else
+            this.isRequireDocumentTicket = null;
+
         if (!customsDocumentsTicket.PreventEdit) {
             if (customsDocumentsTicket.DocumentsFilingId) {
                 this.CurrentSession.StartBusyIndicatorLoading();
@@ -651,7 +658,7 @@ export class CustomsDocumentsComponent
             else {
                 this.CurrentSession.StopBusyIndicator();
                 this.ApplyEditCustomsDocumentTicket(false, customsDocumentsTicket.customsDocumentsTicketPM, null);
-            }
+            }                       
         }
 
     }
@@ -685,6 +692,7 @@ export class CustomsDocumentsComponent
         windowArgs.Child1EntityId = entityInfo.Child1EntityId;
         windowArgs.Child1EntityCode = entityInfo.Child1EntityCode;
         windowArgs.EntityPM = this.EntityPM;
+        windowArgs.RequestedDocumentId = this.isRequireDocumentTicket;
         var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditDocumentMetaData");
 
         var logWindow = new LogitudeWindow();
@@ -694,7 +702,7 @@ export class CustomsDocumentsComponent
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
-
+        
         logWindow.Show('./CustomsModules/CustomsDocuments/Components/AddEditCustomsDocumentComponent');
     }
 
