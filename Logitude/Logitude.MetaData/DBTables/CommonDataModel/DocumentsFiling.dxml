@@ -454,4 +454,6 @@
     Columns="SearchFields" />
   <Index
     Columns="Tenant,ExternalEntityReference,ExternalEntityName" />
+	<Index
+  Columns="EntityId,ObjectTableId,EntityReference,DirectionCode" />
 </Table>
