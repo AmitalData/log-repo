@@ -341,7 +341,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.IsSendToCustomsAndNotConnectTicket(documentsfilingid, entityId, tenant);
         }
-        public bool GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(string declarationId)
+        public bool GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(string declarationId,string docTicketId)
         {
             return repository.GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(declarationId, docTicketId);
         }
