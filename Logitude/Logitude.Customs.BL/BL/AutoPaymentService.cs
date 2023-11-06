@@ -2288,8 +2288,14 @@ public class PaymentMethodModel : DeclarationPaymentMethodPM
 					is_ABOVE_MSVLK_agent = false;
 
 				}
-				else
+				else if (this.parent.BetweenMinAndMax)
 				{
+					this.updateDefaultPaymentMethod(
+							"2",/*קופה*/
+							"3" //סוכן מכס
+						);
+				}
+				else{
 					//console.log('b.');
 					//console.log(`דיפולט "תשלום בניצול העברת זהב לקוח/קופה" = "סכום מעל סכום החסימה מס"ב לקוח" וגם סכום המיסים קטן שווה לסכום שהוזן בדיפולט "סכום מיסים מקסימלי לתשלום במס"ב סוכן") יבוצע תשלום באמצעות מס"ב סוכן`)
 
@@ -2700,10 +2706,26 @@ public class PaymentMethodModel : DeclarationPaymentMethodPM
 	}
 	public void setBankis_ABOVE_MSVLK_agent(CustomBankList bank)
 	{
-		if (is_ABOVE_MSVLK_agent && bank != null)
+		string myCIM_AGENT_BANK = "";
+		CustomBankListQueryService customBankQueryList = new CustomBankListQueryService(this.parent.customContext);
+		QueryOperations queryOperations = new QueryOperations();
+		queryOperations.GetAll = true;
+		List<CustomBankList> allCustomBankList = customBankQueryList.GetList(queryOperations, this.parent._tenant);
+
+		if (!string.IsNullOrWhiteSpace(this.parent._MyDeclarationPM.CustomerCode))
 		{
-			SetInternalBankId(bank.Id);
-			//this.InternalBankId = bank.Id;
+			DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(this.parent._tenant);
+
+			myCIM_AGENT_BANK = defaultValueQueryService.GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", this.parent._MyDeclarationPM.CustomerCode, this.parent._tenant);//דיפןלט בנק
+		}
+
+		if (is_ABOVE_MSVLK_agent && (!string.IsNullOrEmpty(myCIM_AGENT_BANK) || bank != null))
+		{
+			if(!string.IsNullOrEmpty(myCIM_AGENT_BANK))
+				this.SetParamInternalBankId(allCustomBankList, myCIM_AGENT_BANK);
+			else if (bank != null)
+				SetInternalBankId(bank.Id);
+
 			SelectedBank = bank;
 
 		}
