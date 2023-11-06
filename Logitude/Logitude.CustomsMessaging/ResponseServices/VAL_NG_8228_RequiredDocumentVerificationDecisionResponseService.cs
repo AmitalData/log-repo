@@ -87,7 +87,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     myInsertEventContextTagModel.EventCode = "RDA";
                     myInsertEventContextTagModel.EventRemarks = "Required Document Verified By Customs";
                     myInsertEventContextTagModel.FUStatusRemarks = "דרישת מסמך אומתה " + "\n" + "הערות - " + customResponse.GeneralDetails.remarks;
-                    this.UpdateRequestedCustomsDocId(customResponse, requestParams);
+                    this.UpdateRequestedCustomsDocId(customResponse, requestParams,myCustomsDocumentsTicketPM);
                     break;
                 case 3: // אומת בנוכחות הלקוח
                     myCustomsDocumentsTicketPM.VerificationStatusTypeCode = "5";
@@ -95,7 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     myInsertEventContextTagModel.EventCode = "RDA";
                     myInsertEventContextTagModel.EventRemarks = "Required Document Verified By Customs";
                     myInsertEventContextTagModel.FUStatusRemarks = "דרישת מסמך אומתה " + "\n" + "הערות - " + customResponse.GeneralDetails.remarks;
-                    this.UpdateRequestedCustomsDocId(customResponse, requestParams);
+                    this.UpdateRequestedCustomsDocId(customResponse, requestParams, myCustomsDocumentsTicketPM);
                     break;
                 case 4: // נדחה
                     myCustomsDocumentsTicketPM.VerificationStatusTypeCode = "6";
@@ -136,7 +136,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.VerificationDecisionType = customResponse.VerificationDecision.verificationDecisionType.ToString();
         }
 
-        private void UpdateRequestedCustomsDocId(VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessage customResponse, RequiredDocumentRequestParams requestParams)
+        private void UpdateRequestedCustomsDocId(VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessage customResponse, RequiredDocumentRequestParams requestParams, CustomsDocumentsTicketPM myCustomsDocumentsTicketPM)
         {
             var customContext = CustomContext.GetContext(requestParams.Tenant);
             var CustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
@@ -149,7 +149,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var _MyDeclarationPM = myQueryService.GetAcceptDeclarationAmendmentByCustomsFile(customfileno, requestParams.Tenant);
                 if (_MyDeclarationPM != null)
                 {
-                    var IsThereRequestCustomDoc = CustomsDocumentsTicketQueryService.GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(_MyDeclarationPM.Id);
+                    var IsThereRequestCustomDoc = CustomsDocumentsTicketQueryService.GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(_MyDeclarationPM.Id, myCustomsDocumentsTicketPM.Id);
                     if (!IsThereRequestCustomDoc) {
                         _MyDeclarationPM.RequestedCustomsDocId = 0;
                         _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
