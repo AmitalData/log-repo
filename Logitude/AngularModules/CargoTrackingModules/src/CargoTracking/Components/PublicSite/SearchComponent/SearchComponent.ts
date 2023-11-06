@@ -221,22 +221,23 @@ export class SearchComponent implements AfterViewInit, OnInit, OnDestroy {
     }
     Search(searchSource: any) {
 
-        //if (this.IsShowAreaCaptcha) {
-        //    this.ValidateUser();
-        //}
-        //else {
         this.CheckSearchTimes(searchSource);
         var minimumCharactersLimitForSearch = 3;
-        if (this.SearchText?.length < minimumCharactersLimitForSearch && searchSource != "searchText") {
+        if (this.SearchText?.length <= minimumCharactersLimitForSearch && searchSource != "searchText" && this.checkValidSearchSpace()) {
             this.OpenMessageWindow(this.ShortSearchValueBlockingMessage);
         }
         else if (this.tenant != null && this.SearchText) {
             this.router.navigate(['public-tracking/search'], { queryParams: { searchKey: this.SearchText } });
             this.LoadShipments();
-            // }
         }
-
     }
+
+    checkValidSearchSpace() {
+        const searchText = this.SearchText;
+        const firstChar = searchText[0];
+        return firstChar === " " ;
+    }    
+    
     CheckSearchTimes(searchSource: any) {
         this.currentDate = new Date();
         if (this.searchCounter == 0) sessionStorage.setItem("FirstSearchDate", this.currentDate.getTime());
