@@ -6693,10 +6693,6 @@
     <Content Include="Stimulsoft\fonts\perpetua\PERB____.TTF" />
     <Content Include="Stimulsoft\fonts\perpetua\PERI____.TTF" />
     <Content Include="Stimulsoft\fonts\perpetua\PER_____.TTF" />
-    <Content Include="Stimulsoft\fonts\idautomated\IDAutomationCMC7.ttf" />
-    <Content Include="Stimulsoft\fonts\idautomated\IDAutomationCMC7n10.ttf" />
-    <Content Include="Stimulsoft\fonts\idautomated\IDAutomationCMC7n25.ttf" />
-    <Content Include="Stimulsoft\fonts\idautomated\IDAutomationCMC7n40.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\ShipmentsController.cs" />

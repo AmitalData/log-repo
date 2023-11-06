@@ -963,19 +963,7 @@ namespace WebFreight.Web
         //        }
         //    }
         //}
-        public static void WriteLogFile(string message)
-        {
-            try
-            {
-                System.IO.File.AppendAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "simon.log"), string.Format("{0}:{1}\n\r", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff"), message));
 
-            }
-            catch (Exception ex)
-            {
-
-            }
-            
-        }
 
     }
 

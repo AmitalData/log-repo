@@ -1,12 +1,10 @@
 ﻿using Logitude.BL.GlobalModel.EntityQueries;
-using NPOI.SS.Formula.Functions;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -28,7 +26,7 @@ namespace WebFreight.Web
                 var htmlVersion = GetHTMLVersion();
 
                 string RedirectUrl = "Angular" + htmlVersion + "/index.html?Menu=" + Menu + "&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
-               Response.Redirect("~/" + RedirectUrl);
+                Response.Redirect("~/" + RedirectUrl);
             }
 
      
