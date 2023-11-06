@@ -1109,12 +1109,18 @@ namespace WebFreight.Web.Security
                     string redirectUrl = context.Request.Url.ToString().Replace("http:", "https:").Replace(":81", "");
                     if (IsEndResponse)
                     {
+                        Global.WriteLogFile(string.Format("SecurityUtility.line 1112=>{0}", redirectUrl));
+                        Global.WriteLogFile(string.Format("SecurityUtility.line 1112 rawurl=>{0}" , context.Request.RawUrl));
+                        Global.WriteLogFile(string.Format("SecurityUtility.line 1112 urlreferrer=>{0}", context.Request.UrlReferrer));
                         context.Response.Redirect(redirectUrl);
                     }
                     else
                     {
                         if (!context.Request.Url.ToString().Contains("https"))
                         {
+                            Global.WriteLogFile(string.Format("SecurityUtility.line 1119=>{0}" , redirectUrl));
+                            Global.WriteLogFile(string.Format("SecurityUtility.line 1119 rawurl=>{0}", context.Request.RawUrl));
+                            Global.WriteLogFile(string.Format("SecurityUtility.line 1119 urlreferrer=>{0}",context.Request.UrlReferrer));
                             context.Response.Redirect(redirectUrl, false);
                         }
 
@@ -1129,7 +1135,9 @@ namespace WebFreight.Web.Security
             HttpContext context = HttpContext.Current;
             string Url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
             Url = Url.Split(':')[0];
-
+            Global.WriteLogFile(string.Format("SecurityUtility.line 1134=>{0}" , context.Request.Url));
+            Global.WriteLogFile(string.Format("SecurityUtility.line 1134 rawurl=>{0}", context.Request.RawUrl));
+            Global.WriteLogFile(string.Format("SecurityUtility.line 1134 urlreferrer=>{0}", context.Request.UrlReferrer));
             return Url;
         }
 
