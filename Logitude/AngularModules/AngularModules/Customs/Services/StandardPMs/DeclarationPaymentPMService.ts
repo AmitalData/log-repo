@@ -154,7 +154,7 @@ export class DeclarationPaymentPMService {
          
         if (!entityPM) {
             
-            entityPM = new DeclarationPaymentPM();
+            entityPM = new DeclarationPaymentPM(null);
 			entityPM.DisableMarkAsDirty = true;
         }
 
@@ -426,7 +426,7 @@ export class DeclarationPaymentPMService {
 
 	  public GetNewEntityPM() {		 
 		    var entityPM: DeclarationPaymentPM;
-			entityPM = new DeclarationPaymentPM();
+			entityPM = new DeclarationPaymentPM(null);
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
