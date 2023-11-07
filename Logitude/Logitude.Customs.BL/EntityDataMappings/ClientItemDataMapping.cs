@@ -30,6 +30,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.OriginCountryCode = entityPM.OriginCountryCode;
                 entityPOCO.ClassificationCode = entityPM.ClassificationCode;
                 entityPOCO.ItemDescription = entityPM.ItemDescription;
+                entityPOCO.Id = entityPM.Id;
             }
         }
 
