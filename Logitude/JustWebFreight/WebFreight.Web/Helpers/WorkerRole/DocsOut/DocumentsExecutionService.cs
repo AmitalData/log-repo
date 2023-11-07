@@ -20,6 +20,14 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools.EntityChanges;
 using WebFreight.Web.Helpers.CallBack;
+using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Transactions;
+using Newtonsoft.Json;
+using Logitude.BL.QuoteModel.Tools.EntityService;
+using Simplog.Data.QuoteModel;
+using Microsoft.Practices.Unity;
+using Logitude.BL.QuoteModel.EntityPMs;
 
 namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
 {
@@ -29,6 +37,8 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         private QueueResponse queueResponse = null;
         private int? tenant =null;
         private string documentsExecutionLogId = string.Empty;
+        private string communicationLogId = string.Empty;
+        
         private string callBackDetailsXml = string.Empty;
         private DocumentsExecutionLogRepository documentsExecutionLogRepository = null;
         private DocumentsExecutionLog documentsExecutionLog = null;
@@ -44,6 +54,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 documentsExecutionLogId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("DocumentsExecutionLogId") ? queueResponse.MessageValues["DocumentsExecutionLogId"].ToString() : "";
                 tenant = GetTenantValueFromQueueResponse(queueResponse);
                 callBackDetailsXml = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("CallBackDetailsXml") ? queueResponse.MessageValues["CallBackDetailsXml"].ToString() : "";
+                communicationLogId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("communicationLogId") ? queueResponse.MessageValues["communicationLogId"].ToString() : "";
             }
         }
 
@@ -51,7 +62,10 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         {
             try
             {
-                if (queueService != null && queueResponse!=null)
+                if (!string.IsNullOrEmpty(communicationLogId)) {
+                    UpdateCommunicationLogsDocuments();
+                }
+                else if (queueService != null && queueResponse!=null)
                 {
                     documentsExecutionLog = GetDocumentsExecutionLog();
                     if (documentsExecutionLog != null && documentsExecutionLog.RetryNumber < 2 && documentsExecutionLog.CreateDate > DateTime.Now.AddMinutes(-5) &&  (documentsExecutionLog.StatusCode == "W" || documentsExecutionLog.StatusCode == "P"))
@@ -109,6 +123,51 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             }
         }
 
+        private void UpdateCommunicationLogsDocuments() {
+            ICommonDataContext context = CommonDataContext.GetContext(tenant.Value);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+            CommunicationLog commLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant.Value);
+            if (commLog != null && commLog.Subject == "Update Quote Document")
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        BlobFileInfo fileInfo = new BlobFileInfo()
+                        {
+                            FileName = commLog.Document.Id,
+                            FolderName = commLog.Document.Folder,
+                            Extension = commLog.Document.Extension,
+                            Tenant = commLog.Document.Tenant,
+                            FileSize = commLog.Document.FileSize,
+                        };
+                        Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                        byte[] objectData = storageservice.Read(fileInfo);
+                        var jsonObject = System.Text.Encoding.Default.GetString(objectData);
+                        var quotePM = JsonConvert.DeserializeObject<QuotePM>(jsonObject);
+                        IQuotesContext MyContext = QuotesContext.GetContext(tenant.Value);
+                        var email = "system@tenant" + tenant.Value + ".com";
+                        QuoteService service = new QuoteService(MyContext, tenant.Value, email);
+
+                        service.UpdateQuoteDocuments(quotePM);
+                        commLog.CommunicationStatusTypeCode = "D";
+                        commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
+                        commLog.DoneDateUTC = DateTime.UtcNow;
+                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
+                        commLog.LastStatusDateUTC = DateTime.UtcNow;
+                        communicationLogRep.Update(commLog);
+                        communicationLogRep.SubmitChanges();
+                        scope.Complete();
+                    }
+                    queueService.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant.Value, null, "F", null + DateTime.Now.ToString(), ex.Message);
+                    queueService.Complete();
+                }
+            }
+        }
         public void ExecuteDocumentsV2ExecutionQueue()
         {
             try

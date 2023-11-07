@@ -41,6 +41,10 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 declare var attachmentUploader, ResultAsArray: any;
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
+import { delay, expand, takeLast } from 'rxjs/operators';
+import { RecoCallback } from 'Accounting/DataContracts/RecoCallback';
+import { EMPTY } from 'rxjs';
+import { ReconciliationExtendedPMService } from 'Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 
 @Component({
     selector: 'QuotationComponent',
@@ -72,6 +76,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     QuoteTypeCode: string;
 
     private CurrentSession = SessionLocator.SelectedSession;
+    public _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
     constructor() {
         super();
 
@@ -670,9 +675,13 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                     this.currentDocumentVersion = this.ReportVersions.filter(v => v.IsSent == false)[0];
 
                     this.ClearLastQuoteTemplateVersionDocuemnt();
-
+                    if(this.QuotePM.CommunicationLogId) {
+                        this.getCommunicationLog(this.QuotePM.CommunicationLogId);
+                    } else {
+                        this.GetQuoteTemplatePdf();
+                    }
                   
-                    this.GetQuoteTemplatePdf();
+                    
                 }
                 else { }
 
@@ -764,7 +773,43 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         });
 
     }
-
+    
+    getCommunicationLog(communicationLogId: string) {
+        SessionLocator.SelectedSession.StartBusyIndicator("Document in progress");
+        this._ReconciliationExtendedPMService
+                .getCommunicationLog(communicationLogId)
+                .pipe(
+                    delay(3000),
+                    expand((response: any) => {
+                    if ((response.HasError || response.Result.CommunicationStatusTypeCode === 'W')) {
+                        return this._ReconciliationExtendedPMService
+                    .getCommunicationLog(communicationLogId).pipe(delay(3000));
+                    }
+                    return EMPTY;
+                    }),
+                    takeLast(1)
+                )
+                .subscribe((result: ServiceResponse) => {
+                    if (!result.HasError) {
+                        var communicationLogResult = result.Result;
+                        if(communicationLogResult.CommunicationStatusTypeCode === 'D') {
+                            
+                            
+                            this.CurrentSession.StopBusyIndicator();
+                            this.GetQuoteTemplatePdf();
+                        } else if(communicationLogResult.CommunicationStatusTypeCode === 'F') {
+                            // this.ValidationErrorsList = [];
+                            // this.ValidationErrorsList.push(communicationLogResult.ExceptionMessage);
+                            this.CurrentSession.StopBusyIndicator();
+                        }
+                    }
+                    else {
+                        // this.ValidationErrorsList = result.ErrorsArray;
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+                    
+                })
+    }
 
     OnDownLoadTemplateButtonClick() {
         if (!AppTool.IsNullOrEmpty(this.QuotePM.QuoteHTMLDocumentId)) {
