@@ -46,6 +46,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
 using System.Xml.Linq;
 using Logitude.BL.CommonDataModel.Helpers;
+using System.Threading.Tasks;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -468,10 +469,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void TryBuildUD2LT(DocumentsFilingPM extDocPM)
         {
-            ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
-            myICreateUD2LTService.JustDoIt(extDocPM);
+            ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;     
+			Task.Run(() => myICreateUD2LTService.JustDoIt(extDocPM));
 
-        }
+		}
         private void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
         {
             DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(extDocPM.Tenant);
@@ -487,7 +488,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
             ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
-            myISendBondedCustomDocumentService.JustDoIt(extDocPM);
+		    Task.Run(() => myISendBondedCustomDocumentService.JustDoIt(extDocPM));
+			
         }
 
         
