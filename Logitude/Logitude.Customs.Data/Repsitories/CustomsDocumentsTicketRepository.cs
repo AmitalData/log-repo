@@ -240,6 +240,15 @@ FROM ( SELECT DISTINCT
                     select a).Count();
         }
 
+        public Boolean GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(string declarationId,string docTicketId) {
+            var result = (from pointer in context.CustomsDocumentPointers
+                          join ticket in context.CustomsDocumentsTickets on pointer.CustomsDocumentsTicketId equals ticket.Id
+                          where pointer.ParentEntityId == declarationId && ticket.RequestedCustomsDocId != null && (ticket.VerificationStatusTypeCode != "4" && ticket.VerificationStatusTypeCode != "5") && ticket.Id != docTicketId
+                          select ticket).Any();
+            return result;
+
+        }
+
         public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketsByDocumentsFilingId(string documentsFilingId, int tenant)
 {
 (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
