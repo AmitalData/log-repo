@@ -3521,6 +3521,13 @@ export class PaymentMethodModel extends BaseComponent {
                 "0" //יבואן / יצואן
             );
         }
+        else if(this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ALL_KUPA")
+		{
+			this.updateDefaultPaymentMethod(
+							"2",/*קופה*/
+							"0" //יבואן / יצואן
+						);
+		}
         else if (this._UsingDsvPayKupa) {
             //already set
             console.log("DefaultPaymentMethod-->קופה טווח 20,000 - 40,000 (ולא מוגדר ניצול העברת זהב - כל סכום)  == DSVKUPA");
