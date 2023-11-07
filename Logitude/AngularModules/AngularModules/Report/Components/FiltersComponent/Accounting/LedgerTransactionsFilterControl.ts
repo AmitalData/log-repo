@@ -32,8 +32,7 @@ import { Operators } from 'Accounting/DataContracts/Operators';
     templateUrl: './LedgerTransactionsFilterControl.html',
 })
 
-export class LedgerTransactionsFilterControl extends BaseComponent implements OnInit
-{
+export class LedgerTransactionsFilterControl extends BaseComponent implements OnInit {
     public CurrencyFilters: any;
 
     ObjectTableName: string = "LedgerTransaction";
@@ -42,14 +41,16 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     public DataContext = this;
     public ValidationErrorsList: string[] = [];
     operatorsList =
-    [{Code:Operators.Equals, EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
-        {Code:Operators.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
-        {Code:Operators.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
-        {Code:Operators.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
-        {Code:Operators.LessThanOrEqual, EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
-        {Code:Operators.GreaterThanOrEqual, EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
-    ];
-    selectedAmountOperator:{Code:string, EnglishName: string, LocalName: string };
+        [{ Code: Operators.Equals, EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
+        { Code: Operators.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
+        { Code: Operators.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
+        { Code: Operators.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
+        { Code: Operators.LessThanOrEqual, EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
+        { Code: Operators.GreaterThanOrEqual, EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
+        ];
+    selectedAmountOperator: { Code: string, EnglishName: string, LocalName: string };
+    selectedAmountOperatorLocalBalanceInDue: { Code: string, EnglishName: string, LocalName: string };
+
     amount: number;
     get Amount() { return this.amount; }
     set Amount(value: number) {
@@ -74,8 +75,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     private chartOfAccountPMService: ChartOfAccountPMService = new ChartOfAccountPMService();
     private fullAccountingSetting: FullAccountingSettingList = new FullAccountingSettingList();
     private ChartOfAccountSecurityLevel: any;
-    constructor(private CD: ChangeDetectorRef)
-    {
+    constructor(private CD: ChangeDetectorRef) {
         super();
 
         this.InitLOVFilters();
@@ -95,26 +95,22 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                 if (myResponse != null) {
 
                     var res = myResponse.Result;
-                    this.fullAccountingSetting = res;                   
+                    this.fullAccountingSetting = res;
                 }
             })
         });
     }
 
-    private GetResources()
-    {
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) =>
-        {
-            this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) =>
-            {
+    private GetResources() {
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
+            this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
                 this.isReady = true;
                 this.SetRunReportTitle();
             });
         });
     }
 
-    private InitLOVFilters()
-    {
+    private InitLOVFilters() {
         this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
         this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
 
@@ -125,24 +121,22 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this.GLAccountFilterItems = new ApiQueryFilters();
         this.GLAccountFilterItems.addAdditionalFilter("AccountTypeCode", "4,5", null, null, "Exclude", false, false, false, "string", false, true);
     }
-      private loggedUser: UserPM;
+    private loggedUser: UserPM;
 
-    GetSalesmanFeature()
-    {
+    GetSalesmanFeature() {
         var salesmanLedger = FeatureLocator.HasFeaturePermession("LedgerTransaction", "SalesmanLTRP");
-        var isSalesmanRestrictionsEnabled =  !!salesmanLedger;
+        var isSalesmanRestrictionsEnabled = !!salesmanLedger;
         console.log("[Salesman Ledger Transactions]", salesmanLedger);
-         this.loggedUser = SessionLocator.LoggedUserPM;
+        this.loggedUser = SessionLocator.LoggedUserPM;
         if (this.loggedUser.IsSalesman && isSalesmanRestrictionsEnabled) {
             this.IsSalesmanRestricted = true;
             this.Salesman = this.loggedUser.Id;
-          this.GLAccountFilterItems.addAdditionalFilter("ConnectedToSalesmanId", this.loggedUser.Id, null, null, "Equals", true, true, false, "string", false, false);
+            this.GLAccountFilterItems.addAdditionalFilter("ConnectedToSalesmanId", this.loggedUser.Id, null, null, "Equals", true, true, false, "string", false, false);
         }
 
     }
 
-    SetRunReportTitle()
-    {
+    SetRunReportTitle() {
         if (this.isReady) {
             if (this.IsSchedulerReport) {
                 this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
@@ -153,13 +147,11 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
     }
 
-    InitializeComponent(myReportsPreview: ReportsPreviewComponent)
-    {
+    InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
     }
 
-    ngOnInit()
-    {
+    ngOnInit() {
         this.SetUIProperties();
         this.FillDefaultDateDetails();
     }
@@ -173,24 +165,25 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
     }
 
-    SetUIProperties()
-    {
+    SetUIProperties() {
         this.UIProperties.SetRequired("FromDate", this.ObjectTableName, !this.FromDate);
         this.UIProperties.SetRequired("ToDate", this.ObjectTableName, !this.ToDate);
 
-        if (this.IsSalesmanRestricted)
-        {
+        if (this.IsSalesmanRestricted) {
             this.UIProperties.SetRequired("Salesman", "GLAccount", true);
             this.UIProperties.SetEnabled("Salesman", "GLAccount", false);
         }
-        if (this.glaccountPM)
-        {
+        if (this.glaccountPM) {
             this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", true);
+            this.UIProperties.SetEnabled("LocalBalanceInDue", "GLAccount", true);
+
         } else {
             this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", false);
+            this.UIProperties.SetEnabled("LocalBalanceInDue", "GLAccount", false);
+
         }
 
-        
+
     }
 
     //#region Filters
@@ -198,8 +191,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     //row 1
     private agingForDate: Date = null;
     public get AgingForDate() { return this.agingForDate; }
-    public set AgingForDate(value: Date)
-    {
+    public set AgingForDate(value: Date) {
         if (this.agingForDate != value) {
             this.agingForDate = value;
 
@@ -210,8 +202,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private customer: string;
     public get Customer() { return this.customer; }
-    public set Customer(value: string)
-    {
+    public set Customer(value: string) {
         if (this.customer != value) {
             this.customer = value;
 
@@ -222,17 +213,17 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
     }
 
-    AmountOperatorChanged($event){
+    AmountOperatorChanged($event) {
         this.selectedAmountOperator = $event;
     }
-
-    ValidateDate()
-    {
+    AmountOperatorLocalBalanceInDueChanged($event) {
+        this.selectedAmountOperatorLocalBalanceInDue = $event;
+    }
+    ValidateDate() {
         var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
         if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
 
-            setTimeout(() =>
-            {
+            setTimeout(() => {
                 if (!this.IsOldDate("ToDate"))
                     this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
                 if (!this.IsOldDate("FromDate"))
@@ -241,8 +232,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             }, 200);
 
         } else {
-            setTimeout(() =>
-            {
+            setTimeout(() => {
                 this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
                 this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "");
                 this.CD.detectChanges();
@@ -256,45 +246,42 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         const uiProperty = this.UIProperties.UIPropertyList.filter(uiProp => uiProp.FieldName == fieldName)[0];
         if (uiProperty)
             isOldDate = uiProperty.ValidationError == "Date time is too way in the past!" || uiProperty.ValidationError == "Invalid Date";
-        
+
         return isOldDate;
     }
 
     private chartOfAccountId: string;
 
     get ChartOfAccountId() { return this.chartOfAccountId; }
-    set ChartOfAccountId(value: string)
-    {
+    set ChartOfAccountId(value: string) {
         if (this.chartOfAccountId != value) {
             this.chartOfAccountId = value;
 
 
         }
     }
-    
-    private _ChartOfAccountsTypeCode : string;
-    public get ChartOfAccountsTypeCode() : string {
+
+    private _ChartOfAccountsTypeCode: string;
+    public get ChartOfAccountsTypeCode(): string {
         return this._ChartOfAccountsTypeCode;
     }
-    public set ChartOfAccountsTypeCode(v : string) {
+    public set ChartOfAccountsTypeCode(v: string) {
         this._ChartOfAccountsTypeCode = v;
     }
-    
+
     private chartOfAccount: ChartOfAccountList;
     public get ChartOfAccount() { return this.chartOfAccount; }
-    public set ChartOfAccount(value: ChartOfAccountList)
-    {
+    public set ChartOfAccount(value: ChartOfAccountList) {
         if (this.chartOfAccount != value) {
             this.chartOfAccount = value;
-            if(value)
-            this.ChartOfAccountSecurityLevel = value.ChartOfAccountSecurityLevel == undefined ? 0 : value.ChartOfAccountSecurityLevel;
+            if (value)
+                this.ChartOfAccountSecurityLevel = value.ChartOfAccountSecurityLevel == undefined ? 0 : value.ChartOfAccountSecurityLevel;
         }
     }
 
     private numberOfMonths: number;
     public get NumberOfMonths() { return this.numberOfMonths; }
-    public set NumberOfMonths(value: number)
-    {
+    public set NumberOfMonths(value: number) {
         if (this.numberOfMonths != value) {
             this.numberOfMonths = value;
         }
@@ -305,8 +292,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private collector: string;
     public get Collector() { return this.collector; }
-    public set Collector(value: string)
-    {
+    public set Collector(value: string) {
         if (this.collector != value) {
             this.collector = value;
         }
@@ -314,8 +300,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private salesman: string;
     public get Salesman() { return this.salesman; }
-    public set Salesman(value: string)
-    {
+    public set Salesman(value: string) {
         if (this.salesman != value) {
             this.salesman = value;
         }
@@ -325,8 +310,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private category1: string;
     public get Category1() { return this.category1; }
-    public set Category1(value: string)
-    {
+    public set Category1(value: string) {
         if (this.category1 != value) {
             this.category1 = value;
         }
@@ -335,8 +319,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private category2: string;
     public get Category2() { return this.category2; }
-    public set Category2(value: string)
-    {
+    public set Category2(value: string) {
         if (this.category2 != value) {
             this.category2 = value;
         }
@@ -344,8 +327,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private category3: string;
     public get Category3() { return this.category3; }
-    public set Category3(value: string)
-    {
+    public set Category3(value: string) {
         if (this.category3 != value) {
             this.category3 = value;
         }
@@ -353,8 +335,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private category4: string;
     public get Category4() { return this.category4; }
-    public set Category4(value: string)
-    {
+    public set Category4(value: string) {
         if (this.category4 != value) {
             this.category4 = value;
         }
@@ -363,8 +344,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     //row 4
     private category5: string;
     public get Category5() { return this.category5; }
-    public set Category5(value: string)
-    {
+    public set Category5(value: string) {
         if (this.category5 != value) {
             this.category5 = value;
         }
@@ -372,35 +352,40 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private currenciesDetailed: boolean;
     public get CurrenciesDetailed() { return this.currenciesDetailed; }
-    public set CurrenciesDetailed(value: boolean)
-    {
+    public set CurrenciesDetailed(value: boolean) {
         if (this.currenciesDetailed != value) {
             this.currenciesDetailed = value;
         }
     }
 
-    private _BalanceInLocalCurrency : string;
-    public get BalanceInLocalCurrency() : string {
+    private _BalanceInLocalCurrency: string;
+    public get BalanceInLocalCurrency(): string {
         return this._BalanceInLocalCurrency;
     }
-    public set BalanceInLocalCurrency(v : string) {
+    public set BalanceInLocalCurrency(v: string) {
         this._BalanceInLocalCurrency = v;
     }
-    
+
+    private _LocalBalanceInDue: string;
+    public get LocalBalanceInDue(): string {
+        return this._LocalBalanceInDue;
+    }
+    public set LocalBalanceInDue(v: string) {
+        this._LocalBalanceInDue = v;
+    }
+
     //#endregion
 
     //#region Filter Methods
     public filterSelectedValue: string = 'filter_accounting';
     public _dateTypeCode: string = '1';
-    FilterItemClicked(itemValue: string)
-    {
+    FilterItemClicked(itemValue: string) {
         if (this.filterSelectedValue != itemValue) {
             this.filterSelectedValue = itemValue;
             this.FilterLines();
         }
     }
-    FilterLines()
-    {
+    FilterLines() {
 
         //Task 46666: Transaction Tab - date filter new design
         // <DateTypeCode>2</DateTypeCode> 1/2/3
@@ -424,8 +409,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     }
     //#endregion
 
-    SetFilterSelectedValue()
-    {
+    SetFilterSelectedValue() {
         switch (this._dateTypeCode) {
             case '1':
                 this.filterSelectedValue = 'filter_accounting';
@@ -451,8 +435,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         return this.GLAccountChanged;
     }
 
-    GetQueryFilterItems()
-    {
+    GetQueryFilterItems() {
         var queryFilterItems = new Array<QueryFilterItem>();
         var queryFilterItem: QueryFilterItem;
 
@@ -541,7 +524,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
         queryFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
         queryFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
-  
+
         queryFilterItems.push(new QueryFilterItem("UseSecurityLevel", this.fullAccountingSetting.IsSecurityLevelActivated));
 
 
@@ -555,11 +538,20 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             }
             queryFilterItems.push(queryFilterItem);
         }
+        if (this.LocalBalanceInDue != null) {
+            queryFilterItem = new QueryFilterItem();
+            queryFilterItem.FieldName = "LocalBalanceInDue";
+            queryFilterItem.FieldValue = this.LocalBalanceInDue;
+            if (this.selectedAmountOperatorLocalBalanceInDue) {
+                queryFilterItem.Operator = this.selectedAmountOperatorLocalBalanceInDue.Code; //ayed
+                this.selectedAmountOperatorLocalBalanceInDue
+            }
+            queryFilterItems.push(queryFilterItem);
+        }
         return queryFilterItems;
     }
 
-    GetLookUpFieldValue(field)
-    {
+    GetLookUpFieldValue(field) {
         if (field) {
             if (field[0]["@nil"] != "true")
                 return field;
@@ -567,19 +559,16 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         return null
     }
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>)
-    { //For Scheduler Report
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
         this.IsSchedulerReport = true;
         if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem =>
-            {
+            queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
             });
         }
     }
 
-    private SetFilterItem(queryFilterItem: QueryFilterItem)
-    {
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
             switch (queryFilterItem.FieldName) {
                 case "FromDate":
@@ -631,13 +620,18 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                     if (this.operatorsList.filter(x => x.Code == queryFilterItem.Operator).length > 0) {
                         this.selectedAmountOperator = this.operatorsList.filter(x => x.Code == queryFilterItem.Operator)[0];
                     }
-                    break;    
+                    break;
+                case "LocalBalanceInDue":
+                    this.LocalBalanceInDue = queryFilterItem.FieldValue;//ayed
+                    if (this.operatorsList.filter(x => x.Code == queryFilterItem.Operator).length > 0) {
+                        this.selectedAmountOperatorLocalBalanceInDue = this.operatorsList.filter(x => x.Code == queryFilterItem.Operator)[0];
+                    }
+                    break;
             }
         }
     }
 
-    ValidateSelectedFilters()
-    {
+    ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
         var isValid: boolean = true;
         isValid = this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
@@ -654,31 +648,30 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLAccounts.O.tofieldrequired"));
             isValid = false;
         }
-       
+
         var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
         if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
             isValid = false;
         }
-        
+
         if (this.ValidationErrorsList.length == 0)
             this.filterControlHight = "100";
         else
             this.filterControlHight = "80";
-     
+
         return isValid;
     }
     private CheckIfChartOfAccountAndUserSecurityLevelAreMatched() {
 
         if (this.CheckGLAccountChartOfAccountSecurityLevel()) {
-           
+
             return this.CheckChartOfAccountSecurityLevel();
         }
         else return false;
     }
 
-    public get SelectedCategoryValue(): string
-    {
+    public get SelectedCategoryValue(): string {
         if (this.SelectedCategory) {
             var categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
             if (categoryIndex)
@@ -688,18 +681,15 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     }
 
 
-    PrepareContactList()
-    {
+    PrepareContactList() {
         var cardExtendedPMService = new CardExtendedPMService();
         var glAccountId = this.GetLookUpFieldValue(this.GLAccountId);
         if (glAccountId != null) {
-            cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) =>
-            {
+            cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     var allContacts = response.Result;
                     if (allContacts != null && allContacts.length > 0) {
-                        allContacts.forEach(contact =>
-                        {
+                        allContacts.forEach(contact => {
                             if (!AppTool.IsNullOrEmpty(contact)) this.ReportsPreview.AddPartner(contact.PartnerName, contact.PartnerId);
                         });
                         this.ReportsPreview.PartnersObslist.reverse();
@@ -709,8 +699,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
     }
 
-    RunButtonClicked()
-    {
+    RunButtonClicked() {
         this.SetUIProperties();
 
         var errors: string[] = [];
@@ -750,8 +739,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         'Category 5'
     ];
     SelectedCategory: string;
-    SelectedItemChanged(item)
-    {
+    SelectedItemChanged(item) {
         this.SelectedCategory = item;
     }
     //#endregion
@@ -760,8 +748,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     //OpenAmountHint: string = "";
     private openAmountHint: string;
     get OpenAmountHint() { return this.openAmountHint; }
-    set OpenAmountHint(value: string)
-    {
+    set OpenAmountHint(value: string) {
         if (this.openAmountHint != value) {
             this.openAmountHint = value;
         }
@@ -769,8 +756,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private fromDate: Date;
     get FromDate() { return this.fromDate; }
-    set FromDate(value: Date)
-    {
+    set FromDate(value: Date) {
         if (this.fromDate != value) {
             this.fromDate = value;
             this.ValidateDate();
@@ -781,21 +767,19 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     toDate: Date;
     get ToDate() { return this.toDate; }
-    set ToDate(value: Date)
-    {
+    set ToDate(value: Date) {
         if (this.toDate != value) {
             this.toDate = value;
             this.ValidateDate();
             if (!this.IsOldDate("ToDate"))
-            this.UIProperties.SetRequired("ToDate", this.ObjectTableName, !value);
+                this.UIProperties.SetRequired("ToDate", this.ObjectTableName, !value);
 
         }
     }
 
     private currencyId: string;
     get CurrencyId() { return this.currencyId; }
-    set CurrencyId(value: string)
-    {
+    set CurrencyId(value: string) {
         if (this.currencyId != value) {
             this.currencyId = value;
         }
@@ -804,13 +788,12 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private attachedGLAccountCheckBox: boolean = true;
     get AttachedGLAccountCheckBox() { return this.attachedGLAccountCheckBox; }
-    set AttachedGLAccountCheckBox(value: boolean)
-    {
+    set AttachedGLAccountCheckBox(value: boolean) {
         if (this.attachedGLAccountCheckBox != value) {
             const formday = new Date();
-            if (!value)   
+            if (!value)
                 this.FromDate = new Date(formday.setFullYear(2000, 0, 1));
-            else 
+            else
                 this.FromDate = new Date(formday.setMonth(formday.getMonth() - 1));
             this.attachedGLAccountCheckBox = value;
         }
@@ -818,8 +801,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private splittedByCurrencyCheckBox: boolean = false;
     get SplittedByCurrencyCheckBox() { return this.splittedByCurrencyCheckBox; }
-    set SplittedByCurrencyCheckBox(value: boolean)
-    {
+    set SplittedByCurrencyCheckBox(value: boolean) {
         if (this.splittedByCurrencyCheckBox != value) {
             this.splittedByCurrencyCheckBox = value;
 
@@ -828,8 +810,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private _GLAccountId: string;
     get GLAccountId() { return this._GLAccountId; }
-    set GLAccountId(value: string)
-    {
+    set GLAccountId(value: string) {
         if (this._GLAccountId != value) {
             this.SetGLAccountChanged(this._GLAccountId);
             this._GLAccountId = value;
@@ -844,10 +825,9 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     private securityLevel: any;
     private glaccountPM: any;
-    
+
     get GLAccount() { return this.glaccountPM; }
-    set GLAccount(value: any)
-    {
+    set GLAccount(value: any) {
         if (this.glaccountPM != value) {
             this.glaccountPM = value;
             if (this.glaccountPM) {
@@ -859,21 +839,27 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                     this.CurrencyId = !AppTool.IsNullOrEmpty(this.CurrencyId) && this.IsSchedulerReport ? this.CurrencyId : this.glaccountPM.CurrencyId;
                     this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
                 }
-             
-                 this.SetChartOfAccountSecurityLevel(value.ChartOfAccountsId);
+
+                this.SetChartOfAccountSecurityLevel(value.ChartOfAccountsId);
             }
 
         }
-        
-        if(this.glaccountPM) {
+
+        if (this.glaccountPM) {
             this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", true);
+            this.UIProperties.SetEnabled("LocalBalanceInDue", "GLAccount", true);
+
         } else {
             this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", false);
+            this.UIProperties.SetEnabled("LocalBalanceInDue", "GLAccount", false);
+
             this.BalanceInLocalCurrency = '';
+            this.LocalBalanceInDue = '';
+
         }
     }
 
-    private  SetChartOfAccountSecurityLevel(ChartOfAccountId: string) {
+    private SetChartOfAccountSecurityLevel(ChartOfAccountId: string) {
         this.chartOfAccountPMService.get(ChartOfAccountId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 var chartOfAccount: ChartOfAccountPM = response.Result;
@@ -885,7 +871,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this.GLAccount) {
             return this.CheckSecurityLevel(this.securityLevel);
         } else return true;
-       
+
     }
     private CheckChartOfAccountSecurityLevel() {
         if (this.ChartOfAccount) {
@@ -894,53 +880,45 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         else return true;
     }
     private CheckSecurityLevel(securityLevel: any) {
-        if (!this.loggedUser.IsCustomerCare && (securityLevel > this.loggedUser.SecurityLevel )) {          
-           
-                this.ValidationErrorsList.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
-                return false;
-            }          
+        if (!this.loggedUser.IsCustomerCare && (securityLevel > this.loggedUser.SecurityLevel)) {
+
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
+            return false;
+        }
         else return true;
     }
 
     private _IsReconciled: boolean;
-    public get IsReconciled(): boolean
-    {
+    public get IsReconciled(): boolean {
         return this._IsReconciled;
     }
-    public set IsReconciled(v: boolean)
-    {
+    public set IsReconciled(v: boolean) {
         this._IsReconciled = v;
     }
 
 
     private _IncludeChildAccounts: boolean;
-    public get IncludeChildAccounts(): boolean
-    {
+    public get IncludeChildAccounts(): boolean {
         return this._IncludeChildAccounts;
     }
-    public set IncludeChildAccounts(v: boolean)
-    {
+    public set IncludeChildAccounts(v: boolean) {
         this._IncludeChildAccounts = v;
     }
 
     private _IncludeRelatedCurrenciesAccount: boolean;
-    public get IncludeRelatedCurrenciesAccount(): boolean
-    {
+    public get IncludeRelatedCurrenciesAccount(): boolean {
         return this._IncludeRelatedCurrenciesAccount;
     }
-    public set IncludeRelatedCurrenciesAccount(v: boolean)
-    {
+    public set IncludeRelatedCurrenciesAccount(v: boolean) {
         this._IncludeRelatedCurrenciesAccount = v;
     }
 
 
     private _SearchFields: string;
-    public get SearchFields(): string
-    {
+    public get SearchFields(): string {
         return this._SearchFields;
     }
-    public set SearchFields(v: string)
-    {
+    public set SearchFields(v: string) {
         this._SearchFields = v;
     }
 
