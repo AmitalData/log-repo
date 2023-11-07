@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ARPaymentChequeUpdateClass
    {  		
-
-		public const string HashString = "3e9a16fdb7e95cf05efaab91a89a2eb3";
+		public const string HashString = "20b1a946d86b7159e7849458b4580727";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "שורת המחםה",
+			      				    LocalDefaultText =  "שורת המחאה",
 			      				    DefaultText =  "Cheque Line",
 			      				    Code =  "f3c3",
 			      				    Name =  "ARPaymentCheque Query Group",
@@ -588,10 +587,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChequeNumber",
 					  						DefaultText =  "Cheque No.",
-					  						FullLocalDefaultText =  "מספר המחםה",
+					  						FullLocalDefaultText =  "מספר המחאה",
 					  						ListFieldLable =  "ChequeNumberListLable",
 					  						ListLableDefaultText =  "Cheque No.",
-					  						ListLocalDefaultText =  "מספר המחםה",
+					  						ListLocalDefaultText =  "מספר המחאה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -653,10 +652,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ValueDate",
 					  						DefaultText =  "Value Date",
-					  						FullLocalDefaultText =  "תםריך פרעון",
+					  						FullLocalDefaultText =  "תאריך פרעון",
 					  						ListFieldLable =  "ValueDateListLable",
 					  						ListLableDefaultText =  "ValueDate",
-					  						ListLocalDefaultText =  "תםריך פרעון",
+					  						ListLocalDefaultText =  "תאריך פרעון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1376,10 +1375,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusCode",
 					  						DefaultText =  "Cheque Status",
-					  						FullLocalDefaultText =  "סטטוס המחםה",
+					  						FullLocalDefaultText =  "סטטוס המחאה",
 					  						ListFieldLable =  "StatusCodeListLable",
 					  						ListLableDefaultText =  "Cheque Status",
-					  						ListLocalDefaultText =  "סטטוס המחםה",
+					  						ListLocalDefaultText =  "סטטוס המחאה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ARPaymentChequeStatus",
 					  						NavigationPropertyName =  "ARPaymentChequeStatus",
@@ -1507,7 +1506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Status Name",
 					  						ListFieldLable =  "StatusNameListLable",
 					  						ListLableDefaultText =  "Cheque Status Name",
-					  						ListLocalDefaultText =  "סטטוס המחםה",
+					  						ListLocalDefaultText =  "סטטוס המחאה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1549,15 +1548,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ARPaymentChequeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.UnRedeemedCheques", DefaultText = @"UnRedeemed Cheques",LocalDefaultText = "המחםות שלם נפרעו", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ARPaymentChequeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.UnRedeemedCheques", DefaultText = @"UnRedeemed Cheques",LocalDefaultText = "המחאות שלא נפרעו", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ARPaymentChequeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.UnRedeemedCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.UnRedeemedCheques", NameTextCodeDefaultText = "UnRedeemed Cheques", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ARPaymentChequeTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.AllCheques", DefaultText = @"All Cheques",LocalDefaultText = "כל ההמחםות", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ARPaymentChequeTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.AllCheques", DefaultText = @"All Cheques",LocalDefaultText = "כל ההמחאות", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ARPaymentChequeFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.AllCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.AllCheques", NameTextCodeDefaultText = "All Cheques", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ARPaymentChequeTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.PostponedCheques", DefaultText = @"Postponed Cheques",LocalDefaultText = "המחםות דחויות", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ARPaymentChequeTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.Q.PostponedCheques", DefaultText = @"Postponed Cheques",LocalDefaultText = "המחאות דחויות", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ARPaymentChequeFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentCheque.Q.PostponedCheques", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentChequeFeatures.PostponedCheques", NameTextCodeDefaultText = "Postponed Cheques", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARPaymentChequeObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -1755,7 +1754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable ARPaymentChequeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARPaymentCheque" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ARPaymentChequeTextCode_ARPaymentChequeOCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.O.Cheques", DefaultText = "Cheques",LocalDefaultText = @"המחםה", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARPaymentChequeTextCode_ARPaymentChequeOCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.O.Cheques", DefaultText = "Cheques",LocalDefaultText = @"המחאה", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
