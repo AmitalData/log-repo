@@ -6102,7 +6102,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<DeclarationPaymentPM> declarationPayments;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DeclarationPayment", "Id","DeclarationId")]
+	   [DataMember]
+	   public virtual List<DeclarationPaymentPM> DeclarationPayments  
+	   {
+	        get
+             {
+                 if (declarationPayments == null)
+                 {
+                     declarationPayments = new List<DeclarationPaymentPM>();
+                 }
+                 return declarationPayments;
+              }
+             set { declarationPayments = value; }
+	    }
+		   
+	   private List<DeclarationPaymentPM>  deletedDeclarationPayments;
+	   public virtual List<DeclarationPaymentPM> DeletedDeclarationPayments  
+	   {
+	        get
+             {
+                 if ( deletedDeclarationPayments == null)
+                 {
+                      deletedDeclarationPayments = new List<DeclarationPaymentPM>();
+                 }
+                 return  deletedDeclarationPayments;
+              }
+             set {  deletedDeclarationPayments = value; }
+	    }
+	     }
    
 }
 	 

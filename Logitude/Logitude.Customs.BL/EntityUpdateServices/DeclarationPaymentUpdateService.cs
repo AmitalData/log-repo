@@ -111,7 +111,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 
-        protected override void AfterUpdating(DeclarationPaymentPM entityPM, Server.Tools.EntityPM entityParentPM)
+        protected override void AfterUpdating(DeclarationPaymentPM entityPM, DeclarationPM entityParentPM)
         {
 
             bool methodAdded = entityPM.DeclarationPaymentMethods.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any();

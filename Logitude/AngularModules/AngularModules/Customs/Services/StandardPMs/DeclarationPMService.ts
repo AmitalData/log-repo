@@ -57,6 +57,10 @@ import {DeclarationConsAcceptancePM} from '../../EntityPMs/DeclarationConsAccept
 import {DecDangersContactPM} from '../../EntityPMs/DecDangersContactPM';
 import {DeclarationExportRecipientPM} from '../../EntityPMs/DeclarationExportRecipientPM';
 import {DeclarationFollowUpPM} from '../../EntityPMs/DeclarationFollowUpPM';
+import {DeclarationPaymentPM} from '../../EntityPMs/DeclarationPaymentPM';
+
+import {DeclarationPaymentProtestPM} from '../../EntityPMs/DeclarationPaymentProtestPM';
+import {DeclarationPaymentMethodPM} from '../../EntityPMs/DeclarationPaymentMethodPM';
 import {DeclarationValidator} from '../../Validators/DeclarationValidator';
 
 @Injectable()
@@ -240,6 +244,7 @@ export class DeclarationPMService {
                this.MapDecDangersContacts(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapDeclarationExportRecipients(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapDeclarationFollowUp(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapDeclarationPayments(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -486,6 +491,29 @@ export class DeclarationPMService {
 						
 							 
             entityPM.OldEntityPM.DeclarationFollowUp.push(newDeclarationFollowUpPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.DeclarationPayments = [];
+            for (var item in entityPM.DeclarationPayments) {
+            var myDeclarationPaymentPM = entityPM.DeclarationPayments[item];
+            var newDeclarationPaymentPM: DeclarationPaymentPM = this.clone(myDeclarationPaymentPM);
+						
+                newDeclarationPaymentPM.DeclarationPaymentProtests = [];
+                for (var k in myDeclarationPaymentPM.DeclarationPaymentProtests) {
+				    var myDeclarationPaymentProtestPM =myDeclarationPaymentPM.DeclarationPaymentProtests[k];
+				    var newDeclarationPaymentProtestPM=this.clone(myDeclarationPaymentPM.DeclarationPaymentProtests[k]);
+                    newDeclarationPaymentPM.DeclarationPaymentProtests.push(newDeclarationPaymentProtestPM);
+
+					                 }
+                newDeclarationPaymentPM.DeclarationPaymentMethods = [];
+                for (var k in myDeclarationPaymentPM.DeclarationPaymentMethods) {
+				    var myDeclarationPaymentMethodPM =myDeclarationPaymentPM.DeclarationPaymentMethods[k];
+				    var newDeclarationPaymentMethodPM=this.clone(myDeclarationPaymentPM.DeclarationPaymentMethods[k]);
+                    newDeclarationPaymentPM.DeclarationPaymentMethods.push(newDeclarationPaymentMethodPM);
+
+					                 }
+							 
+            entityPM.OldEntityPM.DeclarationPayments.push(newDeclarationPaymentPM);
             }
 			   
 		}
@@ -1538,6 +1566,321 @@ export class DeclarationPMService {
             }
         }
     }
+    MapDeclarationPayments(entityPM: DeclarationPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldDeclarationPayments: DeclarationPaymentPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldDeclarationPayments = entityPM.OldEntityPM.DeclarationPayments;
+        }
+
+        entityPM.DeclarationPayments = new Array<DeclarationPaymentPM>();
+        for (var item in jsonPM.DeclarationPayments) {
+            var jItem = jsonPM.DeclarationPayments[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newDeclarationPaymentPM: DeclarationPaymentPM;
+	  
+            if (mapParent) {
+                newDeclarationPaymentPM = new DeclarationPaymentPM(entityPM);
+            }
+            else
+            {
+                newDeclarationPaymentPM = new DeclarationPaymentPM(null);
+            }
+ 			newDeclarationPaymentPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newDeclarationPaymentPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newDeclarationPaymentPM.UniqueKey = Guid.newGuid();
+                newDeclarationPaymentPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newDeclarationPaymentPM.OldEntityPM = this.clone(newDeclarationPaymentPM);
+ 
+
+                this.MapDeclarationPaymentProtests(newDeclarationPaymentPM, jItem, mapParent);
+                newDeclarationPaymentPM.OldEntityPM.DeclarationPaymentProtests = [];
+                for (var k in newDeclarationPaymentPM.DeclarationPaymentProtests) {
+                    //var clonedInside = this.clone(newDeclarationPaymentPM.DeclarationPaymentProtests[k]);
+                    newDeclarationPaymentPM.OldEntityPM.DeclarationPaymentProtests.push(newDeclarationPaymentPM.DeclarationPaymentProtests[k].OldEntityPM); // clone old DeclarationPaymentProtests//
+                }
+ 
+
+                this.MapDeclarationPaymentMethods(newDeclarationPaymentPM, jItem, mapParent);
+                newDeclarationPaymentPM.OldEntityPM.DeclarationPaymentMethods = [];
+                for (var k in newDeclarationPaymentPM.DeclarationPaymentMethods) {
+                    //var clonedInside = this.clone(newDeclarationPaymentPM.DeclarationPaymentMethods[k]);
+                    newDeclarationPaymentPM.OldEntityPM.DeclarationPaymentMethods.push(newDeclarationPaymentPM.DeclarationPaymentMethods[k].OldEntityPM); // clone old DeclarationPaymentMethods//
+                }
+
+				
+            }
+            else {
+                if (newDeclarationPaymentPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newDeclarationPaymentPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newDeclarationPaymentPM.ChangeSetOp = "Insert";
+                }
+ 
+
+                this.MapDeclarationPaymentProtests(newDeclarationPaymentPM, jItem, mapParent);
+ 
+
+                this.MapDeclarationPaymentMethods(newDeclarationPaymentPM, jItem, mapParent);
+ 
+                newDeclarationPaymentPM.OldEntityPM = null;
+                newDeclarationPaymentPM.EntityParentPM = null;
+            }
+			 newDeclarationPaymentPM.DisableMarkAsDirty = false;
+			 newDeclarationPaymentPM.IsDirty = false;
+            entityPM.DeclarationPayments.push(newDeclarationPaymentPM);
+        }
+        if (oldDeclarationPayments) {
+            
+            for (var itemKey in oldDeclarationPayments) {
+                if (entityPM.DeclarationPayments.filter(p=> p.UniqueKey === oldDeclarationPayments[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldDeclarationPayments[itemKey]) {
+                        //oldDeclarationPayments[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.DeclarationPayments.push(oldDeclarationPayments[itemKey]);
+						var oldItemJson = oldDeclarationPayments[itemKey];
+                        var deletedPM: DeclarationPaymentPM = new DeclarationPaymentPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+ 
+
+                        this.MapDeclarationPaymentProtests(deletedPM, oldItemJson, mapParent);
+ 
+
+                        this.MapDeclarationPaymentMethods(deletedPM, oldItemJson, mapParent);
+                        deletedPM.OldEntityPM = null;
+                        entityPM.DeclarationPayments.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapDeclarationPaymentProtests(entityPM: DeclarationPaymentPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldDeclarationPaymentProtests: DeclarationPaymentProtestPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldDeclarationPaymentProtests = entityPM.OldEntityPM.DeclarationPaymentProtests;
+        }
+
+        entityPM.DeclarationPaymentProtests = new Array<DeclarationPaymentProtestPM>();
+        for (var item in jsonPM.DeclarationPaymentProtests) {
+            var jItem = jsonPM.DeclarationPaymentProtests[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newDeclarationPaymentProtestPM: DeclarationPaymentProtestPM;
+	  
+            if (mapParent) {
+                newDeclarationPaymentProtestPM = new DeclarationPaymentProtestPM(entityPM);
+            }
+            else
+            {
+                newDeclarationPaymentProtestPM = new DeclarationPaymentProtestPM(null);
+            }
+ 			newDeclarationPaymentProtestPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newDeclarationPaymentProtestPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newDeclarationPaymentProtestPM.UniqueKey = Guid.newGuid();
+                newDeclarationPaymentProtestPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newDeclarationPaymentProtestPM.OldEntityPM = this.clone(newDeclarationPaymentProtestPM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newDeclarationPaymentProtestPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newDeclarationPaymentProtestPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newDeclarationPaymentProtestPM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newDeclarationPaymentProtestPM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newDeclarationPaymentProtestPM.OldEntityPM = null;
+                newDeclarationPaymentProtestPM.EntityParentPM = null;
+            }
+			 newDeclarationPaymentProtestPM.DisableMarkAsDirty = false;
+			 newDeclarationPaymentProtestPM.IsDirty = false;
+            entityPM.DeclarationPaymentProtests.push(newDeclarationPaymentProtestPM);
+        }
+        if (oldDeclarationPaymentProtests) {
+            
+            for (var itemKey in oldDeclarationPaymentProtests) {
+                if (entityPM.DeclarationPaymentProtests.filter(p=> p.UniqueKey === oldDeclarationPaymentProtests[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldDeclarationPaymentProtests[itemKey]) {
+                        //oldDeclarationPaymentProtests[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.DeclarationPaymentProtests.push(oldDeclarationPaymentProtests[itemKey]);
+						var oldItemJson = oldDeclarationPaymentProtests[itemKey];
+                        var deletedPM: DeclarationPaymentProtestPM = new DeclarationPaymentProtestPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.DeclarationPaymentProtests.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapDeclarationPaymentMethods(entityPM: DeclarationPaymentPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldDeclarationPaymentMethods: DeclarationPaymentMethodPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldDeclarationPaymentMethods = entityPM.OldEntityPM.DeclarationPaymentMethods;
+        }
+
+        entityPM.DeclarationPaymentMethods = new Array<DeclarationPaymentMethodPM>();
+        for (var item in jsonPM.DeclarationPaymentMethods) {
+            var jItem = jsonPM.DeclarationPaymentMethods[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newDeclarationPaymentMethodPM: DeclarationPaymentMethodPM;
+	  
+            if (mapParent) {
+                newDeclarationPaymentMethodPM = new DeclarationPaymentMethodPM(entityPM);
+            }
+            else
+            {
+                newDeclarationPaymentMethodPM = new DeclarationPaymentMethodPM(null);
+            }
+ 			newDeclarationPaymentMethodPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newDeclarationPaymentMethodPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newDeclarationPaymentMethodPM.UniqueKey = Guid.newGuid();
+                newDeclarationPaymentMethodPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newDeclarationPaymentMethodPM.OldEntityPM = this.clone(newDeclarationPaymentMethodPM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newDeclarationPaymentMethodPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newDeclarationPaymentMethodPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newDeclarationPaymentMethodPM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newDeclarationPaymentMethodPM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newDeclarationPaymentMethodPM.OldEntityPM = null;
+                newDeclarationPaymentMethodPM.EntityParentPM = null;
+            }
+			 newDeclarationPaymentMethodPM.DisableMarkAsDirty = false;
+			 newDeclarationPaymentMethodPM.IsDirty = false;
+            entityPM.DeclarationPaymentMethods.push(newDeclarationPaymentMethodPM);
+        }
+        if (oldDeclarationPaymentMethods) {
+            
+            for (var itemKey in oldDeclarationPaymentMethods) {
+                if (entityPM.DeclarationPaymentMethods.filter(p=> p.UniqueKey === oldDeclarationPaymentMethods[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldDeclarationPaymentMethods[itemKey]) {
+                        //oldDeclarationPaymentMethods[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.DeclarationPaymentMethods.push(oldDeclarationPaymentMethods[itemKey]);
+						var oldItemJson = oldDeclarationPaymentMethods[itemKey];
+                        var deletedPM: DeclarationPaymentMethodPM = new DeclarationPaymentMethodPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.DeclarationPaymentMethods.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+ 
 
 	  public clone(jsonPM: any) {
         var entityPM: any;
