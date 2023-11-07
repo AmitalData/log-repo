@@ -20,7 +20,7 @@ import { CustomsRequestMenuService } from '../../Services/Others/CustomsRequestM
 import { IIGGeneralMessagesService } from '../../Services/WebServices/IIGGeneralMessagesService';
 import { CustomFileCreditRequestParams } from '../../DataContract/RequestParams/CustomFileCreditRequestParams';
 
-import { CustomMessageProgressHelper, CustomMessageProgressComponent } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { CustomMessageProgressHelper, CustomMessageProgressComponent, ShowProgressBarParams } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { DeclarationMessagesService } from '../../Services/WebServices/DeclarationMessagesService';
 import { DeclarationWebService } from '../../Services/WebServices/DeclarationWebService';
 import { CustomFileCreditResponseData } from '../../DataContract/ResponseData/CustomFileCreditResponseData';
@@ -79,6 +79,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     private declarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     private notificationPMService: NotificationPMService = new NotificationPMService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
+    declarationService: DeclarationPMService = new DeclarationPMService();
+
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -207,6 +210,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     ApplyCheckMenuButtonsState(menuButtons: MenuButtonPM[]) {
         let parentButton: MenuButtonPM;
+        
         if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
 
@@ -435,6 +439,17 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         else {
                             button.IsDisabled = false;
                             button.IsHidden = false;
+                        }
+                    }
+                    if (button.EventCode == "CancelPayment") {
+                        if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "CancelPaymentFeature") && (this.EntityPM.Direction != "E")) {
+                            button.IsHidden = false;
+                            if(AppTool.IsNullOrEmpty(this.EntityPM.PaymentDate)){
+                                button.IsDisabled = true;
+                            }
+                        }
+                        else {
+                            button.IsHidden = true;
                         }
                     }
                     if (button.EventCode == "CourierPendingReason") {
@@ -690,6 +705,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                         break;
                     }
+                case "CancelPayment":
+                    {
+                        this.CancelPaymentMethod();
+                        break;
+                    }
 
                 case "Copy":
                     {
@@ -840,7 +860,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                 .subscribe((myResponse: ServiceResponse) => {
                                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                     this.CurrentSession.StopBusyIndicator();
-                                    debugger;
                                 });
                         }
                     });
@@ -1022,14 +1041,88 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         }
     }
 
+    
+    CancelPaymentMethod() {
+        const confirm = new ConfirmWindow();
+        confirm.WindowClosed.subscribe((event) => {
+            if (confirm.Yes) {
+                // send massage 2755 like logic on DeclarationPaymentComponent component
+                var params = new CustomFileCreditRequestParams();
+                var ObjectTable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
 
+                
+                params.Tenant = SessionLocator.Tenant;
+                params.AppicationId =  this.EntityPM.Id;
+                params.LoggingEnabled = true;
+                params.LoggingEntityId = this.EntityPM.Id;
+                params.LoggingObjectTableId = ObjectTable.Id;
+                params.LoggingUserId = SessionLocator.LoggedUserId;
+                params.RequestName = "send cancel payment request";
+                params.ResponseName = "send cancel payment response";
+                params.Mode = "Check";
+
+                var messageWindow = new MessageWindow();
+                messageWindow.Width = 400;
+                messageWindow.Height = 150;
+                messageWindow.Title = "ביטול הגשה";
+                
+
+                let myShowProgressBarParams = new ShowProgressBarParams();
+                myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
+                    (response: any) => {
+                        let myPaymentResponseData: CustomFileCreditResponseData = response;
+                      
+                    };
+                CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, params.PBId, "ביטול הגשה", false, myShowProgressBarParams).then(res => {
+                    var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
+                    if (ResponseData && ResponseData.ContinueProcessInBackground) {
+                        SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                    }
+                    
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    let myPaymentResponseData: CustomFileCreditResponseData = res;
+                    this.RefreshDeclaration();
+                    SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+                    SessionLocator.SelectedSession.CloseCurrentWindow();
+                    
+                })
+                .catch(err => {
+                    err = err || "PostSendPaymentOnly return Error)";
+                    let messWindow = new MessageWindow();
+                    messWindow.Show(err);
+                    messWindow.WindowClosed.subscribe(() => {
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
+                    });
+                });
+
+                this.declarationMessagesService.PostSendPaymentOnly(params)
+                    .subscribe( res => {
+                        if(!res.Result.HasException){
+                            let messWindow = new MessageWindow();
+                            messWindow.Show("ביטול הגשה הסתיים בהצלחה");
+                            messWindow.WindowClosed.subscribe(() => {
+                                SessionLocator.SelectedSession.CloseCurrentWindow();
+                            });
+                        }
+                    }
+                );
+            }
+        });
+        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CancelPayment")); 
+    }
+
+    RefreshDeclaration() {
+        this.declarationService.get(this.EntityPM.Id).subscribe((res: ServiceResponse) => {
+            this.EntityPM = res.Result;
+        });
+    }
 
     ResetDeclarationNumberMethod() {
         this._DeclarationNumberandVersionId = null;//itzik:clear onstart on the house !!!
         if (this.EntityPM.Direction == "E") {
             this.GetAnyRequestBeforeResetDeclaration("2755E", "לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשה");
         } else {
-            this.GetAnyRequestBeforeResetDeclaration("2755", "לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
+            this.GetAnyRequestBeforeResetDeclaration("2755", "לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום בסטטוס שונה מתשובה נותחה");
         }
     }
     private GetAnyRequestBeforeResetDeclaration(interfaceTypeCode: string, message: string) {
@@ -1066,7 +1159,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
                 });
         } else {
-            this.ShowResetDeclarationMessage(message);
+            this.ShowResetDeclarationMessage('לא ניתן לאפס מספר הצהרה, קיים תאריך תשלום');
         }
     }
 
