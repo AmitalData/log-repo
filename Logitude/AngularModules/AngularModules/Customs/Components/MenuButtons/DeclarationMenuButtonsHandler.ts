@@ -1034,36 +1034,58 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
     private GetAnyRequestBeforeResetDeclaration(interfaceTypeCode: string, message: string) {
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-
-        declarationDisplayOnlyChecks.GetAnyRequest(interfaceTypeCode, this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
-            .subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var requestSheets = response.Result;
-                    var haveRS2755: boolean = false;
-                    if (requestSheets == null || requestSheets.length == 0) {
-                    } else {
-                        haveRS2755 = true;
-                    }
-                    if (haveRS2755) {
-                        var messageWindow = new MessageWindow();
-                        messageWindow.Width = 400;
-                        messageWindow.Height = 150;
-                        messageWindow.Title = "איפוס מספר הצהרה";
-                        messageWindow.Show(message);
-                        return;
-                    }
-
-
-                    let confirm = new ConfirmWindow();
-                    confirm.WindowClosed.subscribe((event: any) => {
-                        if (confirm.Yes) {
-                            this.UpdateResetDeclarationNumber();
+        var canResetDeclaration: boolean = this.EntityPM.Direction == 'E' ? true : this.EntityPM.PaymentDate == null;
+        if (canResetDeclaration) {
+            declarationDisplayOnlyChecks.GetAnyRequest(interfaceTypeCode, this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
+                .subscribe((response: ServiceResponse) => {
+                    if (!response.HasError) {
+                        var requestSheets = response.Result;
+                        var haveRS2755: boolean = false;
+                        const analyzed = "30";
+                        if (requestSheets == null || requestSheets.length == 0) {
+                        } else {
+                            haveRS2755 = true;
                         }
-                    });
-                    confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ResetDeclaration"));
-                }
+                        if (haveRS2755) {
+                            if (this.EntityPM.Direction == 'E') {
+                                canResetDeclaration = false;
+                            } else {
+                                for (let request of requestSheets) {
+                                    if (request.RequestStatusCode != analyzed) {
+                                        canResetDeclaration = false;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (canResetDeclaration) {
+                            this.ResetDeclaration();
+                        } else {
+                            this.ShowResetDeclarationMessage(message);
+                        }
+                    }
+                });
+        } else {
+            this.ShowResetDeclarationMessage(message);
+        }
+    }
 
-            });
+    private ResetDeclaration(){
+        let confirm = new ConfirmWindow();
+        confirm.WindowClosed.subscribe((event: any) => {
+        if (confirm.Yes) {
+            this.UpdateResetDeclarationNumber();
+        }
+        });                    
+        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ResetDeclaration"));    
+    }
+
+    private ShowResetDeclarationMessage(message){
+        var messageWindow = new MessageWindow();
+        messageWindow.Width = 400;
+        messageWindow.Height = 150;
+        messageWindow.Title = "איפוס מספר הצהרה";
+        messageWindow.Show(message);
     }
 
     private UpdateResetDeclarationNumber() {
