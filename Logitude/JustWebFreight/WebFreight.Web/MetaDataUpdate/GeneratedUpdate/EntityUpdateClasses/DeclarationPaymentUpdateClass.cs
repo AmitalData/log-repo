@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationPaymentUpdateClass
    {  		
-		public const string HashString = "5e02bae0c53c2f83204be90cdb35ffa0";
+		public const string HashString = "5ef193e6f049389bdc28744205ead2a8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,14 +118,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SortingByObjectField =  "PaymentDate",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
+			      				    IsComposition =  true,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Payment",
-			      				    Code =  "a05b",
+			      				    Code =  "7929",
 			      				    Name =  "Customs.DeclarationPayment Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -252,10 +252,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentDate",
 					  						DefaultText =  "Payment Date",
-					  						FullLocalDefaultText =  "תאריך הגשה",
+					  						FullLocalDefaultText =  "תםריך הגשה",
 					  						ListFieldLable =  "PaymentDateListLable",
 					  						ListLableDefaultText =  "Payment Date",
-					  						ListLocalDefaultText =  "תאריך הגשה",
+					  						ListLocalDefaultText =  "תםריך הגשה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -440,10 +440,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsProcessA",
 					  						DefaultText =  "Is Process A",
-					  						FullLocalDefaultText =  "תהליך א'",
+					  						FullLocalDefaultText =  "תהליך ם'",
 					  						ListFieldLable =  "IsProcessAListLable",
 					  						ListLableDefaultText =  "Is Process A",
-					  						ListLocalDefaultText =  "תהליך א'",
+					  						ListLocalDefaultText =  "תהליך ם'",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -503,10 +503,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProcessADescription",
 					  						DefaultText =  "Process A Description",
-					  						FullLocalDefaultText =  "הסבר תהליך א'",
+					  						FullLocalDefaultText =  "הסבר תהליך ם'",
 					  						ListFieldLable =  "ProcessADescriptionListLable",
 					  						ListLableDefaultText =  "Process A Description",
-					  						ListLocalDefaultText =  "הסבר תהליך א'",
+					  						ListLocalDefaultText =  "הסבר תהליך ם'",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -965,7 +965,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FuturePaymentDateTime",
 					  						DefaultText =  "Future Payment Date",
-					  						FullLocalDefaultText =  "תאריך תשלום עתידי",
+					  						FullLocalDefaultText =  "תםריך תשלום עתידי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1071,13 +1071,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable DeclarationPaymentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationPayment" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature DeclarationPaymentFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationPayment.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationPaymentObjectTable);
-		   Feature DeclarationPaymentFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationPayment.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationPaymentObjectTable);
-		   Feature DeclarationPaymentFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationPayment.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationPaymentObjectTable);
-		   Feature DeclarationPaymentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationPayment.Features.PackageFeature", NameTextCodeDefaultText = "DeclarationPayment Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationPaymentObjectTable);    
+	    {     
 	    
 		}
 

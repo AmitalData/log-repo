@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {DeclarationPM} from './DeclarationPM';
 import {DeclarationPaymentProtestPM} from './DeclarationPaymentProtestPM';
 import {DeclarationPaymentMethodPM} from './DeclarationPaymentMethodPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
@@ -20,11 +21,13 @@ export class DeclarationPaymentPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-	  constructor() {
+	        constructor(_entityParentPM: any) {
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
- 	 
+
+	 
     
     private declarationId: string;
     public get DeclarationId() { return this.declarationId; }
@@ -166,14 +169,26 @@ export class DeclarationPaymentPM {
 	 
 
     public OldEntityPM: DeclarationPaymentPM;
-		
+	
+    private entityParentPM: any;
+    public get EntityParentPM() { return this.entityParentPM; }
+    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
+
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
+
+    public UniqueKey: string;
+	 	
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
         this.IsDirty = true;
-		  	
+		  if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
+        }	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DeclarationPayment");
