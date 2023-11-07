@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class DeclarationPaymentQueryService: EntityQueryService<DeclarationPayment,DeclarationPaymentKeys,DeclarationPaymentPM,object,DeclarationPaymentKeys>
+   public partial class DeclarationPaymentQueryService: EntityQueryService<DeclarationPayment,DeclarationPaymentKeys,DeclarationPaymentPM,DeclarationPM,DeclarationKeys>
    {
    
         DeclarationPaymentRepository repository;
