@@ -16,6 +16,7 @@ import {DeclarationConsAcceptancePM} from './DeclarationConsAcceptancePM';
 import {DecDangersContactPM} from './DecDangersContactPM';
 import {DeclarationExportRecipientPM} from './DeclarationExportRecipientPM';
 import {DeclarationFollowUpPM} from './DeclarationFollowUpPM';
+import {DeclarationPaymentPM} from './DeclarationPaymentPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -1534,7 +1535,41 @@ export class DeclarationPM {
     public set EffectiveFlight(newValue: boolean) { if (this.effectiveFlight != newValue) { this.effectiveFlight = newValue; this.MarkAsDirty("EffectiveFlight"); } }
        
 	 
+     
+	private declarationPayments: DeclarationPaymentPM[];
+    get  DeclarationPayments() {
+        if (this.declarationPayments == null) {
+            this.declarationPayments = [];
+        }
 
+        return this.declarationPayments;
+    }
+    set  DeclarationPayments(newValue: DeclarationPaymentPM[]) {
+        if (this.declarationPayments != newValue) {
+            this.declarationPayments = newValue;
+        }
+    }
+    public AddDeclarationPayment(item: DeclarationPaymentPM) {
+        if (item != null) {
+            var index = this. DeclarationPayments.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DeclarationPayments.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDeclarationPayment(item: DeclarationPaymentPM) {
+        if (item != null) {
+            var index = this. DeclarationPayments.indexOf(item);
+            if (index > -1) {
+                this. DeclarationPayments.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DeclarationPayments: Array<DeclarationPaymentPM>= [];
+ 
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;
