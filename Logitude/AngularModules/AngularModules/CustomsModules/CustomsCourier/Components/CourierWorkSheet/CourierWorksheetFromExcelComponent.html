@@ -933,9 +933,7 @@
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
-                                                                <!-- HOLD -->
-                                                                <table
-                                                                    *ngIf=" _SelectedTabFilter.Code=='HOLD' ">
+                                                                <table *ngIf="_SelectedTabFilter.Code=='HOLD' ">
                                                                     <tr>
                                                                         <td class="col1Label"
                                                                             style="width:80px; font-size: 13px; font-weight:bold; padding-right: 10px;">
@@ -1005,24 +1003,43 @@
                                                                                     class="class-MENUSplitButton-content">
                                                                                     <div></div>
                                                                                 </div>
+
                                                                             </split-button>
-                                                                        <td>
-                                                                            <div *ngIf="HasRequiresApprovalFeature"
-                                                                                style="width: 130px;">
-                                                                                <split-button
-                                                                                    (DefaultSplitButtonClicked)="ApproveAllPendingMethod()"
-                                                                                    [IsDisabled]="IsDisplayOnly || !(SelectedPendingCodeFilter?.Key == 'A' || SelectedPendingCodeFilter?.Key == 'NotApproved' )"
-                                                                                    [ButtonText]="'אישור PENDING'"
-                                                                                    [AsRegularButton]="'true'"
-                                                                                    [MENUDivExtraTop]="24"
-                                                                                    [MENUDivExtraLeft]="110">
-                                                                                    <div
-                                                                                        class="class-MENUSplitButton-content">
-                                                                                        <div></div>
-                                                                                    </div>
-                                                                                </split-button>
-                                                                            </div>
                                                                         </td>
+
+                                                                        <td
+                                                                        [ngStyle]="{'width':!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) ? '130px' : '150px' }">
+                                                                        <div *ngIf="HasRequiresApprovalFeature &&!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0)"
+                                                                            style="width: 130px;">
+                                                                            <split-button
+                                                                                (DefaultSplitButtonClicked)="ApprovePendingMethod()"
+                                                                                [IsDisabled]="IsDisplayOnly"
+                                                                                [ButtonText]=SelectedApprovPendingSendButtonText
+                                                                                [AsRegularButton]="'true'"
+                                                                                [MENUDivExtraTop]="24"
+                                                                                [MENUDivExtraLeft]="110">
+                                                                                <div
+                                                                                    class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                            </split-button>
+                                                                        </div>
+                                                                        <div *ngIf="HasRequiresApprovalFeature && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
+                                                                            style="width: 130px;">
+                                                                            <split-button
+                                                                                (DefaultSplitButtonClicked)="ApprovePendingMethod()"
+                                                                                [IsDisabled]="IsDisplayOnly"
+                                                                                [ButtonText]=SelectedApprovPendingSendButtonText
+                                                                                [AsRegularButton]="'true'"
+                                                                                [MENUDivExtraTop]="24"
+                                                                                [MENUDivExtraLeft]="110">
+                                                                                <div
+                                                                                    class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                            </split-button>
+                                                                        </div>
+                                                                    </td>
 
                                                                         <td>
                                                                             <div></div>

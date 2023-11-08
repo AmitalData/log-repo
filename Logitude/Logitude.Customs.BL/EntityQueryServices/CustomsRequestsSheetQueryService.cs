@@ -266,7 +266,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             string ObjectTableId1, string EntityId1,
             string ObjectTableId2, string EntityId2,
             string CustomFileNo,
-            bool displayOnlyMode = false)
+            bool displayOnlyMode = false
+            ,bool IsWorkSheetFromExcel = false,string userId = null)
         {
             return GetRequestInProgress(new RequestInProgressParams()
             {
@@ -277,7 +278,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 ObjectTableId2 = ObjectTableId2,
                 EntityId2 = EntityId2,
                 CustomFileNo = CustomFileNo,
-                DisplayOnlyMode = displayOnlyMode
+                DisplayOnlyMode = displayOnlyMode,
+                IsWorkSheetFromExcel= IsWorkSheetFromExcel,
+                UserId= userId,
             });
         }
         public List<CustomsRequestsSheetPM> GetRequestInProgress(
@@ -410,13 +413,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var haveFilter = false;
             if (requestInProgressParams.IsWorkSheetFromExcel)
             {
-                /* CourierHawbFromExcelRepository courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
-                 var qFromExcel = courierHawbFromExcelRepository.GetAllByUser(requestInProgressParams.Tenant, requestInProgressParams.UserId);
-                 q = (from customsRequestSheet in q
-                      join courierHawbFromExcel in qFromExcel
-                       on customsRequestSheet.CustomFileNo equals courierHawbFromExcel.CustomFileNo
-                    select customsRequestSheet);*/
-                q = q.Where(rec => rec.RequestOwnerId == requestInProgressParams.UserId);
+                haveFilter = true;
+                q = q.Where(rec => rec.RequestOwnerId == requestInProgressParams.UserId && rec.ObjectTableId1 == requestInProgressParams.ObjectTableId1);
             }
             if (!string.IsNullOrWhiteSpace(requestInProgressParams.CustomFileNo))
             {
@@ -512,6 +510,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8314", // נתוני פרט מכס
 "8888",//תשובה לנתוני פרט מכס
 "2791",// אחסנה
+"UCBCTML", // שידור הגשה בלדר
+"UCB2715", // שידור מסמכים שגויים ראשי - מפצל
 };
 
 
