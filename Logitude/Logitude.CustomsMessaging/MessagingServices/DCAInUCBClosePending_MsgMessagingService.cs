@@ -38,8 +38,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBClosePendingWithResponseContentHeader customsResponse)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+            if (customsResponse.IsWorkSheetFromExcel)
+            {
+                objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierHawbFromExcel");
+            }
 
-            
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
@@ -82,8 +85,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+            if (mySendClosePendingRequestParams.IsWorkSheetFromExcel)
+            {
+                objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierHawbFromExcel");
+            }
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendClosePendingRequestParams.CourierMasterId, null, null, null, true);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendClosePendingRequestParams.CourierMasterId, null, null, null, true,null, mySendClosePendingRequestParams.IsWorkSheetFromExcel, mySendClosePendingRequestParams.LoggingUserId);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
                 return "קיים מסר זהה בתהליך";

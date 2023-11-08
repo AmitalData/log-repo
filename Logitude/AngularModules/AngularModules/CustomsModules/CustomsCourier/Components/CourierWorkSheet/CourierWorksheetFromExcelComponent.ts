@@ -709,6 +709,15 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         return this._SelectedMNFToBatchSendButtonText;
     }
 
+    private _SelectedApprovPendingSendButtonText: string = "";
+    public get SelectedApprovPendingSendButtonText(): string {
+        this._SelectedApprovPendingSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyApprov");
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            this._SelectedApprovPendingSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.SelectedApprov") + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
+        }
+        return this._SelectedApprovPendingSendButtonText;
+    }
+
     private _PendingFilter: string = "";
 
     get PendingFilter() { return this._PendingFilter; }
@@ -2205,7 +2214,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         });
 
     }
-    ApproveAllPendingMethod() {
+    ApprovePendingMethod() {
         if (this.IsDisplayOnly) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -2218,13 +2227,16 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.CourierMasterId = this.entityPM?.Id;
-        currRequestParams.MAWB = this.entityPM?.MAWB;
         currRequestParams.IsWorkSheetFromExcel = true;
-        currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Value);
 
-        let text = "הםם לםשר םת כל Pending שלם םושרו בטיסה";
-
+        currRequestParams.PendingCode = [];
+        let text = "נם םשר םישור פנדינג גורף";
+        currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+            text = "נם םשר לבצע םישור רק לשורות שסומנו";
+        }
+        
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show(text);
         confirmWindow.WindowClosed.subscribe((event: any) => {
