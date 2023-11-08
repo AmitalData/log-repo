@@ -1262,6 +1262,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     AmountCheckBoxChecked: boolean = false;
     ReferenceCheckBoxChecked: boolean = false;
     ReferenceDateCheckBoxChecked: boolean = false;
+    AccountingDateCheckBoxChecked: boolean = false;
 
 
     private showInProgessLines : boolean = false;
@@ -1426,6 +1427,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         serviceArgs.amountReconcile = this.AmountCheckBoxChecked;
         serviceArgs.referenceReconcile = this.ReferenceCheckBoxChecked;
         serviceArgs.refDateReconcile = this.ReferenceDateCheckBoxChecked;
+        serviceArgs.accoutingDateReconcile = this.AccountingDateCheckBoxChecked;
+
         serviceArgs.objectTableId = objectTable.Id;
         serviceArgs.entityId = this.EntityPM.Id;
 
@@ -1841,24 +1844,28 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                             this.AmountCheckBoxChecked = true;
                             this.ReferenceDateCheckBoxChecked = false;
                             this.ReferenceCheckBoxChecked = false;
+                            this.AccountingDateCheckBoxChecked = false;
                             break;
                         }
                         case '2': { // Reference
                             this.AmountCheckBoxChecked = false;
                             this.ReferenceDateCheckBoxChecked = false;
                             this.ReferenceCheckBoxChecked = true;
+                            this.AccountingDateCheckBoxChecked = false;
                             break;
                         }
                         case '3': { // Reference Date + Reference
                             this.AmountCheckBoxChecked = false;
                             this.ReferenceDateCheckBoxChecked = true;
                             this.ReferenceCheckBoxChecked = true;
+                            this.AccountingDateCheckBoxChecked = false;
                             break;
                         }
                         case '4': { // Amount + Reference + Reference Date
                             this.AmountCheckBoxChecked = true;
                             this.ReferenceDateCheckBoxChecked = true;
                             this.ReferenceCheckBoxChecked = true;
+                            this.AccountingDateCheckBoxChecked = false;
                             break;
                         }
 
@@ -1884,24 +1891,28 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                                     this.AmountCheckBoxChecked = true;
                                     this.ReferenceDateCheckBoxChecked = false;
                                     this.ReferenceCheckBoxChecked = false;
+                                    this.AccountingDateCheckBoxChecked = false;
                                     break;
                                 }
                                 case '2': { // Reference
                                     this.AmountCheckBoxChecked = false;
                                     this.ReferenceDateCheckBoxChecked = false;
                                     this.ReferenceCheckBoxChecked = true;
+                                    this.AccountingDateCheckBoxChecked = false;
                                     break;
                                 }
                                 case '3': { // Reference Date + Reference
                                     this.AmountCheckBoxChecked = false;
                                     this.ReferenceDateCheckBoxChecked = true;
                                     this.ReferenceCheckBoxChecked = true;
+                                    this.AccountingDateCheckBoxChecked = false;
                                     break;
                                 }
                                 case '4': { // Amount + Reference + Reference Date
                                     this.AmountCheckBoxChecked = true;
                                     this.ReferenceDateCheckBoxChecked = true;
                                     this.ReferenceCheckBoxChecked = true;
+                                    this.AccountingDateCheckBoxChecked = false;
                                     break;
                                 }
 

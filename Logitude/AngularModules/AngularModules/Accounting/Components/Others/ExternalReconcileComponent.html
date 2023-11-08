@@ -555,7 +555,15 @@
                                     [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">
                                     {{'Accounting.General.O.Reference' | TextCodeTranslationPipe}}
                                 </li>
-
+                                <!-- Accouting Date Checkbox -->
+                                <li float-start style="padding: 0 8px;padding-top: 5px;">
+                                    <CheckBox [IsChecked]="AccountingDateCheckBoxChecked"
+                                              (Checked)="AccountingDateCheckBoxChecked = $event"></CheckBox>
+                                </li>
+                                <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'"
+                                    [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">
+                                    {{'Accounting.General.O.AccountingDate' | TextCodeTranslationPipe}}
+                                </li>
                                 <!-- Auto Reco Button -->
                                 <li float-start style="padding: 0 15px;padding-top: 2px;">
                                     <button class="Button"
