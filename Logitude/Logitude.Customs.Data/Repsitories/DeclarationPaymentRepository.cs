@@ -17,8 +17,12 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<DeclarationPayment> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            DeclarationKeys declarationKeys = entityKeys as DeclarationKeys;
+
+            return (from a in context.DeclarationPayments
+                    where a.DeclarationId == declarationKeys.Id
+                    select a).ToList();
         }
 
         public int GetAutomaticPayment(string declarationid)
