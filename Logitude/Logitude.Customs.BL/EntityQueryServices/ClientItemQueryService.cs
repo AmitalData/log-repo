@@ -18,7 +18,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public ClientItemPM GetSingleWithTenant(string itemCode, string exporterCode, int tenant)
         {
-            var poco = repository.GetSingle(itemCode, exporterCode, tenant);
+            var poco = repository.GetSingleWithTenant(itemCode, exporterCode, tenant);
             if(poco == null)
             {
                 return null;

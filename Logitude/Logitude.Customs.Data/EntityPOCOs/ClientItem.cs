@@ -37,6 +37,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
      [Key]
         [Column("ClientCode")]
 	    public string ClientCode { get; set; }
+     [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
     }
 }
 	 

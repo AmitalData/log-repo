@@ -17,8 +17,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class ClientItemUpdateService : EntityUpdateService<ClientItem, ClientItemPM, EntityPM>
     {
-        
-       
+        protected override void OnCreating(ClientItemPM entityPM, EntityPM entityParentPM)
+        {
+            entityPM.Id = IdCounter.GetNumber("Customs.ClientItem", entityPM.Tenant);
+
+        }
+
         protected override void OnUpdating(ClientItemPM entityPM, ClientItem entityPOCO)
         {
             if (entityPM != null && entityPM.ChangeSetOp != ChangeSetOperation.None)
