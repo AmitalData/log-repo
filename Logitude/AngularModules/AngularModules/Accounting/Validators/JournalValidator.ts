@@ -58,13 +58,8 @@ export class JournalValidator
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseCurrency") + " " + line.Line  ); //You must choose Currency for line
 
                 }
-
-                // Amount
-                if (!line.LocalAmount || !line.ForeignAmount) {
-                    //Amount is missing
-                    errors.push(TextCodeTranslator.Translate("Accounting.General.O.AmountIsMissing") + " " + line.Line  ); //Amount is missing for line
-
-                }
+               
+               
 
 
                 // Credit and Debit account (same currency)
@@ -157,7 +152,7 @@ export class JournalValidator
       }
     errorList: string[];
     public Validate(entityPM: JournalPM) {
-
+        
         var oldEntity:any = entityPM.OldEntityPM;
         if(oldEntity && oldEntity?.statusCode == approvedStatus)
             return [];
