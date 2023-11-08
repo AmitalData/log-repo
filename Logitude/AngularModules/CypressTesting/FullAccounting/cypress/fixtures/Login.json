@@ -1,8 +1,10 @@
 {
-  "url": "http://test19.westeurope.cloudapp.azure.com/test/",
-  "email": "CloudSmokeNewEnv@mail.com",
-  "password": "!Cypress1",
+  "url": "https://amitaltest.logitudeworld.com/test/",
+  "email": "cypress_test1106@amital.co.il",
+  "password": "Ct2024!@#",
   "customerCareEmail": "ahmada@logitudeworld.com",
   "customerCarePassword": "!A123456",
   "tenant": "UNF 58 Accounting (1071)"
 }
+
+
