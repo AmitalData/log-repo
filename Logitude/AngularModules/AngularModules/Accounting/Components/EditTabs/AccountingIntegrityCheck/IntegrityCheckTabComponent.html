@@ -1,4 +1,9 @@
 <style>
+    .excel  {    
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
 </style>
 <table>
     <tr>
@@ -76,6 +81,7 @@
                                     <td style="width: 40px;vertical-align: top" [style.text-align]="isRTL ? 'right' : 'left'">
                                         <div>
                                             <button [disabled]="entityPM.StatusCode != '3'" style="display: inline-block;width:100px;" class="Button" (click)="ViewResultXMLButtonClicked()">View</button>
+                                            <IconButton class="excel" [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="false"></IconButton>
                                         </div>
                                     </td>
                                     <td>
