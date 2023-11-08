@@ -25,6 +25,9 @@ using System.Threading.Tasks;
 using UnifreightIIG.Common.GlobalScannedAttachmentToEntityServiceReference;
 using Logitude.Server.Tools.Utils;
 using Logitude.Customs.BL.BL;
+using Logitude.Customs.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -184,6 +187,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _MyCustomsDocumentPM.DocumentStatusCode = "1"; // Sent
                     }
                     _MyCustomsDocumentPM.CustomsDocId = customResponse.ResponseContentHeader.ApplicationID.ToString();
+
+                    if (requestParams.IsFromAutoClosing)
+                    {
+						var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(requestParams.Tenant);
+						var declarationPM = declarationQueryService.GetSingle(requestParams.DeclaretionId, false, false);
+						ICustomsAutoDecClosing CustomsAutoDecClosing = ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new ParameterOverride("", 1)) as ICustomsAutoDecClosing;
+						CustomsAutoDecClosing.Send8235(declarationPM);
+					}
                 }
             }
 

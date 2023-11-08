@@ -402,14 +402,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
 		{			
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 			CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(tenant);
-            var a = customDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant("419", 6);
+
 			var customDocumentTypes = customDocumentTypeQueryService.GetCustomDocumentTypesByTenant(tenant).Where(c=>c.PointerLevel == "C").Select(x=>x.Code);
 
 			var customsDocumentPM =
 				  (from cd in context.CustomsDocuments
 				   join cdt in customDocumentTypes
 				   on cd.DocumentTypeCode equals cdt 
-				   where cd.Tenant == tenant && docsFileId.Contains(cd.DocumentsFilingId)  && !string.IsNullOrEmpty(cd.CustomsDocId) && cd.DocumentStatusCode == "1"
+				   where cd.Tenant == tenant && docsFileId.Contains(cd.DocumentsFilingId)
 				   select new CustomsDocumentPM
                    {
 					   Tenant = cd.Tenant,
