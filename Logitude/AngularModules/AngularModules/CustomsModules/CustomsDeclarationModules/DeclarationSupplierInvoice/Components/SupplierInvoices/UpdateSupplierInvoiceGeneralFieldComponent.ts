@@ -1,23 +1,25 @@
 
-import {Component}  from '@angular/core';
-import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import {AppTool} from '../../../../../Infrastructure/Tools';
-import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
-import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+import { Component } from '@angular/core';
+import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import { AppTool } from '../../../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CustomsCountryPM } from '../../../../../Customs/EntityPMs/CustomsCountryPM';
 
 
 @Component({
-    templateUrl: './UpdateCountryOfOriginComponent.html',
+    templateUrl: './UpdateSupplierInvoiceGeneralFieldComponent.html',
 })
 
-export class UpdateCountryOfOriginComponent extends BaseComponent {
+export class UpdateSupplierInvoiceGeneralFieldComponent extends BaseComponent {
     DataContext: any = this;
     public ItemsSource: ObservableCollection;
     SupplierInvoicePM: SupplierInvoicePM;
+    ValidateClassificationCode: any;
+    UpdateField: string;
     public ValidationErrorsList: string[] = [];
     IsDisplayOnly: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -28,28 +30,46 @@ export class UpdateCountryOfOriginComponent extends BaseComponent {
         this.UIProperties.SetEnabled("ToNumber", null, false);
         this.IsAddButtonEnabled = false;
     }
-
     SetWindowArgs(args: any) {
-        if (!AppTool.IsNullOrEmpty(args)) {       
+        if (!AppTool.IsNullOrEmpty(args)) {
             this.SupplierInvoicePM = args.SupplierInvoicePM;
+            this.UpdateField = args.UpdateField;
+            this.ValidateClassificationCode = args.ValidateClassificationCode;
         }
         this.UpdateItemsWithNoValue = true;
     }
+    classificationKeyUp(event, classificationTextBox: any) {
+        var key = event.keyCode;
+        if (key == 13) {
+            this.validateClassificationNumber(classificationTextBox);
+        }
+    }
 
+    async validateClassificationNumber(classificationTextBox: any) {
+        var res = this.ValidateClassificationCode(this.ClassificationCode);
+        if (res.valid) {
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
+        }
+        else {
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, res.errorDescription);
+        }
+        this.ClassificationCode = res.ClassificationCode;
+        classificationTextBox.TextValue = this.ClassificationCode;
+    }
 
     BuildActualInvoiceLines() {
         this.ItemsSource.Clear();
 
-        var dataString: string = "";     
+        var dataString: string = "";
     }
-    originCountryCode: string;
-    get OriginCountryCode() { return this.originCountryCode; }
-    set OriginCountryCode(value: string) {
-        this.originCountryCode = value;
+    classificationCode: string;
+    get ClassificationCode() { return this.classificationCode; }
+    set ClassificationCode(value: string) {
+        this.classificationCode = value;
     }
     fromNumber: number;
     get FromNumber() { return this.fromNumber }
-    set FromNumber(value: number) { this.fromNumber = value; } 
+    set FromNumber(value: number) { this.fromNumber = value; }
 
     toNumber: number;
     get ToNumber() { return this.toNumber }
@@ -57,8 +77,7 @@ export class UpdateCountryOfOriginComponent extends BaseComponent {
 
     updateAll: boolean;
     get UpdateAll() { return this.updateAll }
-    set UpdateAll(value: boolean)
-    {
+    set UpdateAll(value: boolean) {
         this.updateAll = value;
         if (value) {
             this.UpdateSelected = false;
@@ -70,8 +89,7 @@ export class UpdateCountryOfOriginComponent extends BaseComponent {
     }
     updateSelected: boolean;
     get UpdateSelected() { return this.updateSelected }
-    set UpdateSelected(value: boolean)
-    {
+    set UpdateSelected(value: boolean) {
         this.updateSelected = value;
         if (value) {
             this.UpdateAll = false;
@@ -88,18 +106,18 @@ export class UpdateCountryOfOriginComponent extends BaseComponent {
         this.updateItemsWithNoValue = value;
         if (value) {
             this.UpdateAll = false;
-            this.UpdateSelected=false
+            this.UpdateSelected = false
             this.UIProperties.SetEnabled("FromNumber", null, false);
             this.UIProperties.SetEnabled("ToNumber", null, false);
             this.IsAddButtonEnabled = false;
         }
 
     }
-   isAddButtonEnabled: boolean;
-   get IsAddButtonEnabled() { return this.isAddButtonEnabled; }
-   set IsAddButtonEnabled(value: boolean) {
-       this.isAddButtonEnabled = value;
-   }
+    isAddButtonEnabled: boolean;
+    get IsAddButtonEnabled() { return this.isAddButtonEnabled; }
+    set IsAddButtonEnabled(value: boolean) {
+        this.isAddButtonEnabled = value;
+    }
 
     UpdateAllRadio(newValue: boolean) {
         this.UpdateAll = newValue;
@@ -130,8 +148,8 @@ export class UpdateCountryOfOriginComponent extends BaseComponent {
             }
             else {
                 this.IsAddMessageVisible = true;
-                this.AddMessage = "קיימים רק " + this.ItemsSource.Collection.length +  " פריטים";
-               
+                this.AddMessage = "קיימים רק " + this.ItemsSource.Collection.length + " פריטים";
+
             }
         }
         else if (this.FromNumber != null && this.ToNumber >= this.FromNumber && this.ToNumber > 0 && this.FromNumber >= 0) {
@@ -143,9 +161,6 @@ export class UpdateCountryOfOriginComponent extends BaseComponent {
             }
             else {
                 for (var i = this.FromNumber; i <= this.ToNumber; i++) {
-
-
-
                     var number: number = i;
                     var existed: SelectedItem = this.ItemsSource.Collection.filter(d => d.Number == number)[0];
                     if (existed == null && number != 0) {
@@ -161,14 +176,14 @@ export class UpdateCountryOfOriginComponent extends BaseComponent {
 
     }
 
-       OkButtonClicked() {
+    OkButtonClicked() {
         this.ValidationErrorsList = [];
-           var errors = [];
-           if (!this.UpdateAll && !this.UpdateSelected && !this.UpdateItemsWithNoValue) {
+        var errors = [];
+        if (!this.UpdateAll && !this.UpdateSelected && !this.UpdateItemsWithNoValue) {
             errors.push("בחר פריטים לעדכון");
         }
         if (this.SupplierInvoicePM == null) {
-            errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ProcessTypeRequired")); 
+            errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ProcessTypeRequired"));
         }
         if (this.UpdateSelected && this.ItemsSource.Length == 0) {
             errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.SelectItems"));
@@ -183,27 +198,26 @@ export class UpdateCountryOfOriginComponent extends BaseComponent {
                 var exist = this.SupplierInvoicePM.SupplierInvoiceItems.filter(d => d.SequenceNumeric == item.Number)[0];
                 if (!exist) {
                     errors.push("מספר " + item.Number + " אינו קיים בפריטים");
-                   
 
-                  //  errors.push("חשבון זה מכיל " + this.SupplierInvoicePM.SupplierInvoiceItems.length + " שורות, לא ניתן לבחור מספר גדול מ- " + this.SupplierInvoicePM.SupplierInvoiceItems.length);
+
+                    //  errors.push("חשבון זה מכיל " + this.SupplierInvoicePM.SupplierInvoiceItems.length + " שורות, לא ניתן לבחור מספר גדול מ- " + this.SupplierInvoicePM.SupplierInvoiceItems.length);
                 }
             }
         }
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
-
             this.CurrentSession.CloseCurrentWindowEmit("ok");
         }
-    } 
+    }
 
 
 }
 
 
 export class SelectedItem extends BaseComponent {
-    parent:  UpdateCountryOfOriginComponent;
+    parent: UpdateSupplierInvoiceGeneralFieldComponent;
     DataContext: any = this;
-    constructor(number: number, Parent: UpdateCountryOfOriginComponent) {
+    constructor(number: number, Parent: UpdateSupplierInvoiceGeneralFieldComponent) {
         super();
         this.Number = number;
         this.parent = Parent;

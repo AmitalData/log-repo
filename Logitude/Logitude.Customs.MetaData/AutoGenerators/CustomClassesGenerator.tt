@@ -56,7 +56,7 @@ GenerateMetaDataUpdateClass("../EntityFiles","../../JustWebFreight/WebFreight.We
 
 GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../Logitude.Customs.BL/CloseTables");
 GenerateAllDomainServices("../EntityFiles","../../JustWebFreight/WebFreight.Web/CustomModel","CustomContext","Logitude.Customs","CustomDomainService");
-
+ 
 
 // ---------------------------- typedscript generated files
 
