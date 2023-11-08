@@ -38,6 +38,10 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         private int? tenant =null;
         private string documentsExecutionLogId = string.Empty;
         private string communicationLogId = string.Empty;
+        private string versionNumber = string.Empty;
+        private string quoteTemplateId = string.Empty;
+        private string updatedByUserId = string.Empty;
+        private string isGenerate = string.Empty;
         
         private string callBackDetailsXml = string.Empty;
         private DocumentsExecutionLogRepository documentsExecutionLogRepository = null;
@@ -55,6 +59,10 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                 tenant = GetTenantValueFromQueueResponse(queueResponse);
                 callBackDetailsXml = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("CallBackDetailsXml") ? queueResponse.MessageValues["CallBackDetailsXml"].ToString() : "";
                 communicationLogId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("communicationLogId") ? queueResponse.MessageValues["communicationLogId"].ToString() : "";
+                versionNumber = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("versionNumber") ? queueResponse.MessageValues["versionNumber"].ToString() : "";
+                quoteTemplateId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("quoteTemplateId") ? queueResponse.MessageValues["quoteTemplateId"].ToString() : "";
+                updatedByUserId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("updatedByUserId") ? queueResponse.MessageValues["updatedByUserId"].ToString() : "";
+                isGenerate = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("isGenerate") ? queueResponse.MessageValues["isGenerate"].ToString() : "";
             }
         }
 
@@ -127,29 +135,56 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             ICommonDataContext context = CommonDataContext.GetContext(tenant.Value);
             CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
             CommunicationLog commLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant.Value);
+            var email = "system@tenant" + tenant.Value + ".com";
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = commLog.Document.Id,
+                FolderName = commLog.Document.Folder,
+                Extension = commLog.Document.Extension,
+                Tenant = commLog.Document.Tenant,
+                FileSize = commLog.Document.FileSize,
+            };
+            Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
             if (commLog != null && commLog.Subject == "Update Quote Document")
             {
                 try
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        BlobFileInfo fileInfo = new BlobFileInfo()
-                        {
-                            FileName = commLog.Document.Id,
-                            FolderName = commLog.Document.Folder,
-                            Extension = commLog.Document.Extension,
-                            Tenant = commLog.Document.Tenant,
-                            FileSize = commLog.Document.FileSize,
-                        };
-                        Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                        
                         byte[] objectData = storageservice.Read(fileInfo);
                         var jsonObject = System.Text.Encoding.Default.GetString(objectData);
                         var quotePM = JsonConvert.DeserializeObject<QuotePM>(jsonObject);
                         IQuotesContext MyContext = QuotesContext.GetContext(tenant.Value);
-                        var email = "system@tenant" + tenant.Value + ".com";
                         QuoteService service = new QuoteService(MyContext, tenant.Value, email);
 
                         service.UpdateQuoteDocuments(quotePM);
+                        commLog.CommunicationStatusTypeCode = "D";
+                        commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
+                        commLog.DoneDateUTC = DateTime.UtcNow;
+                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
+                        commLog.LastStatusDateUTC = DateTime.UtcNow;
+                        communicationLogRep.Update(commLog);
+                        communicationLogRep.SubmitChanges();
+                        scope.Complete();
+                    }
+                    queueService.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant.Value, null, "F", null + DateTime.Now.ToString(), ex.Message);
+                    queueService.Complete();
+                }
+            }
+            else if (commLog != null && commLog.Subject == "Update Quote Document2") {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        IQuotesContext MyContext = QuotesContext.GetContext(tenant.Value);
+                        QuoteService service = new QuoteService(MyContext, tenant.Value, email);
+                        var pdfData = service.BuildQuoteTemplatePdfDocument(commLog.EntityId, int.Parse(versionNumber), quoteTemplateId, updatedByUserId, tenant.Value, Boolean.Parse(isGenerate));
+                        storageservice.Write(pdfData, fileInfo);
                         commLog.CommunicationStatusTypeCode = "D";
                         commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
                         commLog.DoneDateUTC = DateTime.UtcNow;

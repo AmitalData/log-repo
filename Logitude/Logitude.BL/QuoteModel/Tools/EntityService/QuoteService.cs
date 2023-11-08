@@ -49,6 +49,9 @@ using Logitude.BL.AnalyticTableServices;
 using Newtonsoft.Json;
 using System.Text;
 using Logitude.Server.Tools.QueueService;
+using System.Transactions;
+using Logitude.Server.Tools.StorageService;
+using Logitude.BL.Interfaces;
 
 namespace Logitude.BL.QuoteModel.Tools.EntityService
 {
@@ -379,6 +382,111 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.Update(entityPM);
 
             return entityPM;
+        }
+        public byte[] BuildQuoteTemplatePdfDocument(string quoteId, int versionNumber, string quoteTemplateId, string updatedByUserId, int tenant, bool isGenerate) {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            DocumentRepository documentRep = new DocumentRepository(commonContext);
+            ObjectTableRepository tableRepository = new ObjectTableRepository(tenant);
+            DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(commonContext);
+            DocumentOutRepository documentOutRepository = new DocumentOutRepository(commonContext);
+
+            IQuotesContext objectContext = QuotesContext.GetContext(tenant);
+            QuoteDocumentVersionRepository quoteDocumentVersionRep = new QuoteDocumentVersionRepository(objectContext);
+            QuoteRepository quoteRep = new QuoteRepository(objectContext);
+            QuoteQuery quoteQuery = new QuoteQuery(new QuoteRepository(objectContext));
+            string documentTypeId = documentTypeRepository.GetDocumentTypeIdByCode("QUOTE", tenant);
+            byte[] pdfData = null;
+            if (!string.IsNullOrEmpty(documentTypeId))
+            {
+
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+
+                    QuoteDocumentVersion version = quoteDocumentVersionRep.GetSingleQuoteDocumentVersion(quoteId, tenant, versionNumber);
+                    QuotePM quotePM = quoteQuery.GetSinglePM(quoteId, tenant);
+                    QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(tenant);
+
+                    string defult = !isGenerate ? quotePM.QuoteTemplateId : null;
+                    List<string> templateSectionsIds = quoteTemplateSectionQuery.GetQuoteTemplateSectionIdsByQuoteTemplateId(quoteTemplateId, quoteId, tenant, defult, quotePM.QuotationSections);
+                    string sectionsIds = "";
+                    foreach (string sectionId in templateSectionsIds)
+                    {
+                        sectionsIds += (sectionId + ",");
+                    }
+
+                    sectionsIds = sectionsIds.Remove(sectionsIds.Length - 1);
+
+                    if (quotePM.QuoteTemplateId != quoteTemplateId || quotePM.QuotationSections != sectionsIds || quotePM.LastVersionNumber != version.VersionNumber)
+                    {
+                        quotePM.LastVersionNumber = version.VersionNumber;
+                        quotePM.QuoteTemplateId = quoteTemplateId;
+                        quotePM.QuotationSections = sectionsIds;
+
+
+                    }
+
+                    IQuoteTemplateReportHelper helper = ContainerAccessor.Container.Resolve(typeof(IQuoteTemplateReportHelper), "QuoteTemplateReportHelper", new ParameterOverride("", 1)) as IQuoteTemplateReportHelper;
+                    pdfData = helper.BuildQuoteTemplatePdfReport(quoteId, quoteTemplateId, updatedByUserId, tenant, null, null, quotePM);
+                    //Update QuoteHTMLDocumentId;
+                    SetChangeSet(new List<QuoteChargePM>(), new List<QuoteFollowUpPM>(), new List<QuotePackagePM>(), new List<QuoteDocumentVersionPM>());
+                    Update(quotePM);
+
+                    Simplog.Data.CommonDataModel.EntityPOCOs.Document document = documentRep.GetSingleDocument(tenant, version.DocumentId);
+
+                    document.FileSize = Convert.ToInt32(pdfData.Length);
+                    document.Extension = "pdf";
+                    document.CalculatedFileName = "Quotation-" + quotePM.QuoteNumber + "-" + version.VersionNumber;
+                    document.IsEncrypted = true;
+                    documentRep.Update(document);
+
+
+                    version.VersionType = "G";
+                    version.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    version.UpdatedByUserId = updatedByUserId;
+                    version.QuoteTemplateId = quoteTemplateId;
+
+
+                    DocumentOut documentout = documentOutRepository.GetDocumentOutByDocumentTypeAndEntity(quoteId, documentTypeId, tenant);
+                    documentout.IsBlobExist = true;
+                    documentout.Issued = true;
+                    documentout.DocumentsFiling.UpdatedByUserId = updatedByUserId;
+                    documentout.DocumentsFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    documentOutRepository.Update(documentout);
+
+
+                    commonContext.SaveChanges();
+
+                    quoteDocumentVersionRep.Update(version);
+
+                    objectContext.SaveChanges();
+
+
+                    string filename = document.Id + "." + document.Extension;
+                    string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
+                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    BlobFileInfo fileInfo = new BlobFileInfo()
+                    {
+                        FileName = document.Id,
+                        FolderName = document.Folder,
+                        Extension = document.Extension,
+                        Tenant = tenant,
+                        FileSize = pdfData.Length,
+
+                    };
+                    storageservice.Write(pdfData, fileInfo);
+
+
+                    scope.Complete();
+
+
+                }
+
+                return pdfData;
+            }
+            else
+            {
+                throw new Exception("Document Type with code 'QUOTE' is not found!");
+            }
         }
 
         private void GetQuoteSettings()
