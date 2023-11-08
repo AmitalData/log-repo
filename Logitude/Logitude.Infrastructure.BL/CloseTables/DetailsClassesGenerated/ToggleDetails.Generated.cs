@@ -988,6 +988,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "UQD,Update Quote Documents", 
                 Description = "Update Quote Documents", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ILO", 
+                Name = "Invoice Status According To Ledger Open Amount", 
+                SearchFields = "ILO,Invoice Status According To Ledger Open Amount", 
+                Description = "Invoice Status According To Ledger Open Amount", 
+			});
 			
             return all;
        }
