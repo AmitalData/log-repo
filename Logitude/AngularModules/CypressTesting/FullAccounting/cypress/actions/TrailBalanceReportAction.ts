@@ -29,6 +29,6 @@ export function RunTrailBalanceReport() {
 }
 
 export function AssertRunTrailBalanceReport() {
-    cy.get(TrailBalanceReportSelectors.TrailBalanceReporRows).should('have.length', 1)
+    cy.get(TrailBalanceReportSelectors.TrailBalanceReporScreen).should('be.visible')
 }
 

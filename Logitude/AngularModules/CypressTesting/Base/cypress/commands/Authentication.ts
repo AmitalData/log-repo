@@ -13,6 +13,7 @@ Cypress.Commands.add("Login", (customerCareUser = false ) => {
     let mode = Cypress.env("Mode");
     if (mode.toLowerCase() === "development") {
         cy.fixture("Login.json").then(loginData => {
+            debugger
             let email = customerCareUser ? loginData.customerCareEmail : loginData.email;
             let password = customerCareUser ? loginData.customerCarePassword : loginData.password;
             let url = loginData.url;
@@ -44,6 +45,7 @@ Cypress.Commands.add("GetCurrentPassword", (customerCareUser = false) => {
     let mode = Cypress.env("Mode");
     if (mode.toLowerCase() === "development") {
         cy.fixture("Login.json").then(loginData => {
+            debugger
             return customerCareUser ? loginData.customerCarePassword : loginData.password;
         });
     }
