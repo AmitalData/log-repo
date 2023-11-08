@@ -1586,7 +1586,7 @@ export class DeclarationPMService {
             }
             else
             {
-                newDeclarationPaymentPM = new DeclarationPaymentPM(null);
+                newDeclarationPaymentPM = new DeclarationPaymentPM(entityPM);
             }
  			newDeclarationPaymentPM.DisableMarkAsDirty = true;
                
@@ -1656,7 +1656,7 @@ export class DeclarationPMService {
                         //oldDeclarationPayments[itemKey].ChangeSetOp = "Delete";
                         //entityPM.DeclarationPayments.push(oldDeclarationPayments[itemKey]);
 						var oldItemJson = oldDeclarationPayments[itemKey];
-                        var deletedPM: DeclarationPaymentPM = new DeclarationPaymentPM(null);
+                        var deletedPM: DeclarationPaymentPM = new DeclarationPaymentPM(entityPM);
 						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {

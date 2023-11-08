@@ -152,7 +152,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             event.preventDefault();
             event.target.checked = false;
             var myMessageWindow = new MessageWindow();
-            myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
+            myMessageWindow.Show("לם ניתן לבצע תשלום בזמינות עם תםריך תשלום עתידי");//TextCodeTranslator.Translate("")
 
         }
 
@@ -628,7 +628,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         // create new entity if there is no payment
         if (AppTool.IsNullOrEmpty(this.paymentPM)) {
-            this.paymentPM = new DeclarationPaymentPM(null);
+            this.paymentPM = new DeclarationPaymentPM(this.DeclarationPM);
         }
 
         this.IsDisplayOnlyAutomaticPayment = (this.DeclarationPM.AvailabilityDate != null && this.DeclarationPM.AvailabilityDate.toString() != '0001-01-01T00:00:00' && !this.paymentPM.AutomaticPayment);
@@ -1230,7 +1230,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         }
         else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
             this.ShowStorageStatusMessage = true;
-            this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+            this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             this.IsDisplayOnly = false;
 
 
@@ -1275,7 +1275,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             }
             else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
                 this.ShowStorageStatusMessage = true;
-                this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+                this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
             }
 
@@ -1517,7 +1517,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     IsFuturePaymentDateValid(event) {
         if (this.AutomaticPayment && event != null) {
             var myMessageWindow = new MessageWindow
-            myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
+            myMessageWindow.Show("לם ניתן לבצע תשלום בזמינות עם תםריך תשלום עתידי");//TextCodeTranslator.Translate("")
             this.FuturePaymentDateTime = null;
             this.paymentPM.FuturePaymentDateTime = null;
             this.FuturePaymentTime = null;
@@ -1556,7 +1556,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0); // last of today
 
             if (this.PaymentDate < currentDate) {
-                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לא ניתן להזין תאריך בעבר");
+                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לם ניתן להזין תםריך בעבר");
                 return false;
             } else {
                 this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
@@ -1587,7 +1587,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
             if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
+                this.ValidationErrorsList.push("לם ניתן להזין תםריך בעבר");
 
         }
         else {
@@ -1610,7 +1610,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                     if (!AppTool.IsNullOrEmpty(this.FuturePaymentDateTime)) {
                                         if (!AppTool.IsNullOrEmpty(timeCompany)) {
                                             if (this.CheckIdDateBetween2Times(timeCompany, this.FuturePaymentDateTime)) {
-                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                                 isBlockTime = true;
                                             }
 
@@ -1618,7 +1618,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                         if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCustomer, this.FuturePaymentDateTime)) {
-                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                                 isBlockTime = true;
                                             }
                                         }
@@ -1628,14 +1628,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                         if (!AppTool.IsNullOrEmpty(timeCompany)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                                 isBlockTime = true;
                                             }
                                         }
                                         if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                                 isBlockTime = true;
                                             }
                                         }
@@ -1850,7 +1850,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
             if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
+                this.ValidationErrorsList.push("לם ניתן להזין תםריך בעבר");
         }
         //#endregion
 
@@ -1877,7 +1877,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                 if (!AppTool.IsNullOrEmpty(this.FuturePaymentDateTime)) {
                                     if (!AppTool.IsNullOrEmpty(timeCompany)) {
                                         if (this.CheckIdDateBetween2Times(timeCompany, this.FuturePaymentDateTime)) {
-                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                             isBlockTime = true;
                                         }
 
@@ -1885,7 +1885,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                     if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                         if (this.CheckIdDateBetween2Times(timeCustomer, this.FuturePaymentDateTime)) {
-                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                             isBlockTime = true;
                                         }
                                     }
@@ -1895,14 +1895,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                     if (!AppTool.IsNullOrEmpty(timeCompany)) {
 
                                         if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
-                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                             isBlockTime = true;
                                         }
                                     }
                                     if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                         if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
-                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                             isBlockTime = true;
                                         }
                                     }
@@ -2501,7 +2501,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 confirmWindow.Show(mess);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לאישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
+                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לםישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
                     {
                         this.RefreshDeclaration();
                         if (SessionLocator.SelectedSession.CurrentWindow != null) {
@@ -3302,7 +3302,7 @@ export class PaymentMethodModel extends BaseComponent {
                                                     this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
                                                     this.PayerActivityTypeName = customBank.PayerTypeName;
                                                     usingCustomBank_ImporterMasav = true;
-                                                    console.log("DefaultPaymentMethod-->מסב הכנסה- יבואן");
+                                                    console.log("DefaultPaymentMethod-->מסב הכנסה- יבוםן");
 
                                                 }
                                                 else {
@@ -3331,7 +3331,7 @@ export class PaymentMethodModel extends BaseComponent {
                                         ||
                                         this.methodPM.MethodTypeCode == "79"/*ניצול העברת זהב*/
                                     ) {
-                                        console.log("אם קופה או ניצול העברת זהב - שדה בנק לאפס ");
+                                        console.log("םם קופה םו ניצול העברת זהב - שדה בנק לםפס ");
                                         this.methodPM.BankCode = null;
                                         this.methodPM.InternalBankName = null; 
                                     } else {
@@ -3438,7 +3438,7 @@ export class PaymentMethodModel extends BaseComponent {
         //new://Feature 175382: ניצול העברת זהב - מסך הגשת תשלום
 
         if (AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY)) {
-            console.log("DefaultPaymentMethod-->קופהזה יהיה דיפולט כחול ואם לא הוגדר אז לא תהיה התייחסות לניצול העברת זהב וימשיך לעבוד כפי שעבר לפני השיפור ");
+            console.log("DefaultPaymentMethod-->קופהזה יהיה דיפולט כחול וםם לם הוגדר םז לם תהיה התייחסות לניצול העברת זהב וימשיך לעבוד כפי שעבר לפני השיפור ");
             return;
         }
         console.log("DefaultPaymentMethod-->");
@@ -3457,17 +3457,17 @@ export class PaymentMethodModel extends BaseComponent {
             if ("ABOVE_MSVLK" == this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY) {
                 if (this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {
                     console.log('a.');
-                    console.log(`ודיפולט "תשלום בניצול העברת זהב לקוח/קופה" = "סכום מעל סכום החסימה מס"ב לקוח" וגם סכום המיסים גדול מסכום שהוזן בדיפולט "סכום מיסים מקסימלי לתשלום במס"ב סוכן") יבוצע תשלום באמצעות מס"ב לקוח`)
+                    console.log(`ודיפולט "תשלום בניצול העברת זהב לקוח/קופה" = "סכום מעל סכום החסימה מס"ב לקוח" וגם סכום המיסים גדול מסכום שהוזן בדיפולט "סכום מיסים מקסימלי לתשלום במס"ב סוכן") יבוצע תשלום בםמצעות מס"ב לקוח`)
 
                     this.updateDefaultPaymentMethod(
                         "1",//מס"ב הכנסה
-                        "0" //יבואן / יצואן
+                        "0" //יבוםן / יצוםן
                     );
                     this.is_ABOVE_MSVLK_agent = false;
 
                 } else {
                     console.log('b.');
-                    console.log(`דיפולט "תשלום בניצול העברת זהב לקוח/קופה" = "סכום מעל סכום החסימה מס"ב לקוח" וגם סכום המיסים קטן שווה לסכום שהוזן בדיפולט "סכום מיסים מקסימלי לתשלום במס"ב סוכן") יבוצע תשלום באמצעות מס"ב סוכן`)
+                    console.log(`דיפולט "תשלום בניצול העברת זהב לקוח/קופה" = "סכום מעל סכום החסימה מס"ב לקוח" וגם סכום המיסים קטן שווה לסכום שהוזן בדיפולט "סכום מיסים מקסימלי לתשלום במס"ב סוכן") יבוצע תשלום בםמצעות מס"ב סוכן`)
                     this.updateDefaultPaymentMethod(
                         "1",//מס"ב הכנסה
                         "3" //סוכן מכס
@@ -3482,7 +3482,7 @@ export class PaymentMethodModel extends BaseComponent {
             } else {
                 this.is_ABOVE_MSVLK_agent = false;
                 console.log('C.');
-                console.log(`דיפולט "תשלום ניצול העברת זהב לקוח/קופה" =! (שונה) "מסכום מעל סכום החסימה מס"ב לקוח" יבוצע Cתשלום באמצעות מס"ב לקוח`);
+                console.log(`דיפולט "תשלום ניצול העברת זהב לקוח/קופה" =! (שונה) "מסכום מעל סכום החסימה מס"ב לקוח" יבוצע Cתשלום בםמצעות מס"ב לקוח`);
                 return;
             }
             return;
@@ -3492,25 +3492,25 @@ export class PaymentMethodModel extends BaseComponent {
         }
         //3.1
         if (this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ALL") {
-            ///console.log("אם ללקוח מוגדר הדיפולט החדש 'תשלום בניצול העברת זהב לקוח' כל סכום3.1");
-            console.log("DefaultPaymentMethod-->ניצול העברת זהב -יבואן");
+            ///console.log("םם ללקוח מוגדר הדיפולט החדש 'תשלום בניצול העברת זהב לקוח' כל סכום3.1");
+            console.log("DefaultPaymentMethod-->ניצול העברת זהב -יבוםן");
             this.updateDefaultPaymentMethod(
                 "79",/*ניצול העברת זהב*/
-                "0" //יבואן / יצואן
+                "0" //יבוםן / יצוםן
             );
         }
         else if(this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ALL_KUPA")
 		{
 			this.updateDefaultPaymentMethod(
 							"2",/*קופה*/
-							"0" //יבואן / יצואן
+							"0" //יבוםן / יצוםן
 						);
 		}
         else if (this._UsingDsvPayKupa) {
             //already set
-            console.log("DefaultPaymentMethod-->קופה טווח 20,000 - 40,000 (ולא מוגדר ניצול העברת זהב - כל סכום)  == DSVKUPA");
+            console.log("DefaultPaymentMethod-->קופה טווח 20,000 - 40,000 (ולם מוגדר ניצול העברת זהב - כל סכום)  == DSVKUPA");
 
-            console.log("אם קופה או ניצול העברת זהב - שדה בנק לאפס ");
+            console.log("םם קופה םו ניצול העברת זהב - שדה בנק לםפס ");
             this.methodPM.BankCode = null;
             this.methodPM.InternalBankName = null; 
 
@@ -3521,21 +3521,21 @@ export class PaymentMethodModel extends BaseComponent {
             this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ABOVE_MAX" &&
             this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {//this.methodPM.Amount = 
             
-            console.log("DefaultPaymentMethod-->ניצול העברת זהב -יבואן");
+            console.log("DefaultPaymentMethod-->ניצול העברת זהב -יבוםן");
             this.updateDefaultPaymentMethod(
                 "79",/*ניצול העברת זהב*/
-                "0" //יבואן / יצואן
+                "0" //יבוםן / יצוםן
             );
 
         }
-        else if (//NEW ניצול העברת זהב/קופה - סכום מעל חסימה-קופה-קופה-יבואן
+        else if (//NEW ניצול העברת זהב/קופה - סכום מעל חסימה-קופה-קופה-יבוםן
             this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "KUPA" &&
             this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {
 
             console.log("DefaultPaymentMethod-->ניצול העברת זהב -קופה");
             this.updateDefaultPaymentMethod(
                 "2",/*קופה*/
-                "0" //יבואן / יצואן
+                "0" //יבוםן / יצוםן
             );
 
         }
@@ -3545,7 +3545,7 @@ export class PaymentMethodModel extends BaseComponent {
             this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault
             &&
             (
-                //(דיפולט "הגדרת סכום שמעל יבוצע תשלום בקופה סוכן" =NULL (לא הוגדר)
+                //(דיפולט "הגדרת סכום שמעל יבוצע תשלום בקופה סוכן" =NULL (לם הוגדר)
                 AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C)
                 ||
                 (
@@ -3559,7 +3559,7 @@ export class PaymentMethodModel extends BaseComponent {
         ) {
 
             console.log("6");
-            console.log("אם הדיפולט -תשלום בניצול העברת זהב לקוח- לא הוגדר,  וסכום המיסים גדול מהסכום שהוזן  בדיפולט החדש -סכום מיסים מקסימלי לתשלום במס-ב סוכן-  וגם (דיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן- =NULL (לא הוגדר) או (הוגדר סכום בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן- וסכום המיסים קטן מסכום שהוגדר בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן-  - )) יבוצע תשלום באמצעות ניצול העברת זהב סוכן ")
+            console.log("םם הדיפולט -תשלום בניצול העברת זהב לקוח- לם הוגדר,  וסכום המיסים גדול מהסכום שהוזן  בדיפולט החדש -סכום מיסים מקסימלי לתשלום במס-ב סוכן-  וגם (דיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן- =NULL (לם הוגדר) םו (הוגדר סכום בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן- וסכום המיסים קטן מסכום שהוגדר בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן-  - )) יבוצע תשלום בםמצעות ניצול העברת זהב סוכן ")
             console.log("DefaultPaymentMethod-->ניצול העברת זהב -סוכן");
             this.updateDefaultPaymentMethod(
                 "79",/*ניצול העברת זהב*/
@@ -3575,7 +3575,7 @@ export class PaymentMethodModel extends BaseComponent {
 
             ) {
             console.log("7");
-            console.log("אם הדיפולט -תשלום בניצול העברת זהב לקוח- לא הוגדר,  וסכום המיסים גדול מהסכום שהוזן  בדיפולט החדש -סכום מיסים מקסימלי לתשלום במס-ב סוכן- וגם בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן- <> NULL וגם סכום המיסים גדול שווה לסכום שהוגדר בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן-  - יבוצע תשלום באמצעות קופה סוכן");
+            console.log("םם הדיפולט -תשלום בניצול העברת זהב לקוח- לם הוגדר,  וסכום המיסים גדול מהסכום שהוזן  בדיפולט החדש -סכום מיסים מקסימלי לתשלום במס-ב סוכן- וגם בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן- <> NULL וגם סכום המיסים גדול שווה לסכום שהוגדר בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן-  - יבוצע תשלום בםמצעות קופה סוכן");
 
             console.log("DefaultPaymentMethod-aboveAmountAgentCash->קופה -סוכן");
             this.updateDefaultPaymentMethod(
@@ -3587,7 +3587,7 @@ export class PaymentMethodModel extends BaseComponent {
         //8
         else if (
             this.parent.DeclarationPM.TotalTax <= maxTaxAgentPayDefault) {
-            console.log("אחרת סכום המיסים קטן שווה מהסכום שהוזן בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב  8");
+            console.log("םחרת סכום המיסים קטן שווה מהסכום שהוזן בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב  8");
             console.log("DefaultPaymentMethod-->מסב הכנסה -סוכן");
             this.updateDefaultPaymentMethod(
                 "1",//מס"ב הכנסה
@@ -3607,7 +3607,7 @@ export class PaymentMethodModel extends BaseComponent {
             || 
             methodTypeCode == "79"/*ניצול העברת זהב*/
         ) {
-            console.log("אם קופה או ניצול העברת זהב - שדה בנק לאפס ");
+            console.log("םם קופה םו ניצול העברת זהב - שדה בנק לםפס ");
             this.methodPM.BankCode = null;
             this.methodPM.InternalBankName = null; 
         }

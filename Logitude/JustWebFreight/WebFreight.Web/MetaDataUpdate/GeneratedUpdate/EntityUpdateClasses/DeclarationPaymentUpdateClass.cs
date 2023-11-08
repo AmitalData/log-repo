@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationPaymentUpdateClass
    {  		
-		public const string HashString = "e0bd67daca48e64c7dc66dab13757407";
+		public const string HashString = "8c04cefb2a3ca3c5020727eed116cc8b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Payment",
-			      				    Code =  "7929",
+			      				    Code =  "191e",
 			      				    Name =  "Customs.DeclarationPayment Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -252,10 +252,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentDate",
 					  						DefaultText =  "Payment Date",
-					  						FullLocalDefaultText =  "תאריך הגשה",
+					  						FullLocalDefaultText =  "תםריך הגשה",
 					  						ListFieldLable =  "PaymentDateListLable",
 					  						ListLableDefaultText =  "Payment Date",
-					  						ListLocalDefaultText =  "תאריך הגשה",
+					  						ListLocalDefaultText =  "תםריך הגשה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -440,10 +440,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsProcessA",
 					  						DefaultText =  "Is Process A",
-					  						FullLocalDefaultText =  "תהליך א'",
+					  						FullLocalDefaultText =  "תהליך ם'",
 					  						ListFieldLable =  "IsProcessAListLable",
 					  						ListLableDefaultText =  "Is Process A",
-					  						ListLocalDefaultText =  "תהליך א'",
+					  						ListLocalDefaultText =  "תהליך ם'",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -503,10 +503,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProcessADescription",
 					  						DefaultText =  "Process A Description",
-					  						FullLocalDefaultText =  "הסבר תהליך א'",
+					  						FullLocalDefaultText =  "הסבר תהליך ם'",
 					  						ListFieldLable =  "ProcessADescriptionListLable",
 					  						ListLableDefaultText =  "Process A Description",
-					  						ListLocalDefaultText =  "הסבר תהליך א'",
+					  						ListLocalDefaultText =  "הסבר תהליך ם'",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -965,7 +965,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FuturePaymentDateTime",
 					  						DefaultText =  "Future Payment Date",
-					  						FullLocalDefaultText =  "תאריך תשלום עתידי",
+					  						FullLocalDefaultText =  "תםריך תשלום עתידי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

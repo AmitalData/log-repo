@@ -37,7 +37,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Declaration"
   DefaultText="&quot;Declaration Payment&quot;"
-  Code="&quot;7929&quot;"
+  Code="&quot;191e&quot;"
   Name="&quot;Customs.DeclarationPayment Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
