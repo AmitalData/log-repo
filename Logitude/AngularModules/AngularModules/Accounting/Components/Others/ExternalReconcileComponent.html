@@ -744,12 +744,20 @@
 
                     <!-- subtitle -->
                     <tr>
+                        
                         <td>
+                            <div style="display: inline-block; width: 40px; padding: 0 15px;"><CheckBox title="Select All" style="position: absolute; top: 12px;" 
+                                [IsChecked]="isAllSelected"
+                        (Checked)="isAllSelected = $event"></CheckBox>
+                            </div>
+                            <div style="display: inline-block;">
                             <div class="SubTitle">
                                 {{'ReconcileExternalPage.O.Transactions' | TextCodeTranslationPipe}}
                                 ({{IsAutoReconcile ? TransactionSelectedLines.Length : transCount}})
                             </div>
+                        </div>
                         </td>
+
                     </tr>
 
                     <!-- Grid -->
@@ -771,7 +779,8 @@
                                                [MarkIsChecked]="TransactionMarkIsChecked"
                                                (DataLoaded)="TransactiononDataLoaded()"
                                                (SortInvoked)="OnSortInvoked($event)"
-                                               (rowSelectedEvent)="onRowSelected($event)">
+                                               (rowSelectedEvent)="onRowSelected($event)"
+                                               [ChangeCheckBoxesState]="ChangeCheckBoxesState">
                                 </logitude-grid>
                             </div>
                         </td>
@@ -952,11 +961,20 @@
                     <!-- subtitle -->
                     <tr>
                         <td colspan="3">
-                            <div class="SubTitle">
-                                {{ExternalPagesTitle}}
-                                ({{IsAutoReconcile ? ExtPageSelectedLines.Length : extPageCount}})
+                           
+                                <div style="display: inline-block; width: 40px; padding: 0 15px;"><CheckBox title="Select All" style="position: absolute; top: 12px;" 
+                                    [IsChecked]="isAllSelectedExt"
+                                    (Checked)="isAllSelectedExt = $event" ></CheckBox>
+                                </div>
+                                <div style="display: inline-block;">
+                                    <div class="SubTitle">
+                                        {{ExternalPagesTitle}}
+                                        ({{IsAutoReconcile ? ExtPageSelectedLines.Length : extPageCount}})
+                                    </div>
                             </div>
-                        </td>
+                            </td>
+                            
+                        
                     </tr>
 
                     <!-- Grid -->
@@ -971,7 +989,9 @@
                                                [IsCustomTemplate]="true" [PassAdditionalDataToTemplates]="true"
                                                (CountReady)="onCountReadyExtPage($event)" [ColumnsReady]="ExtPageColumnsReady"
                                                [MarkIsChecked]="ExtPageMarkIsChecked" (DataLoaded)="ExtPageonDataLoaded()" (SortInvoked)="OnSortInvoked($event)"
-                                               (rowSelectedEvent)="onExternalPageRowSelected($event)">
+                                               (rowSelectedEvent)="onExternalPageRowSelected($event)"
+                                               [ChangeCheckBoxesState]="ChangeCheckBoxesStateExt">
+
                                 </logitude-grid>
                             </div>
                         </td>
