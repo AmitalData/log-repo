@@ -24,7 +24,7 @@ namespace Logitude.Accounting.Data.Repositories
             
 			throw new NotImplementedException();
         }
-        public List<LedgerTransactionList> GetAllChecks(string billToId, int tenant, bool isFuture, bool showLocal = true, bool withoutDate = false)
+        public List<LedgerTransactionList> GetAllChecks(string accountId, int tenant, bool isFuture, bool showLocal = true, bool withoutDate = false)
         {
 
            DateTime today = GetCurrentDate(tenant);
@@ -32,7 +32,7 @@ namespace Logitude.Accounting.Data.Repositories
 
             var query
                 = (from a in context.AllARPaymentChequesViews
-                   where a.BillToId == billToId && a.Tenant == tenant
+                   where a.AccountId == accountId && a.Tenant == tenant
                   && (withoutDate || (isFuture && a.ValueDate > today) || (!isFuture && a.ValueDate <= today))
                    select new LedgerTransactionList()
                    {
@@ -48,7 +48,7 @@ namespace Logitude.Accounting.Data.Repositories
                        Reference3 = a.Reference3,
                        JournalNumber = a.Journalnumber,
                        Notes = a.Notes,
-                       AccountId = a.GLAccountId,
+                       AccountId = a.AccountId,
                        // InternalNote = transaction.InternalNote,
                        //UpdateDateTime = transaction.UpdateDateTime,
                        //UpdatedByUserName = transaction.UpdatedByUserName,

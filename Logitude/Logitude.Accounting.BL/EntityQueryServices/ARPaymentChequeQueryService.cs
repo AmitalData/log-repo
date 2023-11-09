@@ -208,6 +208,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return cheques.Select(rec => GetEntityPM(rec)).ToList();
         }
+
+        public string GetAccountIdForCheque(int tenant, string paymentId, int lineNumber)
+        {
+            return repository.GetAccountIdForCheque(tenant, paymentId, lineNumber);
+        }
     }
 }
 
