@@ -610,7 +610,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         //this.onQueryChangeEvent.emit({ Filters: this.filterAgrs, Reload: true });
         this.RefreshStatistic();
         this.RefreshList();
-        this.DisplayOnlyCheck();
         this.DisplayOnlyCheckDeletePending();
         this.DisplayOnlyCheckApprovePending();
 
@@ -2175,7 +2174,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.MAWB = this.entityPM?.MAWB;
         currRequestParams.IsWorkSheetFromExcel = true;
 
-        let text = "נם םשר מחיקת קוד עיכוב";
+        let text = "נא אשר מחיקת קוד עיכוב";
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
@@ -2236,7 +2235,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
             text = "נם םשר לבצע םישור רק לשורות שסומנו";
         }
-        
+
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show(text);
         confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -2296,12 +2295,11 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
 
     DisplayOnlyCheckDeletePending() {
-        /*this.IsDisplayOnly = false;
+        this.IsDisplayOnly = false;
         this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
 
         //Check if deleting pending
-        this._CourierMasterValidator.SetEntityPM(this.entityPM);
-        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "ClosePending", this.entityPM.Id).subscribe((response: any) => {
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(SessionLocator.Tenant, "ClosePending", "",false,true,SessionLocator.LoggedUserId).subscribe((response: any) => {
             var displayOnlyCheckResult = response.Result;
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "ClosePending")[0];
@@ -2311,7 +2309,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
-        });*/
+        });
     }
 
     DisplayOnlyCheckApprovePending() {
@@ -2319,38 +2317,19 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
 
         //Check if deleting pending
-        this._CourierMasterValidator.SetEntityPM(this.entityPM);
-        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(SessionLocator.Tenant, "DCAInUCBApproveAllPending", null,true,this.CourierHawbsFromExcelUploaded,SessionLocator.LoggedUserId.toString()).subscribe((response: any) => {
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(SessionLocator.Tenant, "DCAInUCBApproveAllPending", "",true,true,SessionLocator.LoggedUserId.toString()).subscribe((response: any) => {
             var displayOnlyCheckResult = response.Result;
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "DCAInUCBApproveAllPending")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לםישור PENDING ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לאישור PENDING ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
         });
     }
 
-    DisplayOnlyCheck() {
-        this.IsDisplayOnly = false;
-        this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
-
-        //Check if changing StorageSiteCode
-        // this._CourierMasterValidator.SetEntityPM(this.entityPM);
-        /*this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(SessionLocator.Tenant, "UCBCMSS", this.entityPM.Id).subscribe((response: any) => {
-            var displayOnlyCheckResult = response.Result;
-            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
-                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
-                if (customsRequestsSheetPM != null) {
-                    this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי םתר םחסון/פריקה ברקע ";
-                    this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
-                }
-            }
-        });*/
-    }
 
     SendUncorrectDocuments(sendMode: string) {
 

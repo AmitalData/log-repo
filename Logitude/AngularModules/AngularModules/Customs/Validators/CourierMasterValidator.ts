@@ -72,6 +72,9 @@ export class CourierMasterValidator {
   public CheckRequestInProgressForCourierMaster(tenant: number, interfaceTypeCode: string, courierMasterId: string, displayOnlyMode: boolean = true,isWorkSheetFromExcel:boolean=false,userId:string=null) {
 
     var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.CourierMaster")[0];
+    if(isWorkSheetFromExcel){
+      objecttable= window.ObjectTables.filter(x => x.Name === "Customs.CourierHawbFromExcel")[0];
+    }
     var apiUrl: string = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
 
     return defer(() => {
