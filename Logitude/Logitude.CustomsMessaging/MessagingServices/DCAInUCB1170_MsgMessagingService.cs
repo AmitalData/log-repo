@@ -118,7 +118,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierHawbFromExcel");
             }
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, requestParamsData.CourierMasterId, null, null, null, true,null, requestParamsData.IsWorkSheetFromExcel, requestParamsData.LoggingUserId);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, requestParamsData.CourierMasterId, null, null, null, true, requestParamsData.IsWorkSheetFromExcel, requestParamsData.LoggingUserId);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
 

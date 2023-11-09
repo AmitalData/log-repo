@@ -88,7 +88,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 objectTableId= ObjectTableRepository.GetObjectTableByName("Customs.CourierHawbFromExcel");
             }
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendUnCorrectDocumentsRequestParams.CourierMasterId, null, null, null, true,null, mySendUnCorrectDocumentsRequestParams.IsWorkSheetFromExcel, mySendUnCorrectDocumentsRequestParams.LoggingUserId);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendUnCorrectDocumentsRequestParams.CourierMasterId, null, null, null, true, mySendUnCorrectDocumentsRequestParams.IsWorkSheetFromExcel, mySendUnCorrectDocumentsRequestParams.LoggingUserId);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
                 ///throw new System.Exception("Requestsheet  with Interface Type  = UCB2715  already in progress  !!!");
