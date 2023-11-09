@@ -757,14 +757,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return billToIds;
         }
 
-        public List<Card> GetAllActivityCardByTenant(int tenant)
-        {
-            List<Card> cards = ((from a in context.Cards
-                                        where !a.InActive && !string.IsNullOrEmpty(a.GLAccountId)  && (tenant == 0 || a.Tenant == tenant)
-                                        select a).ToList());
 
-            return cards;
-        }
 
     }
 }

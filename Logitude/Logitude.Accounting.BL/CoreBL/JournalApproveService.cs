@@ -349,7 +349,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(_Tenant);
                 GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_Tenant);
-                List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(arPayment.BillToId, _Tenant, false, withoutDate: true);
+                List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(ledgerTrasnctions[0].AccountId, _Tenant, false, withoutDate: true);
                 if (allChecks != null && allChecks.Count != 0)
                 {
                     GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(allChecks[0].AccountId, _Tenant);

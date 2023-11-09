@@ -195,5 +195,10 @@ namespace Logitude.Server.Tools.StorageService
                 blobFileRepository.SubmitChanges();
             }
         }
+
+        public void Dispose()
+        {
+          //  throw new NotImplementedException();
+        }
     }
 }

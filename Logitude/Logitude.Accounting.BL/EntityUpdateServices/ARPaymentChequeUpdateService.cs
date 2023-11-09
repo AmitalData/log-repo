@@ -115,7 +115,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void AfterUpdating(ARPaymentChequePM chequePM, EntityPM entityParentPM)
         {
-            this.CalculateTotalFutureOpenChequesForCreditGlAccount(chequePM.PaymentId, chequePM.ValueDate, chequePM.Tenant);
+            this.CalculateTotalFutureOpenChequesForCreditGlAccount(chequePM, chequePM.ValueDate, chequePM.Tenant);
 
             //bool isAccountingActivated = CheckIfAccountingIsActivated(chequePM.Tenant);
             //if (isAccountingActivated)
@@ -167,65 +167,43 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             base.SubmitChanges();
         }
-        public void CalculateTotalFutureOpenChequesForCreditGlAccount(string paymentId, DateTime valueDate, int tenant)
+
+        public void CalculateTotalFutureOpenChequesForCreditGlAccount(ARPaymentChequePM chequePM, DateTime valueDate, int tenant)
         {
-            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
-            string billToId = aRPaymentRepository.GetBillToId(paymentId, tenant);
-            if (billToId != null)
+            ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(tenant);
+            string accountId = aRPaymentChequeQueryService.GetAccountIdForCheque(tenant, chequePM.PaymentId, chequePM.LineNumber);
+
+            if (accountId != null)
             {
                 GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
                 GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(tenant);
-                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
                 bool isFuture = valueDate > DateTime.Today ? true : false;
-                List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(billToId, tenant, isFuture: isFuture);
+                List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(accountId, tenant, isFuture: isFuture);
 
 
-                if (allChecks != null && allChecks.Count != 0)
+                GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(accountId, tenant);
+                if(glAccountMoreData != null)
                 {
-                    GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(allChecks[0].AccountId, tenant);
                     GLAccountMoreDataPM moreDataPM = gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);
                     moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
 
-
-                    var sum = allChecks.Sum(x => x.CalculatedLocalAmount);
-
                     if (isFuture)
                     {
-                        moreDataPM.TotFutureOpenChequesInLocalCur = sum;
+                        moreDataPM.TotFutureOpenChequesInLocalCur = allChecks?.Sum(x => x.CalculatedLocalAmount) ?? 0;
                     }
                     else
                     {
-                        moreDataPM.TotalOpenChequesInLocalCur = sum;
+                        moreDataPM.TotalOpenChequesInLocalCur = allChecks?.Sum(x => x.CalculatedLocalAmount) ?? 0;
                     }
+
+                    IAccountingContext MyContext = AccountingContext.GetContext(tenant);
                     GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                     gLAccountMoreDataUpdateService.Update(moreDataPM, true);
 
                 }
-                else
-                {
-                    CardRepository cardRepository = new CardRepository(tenant);
-                    string accountId = cardRepository.GetCard(billToId, tenant)?.GLAccountId;
-                    if (accountId != null)
-                    {
-                        GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(accountId, tenant);
-                        GLAccountMoreDataPM moreDataPM = gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);
-                        moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
 
-                        if (isFuture)
-                        {
-                            moreDataPM.TotFutureOpenChequesInLocalCur = 0;
-                        }
-                        else
-                        {
-                            moreDataPM.TotalOpenChequesInLocalCur = 0;
-                        }
-                        GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                        gLAccountMoreDataUpdateService.Update(moreDataPM, true);
-                    }
-
-                }
-
+                
             }
         }
 
