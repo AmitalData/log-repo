@@ -191,7 +191,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     var declarationPaymentsPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
                                     if (declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue && declarationPaymentsPM.PaymentDate < DateTime.Now)
                                     {
-                                        if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTimeSpecified == true)
+                                        if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime != null)
                                         {
                                             declarationPM.PaymentDate = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime;
                                             declarationPM.ChangeSetOp = ChangeSetOperation.Update;
