@@ -633,6 +633,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.RefreshMasterRequiredFields();
         this.RefreshList();
         this.DisplayOnlyCheck();
+        this.DisplayOnlyCheckClassificationApprove();
         this.DisplayOnlyCheckDeletePending();
         this.DisplayOnlyCheckApprovePending();
 
@@ -2574,6 +2575,25 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
                     this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי נמל טעינה/אתר אחסון/פריקה ברקע ";
+                    this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
+                }
+            }
+        });
+    }
+    
+    DisplayOnlyCheckClassificationApprove() {
+        this.IsDisplayOnly = false;
+        this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
+
+        //Check if changing ClassificationApprove
+        this._CourierMasterValidator.SetEntityPM(this.entityPM);
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBAC", this.entityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBAC")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לאישור סיווג ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
