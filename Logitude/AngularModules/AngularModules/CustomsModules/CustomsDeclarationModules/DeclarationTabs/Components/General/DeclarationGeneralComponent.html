@@ -318,8 +318,8 @@
                                         <LogLabel [ObjectFieldName]="'ExporterImporterCode'" [ObjectTableName]="ObjectTableName"
                                         [DataContext]="DataContext"  ></LogLabel>
                                     </td>
-                                    <td style="width: 100px;">
-                                       <IconButton *ngIf="_IsIndicationsClientFeature && clientIndications && clientIndications.length > 0" [IsSmall]="true" [Name]="'flag'" (click)="ShowClientIndication($event)" [IsIconOnly]="true" style="float:right;margin-right: -20px;"></IconButton> 
+                                    <td style="width: 100px;" id="ExporterImporterCode">
+                                       <IconButton *ngIf="_IsIndicationsClientFeature && clientIndications && clientIndications.length > 0" [IsSmall]="true" [Name]="'flag'" (click)="ShowClientIndication($event)" [IsIconOnly]="true" style="float:right;margin-right: -20px;" ></IconButton> 
                                         <SearchBox #ImporterSearchBox [ObjectTableName]="'Customs.Client'"
                                                    [IsQuickSearch]="true"
                                                    [DropDownWidth]="143"
@@ -380,7 +380,7 @@
                                         <LogLabel [ObjectFieldName]="'TransferExporterCode'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
-                                    <td>
+                                    <td id="TransferExporterCode">
 
                                         <SearchBox [ObjectTableName]="'Customs.Client'"
                                                    [IsQuickSearch]="true"
@@ -392,7 +392,8 @@
                                                    [ItemHeight]="36"
                                                    [HideIcons]="true"
                                                    [Watermark]="''"
-                                                   (ItemClicked)="ImporterClicked('Transfer',$event)"></SearchBox>
+                                                   (ItemClicked)="ImporterClicked('Transfer',$event)"
+                                                   ></SearchBox>
 
                                     </td>
                                     <td><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditTransferImporter()"></IconButton></td>
