@@ -1036,7 +1036,8 @@ Line3
     ButtonBanksCCExternalReco_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
-        defaultParam.AccountId = "1-1234"
+        defaultParam.AccountId = "1-1234";
+        defaultParam.AccountDisplayNumber = "12345678";
         defaultParam.ToAccountingDate = "30.04.2023";
         defaultParam.Batch = 0;
       //  defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
@@ -1048,6 +1049,7 @@ Line3
         let _BanksCCExternalRecoUrl = ServiceHelper.GetLogitudeURL() + '/api/BanksCCExternalReco';
         let myUrl = _BanksCCExternalRecoUrl + "?tenant=" + objToCheck1.Tenant;
         myUrl = myUrl + "&accountId=" + objToCheck1.AccountId;
+        myUrl = myUrl + "&accountDisplayNumber=" + objToCheck1.AccountDisplayNumber;
         myUrl = myUrl + "&toAccountingDate=" + objToCheck1.ToAccountingDate;
         myUrl = myUrl + "&batch=" + objToCheck1.Batch;
 
