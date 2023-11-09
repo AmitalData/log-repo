@@ -2312,7 +2312,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     DisplayOnlyCheckApprovePending() {
-        debugger;
         this.IsDisplayOnly = false;
         this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
 
