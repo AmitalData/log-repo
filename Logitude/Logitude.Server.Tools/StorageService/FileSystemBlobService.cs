@@ -114,5 +114,10 @@ namespace Logitude.Server.Tools.StorageService
         {
             throw new NotImplementedException();
         }
+
+        public void Dispose()
+        {
+            //throw new NotImplementedException();
+        }
     }
 }
