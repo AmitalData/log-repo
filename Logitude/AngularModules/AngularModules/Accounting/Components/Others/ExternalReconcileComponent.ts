@@ -732,6 +732,17 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'AccountingDate'
         });
+        this.TransactionsColumns.push({
+            FieldName: 'DocumentDate',
+            DataTypeCode: 'DateTime',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate"),
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'DocumentDate'
+        });
         //this.TransactionsColumns.push({
         //    FieldName: 'DocumentDate',
         //    DataTypeCode: 'DateTime',
@@ -819,16 +830,16 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Reference2'
         });
-        this.TransactionsColumns.push({
-            FieldName: 'Reference3',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference3"), // 'Ref. 3',
-            Styles: { width: '80px' },
-            IsCustomTemplate: true
-            ,
-            ServerSideSortable: true,
-            SortByName: 'Reference3'
-        });
+        // this.TransactionsColumns.push({
+        //     FieldName: 'Reference3',
+        //     DataTypeCode: 'String',
+        //     Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference3"), // 'Ref. 3',
+        //     Styles: { width: '80px' },
+        //     IsCustomTemplate: true
+        //     ,
+        //     ServerSideSortable: true,
+        //     SortByName: 'Reference3'
+        // });
         //this.TransactionsColumns.push({
         //    FieldName: 'JournalNumber',
         //    DataTypeCode: 'String',
