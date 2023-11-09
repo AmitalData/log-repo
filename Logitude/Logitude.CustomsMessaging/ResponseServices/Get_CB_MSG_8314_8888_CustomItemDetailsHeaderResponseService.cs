@@ -148,7 +148,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
-                    if (doUpdateCustomsItem && !(currentDBListCustomsItemDetailsHistoryRow.ChangeSetOp == ChangeSetOperation.Insert && mehesCustomsItemRow.isDiscountCode == true))
+                    if (doUpdateCustomsItem )
                     {
                         currentDBListCustomsItemRow.FullClassification = mehesCustomsItemRow.fullClassification.Split('/')[0]?? mehesCustomsItemRow.fullClassification;
                         currentDBListCustomsItemRow.CustomsItemHierarchicLocationID = mehesCustomsItemRow.HierarchicLocationID;
@@ -162,7 +162,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             logContext.SaveChanges();
                        
                     }
-                    if(doUpdateCustomsItemDetailsHistory &&!( currentDBListCustomsItemDetailsHistoryRow.ChangeSetOp==ChangeSetOperation.Insert && mehesCustomsItemRow.isDiscountCode==true))
+                    if(doUpdateCustomsItemDetailsHistory)
                      {
                         currentDBListCustomsItemDetailsHistoryRow.CustomsItemID = mehesCustomsItemRow.ID.ToString();
                         currentDBListCustomsItemDetailsHistoryRow.Title = mehesCustomsItemRow.GoodsDescription;
@@ -175,7 +175,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     }
 
-                    if (doUpdatePropertiesDetailsHistory && !(currentDBListCustomsItemDetailsHistoryRow.ChangeSetOp == ChangeSetOperation.Insert && mehesCustomsItemRow.isDiscountCode == true))
+                    if (doUpdatePropertiesDetailsHistory)
                     {
                         currentDBListPropertiesDetailsHistoryRow.CustomsItemID = mehesCustomsItemRow.ID.ToString();
                         currentDBListPropertiesDetailsHistoryRow.StartDate= DateTime.Today.AddDays(-30);
