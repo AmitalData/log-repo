@@ -90,7 +90,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierHawbFromExcel");
             }
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendClosePendingRequestParams.CourierMasterId, null, null, null, true, mySendClosePendingRequestParams.IsWorkSheetFromExcel, mySendClosePendingRequestParams.LoggingUserId);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendClosePendingRequestParams.CourierMasterId, null, null, null, true, null, mySendClosePendingRequestParams.IsWorkSheetFromExcel, mySendClosePendingRequestParams.LoggingUserId);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
                 return "קיים מסר זהה בתהליך";
