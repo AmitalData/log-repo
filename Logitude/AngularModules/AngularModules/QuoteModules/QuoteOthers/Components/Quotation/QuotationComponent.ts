@@ -76,10 +76,11 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     QuoteTypeCode: string;
 
     private CurrentSession = SessionLocator.SelectedSession;
+    public UpdateQuoteDocument:boolean= false;
     public _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
     constructor() {
         super();
-
+        this.UpdateQuoteDocument = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "UQD")[0]? true : false;
         this.Listen();
         this.PreviewPdfId = Guid.newGuid();
         this.UploadFileId = Guid.NewRandomString();
@@ -597,20 +598,23 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                     var pmResponse: ServiceResponse = response;
                     this.CurrentSession.StopBusyIndicator();
                     if (!pmResponse.HasError && pmResponse.Result) {
+                        if(this.UpdateQuoteDocument) {
+                            var commLogId = pmResponse.Result;
+                            this.getQuoteTemplateCommunicationLog(commLogId);
+                        } else {
+                            var buffer = EntityResourceService.base64ToBufferConvertor(pmResponse.Result);
+                            var blob = new Blob([buffer], { type: 'application/pdf' });
+                            var objectURL = URL.createObjectURL(blob);
 
-                        var buffer = EntityResourceService.base64ToBufferConvertor(pmResponse.Result);
-                        var blob = new Blob([buffer], { type: 'application/pdf' });
-                        var objectURL = URL.createObjectURL(blob);
 
+                            this.IFrameURI = objectURL;
 
-                        this.IFrameURI = objectURL;
+                            this.IsQuoteTemplateSectionInCludedChange = false;
 
-                        this.IsQuoteTemplateSectionInCludedChange = false;
+                            this.RefreshVersions();
 
-                        this.RefreshVersions();
-
-                        this.ClearLastQuoteTemplateVersionDocuemnt();
-           
+                            this.ClearLastQuoteTemplateVersionDocuemnt();
+                        }
                     }
                 });
 
@@ -758,7 +762,6 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
-
                 var buffer = EntityResourceService.base64ToBufferConvertor(pmResponse.Result);
                 var blob = new Blob([buffer], { type: 'application/pdf' });
                 var objectURL = URL.createObjectURL(blob);
@@ -772,6 +775,61 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
         });
 
+    }
+
+    getQuoteTemplateCommunicationLog(communicationLogId: string) {
+        SessionLocator.SelectedSession.StartBusyIndicator("Document in progress");
+        this._ReconciliationExtendedPMService
+                .getCommunicationLog(communicationLogId)
+                .pipe(
+                    delay(3000),
+                    expand((response: any) => {
+                    if ((response.HasError || response.Result.CommunicationStatusTypeCode === 'W')) {
+                        return this._ReconciliationExtendedPMService
+                    .getCommunicationLog(communicationLogId).pipe(delay(3000));
+                    }
+                    return EMPTY;
+                    }),
+                    takeLast(1)
+                )
+                .subscribe((result: ServiceResponse) => {
+                    if (!result.HasError) {
+                        var communicationLogResult = result.Result;
+                        if(communicationLogResult.CommunicationStatusTypeCode === 'D') {
+                            
+                            this.quoteTemplateExtendedPMService.GetCommunicationLogDocument(communicationLogId).subscribe((res:any) => {
+                                var pmResponse: ServiceResponse = res;
+                                this.CurrentSession.StopBusyIndicator();
+                                if (!pmResponse.HasError && pmResponse.Result) {
+                                    var buffer = EntityResourceService.base64ToBufferConvertor(pmResponse.Result);
+                                    var blob = new Blob([buffer], { type: 'application/pdf' });
+                                    var objectURL = URL.createObjectURL(blob);
+
+
+                                    this.IFrameURI = objectURL;
+
+                                    this.IsQuoteTemplateSectionInCludedChange = false;
+
+                                    this.RefreshVersions();
+
+                                    this.ClearLastQuoteTemplateVersionDocuemnt();
+                    
+                                }
+                    
+                    
+                            });
+                        } else if(communicationLogResult.CommunicationStatusTypeCode === 'F') {
+                            // this.ValidationErrorsList = [];
+                            // this.ValidationErrorsList.push(communicationLogResult.ExceptionMessage);
+                            this.CurrentSession.StopBusyIndicator();
+                        }
+                    }
+                    else {
+                        // this.ValidationErrorsList = result.ErrorsArray;
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+                    
+                })
     }
     
     getCommunicationLog(communicationLogId: string) {

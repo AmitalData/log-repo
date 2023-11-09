@@ -163,6 +163,20 @@ export class QuoteTemplateExtendedPMService {
         }),catchError(ServiceHelper.HandleServiceError));
 
     }
+    
+
+    GetCommunicationLogDocument(commId: string) {
+
+
+        return this._http.get(this._apiUrl + '/GetCommunicationLogDocument?' + 'id=' +commId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result = response;
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = result
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
     GetQuoteDocumentVersionsByQuoteId(quoteId: string, tenant: number) {
 
         return this._http.get(this._apiUrl + '/GetQuoteDocumentVersionsByQuoteId/?' + 'quoteId=' + quoteId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
