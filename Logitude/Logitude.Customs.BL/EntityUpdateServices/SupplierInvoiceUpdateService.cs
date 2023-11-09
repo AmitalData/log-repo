@@ -737,7 +737,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 int index = 0;
                 var my = new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey };
 
-                if (defaultDeclarationPM.IsAmendment != true || defaultDeclarationPM.Direction != "E")
+                if (defaultDeclarationPM.IsAmendment != true )
                 {
 
 
