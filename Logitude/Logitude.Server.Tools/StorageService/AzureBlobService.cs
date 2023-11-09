@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.StorageService
 {
-    public class AzureBlobService : IBlobService
+    public class AzureBlobService : IBlobService , IDisposable
     {
 
          
@@ -408,6 +408,10 @@ namespace Logitude.Server.Tools.StorageService
 
           
         }
+
+        public void Dispose()
+        {
+         }
     }
 }
 
