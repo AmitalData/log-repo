@@ -1124,6 +1124,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string occuredStatus ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OccuredStatus  
+	   {
+	    
+	     get
+		{
+		   return occuredStatus;
+		 }
+		 set
+		 {
+		   if(occuredStatus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OccuredStatus",OldValue=occuredStatus,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   occuredStatus=value;
+		   }
+			
+		 }
+	   }
+	  private string notOccuredStatus ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NotOccuredStatus  
+	   {
+	    
+	     get
+		{
+		   return notOccuredStatus;
+		 }
+		 set
+		 {
+		   if(notOccuredStatus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NotOccuredStatus",OldValue=notOccuredStatus,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   notOccuredStatus=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
