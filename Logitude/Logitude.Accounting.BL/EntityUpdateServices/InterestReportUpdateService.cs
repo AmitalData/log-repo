@@ -198,7 +198,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             }
                         case "6":
                             {
-                                CreateEvent("IRFD", entityPM);
+                                CreateEvent("IRFD", entityPM, entityPM.InvoiceFailureReason);
                                 break;
                             }
                         case "2":

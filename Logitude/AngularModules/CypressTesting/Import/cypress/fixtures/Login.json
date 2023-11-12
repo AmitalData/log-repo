@@ -1,9 +1,8 @@
 {
-  "url": "http://10.10.10.97/customs19",
-  "email": "itzik@amital.co.il",
-  "password": "xhx@word3",
+  "url": "http://10.10.10.97/customssql/",
+  "email": "oritcypress@amital.co.il",
+  "password": "OritTest@1",
   "customerCareEmail": "itzik@amital.co.il",
   "customerCarePassword": "Arbel1980",
-  "tenant": "1"
+  "tenant": "6"
 }
-

@@ -52,6 +52,7 @@
     "angular-mentions": "^1.4.0",
     "collaboration-tool-tasks-list": "^11.2.19",
     "fast-json-patch": "^3.1.1",
+    "file-saver": "^2.0.5",
     "fusioncharts": "^3.19.0",
     "lodash.clonedeep": "^4.5.0",
     "logitude-dashboard-library": "^1.4.41",
@@ -68,8 +69,11 @@
     "rxjs": "~6.5.4",
     "safe-clone-deep": "^1.1.5",
     "selenium-webdriver": "^4.0.0-alpha.5",
+    "stream": "0.0.2",
+    "timers": "^0.1.1",
     "tslib": "^1.10.0",
     "webdriver-manager": "^12.1.6",
+    "xlsx": "^0.18.5",
     "zone.js": "^0.11.1"
   },
   "devDependencies": {

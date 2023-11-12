@@ -22,6 +22,7 @@ namespace WebFreight.Web.Stimulsoft.fonts
             AddMonacoFont();
             AddOptimaFont();
             AddPerpetuaFont();
+            AddIDAutomatedFont();
         }
 
         private static void AddFont(string filePath)
@@ -98,6 +99,16 @@ namespace WebFreight.Web.Stimulsoft.fonts
             AddFont("century-gothic/GOTHICI.ttf");
         }
 
+        private static void AddIDAutomatedFont()
+        {
+            if (FontExists("idautomated")) return;
+
+            AddFont("idautomated/IDAutomationCMC7.ttf");
+            AddFont("idautomated/IDAutomationCMC7n10.ttf");
+            AddFont("idautomated/IDAutomationCMC7n25.ttf");
+            AddFont("idautomated/IDAutomationCMC7n40.ttf");
+        
+        }
 
     }
 }

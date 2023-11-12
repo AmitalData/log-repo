@@ -112,16 +112,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //get cheque
             ARPaymentChequeQueryService aRPaymentChequeQuery = new ARPaymentChequeQueryService(tenant);
             ARPaymentChequePM cheque = aRPaymentChequeQuery.GetSingle(arpChequeId, false, false);
-            //if(cheque != null)
-            //{
+            if (cheque != null)
+            {
 
-            //    // Check reedemed cheuqe , Task 44667: Deposits: New validation before out of deposit action
-            //    if (cheque.StatusCode == "6") // 6- redemmed
-            //    {
-            //        isValid = false;
-            //        throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.RedeemedChequeMSG", tenant, showLocal));
-            //    }
-            //}
+                // Check reedemed cheuqe , Task 44667: Deposits: New validation before out of deposit action
+                if (cheque.StatusCode == "6") // 6- redemmed
+                {
+                    isValid = false;
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.RedeemedChequeMSG", tenant, showLocal));
+                }
+            }
 
             return isValid;
         }

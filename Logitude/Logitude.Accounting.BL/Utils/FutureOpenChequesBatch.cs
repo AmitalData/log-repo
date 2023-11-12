@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -52,22 +53,21 @@ namespace Logitude.Accounting.BL.Utils
         public void SetTotalFutureOpenChequesInLocalCurrency(int tenant = 0)
         {
 
-            
-            CardRepository cardRepository = new CardRepository(tenant);
-            List<Card> cards = cardRepository.GetAllActivityCardByTenant(tenant);
+            GLAccountRepository gLAccountRepository = new GLAccountRepository(tenant);
+            List<GLAccount> accounts = gLAccountRepository.GetAllActivityAccountsByTenant(tenant);
 
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
             GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
             GLAccountMoreDataQueryService moreDataQueryService = new GLAccountMoreDataQueryService(tenant);
 
-            foreach (var card in cards)
+            foreach (var account in accounts)
             {
                 
-                    List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(card.Id, 0, isFuture: false, withoutDate: true);
+                    List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(account.Id, account.Tenant, isFuture: false, withoutDate: true);
 
 
-                    GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(card.GLAccountId, card.Tenant);
+                    GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(account.Id, account.Tenant);
                     GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetEntityPM(glAccountMoreData);
                     if (moreDataPM != null) 
                     {
@@ -77,7 +77,7 @@ namespace Logitude.Accounting.BL.Utils
                         moreDataPM.TotalOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate <= DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
 
 
-                        GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), card.Tenant);
+                        GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), account.Tenant);
                         gLAccountMoreDataUpdateService.Update(moreDataPM, true);
 
                     }
@@ -95,7 +95,7 @@ namespace Logitude.Accounting.BL.Utils
 
         }
 
-
+        
 
     }
 }

@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 import {Router, ActivatedRoute, NavigationStart, NavigationEnd} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {CargoTrackingSearchService} from '../../../../Services/Others/CargoTrackingSearchService';
@@ -34,6 +35,7 @@ import {ApiQueryFilters} from 'src/CargoTracking/Services/Others/ApiQueryFilters
 import {LogitudeGridExportToExcelService} from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
 import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
 import { TenantManagementPM } from 'src/CargoTracking/Services/Others/TenantManagementPM';
+import { DateTimeFormatPipe } from 'src/Infrastructure/Pipes/DateTimeFormatPipe';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -60,6 +62,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     isFilter1Expanded: boolean = false;
     isFilter2Expanded: boolean = false;
     isMilestonesStatusFilterExpanded: boolean = false;
+
+    isFilterByOpenDateExpanded: boolean = false;
+    isFilterByClearanceDateExpanded: boolean = false;
+    isFilterByATADateExpanded: boolean = false;
+
     isShipmentTypeFilterExpanded: boolean = false;
     isShipmentDirectionFilterExpanded: boolean = false;
     isAbdullahCompanyChecked: boolean = true;
@@ -92,9 +99,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     isMobileView: boolean;
     tempInvitedCustomers: any[] = [];
     tempMilestonesStatus: any[] = [];
+
     tempShipmentDirectionFilters: any[] = [];
     tempShipmentTypeFilters: any[] = [];
     MilestonesStatusNoResult: boolean;
+
+    // FillterByOpenDateNoResult: boolean;
+
     ShipmentDirectionFiltersNoResult: boolean;
     ShipmentTypeFiltersNoResult: boolean;
     InvitedCustomersNoResult: boolean;
@@ -112,7 +123,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     FiltersSelectedInvitedCustoms: any[] = [];
     ShipmentSearchInput: CargoTrackingShipmentSearchInput = new CargoTrackingShipmentSearchInput();
     MilestonesStatus: any[] = [];
+
+
     MilestonesStatusDictionary: {} = {};
+
     InvitedCustomers: any[] = [];
     MoreFilterMobileValue: MoreFilter = new MoreFilter();
     InvitedCustomersDictionary: {} = {};
@@ -181,6 +195,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         return false;
     }
 
+    public FilterByOpenDateDataGreaterThan:string = "";
+    public FilterByClearanceDateDataGreaterThan:string = "";
+    public FilterByATADateDataGreaterThan:string = "";
+    public FilterByOpenDateDataLessThan:string = "";
+    public FilterByClearanceDateDataLessThan:string = "";
+    public FilterByATADateDataLessThan:string = "";
+
     ngOnInit(): void {
         this.setMaxNumberOfCarachter(window.innerWidth);
         this.setDefaultSort();
@@ -205,6 +226,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private buildFilterArgs() {
+        debugger
         this.filterAgrs = new ApiQueryFilters();
         this.filterAgrs.addAdditionalFilter("Tenant", this.ShipmentSearchInput.Tenant, null, null, "Equals", false, false, false, "string");
         this.filterAgrs.addAdditionalFilter("HasException", this.ShipmentSearchInput.HasException, null, null, "Equals", true, false, false, "boolean");
@@ -226,6 +248,25 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         if (this.ShipmentSearchInput.MilestonesCodes.length > 0) {
             this.filterAgrs.addAdditionalFilter("MilestonesCodes", this.ShipmentSearchInput.MilestonesCodes.join("_"), null, null, "Equals", false, false, false, "string");
         }
+        if (this.ShipmentSearchInput.OpenDateGreaterThan) {
+            this.filterAgrs.addAdditionalFilter("OpenDateGreaterThan", this.ShipmentSearchInput.OpenDateGreaterThan, null, null, "LargerThan", false, false, false, "string");
+        }
+        if (this.ShipmentSearchInput.OpenDateLessThan) {
+            this.filterAgrs.addAdditionalFilter("OpenDateLessThan", this.ShipmentSearchInput.OpenDateLessThan, null, null, "LessThan", false, false, false, "string");
+        }
+        if (this.ShipmentSearchInput.ClearanceDateGreaterThan) {
+            this.filterAgrs.addAdditionalFilter("ClearanceDateGreaterThan", this.ShipmentSearchInput.ClearanceDateGreaterThan, null, null, "LargerThan", false, false, false, "string");
+        }        
+        if (this.ShipmentSearchInput.ClearanceDateLessThan) {
+            this.filterAgrs.addAdditionalFilter("ClearanceDateLessThan", this.ShipmentSearchInput.ClearanceDateLessThan, null, null, "LessThan", false, false, false, "string");
+        }        
+        if (this.ShipmentSearchInput.ATADateGreaterThan) {
+            this.filterAgrs.addAdditionalFilter("ATADateGreaterThan", this.ShipmentSearchInput.ATADateGreaterThan, null, null, "LargerThan", false, false, false, "string");
+        }
+        if (this.ShipmentSearchInput.ATADateLessThan) {
+            this.filterAgrs.addAdditionalFilter("ATADateLessThan", this.ShipmentSearchInput.ATADateLessThan, null, null, "LessThan", false, false, false, "string");
+        }
+       
 
         if (this.ShipmentSearchInput.TransportModeCodes.length > 0) {
             this.filterAgrs.addAdditionalFilter("TransportModeCodes", this.ShipmentSearchInput.TransportModeCodes.join("_"), null, null, "Equals", false, false, false, "string");
@@ -440,10 +481,62 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     }
 
+    UnselectFilterByOpenDate() {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.resetFilterOpenDate();
+        this.LoadScreenData();
+    }
+
+    UnselectFilterByClearanceDate() {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.resetFilterClearanceDate();
+        this.LoadScreenData();
+    }
+
+    UnselectFilterByATADate() {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.resetFilterATADate();
+        this.LoadScreenData();
+    }
+
+    resetFilterOpenDate(){
+        this.FilterByOpenDateDataGreaterThan = "";
+        this.ShipmentSearchInput.OpenDateGreaterThan = this.FilterByOpenDateDataGreaterThan;
+        this.FilterByOpenDateDataLessThan = "";
+        this.ShipmentSearchInput.OpenDateLessThan = this.FilterByOpenDateDataLessThan;
+    }
+
+    resetFilterClearanceDate(){
+        this.FilterByClearanceDateDataGreaterThan = "";
+        this.ShipmentSearchInput.ClearanceDateGreaterThan = this.FilterByClearanceDateDataGreaterThan;
+        this.FilterByClearanceDateDataLessThan = "";
+        this.ShipmentSearchInput.ClearanceDateLessThan = this.FilterByClearanceDateDataLessThan;
+    } 
+
+    resetFilterATADate(){
+        this.FilterByATADateDataGreaterThan = "";
+        this.ShipmentSearchInput.ATADateGreaterThan = this.FilterByATADateDataGreaterThan;
+        this.FilterByATADateDataLessThan = "";
+        this.ShipmentSearchInput.ATADateLessThan= this.FilterByATADateDataLessThan;
+    }
+
     // Milestones filter
     OnMilestonesStatusFilterChanged(value, state) {
         state.IsSelected = value;
     }
+
+    // // Open Date filter
+    // OnFilterByOpenDateChanged(value, state) {
+    //     state.IsSelected = value;
+    // }
+    // // Clearance Date filter
+    // OnFilterByClearanceDateChanged(value, state) {
+    //     state.IsSelected = value;
+    // }
+    // // ATA Date filter
+    // OnFilterByATADateChanged(value, state) {
+    //     state.IsSelected = value;
+    // }
 
     OnShipmentTypeFilterChanged(value, item: ToggleFilter) {
         item.IsSelected = value;
@@ -464,6 +557,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     onSearchAdvancedFiltersChange(searchInput) {
         this.onSearchInvitedCustomersChange(searchInput);
         this.onSearchMilestonesStatusChange(searchInput);
+        // this.onSearchOnFilterByOpenDateChange(searchInput);
         this.onSearchShipmentDirectionFiltersChange(searchInput);
         this.onSearchShipmentTypeFiltersChange(searchInput);
         this.SearchText = searchInput;
@@ -506,6 +600,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             this.MilestonesStatusNoResult = false;
         }
     }
+
+   
+    
     onSearchShipmentDirectionFiltersChange(searchInput) {
         if (searchInput) {
             var size = this.tempShipmentDirectionFilters.length;
@@ -743,7 +840,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         fromDate.setMonth(fromDate.getMonth() - this.backMonths);
         return fromDate;
     }
-
     private async InitiateShipmentDataSource() {
         let filter = await this.filterWithAllCustomersWhenCustomersNotSelected();
         this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
@@ -998,6 +1094,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShipmentSearchInput.CustomersIds = this.InvitedCustomers.filter(e => e.IsSelected).map(d => d.CardId);
         this.ShipmentSearchInput.DirectionCodes = [];
         this.ShipmentSearchInput.MilestonesCodes = [];
+        this.resetFilterOpenDate();
+        this.resetFilterClearanceDate();
+        this.resetFilterATADate();
+
         this.ShipmentSearchInput.TransportModeCodes = [];
         this.ShipmentSearchInput.EstimatedArrivalOnly = this.MoreFilterMobileValue.EstimatedArrivalOnly = false;
         this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException = false;
@@ -1017,11 +1117,44 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.MoreFilterMobileValue.OperationalOpenedOnly = false;
     }
 
+
+    formatDate(val: string) {
+        if (val) {
+            const dateObj = new Date(val);
+            const day = dateObj.getDate();
+            const month = dateObj.getMonth() + 1; 
+            const year = dateObj.getFullYear();
+            return `${day}/${month}/${year}`;
+        } 
+        else {
+            return "";
+        }
+      }
+
+    isFirstDateLater(firstDateString, secondDateString) {
+        // Convert the string to Date objects
+        var firstDate = new Date(firstDateString);
+        var secondDate = new Date(secondDateString);
+    
+        // Compare the two dates
+        return firstDate > secondDate;
+    }
+    // public tempArr:any;
+
     ApplyFilterButtonClicked() {
+        
+        this.ShipmentSearchInput.OpenDateGreaterThan = this.formatDate(this.FilterByOpenDateDataGreaterThan);
+        this.ShipmentSearchInput.ClearanceDateGreaterThan = this.formatDate(this.FilterByClearanceDateDataGreaterThan);
+        this.ShipmentSearchInput.ATADateGreaterThan = this.formatDate(this.FilterByATADateDataGreaterThan);
+        this.ShipmentSearchInput.OpenDateLessThan = this.formatDate(this.FilterByOpenDateDataLessThan);
+        this.ShipmentSearchInput.ClearanceDateLessThan = this.formatDate(this.FilterByClearanceDateDataLessThan);
+        this.ShipmentSearchInput.ATADateLessThan = this.formatDate(this.FilterByATADateDataLessThan);
+   
         this.sharedService.updateValue(false);
         this.ShipmentSearchInput.CustomersIds = this.InvitedCustomers.filter(e => e.IsSelected).map(d => d.CardId);
 
         this.ShipmentSearchInput.MilestonesCodes = this.MilestonesStatus.filter(e => e.IsSelected).map(state => state.Code);
+        
         if (this.isMobileView) {
             this.ShipmentSearchInput.DirectionCodes = this.ShipmentDirectionFilters.filter(e => e.IsSelected).map(e => e.Code);
             this.ShipmentSearchInput.TransportModeCodes = this.ShipmentTypeFilters.filter(e => e.IsSelected).map(e => e.Code);
@@ -1043,6 +1176,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         return this.ShipmentSearchInput.CustomersIds.length > 0
             || this.ShipmentSearchInput.DirectionCodes.length > 0
             || this.ShipmentSearchInput.MilestonesCodes.length > 0
+            || this.ShipmentSearchInput.OpenDateGreaterThan
+            || this.ShipmentSearchInput.ClearanceDateGreaterThan
+            || this.ShipmentSearchInput.ATADateGreaterThan
             || this.ShipmentSearchInput.TransportModeCodes.length > 0
             || this.ShipmentSearchInput.EstimatedArrivalOnly
             || this.ShipmentSearchInput.HasException

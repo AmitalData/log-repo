@@ -89,7 +89,6 @@ export class QuoteTemplateSectionExtendedPMService {
     }
 
 
-
  GetMakeQuoteTemplateSectionsIncluded(quoteId: string, quotetemplateId: string, quotetemplatesectionId: string, tenant: number) {
 
      return this._http.get(this._apiUrl + '/GetMakeQuoteTemplateSectionsIncluded/?' + 'quoteId=' + quoteId + '&quotetemplateId=' + quotetemplateId + '&quotetemplatesectionId=' + quotetemplatesectionId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {

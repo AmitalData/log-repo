@@ -149,10 +149,7 @@
     <div class="selected-filters"
         *ngIf="CheckFiltersExists()">
         <ul>
-            <li *ngFor="let code of ShipmentSearchInput.TransportModeCodes" (click)="DeselectTransportModeFilter(code)">
-                {{ShipmentShipmentTypeFiltersDictionary[code].Name}}
-                <span class="filter-close-btn">×</span>
-            </li>
+           
             <li *ngFor="let code of ShipmentSearchInput.DirectionCodes" (click)="DeselectDirectionFilter(code)">
                 {{ShipmentDirectionFiltersDictionary[code].Name}}
                 <span class="filter-close-btn">×</span>
@@ -178,6 +175,22 @@
             </li>
             <li *ngFor="let code of ShipmentSearchInput.MilestonesCodes" (click)="UnselectMiletone(code)">
                 {{MilestonesStatusDictionary[code].EnglishName}}
+                <span class="filter-close-btn">×</span>
+            </li>
+
+            <!--FilterByOpenDateData  -->
+            <li *ngIf="this.ShipmentSearchInput.OpenDateGreaterThan" (click)="UnselectFilterByOpenDate()">
+                Open Date: {{this.ShipmentSearchInput.OpenDateGreaterThan}} <label *ngIf="this.ShipmentSearchInput.OpenDateLessThan"> - </label> {{this.ShipmentSearchInput.OpenDateLessThan}}
+                <span class="filter-close-btn">×</span>
+            </li>
+            <!--FilterByClearanceDateData  -->
+            <li *ngIf="this.ShipmentSearchInput.ClearanceDateGreaterThan" (click)="UnselectFilterByClearanceDate()">
+                Clearance Date: {{this.ShipmentSearchInput.ClearanceDateGreaterThan}} <label *ngIf="this.ShipmentSearchInput.ClearanceDateLessThan"> - </label> {{this.ShipmentSearchInput.ClearanceDateLessThan}}
+                <span class="filter-close-btn">×</span>
+            </li>
+            <!--FilterByATADateData  -->
+            <li *ngIf="this.ShipmentSearchInput.ATADateGreaterThan" (click)="UnselectFilterByATADate()">
+                ATA Date: {{this.ShipmentSearchInput.ATADateGreaterThan}} <label *ngIf="this.ShipmentSearchInput.ATADateLessThan"> - </label>{{this.ShipmentSearchInput.ATADateLessThan}}
                 <span class="filter-close-btn">×</span>
             </li>
 
@@ -578,8 +591,6 @@
                         [class.expanded]="isMilestonesStatusFilterExpanded" />
                 </div>
                 <div class="expanded-list" [class.show]="isMilestonesStatusFilterExpanded">
-
-
                     <div class="checkbox-filteritem" *ngFor="let state of MilestonesStatus">
                         <CheckBox [Value]="state.IsSelected" [Text]="state.EnglishName"
                             (ValueChanged)="OnMilestonesStatusFilterChanged($event, state)"></CheckBox>
@@ -590,6 +601,102 @@
 
                 </div>
             </li>
+            <li [class.expanded]="isFilterByOpenDateExpanded">
+                <div class="filter-title"
+                    (click)="isFilterByOpenDateExpanded = !isFilterByOpenDateExpanded">Filter by Open Date</div>
+                <div class="expand-icon" (click)="isFilterByOpenDateExpanded = !isFilterByOpenDateExpanded">
+                    <img src="./assets/images/icons/down-arrow.png" alt=" "
+                        [class.expanded]="isFilterByOpenDateExpanded" />
+                </div>
+                <div class="expanded-list" [class.show]="isFilterByOpenDateExpanded">
+                    <div class="inputDateBox" style="float: left;"> 
+                        <div>
+                            <label>Greater Than</label>
+                        </div>
+                        <div>
+                            <input #dateInput type="date"  id="MyFilterByOpenDateDataAdvancedFiltersGreaterThan" class="gray" [(ngModel)]="FilterByOpenDateDataGreaterThan"
+                                name="FilterByOpenDateDataGreaterThan"  value="{{FilterByOpenDateDataGreaterThan}}"/>     
+                        </div>
+                    </div>
+                    <div class="inputDateBox" style="float: left;"> 
+                        <div>
+                            <label> Less Than</label>
+                        </div>
+                        <div>
+                            <input #dateInput type="date"  id="MyFilterByOpenDateDataAdvancedFiltersLessThan" class="gray" [(ngModel)]="FilterByOpenDateDataLessThan"
+                                name="FilterByOpenDateDataLessThan"  value="{{FilterByOpenDateDataLessThan}}"/>     
+                        </div>
+                    </div>
+                    <div class="" *ngIf="MilestonesStatusNoResult">
+                        <p style=" font-weight: 15; color: #5a5a5a; width:300px;">No matched results</p>
+                    </div> 
+                </div>
+            </li>
+          
+            <li [class.expanded]="isFilterByClearanceDateExpanded">
+                <div class="filter-title"
+                    (click)="isFilterByClearanceDateExpanded = !isFilterByClearanceDateExpanded">Filter by Clearance Date</div>
+                <div class="expand-icon" (click)="isFilterByClearanceDateExpanded = !isFilterByClearanceDateExpanded">
+                    <img src="./assets/images/icons/down-arrow.png" alt=" "
+                        [class.expanded]="isFilterByClearanceDateExpanded" />
+                </div>
+                <div class="expanded-list" [class.show]="isFilterByClearanceDateExpanded">
+                    <div class="inputDateBox" style="float: left;"> 
+                        <div>
+                            <label>Greater Than</label>
+                        </div>
+                        <div>
+                            <input #dateInput type="date"  id="MyFilterByClearanceDateDataAdvancedFilters" class="gray" [(ngModel)]="FilterByClearanceDateDataGreaterThan"
+                            name="FilterByClearanceDateDataGreaterThan"  value="{{FilterByClearanceDateDataGreaterThan}}"/>     
+                        </div>
+                    </div>
+                    <div class="inputDateBox" style="float: left;">
+                        <div>
+                            <label> Less Than</label>
+                        </div>
+                        <div>
+                            <input #dateInput type="date"  id="MyFilterByClearanceDateDataAdvancedFilters" class="gray" [(ngModel)]="FilterByClearanceDateDataLessThan"
+                                name="FilterByClearanceDateDataLessThan"  value="{{FilterByClearanceDateDataLessThan}}"/>     
+                        </div>
+                    </div>
+                    <div class="" *ngIf="MilestonesStatusNoResult">
+                        <p style=" font-weight: 15; color: #5a5a5a; width:300px;">No matched results</p>
+                    </div> 
+                </div>
+            </li>
+            <li [class.expanded]="isFilterByATADateExpanded">
+                <div class="filter-title"
+                    (click)="isFilterByATADateExpanded = !isFilterByATADateExpanded">Filter by ATA Date </div>
+                <div class="expand-icon" (click)="isFilterByATADateExpanded = !isFilterByATADateExpanded">
+                    <img src="./assets/images/icons/down-arrow.png" alt=" "
+                        [class.expanded]="isFilterByATADateExpanded" />
+                </div>
+                <div class="expanded-list" [class.show]="isFilterByATADateExpanded">
+
+                    <div class="inputDateBox" style="float: left;"> 
+                        <div>
+                            <label>Greater Than</label>
+                        </div>
+                        <div>
+                            <input #dateInput type="date"  id="MyFilterByATADateDataDataAdvancedFilters" class="gray" [(ngModel)]="FilterByATADateDataGreaterThan"
+                                name="FilterByATADateDataGreaterThan"  value="{{FilterByATADateDataGreaterThan}}"/>     
+                        </div>
+                    </div>
+                    <div class="inputDateBox" style="float: left;"> 
+                        <div>
+                            <label> Less Than</label>
+                        </div>
+                        <div>
+                            <input #dateInput type="date"  id="MyFilterByATADateDataDataAdvancedFilters" class="gray" [(ngModel)]="FilterByATADateDataLessThan"
+                                name="FilterByATADateDataLessThan"  value="{{FilterByATADateDataLessThan}}"/>     
+                        </div>
+                    </div>
+                    <div class="" *ngIf="MilestonesStatusNoResult">
+                        <p style=" font-weight: 15; color: #5a5a5a; width:300px;">No matched results</p>
+                    </div> 
+                </div>
+            </li>
+          
 
             <li class="mobile-only" [class.expanded]="isShipmentTypeFilterExpanded">
                 <div class="filter-title" (click)="isShipmentTypeFilterExpanded = !isShipmentTypeFilterExpanded">

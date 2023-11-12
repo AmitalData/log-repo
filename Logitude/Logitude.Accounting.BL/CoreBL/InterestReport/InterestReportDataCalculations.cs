@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             }
             catch (Exception e)
             {
-                SetInterestReportStatusFailed();
+                SetInterestReportStatusFailed(e.Message);
                 throw new ApplicationException(e.Message);
             }
         }
@@ -196,9 +196,10 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
             if (interestReportLinesByDateTotalLocalAmountWithOpenBalance != interestReportPM.CloseBalance)
             {
-                SetInterestReportStatusFailed();
-                throw new ApplicationException("Interest report open balance and interest report lines by date total amounts of the report doesn't match the closing " +
+                var message = ("Interest report open balance and interest report lines by date total amounts of the report doesn't match the closing " +
                     "balance (" + interestReportPM.OpenBalance + " " + interestReportLinesByDateTotalLocalAmount + ") != " + interestReportPM.CloseBalance);
+                SetInterestReportStatusFailed(message);
+                throw new ApplicationException(message);
             }
         }
 
@@ -404,11 +405,12 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         {
             interestReportPM.InterestReportStatusCode = "1";
         }
-        private void SetInterestReportStatusFailed()
+        private void SetInterestReportStatusFailed(string error="")
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 interestReportPM.InterestReportStatusCode = "6";
+                interestReportPM.InvoiceFailureReason = error;
                 SubmitChangesToInterestReport();
                 scope.Complete();
             }

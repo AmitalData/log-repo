@@ -258,9 +258,12 @@ namespace WebFreight.Web.Helpers
             byte[] result = storageservice.Read(fileInfo);
             if (result != null)
             {
-                url = GetSpecificPageFromTiffImageAsBase64(reportFliter, result);
+                url = GetSpecificPageFromTiffImageAsBase64(reportFliter,ref result);
 
             }
+
+            storageservice.Dispose();
+
             return url;
         }
 
@@ -2313,18 +2316,21 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        public string GetSpecificPageFromTiffImageAsBase64(ReportFliter reportFliter, byte[] data)
+        public string GetSpecificPageFromTiffImageAsBase64(ReportFliter reportFliter,ref byte[] data)
         {
             string url = string.Empty;
             if (data != null)
             {
-                System.Drawing.Bitmap bitmapReport = (Bitmap)Image.FromStream(new MemoryStream(data));
-                reportFliter.PageCount = bitmapReport.GetFrameCount(FrameDimension.Page);
-                bitmapReport.SelectActiveFrame(FrameDimension.Page, reportFliter.NumberOfPage - 1);
-                MemoryStream byteStream = new MemoryStream();
-                bitmapReport.Save(byteStream, ImageFormat.Jpeg);
-                byte[] imagebyte = byteStream.ToArray();
-                url = "data:image/jpg;base64," + System.Convert.ToBase64String(imagebyte, 0, imagebyte.Length);
+                using (MemoryStream byteStream = new MemoryStream())
+                {
+                    System.Drawing.Bitmap bitmapReport = (Bitmap)Image.FromStream(new MemoryStream(data));
+                    reportFliter.PageCount = bitmapReport.GetFrameCount(FrameDimension.Page);
+                    bitmapReport.SelectActiveFrame(FrameDimension.Page, reportFliter.NumberOfPage - 1);
+                    //MemoryStream byteStream = new MemoryStream();
+                    bitmapReport.Save(byteStream, ImageFormat.Jpeg);
+                    byte[] imagebyte = byteStream.ToArray();
+                    url = "data:image/jpg;base64," + System.Convert.ToBase64String(imagebyte, 0, imagebyte.Length);
+                }
             }
             return url;
         }
