@@ -1368,13 +1368,34 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 ObjectTableName = objectTableName,
                 IsAddedManually = false,
                 EventTypeCode = eventTypeCode,
-                Notes = SetNotesForConnectGLAccountEvent(AccountId),
+                Notes = SetNotesForConnectGLAccountEvent(AccountId, Tenant),
             });
         }
-        private string SetNotesForConnectGLAccountEvent(string id)
+        private string SetNotesForConnectGLAccountEvent(string id, int tenant)
         {
-            GLAccountPM glaccount = this.GetSingle(id, false, false);
-            return string.Concat("Internal number: ", glaccount.InternalNumber, "\nLocal name: ", glaccount.LocalName);
+       //   GLAccountPM glaccount = this.GetSingle(id, false, false);
+            GLAccountPMLite accLite = this.GetLiteById(id, tenant); 
+
+            return string.Concat("Internal number: ", accLite.InternalNumber, "\nLocal name: ", accLite.LocalName);
+        }
+
+        private GLAccountPMLite GetLiteById(string id, int tenant)
+        {
+            GLAccountPMLite rv = new GLAccountPMLite();
+            if (!String.IsNullOrEmpty(id))
+            {
+                List<GLAccount> GLAccounts = this.repository.GetAll(tenant).Where(s => s.Id == id).ToList();
+                if (GLAccounts != null && GLAccounts.Count == 1)
+                {
+                    GLAccount gLAccount = GLAccounts[0];
+                    rv.Id = gLAccount.Id;
+                    rv.InternalNumber = gLAccount.InternalNumber;
+                    rv.DisplayNumber = gLAccount.DisplayNumber;
+                    rv.EnglishName = gLAccount.EnglishName;
+                    rv.LocalName = gLAccount.LocalName;
+                }
+            }
+            return rv;
         }
 
         private void CheckConnectCards(string accountId, string cardId, int tenant)
@@ -1670,6 +1691,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
     }
+
+    internal class GLAccountPMLite
+    {
+        public string Id { get; set; }
+        public string EnglishName { get; set; }
+        public string LocalName { get; set; }
+        public string DisplayNumber { get; set; }
+        public string InternalNumber { get; set; }
+
+    }
+
     public class GLAccountCurrencyBalance
     {
         public decimal? ForeignAmount { get; set; }
