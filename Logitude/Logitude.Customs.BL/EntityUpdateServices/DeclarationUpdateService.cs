@@ -648,13 +648,38 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (entityPM.ResetDeclarationNumber)//לא לאפשר איפוס הצהרה  במקרה וישנה בקשה לש הגשת תשלום בגליון בקשות (Call# 310088) CALL#310416
                 {
                     var crsQS = new CustomsRequestsSheetQueryService(entityPM.Tenant);
-                    var listCRS = crsQS.GetCustomsRequestsSheetByCustomFileNumber(entityPM.CustomFileNo, entityPM.Tenant);
-                    var CRS2755 = listCRS.FirstOrDefault(r => r.InterfaceTypeCode == "2755");// - מסר הגשה
-                    if (CRS2755 != null)
+                    var canResetDeclaration = entityPM.Direction == "E" ? true : entityPM.PaymentDate == null;
+                    var interfaceTypeCode = entityPM.Direction == "E" ? "2755E" : "2755";
+                    const string analyzed = "30";
+                    if (canResetDeclaration)
                     {
-                        throw new Exception(" קיימת בקשה של הגשת תשלום - לא ניתן לבצע איפוס");
-                    }
+                        var listCRS = crsQS.GetCustomsRequestsSheetByCustomFileNumber(entityPM.CustomFileNo, entityPM.Tenant);
+                        var CRS2755 = listCRS.Where(r => r.InterfaceTypeCode == interfaceTypeCode);// - מסר הגשה
 
+                        if (CRS2755 != null)
+                        {
+                            if (entityPM.Direction == "E")
+                            {
+                                throw new Exception(TranslateTextsClass.Translate("Customs.Declaration.O.CantResetDeclarationNumberSubmissionExsist", entityPM.Tenant, true));
+                            }
+                            else
+                            {
+                                foreach (var request in CRS2755)
+                                {
+                                    if (request.RequestStatusCode != analyzed)
+                                    {
+                                        throw new Exception(TranslateTextsClass.Translate("Customs.Declaration.O.CantResetDeclarationNumberDifferentFromAnalyzed", entityPM.Tenant, true));
+                                    }
+                                }
+                            }
+                          
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception(TranslateTextsClass.Translate("Customs.Declaration.O.CantResetDeclarationNumberPaymentDate", entityPM.Tenant, true));
+                    }
+               
 
                     ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
 
