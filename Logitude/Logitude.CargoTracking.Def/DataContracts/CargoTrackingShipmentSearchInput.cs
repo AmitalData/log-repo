@@ -12,6 +12,12 @@ namespace Logitude.CargoTracking.Def.DataContracts
         public string SearchText { get; set; }
         public List<string> CustomersIds { get; set; }
         public List<string> MilestonesCodes { get; set; }
+        public string OpenDateGreaterThan { get; set; }
+        public string ClearanceDateGreaterThan { get; set; }
+        public string ATADateGreaterThan { get; set; }
+        public string OpenDateLessThan { get; set; }
+        public string ClearanceDateLessThan { get; set; }
+        public string ATADateLessThan { get; set; }
         public List<string> TransportModeCodes { get; set; }
         public List<string> DirectionCodes { get; set; }
         public string SortType { get; set; }
