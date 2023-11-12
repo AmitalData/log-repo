@@ -166,7 +166,7 @@ namespace Logitude.Server.Tools
 
         public static string AddCommunicationLog(CommunicationsParams communicationParams)
         {
-            if(communicationParams.QueueName.StartsWith("externaltasksqueue"))
+            if((communicationParams.QueueName != null && communicationParams.QueueName.StartsWith("externaltasksqueue")) || communicationParams.To == "Unifreight")
             {
                 CustomsSetting customsSettings = CustomsSettingRepository.GetSettingByTenantCache(communicationParams.Tenant);
                 if (customsSettings.StandAlone)
