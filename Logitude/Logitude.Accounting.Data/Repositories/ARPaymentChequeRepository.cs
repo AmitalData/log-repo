@@ -104,7 +104,7 @@ namespace Logitude.Accounting.Data.Repositories
                     join l in context.LedgerTransactions
                     on a.Id equals l.JournalId
                     where a.AccountingEntityId == paymentId && a.Tenant == tenant && l.JournalLineNumber == lineNumber 
-                    select l.AccountId).FirstOrDefault().ToString();
+                    select l.AccountId).FirstOrDefault();
         }
 
 
