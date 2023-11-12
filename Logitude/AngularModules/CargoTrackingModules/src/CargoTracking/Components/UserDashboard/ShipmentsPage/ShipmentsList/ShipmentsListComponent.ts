@@ -812,7 +812,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         if (this.tenant) {
             this.ShipmentSearchInput.Tenant = this.tenant;
             var shipmentFilters = this.BuildShipmentFilters();
-            debugger
             this.LoadShipments();
             this.SetShipmentsScrollPosition();
         }
@@ -822,7 +821,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     private LoadShipments() {
         if (this.ShipmentsDataSource) {
-            debugger
             this.ReloadShipments();
         } else {
             this.InitiateShipmentDataSource();
@@ -851,7 +849,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     private async ReloadShipments() {
         let filter = await this.filterWithAllCustomersWhenCustomersNotSelected();
-        debugger
         this.ShipmentsDataSource.ReloadData(filter);
         this.ResetShipmentsScrollbarPosition();
     }
@@ -1163,7 +1160,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
 
         RootContext.ShipmentsScrollPosition = 0;
-        debugger
         this.LoadScreenData();
     }
 
