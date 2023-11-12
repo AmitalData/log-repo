@@ -1,4 +1,6 @@
 ﻿using Devart.Data.Oracle;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
@@ -161,8 +163,16 @@ namespace Logitude.Server.Tools
             storageservice.Write(byteData, fileInfo);
 
         }
+
         public static string AddCommunicationLog(CommunicationsParams communicationParams)
         {
+            if(communicationParams.QueueName.StartsWith("externaltasksqueue"))
+            {
+                CustomsSetting customsSettings = CustomsSettingRepository.GetSettingByTenantCache(communicationParams.Tenant);
+                if (customsSettings.StandAlone)
+                    return null;
+            }
+
             CommunicationLog commLog;
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
