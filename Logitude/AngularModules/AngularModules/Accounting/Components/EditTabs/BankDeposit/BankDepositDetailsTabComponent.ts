@@ -894,18 +894,18 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         // validate redeemed cheque
 
-        // if (line.ChequeStatusCode == "6") { // 6- Redeemed
-        //     // var msg = new MessageWindow();
-        //     // msg.Show(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
-        //     this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        //     this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
+        if (line.ChequeStatusCode == "6") { // 6- Redeemed
+            var msg = new MessageWindow();
+            msg.Show(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
 
-        //     return;
-        // } else {
+            return;
+        } else {
 
             this.showReturnChequeWindow(line);
 
-       // }
+        }
 
     }
     showReturnChequeWindow(line){
