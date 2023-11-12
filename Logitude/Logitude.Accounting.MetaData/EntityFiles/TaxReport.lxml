@@ -3430,8 +3430,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxReport.O.CloseJournalRunInBackground&quot;"
-      DefaultText="&quot;Closing VAT report run in background, batchId:&quot;"
-      LocalDefaultText="&quot;סגירת דוח מע&quot;מ רץ ברקע, מזהה תהליך:&quot;"
+      DefaultText="&quot;Creating journal will be done in the background and may take several minutes&quot;"
+      LocalDefaultText="&quot;יצירת פקודת היומן תעשה ברקע והיא עשויה לקחת מספר דקות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
