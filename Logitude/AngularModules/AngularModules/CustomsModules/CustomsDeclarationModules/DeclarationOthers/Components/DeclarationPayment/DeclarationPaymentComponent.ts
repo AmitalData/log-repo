@@ -628,7 +628,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         // create new entity if there is no payment
         if (AppTool.IsNullOrEmpty(this.paymentPM)) {
-            this.paymentPM = new DeclarationPaymentPM(this.DeclarationPM);
+            this.paymentPM = new DeclarationPaymentPM(null);
         }
 
         this.IsDisplayOnlyAutomaticPayment = (this.DeclarationPM.AvailabilityDate != null && this.DeclarationPM.AvailabilityDate.toString() != '0001-01-01T00:00:00' && !this.paymentPM.AutomaticPayment);
