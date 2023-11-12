@@ -59,7 +59,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             var repoDeclarationCourierStatus = new DeclarationCourierStatusRepository(context);
             var repo = new DeclarationCourierStatusQueryService(context);
-            List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
+            var repo2 = new CourierDeclarationQueryService(context);
+
+            List<string> listPoco = new List<string>();
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
 
@@ -74,48 +76,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 mess.AppendLine($"ראשי - מפצל");
                 mess.AppendLine($"כל ההצהרות יפוצלו.....");
-                if (customResponse.ClientFilterDeclarationsList != null && customResponse.ClientFilterDeclarationsList.Count > 0)
-                {
-                    mess.AppendLine($"סומנו בצד הלקוח ");
 
-                    listPoco = repoDeclarationCourierStatus.GetDeclarationsByIdsExpectDecWithHatraDate(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
-                }
-                else
-                {
-                    mess.AppendLine($"GetByMasterIDCourierManifestStatusCode");
-                    listPoco = GetByMasterIDCourierManifestStatusCode(customResponse, requestParams, repoDeclarationCourierStatus);
-                }
+                listPoco = repo2.GetDeclarationIdsByCourierMasterID(customResponse.CourierMasterId, requestParams.Tenant);
+
+
                 if (listPoco.Count == 0)
                 {
-                    mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Manifest) send for master {requestParams.AppicationId} ");
+                    mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");
                 }
                 else
                 {
-                    if (customResponse.CourierDeclarationStatusCode == "RV")
+                    listPoco.ChunkBy(100)
+                    .ForEach(list100 =>
                     {
-                        listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode != "P")).ToList();
-                    }
-                   
-                    if (listPoco.Count == 0)
-                    {
-                        mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");
-                    }
-                    else
-                    {
-                        listPoco.Select(r=>r.DeclarationId).ToList().ChunkBy(100)
-                        .ForEach(list100 =>
-                        {
-                            customResponse.ServerSplitDeclarationsList = list100;
-                            customResponse.LoggingUserId = requestParams.LoggingUserId;
+                        customResponse.ServerSplitDeclarationsList = list100;
+                        customResponse.LoggingUserId = requestParams.LoggingUserId;
 
-                            var CreateDCAInUCBAC_MsgMessagingService = new CRSUtil();
-                            CreateDCAInUCBAC_MsgMessagingService
-                            .CreateCRS_DCAIn<DCAInUCBACWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
+                        var CreateDCAInUCBAC_MsgMessagingService = new CRSUtil();
+                        CreateDCAInUCBAC_MsgMessagingService
+                        .CreateCRS_DCAIn<DCAInUCBACWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
 
-                        });
-                    }
+                    });
                 }
             }
+            
 
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
