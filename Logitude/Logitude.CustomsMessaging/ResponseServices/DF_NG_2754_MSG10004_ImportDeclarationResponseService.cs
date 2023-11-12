@@ -792,7 +792,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (this._IsCancelPaymentResponse && customResponse?.Response?.Declaration != null)
             {
-                this._MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.ToString();
+                this._MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
                 this._MyDeclarationPM.PaymentDate = null;
                 this._MyDeclarationPM.PaymentOrderNumber = null;
                 this._MyDeclarationPM.PaymentStatusCode = null;
