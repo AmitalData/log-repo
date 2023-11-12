@@ -248,12 +248,26 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
         if (this.ShipmentSearchInput.MilestonesCodes.length > 0) {
             this.filterAgrs.addAdditionalFilter("MilestonesCodes", this.ShipmentSearchInput.MilestonesCodes.join("_"), null, null, "Equals", false, false, false, "string");
-            debugger
         }
-        if (this.ShipmentSearchInput.OpenDateGreaterThan) {
-            debugger
-            // this.filterAgrs.addAdditionalFilter("OpenDate", this.ShipmentSearchInput.OpenDate.join("_"), null, null, "Equals", false, false, false, "string");
-        }
+        // if (this.ShipmentSearchInput.OpenDateGreaterThan) {
+        //     this.filterAgrs.addAdditionalFilter("OpenDateGreaterThan", this.ShipmentSearchInput.OpenDateGreaterThan, null, null, "Equals", false, false, false, "string");
+        // }
+        // if (this.ShipmentSearchInput.OpenDateLessThan) {
+        //     this.filterAgrs.addAdditionalFilter("OpenDateLessThan", this.ShipmentSearchInput.OpenDateGreaterThan, null, null, "Equals", false, false, false, "string");
+        // }
+        // if (this.ShipmentSearchInput.ClearanceDateGreaterThan) {
+        //     this.filterAgrs.addAdditionalFilter("ClearanceDateGreaterThan", this.ShipmentSearchInput.OpenDateGreaterThan, null, null, "Equals", false, false, false, "string");
+        // }        
+        // if (this.ShipmentSearchInput.ClearanceDateLessThan) {
+        //     this.filterAgrs.addAdditionalFilter("ClearanceDateLessThan", this.ShipmentSearchInput.OpenDateGreaterThan, null, null, "Equals", false, false, false, "string");
+        // }        
+        // if (this.ShipmentSearchInput.ATADateGreaterThan) {
+        //     this.filterAgrs.addAdditionalFilter("ATADateGreaterThan", this.ShipmentSearchInput.OpenDateGreaterThan, null, null, "Equals", false, false, false, "string");
+        // }
+        // if (this.ShipmentSearchInput.ATADateLessThan) {
+        //     this.filterAgrs.addAdditionalFilter("ATADateLessThan", this.ShipmentSearchInput.OpenDateGreaterThan, null, null, "Equals", false, false, false, "string");
+        // }
+       
 
         if (this.ShipmentSearchInput.TransportModeCodes.length > 0) {
             this.filterAgrs.addAdditionalFilter("TransportModeCodes", this.ShipmentSearchInput.TransportModeCodes.join("_"), null, null, "Equals", false, false, false, "string");
