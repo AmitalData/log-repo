@@ -341,19 +341,19 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (_JournalPM.AccountingEntityCode == "3" || _JournalPM.AccountingEntityCode == "1")
             {
-                ARPaymentQuery arPaymentQuery = new ARPaymentQuery(_Tenant);
-                var arPayment = arPaymentQuery.GetSingleARPayment(_JournalPM.AccountingEntityId, _Tenant);
-                GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(_Tenant);
+                //ARPaymentQuery arPaymentQuery = new ARPaymentQuery(_Tenant);
+                //var arPayment = arPaymentQuery.GetSingleARPayment(_JournalPM.AccountingEntityId, _Tenant);
+                //GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(_Tenant);
                 //chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(arPayment.BillToId);
 
-
-                GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(_Tenant);
-                GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_Tenant);
-                List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(ledgerTrasnctions[0].AccountId, _Tenant, false, withoutDate: true);
-                if (allChecks != null && allChecks.Count != 0)
+                if(ledgerTrasnctions.Count > 0)
                 {
-                    GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(allChecks[0].AccountId, _Tenant);
-                    GLAccountMoreDataPM moreDataPM =  gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);
+                    GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(_Tenant);
+                    GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_Tenant);
+                    List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(ledgerTrasnctions[0].AccountId, _Tenant, false, withoutDate: true);
+
+                    GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(ledgerTrasnctions[0].AccountId, _Tenant);
+                    GLAccountMoreDataPM moreDataPM = gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);
 
                     moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                     moreDataPM.TotFutureOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate > DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
@@ -362,7 +362,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _Tenant);
                     gLAccountMoreDataUpdateService.Update(moreDataPM, true);
+
                 }
+
             }
             //foreach (var trasnction in ledgerTrasnctions.Where(trasnction => trasnction.LocalAmountCredit != 0))
             //{
