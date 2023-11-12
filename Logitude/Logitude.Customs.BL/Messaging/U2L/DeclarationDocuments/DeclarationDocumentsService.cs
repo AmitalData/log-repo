@@ -77,7 +77,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
             ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
 
-            if (this._MyDeclarationPM.PaymentDate.HasValue)
+            if (this._MyDeclarationPM.Direction != "E" && this._MyDeclarationPM.PaymentDate.HasValue)
             {
                 throw new BusinessErrorException("Declaration has already been payed");
             }
