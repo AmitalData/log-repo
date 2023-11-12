@@ -109,52 +109,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-        private static List<DeclarationCourierStatus> GetByMasterIDCourierManifestStatusCode(DCAInUCBACWithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository qs)
-        {
-            List<DeclarationCourierStatus> listPM;
-            if (customResponse.IsWorkSheetFromExcel)
-            {
-                listPM = qs.GeCourierManifestStatusCodeFromExcel(requestParams.Tenant, requestParams.LoggingUserId, "R",
-               customResponse.SelectedBOLValue,
-               customResponse.SelectedStatusValue,
-               customResponse.SelectedTotalInvoiceValue,
-               customResponse.SelectedFastIndividualProcessValue,
-               customResponse.SelectedCustomStatusValue,
-               customResponse.SelectedFinalReleaseValue);
-                if (customResponse.CourierDeclarationStatusCode == "RV")
-                {
-                    var listPM2 = qs.GeCourierManifestStatusCodeFromExcel(requestParams.Tenant, requestParams.LoggingUserId, "V", customResponse.SelectedBOLValue,
-                    customResponse.SelectedStatusValue,
-                    customResponse.SelectedTotalInvoiceValue,
-                    customResponse.SelectedFastIndividualProcessValue,
-                    customResponse.SelectedCustomStatusValue,
-                    customResponse.SelectedFinalReleaseValue);
-                    listPM = listPM.Concat(listPM2).ToList();
-                }
-            }
-            else
-            {
-                listPM = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
-             customResponse.SelectedBOLValue,
-             customResponse.SelectedStatusValue,
-             customResponse.SelectedTotalInvoiceValue,
-             customResponse.SelectedFastIndividualProcessValue,
-             customResponse.SelectedCustomStatusValue,
-             customResponse.SelectedFinalReleaseValue);
-                if (customResponse.CourierDeclarationStatusCode == "RV")
-                {
-                    var listPM2 = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
-                    customResponse.SelectedStatusValue,
-                    customResponse.SelectedTotalInvoiceValue,
-                    customResponse.SelectedFastIndividualProcessValue,
-                    customResponse.SelectedCustomStatusValue,
-                    customResponse.SelectedFinalReleaseValue);
-                    listPM = listPM.Concat(listPM2).ToList();
-                }
-            }
-            return listPM;
-        }
-
+       
         private static void CreateCRS_AC_UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatusPM> listPM)
         {
             var context = CustomContext.GetContext(requestParams.Tenant);
