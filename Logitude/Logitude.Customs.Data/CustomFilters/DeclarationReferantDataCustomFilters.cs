@@ -44,8 +44,21 @@ namespace Logitude.Customs.Data.CustomFilters
 
         public IQueryable<DeclarationReferantData> GetFreelancerDeclarationReferantDatas(QueryOperations operations, IQueryable<DeclarationReferantData> queryableData, int tenant , ICustomContext context)
         {
-           // var context = CustomContext.GetContext(tenant);
-
+            // var context = CustomContext.GetContext(tenant);
+            List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
+            foreach (QueryFilterItem item in queryFilters)
+            {
+                if (item.FieldName == "OccuredStatus")
+                {
+                    var q = context.DeclarationStatuses.Where(decStatus => item.FieldValue.ToString().Contains(decStatus.StatusCode.Status_Code)).Select(r => r.DeclarationId);
+                    queryableData = (from a in queryableData.Where(r => q.Contains(r.DeclarationId)) select a);
+                }
+                if (item.FieldName == "NotOccuredStatus")
+                {
+                    var q = context.DeclarationStatuses.Where(decStatus => item.FieldValue.ToString().Contains(decStatus.StatusCode.Status_Code)).Select(r => r.DeclarationId);
+                    queryableData = (from a in queryableData.Where(r => q.Contains(r.DeclarationId)) select a);
+                }
+            }
             FreelancerCustomersUtil frlUtil = new FreelancerCustomersUtil(tenant);
             if (frlUtil.user.IsFreelancer)
             {
