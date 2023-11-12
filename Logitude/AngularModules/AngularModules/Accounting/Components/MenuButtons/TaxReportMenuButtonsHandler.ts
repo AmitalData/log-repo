@@ -291,7 +291,7 @@ export class TaxReportMenuButtonsHandler {
                     const message = new MessageWindow();
                     message.ShowSuccessIcon = true;
                     message.Width = 400;
-                    message.Show(TextCodeTranslator.Translate(TextCode.TaxReportCloseJournalRunInBackground) + " " + response);
+                    message.Show(TextCodeTranslator.Translate(TextCode.TaxReportCloseJournalRunInBackground));
                 }
             }, (error) =>
             {
