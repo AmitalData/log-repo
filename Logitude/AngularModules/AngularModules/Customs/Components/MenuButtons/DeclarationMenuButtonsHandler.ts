@@ -1120,9 +1120,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     ResetDeclarationNumberMethod() {
         this._DeclarationNumberandVersionId = null;//itzik:clear onstart on the house !!!
         if (this.EntityPM.Direction == "E") {
-            this.GetAnyRequestBeforeResetDeclaration("2755E", "לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשה");
+            this.GetAnyRequestBeforeResetDeclaration("2755E",TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberSubmissionExsist"));
         } else {
-            this.GetAnyRequestBeforeResetDeclaration("2755", "לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום בסטטוס שונה מתשובה נותחה");
+            this.GetAnyRequestBeforeResetDeclaration("2755", TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberDifferentFromAnalyzed"));
         }
     }
     private GetAnyRequestBeforeResetDeclaration(interfaceTypeCode: string, message: string) {
@@ -1159,7 +1159,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
                 });
         } else {
-            this.ShowResetDeclarationMessage('לא ניתן לאפס מספר הצהרה, קיים תאריך תשלום');
+            this.ShowResetDeclarationMessage(TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberPaymentDate"));
         }
     }
 

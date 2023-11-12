@@ -659,7 +659,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             if (entityPM.Direction == "E")
                             {
-                                throw new Exception("לא ניתן לאפס מספר הצהרה, קיימת בקשה מסוג הגשה");
+                                throw new Exception(TranslateTextsClass.Translate("Customs.Declaration.O.CantResetDeclarationNumberSubmissionExsist", entityPM.Tenant, true));
                             }
                             else
                             {
@@ -667,7 +667,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 {
                                     if (request.RequestStatusCode != analyzed)
                                     {
-                                        throw new Exception("לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום בסטטוס שונה מתשובה נותחה");
+                                        throw new Exception(TranslateTextsClass.Translate("Customs.Declaration.O.CantResetDeclarationNumberDifferentFromAnalyzed", entityPM.Tenant, true));
                                     }
                                 }
                             }
@@ -676,7 +676,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else
                     {
-                        throw new Exception("לא ניתן לאפס מספר הצהרה, קיים תאריך תשלום");
+                        throw new Exception(TranslateTextsClass.Translate("Customs.Declaration.O.CantResetDeclarationNumberPaymentDate", entityPM.Tenant, true));
                     }
                
 

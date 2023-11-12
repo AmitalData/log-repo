@@ -85,9 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
- 
-		public const string HashString = "4826ed739044da55a7a6e34eb87e9798";
- 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+		public const string HashString = "bd831078dd301d1e1542bd7bb46b00a1";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -21739,6 +21738,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOexportFilterMenu = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.exportFilterMenu", DefaultText = "Filters for multiple select",LocalDefaultText = @"סינון מתקדם", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOAsmbli = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Asmbli", DefaultText = "Asmbli",LocalDefaultText = @"אסמבלי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateClassificationCode", DefaultText = "Update Classification Code",LocalDefaultText = @"עדכון פרט מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiClassificationCode", DefaultText = "This screen allows to multi update Classification Code",LocalDefaultText = @"מסך זה מאפשר לעדכן את פרט המכס באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד התהליך ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoClassificationCode", DefaultText = "Update Items with no Classification Code",LocalDefaultText = @"עדכן פריטים ללא פרט מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCantResetDeclarationNumberSubmissionExsist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantResetDeclarationNumberSubmissionExsist", DefaultText = "Can not reset declaration number, there is a request of submission type ",LocalDefaultText = @"לא ניתן לאפס מספר הצהרה, קיימת בקשה מסוג הגשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCantResetDeclarationNumberDifferentFromAnalyzed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantResetDeclarationNumberDifferentFromAnalyzed", DefaultText = "Can not reset declaration number, there is a request of type different from analyzed",LocalDefaultText = @"לא ניתן לאפס מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום בסטטוס שונה מתשובה נותחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCantResetDeclarationNumberPaymentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CantResetDeclarationNumberPaymentDate", DefaultText = "Can not reset declaration number, there is a payment date",LocalDefaultText = @"לא ניתן לאפס מספר הצהרה, קיים תאריך תשלום", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
