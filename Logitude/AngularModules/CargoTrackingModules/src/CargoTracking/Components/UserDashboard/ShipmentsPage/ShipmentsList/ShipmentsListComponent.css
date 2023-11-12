@@ -1082,3 +1082,14 @@ h1{
     margin-left: 5px;
 }
 
+.inputDateBox{
+    font-size: 11px;
+    display: flex;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+}
+    
+
+
+
