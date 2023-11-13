@@ -20,12 +20,14 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
 import {CustomerPMService} from '../../Common/Services/StandardPMs/CustomerPMService';
 import {TenantPMService} from '../../Common/Services/StandardPMs/TenantPMService';
+import { TenantManagementPMService } from 'Infrastructure/Services/StandardPMs/TenantManagementPMService';
 import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 import {SharedLogisticsService} from '../Services/Others/SharedLogisticsService';
 import {DocumentTypeListService} from '../../Common/Services/StandardLists/DocumentTypeListService';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {CustomerPM} from '../../Common/EntityPMs/CustomerPM';
 import { AppTool } from '../../Infrastructure/Tools';
+import { TenantManagementPM } from 'Infrastructure/EntityPMs/TenantManagementPM';
 
 @Component({
     
@@ -78,7 +80,13 @@ export class SharedLogisticsMainComponent implements OnInit {
     public ResetUserPassword: any;
     sharedLogisticsSummary: SharedLogisticsSummary;
     myTenantPM: TenantPM;
+    myTenantManagementPM: TenantManagementPM;
+    
+    public CargoTrackingPublicShowEvents:boolean = false;
+    public CargoTrackingPrivateShowEvents:boolean= false;
+
     public tenantPMService: TenantPMService;
+    public tenantManagementPMService: TenantManagementPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     public LastMonthAccessVisibility: boolean = false;
     public LastActivityVisibility: boolean = false;
@@ -194,7 +202,7 @@ export class SharedLogisticsMainComponent implements OnInit {
         this.LoadCurrentTenant();
         if (this.LastMonthAccessVisibility) {
             this.LoadLastLoginPartners();
-        }
+        }        
     }
 
     LoadCurrentTenant() {
@@ -204,6 +212,7 @@ export class SharedLogisticsMainComponent implements OnInit {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     this.myTenantPM = myResult;
+                    this.GetTenantManagementData();
                     this.RefreshTenantScreenData();
                 }
             }
@@ -388,6 +397,40 @@ export class SharedLogisticsMainComponent implements OnInit {
         logWindow.Height = 520;
         logWindow.Title = "Money Permissions";
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsMoneyPermissiosComponent");
+    }
+
+    private GetTenantManagementData(){
+        var managementService: TenantManagementPMService = new TenantManagementPMService();
+        managementService.get(this.myTenantPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var ten: TenantManagementPM = myResponse.Result;
+                this.CargoTrackingPublicShowEvents = ten.CargoTrackingPublicShowEvents;
+                this.CargoTrackingPrivateShowEvents = ten.CargoTrackingPrivateShowEvents;            
+            }
+        });    
+    }
+
+    EventsLinkClick() {
+        var backButtonTitle = "Cargo Tracking";
+        var displayTitle = "Events";
+        var objectTableName = "EventType";
+        var queryCode = "Event types";
+        this.filterAgrs = new ApiQueryFilters();
+        var listArgs = new ListComponentArgs();
+        listArgs.Filters = this.filterAgrs;
+        listArgs.QueryCode = queryCode;
+        listArgs.ObjectTableName = objectTableName;
+        listArgs.DisplayTitle = displayTitle;
+        listArgs.BackButtonTitle = backButtonTitle;
+        listArgs.IsDigitalPortalMenuClicked = true;
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
     }
 
     PartnersPermissionsLinkClick() {
