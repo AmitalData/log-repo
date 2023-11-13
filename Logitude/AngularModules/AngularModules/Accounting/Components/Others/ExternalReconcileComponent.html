@@ -744,6 +744,12 @@
                     <!-- subtitle -->
                     <tr>
                         <td>
+                            <div style="display: inline-block; width: 40px; padding: 0 15px;"><CheckBox title="Select All" style="position: absolute; top: 12px;" 
+                                [IsChecked]="isAllSelected"
+
+                        (Checked)="isAllSelected = $event"></CheckBox>
+                            </div>
+                            <div style="display: inline-block;">
                             <div class="SubTitle">
                                 {{'ReconcileExternalPage.O.Transactions' | TextCodeTranslationPipe}}
                                 ({{IsAutoReconcile ? TransactionSelectedLines.Length : transCount}})
@@ -951,6 +957,13 @@
                     <!-- subtitle -->
                     <tr>
                         <td colspan="3">
+                           
+                                <div style="display: inline-block; width: 40px; padding: 0 15px;"><CheckBox title="Select All" style="position: absolute; top: 12px;" 
+                                    [IsChecked]="isAllSelectedExt"
+                                    
+                                    (Checked)="isAllSelectedExt = $event" ></CheckBox>
+                                </div>
+                                <div style="display: inline-block;">
                             <div class="SubTitle">
                                 {{ExternalPagesTitle}}
                                 ({{IsAutoReconcile ? ExtPageSelectedLines.Length : extPageCount}})
