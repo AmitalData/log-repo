@@ -1512,13 +1512,13 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
 					SupplierInvoiceItemVehiclePMList.Add(supplierInvoiceItemVehiclePM);
 				}
-				if (!string.IsNullOrEmpty(invoiceItem.VEHICLES.VEHICLECHASSISNUMBER))
+				if (!string.IsNullOrEmpty(invoiceItem.VEHICLES.RICHBITFILENUMBER))
 				{
 					supplierInvoiceItemVehiclePM = new SupplierInvoiceItemVehiclePM();
 					supplierInvoiceItemVehiclePM.DeclarationId = supplierInvoiceItemPM.DeclarationId;
 					supplierInvoiceItemVehiclePM.SequenceNumeric = 1;
 					supplierInvoiceItemVehiclePM.VehicleTypeCode = "ZZZ";
-					supplierInvoiceItemVehiclePM.RichbitFileNumber = invoiceItem.VEHICLES.VEHICLECHASSISNUMBER;
+					supplierInvoiceItemVehiclePM.RichbitFileNumber = invoiceItem.VEHICLES.RICHBITFILENUMBER;
 					supplierInvoiceItemVehiclePM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
 					supplierInvoiceItemVehiclePM.ChangeSetOp = ChangeSetOperation.Insert;
 					SupplierInvoiceItemVehiclePMList.Add(supplierInvoiceItemVehiclePM);
