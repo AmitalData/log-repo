@@ -229,6 +229,7 @@
     <Compile Include="CoreBL\BankAccountPages\BankAccountPageAnalyzer.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPagesExample.cs" />
     <Compile Include="CoreBL\Batch\BatchCancelTaxReportTask.cs" />
+    <Compile Include="CoreBL\Batch\BatchClosingTaxReportJournalTask.cs" />
     <Compile Include="CoreBL\Batch\BatchGLAccountInterestDeactivationBalanceTask.cs" />
     <Compile Include="CoreBL\Batch\BatchYearlyFIXService.cs" />
     <Compile Include="CoreBL\Batch\GLAccountInterestActivationBalanceTask.cs" />

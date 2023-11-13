@@ -208,6 +208,17 @@ export class AccountingMainTesterComponent extends BaseComponent {
 
     }
 
+    closingVATReportClick() {
+        const aging_params = {
+            reportNumber: '',
+            tenant:SessionLocator.Tenant
+        };        
+        const opr = "closingVATReport";
+        const callBack = () => this.JsonList = ["Finish, result: " + JSON.parse(this.JsonOut)];
+
+        this.StrandartOp(opr, aging_params, callBack);
+    }
+
     RebuildFIXGLAccountAgingData_Click() {
         let opr = "RebuildFIXGLAccountAgingData_Click";
         let obj = { /*MyTenant: SessionLocator.Tenant,*/ Aging4AccountTypeCode: 'Customer2', MyGLAccId: "1-152", Aging4AccountTypeCode_Options: 'Customer2;Vendor3',};
