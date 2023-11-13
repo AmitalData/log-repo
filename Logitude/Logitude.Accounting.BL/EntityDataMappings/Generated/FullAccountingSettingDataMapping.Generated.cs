@@ -349,12 +349,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.NumberingByChartOfAccount = entityPM.NumberingByChartOfAccount;
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountNumber))
+			
+			}
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountNumber))
             {
-				entityPOCO.OppositeAccountNumber = entityPM.OppositeAccountNumber;
-			}
-			}
-			}
+                entityPOCO.OppositeAccountNumber = entityPM.OppositeAccountNumber;
+            }
+        }
 
 		public void POCOToPM(FullAccountingSettingPM entityPM, FullAccountingSetting entityPOCO)
         {
@@ -577,8 +578,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.OppositeAccountNumber = entityPOCO.OppositeAccountNumber;
             }
-
-		}
 
 		}
 
