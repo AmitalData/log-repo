@@ -33,7 +33,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
 
-        public override void Update(DCAInUCBUD2LTWithResponseContentHeader customResponse, GenericRequestParams requestParams)
+        public bool UpdateUCBUD2LT(DCAInUCBUD2LTWithResponseContentHeader customResponse, GenericRequestParams requestParams)
+        {
+            Update(customResponse, requestParams);
+            return MyResponseData.Succeeded;
+
+		}
+		public override void Update(DCAInUCBUD2LTWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             bool lockit = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Singleton.CRS:2715/UDLT"));
             string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(customResponse.DocumentsFilingId, requestParams.Tenant);

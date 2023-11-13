@@ -36,7 +36,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
 
             var feature = features.Features.FirstOrDefault(x => x.Code == "StatusDeclarationOldVersion");
-            if (feature != null)
+            if (feature != null && !customResponse.IsWorkSheetFromExcel)
             {
                 UpdateRealOld(customResponse, requestParams);
 

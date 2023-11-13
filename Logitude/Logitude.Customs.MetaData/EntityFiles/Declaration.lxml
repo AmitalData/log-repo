@@ -21562,6 +21562,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -27617,10 +27618,35 @@
       LocalDefaultText="&quot;סינון מתקדם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CancelPayment&quot;"
+      DefaultText="&quot;Please confirm sending a cancellation message&quot;"
+      LocalDefaultText="&quot;נא אשר שליחה של מסר ביטול הגשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.Declaration.O.Asmbli&quot;"
       DefaultText="&quot;Asmbli&quot;"
       LocalDefaultText="&quot;אסמבלי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.UpdateClassificationCode&quot;"
+      DefaultText="&quot;Update Classification Code&quot;"
+      LocalDefaultText="&quot;עדכון פרט מכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.MultiClassificationCode&quot;"
+      DefaultText="&quot;This screen allows to multi update Classification Code&quot;"
+      LocalDefaultText="&quot;מסך זה מאפשר לעדכן את פרט המכס באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד התהליך ובפעולה הרצויה.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ItemsWithNoClassificationCode&quot;"
+      DefaultText="&quot;Update Items with no Classification Code&quot;"
+      LocalDefaultText="&quot;עדכן פריטים ללא פרט מכס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
@@ -27973,6 +27999,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.WorkSheetFromExcel&quot;"
       FeatureDefaultText="&quot;מסך עבודה-הטענת אקסל&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ClosingAutoExpDec&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.ClosingAutoExpDec&quot;"
+      FeatureDefaultText="&quot;Closing an automatic export declaration&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

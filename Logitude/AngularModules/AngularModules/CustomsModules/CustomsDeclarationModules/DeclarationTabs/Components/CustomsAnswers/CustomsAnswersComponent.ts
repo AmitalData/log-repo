@@ -29,10 +29,13 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { ImageLibraryService } from 'Common/Services/Others/ImageLibraryService';
+import { Guid } from 'Infrastructure/Utilities/Guid';
  
 @Component({    
     templateUrl: './CustomsAnswersComponent.html',
-    providers: [DeclarationExtendedListService],
+    providers: [DeclarationExtendedListService,ImageLibraryService],
     selector:"CustomsAnswer"
 })
 
@@ -47,6 +50,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     public DisplayOnlyMessage: string = "";
     public IsDescriptionVisible: boolean = false;
     ResponseData: INF_MSG_GenericResponseData;
+    SmalllogoHtmlId: string = Guid.newGuid();
 
     Errorslist: ObservableCollection = new ObservableCollection([]);
     Warninglist: ObservableCollection = new ObservableCollection([]);
@@ -75,6 +79,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
     private declarationPMService: DeclarationPMService = new DeclarationPMService;
+    src:string="";
 
     //#region TextCodes translations
     textcode_CollateralRequest: string           ;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
@@ -88,7 +93,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     //#endregion
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
+    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,public _imageLibraryService: ImageLibraryService) {
         super();
         
         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe();
@@ -139,9 +144,29 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
 
     ngAfterViewInit() {
+        this.LoadLogo()
+
         this.SetFilter();
     }
+    LoadLogo(){
+       
+        this._imageLibraryService.DownloadFile("minilogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            
+            this.CurrentSession.StopBusyIndicator();
 
+            if (!pmResponse.HasError) {
+                var result = pmResponse.Result;
+                
+                if (result) {
+                    this.src=result;
+                } 
+
+            } 
+          
+        });
+      
+    }
     SetFilter() {
         var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
         if (myDeclarationEditComponentController.CustomsAnswersShowManifest) {

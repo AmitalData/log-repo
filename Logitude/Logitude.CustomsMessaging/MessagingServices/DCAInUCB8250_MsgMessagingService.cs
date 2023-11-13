@@ -108,7 +108,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(LoggingUserId, tenant);
 
             var feature = features.Features.FirstOrDefault(x => x.Code == "StatusDeclarationOldVersion");
-            if (feature != null)
+            if (feature != null && !IsWorkSheetFromExcel)
             {
                   RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgress(tenant, "8250", null, null, objectTableId, CourierMasterId, null, false);
             }

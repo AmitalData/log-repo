@@ -35,6 +35,7 @@ import { CustomsDocumentsTicketPMService } from 'Customs/Services/StandardPMs/Cu
 import { CustomDocumentTypeMetaDataList } from 'Customs/EntityLists/CustomDocumentTypeMetaDataList';
 import { OcrDocumentExtendedListService } from 'Customs/Services/ExtendedLists/OcrDocumentExtendedListService';
 import { TruckerList } from 'Common/EntityLists/TruckerList';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 
 @Component({
 
@@ -97,6 +98,7 @@ export class CustomsDocumentsComponent
     ParentEntityCode_args: string = "";
     DontClear: boolean = false;
     bulkUploadDocumentsPermission: boolean = true;
+    src:string="";
 
     public customs: string = "עמילות";
     public forwarding: string = "שילוח";
@@ -114,6 +116,8 @@ export class CustomsDocumentsComponent
         if (entityArgs.EntityPM && !entityArgs.SkipCtor) {
             this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName, entityArgs.EntityParentPM, entityArgs.IsFromStandAloneScreen ,null,this.IsClose);
         }
+        this._ImageLibraryService = new ImageLibraryService();
+        this.LoadLogo();
 
         this.bulkUploadDocumentsPermission = FeatureLocator.HasFeaturePermession("Customs.Declaration", "BULKUPLOADDOCUMENTS");
     }
@@ -178,7 +182,6 @@ export class CustomsDocumentsComponent
                             this.Listen();
                             this.BuildHeader = true;
                             this.FilterSelectedValue = 'alltickets';
-                            this._ImageLibraryService = new ImageLibraryService();
                             this.custDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
                             this.GetDocumentRequestDefaults(this.EntityPM.CustomerCode);
                         }, timeout);
@@ -530,7 +533,22 @@ export class CustomsDocumentsComponent
 
     }
 
+    LoadLogo(){
+        this._ImageLibraryService.DownloadFile("minilogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+        var pmResponse: ServiceResponse = res;
+        this.CurrentSession.StopBusyIndicator();
+         if (!pmResponse.HasError) {
+            var result = pmResponse.Result;
+            
+            if (result) {
+                this.src=result;
+            } 
 
+        } 
+      
+    });
+  
+    }
 
     SortCustomsDocumentTickets() {
         this.CustomsDocumentsTicketViewModels = this.CustomsDocumentsTicketViewModels.sort((a, b) => {
@@ -602,8 +620,15 @@ export class CustomsDocumentsComponent
         }
     }
 
+    private isRequireDocumentTicket: string = null;
+
     EditCustomsDocumentsTicket(customsDocumentsTicket: CustomsDocumentTicketViewModel) {
         
+        if(customsDocumentsTicket.RequestedDocumentId)
+            this.isRequireDocumentTicket = customsDocumentsTicket.RequestedDocumentId; 
+        else
+            this.isRequireDocumentTicket = null;
+
         if (!customsDocumentsTicket.PreventEdit) {
             if (customsDocumentsTicket.DocumentsFilingId) {
                 this.CurrentSession.StartBusyIndicatorLoading();
@@ -633,7 +658,7 @@ export class CustomsDocumentsComponent
             else {
                 this.CurrentSession.StopBusyIndicator();
                 this.ApplyEditCustomsDocumentTicket(false, customsDocumentsTicket.customsDocumentsTicketPM, null);
-            }
+            }                       
         }
 
     }
@@ -667,6 +692,7 @@ export class CustomsDocumentsComponent
         windowArgs.Child1EntityId = entityInfo.Child1EntityId;
         windowArgs.Child1EntityCode = entityInfo.Child1EntityCode;
         windowArgs.EntityPM = this.EntityPM;
+        windowArgs.RequestedDocumentId = this.isRequireDocumentTicket;
         var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditDocumentMetaData");
 
         var logWindow = new LogitudeWindow();
@@ -676,7 +702,7 @@ export class CustomsDocumentsComponent
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
-
+        
         logWindow.Show('./CustomsModules/CustomsDocuments/Components/AddEditCustomsDocumentComponent');
     }
 

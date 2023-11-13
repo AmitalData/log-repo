@@ -21,6 +21,7 @@ using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -61,9 +62,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
 
             string packageCode = "BUSN";
-
-            SettingRepository settingRepository = new SettingRepository();
-            Setting setting = settingRepository.GetSingleSetting("1");
+            Setting setting;
+            using (TransactionScope setScope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 0, 0)))
+            {
+                SettingRepository settingRepository = new SettingRepository();
+                  setting = settingRepository.GetSingleSetting("1");
+                setScope.Complete();
+            }
+           
 
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())

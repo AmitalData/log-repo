@@ -16,6 +16,7 @@ export class ClientItemList {
 	OriginCountryCode: string;
 	OriginCountryName: string;
 	ClientCode: string;
+	Id: string;
 	
 }
  

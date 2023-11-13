@@ -486,31 +486,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
 
 
-                CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
-                List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(_DocumentsFilingPM.Id, declarationPM.Tenant);
-                if (myCustomsDocumentsTicketPMList != null && myCustomsDocumentsTicketPMList.Count() > 0)
-                {
-                    List<string> ticketdIds = myCustomsDocumentsTicketPMList.Select(r => r.Id).ToList();
-                    if (ticketdIds != null && ticketdIds.Count() > 0)
-                    {
-                        CustomsDocumentPointerQueryService myCustomsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(_DocumentsFilingPM.Tenant);
-                        List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMList = myCustomsDocumentPointerQueryService.GetPointersForMultipleTickets(ticketdIds, _DocumentsFilingPM.Tenant);
-                        if (myCustomsDocumentPointerPMList != null && myCustomsDocumentPointerPMList.Count() > 0)
-                        {
-                            var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == declarationPM.Id);
-                            if (myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
-                            {
-                                LogitudeSettings.HandleLogMe("Ticket already Exist for this Document" + logData, false, "CreateUD2LTService", stopLogAt);
-                                Debug.WriteLine("Ticket already Exist for this Document");
-                                return;
-
-                            }
-                        }
-                    }
-                }
-
-
-
                 Debug.WriteLine("CreateCRS");
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
@@ -582,7 +557,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         LogitudeSettings.HandleLogMe("documentTypeCustomsDataPM != null " + documentTypeCustomsDataPM?.CustomsDoucumentTypeCode + logData, false, "CreateUD2LTService", stopLogAt);
                         CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
 
-                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, false);
+                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, _DocumentsFilingPM.Tenant);
 
                         if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
                         {
@@ -684,7 +659,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private bool TicketalreadyExistforthisDocument(DeclarationPM declarationPM)
         {
-            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_DocumentsFilingPM.Tenant);
+			var ParentEntityCodeList = new string[] { "Declaration", "ExportDeclarationClosingData" };
+
+			CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_DocumentsFilingPM.Tenant);
             List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
             if (myCustomsDocumentsTicketPMList != null && myCustomsDocumentsTicketPMList.Count() > 0)
             {
@@ -695,7 +672,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMList = myCustomsDocumentPointerQueryService.GetPointersForMultipleTickets(ticketdIds, _DocumentsFilingPM.Tenant);
                     if (myCustomsDocumentPointerPMList != null && myCustomsDocumentPointerPMList.Count() > 0)
                     {
-                        var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == declarationPM.Id);
+                        var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => ParentEntityCodeList.Contains(o.ParentEntityCode) && o.ParentEntityId == declarationPM.Id);
                         if (myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                         {
                             return true;
@@ -718,5 +695,60 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             return (this._DocumentsFilingPM.ObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration") &&  ( !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.EntityId) || !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.ExternalEntityReference)));
         }
-    }
+
+
+
+		
+	}
+    public class CustomCreateTicket : ICustomCreateTicket
+	{
+		public bool CreateTicket(string documentFilingId, string documentFilingCode, string documentTypeCode, int tenant, string declaratinId)
+		{
+			var transmitionDateTime = DateTime.Now;
+			string xmlESBResponseXmlClass = null;
+
+			var myDCAInUCBUD2LTWithResponseContentHeader = new DCAInUCBUD2LTWithResponseContentHeader()
+			{
+				DeclarationId = declaratinId,
+				DocumentsFilingId = documentFilingId,
+				DocumentsFilingCode = documentFilingCode,
+				LoggingUserId = null,
+				//DocumentTypeId=documentsFilingPM.DocumentTypeId,
+				DocumentTypeCode = documentTypeCode,
+
+				tenant = tenant,
+				MyMoreParams = "",
+				ResponseContentHeader = new DefaultResponseContentHeader()
+				{
+					TransmitionDateTime = transmitionDateTime
+				},
+			};
+           // DCAInUCBUD2LT_MsgMessagingService dCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
+
+			var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+			var objectTableId2 = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
+			var genericRequestParams = new GenericRequestParams()
+			{
+				Tenant = myDCAInUCBUD2LTWithResponseContentHeader.tenant,
+				AppicationId = myDCAInUCBUD2LTWithResponseContentHeader.DeclarationId,
+				//RequestVIA = SendRequestVIA.WebServiceBatch,
+				LoggingEnabled = true,
+				InterfaceTypeCode = "UCBUD2LT",
+				MainInterfaceCode = "UCBUD2LT",
+
+
+				LoggingObjectTableId = objectTableId,
+				LoggingEntityId = myDCAInUCBUD2LTWithResponseContentHeader.DeclarationId,
+				LoggingObjectTableId2 = objectTableId2,
+				LoggingEntityId2 = myDCAInUCBUD2LTWithResponseContentHeader.DocumentsFilingId,
+
+				LoggingUserId = myDCAInUCBUD2LTWithResponseContentHeader.LoggingUserId,
+				RequestName = $" UD2LT   קישור מסמך לטיקט" + myDCAInUCBUD2LTWithResponseContentHeader.DocumentsFilingCode + " "
+			};
+
+			UniCourierBatchSendUCBUD2LT_MsgResponseService uniCourierBatchSendUCBUD2LT_MsgResponseService = new UniCourierBatchSendUCBUD2LT_MsgResponseService();
+			bool isSucceeded = uniCourierBatchSendUCBUD2LT_MsgResponseService.UpdateUCBUD2LT(myDCAInUCBUD2LTWithResponseContentHeader, genericRequestParams);
+            return isSucceeded;
+		}
+	}
 }

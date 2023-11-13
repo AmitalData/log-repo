@@ -54,11 +54,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
             var myCustomsDocumentQueryService = new CustomsDocumentQueryService(dbContext);
             var customsDocumentPM = myCustomsDocumentQueryService.GetSingle(customResponse.DocumentsFilingId, true, false);
-            (new Send2715Bonded()).Send(
+            if(customsDocumentPM!= null)
+            customsDocumentPM.DeclarationId = customResponse?.DeclarationId;
+			(new Send2715Bonded()).Send(
                    requestParams.Tenant,
                    customResponse.DocumentsFilingId,
                    customsDocumentPM,
-                   customResponse.DocumentTypeCode);
+                   customResponse.DocumentTypeCode, customResponse.IsSendFromAutoClosing);
 
 
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();

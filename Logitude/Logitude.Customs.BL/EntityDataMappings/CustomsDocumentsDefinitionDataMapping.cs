@@ -41,7 +41,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!string.IsNullOrEmpty(entityPOCO.DocumentTypeCode))
             {
                 CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(entityPOCO.Tenant);
-                CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(entityPOCO.DocumentTypeCode, false, true);
+                CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(entityPOCO.DocumentTypeCode, entityPOCO.Tenant);
                 entityPM.DocumentTypeName = customDocumentTypePM.LocalName;
             }
 

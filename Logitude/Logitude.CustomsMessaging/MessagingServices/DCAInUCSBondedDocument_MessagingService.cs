@@ -98,10 +98,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
         public  string CreateCRS(
-            int tenant, 
+            int tenant,
             string LoggingUserId,
             DocumentsFilingPM documentsFilingPM,
-            string CustomsDoucumentTypeCode
+            string CustomsDoucumentTypeCode        
             )
         {
 
@@ -183,7 +183,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var myDCAInUCSBondedWithResponseContentHeader = new DCAInUCSBondedWithResponseContentHeader()
             {
-                DeclarationId = documentsFilingPM.EntityId,
+                DeclarationId = documentsFilingPM.IsNotCustomsDocId ? documentsFilingPM.DeclarationId: documentsFilingPM.EntityId,
                 DocumentsFilingId = documentsFilingPM.Id,
                 CustomsDoucumentTypeCode = CustomsDoucumentTypeCode,
                 LoggingUserId = LoggingUserId,
@@ -196,7 +196,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     TransmitionDateTime = transmitionDateTime
                 },
-            };
+				IsSendFromAutoClosing = documentsFilingPM.IsNotCustomsDocId,
+			};
 
 
 
@@ -297,10 +298,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string DOCUMENTTYPEID { get; set; }
         public string DocumentTypeCode { get; set; }
         public string LoggingEntityReference { get;  set; }
+		public bool IsSendFromAutoClosing { get; set; }
 
-        //public string DocumentTypeId { get; set; }
+		//public string DocumentTypeId { get; set; }
 
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 
 
@@ -340,7 +342,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 var DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(_DocumentsFilingPM.Tenant);
                 var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", _DocumentsFilingPM.Tenant);
                 var myDocumentsFilingMetaDataValueReferenceAsDocType = "";
-                if (!CheckIsSendByDocType(logData) && string.IsNullOrEmpty(_DocumentsFilingPM.OcrStatusCode))
+                if (!(CheckIsSendByDocType(logData) || _DocumentsFilingPM.IsNotCustomsDocId) && string.IsNullOrEmpty(_DocumentsFilingPM.OcrStatusCode))
                 {
                     if (ENDOC == null)
                     {
@@ -463,7 +465,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         LogitudeSettings.HandleLogMe("   if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))" + documentTypeCustomsDataPM?.CustomsDoucumentTypeCode, false, "SendBondedCustomDocument", stopLogAt);
 
                         CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
-                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, false);
+                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, _DocumentsFilingPM.Tenant);
 
                         if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
                         {
@@ -501,7 +503,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
 
                 var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
-                var myCustomDocumentTypePM = myCustomDocumentTypeQueryService.GetSingle(myDocumentsFilingMetaDataValueReferenceAsDocType, true, true);
+                var myCustomDocumentTypePM = myCustomDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(myDocumentsFilingMetaDataValueReferenceAsDocType, _DocumentsFilingPM.Tenant);
             if (myCustomDocumentTypePM == null)
             {
                 LogitudeSettings.HandleLogMe("myDocumentsFilingMetaDataValueReferenceAsDocType " + myDocumentsFilingMetaDataValueReferenceAsDocType + " but not found" + _DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
@@ -585,7 +587,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             string DocumentsFilingPMId,
            CustomsDocumentPM customsDocumentPM,
 
-           string CustomsDoucumentTypeCode)
+           string CustomsDoucumentTypeCode,
+           bool IsSendFromAutoClosing = false)
         {
             if (customsDocumentPM == null)
             {
@@ -617,8 +620,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     var context1 = CustomContext.GetContext(Tenant);//context each CRS TRANS
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(context1, new Dictionary<string, IContext>(), customsDocumentPM.Tenant);
+					myCustomsDocumentUpdateService.IsSendFromAutoClosing = IsSendFromAutoClosing;
 
-                    customsDocumentPM.IsSendToQueue = false;
+					customsDocumentPM.IsSendToQueue = false;
                     myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
@@ -628,7 +632,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         r.ChangeSetOp = ChangeSetOperation.None;
                     });
                     customsDocumentPM.IsSendToQueue = true;
-                    myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+					myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                     LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({DocumentsFilingPMId})");
 

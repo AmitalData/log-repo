@@ -11,6 +11,8 @@ using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Runtime.Remoting.Contexts;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -220,7 +222,22 @@ namespace Logitude.Customs.Data.Repsitories
                                                            select a);
             return pointers;
         }
-   }
+
+
+		public IQueryable<CustomsDocumentPointer> GetCustomDocumentPoinersForClosingData(string parentEntityId,int tenant, string documentFilingId)
+		{
+			IQueryable<CustomsDocumentPointer> pointers = (from p in context.CustomsDocumentPointers
+
+														   join t in context.CustomsDocumentsTickets
+
+														   on p.CustomsDocumentsTicketId equals t.Id
+
+														   where p.Tenant == tenant && t.DocumentsFilingId == documentFilingId && p.ParentEntityId == parentEntityId 
+
+														   select p);
+			return pointers;
+		}
+	}
 
 }
    
