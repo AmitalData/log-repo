@@ -62,7 +62,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         HSM, 
 	         HSMtoken, 
 	         HSMaddress, 
-	         AllowEditingExchangeRate,
+	         AllowEditingExchangeRate, 
+	         AmountForConfirmationNumber, 
+	         NumberingByChartOfAccount, 
+	         OppositeAccountNumber,
 	      }
 
 
@@ -126,7 +129,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         HSM, 
 	         HSMtoken, 
 	         HSMaddress, 
-	         AllowEditingExchangeRate,
+	         AllowEditingExchangeRate, 
+	         AmountForConfirmationNumber, 
+	         NumberingByChartOfAccount, 
+	         OppositeAccountNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -333,6 +339,21 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditingExchangeRate))
             {
 				entityPOCO.AllowEditingExchangeRate = entityPM.AllowEditingExchangeRate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountForConfirmationNumber))
+            {
+				entityPOCO.AmountForConfirmationNumber = entityPM.AmountForConfirmationNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberingByChartOfAccount))
+            {
+				entityPOCO.NumberingByChartOfAccount = entityPM.NumberingByChartOfAccount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountNumber))
+            {
+				entityPOCO.OppositeAccountNumber = entityPM.OppositeAccountNumber;
 			}
 			}
 
@@ -544,6 +565,21 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.AllowEditingExchangeRate = entityPOCO.AllowEditingExchangeRate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmountForConfirmationNumber))
+            {
+					entityPM.AmountForConfirmationNumber = entityPOCO.AmountForConfirmationNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NumberingByChartOfAccount))
+            {
+					entityPM.NumberingByChartOfAccount = entityPOCO.NumberingByChartOfAccount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OppositeAccountNumber))
+            {
+					entityPM.OppositeAccountNumber = entityPOCO.OppositeAccountNumber;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -748,6 +784,21 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditingExchangeRate))
             {
                 oldEntityPM.AllowEditingExchangeRate = entityPM.AllowEditingExchangeRate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountForConfirmationNumber))
+            {
+                oldEntityPM.AmountForConfirmationNumber = entityPM.AmountForConfirmationNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberingByChartOfAccount))
+            {
+                oldEntityPM.NumberingByChartOfAccount = entityPM.NumberingByChartOfAccount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountNumber))
+            {
+                oldEntityPM.OppositeAccountNumber = entityPM.OppositeAccountNumber;
             }
 			
 		}

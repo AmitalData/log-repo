@@ -62,6 +62,7 @@ export class FullAccountingSettingList {
 	HSMtoken: string;
 	HSMaddress: string;
 	AllowEditingExchangeRate: boolean;
+	OppositeAccountNumber: boolean;
 	
 }
  
