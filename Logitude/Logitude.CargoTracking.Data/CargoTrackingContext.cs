@@ -21,10 +21,11 @@ using System.Configuration;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data; 
 using Logitude.CargoTracking.Data.EntityMapping;
+using System.Data.Entity.Infrastructure.Interception;
 
 namespace Logitude.CargoTracking.Data
 {
-   public  partial  class CargoTrackingContext: DbContextBase, ICargoTrackingContext
+    public  partial  class CargoTrackingContext: DbContextBase, ICargoTrackingContext
     {
         public CargoTrackingContext()
         {

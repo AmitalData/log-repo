@@ -19,6 +19,8 @@ export class CargoTrackingShipmentSearchInput extends MoreFilter
     public SortFieldName: string;
     public PageIndex: number;
     public PageSize: number;
+    public FromDate: Date;
+    public ToDate: Date;
 
 }
 

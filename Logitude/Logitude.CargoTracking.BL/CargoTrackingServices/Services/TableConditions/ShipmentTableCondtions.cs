@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure;
+using Logitude.CargoTracking.BL.CoreBL.Batch;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableConditions
 {
@@ -190,17 +193,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableConditio
             }
             else
             {
-                if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
-                {
-                    string tenantCondition = $" C.Tenant = {cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant}";
-                    whereConditions.Add(tenantCondition);
-                }
-
-
-                var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, C.CreateDateTime ), 0)";
-                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and" +
-                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'";
-                whereConditions.Add(datePeriodCondition);
+                AddTenantAndDateFilter("C", whereConditions);
             }
 
             var whereScript = " WHERE C.ShipmentLevelCode = 'A' AND " + string.Join(" AND ", whereConditions);
@@ -446,18 +439,8 @@ end)
             }
             else
             {
+                AddTenantAndDateFilter("P", whereConditions);
 
-                if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
-                {
-                    string tenantCondition = $" P.Tenant = {cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant}";
-                    whereConditions.Add(tenantCondition);
-                }
-
-
-                var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0)";
-                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and" +
-                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'";
-                whereConditions.Add(datePeriodCondition);
             }
 
             var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
@@ -644,17 +627,7 @@ end)
             }
             else
             {
-                if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
-                {
-                    string tenantCondition = $" SHO.Tenant = {cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant}";
-                    whereConditions.Add(tenantCondition);
-                }
-
-
-                var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, SHO.CreateDate ), 0)";
-                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and" +
-                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'";
-                whereConditions.Add(datePeriodCondition);
+                AddTenantAndDateFilter("SHO", whereConditions);
             }
 
             var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
@@ -664,5 +637,43 @@ end)
             return sqlQuery;
         }
 
+
+        private static void AddTenantAndDateFilter(string tableName, List<string> whereConditions)
+        {
+            string condition = "(";
+            List<CargoTrackingXMLParameters> tenantsList = new List<CargoTrackingXMLParameters>();
+            
+            tenantsList.Add(new CargoTrackingXMLParameters()
+            {
+                ToDate = DateTime.Now.Date,
+                FromDate = DateTime.Now.AddMonths(-6).Date,
+            });
+
+            tenantsList.AddRange(new TenantManagementQuery(0).GetWhereHavePermissionBuildMonths().Select(x => new CargoTrackingXMLParameters()
+            {
+                Tenant = x.Id,
+                ToDate = DateTime.Now.Date,
+                FromDate = x.ActivatePrivateSite ?
+                    DateTime.Now.AddMonths(Convert.ToInt32(x.PermissionBuildMonths.Value) * -1) :
+                    DateTime.Now.AddMonths(-6).Date
+            }));
+
+            tenantsList.ForEach(t =>
+            {                
+                if (t.Tenant != null)
+                    condition += $" OR ( {tableName}.Tenant = {t.Tenant} AND ";
+
+                string columnCreateDateName = tableName == "SHO" ? "CreateDate" : "CreateDateTime";
+                string createDateWithoutTime = $"DATEADD(dd, DATEDIFF(dd, 0, {tableName}.{columnCreateDateName} ), 0)";
+                condition += $"( {createDateWithoutTime} >= '{t.FromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and" +
+                             $" {createDateWithoutTime} <= '{t.ToDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}')";
+
+                if (t.Tenant != null)
+                    condition += ")";
+            });
+            
+            condition += ")";
+            whereConditions.Add(condition);
+        }
     }
 }

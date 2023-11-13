@@ -1,6 +1,5 @@
-
 <style type="text/css">
- 
+
 </style>
 
 <table>
@@ -10,12 +9,12 @@
         </td>
     </tr>
 
-<tr style="height:20px;">
-    <td colspan="6">
+    <tr style="height:20px;">
+        <td colspan="6">
 
-    </td>
-</tr>
-<!-- <tr style="height: 32px;">
+        </td>
+    </tr>
+    <!-- <tr style="height: 32px;">
 
     <td colspan="6">
         <table>
@@ -49,39 +48,44 @@
 </tr> -->
 
 
-    
-    <tr style="height: 32px;">
+
+    <!-- <tr style="height: 32px;">
         <td style="width: 75px;">
             From Date:
         </td>
 
         <td style="width:120px;">
-            <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                                        [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
+            <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                [ForceSubscribe]="true" [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="FromDate">
+            </LogDatePicker>
         </td>
 
-
-        <!-- ToDate -->
         <td style="width:10px"></td>
         <td style="width: 70px;">
             To Date:
         </td>
 
         <td style="width:120px;">
-            <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                                        [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
+            <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                [ForceSubscribe]="true" [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="ToDate">
+            </LogDatePicker>
         </td>
 
-        <td><div></div></td>
- 
+        <td>
+            <div></div>
+        </td>
+
+    </tr> -->
+    <tr style="height: 32px;">
+        <td>
+            <div>{{'TenantManagement.TH.CargoTrackingFromBranding'| TextCodeTranslationPipe}}</div>
+        </td>
     </tr>
-<tr>
-    <td colspan="6">
-         <div></div>
-    </td>
-</tr>
+    <tr>
+        <td colspan="6">
+            <div></div>
+        </td>
+    </tr>
     <tr style="height: 32px;">
         <td colspan="6" style="vertical-align: bottom">
             <table style="height: 22px;">
@@ -93,7 +97,7 @@
                     <td style="width: 57px;">
                         <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
- 
+
                     <td style="width: 5px;">
                         <div></div>
                     </td>

@@ -84,10 +84,9 @@ using Logitude.DashboardModule.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class TenantManagementUpdateClass
-   {
-
-       public const string HashString = "0d71a8f84270f55c2aa144b58e4f9213";
-       public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+   {  		
+		public const string HashString = "ca25406329ecdf8e147a48db7bdd5300";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -13587,6 +13586,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
  		   ObjectTable TenantManagementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode TenantManagementTextCode_TenantManagementTHLogitudeDigitalBranding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.LogitudeDigitalBranding", DefaultText = "Digital Portal Branding",LocalDefaultText = @"Digital Portal Branding", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantManagementTextCode_TenantManagementTHPermissionBuildMonthsLimit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.PermissionBuildMonthsLimit", DefaultText = "The value can be number from 1 to 84 only",LocalDefaultText = @"ניתן להכניס ערך מ1 עד 84 בלבד", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantManagementTextCode_TenantManagementTHCargoTrackingFromBranding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.CargoTrackingFromBranding", DefaultText = "Cargo tracking shipments build - from branding settings",LocalDefaultText = @"Cargo tracking shipments build - from branding settings", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -4,7 +4,7 @@ declare var window: any;
 
 
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -23,6 +23,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { GlobalDomainService } from '../../../../Common/Services/GlobalDomainService';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'CargoTrackingBrandingComponent',
@@ -48,8 +49,15 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     isGenerateClicked = false;
     isGenerateEnabled = true;
     private iGlobalDomainService: GlobalDomainService;
+    previousPermissionBuildMonthsValue: any;
+    showPermissionBuildMonths: boolean = true;    
+    permissionBuildMonthsInProcess: boolean = false;
+    showPermissionBuildMonthsInProcess: boolean = true;
 
-    constructor(public entityArgs: EntityArgs) {
+    constructor(
+        private cd: ChangeDetectorRef,
+        public entityArgs: EntityArgs) {
+
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityId = this.EntityPM.Id;
@@ -57,16 +65,23 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.InitializeImageIds();
         this.SetColorsFromEntity();
         this.CheckDigtialPortalAddsOnPackage();
+        this.setPreviousPermissionBuildMonthsValue();
         this.Listen();
     }
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
+
+    private setPreviousPermissionBuildMonthsValue() {
+        this.previousPermissionBuildMonthsValue = this.PermissionBuildMonths;
+    }
+
     private Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.setPreviousPermissionBuildMonthsValue();
                     this.CustomerURL = this.EntityPM.CustomerURL;
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
@@ -205,10 +220,37 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     get PermissionBuildMonths() {
         return this.EntityPM.PermissionBuildMonths;
     }
-    set PermissionBuildMonths(value: number) {
-        this.EntityPM.PermissionBuildMonths = value;
 
+    set PermissionBuildMonths(value: any) {
+        this.setPermissionBuildMonths(value);    
     }
+
+    private async setPermissionBuildMonths(value: any) {
+        if(this.permissionBuildMonthsInProcess) return;
+
+        if ((value > 84 || value < 0) && (value !== null && value !== '')) {
+            this.permissionBuildMonthsInProcess = true;
+            await this.showPopupMessage(TextCodeTranslator.Translate("TenantManagement.TH.PermissionBuildMonthsLimit"));
+            this.permissionBuildMonthsInProcess = false;
+            this.PermissionBuildMonths = this.previousPermissionBuildMonthsValue;
+            this.showPermissionBuildMonthsInProcess = false;
+            this.cd.detectChanges();
+            this.showPermissionBuildMonthsInProcess = true;
+            this.cd.detectChanges();
+        } else {
+            this.EntityPM.PermissionBuildMonths = value;
+            this.cd.detectChanges();
+        }
+        this.permissionBuildMonthsInProcess = false;
+    }
+
+
+    private async showPopupMessage(message: string) {
+        const win:MessageWindow = new MessageWindow();
+        win.Show(message);
+        await new Promise<void>(resolve => win.WindowClosed.subscribe(()=> resolve()));
+    }
+
     private ValidateMainColorCode(hexColor: string) {
         if (!this.ValidateHexCode(hexColor, "MainColorCode"))
             this.wrongMainColor = true;
