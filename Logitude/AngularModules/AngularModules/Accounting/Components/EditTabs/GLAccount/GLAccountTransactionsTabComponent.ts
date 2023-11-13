@@ -586,7 +586,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference3",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Reference3")));
 
         this.columns.push({
-            FieldName: 'OppositeAccountLocalName',
+            FieldName:  this.CheckOppositeAccountIsActive(),
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.OppositeAccountLocalName"),
             Styles: { width: '120px' },
@@ -908,6 +908,11 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             }
 
         });
+    }
+
+     
+    CheckOppositeAccountIsActive(): string {        
+        return this.fullAccountingSetting.OppositeAccountNumber ? 'OppositeAccountDisplayNumber':'OppositeAccountLocalName';
     }
 
     GetOpenBalanceCurrencySign() {
