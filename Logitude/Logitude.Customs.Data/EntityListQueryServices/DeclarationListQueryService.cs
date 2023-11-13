@@ -146,15 +146,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             var arrAmentmentStatus = new string[] { "6", "7", "8", "10" };
 
-            //var qConsignmentNumber = (from a in context.Consignments
-            //                          group a by a.DeclarationId into gConsignments
-            //                          select
-            //                          new
-            //                          {
-            //                              DeclarationId = gConsignments.Key,
-            //                              ConsignmentNumber = gConsignments.Min(r => r.ConsignmentNumber),
 
-            //                          });
 
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -355,6 +347,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             else
             {
+
+                var qConsignmentNumber = (from a in context.Consignments
+                                          group a by a.DeclarationId into gConsignments
+                                          select
+                                          new
+                                          {
+                                              DeclarationId = gConsignments.Key,
+                                              ConsignmentNumber = gConsignments.Min(r => r.ConsignmentNumber),
+
+                                          });
+
                 IQueryable<DeclarationList> query2 = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                      .Include("Importer").Include("ImporterType").Include("FreightPaymentMethod")
                                      .Include("CustomsCountry")
@@ -387,14 +390,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                       from dcs in dcsJoin_.DefaultIfEmpty()
 
 
-                                                      //join recConsignment in context.Consignments.Include("CargoType")
-                                                      //.Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.CargoDescription, x.CargoType.LocalName, x.SecondCargoID, x.ThirdCargoID, x.ManifestNumber })
-                                                      //on a.Id equals recConsignment.DeclarationId into qjoinConsignments
-                                                      //from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
+                                                      join recConsignment in context.Consignments.Include("CargoType")
+                                                      .Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.CargoDescription, x.CargoType.LocalName, x.SecondCargoID, x.ThirdCargoID, x.ManifestNumber })
+                                                      on a.Id equals recConsignment.DeclarationId into qjoinConsignments
+                                                      from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
 
-                                                      //join c in qConsignmentNumber
-                                                      //.Select(x => new { x.DeclarationId, x.ConsignmentNumber })
-                                                      //on new { myJoinConsignment.DeclarationId, myJoinConsignment.ConsignmentNumber } equals new { c.DeclarationId, c.ConsignmentNumber }
+                                                      join c in qConsignmentNumber
+                                                      .Select(x => new { x.DeclarationId, x.ConsignmentNumber })
+                                                      on new { myJoinConsignment.DeclarationId, myJoinConsignment.ConsignmentNumber } equals new { c.DeclarationId, c.ConsignmentNumber }
 
 
                                                       join recOriginalDeclarations in context.Declarations.Where(x => x.IsAmendment != true)
@@ -531,7 +534,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                           MAWB = isCourierEnv && cd != null ? cd.MAWB : null,
                                                           IsCourierMissingClassification = !isCourierEnv ? true : dcs != null ? dcs.IsCourierMissingClassification : false,
-                                                          //CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
+                                                          CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
                                                           IsPaymentProtested = a.IsPaymentProtested,
                                                           DeclarationNoAmendment = myJoinOriginalDeclaration.DeclarationNumber,
                                                           CustomFileAmendment = myJoinOriginalDeclaration.CustomFileNo,
@@ -552,10 +555,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           CreateDateForExport = a.CreateDateTime,
                                                           TransportModeForExport = a.TransportModeId,
                                                           CustomFileForExport = a.CustomFileNo,
-                                                          //CargoTypeName = myJoinConsignment != null ? myJoinConsignment.LocalName : null,
-                                                          //SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
-                                                          //ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
-                                                          //ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
+                                                          CargoTypeName = myJoinConsignment != null ? myJoinConsignment.LocalName : null,
+                                                          SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
+                                                          ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
+                                                          ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
                                                           TerminalReleaseDate = !isCourierEnv ? null : dcs != null ? dcs.TerminalReleaseDate : null,
                                                           PhysicalCheck = a.PhysicalCheck,
                                                           PhysicalCheckName = a.PhysicalCheck == null ? "��� �����" : a.PhysicalCheckCode.Name,
