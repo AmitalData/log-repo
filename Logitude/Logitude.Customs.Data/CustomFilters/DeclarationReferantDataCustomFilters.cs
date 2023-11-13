@@ -55,8 +55,11 @@ namespace Logitude.Customs.Data.CustomFilters
                 }
                 if (item.FieldName == "NotOccuredStatus")
                 {
-                    var q = context.DeclarationStatuses.Where(decStatus => item.FieldValue.ToString().Contains(decStatus.StatusCode.Status_Code)).Select(r => r.DeclarationId);
-                    queryableData = (from a in queryableData.Where(r => q.Contains(r.DeclarationId)) select a);
+                    var notContainsFilter = item.FieldValue.ToString();
+                    var notContainsQuery = context.DeclarationStatuses
+                        .Where(decStatus => notContainsFilter.Contains(decStatus.StatusCode.Status_Code))
+                        .Select(r => r.DeclarationId);
+                    queryableData = queryableData.Where(r => !notContainsQuery.Contains(r.DeclarationId));
                 }
             }
             FreelancerCustomersUtil frlUtil = new FreelancerCustomersUtil(tenant);
