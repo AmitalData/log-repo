@@ -155,8 +155,8 @@
 
         private INV_EXPENSES[] iNV_EXPENSESField;
 
-        /// <remarks/>
-        public string INVOICELINENO
+		/// <remarks/>
+		public string INVOICELINENO
         {
             get
             {
@@ -324,9 +324,9 @@
                 this.qUE_TYPEField = value;
             }
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("INV_EXPENSES")]
+		
+		/// <remarks/>
+		[System.Xml.Serialization.XmlElementAttribute("INV_EXPENSES")]
         public INV_EXPENSES[] INV_EXPENSES
         {
             get
@@ -340,8 +340,8 @@
         }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+	/// <remarks/>
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -398,8 +398,10 @@
 
         private EXPENSES[] eXPENSESField;
 
-        /// <remarks/>
-        public string ITEMLINENO
+		private VEHICLES vEHICLESField;
+
+		/// <remarks/>
+		public string ITEMLINENO
         {
             get
             {
@@ -711,7 +713,20 @@
                 this.eXPENSESField = value;
             }
         }
-    }
+		/// <remarks/>
+		[System.Xml.Serialization.XmlElementAttribute("VEHICLES")]
+		public VEHICLES VEHICLES
+		{
+			get
+			{
+				return this.vEHICLESField;
+			}
+			set
+			{
+				this.vEHICLESField = value;
+			}
+		}
+	}
 
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
@@ -1086,5 +1101,61 @@
             }
         }
     }
+
+	/// <remarks/>
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+	[System.SerializableAttribute()]
+	[System.Diagnostics.DebuggerStepThroughAttribute()]
+	[System.ComponentModel.DesignerCategoryAttribute("code")]
+	[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGISIVUG")]
+	[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGISIVUG", IsNullable = false)]
+	public partial class VEHICLES
+	{
+		
+		private string vehicleChassisNumberField;
+
+		private string richnitFileNumberField;
+
+		private string excludeFromInterfaceField;
+
+		/// <remarks/>
+		public string VEHICLECHASSISNUMBER
+		{
+			get
+			{
+				return this.vehicleChassisNumberField;
+			}
+			set
+			{
+				this.vehicleChassisNumberField = value;
+			}
+		}
+
+		/// <remarks/>
+		public string RICHBITFILENUMBER
+		{
+			get
+			{
+				return this.richnitFileNumberField;
+			}
+			set
+			{
+				this.richnitFileNumberField = value;
+			}
+		}
+
+		/// <remarks/>
+		public string EXCLUDEFROMINTERFACE
+		{
+			get
+			{
+				return this.excludeFromInterfaceField;
+			}
+			set
+			{
+				this.excludeFromInterfaceField = value;
+			}
+		}
+	}
 
 }
