@@ -73,6 +73,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myOcrDocument = ocrDocumentService.GetOcrDocumentByDocumentFilingId(customResponse.DocumentsFilingId, customResponse.tenant);
             if (myOcrDocument != null && !string.IsNullOrEmpty(myOcrDocument.JsonData) && !string.IsNullOrEmpty(myOcrDocument.Reference))
             {
+                CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(customResponse.tenant);
+                CustomsDocumentPM customsDocument = customsDocumentQueryService.GetSingle(myOcrDocument?.DocId, false, true);
+
+                if (customsDocument != null && customsDocument.DocumentStatusCode == "7") 
+                {
+                    throw new Exception("Customs Document Send In Progress !!!");
+                }
+
                 try
                 {
                     string pattern = @"[\x00-\x08\x0B\x0C\x0E-\x1F]";
