@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "3be9a539e75ea06b5b484d5973e913d4";
+		public const string HashString = "51200d3e6d7d07ed69e6fdcd89308a34";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3140,7 +3140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode TaxReportTextCode_TaxReportOCloseJournalNotSupported = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CloseJournalNotSupported", DefaultText = "Creating a closing journal is not supported before 05.22",LocalDefaultText = @"הפעולה ליצירת פקודת יומן והתאמות לדוח המע''מ , נתמכת החל מדוח 05.22 בלבד ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TaxReportTextCode_TaxReportOCloseJournalRunInBackground = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CloseJournalRunInBackground", DefaultText = "Closing VAT report run in background, batchId:",LocalDefaultText = "סגירת דוח מע''מ רץ ברקע, מזהה תהליך:", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TaxReportTextCode_TaxReportOCloseJournalRunInBackground = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CloseJournalRunInBackground", DefaultText = "Creating journal will be done in the background and may take several minutes",LocalDefaultText = @"יצירת פקודת היומן תעשה ברקע והיא עשויה לקחת מספר דקות", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

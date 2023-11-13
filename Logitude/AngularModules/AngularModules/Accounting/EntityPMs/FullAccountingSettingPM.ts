@@ -317,9 +317,13 @@ export class FullAccountingSettingPM {
     private amountForConfirmationNumber: number;
     public get AmountForConfirmationNumber() { return this.amountForConfirmationNumber; }
     public set AmountForConfirmationNumber(newValue: number) { if (this.amountForConfirmationNumber != newValue) { this.amountForConfirmationNumber = newValue; this.MarkAsDirty("AmountForConfirmationNumber"); } }
+       
+	 
     private numberingByChartOfAccount: boolean;
     public get NumberingByChartOfAccount() { return this.numberingByChartOfAccount; }
     public set NumberingByChartOfAccount(newValue: boolean) { if (this.numberingByChartOfAccount != newValue) { this.numberingByChartOfAccount = newValue; this.MarkAsDirty("NumberingByChartOfAccount"); } }
+       
+	 
     private oppositeAccountNumber: boolean;
     public get OppositeAccountNumber() { return this.oppositeAccountNumber; }
     public set OppositeAccountNumber(newValue: boolean) { if (this.oppositeAccountNumber != newValue) { this.oppositeAccountNumber = newValue; this.MarkAsDirty("OppositeAccountNumber"); } }
@@ -353,4 +357,4 @@ export class FullAccountingSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

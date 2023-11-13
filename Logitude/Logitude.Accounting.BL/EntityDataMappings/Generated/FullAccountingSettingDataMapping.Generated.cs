@@ -63,8 +63,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         HSMtoken, 
 	         HSMaddress, 
 	         AllowEditingExchangeRate, 
-	         AmountForConfirmationNumber,
-	         NumberingByChartOfAccount,
+	         AmountForConfirmationNumber, 
+	         NumberingByChartOfAccount, 
 	         OppositeAccountNumber,
 	      }
 
@@ -130,8 +130,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         HSMtoken, 
 	         HSMaddress, 
 	         AllowEditingExchangeRate, 
-	         AmountForConfirmationNumber,
-	         NumberingByChartOfAccount,
+	         AmountForConfirmationNumber, 
+	         NumberingByChartOfAccount, 
 	         OppositeAccountNumber,
 	      }
 
@@ -345,14 +345,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.AmountForConfirmationNumber = entityPM.AmountForConfirmationNumber;
 			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberingByChartOfAccount))
             {
 				entityPOCO.NumberingByChartOfAccount = entityPM.NumberingByChartOfAccount;
+			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountNumber))
             {
 				entityPOCO.OppositeAccountNumber = entityPM.OppositeAccountNumber;
-			}
 			}
 			}
 
@@ -573,12 +574,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.NumberingByChartOfAccount = entityPOCO.NumberingByChartOfAccount;
             }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OppositeAccountNumber))
             {
 					entityPM.OppositeAccountNumber = entityPOCO.OppositeAccountNumber;
             }
-
-		}
 
 		}
 
