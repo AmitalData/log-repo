@@ -74,7 +74,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (myOcrDocument != null && !string.IsNullOrEmpty(myOcrDocument.JsonData) && !string.IsNullOrEmpty(myOcrDocument.Reference))
             {
                 CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(customResponse.tenant);
-                CustomsDocumentPM customsDocument = customsDocumentQueryService.GetSingle(myOcrDocument?.DocId, false, true);
+                CustomsDocumentPM customsDocument = customsDocumentQueryService.GetSingle(myOcrDocument?.DocId, false, false);
 
                 if (customsDocument != null && customsDocument.DocumentStatusCode == "7") 
                 {
