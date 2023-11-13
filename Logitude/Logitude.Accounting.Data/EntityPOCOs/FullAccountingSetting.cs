@@ -162,6 +162,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int? AmountForConfirmationNumber { get; set; }
         [Column("NumberingByChartOfAccount")]
 	    public bool NumberingByChartOfAccount { get; set; }
+        [Column("OppositeAccountNumber")]
+	    public bool OppositeAccountNumber { get; set; }
     }
 }
 	 
