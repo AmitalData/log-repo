@@ -314,6 +314,11 @@ export class FullAccountingSettingPM {
     public set AllowEditingExchangeRate(newValue: boolean) { if (this.allowEditingExchangeRate != newValue) { this.allowEditingExchangeRate = newValue; this.MarkAsDirty("AllowEditingExchangeRate"); } }
        
 	 
+    private oppositeAccountNumber: boolean;
+    public get OppositeAccountNumber() { return this.oppositeAccountNumber; }
+    public set OppositeAccountNumber(newValue: boolean) { if (this.oppositeAccountNumber != newValue) { this.oppositeAccountNumber = newValue; this.MarkAsDirty("OppositeAccountNumber"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

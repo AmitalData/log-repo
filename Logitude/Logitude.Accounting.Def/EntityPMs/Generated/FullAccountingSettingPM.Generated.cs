@@ -1354,6 +1354,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool oppositeAccountNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool OppositeAccountNumber  
+	   {
+	    
+	     get
+		{
+		   return oppositeAccountNumber;
+		 }
+		 set
+		 {
+		   if(oppositeAccountNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OppositeAccountNumber",OldValue=oppositeAccountNumber,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   oppositeAccountNumber=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

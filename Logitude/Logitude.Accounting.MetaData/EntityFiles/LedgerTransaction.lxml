@@ -5664,7 +5664,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
- <field
+  <field
     Id="&quot;4808272f-abdd-4f6d-8f2a-a46abcbe11cd&quot;"
     FieldName="&quot;SecurityLevelFiltering&quot;"
     OldNames="SecurityLevelFiltering"
@@ -6520,15 +6520,6 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;LedgerTransaction.Features.SalesmanLTRP&quot;"
       FeatureDefaultText="&quot;Ledger Transaction Report Salesman Restrictions&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;OppositeAccountNumber&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;LedgerTransaction.Features.OppositeAccountNUM&quot;"
-      FeatureDefaultText="&quot;Displaying the name of the opposite card or the number of the opposite card&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
