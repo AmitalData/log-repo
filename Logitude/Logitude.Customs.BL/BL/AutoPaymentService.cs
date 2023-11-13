@@ -69,7 +69,13 @@ namespace Logitude.Customs.BL.BL
 		public void ValidateBeforeCreatingPayment()
 		{
 			ErrorMessage = "";
-
+			CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(customContext);
+			CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "2755", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), _MyDeclarationPM.Id, null, null, null, false).FirstOrDefault();
+			if (requestsSheetPM != null)
+			{
+				ErrorMessage = "קיימת בקשת תשלום בתהליך";//קיימת בקשת תשלום בתהליך
+				throw new Exception(ErrorMessage);
+			}
 			if (_MyDeclarationPM.IsChanged)
 			{
 
