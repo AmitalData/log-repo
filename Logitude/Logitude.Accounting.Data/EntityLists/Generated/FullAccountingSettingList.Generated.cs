@@ -122,6 +122,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string HSMaddress  { get; set; }
        [DataMember]
        public bool AllowEditingExchangeRate  { get; set; }
+       [DataMember]
+       public bool OppositeAccountNumber  { get; set; }
    }
 
 }

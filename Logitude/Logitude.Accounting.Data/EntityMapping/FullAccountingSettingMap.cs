@@ -107,6 +107,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.AmountForConfirmationNumber).HasColumnName("AmountForConfirmationNumber");
             this.Property(t => t.NumberingByChartOfAccount).HasColumnName("NumberingByChartOfAccount");
+            this.Property(t => t.OppositeAccountNumber).HasColumnName("OppositeAccountNumber");
         }
     }
 }

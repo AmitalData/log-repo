@@ -320,6 +320,9 @@ export class FullAccountingSettingPM {
     private numberingByChartOfAccount: boolean;
     public get NumberingByChartOfAccount() { return this.numberingByChartOfAccount; }
     public set NumberingByChartOfAccount(newValue: boolean) { if (this.numberingByChartOfAccount != newValue) { this.numberingByChartOfAccount = newValue; this.MarkAsDirty("NumberingByChartOfAccount"); } }
+    private oppositeAccountNumber: boolean;
+    public get OppositeAccountNumber() { return this.oppositeAccountNumber; }
+    public set OppositeAccountNumber(newValue: boolean) { if (this.oppositeAccountNumber != newValue) { this.oppositeAccountNumber = newValue; this.MarkAsDirty("OppositeAccountNumber"); } }
        
 	 
 
