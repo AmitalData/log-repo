@@ -65,6 +65,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour;
         private bool isAccountingActivated = false;
         private GLAccountPM _PaymentGLAccount = null;
+        private bool _invoiceStatusAccordingToLedgerOpenAmount = false;
         public APPaymentService(IInvoiceContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -83,6 +84,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             isAccountingActivated = tenantPOCO.AccountingActivated;
+            _invoiceStatusAccordingToLedgerOpenAmount = FeatureToggleHelper.HasFeatureToggle("ILO", tenant);
         }
 
         private bool isTransferEnabled = false;
@@ -1064,7 +1066,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             {
 
                                 invoice.IsClosed = false;
-                                if (invoice.StatusCode == "PD" || invoice.StatusCode == "PP")
+                            if (!_invoiceStatusAccordingToLedgerOpenAmount && (invoice.StatusCode == "PD" || invoice.StatusCode == "PP"))
                                 {
                                     if (PaidAmount != 0)
                                     {
@@ -1084,6 +1086,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             invoice.AmountDueInLocalCurrency = MethodHelper.Round((invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate), 2);
                             invoice.AmountDueInProfitCurrency = MethodHelper.Round((invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate), 2);
                             if (!FeatureToggleHelper.HasFeatureToggle("PSR", entityPM.Tenant))
+                            {
+                            if (!_invoiceStatusAccordingToLedgerOpenAmount)
                             {
                                 if (invoiceAmountDue == 0)
                                 {
@@ -1112,6 +1116,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     throw new Exception("The Amount due is not suitable to the total amount paid, for invoice: " + invoice.InvoiceNumber);
                                 }
                             }
+                           }
                         }
 
                         else
