@@ -397,7 +397,7 @@ ul.line-list li.tick {
 }
 
     .buttonShowMore{
-        padding: 5px 15px;
+        padding: 8px 15px;
         border-radius: 25px;
         box-shadow: 0px 0px 8px 0px #00000025;
         color: rgb(66, 66, 66);
@@ -405,7 +405,7 @@ ul.line-list li.tick {
         color: white;
         border: none;
         cursor: pointer;
-
+        line-height: 1;
     }
         .buttonShowMore:hover{
             box-shadow: 0px 0px 8px 0px #00000040;
