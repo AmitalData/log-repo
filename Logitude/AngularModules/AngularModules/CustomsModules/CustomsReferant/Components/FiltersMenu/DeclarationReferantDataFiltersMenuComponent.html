@@ -70,7 +70,7 @@
         </td>
         <td *ngIf="StatusesFeature && !CurrentScreenIsWorkSpace" style="width:250px; vertical-align:middle;">
             <MultiSelectLOV [DataContext]="DataContext" [PlaceHolder]="'התרחש סטטוס'" [LayoutDirection]="'rtl'"
-                [LOVListComponentPropName]="'LOVListOccuredStatuses'"
+                [LOVListComponentPropName]="'LOVListOccuredStatuses'" [MaxItemsAddedToList]="1"
                 (ChosenListItemsChanged)="SelectedValueChangedEmitOccuredStatuses()" [ChosenListHeader]="'סטטוסים שנבחרו'"
                 [ButtonAddLabel]="'בחר'">
                 <span class="class-MultiSelectLOV-content">
@@ -86,7 +86,7 @@
         </td>
         <td *ngIf="StatusesFeature && !CurrentScreenIsWorkSpace" style="width:250px; vertical-align:middle;">
             <MultiSelectLOV [DataContext]="DataContext" [PlaceHolder]="'לא התרחש סטטוס'" [LayoutDirection]="'rtl'"
-                [LOVListComponentPropName]="'LOVListNotOccuredStatuses'"
+                [LOVListComponentPropName]="'LOVListNotOccuredStatuses'" [MaxItemsAddedToList]="1"
                 (ChosenListItemsChanged)="SelectedValueChangedEmitNotOccuredStatuses()" [ChosenListHeader]="'סטטוסים שנבחרו'"
                 [ButtonAddLabel]="'בחר'">
                 <span class="class-MultiSelectLOV-content">
