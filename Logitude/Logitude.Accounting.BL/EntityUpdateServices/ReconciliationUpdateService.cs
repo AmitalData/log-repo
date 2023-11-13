@@ -41,6 +41,11 @@ using Logitude.BL.InvoiceModel.CloseTables;
 using System.Diagnostics;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Logitude.Accounting.BL.CoreBL.Reports;
+using System.Transactions;
+using Logitude.BL.ShipmentsModel.APIDataContract;
+using Logitude.Customs.BL.EntityQueryServices;
+using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.Security;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -470,6 +475,34 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
 
                     ledgerTransactionPM.IsReconciled = !reconciliationLine.IsPartial;
+                }
+                if (FeatureToggleHelper.HasFeatureToggle("ILO", ledgerTransactionPM.Tenant) && ledgerTransactionPM.SourceTypeCode == "4")
+                {
+                    IInvoiceContext invoiceContext = InvoiceContext.GetContext(ledgerTransactionPM.Tenant);
+                    var invoiceRepository = new APInvoiceRepository(invoiceContext);
+                    APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(invoiceRepository);
+                    APInvoicePM invoice = aPInvoiceQuery.GetSinglePM(ledgerTransactionPM.SourceId, ledgerTransactionPM.Tenant);
+                    GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
+                    GLAccountPM account = query.GetSingle(entityPM.AccountId, false, false);
+                    var transactionAmount = account.ReconcileMethodCode == ReconcileMethodValues.LocalCurrency ? ledgerTransactionPM.LocalAmountCredit : ledgerTransactionPM.ForeignAmountCredit;
+                    if (ledgerTransactionPM.OpenAmount == 0)
+                    {
+                        invoice.IsClosed = true;
+                        invoice.StatusCode = "PD";
+                    }
+                    else if (Math.Abs(ledgerTransactionPM.OpenAmount) < transactionAmount)
+                    {
+                        invoice.IsClosed = false;
+                        invoice.StatusCode = "PP";
+                    }
+                    else
+                    {
+                        invoice.IsClosed = false;
+                        invoice.StatusCode = "AD";
+                    }
+                    SecurityUtility.IsWorkerRoleCall = true;
+                    APInvoiceService aPInvoiceService = new APInvoiceService(invoiceContext, ledgerTransactionPM.Tenant);
+                    aPInvoiceService.Update(invoice, true);
                 }
                 //ledgerTransactionPM.InReconcileProgress = true;
             }

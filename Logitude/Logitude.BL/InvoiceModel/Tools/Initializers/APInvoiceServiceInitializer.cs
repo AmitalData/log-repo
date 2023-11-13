@@ -100,8 +100,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
             else
             {
                 ContactRepository contactRepository = new ContactRepository(CommonContext);
-
-                string email = HttpContext.Current.User.Identity.Name;
+                string email = "";
+                if (SecurityUtility.IsWorkerRoleCall) {
+                    email = SecurityUtility.GetAuthenticatedUser();
+                } else {
+                    email = HttpContext.Current.User.Identity.Name;
+                }
 
                 if (email != null)
                 {

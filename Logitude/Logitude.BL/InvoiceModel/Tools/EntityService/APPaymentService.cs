@@ -65,6 +65,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour;
         private bool isAccountingActivated = false;
         private GLAccountPM _PaymentGLAccount = null;
+        private bool _invoiceStatusAccordingToLedgerOpenAmount = false;
         public APPaymentService(IInvoiceContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -83,6 +84,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             isAccountingActivated = tenantPOCO.AccountingActivated;
+            _invoiceStatusAccordingToLedgerOpenAmount = FeatureToggleHelper.HasFeatureToggle("ILO", tenant);
         }
 
         private bool isTransferEnabled = false;
@@ -1061,7 +1063,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         if ((invoiceAmount < 0) || (PaidAmount <= invoiceAmount))
                         {
                             invoice.IsClosed = false;
-                            if (invoice.StatusCode == "PD" || invoice.StatusCode == "PP")
+                            if (!_invoiceStatusAccordingToLedgerOpenAmount && (invoice.StatusCode == "PD" || invoice.StatusCode == "PP"))
                             {
                                 if (PaidAmount != 0)
                                 {
@@ -1079,32 +1081,34 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             invoice.AmountDue = invoiceAmountDue;
                             invoice.AmountDueInLocalCurrency = MethodHelper.Round((invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate), 2);
                             invoice.AmountDueInProfitCurrency = MethodHelper.Round((invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate), 2);
-                            
-                            if (invoiceAmountDue == 0)
+                            if (!_invoiceStatusAccordingToLedgerOpenAmount)
                             {
-                                // it is allowed to have invoice with 0 amount and 0 amount due
-                                if (allConnectedItems.Count > 0)
+                                if (invoiceAmountDue == 0)
                                 {
-                                    invoice.IsClosed = true;
-                                    invoice.StatusCode = "PD";
+                                    // it is allowed to have invoice with 0 amount and 0 amount due
+                                    if (allConnectedItems.Count > 0)
+                                    {
+                                        invoice.IsClosed = true;
+                                        invoice.StatusCode = "PD";
+                                    }
                                 }
-                            }
 
-                            else if (invoiceAmountDue > 0 && invoiceAmountDue < invoiceAmount)
-                            {
-                                invoice.IsClosed = false;
-                                invoice.StatusCode = "PP";
-                            }
+                                else if (invoiceAmountDue > 0 && invoiceAmountDue < invoiceAmount)
+                                {
+                                    invoice.IsClosed = false;
+                                    invoice.StatusCode = "PP";
+                                }
 
-                            else if (invoiceAmountDue < 0 && invoiceAmountDue > invoiceAmount)
-                            {
-                                invoice.IsClosed = false;
-                                invoice.StatusCode = "PP";
-                            }
+                                else if (invoiceAmountDue < 0 && invoiceAmountDue > invoiceAmount)
+                                {
+                                    invoice.IsClosed = false;
+                                    invoice.StatusCode = "PP";
+                                }
 
-                            else if (invoiceAmountDue < 0 && invoiceAmount > 0)
-                            {
-                                throw new Exception("The Amount due is not suitable to the total amount paid, for invoice: " + invoice.InvoiceNumber);
+                                else if (invoiceAmountDue < 0 && invoiceAmount > 0)
+                                {
+                                    throw new Exception("The Amount due is not suitable to the total amount paid, for invoice: " + invoice.InvoiceNumber);
+                                }
                             }
                         }
 
