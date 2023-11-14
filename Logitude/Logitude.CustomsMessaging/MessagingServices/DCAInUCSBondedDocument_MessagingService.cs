@@ -188,7 +188,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DeclarationId = documentsFilingPM.IsNotCustomsDocId ? documentsFilingPM.DeclarationId: documentsFilingPM.EntityId,
                 DocumentsFilingId = documentsFilingPM.Id,
                 CustomsDoucumentTypeCode = CustomsDoucumentTypeCode,
-                LoggingUserId = LoggingUserId,
+                LoggingUserId = documentsFilingPM.IsNotCustomsDocId ? documentsFilingPM.LoggedUserId: LoggingUserId,
                 
                 DocumentTypeCode = documentsFilingPM.DocumentTypeCode,
                  LoggingEntityReference = documentsFilingPM.Code,
@@ -600,7 +600,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
            CustomsDocumentPM customsDocumentPM,
 
            string CustomsDoucumentTypeCode,
-           bool IsSendFromAutoClosing = false)
+           bool IsSendFromAutoClosing = false,string LogingUserId = "")
         {
             if (customsDocumentPM == null)
             {
@@ -632,6 +632,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     var context1 = CustomContext.GetContext(Tenant);//context each CRS TRANS
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(context1, new Dictionary<string, IContext>(), customsDocumentPM.Tenant);
+					myCustomsDocumentUpdateService.LoginUserId = LogingUserId;
 					myCustomsDocumentUpdateService.IsSendFromAutoClosing = IsSendFromAutoClosing;
 
 					customsDocumentPM.IsSendToQueue = false;

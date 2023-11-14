@@ -992,6 +992,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				if (documentsFilingPM.IsNotCustomsDocId)
 				{
 					documentsFilingPM.DeclarationId = _MyDeclarationPM.Id;
+					documentsFilingPM.LoggedUserId = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
 					ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", documentsFilingPM.Tenant)) as ISendBondedCustomDocumentService;
 					myISendBondedCustomDocumentService.JustDoIt(documentsFilingPM);
 				}

@@ -60,7 +60,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                    requestParams.Tenant,
                    customResponse.DocumentsFilingId,
                    customsDocumentPM,
-                   customResponse.DocumentTypeCode, customResponse.IsSendFromAutoClosing);
+                   customResponse.DocumentTypeCode, customResponse.IsSendFromAutoClosing, customResponse.LoggingUserId);
 
 
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
