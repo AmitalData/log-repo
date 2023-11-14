@@ -173,6 +173,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool OcrNotConnect { get; set; }
 		public bool IsNotCustomsDocId { get; set; }
 		public string DeclarationId { get; set; }
+		public string LoggedUserId { get; set; }
 
 	}
 }
