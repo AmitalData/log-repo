@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
 
-            List<LedgerTransactionList> arPaymentTransactions = gLAccountMoreDataRepository.GetAllChecks(cardId, tenant, isFuture: _IsFutureOpenCheques,showLocal: showLocal);
+            List<LedgerTransactionList> arPaymentTransactions = gLAccountMoreDataRepository.GetAllChecks(accountId, tenant, isFuture: _IsFutureOpenCheques,showLocal: showLocal);
             /*GetARPaymentLedgerTransactions(accountId).Distinct().ToList();*/
             //List<LedgerTransactionList> externalTransactions = GetExternalTransactionsForAccount(accountId, tenant);
 

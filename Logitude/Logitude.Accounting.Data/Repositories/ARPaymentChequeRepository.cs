@@ -10,6 +10,8 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Data.Entity.Core.Objects;
+using System.Runtime.Remoting.Contexts;
+
 namespace Logitude.Accounting.Data.Repositories
 {
    public partial class ARPaymentChequeRepository:IRepository<ARPaymentCheque>
@@ -95,6 +97,16 @@ namespace Logitude.Accounting.Data.Repositories
         {
             return context.ARPaymentCheques.Any(a => a.PaymentId == paymentId && a.Id == arPaymentChequesId && a.Tenant == tenant);
         }
+
+        public string GetAccountIdForCheque(int tenant, string paymentId, int lineNumber)
+        {
+            return (from a in context.Journals
+                    join l in context.LedgerTransactions
+                    on a.Id equals l.JournalId
+                    where a.AccountingEntityId == paymentId && a.Tenant == tenant && l.JournalLineNumber == lineNumber 
+                    select l.AccountId).FirstOrDefault();
+        }
+
 
     }
 
