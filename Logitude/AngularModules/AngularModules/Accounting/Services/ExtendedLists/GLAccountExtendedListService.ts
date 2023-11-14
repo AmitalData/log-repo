@@ -10,8 +10,9 @@ import { AgingReportParameters } from '../../DataContracts/AgingReportParameters
 import { LedgerTransactionListService } from '../StandardLists/LedgerTransactionListService'
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {AppTool} from '../../../Infrastructure/Tools';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
+import { PerformanceLogger } from 'Infrastructure/Utilities/PerformanceLogger';
 
 @Injectable()
 
@@ -368,8 +369,77 @@ export class GLAccountExtendedListService {
 
 
     }
+    private _http: HttpClient;
+
+    getByFilters(filters: ApiQueryFilters) {
+
+       this._http = ServiceHelper.HttpClient;
+        var callTime = new Date();
+        var url=ServiceHelper.GetLogitudeURL() + 'api/glaccountviews';                     
+        var urlparameters = '/getbyfiltersshort?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter)
+                {
+					propValue = encodeURIComponent(propValue);
+					urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+				}
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
 
 
+        }
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+
+      
+        var callUrl = this._apiUrl.concat(urlparameters);//
+        
+		
+	   return defer(() => {
+           return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+
+               var serviceResponse: ServiceResponse;
+               serviceResponse = response.body;
+                var _mappedListsArray: Array< GLAccountList> = [];
+				if(serviceResponse.Result)
+				{
+                for (var key in serviceResponse.Result) {
+				
+				   var entity: GLAccountList;
+                   entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+				   _mappedListsArray.push(entity);
+
+				 }
+                }   
+
+                serviceResponse.Result = _mappedListsArray;       
+				serviceResponse.CallTime = callTime;
+                var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GLAccount", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+				           
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));;
+        });        
+    }
+    getByFiltersShort(objectTableName: string, filters: ApiQueryFilters, MethodName: string = null) {
+        
+        return new Promise((resolve, reject) => {
+            resolve(this.getByFilters(filters));
+          
+        });
+    }
 
 
 
