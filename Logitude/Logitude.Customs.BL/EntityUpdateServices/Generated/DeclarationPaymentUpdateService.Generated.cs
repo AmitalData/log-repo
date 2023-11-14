@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class DeclarationPaymentUpdateService:EntityUpdateService<DeclarationPayment,DeclarationPaymentPM,EntityPM>
+   public partial class DeclarationPaymentUpdateService:EntityUpdateService<DeclarationPayment,DeclarationPaymentPM,DeclarationPM>
    {
    
         DeclarationPaymentRepository entityRepository;

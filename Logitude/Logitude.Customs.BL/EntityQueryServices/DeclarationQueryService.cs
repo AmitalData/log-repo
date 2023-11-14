@@ -55,12 +55,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
             DeclarationConstraintQueryService declarationConstraintQueryService = new EntityQueryServices.DeclarationConstraintQueryService(context);
             DeclarationConsAcceptanceQueryService declarationConsAcceptanceQueryService = new DeclarationConsAcceptanceQueryService(context);
             DecDangersContactQueryService decDangersContactQueryService = new DecDangersContactQueryService(context);
+            DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(context);
 
             //DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
 
             entityPM.InvoiceHasFreight = supplierInvoiceService.DoesAnyInvoiceHasFreight(entityPM.Id, entityPM.Tenant);
             //******getting all compositionTables for response service purposes only *****///
             entityPM.Consignments = consignmentService.GetMulti(declarationKeys, true);
+            entityPM.DeclarationPayments = declarationPaymentQueryService.GetMulti(declarationKeys, true,true);
+
             // if (LoadSupplierInvoices)
             var DeclarationExportRecipientQueryService = new DeclarationExportRecipientQueryService(context);
             entityPM.DeclarationExportRecipients = DeclarationExportRecipientQueryService
