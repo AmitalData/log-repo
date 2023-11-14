@@ -89,7 +89,7 @@ print N'Check  Journal_cursor'
 	end
 
 UPDATE [dbo].[Journals]
-SET [QueueId]= @pQMessageId,[IsLedgerCreated]=1
+SET [QueueId]= @pQMessageId,[IsLedgerCreated]=1,[StatusCode]=2
 WHERE [Journals].Id=  @pJournalId and [Journals].Tenant = @pTenant;
 
  SELECT @myrowcount = @@ROWCOUNT
