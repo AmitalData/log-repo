@@ -1057,8 +1057,8 @@ Line3
         let _http = ServiceHelper.HttpClient;
         _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
             .subscribe(
-                r => { this._LabelLog = JSON.stringify(r); },
-                e => { this._LabelLog = JSON.stringify(e); },
+                r => { this._LabelLog = JSON.stringify(r); this.CurrentSession.StopBusyIndicator(); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator(); },
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
     }
