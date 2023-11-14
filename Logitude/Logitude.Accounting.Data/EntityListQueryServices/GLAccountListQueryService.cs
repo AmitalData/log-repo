@@ -352,6 +352,161 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return query;
         }
+        public List<GLAccountList> GetListShort(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<GLAccount> iQueryable = (from a in context.GLAccounts
+
+                                                where a.Tenant == tenant
+                                                select a);
+            iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable, tenant);
+            iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<GLAccount>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            User loggedUser = GetLoggedUser(tenant);
+            FullAccountingSettingListQueryService fullAccountingSettingListQueryService = new FullAccountingSettingListQueryService(AccountingContext.GetContext(tenant));
+            FullAccountingSettingList settings = fullAccountingSettingListQueryService.GetSingle(tenant.ToString());
+
+            IQueryable<GLAccountList> query2 = GetIqueryableListShort(iQueryable, loggedUser, settings);
+
+            //query2 = MapListFields(query2, loggedUser);
+
+
+            query2 = filter.GetFilteredQuery<GLAccountList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(GLAccountList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> GLAccountObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("GLAccount", tenant).ToList();
+
+                ObjectField objectField = (from a in GLAccountObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+                    if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<GLAccountList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                        switch (objectField.DataTypeCode.ToLower())
+                        {
+                            case "ntext":
+                            case "text":
+                                {
+                                    query2 = sortClass.GetSorterQuery<GLAccountList, string>(queryOperations, query2);
+                                    break;
+                                }
+                            case "sigdouble":
+                            case "double":
+                                {
+                                    query2 = sortClass.GetSorterQuery<GLAccountList, double>(queryOperations, query2);
+                                    break;
+                                }
+                            case "date":
+                            case "datetime":
+                                {
+                                    query2 = sortClass.GetSorterQuery<GLAccountList, DateTime>(queryOperations, query2);
+                                    break;
+                                }
+                            case "unsinteger":
+                            case "integer":
+                                {
+                                    query2 = sortClass.GetSorterQuery<GLAccountList, int>(queryOperations, query2);
+                                    break;
+                                }
+                            case "boolean":
+                                {
+                                    query2 = sortClass.GetSorterQuery<GLAccountList, bool>(queryOperations, query2);
+                                    break;
+                                }
+                            case "unsdecimal":
+                            case "decimal":
+                                {
+                                    query2 = sortClass.GetSorterQuery<GLAccountList, decimal>(queryOperations, query2);
+                                    break;
+                                }
+                            default:
+                                {
+                                    query2 = query2.OrderBy(d => d.DisplayNumber);
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                query2 = query2.OrderBy(d => d.DisplayNumber);
+            }
+            if (!queryOperations.GetAll)
+            {
+                query2 = query2.Skip(skippedPorts);
+                query2 = query2.Take(queryOperations.PageSize);
+            }
+            return query2.ToList();
+
+
+        }
+
+
+        public IQueryable<GLAccountList> GetIqueryableListShort(IQueryable<GLAccount> iQueryable, User loggedUser, FullAccountingSettingList settings)
+        {
+            string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
+            string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
+            string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
+
+            IQueryable<GLAccountList> query = (from a in iQueryable
+                                               join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
+                                               join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
+
+
+                                               select new GLAccountList()
+                                               {
+                                                   Id = a.Id,
+                                                   Tenant = a.Tenant,
+                                                  InternalNumber = a.InternalNumber,
+                                                   AccountTypeCode = a.AccountTypeCode,
+
+                                                   DisplayNumber = a.DisplayNumber,
+                                                   EnglishName = a.EnglishName,
+                                                  LocalName = a.LocalName,
+                                                   SearchFields = a.SearchFields,
+                                                   IsMultiCurrency = a.IsMultiCurrency,
+                                                   CurrencyId = a.CurrencyId,
+                                                   RevenueExpenseType = a.RevenueExpenseType,
+                                                   IsControlAccount = a.IsControlAccount,
+                                                   ChartOfAccountsId = a.ChartOfAccountsId,
+                                                   Inactive = a.Inactive,
+                                                   ReconcileMethodCode = a.ReconcileMethodCode,
+                                                   ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                                                   CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
+                                                CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                                                   BalanceInLocalCurrency = (!settings.IsSecurityLevelActivated
+                                                            || (settings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                                            || (settings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.BalanceInLocalCurrency : 0,
+
+
+
+                                               }); ;
+
+           
+
+
+            return query;
+        }
         public IQueryable<GLAccountList> MapListFields(IQueryable<GLAccountList> iQueryable, User loggedUser)
         {
             //iQueryable.Select(a => a.).
