@@ -607,6 +607,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
+        public string LoginUserId = "";
 		public bool IsSendFromAutoClosing = false;
 		public bool IgnoreSendFailure = false;
         private bool _AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady;
@@ -782,7 +783,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     FutureSendDateTime = date,
                     RequestVIAChangeDue = date.HasValue ? string.Concat("נרשמה בקשה מתוזמנת לשעה ", date.GetValueOrDefault().ToShortTimeString()) : "",
                     ParentId = entityPM.ParentRequestId,
-					IsFromAutoClosing = IsSendFromAutoClosing
+					IsFromAutoClosing = IsSendFromAutoClosing,
+                    LoggingUserId = LoginUserId,
+                    
 
 				};
                 if (String.IsNullOrWhiteSpace(declarationId) && !String.IsNullOrWhiteSpace(entityPM.ClaimId))

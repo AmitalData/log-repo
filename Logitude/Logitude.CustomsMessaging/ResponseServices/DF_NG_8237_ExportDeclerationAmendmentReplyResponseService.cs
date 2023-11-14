@@ -1244,12 +1244,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 	}
 	public class CustomsAutoDecClosing : ICustomsAutoDecClosing
 	{
-		public void Send8235(DeclarationPM decPm)
+		public void Send8235(DeclarationPM decPm, string LoggingUserId = "")
 		{
 			var requestParamsData = new AmendmentRequestParams();
 
 			var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-			var loggedUserId = AuthenticationUtil.ResolveUserId(decPm.Tenant);
+			var loggedUserId =!string.IsNullOrEmpty(LoggingUserId)? LoggingUserId: AuthenticationUtil.ResolveUserId(decPm.Tenant);
 
 			requestParamsData.Tenant = decPm.Tenant;
 			requestParamsData.AppicationId = decPm.Id;
