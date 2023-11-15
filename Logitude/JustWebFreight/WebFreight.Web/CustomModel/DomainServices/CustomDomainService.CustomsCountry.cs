@@ -29,7 +29,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
         {
             customContext = CustomContext.GetContext(tenant);
             customsCountryQuery = new CustomsCountryQueryService(customContext);
-            CustomsCountryPM CustomsCountry = customsCountryQuery.GetSingle(id, false, false);
+            CustomsCountryPM CustomsCountry = customsCountryQuery.GetSingleCustomsCountryWithTenant(id, tenant);
             return CustomsCountry;
         }
 
