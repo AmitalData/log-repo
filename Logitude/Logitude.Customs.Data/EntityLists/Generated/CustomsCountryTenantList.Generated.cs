@@ -32,6 +32,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string TarriffName  { get; set; }
        [DataMember]
        public string Code  { get; set; }
+       [DataMember]
+       public string TarriffCode  { get; set; }
    }
 
 }

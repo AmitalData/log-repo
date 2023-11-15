@@ -51,9 +51,33 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TarriffCode"
+    Type="varchar"
+    Size="8">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Code"
+    ReferencedTable="CustomsCountries"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="TarriffCode"
+    ReferencedTable="TradeAgreements"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

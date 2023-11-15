@@ -57,7 +57,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 {
                     int tenant = authToken.Tenant;
 
-                    if (entityPOCO.TarriffCode != null)
+					CustomsCountryTenantQueryService customsCountryTenantQueryService = new CustomsCountryTenantQueryService(tenant);
+					CustomsCountryTenantPM customsCountryTenantPm = customsCountryTenantQueryService.GetByTenant(tenant, entityPOCO.Code).FirstOrDefault();
+					if (customsCountryTenantPm != null)
+					{
+						entityPM.Tenant = tenant;
+						entityPM.MalamId = customsCountryTenantPm.MalamId;
+						entityPM.TarriffCode = customsCountryTenantPm.TarriffCode;
+					}
+					if (entityPOCO.TarriffCode != null)
                     {
                         TradeAgreementQueryService tradeAgreementQueryService = new TradeAgreementQueryService(tenant);
                         TradeAgreementPM tradeAgreementPM = tradeAgreementQueryService.GetSingle(entityPOCO.TarriffCode, false, true);
@@ -66,8 +74,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                             entityPM.TarriffName = tradeAgreementPM.LocalName;
                         }
                     }
-                }
-            }
+
+					
+
+				}
+			}
         }
    }
 

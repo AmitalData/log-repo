@@ -1160,6 +1160,7 @@
     <Compile Include="EntityQueryServices\ClientItemQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CustomCountryTenantQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomDocumentTypeTenantQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationStatusQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientItemQueryService.Generated.cs" />

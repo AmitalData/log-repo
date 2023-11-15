@@ -13,6 +13,10 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Data.Repsitories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using System.Web;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
@@ -21,8 +25,30 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CustomsCountryList> GetIqueryableList(IQueryable<CustomsCountry> iQueryable)
         {
-            IQueryable<CustomsCountryList> query = (from a in iQueryable
-                                                    select new CustomsCountryList()
+
+			int tenant = 1;
+			try
+			{
+
+				string token = HttpContext.Current.Request.Headers["Token"];
+				AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+				tenant = authToken.Tenant;
+			}
+			catch (Exception)
+			{
+
+				// throw;
+			}
+
+			var customsCountryTenantRepository = new CustomsCountryTenantRepository(context);
+
+			var q_customsCountryTenant = customsCountryTenantRepository.GetAll(tenant);
+
+			IQueryable<CustomsCountryList> query = (from a in iQueryable
+													join cc in q_customsCountryTenant.Include("TradeAgreement")
+														on a.Code equals cc.Code into xy
+													from s in xy.DefaultIfEmpty()
+													select new CustomsCountryList()
                                              {
                                                  Code = a.Code,
                                                  EnglishName = a.EnglishName,
@@ -30,9 +56,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  SearchFields = a.SearchFields,
                                                  Inactive = a.Inactive,
                                                  MalamId = a.MalamId,
-                                                 TarriffCode = a.TarriffCode,
-                                                 TarriffName = a.TradeAgreement != null ? a.TradeAgreement.LocalName : null,
-
+                                                 TarriffCode = s != null ? s.TarriffCode : a.TarriffCode,
+                                                 TarriffName = s != null ? (s.TradeAgreement.LocalName != null ? s.TradeAgreement.LocalName : null) : (a.TradeAgreement.LocalName != null ? a.TradeAgreement.LocalName : null),
 
                                              });
             return query;

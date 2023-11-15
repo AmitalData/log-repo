@@ -41,6 +41,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Code { get; set; }
 	      
         public virtual CustomsCountry CustomsCountry { get; set; }
+        [ForeignKey("TradeAgreement")]
+        [Column("TarriffCode")]
+	    public string TarriffCode { get; set; }
+	      
+        public virtual TradeAgreement TradeAgreement { get; set; }
     }
 }
 	 
