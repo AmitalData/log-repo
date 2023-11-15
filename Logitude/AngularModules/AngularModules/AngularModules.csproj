@@ -84,6 +84,7 @@
     <Content Include="Accounting\Components\ListTemplates\ReconciliationLineListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\TaxReportListTemplate.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingFunctionalTestComponent.html" />
+    <Content Include="Accounting\Components\Maintenance\UploadExpensesComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingPeriodEventComponent.html" />
     <Content Include="Accounting\Components\Maintenance\EditAccountingPeriodComponent.html" />
@@ -1131,6 +1132,7 @@
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\ReconciliationLineListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingFunctionalTestComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Maintenance\UploadExpensesComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\FullAccountingAddControlComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Generate1000Component.ts" />

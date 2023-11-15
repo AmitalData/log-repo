@@ -38,7 +38,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.Accounting.Data.Repositories;
-
+using Simplog.Data.CommonDataModel;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -46,7 +46,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
     public partial class GLAccountsController : ApiController
     {
-      
+
 
         public HttpResponseMessage GetSingleByDispalyNumberAndTenant(string displayNumber, int tenant)
         {
@@ -229,10 +229,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
             catch (Exception ex)
             {
-                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetConnectedCardsForGLAccount(string accountId)
         {
             try
@@ -275,9 +275,29 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        [HttpPost]
+        public HttpResponseMessage UpdateFromCsv(ImageParameter fileUploadParamerter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
+                ICommonDataContext objectContext = CommonDataContext.GetContext(authToken.Tenant);
+                IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
 
+                GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(accountingContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                byte[] data = Convert.FromBase64String(fileUploadParamerter.Base64String);
+                var res = gLAccountUpdateService.UpdateFromCsv(data, authToken.Tenant);
 
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage GetSingleByInternalNumberAndTenant(string internalNumber, int tenant)
         {
@@ -301,11 +321,5 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
-
-
-        
-
-
-
     }
 }
