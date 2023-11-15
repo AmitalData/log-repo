@@ -1688,7 +1688,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     //Back
     AutoRecoBackButtonClicked() {
         this.IsAutoReconcile = false;
-
+        this.ValidationErrorsList = [];
         this.ReloadScreen();
         this.ExtPageReloadScreen();
     }
