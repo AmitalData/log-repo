@@ -510,6 +510,7 @@ Line3
         }
         return headers;
     }
+
     CreateJournalTask_Click() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 750;
@@ -517,6 +518,14 @@ Line3
         logitudeWindow.Title = "Accounting Load Test";
         logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingLoadTestComponent');
     }
+
+    UploadExpenses_Click() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 750;
+        logitudeWindow.Title = "Upload Expenses";
+        logitudeWindow.Show('./Accounting/Components/Maintenance/UploadExpensesComponent');
+    }
+
     BuildTenant_Click() {
         let paramDefault: any =
         {
