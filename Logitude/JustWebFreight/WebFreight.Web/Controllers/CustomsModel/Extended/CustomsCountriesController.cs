@@ -42,8 +42,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                     var us = new CustomsCountryUpdateService(MyContext, new System.Collections.Generic.Dictionary<string, IContext>(), authToken.Tenant);
-
-                    entityPM.ChangeSetOp = ChangeSetOperation.Update;
+					UserRepository userRepository = new UserRepository(authToken.Tenant);
+					if (authToken != null)
+					{
+						User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, authToken.Email, authToken.Tenant, true);
+						us.userId = loggedUser.Id;
+					}
+					entityPM.ChangeSetOp = ChangeSetOperation.Update;
                     us.Update(entityPM, true);
 
                     scope.Complete();
