@@ -615,7 +615,7 @@
                         </div>
                         <div>
                             <input #dateInput type="date"  id="MyFilterByOpenDateDataAdvancedFiltersGreaterThan" class="gray" [(ngModel)]="FilterByOpenDateDataGreaterThan"
-                                name="FilterByOpenDateDataGreaterThan"  value="{{FilterByOpenDateDataGreaterThan}}"/>     
+                                name="FilterByOpenDateDataGreaterThan"  value="{{FilterByOpenDateDataGreaterThan}}" max="9999-12-31"/>     
                         </div>
                     </div>
                     <div class="inputDateBox" style="float: left;"> 
@@ -624,7 +624,7 @@
                         </div>
                         <div>
                             <input #dateInput type="date"  id="MyFilterByOpenDateDataAdvancedFiltersLessThan" class="gray" [(ngModel)]="FilterByOpenDateDataLessThan"
-                                name="FilterByOpenDateDataLessThan"  value="{{FilterByOpenDateDataLessThan}}"/>     
+                                name="FilterByOpenDateDataLessThan"  value="{{FilterByOpenDateDataLessThan}}" max="9999-12-31"/>     
                         </div>
                     </div>
                     <div class="" *ngIf="MilestonesStatusNoResult">
@@ -647,7 +647,7 @@
                         </div>
                         <div>
                             <input #dateInput type="date"  id="MyFilterByClearanceDateDataAdvancedFilters" class="gray" [(ngModel)]="FilterByClearanceDateDataGreaterThan"
-                            name="FilterByClearanceDateDataGreaterThan"  value="{{FilterByClearanceDateDataGreaterThan}}"/>     
+                            name="FilterByClearanceDateDataGreaterThan"  value="{{FilterByClearanceDateDataGreaterThan}}" max="9999-12-31"/>     
                         </div>
                     </div>
                     <div class="inputDateBox" style="float: left;">
@@ -656,7 +656,7 @@
                         </div>
                         <div>
                             <input #dateInput type="date"  id="MyFilterByClearanceDateDataAdvancedFilters" class="gray" [(ngModel)]="FilterByClearanceDateDataLessThan"
-                                name="FilterByClearanceDateDataLessThan"  value="{{FilterByClearanceDateDataLessThan}}"/>     
+                                name="FilterByClearanceDateDataLessThan"  value="{{FilterByClearanceDateDataLessThan}}" max="9999-12-31"/>     
                         </div>
                     </div>
                     <div class="" *ngIf="MilestonesStatusNoResult">
@@ -679,7 +679,7 @@
                         </div>
                         <div>
                             <input #dateInput type="date"  id="MyFilterByATADateDataDataAdvancedFilters" class="gray" [(ngModel)]="FilterByATADateDataGreaterThan"
-                                name="FilterByATADateDataGreaterThan"  value="{{FilterByATADateDataGreaterThan}}"/>     
+                                name="FilterByATADateDataGreaterThan"  value="{{FilterByATADateDataGreaterThan}}" max="9999-12-31"/>     
                         </div>
                     </div>
                     <div class="inputDateBox" style="float: left;"> 
@@ -688,7 +688,7 @@
                         </div>
                         <div>
                             <input #dateInput type="date"  id="MyFilterByATADateDataDataAdvancedFilters" class="gray" [(ngModel)]="FilterByATADateDataLessThan"
-                                name="FilterByATADateDataLessThan"  value="{{FilterByATADateDataLessThan}}"/>     
+                                name="FilterByATADateDataLessThan"  value="{{FilterByATADateDataLessThan}}" max="9999-12-31"/>     
                         </div>
                     </div>
                     <div class="" *ngIf="MilestonesStatusNoResult">
