@@ -210,6 +210,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="OcrToken"
+    Type="varchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"

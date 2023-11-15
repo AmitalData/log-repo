@@ -52,7 +52,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SuppressIIGMessageToDate, 
 	         HSMCompanyId, 
 	         HSMToken, 
-	         StandAlone,
+	         StandAlone, 
+	         OcrToken,
 	      }
 
 
@@ -92,7 +93,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SuppressIIGMessageToDate, 
 	         HSMCompanyId, 
 	         HSMToken, 
-	         StandAlone,
+	         StandAlone, 
+	         OcrToken,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -249,6 +251,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StandAlone))
             {
 				entityPOCO.StandAlone = entityPM.StandAlone;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
+            {
+				entityPOCO.OcrToken = entityPM.OcrToken;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -412,6 +419,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.StandAlone = entityPOCO.StandAlone;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OcrToken))
+            {
+					entityPM.OcrToken = entityPOCO.OcrToken;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -566,6 +578,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StandAlone))
             {
                 oldEntityPM.StandAlone = entityPM.StandAlone;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
+            {
+                oldEntityPM.OcrToken = entityPM.OcrToken;
             }
 			
 		}

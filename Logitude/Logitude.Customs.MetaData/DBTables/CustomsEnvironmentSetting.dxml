@@ -75,4 +75,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="OcrToken"
+    Type="varchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

@@ -87,6 +87,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string HSMToken { get; set; }
         [Column("StandAlone")]
 	    public bool StandAlone { get; set; }
+        [Column("OcrToken")]
+	    public string OcrToken { get; set; }
     }
 }
 	 

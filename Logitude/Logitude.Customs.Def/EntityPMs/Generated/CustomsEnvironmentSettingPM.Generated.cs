@@ -252,6 +252,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string ocrToken ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OcrToken  
+	   {
+	    
+	     get
+		{
+		   return ocrToken;
+		 }
+		 set
+		 {
+		   if(ocrToken != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrToken",OldValue=ocrToken,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ocrToken=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
