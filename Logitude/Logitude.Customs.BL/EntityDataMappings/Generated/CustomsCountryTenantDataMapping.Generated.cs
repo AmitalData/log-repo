@@ -29,7 +29,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         Inactive, 
 	         MalamId, 
-	         Code,
+	         Code, 
+	         TarriffCode,
 	      }
 
 
@@ -44,7 +45,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Inactive, 
 	         MalamId, 
 	         TarriffName, 
-	         Code,
+	         Code, 
+	         TarriffCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -86,6 +88,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
             {
 				entityPOCO.Code = entityPM.Code;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TarriffCode))
+            {
+				entityPOCO.TarriffCode = entityPM.TarriffCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -134,6 +141,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Code = entityPOCO.Code;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TarriffCode))
+            {
+					entityPM.TarriffCode = entityPOCO.TarriffCode;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsCountryTenantPM entityPM, CustomsCountryTenantPM oldEntityPM)
@@ -173,6 +185,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
             {
                 oldEntityPM.Code = entityPM.Code;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TarriffCode))
+            {
+                oldEntityPM.TarriffCode = entityPM.TarriffCode;
             }
 			
 		}

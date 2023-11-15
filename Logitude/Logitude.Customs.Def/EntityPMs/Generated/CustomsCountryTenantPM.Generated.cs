@@ -227,6 +227,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string tarriffCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TarriffCode  
+	   {
+	    
+	     get
+		{
+		   return tarriffCode;
+		 }
+		 set
+		 {
+		   if(tarriffCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TarriffCode",OldValue=tarriffCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tarriffCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -27,7 +27,14 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.MalamId == MalamID
                     select a).FirstOrDefault();
         }
-    }
+		public CustomsCountry GetSingleCustomsCountry(EntityKeyFields entityKeys)
+		{
+			CustomsCountryKeys keys = entityKeys as CustomsCountryKeys;
+			return (from a in context.CustomsCountries
+					where a.Code == keys.Code
+					select a).FirstOrDefault();
+		}
+	}
 
 }
    

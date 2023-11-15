@@ -17,6 +17,7 @@ export class CustomsCountryTenantList {
 	MalamId: string;
 	TarriffName: string;
 	Code: string;
+	TarriffCode: string;
 	
 }
  

@@ -20,8 +20,29 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+		public IQueryable<CustomsCountryTenant> GetAll(int tenant, string code)
+		{
+			return from a in context.CustomsCountryTenants
+				   where a.Tenant == tenant && a.Code == code
+				   select a;
+		}
+		public CustomsCountryTenant GetSingleByCode(string code, int tenant)
+		{
+			if (!string.IsNullOrEmpty(code))
+			{
+				CustomsCountryTenant entity;
 
-   }
+				entity = (from a in context.CustomsCountryTenants
+						  where a.Code == code && a.Tenant == tenant
+						  select a).FirstOrDefault();
+
+				return entity;
+			}
+			return null;
+		}
+
+
+	}
 
 }
    

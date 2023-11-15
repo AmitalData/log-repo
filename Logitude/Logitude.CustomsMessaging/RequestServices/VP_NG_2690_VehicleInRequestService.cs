@@ -156,7 +156,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //vehicleDetails.richbitOpenDateSpecified
 
             CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(_CustomContext);
-            CustomsCountryPM customsCountryPM = customsCountryQueryService.GetSingle(_MyVehicle.ManufactureCountryCode, false, true);
+            CustomsCountryPM customsCountryPM = customsCountryQueryService.GetSingleCustomsCountryWithTenant(_MyVehicle.ManufactureCountryCode, _MyVehicle.Tenant);
             if (customsCountryPM != null)
             {
                 int malamId;
