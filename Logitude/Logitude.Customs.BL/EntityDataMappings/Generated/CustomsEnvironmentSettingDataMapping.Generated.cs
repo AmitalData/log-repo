@@ -31,7 +31,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HSMSignProcess, 
 	         HSMToken, 
 	         HSMActiveCertUrl, 
-	         HSMSignServiceUrl,
+	         HSMSignServiceUrl, 
+	         OcrToken,
 	      }
 
 
@@ -47,7 +48,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HSMSignProcess, 
 	         HSMToken, 
 	         HSMActiveCertUrl, 
-	         HSMSignServiceUrl,
+	         HSMSignServiceUrl, 
+	         OcrToken,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -94,6 +96,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMSignServiceUrl))
             {
 				entityPOCO.HSMSignServiceUrl = entityPM.HSMSignServiceUrl;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
+            {
+				entityPOCO.OcrToken = entityPM.OcrToken;
 			}
 			}
 
@@ -150,6 +157,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.HSMSignServiceUrl = entityPOCO.HSMSignServiceUrl;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OcrToken))
+            {
+					entityPM.OcrToken = entityPOCO.OcrToken;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsEnvironmentSettingPM entityPM, CustomsEnvironmentSettingPM oldEntityPM)
@@ -194,6 +206,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMSignServiceUrl))
             {
                 oldEntityPM.HSMSignServiceUrl = entityPM.HSMSignServiceUrl;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
+            {
+                oldEntityPM.OcrToken = entityPM.OcrToken;
             }
 			
 		}

@@ -68,6 +68,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string HSMToken  { get; set; }
        [DataMember]
        public bool StandAlone  { get; set; }
+       [DataMember]
+       public string OcrToken  { get; set; }
    }
 
 }

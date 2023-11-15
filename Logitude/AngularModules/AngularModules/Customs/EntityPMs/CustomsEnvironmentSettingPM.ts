@@ -74,6 +74,11 @@ export class CustomsEnvironmentSettingPM {
     public set HSMSignServiceUrl(newValue: string) { if (this.hSMSignServiceUrl != newValue) { this.hSMSignServiceUrl = newValue; this.MarkAsDirty("HSMSignServiceUrl"); } }
        
 	 
+    private ocrToken: string;
+    public get OcrToken() { return this.ocrToken; }
+    public set OcrToken(newValue: string) { if (this.ocrToken != newValue) { this.ocrToken = newValue; this.MarkAsDirty("OcrToken"); } }
+       
+	 
 
     public OldEntityPM: CustomsEnvironmentSettingPM;
 		

@@ -35,6 +35,7 @@ export class CustomsSettingList {
 	HSMCompanyId: string;
 	HSMToken: string;
 	StandAlone: boolean;
+	OcrToken: string;
 	
 }
  

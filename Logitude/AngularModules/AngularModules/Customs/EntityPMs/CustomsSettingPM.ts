@@ -194,6 +194,11 @@ export class CustomsSettingPM {
     public set StandAlone(newValue: boolean) { if (this.standAlone != newValue) { this.standAlone = newValue; this.MarkAsDirty("StandAlone"); } }
        
 	 
+    private ocrToken: string;
+    public get OcrToken() { return this.ocrToken; }
+    public set OcrToken(newValue: string) { if (this.ocrToken != newValue) { this.ocrToken = newValue; this.MarkAsDirty("OcrToken"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		
