@@ -210,7 +210,6 @@ export class GLAccountMenuButtonsHandler {
     }
 
     private UpdateInactiveField(inactive: boolean) {
-        debugger;
 
         var myGLAccountListService: GLAccountListService = new GLAccountListService();
         myGLAccountListService.getSingle(this.EntityPM.Id)
@@ -220,7 +219,7 @@ export class GLAccountMenuButtonsHandler {
                 if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) {
                     this.SetReactivateAccount(inactive);
                 } else {
-                    if (!inactive){
+                    if (!inactive) {
                         this.SetReactivateAccount(inactive);
                     }
                     this.entityArgs.EditComponent.ValidationErrorsList = [];
@@ -228,13 +227,13 @@ export class GLAccountMenuButtonsHandler {
                 }
             });
     }
-    
+
     private SetReactivateAccount(inactive) {
         this.EntityPM.Inactive = inactive;
-                    if (inactive) {
-                        this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
-                    }
-                    this.SaveChenges();
+        if (inactive) {
+            this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
+        }
+        this.SaveChenges();
     }
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
@@ -244,7 +243,7 @@ export class GLAccountMenuButtonsHandler {
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
         this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
-            if (serviceResponse.Result) { 
+            if (serviceResponse.Result) {
                 var result = serviceResponse.Result;
                 var transaction = result; // get the data
                 var openAmountCurrency = transaction.OpenAmountCurrencySign;
@@ -265,10 +264,10 @@ export class GLAccountMenuButtonsHandler {
                 //    logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Reconcile"); //"Reconcile";
                 //  !IsEditComponent && !IsFullScreen && !IsHideWindowMargin
                 logitudeWindow.IsFullScreen = true;
-                if (this.EntityPM?.IsMultiCurrency && this.EntityPM?.ReconcileMethodCode == "1" && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "MC1")[0]){
+                if (this.EntityPM?.IsMultiCurrency && this.EntityPM?.ReconcileMethodCode == "1" && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "MC1")[0]) {
                     windowArgs.IsMultiWithReconcileMethodCodeEqualOne = true;
                 }
-                this.FillPaymentTermName(windowArgs); 
+                this.FillPaymentTermName(windowArgs);
 
 
                 logitudeWindow.WindowArgs = windowArgs;
