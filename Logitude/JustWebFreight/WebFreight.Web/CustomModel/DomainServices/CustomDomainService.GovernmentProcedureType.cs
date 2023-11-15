@@ -31,7 +31,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
         {
             customContext = CustomContext.GetContext(tenant);
             governmentProcedureTypeQuery = new GovernmentProcedureTypeQueryService(customContext);
-            GovernmentProcedureTypePM GovernmentProcedureType = governmentProcedureTypeQuery.GetSingle(id, false, false);
+            GovernmentProcedureTypePM GovernmentProcedureType = governmentProcedureTypeQuery.GetSingleGovernmentProcedureTypeWithTenant(id, tenant);
             return GovernmentProcedureType;
         }
 

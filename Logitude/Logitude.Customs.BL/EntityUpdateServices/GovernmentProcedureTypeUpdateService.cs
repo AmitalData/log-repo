@@ -4,6 +4,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.Contracts;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
 using System;
@@ -17,7 +18,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     public partial class GovernmentProcedureTypeUpdateService : ICanUpdateClosedTable<GovernmentProcedureTypePM>
     {
         public string userId;
-        protected override void OnUpdating(GovernmentProcedureTypePM entityPM)
+        protected override void OnUpdating(GovernmentProcedureTypePM entityPM, GovernmentProcedureType entityPOCO)
         {
             if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
             {
@@ -40,7 +41,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     tenant_def.Tenant = Tenant;
                     definitionRep.Add(tenant_def);
                 }
-            }
+				entityPM.IsImport = entityPOCO.IsImport;
+				entityPM.IsExport = entityPOCO.IsExport;
+				entityPM.IndexOrder = entityPOCO.IndexOrder;
+			}
         }
 
         private static void Map2TenantDef(GovernmentProcedureTypePM entityPM, GovernmentProcTypeTenant tenant_def)
@@ -49,5 +53,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             tenant_def.IsExport = entityPM.IsExport;
             tenant_def.IndexOrder = entityPM.IndexOrder;
         }
-    }
+		protected override void AfterUpdating(GovernmentProcedureTypePM entityPM, EntityPM entityParentPM)
+		{
+			Mapping.CustomPOCOToPM(EntityPM, EntityPOCO);
+		}
+	}
 }
