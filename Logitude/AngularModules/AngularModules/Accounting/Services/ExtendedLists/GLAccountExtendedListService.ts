@@ -1,3 +1,5 @@
+declare var window: any;
+
 import { Injectable } from '@angular/core';
 import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -13,6 +15,8 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
 import { PerformanceLogger } from 'Infrastructure/Utilities/PerformanceLogger';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { EntityListService } from 'Infrastructure/Services/EntityListService';
 
 @Injectable()
 
@@ -373,9 +377,7 @@ export class GLAccountExtendedListService {
 
     getByFilters(filters: ApiQueryFilters) {
 
-       this._http = ServiceHelper.HttpClient;
         var callTime = new Date();
-        var url=ServiceHelper.GetLogitudeURL() + 'api/glaccountviews';                     
         var urlparameters = '/getbyfiltersshort?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -402,11 +404,10 @@ export class GLAccountExtendedListService {
         if (addtionalFiltersValues) {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
-
-      
+     
+        this._http = ServiceHelper.HttpClient;
         var callUrl = this._apiUrl.concat(urlparameters);//
         
-		
 	   return defer(() => {
            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
@@ -433,12 +434,21 @@ export class GLAccountExtendedListService {
             }),catchError(ServiceHelper.HandleServiceError));;
         });        
     }
+
     getByFiltersShort(objectTableName: string, filters: ApiQueryFilters, MethodName: string = null) {
-        
+        var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
+        if (table.IsCustom) {
+            filters.addAdditionalFilter("ObjectTableName", objectTableName, null, null, "Equals", false, false, false, "string");
+        }
+        var entityListService:EntityListService=new EntityListService()
+        let servicelink = entityListService.GetServiceLink(table, MethodName);
+               
         return new Promise((resolve, reject) => {
-            resolve(this.getByFilters(filters));
-          
+            SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                resolve(this.getByFilters(filters));
+            });
         });
+        
     }
 
 
