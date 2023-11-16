@@ -1,6 +1,6 @@
 {
-  "url": "http://test19.westeurope.cloudapp.azure.com/test/",
-  "email": "CloudSmokeNewEnv@mail.com",
+  "url": "https://staging.amital.co.il/login.aspx",
+  "email": "SmokeStagingCloud2@mail.com",
   "password": "!Cypress1",
   "customerCareEmail": "ahmada@logitudeworld.com",
   "customerCarePassword": "!A123456",
