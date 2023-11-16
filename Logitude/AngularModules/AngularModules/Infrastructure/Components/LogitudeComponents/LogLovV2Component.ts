@@ -40,6 +40,7 @@ import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSec
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/ObjectFieldListService";
 import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
+import { CardExtendedPMService } from 'Common/Services/ExtendedPMs/CardExtendedPMService';
 
 @Component({
     selector: 'LogLov',
@@ -50,7 +51,7 @@ import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
-        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy", "ForceDisabled", "ObjectFieldCode", "DefaultPageSize", "LocalFilterFields", "SearchFieldName"],
+        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy", "ForceDisabled", "ObjectFieldCode", "DefaultPageSize", "LocalFilterFields", "SearchFieldName", "StartSearchFromChar", "StartSearchFromNumber"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
@@ -96,6 +97,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public HideLastColumn: boolean = false;
     public SelectedValuePath: string;
     public DisplayMemberPath: string;
+    public StartSearchFromChar: number;
+    public StartSearchFromNumber: number;
+
     public DisplayMemberPathManuallySet: boolean = false;
     public DataContext: any;
     public DataList: any[];
@@ -1367,6 +1371,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnLogLovKeyDown($event) {
+
         var TABKEY = 9;
         var SHIFTKEY = 16;
         var DELETEKEY = 46;
@@ -1757,10 +1762,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
         }
     }
-
+    private oldsearchText: string = ""
+    private cardExtendedPMService:CardExtendedPMService=new CardExtendedPMService()
     Populate(searchText: string, setFirstAsSelected: boolean = false) {
+        
+        this.oldsearchText=this.oldsearchText==null?"":this.oldsearchText;
+        if (searchText?.length > this.oldsearchText?.length ){
+            if (!AppTool.IsNullOrEmpty(searchText) && ( (isNaN(+searchText)&&!AppTool.IsNullOrEmpty(this.StartSearchFromChar) && searchText?.length <= this.StartSearchFromChar)  ||(!AppTool.IsNullOrEmpty(this.StartSearchFromNumber) && !isNaN(+searchText) && searchText?.length <= this.StartSearchFromNumber)))
+            return;
+         }
         this.LovMessage = null;
-
+        this.oldsearchText = searchText;
         if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
 
             this.LovMessage = "Your package doesn't include this module..";
@@ -1900,7 +1912,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
             //turn loading flag on
             this.isLoadingZero = true;
-            
+
             if (this.LookUpTableName == "GLAccount") {
                 var loadPromise = this._GLAccountExtendedListService.getByFiltersShort(this.LookUpTableName, tenantZeroFilters);
             }
@@ -1923,8 +1935,16 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 //filters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null);
                 tenantZeroFilters.pushAdditionalFilter(filterParams);
 
-                //tenantZeroFilters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null, false, false);
-                loadPromise = this.entityListService.getByCompactFilters(this.LookUpTableName, tenantZeroFilters);
+                //tenantZeroFilters.addAdditionalFilter("CompactSearchField", sarchText, null, null, "Contains", false, false, false, null, false, false);
+                if (this.LookUpTableName == "Card"){
+                    
+                    loadPromise =this.cardExtendedPMService.getByCompactFilters(this.LookUpTableName, tenantZeroFilters);
+
+                }
+                else{
+                    loadPromise = this.entityListService.getByCompactFilters(this.LookUpTableName, tenantZeroFilters);
+
+                }
             }
 
             loadPromise.then((res: any) => {
@@ -1963,6 +1983,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnSearchInputBlur() {
+
         if (!this.MouseInArea) {
             if (this.IsOpen) {
                 this.ToggleOpenDropDown();
@@ -2462,6 +2483,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnToggleClicked() {
+
         this.ToggleOpenDropDown();
         if (this.IsOpen) {
             this.Populate(null);
@@ -3316,14 +3338,14 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.isLoading = true;
 
         filters = this.FillTreeFilterDetails(filters);
-        
+
         var loadPromise
         if (this.LookUpTableName == "GLAccount") {
-             loadPromise = this._GLAccountExtendedListService.getByFiltersShort(this.LookUpTableName, filters);
-           
+            loadPromise = this._GLAccountExtendedListService.getByFiltersShort(this.LookUpTableName, filters);
+
         }
-        else{
-             loadPromise = this.entityListService.getByFilters(this.LookUpTableName, filters);
+        else {
+            loadPromise = this.entityListService.getByFilters(this.LookUpTableName, filters);
         }
         if (this.UseCompactSearch) {
             let filterParams: ApiQueryFiltersAddParams = new ApiQueryFiltersAddParams();
@@ -3338,7 +3360,14 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             filterParams.IsLookUpFilter = true;
             //filters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null);
             filters.pushAdditionalFilter(filterParams);
-            loadPromise = this.entityListService.getByCompactFilters(this.LookUpTableName, filters);
+            if (this.LookUpTableName == "Card"){
+                loadPromise = this.cardExtendedPMService.getByCompactFilters(this.LookUpTableName, filters);
+
+            }
+            else{
+                loadPromise = this.entityListService.getByCompactFilters(this.LookUpTableName, filters);
+
+            }
         }
         else if (searchText) {
 
