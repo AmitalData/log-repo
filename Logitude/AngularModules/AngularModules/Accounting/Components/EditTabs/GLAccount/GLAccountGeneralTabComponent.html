@@ -467,16 +467,16 @@
 
                                                 <td style="width:240px;">
                                                     <LogLov [ObjectFieldName]="'PaymentTerms'"
-                                                        [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                                                        [ObjectTableName]="'ObjectTableName'"
+                                                        [DataContext]="DataContext"
                                                         [LookUpTableName]="'PaymentTerm'"
+                                                        [SelectedValue]="PaymentTerms"
                                                         [AutoCompleteSearchWindow]="false"
                                                         [DisplayMemberPath]="GetDisplayMemberPath()"
                                                         [HideColumns]="true">
                                                     </LogLov>
                                                 </td>
-                                                <td></td>
-
-                                            </tr>`
+                                            </tr>
                                             <tr><td><div></div></td></tr>
                                         </table>
                                     </td>
