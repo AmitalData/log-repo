@@ -227,21 +227,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             taxReportLines.ForEach(row =>
             {
                 bool isUpdate = false;
-
-                if (duplicateKeyList.Contains(row.Line))
-                {
-                    isUpdate = true;
-                    row.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
-                }
-                else if (notToSendKeyList.Contains(row.Line))
+                
+                if (notToSendKeyList.Contains(row.Line))
                 {                    
                     isUpdate = true;
                     row.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitforthisreport;
                 }
-                else if (
-                    !notToSendKeyList.Contains(row.Line) &&
-                    !duplicateKeyList.Contains(row.Line) &&
-                    row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
+                else if (duplicateKeyList.Contains(row.Line))
+                {
+                    isUpdate = true;
+                    row.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
+                }
+                else if (row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                 {
                     isUpdate = true;
                     row.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
