@@ -147,7 +147,9 @@
                                 [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
                                 [QueryFilterItems]="GLAccountFilterItems"
                                 (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true" [HideAddLink]="true"
-                                [HideColumns]="true">
+                                [HideColumns]="true"
+                                [StartSearchFromChar]="3"
+                                [StartSearchFromNumber]="6">
                         </LogLov>
                     </td>
 

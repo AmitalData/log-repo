@@ -60,7 +60,9 @@
                             <LogLov [ObjectFieldName]="'PartnerId'" [SelectedValue]="PartnerId"
                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                     [LookUpTableName]="'Card'" [DependencyFilter1Value]="BillToDependencyValue1"
-                                    [DependencyFilter1IsList]="BillToDependencyValue1IsList">
+                                    [DependencyFilter1IsList]="BillToDependencyValue1IsList"
+                                    [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                             </LogLov>
                         </td>
 
@@ -105,7 +107,9 @@
                         <td>
                             <LogLov [ObjectFieldName]="'BillToId'" [SelectedValue]="BillToId"
                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                    [LookUpTableName]="'Card'">
+                                    [LookUpTableName]="'Card'"
+                                    [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                             </LogLov>
                         </td>
 
