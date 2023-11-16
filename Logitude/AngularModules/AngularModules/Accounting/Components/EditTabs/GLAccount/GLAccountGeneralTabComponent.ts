@@ -77,7 +77,8 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         //#endregion
 
 
-
+        debugger
+        
         this.SetupFiels();
         this.SetUIProperties();
 
