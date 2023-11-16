@@ -495,6 +495,13 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get PaymentTerms() { return this.EntityPM.PaymentTerms; }
+    set PaymentTerms(value: string) {
+        if (this.EntityPM.PaymentTerms != value) {
+            this.EntityPM.PaymentTerms = value;
+        }
+    }
+
     get RevenueExpenseType() { return this.EntityPM.RevenueExpenseType; }
     set RevenueExpenseType(value: string) {
         if (this.EntityPM.RevenueExpenseType != value) {
@@ -578,7 +585,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("FollowupDate", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("FollowupNotes", this.ObjectTableName, enable);
-
+        this.UIProperties.SetEnabled("PaymentTerms", this.ObjectTableName, enable);
     }
 
 
