@@ -84,7 +84,7 @@ using Logitude.DashboardModule.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ToggleUpdateClass
-   {  		
+   {
 
 		public const string HashString = "6b3a61263cc17b6a32d9f8c1d504ea43";
 

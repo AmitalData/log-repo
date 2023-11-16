@@ -15,7 +15,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 import { AccountingEntegrityCheckExtendedPMService } from '../../../Services/ExtendedPMs/AccountingEntegrityCheckExtendedPMService';
 import { AccountingIntegrityCheckPMService } from '../../../Services/StandardPMs/AccountingIntegrityCheckPMService';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
-import * as XLSX from 'xlsx'; 
+import * as XLSX from 'xlsx/xlsx'; 
 
 @Component({
 

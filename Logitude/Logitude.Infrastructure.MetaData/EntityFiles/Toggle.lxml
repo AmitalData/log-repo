@@ -1011,6 +1011,7 @@
       Name="&quot;Invoice Status According To Ledger Open Amount&quot;"
       SearchFields="&quot;ILO,Invoice Status According To Ledger Open Amount&quot;"
       Description="&quot;Invoice Status According To Ledger Open Amount&quot;" />
+
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
