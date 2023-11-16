@@ -43,6 +43,10 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [ForeignKey("Currency")]
         [Column("CurrencyId")]
 	    public string CurrencyId { get; set; }
+        
+        [ForeignKey("PaymentTerm")]
+        [Column("PaymentTerms")]
+	    public string PaymentTerms { get; set; }
 	      
         public virtual Currency Currency { get; set; }
         [ForeignKey("RevenueExpense")]

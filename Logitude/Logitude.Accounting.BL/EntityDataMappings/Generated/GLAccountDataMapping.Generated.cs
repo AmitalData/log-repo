@@ -83,6 +83,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CardsDataId, 
 	         PostponedChequesCommission,
              DateFormat,
+			 PaymentTerms
+			
         }
 
 
@@ -293,6 +295,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
             {
 				entityPOCO.CurrencyId = entityPM.CurrencyId;
+			}
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentTerms))
+            {
+				entityPOCO.PaymentTerms = entityPM.PaymentTerms;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RevenueExpenseType))
