@@ -34,6 +34,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return this.repository.GetAnyLedgerTransactionByJournalId(journalId, tenant);
         }
+        public LedgerTransactionPM GetLedgerTransactionPMByJournalId(string journalId, int tenant)
+        {
+            LedgerTransaction MyPoco = repository.GetByJournalId(journalId, tenant).FirstOrDefault();
+            return this.GetEntityPM(MyPoco);
+        }
 
         public string GetCurrencyWhenMultiOff(string gLAccointId, int tenant)
         {

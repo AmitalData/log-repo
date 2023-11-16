@@ -54,6 +54,32 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 entityPM.Mark = false;
             }
 
+
+            //GLAccountQueryService qs = new GLAccountQueryService((MainContext as IAccountingContext));
+            //var glAccount = qs.GetSingle(entityPM.AccountId, false, false);
+
+            //if (glAccount.ChartOfAccountsTypeCode == "4") //מקור חשבונית ספק 
+            //{
+            //    if (journal.AccountingEntityCode == "4") // מסוג חשבונית ספק 
+            //    {
+            //        foreach (var journalLine in journal.JournalLines)
+            //        {
+            //            if (journalLine.ActionCode == "1") // התנועה היא מתוך שורת פקודת יומן בזכות
+            //            {
+
+            //                 // PaymentTerm
+            //                if (glAccount.PaymentTerm != null)
+            //                {
+            //                    if (int.TryParse(glAccount.PaymentTerm, out int paymentTermDays))
+            //                    {
+            //                        journalLine.DueDate = entityPM.DocumentDate.AddDays(paymentTermDays);
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
         }
 
         public bool _CancelledAction;

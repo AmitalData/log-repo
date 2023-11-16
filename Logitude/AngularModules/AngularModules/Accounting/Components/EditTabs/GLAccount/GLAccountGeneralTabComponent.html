@@ -457,6 +457,26 @@
                                                 </td>
                                                 <td></td>
                                             </tr>
+                                              <!-- PaymentTerms -->
+                                            <tr *ngIf="this.ChartOfAccountsTypeCode == '4'" class="FormFieldRow">
+                                            <!-- <tr  class="FormFieldRow"> -->
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'PaymentTerms'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width:240px;">
+                                                    <LogLov [ObjectFieldName]="'PaymentTerms'"
+                                                        [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                                                        [LookUpTableName]="'PaymentTerm'"
+                                                        [AutoCompleteSearchWindow]="false">
+                                                    </LogLov>
+
+                                                </td>
+                                                <td></td>
+
+                                            </tr>`
                                             <tr><td><div></div></td></tr>
                                         </table>
                                     </td>
