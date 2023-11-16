@@ -50,6 +50,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 using (var scope = TransactionFactory.GetNewReadCommittedTransaction())
                 {
+                    bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
                     DateTime dueDate = new DateTime();
                     DateTime refDate = new DateTime();
                     if (DueDate != null) {
@@ -71,13 +72,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     decimal totReconciliationAmountFromUnknownCurrency = ReconciliationLines.Sum(r => r.ReconciliationAmount);
                     if (totReconciliationAmountFromUnknownCurrency == 0)
                     {
-                        bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
                         var msg = TextCodesTranslator.TranslateText("JournalReconcile.O.TotalReconciliationAmountIsZero", tenant, showLocals);
                         throw new ApplicationException(msg);
                     }
                     if (ReconciliationLines.Select(r => r.CurrencyId).Distinct().Count() > 1)
                     {
-                        throw new ApplicationException("לא אופיין התאמת תנועות  ליותר ממטבע אחד");
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("JournalReconcile.O.CantReconcileLedgerTransactionsMoreOne", tenant, showLocals));
                     }
                     DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
                     var qs = new GLAccountQueryService(_AccountingContext);
@@ -127,7 +127,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (rate == null)
                     {
-                        throw new ApplicationException("שער המטבע לא קיים בטבלת שערי המטבעות");
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("JournalReconcile.O.CurrencyRateDoesNotExist", tenant, showLocals));
                     }
 
 
@@ -298,7 +298,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 long minTotalMinutes = 5;
                                 if (timeElapsed.TotalMinutes < minTotalMinutes)
                                 {
-                                    throw new ApplicationException("ישנן תנועות שסומנו ונמצאות בתהליך התאמה על ידי משתמש או סשן אחר, יש לבצע רענון לצאת ממסך התאמות ללא שמירת השורות ולהיכנס מחדש.");
+                                    throw new ApplicationException(TextCodesTranslator.TranslateText("JournalReconcile.O.ReconcileProgressByAnother", tenant, showLocals));
                                 }
 
                             }
@@ -321,7 +321,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         .GetJournalReconcilesForJournalsWithoutLedgers(listJournalReconciles.Select(x => x.LedgerTransactionId).ToList(), journal.Tenant);
                     if (journalReconciles.Where(x=>x.JournalId != journal.Id).Any())
                     {
-                        throw new ApplicationException("ישנן תנועות שסומנו ונמצאות בתהליך התאמה על ידי משתמש או סשן אחר, יש לבצע רענון לצאת ממסך התאמות ללא שמירת השורות ולהיכנס מחדש.");
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("JournalReconcile.O.ReconcileProgressByAnother", tenant, showLocals));
                     }
 
                     scope.Complete();
@@ -345,13 +345,14 @@ namespace Logitude.Accounting.BL.CoreBL
             string Remarks
             )
         {
+            bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
             lock (thisLock)
             {
                 using (var scope = TransactionFactory.GetNewReadCommittedTransaction())
                 {
                     _AccountingContext = accountingContext;
                     var usrid = AuthenticationUtil.ResolveUserId(tenant);
-                    ValidateTotalReconciliationAmount(ReconciliationLines);
+                    ValidateTotalReconciliationAmount(ReconciliationLines, tenant);
                     DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
                     var gLAccountQueryService = new GLAccountQueryService(_AccountingContext);
                     var glAccountPM = gLAccountQueryService.GetSingle(TheAccountId, false, false);
@@ -374,7 +375,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         rate = new RatesTablePM() { Rate = 1 };/// ON THE HOUSE !?!?!?
                     }
-                    ValidateRate(rate);
+                    ValidateRate(rate,tenant);
                     List<JournalPM> addedJournalPMs = new List<JournalPM>();
                     var journalReconcileRepository = new JournalReconcileRepository(accountingContext);
                     ReconciliationLines.ForEach(reconciliationLine =>
@@ -389,7 +390,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         .GetJournalReconcilesForJournalsWithoutLedgers(journal.JournalReconciles.Select(x => x.LedgerTransactionId).ToList(), tenant);
                         if (journalReconciles.Where(x => x.JournalId != journal.Id).Any())
                         {
-                                throw new ApplicationException("ישנן תנועות שסומנו ונמצאות בתהליך התאמה על ידי משתמש או סשן אחר, יש לבצע רענון לצאת ממסך התאמות ללא שמירת השורות ולהיכנס מחדש.");
+                                throw new ApplicationException(TextCodesTranslator.TranslateText("JournalReconcile.O.ReconcileProgressByAnother", tenant, showLocals));
                             }
                         }
                     });
@@ -459,24 +460,26 @@ namespace Logitude.Accounting.BL.CoreBL
             return journal;
         }
 
-        private void ValidateRate(RatesTablePM rate)
+        private void ValidateRate(RatesTablePM rate, int tenant)
         {
+            bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
             if (rate == null)
             {
-                throw new ApplicationException("שער המטבע לא קיים בטבלת שערי המטבעות");
+                throw new ApplicationException(TextCodesTranslator.TranslateText("JournalReconcile.O.CurrencyRateDoesNotExist", tenant, showLocals));
             }
         }
 
-        private void ValidateTotalReconciliationAmount(List<ReconciliationLinePM> ReconciliationLines)
+        private void ValidateTotalReconciliationAmount(List<ReconciliationLinePM> ReconciliationLines,int tenant)
         {
+            bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
             decimal totReconciliationAmountFromUnknownCurrency = ReconciliationLines.Sum(r => r.ReconciliationAmount);
             if (totReconciliationAmountFromUnknownCurrency == 0)
             {
-                throw new ApplicationException("Total ReconciliationAmount is zero");
+                throw new ApplicationException(TextCodesTranslator.TranslateText("JournalReconcile.O.TotalReconciliationAmountIsZero", tenant, showLocals));
             }
             if (ReconciliationLines.Select(r => r.CurrencyId).Distinct().Count() > 1)
             {
-                throw new ApplicationException("לא אופיין התאמת תנועות  ליוצר ממטבע אחד");
+                throw new ApplicationException(TextCodesTranslator.TranslateText("JournalReconcile.O.CantReconcileLedgerTransactionsMoreOne", tenant, showLocals));
             }
         }
 
