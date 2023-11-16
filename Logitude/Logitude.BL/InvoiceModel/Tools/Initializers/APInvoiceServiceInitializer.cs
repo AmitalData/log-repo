@@ -5,6 +5,7 @@ using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -44,6 +45,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
         public List<VatTypePercentagePM> AllVatPercentages { get; private set; }
 
         public APInvoiceServiceInitializerFlags Flags { get; private set; }
+        private bool _invoiceStatusAccordingToLedgerOpenAmount = false;
+
 
         public APInvoiceServiceInitializer(IInvoiceContext objectContext, APInvoicePM entityPM)
         {
@@ -54,7 +57,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
             this.CommonContext = CommonDataContext.GetContext(Tenant);
             this.Repository = new APInvoiceRepository(Context);
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
-            this.TodayDate = this.TodayDateTime.Value.Date;            
+            this.TodayDate = this.TodayDateTime.Value.Date;
+            _invoiceStatusAccordingToLedgerOpenAmount = FeatureToggleHelper.HasFeatureToggle("ILO", Tenant);
+
         }
 
         public void Initialize()
@@ -75,7 +80,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
             List<IServiceBehaviour> serviceBehaviours = new List<IServiceBehaviour>();
 
             serviceBehaviours.Add(new APInvoiceFieldsBehaviour());
-            serviceBehaviours.Add(new APInvoiceAmountDueBehaviour());
+            if (!(_invoiceStatusAccordingToLedgerOpenAmount && EntityPM.IsUpdateFromPaymentService))
+            {
+                serviceBehaviours.Add(new APInvoiceAmountDueBehaviour());
+            }
 
             serviceBehaviours.Add(new APInvoiceLinesBehavior());
             serviceBehaviours.Add(new APInvoiceTotalVatsBehavior());
