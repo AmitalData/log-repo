@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "4679188dd2b4bc203a3e65f97e6b28ef";
+		public const string HashString = "d84eb7f652f372b10e35dda8f3a4d300";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -11765,6 +11765,74 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListLableDefaultText =  "DateFormat",
 					  						ListLocalDefaultText =  "פורמט לקליטת תאריך בדפי בנק",
 					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PaymentTerms",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "PaymentTerm",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PaymentTerms",
+					  						ListPropertyPath =  "PaymentTerms",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PaymentTerms",
+					  						DefaultText =  "PaymentTerms",
+					  						FullLocalDefaultText =  "תנאי תשלום",
+					  						ListFieldLable =  "PaymentTermsListLable",
+					  						ListLableDefaultText =  "PaymentTerms",
+					  						ListLocalDefaultText =  "תנאי תשלום",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "PaymentTerm",
+					  						NavigationPropertyName =  "PaymentTerm",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
