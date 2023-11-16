@@ -78,10 +78,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (journal.ExternalSystem == "UNIFREIGHT" && journal.AccountingEntityCode == "1" && entityPM.ActionCode == "1")
             {
-                // TODO: add s to PaymentTerm = PaymentTerms
-                if(glAccount.PaymentTerm != null)
+                if(glAccount.PaymentTerms != null)
                 {
-                    if (int.TryParse(glAccount.PaymentTerm, out int paymentTermDays))
+                    if (int.TryParse(glAccount.PaymentTerms, out int paymentTermDays))
                     {
                         entityPM.DueDate = ledgerTransaction.DocumentDate.AddDays(paymentTermDays);
                     }
@@ -98,10 +97,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (glAccount.ChartOfAccountsTypeCode == "4" && journal.AccountingEntityCode == "4" && entityPM.ActionCode == "1" )
             {
-                // TODO: add s to PaymentTerm = PaymentTerms
-                if (glAccount.PaymentTerm != null)
+                if (glAccount.PaymentTerms != null)
                 {
-                    if (int.TryParse(glAccount.PaymentTerm, out int paymentTermDays))
+                    if (int.TryParse(glAccount.PaymentTerms, out int paymentTermDays))
                     {
                         entityPM.DueDate = ledgerTransaction.DocumentDate.AddDays(paymentTermDays);
                     }
