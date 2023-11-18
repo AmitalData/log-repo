@@ -54,8 +54,14 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return false;
             }
-
-            FetchlTransactionOfOriginalJournal(_JournalToVoidPM.Id, _JournalToVoidPM.Tenant);
+            if (theStorno.AccountingEntityCode == AccountingEntityValues.APInvoice)
+            {
+                FetchlTransactionOfOriginalJournalForAPInvoiceStorno(_JournalToVoidPM.Id, _JournalToVoidPM.Tenant);
+            }
+            else
+            {
+                FetchlTransactionOfOriginalJournal(_JournalToVoidPM.Id, _JournalToVoidPM.Tenant);
+            }
             if (!_OrginalJornalLedgerTransactions.Any())
             {
                 return false;// did not stream to Accounting !!
@@ -152,7 +158,11 @@ namespace Logitude.Accounting.BL.CoreBL
             var qs = new LedgerTransactionQueryService(_AccountingContext);
             _OrginalJornalLedgerTransactions = qs.GetByJournalId(OriginalJournalId, Tenant);
         }
-
+        private void FetchlTransactionOfOriginalJournalForAPInvoiceStorno(string OriginalJournalId, int Tenant)
+        {
+            var qs = new LedgerTransactionQueryService(_AccountingContext);
+            _OrginalJornalLedgerTransactions = qs.GetByJournalIdAndForeignAmountCreditNotEqualZero(OriginalJournalId, Tenant);
+        }
 
 
         public List<JournalReconcilePM> JournalReconciles2Insert { get; set; }
