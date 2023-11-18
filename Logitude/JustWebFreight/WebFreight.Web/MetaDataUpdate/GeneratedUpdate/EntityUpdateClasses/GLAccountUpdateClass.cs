@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "022f6aeb37c7c9ff72e82eaba83ede72";
+
+		public const string HashString = "60f2cd719406e3038d84b70865281721";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13998,6 +13999,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsONotRepaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NotRepaid", DefaultText = "Not Repaid",LocalDefaultText = @"פירוט שלא נפרעו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsOFutureCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheque", DefaultText = "FutureCheque",LocalDefaultText = @"פירוט המחאות עתידיות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOClosingBalanceAccordingToTheBalanceInDue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ClosingBalanceAccordingToTheBalanceInDue", DefaultText = "Closing balance according to the balance In Due",LocalDefaultText = @"יתרת סגירה לפי יתרה לגביה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

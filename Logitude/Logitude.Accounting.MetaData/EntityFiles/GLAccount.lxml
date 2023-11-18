@@ -18710,6 +18710,12 @@
       LocalDefaultText="&quot;פירוט המחאות עתידיות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.ClosingBalanceAccordingToTheBalanceInDue&quot;"
+      DefaultText="&quot;Closing balance according to the balance In Due&quot;"
+      LocalDefaultText="&quot;יתרת סגירה לפי יתרה לגביה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
