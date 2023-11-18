@@ -1007,6 +1007,42 @@ Line3
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
     }
+
+
+    ButtonGLAccountMultiToCurrency_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.AccountId = "";
+        defaultParam.AccountDisplayNumber = "12345678";
+        defaultParam.ToCurrencyId = "";
+        defaultParam.ToCurrencyCode = "USD";
+        defaultParam.Batch = 0;
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _GLAccountMultiToCurrencyUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountMultiToCurrency';
+        let myUrl = _GLAccountMultiToCurrencyUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&accountId=" + objToCheck1.AccountId;
+        myUrl = myUrl + "&accountDisplayNumber=" + objToCheck1.AccountDisplayNumber;
+        myUrl = myUrl + "&toCurrencyId=" + objToCheck1.ToCurrencyId;
+        myUrl = myUrl + "&toCurrencyCode=" + objToCheck1.ToCurrencyCode;
+        myUrl = myUrl + "&batch=" + objToCheck1.Batch;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); this.CurrentSession.StopBusyIndicator(); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator(); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+
+
     ButtonLoadConsolTaxRep_Click() {
         let opr = "ButtonLoadConsolTaxRep_Click";
         let str: string =
