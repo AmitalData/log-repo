@@ -55,6 +55,9 @@ export class CustomSendOptionsComponent implements OnInit {
         this._CD.detectChanges();
     }
 
+
+    public IsSendAmendmentDeclarationButton: string =TextCodeTranslator.Translate("Customs.Declaration.O.SendAmendmentDeclaration");
+
     public get IsTestTenant() { return SessionLocator.TenantPM.IsTestTenant; }
     public IsDcaActive: boolean = true;
 
