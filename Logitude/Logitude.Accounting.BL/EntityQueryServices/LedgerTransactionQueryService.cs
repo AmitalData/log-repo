@@ -62,8 +62,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             
             var qLedgerTransByAcountingDate =
                 this.repository.GetAll(tenant).Where(rec =>
-                    EntityFunctions.TruncateTime(rec.AccountingDate) >= fromDate.Date &&
-                    EntityFunctions.TruncateTime(rec.AccountingDate) <= toDate.Date);
+                    rec.AccountingDate >= fromDate.Date &&
+                    rec.AccountingDate <= toDate.Date);
+
             if (!string.IsNullOrWhiteSpace(JournalId))
             {
                 qLedgerTransByAcountingDate = qLedgerTransByAcountingDate.Where(rec => rec.JournalId == JournalId);
