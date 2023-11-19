@@ -246,6 +246,7 @@
     <Compile Include="CoreBL\Batch\BatchCancelTaxReportTask.cs" />
     <Compile Include="CoreBL\Batch\BatchClosingTaxReportJournalTask.cs" />
     <Compile Include="CoreBL\Batch\BatchGLAccountInterestDeactivationBalanceTask.cs" />
+    <Compile Include="CoreBL\Batch\BatchGLAccountMultiToCurrencyTask.cs" />
     <Compile Include="CoreBL\Batch\BatchYearlyFIXService.cs" />
     <Compile Include="CoreBL\Batch\GLAccountInterestActivationBalanceTask.cs" />
     <Compile Include="CoreBL\Batch\GLAccountMultiToCurrencyTask.cs" />
