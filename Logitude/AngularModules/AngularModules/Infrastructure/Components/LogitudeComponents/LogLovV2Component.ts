@@ -510,6 +510,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 var filters: ApiQueryFilters;
                 filters = new ApiQueryFilters();
                 //filters.PageSize = 50;
+                
                 if (this.LookUpTableName == "GLAccount") {
                     var loadPr = this._GLAccountExtendedListService.getByFiltersShort(this.LookUpTableName, filters);
                     loadPr.then((res: any) => {
@@ -1765,7 +1766,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     private oldsearchText: string = ""
     private cardExtendedPMService:CardExtendedPMService=new CardExtendedPMService()
     Populate(searchText: string, setFirstAsSelected: boolean = false) {
-        
         this.oldsearchText=this.oldsearchText==null?"":this.oldsearchText;
         if (searchText?.length > this.oldsearchText?.length ){
             if (!AppTool.IsNullOrEmpty(searchText) && ( (isNaN(+searchText)&&!AppTool.IsNullOrEmpty(this.StartSearchFromChar) && searchText?.length <= this.StartSearchFromChar)  ||(!AppTool.IsNullOrEmpty(this.StartSearchFromNumber) && !isNaN(+searchText) && searchText?.length <= this.StartSearchFromNumber)))
@@ -1912,7 +1912,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
             //turn loading flag on
             this.isLoadingZero = true;
-
+            
             if (this.LookUpTableName == "GLAccount") {
                 var loadPromise = this._GLAccountExtendedListService.getByFiltersShort(this.LookUpTableName, tenantZeroFilters);
             }
@@ -3101,7 +3101,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     CallDataFromCache(searchText: string, filters: ApiQueryFilters, setFirstAsSelected: boolean = false) {
 
-
+debugger
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
             filters.PageSize = 1000;
         }
@@ -3319,7 +3319,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     CallDataFromServer(searchText: string, filters: ApiQueryFilters) {
-
+debugger
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
             if (this.DefaultPageSize) {
                 filters.PageSize = this.DefaultPageSize;
@@ -3339,13 +3339,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
         filters = this.FillTreeFilterDetails(filters);
 
-        var loadPromise
+         
         if (this.LookUpTableName == "GLAccount") {
-            loadPromise = this._GLAccountExtendedListService.getByFiltersShort(this.LookUpTableName, filters);
+            var  loadPromise = this._GLAccountExtendedListService.getByFiltersShort(this.LookUpTableName, filters);
 
         }
         else {
-            loadPromise = this.entityListService.getByFilters(this.LookUpTableName, filters);
+            var loadPromise = this.entityListService.getByFilters(this.LookUpTableName, filters);
         }
         if (this.UseCompactSearch) {
             let filterParams: ApiQueryFiltersAddParams = new ApiQueryFiltersAddParams();
