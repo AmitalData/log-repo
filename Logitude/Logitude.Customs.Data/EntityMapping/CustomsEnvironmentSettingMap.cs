@@ -44,6 +44,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.HSMSignServiceUrl).HasColumnName("HSMSignServiceUrl").HasMaxLength(1024).IsUnicode(false);
 
             this.Property(t => t.OcrToken).HasColumnName("OcrToken").HasMaxLength(1024).IsUnicode(false);
+
+            this.Property(t => t.UpdateDocOcrServiceUrl).HasColumnName("UpdateDocOcrServiceUrl").HasMaxLength(1024).IsUnicode(false);
         }
     }
 }

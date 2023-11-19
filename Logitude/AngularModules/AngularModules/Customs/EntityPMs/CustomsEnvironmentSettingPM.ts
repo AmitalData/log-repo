@@ -79,6 +79,11 @@ export class CustomsEnvironmentSettingPM {
     public set OcrToken(newValue: string) { if (this.ocrToken != newValue) { this.ocrToken = newValue; this.MarkAsDirty("OcrToken"); } }
        
 	 
+    private updateDocOcrServiceUrl: string;
+    public get UpdateDocOcrServiceUrl() { return this.updateDocOcrServiceUrl; }
+    public set UpdateDocOcrServiceUrl(newValue: string) { if (this.updateDocOcrServiceUrl != newValue) { this.updateDocOcrServiceUrl = newValue; this.MarkAsDirty("UpdateDocOcrServiceUrl"); } }
+       
+	 
 
     public OldEntityPM: CustomsEnvironmentSettingPM;
 		

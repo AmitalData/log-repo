@@ -275,6 +275,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string updateDocOcrServiceUrl ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdateDocOcrServiceUrl  
+	   {
+	    
+	     get
+		{
+		   return updateDocOcrServiceUrl;
+		 }
+		 set
+		 {
+		   if(updateDocOcrServiceUrl != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDocOcrServiceUrl",OldValue=updateDocOcrServiceUrl,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updateDocOcrServiceUrl=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

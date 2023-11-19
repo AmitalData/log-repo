@@ -42,6 +42,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string HSMSignServiceUrl { get; set; }
         [Column("OcrToken")]
 	    public string OcrToken { get; set; }
+        [Column("UpdateDocOcrServiceUrl")]
+	    public string UpdateDocOcrServiceUrl { get; set; }
     }
 }
 	 

@@ -239,6 +239,11 @@ export class CustomsDocumentPM {
     public set OcrNotConnect(newValue: boolean) { if (this.ocrNotConnect != newValue) { this.ocrNotConnect = newValue; this.MarkAsDirty("OcrNotConnect"); } }
        
 	 
+    private ocrId: string;
+    public get OcrId() { return this.ocrId; }
+    public set OcrId(newValue: string) { if (this.ocrId != newValue) { this.ocrId = newValue; this.MarkAsDirty("OcrId"); } }
+       
+	 
 
     public OldEntityPM: CustomsDocumentPM;
 		
