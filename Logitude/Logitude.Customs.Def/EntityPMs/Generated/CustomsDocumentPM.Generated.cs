@@ -883,6 +883,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string ocrId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OcrId  
+	   {
+	    
+	     get
+		{
+		   return ocrId;
+		 }
+		 set
+		 {
+		   if(ocrId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrId",OldValue=ocrId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ocrId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

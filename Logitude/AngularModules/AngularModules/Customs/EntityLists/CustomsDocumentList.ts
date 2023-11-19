@@ -24,6 +24,7 @@ export class CustomsDocumentList {
 	OcrStatusCode: string;
 	OcrReference: string;
 	OcrNotConnect: boolean;
+	OcrId: string;
 	
 }
  

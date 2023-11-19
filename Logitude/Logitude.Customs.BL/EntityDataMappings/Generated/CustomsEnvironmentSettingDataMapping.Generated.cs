@@ -32,7 +32,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HSMToken, 
 	         HSMActiveCertUrl, 
 	         HSMSignServiceUrl, 
-	         OcrToken,
+	         OcrToken, 
+	         UpdateDocOcrServiceUrl,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HSMToken, 
 	         HSMActiveCertUrl, 
 	         HSMSignServiceUrl, 
-	         OcrToken,
+	         OcrToken, 
+	         UpdateDocOcrServiceUrl,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -101,6 +103,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
             {
 				entityPOCO.OcrToken = entityPM.OcrToken;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDocOcrServiceUrl))
+            {
+				entityPOCO.UpdateDocOcrServiceUrl = entityPM.UpdateDocOcrServiceUrl;
 			}
 			}
 
@@ -162,6 +169,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.OcrToken = entityPOCO.OcrToken;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdateDocOcrServiceUrl))
+            {
+					entityPM.UpdateDocOcrServiceUrl = entityPOCO.UpdateDocOcrServiceUrl;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsEnvironmentSettingPM entityPM, CustomsEnvironmentSettingPM oldEntityPM)
@@ -211,6 +223,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
             {
                 oldEntityPM.OcrToken = entityPM.OcrToken;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDocOcrServiceUrl))
+            {
+                oldEntityPM.UpdateDocOcrServiceUrl = entityPM.UpdateDocOcrServiceUrl;
             }
 			
 		}
