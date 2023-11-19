@@ -167,11 +167,6 @@ export class DeclarationPaymentPM {
     public set AutomaticPayment(newValue: number) { if (this.automaticPayment != newValue) { this.automaticPayment = newValue; this.MarkAsDirty("AutomaticPayment"); } }
        
 	 
-    private isRepeatPayment: boolean;
-    public get IsRepeatPayment() { return this.isRepeatPayment; }
-    public set IsRepeatPayment(newValue: boolean) { if (this.isRepeatPayment != newValue) { this.isRepeatPayment = newValue; this.MarkAsDirty("IsRepeatPayment"); } }
-       
-	 
 
     public OldEntityPM: DeclarationPaymentPM;
 	
