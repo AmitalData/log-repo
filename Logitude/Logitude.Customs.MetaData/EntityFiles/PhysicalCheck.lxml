@@ -5337,6 +5337,27 @@
       LocalDefaultText="&quot;נתוני בדיקה פיזית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+    Code="&quot;Customs.PhysicalCheck.O.QueueEarlierReason&quot;"
+    DefaultText="&quot;Queue Earlier Reason&quot;"
+    LocalDefaultText="&quot;סיבת הקדמת תור&quot;"
+    TextCodeTypeCode="&quot;O&quot;"
+    IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.RequestDetails&quot;"
+      DefaultText="&quot;Request Details&quot;"
+      LocalDefaultText="&quot;פירוט הבקשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
+    <Feature
+       Code="&quot;TaxDeductionReport.Features.EarlierDateFeature&quot;"
+       FeatureTypeCode="&quot;EarlierDateFeature&quot;"
+       FeatureTextCodeCode="&quot;TaxDeductionReport.Features.EarlierDateFeature&quot;"
+       FeatureDefaultText="&quot;Earlier Date Feature&quot;"
+       IsPackagable="true"
+       IsOld="false"
+       IsCoreFeature="false"
+       IsBusinessUnitEnabled="false" />
   <AdditionalFeatures />
 </entity>

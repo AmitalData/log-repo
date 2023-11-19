@@ -74,6 +74,32 @@
 
 
                             </tr>
+
+                            <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate">
+                                <td colspan="3">
+                                    <div class="Tbl1Col0">
+                                        <!-- <label for="QueueEarlierReason">{{'Customs.PhysicalCheck.O.QueueEarlierReason' | TextCodeTranslationPipe}}</label> -->
+
+                                        <label for="QueueEarlierReason">Queue Earlier Reason:</label>
+                                    </div>
+                                </td>
+                                <td class="Tbl1Col1">
+                                    <input id="QueueEarlierReason" type="text" />
+                                </td>
+                            </tr>
+                            <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate">
+                                <td colspan="3">
+                                    <div class="Tbl1Col0">
+                                        <!-- <label for="RequestDetails">{{'Customs.PhysicalCheck.O.RequestDetails' | TextCodeTranslationPipe}}</label> -->
+
+                                        <label for="RequestDetails">Request Details:</label>
+                                    </div>
+                                </td>
+                                <td class="Tbl1Col1">
+                                    <input id="RequestDetails" type="text" />
+                                </td>
+                            </tr>
+                           
                             <tr class="FormFieldRow">
                                 <td colspan="3">
                                     <div class="RadioButton">
