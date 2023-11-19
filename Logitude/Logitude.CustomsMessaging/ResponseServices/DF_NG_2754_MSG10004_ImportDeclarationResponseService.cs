@@ -50,6 +50,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         //private List<SupplierInvoiceItemsTaxesModPM> _SupplierInvoiceItemsTaxesModificationPMList;
         //public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption;
         public bool _IsSubmitDeclarationResponse { get; set; }
+        public bool _IsCancelPaymentResponse { get; set; } = false;
         public bool _IsRetrieveDeclarationResponse { get; set; }
         decimal? totGeneralTaxCalc = 0;
         decimal? totPurchaseCalc = 0;
@@ -327,7 +328,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "UpdateExportCustomsFile");
 
 
-                this._IsSubmitDeclarationResponse = true;
+                this._IsSubmitDeclarationResponse = !this._IsCancelPaymentResponse;
             }
 
             //if (customResponse.ResponseContentHeader.Exception != null)
@@ -541,7 +542,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //DeleteSupplierInvioceItemCertificates(mySupplierInvioceItemCertificatUpdateService);
             }
             LogMessagingUtil.Instance.AppendLine("IsFastDelete:" + _FastDelete.ToString() + ",Took :" + sw.ElapsedMilliseconds);
-
+            
             if (requestParams.ResponseName != "5117")
             {
                 if (String.IsNullOrWhiteSpace(_MyDeclarationPM.DeclarationNumber))
@@ -788,6 +789,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
             }
+
+            if (this._IsCancelPaymentResponse && customResponse?.Response?.Declaration != null)
+            {
+                this._MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value; 
+                this._MyDeclarationPM.PaymentDate = null;
+                this._MyDeclarationPM.PaymentOrderNumber = null;
+                this._MyDeclarationPM.PaymentStatusCode = null;
+            } 
 
             if (_TotalBtlCoverageNISSum > 0)
             {
