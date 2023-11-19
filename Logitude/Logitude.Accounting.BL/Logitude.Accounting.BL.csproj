@@ -249,7 +249,6 @@
     <Compile Include="CoreBL\Batch\BatchGLAccountMultiToCurrencyTask.cs" />
     <Compile Include="CoreBL\Batch\BatchYearlyFIXService.cs" />
     <Compile Include="CoreBL\Batch\GLAccountInterestActivationBalanceTask.cs" />
-    <Compile Include="CoreBL\Batch\GLAccountMultiToCurrencyTask.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\OpenRecoDataValidationService.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\RealOpenAmountService.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\UpdateOpenReconcileService.cs" />
