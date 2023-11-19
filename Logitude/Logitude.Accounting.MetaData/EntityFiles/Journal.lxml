@@ -5280,6 +5280,12 @@
       LocalDefaultText="&quot;אינך מורשה לצפיה בפקודה מספר &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.PermissionSetting&quot;"
+      DefaultText="&quot;Permission Setting&quot;"
+      LocalDefaultText="&quot;הגדרת הרשאה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
