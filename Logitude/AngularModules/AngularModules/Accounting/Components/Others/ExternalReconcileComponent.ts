@@ -565,7 +565,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         this.ChangeCheckBoxesState.emit(emittedArray);
     }
     public FuncExtPageSelectedLines(result: any) {
-        this.TransactionSelectedLines.Clear();
+        this.ExtPageSelectedLines.Clear();
         let emittedArray = result.map((res: ReconcileExternalPageLinePM) => ({ rowData: res, IsChecked: true, RowIndex: -1, ById: true })); //result.map(res=>(new LineModel(res,this,-1)));//[];
         let selectedLines = result.map(res => (new ExtPageLineModel(res, this, -1)));
         this.ExtPageSelectedLines.InsertCollection(selectedLines);
@@ -1029,6 +1029,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
 
     PushLine(row, RowIndex) {
+        
         var index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
 
@@ -1089,6 +1090,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
 
     CalculateTotals() {
+        
         this.accountTransactionsTotal = 0;
         var total = 0;
         for (let line of this.TransactionSelectedLines.Collection) {
