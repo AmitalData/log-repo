@@ -4241,4 +4241,3 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    }
     
 }
-	 נ
