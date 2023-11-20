@@ -1313,7 +1313,7 @@
                  </div>
                  <div *ngIf="cargoTrackingShipmentPM.Events?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 10px);">
                     <table class="row-hover" style="width: 100%;">
-                        <tr *ngFor="let item of cargoTrackingShipmentPM.Events">
+                        <tr *ngFor="let item of cargoTrackingShipmentPM.Events| StopLoopPipe: showMoreEvents:3">
                             <td style="width: 30px;"><img src="./assets/images/icons/tick.png" alt=""></td>
                             <td style="width: 300px;">{{item.LocalName}} <span *ngIf="item.EntityType"> ({{item.EntityType}})</span></td>
                             <td style="width: 300px;">{{item.EventDatetime | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</td>                               
@@ -1325,11 +1325,8 @@
                     </table>
                 </div>
                 <div class="hide-mobile hide-tablet" style="clear: both;"></div>
-
-               
-           
                 <div class="mobile-only tablet-only card document-mobile-card"
-                    *ngFor="let item of cargoTrackingShipmentPM.Events">
+                    *ngFor="let item of cargoTrackingShipmentPM.Events| StopLoopPipe: showMoreEvents:3">
                     <div class="details-section">
                        
                         <div class="row">
@@ -1352,6 +1349,12 @@
                         </div>
                     </div>
  
+                </div>
+                <div *ngIf="cargoTrackingShipmentPM.Events?.length > 3">
+                    <button class="buttonShowMore"
+                            (click)="showMoreEvents=!showMoreEvents">
+                        {{showMoreEvents?'Show Less':'Show More'}}
+                    </button>
                 </div>
             </div>
             </panel>
