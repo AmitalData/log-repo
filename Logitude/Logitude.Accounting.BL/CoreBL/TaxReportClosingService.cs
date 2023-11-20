@@ -77,9 +77,34 @@ namespace Logitude.Accounting.BL.CoreBL
         private void EnsureAbilityToCreateClosingJournal()
         {
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
-            var canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, fullAccountingSettings.VATOutputGLAccountId, tenant);
+            List<TaxReportLine> reconciledLines = null;
+            var canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, fullAccountingSettings.VATOutputGLAccountId, tenant, ref reconciledLines);
             if (!canHaveClosingJournal)
-                throw new ApplicationException(TranslateTextsClass.Translate("TaxReport.O.ClosingJournalValidationMessage",tenant));
+            {
+                string error_text = TranslateTextsClass.Translate("TaxReport.O.ClosingJournalValidationMessage", tenant);
+                if (reconciledLines != null && reconciledLines.Count > 0)
+                {
+                    reconciledLines = reconciledLines.OrderBy(rl => rl.Journal.JournalNumber).ThenBy(rl => rl.Line).ToList();
+                    const int MAX = 5;
+                    if (reconciledLines.Count > MAX)
+                    {
+                        reconciledLines = reconciledLines.Take(MAX).ToList();
+                    }
+                    string lines = String.Join(",", reconciledLines.Select(rl => rl.Line)); 
+
+                    string journals = String.Join(",", reconciledLines.Select(rl => rl.Journal.JournalNumber));
+
+                    string problem = TranslateTextsClass.Translate("Accounting.O.TaxRepProblem", tenant);
+                    if (String.IsNullOrEmpty(problem)) problem = @"הבעיה מצויה בשורה";
+
+                    string problem_2 = TranslateTextsClass.Translate("Accounting.O.TaxRepProblem_2", tenant);
+                    if (String.IsNullOrEmpty(problem)) problem_2 = @"בדוח זה בפקודת יומן מספר";
+
+                    error_text += ". " + problem + " " + journals; 
+                    error_text += " " + problem_2 + " " + lines;
+                }
+                throw new ApplicationException(error_text);
+            }
         }
 
         private void ValidateDate()
