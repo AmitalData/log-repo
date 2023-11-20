@@ -3840,6 +3840,18 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;Accounting.O.TaxRepProblem&quot;"
+      DefaultText="&quot;The problem is in the line&quot;"
+      LocalDefaultText="&quot;הבעיה מצויה בשורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.TaxRepProblem_2&quot;"
+      DefaultText="&quot;of this report in Journal No&quot;"
+      LocalDefaultText="&quot;בדוח זה בפקודת יומן מספר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;Accounting.O.MustBeLess&quot;"
       DefaultText="&quot;From date must be less than to date&quot;"
       LocalDefaultText="&quot;מ-תאריך חייב להיות קטן מ-עד תאריך&quot;"

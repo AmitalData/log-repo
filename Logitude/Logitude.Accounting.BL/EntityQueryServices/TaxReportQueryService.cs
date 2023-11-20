@@ -145,24 +145,45 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
-        public bool CheckIfTaxReportCanHaveClosingJournal(string taxReportId, string vatOutputGLAccountId, int tenant)
+        public bool CheckIfTaxReportCanHaveClosingJournal(string taxReportId, string vatOutputGLAccountId, int tenant, ref List<TaxReportLine> reconciledLines)
         {
-            return true;
-            //  var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
-            //            .GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
-            //  var taxReportLinesReferences = sameReferenceAndOppositeVatLines.Select(x => x.Key.reference);
+            //return true;
+            var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
+                      .GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
+            var taxReportLinesReferences = sameReferenceAndOppositeVatLines.Select(x => x.Key.reference);
 
-            //bool hasOutputReconciledLines = (from line in context.TaxReportLines
-            //                                 join ledger in context.LedgerTransactions on line.JournalId equals ledger.JournalId
-            //                                 where line.OutputOrInput == TaxReportLineOutType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == vatOutputGLAccountId
-            //                                        && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
-            //                                 select line).Any();
-            //bool hasInputReconciledLines = (from line in context.TaxReportLines
-            //                                join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
-            //                                where line.OutputOrInput == TaxReportLineInputType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0
-            //                                         && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
-            //                                select line).Any();
-            //return !(hasOutputReconciledLines || hasInputReconciledLines);
+            var outputReconciledLinesQ = (from line in context.TaxReportLines
+                                             join ledger in context.LedgerTransactions on line.JournalId equals ledger.JournalId
+                                             where line.OutputOrInput == TaxReportLineOutType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == vatOutputGLAccountId
+                                                    && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                                             select line);
+
+            bool hasOutputReconciledLines = outputReconciledLinesQ.Any();
+
+            if (hasOutputReconciledLines)
+            {
+                reconciledLines = outputReconciledLinesQ.ToList();
+            }
+            else
+            {
+                reconciledLines = new List<TaxReportLine>();
+            }
+
+            var inputReconciledLinesQ = (from line in context.TaxReportLines
+                                            join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
+                                            where line.OutputOrInput == TaxReportLineInputType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0
+                                                     && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                                            select line);
+
+            bool hasInputReconciledLines = inputReconciledLinesQ.Any();
+
+            if (hasInputReconciledLines)
+            {
+                reconciledLines = reconciledLines.Concat(inputReconciledLinesQ).ToList();
+            }
+
+
+            return !(hasOutputReconciledLines || hasInputReconciledLines);
         }
 
         public List<TaxReportLine> GetTaxReportReconciledLines(string taxReportId, int tenant)
