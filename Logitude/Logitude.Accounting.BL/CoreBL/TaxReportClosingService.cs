@@ -100,8 +100,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     string problem_2 = TranslateTextsClass.Translate("Accounting.O.TaxRepProblem_2", tenant);
                     if (String.IsNullOrEmpty(problem)) problem_2 = @"בדוח זה בפקודת יומן מספר";
 
-                    error_text += ". " + problem + " " + journals; 
-                    error_text += " " + problem_2 + " " + lines;
+                    error_text += ". " + problem + " " + lines; 
+                    error_text += " " + problem_2 + " " + journals;
                 }
                 throw new ApplicationException(error_text);
             }
