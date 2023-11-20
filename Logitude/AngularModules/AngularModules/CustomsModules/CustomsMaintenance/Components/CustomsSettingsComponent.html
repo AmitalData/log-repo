@@ -762,7 +762,41 @@
     
     
     
-                            
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+              <!-- OCR -->
+              <tr class="FormFieldRow" >
+                <td colspan="4"  style="border: 1px solid rgb(59, 179, 226);  ">
+                    <table>
+                        <tr>
+                            <td class="tbl1Label" style="width: 90px; ">
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'OcrToken'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          
+                                          >
+    
+                                </LogLabel>
+                            </td>
+    
+                            <td class="tbl1Col1" style="width: 300px; ">
+    
+                                <LogTextBox [ObjectFieldName]="'OcrToken'"
+                                            [InputType]="'text'"
+                                            [DataContext]="DataContext"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [Text]="OcrToken"></LogTextBox>
+    
+    
+    
+                            </td>
                             <td></td>
                         </tr>
                     </table>
