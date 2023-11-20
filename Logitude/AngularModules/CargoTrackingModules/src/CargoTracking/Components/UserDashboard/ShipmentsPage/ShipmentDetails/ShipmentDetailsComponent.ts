@@ -98,7 +98,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     RoutingMobilePagersWidth: number = 60;
     MaxWidthForMobileScreenForRouting: number = 470;
     RoutingMobileMarginLeft: number = 55;
-
+    showMoreEvents: boolean  = false;
     NoTaxDetails: boolean = false;
     public OverviewPanelTitle: string;
     public TypeTitle: string;
