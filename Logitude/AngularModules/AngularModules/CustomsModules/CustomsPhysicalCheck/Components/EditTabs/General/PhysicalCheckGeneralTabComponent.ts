@@ -204,7 +204,7 @@ export class PhysicalCheckGeneralTabComponent
     }
 
     SetEarlierDateFieldsEnable(enable: boolean) {
-        this.UIProperties.SetEnabled("QueueEarlierReason", this.ObjectTableName, enable);
+        this.UIProperties.SetEnabled("RequestToAdvanceAQueue", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled(" RequestDetails", this.ObjectTableName, enable);
         debugger
     }

@@ -5338,8 +5338,8 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-    Code="&quot;Customs.PhysicalCheck.O.QueueEarlierReason&quot;"
-    DefaultText="&quot;Queue Earlier Reason&quot;"
+    Code="&quot;Customs.PhysicalCheck.O.RequestToAdvanceAQueue&quot;"
+    DefaultText="&quot;Request To Advance A Queue&quot;"
     LocalDefaultText="&quot;סיבת הקדמת תור&quot;"
     TextCodeTypeCode="&quot;O&quot;"
     IsSpellChecked="false" />
