@@ -51,6 +51,15 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 changingTimeRequest.BringQueueForwardIndicator = requestParams.BringQueueForwardIndicator;
                 changingTimeRequest.BringQueueForwardIndicatorSpecified = true;
+
+                if (requestParams.BringQueueForwardIndicator)
+                {
+                    // todo: יש לשלוח את 2 השדות החדשים CH_NG_191_MSG2_ChangingTimeRequestParams
+                    
+                    // after adding to db:
+                    //changingTimeRequest.RequestToAdvanceAQueue = requestParams.RequestToAdvanceAQueue;
+                    //changingTimeRequest.RequestDetails = requestParams.RequestDetails;
+                }
             }
 
             var curChangingTimeRequest = changingTimeRequest;

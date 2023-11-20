@@ -129,7 +129,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var declarationPM = declarationQueryService.GetSingle(phsicalCheckPM.DeclarationId, false, false); // Get declaration number for raising event
                         phsicalCheckPM.ChangeSetOp = ChangeSetOperation.Update;
                         phsicalCheckPM.LimitDate = approveChangeTimeRequest.newDate.Value; // Update date of the phsical Check
-                        
+
                         var myUpdateEventContextTagModel = new EventContextTagModel() // Raise event PUI
                         {
                             CallProccessID = EventContextTagModel.ProccessEnum.CH_NG_190_MSG1_NoticeToClientResponseServiceUpdate,
@@ -142,6 +142,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         physicalCheckUpdateService.Update(phsicalCheckPM, true);
                     }
                     break;
+
+                // todo: case requestType=004 && requestType=005
+                case 4:
+                    //phsicalCheckPM.BringQueueForwardIndicatorStatus = 4;
+                    break;
+                case 5:
+                    //phsicalCheckPM.BringQueueForwardIndicatorStatus = 5;
+                    // Build status “PCB”  in unifreight custom file(see document)
+
+                    break;
+
+
+
+
             }
         }
 

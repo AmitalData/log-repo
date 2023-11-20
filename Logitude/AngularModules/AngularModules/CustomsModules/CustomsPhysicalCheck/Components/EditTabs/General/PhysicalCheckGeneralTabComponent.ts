@@ -106,6 +106,7 @@ export class PhysicalCheckGeneralTabComponent
                                
             });
         });
+       
 
     }
 
@@ -158,7 +159,17 @@ export class PhysicalCheckGeneralTabComponent
                     }
                 })
             );
+
+            // todo: BringQueueForwardIndicatorStatus=004  יש להציג הודעה “הקדמת תור הועברה לבחינה של עובד מכס”
+            this.ShowAlertBringQueueForwardIndicatorStatus();
         }
+    }
+
+    ShowAlertBringQueueForwardIndicatorStatus() {
+        debugger
+        // if(this.EntityPM.BringQueueForwardIndicatorStatus== "4"){
+        //     var msg= "יש להציג הודעה “הקדמת תור הועברה לבחינה של עובד מכס";
+        // }
     }
 
     // log tab
