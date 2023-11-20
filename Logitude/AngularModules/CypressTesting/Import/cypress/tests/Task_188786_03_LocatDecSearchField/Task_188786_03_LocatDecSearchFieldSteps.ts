@@ -4,6 +4,7 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { SearchFieldDetails } from '../../models/SearchFieldDetails';
 import * as Actions from '../../actions/Actions';
 var searchFieldDetails;
+
 //#region Filter for Declaration
 Given("the user logged in and navigates to Import workspace", () => {
     cy.Login();

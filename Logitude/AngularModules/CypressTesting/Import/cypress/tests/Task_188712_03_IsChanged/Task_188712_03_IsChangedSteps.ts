@@ -1,9 +1,10 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import * as IsChangedAction2 from '../../actions/IsChangedActions2';
+import * as IsChangedActions2 from '../../actions/IsChangedActions2';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { IsChangedDetails } from '../../models/IsChangedDetails';
 import * as Actions from '../../actions/Actions';
 
+var isChangedDetails;
 
 //#region Send declaration to customs
 Given("the user logged in and navigates to Import workspace", () => {
@@ -12,11 +13,12 @@ Given("the user logged in and navigates to Import workspace", () => {
 
 });
 
-Given("Filter for Correct Draft Declaration", (dataTable) => {
-   
-    let isChangedDetails = Assists.CreateInstance<IsChangedDetails>(dataTable, true);
-    IsChangedAction2.FillIsChanged(isChangedDetails)
-});
+Given("Search for File", (dataTable) => {
+    
+    isChangedDetails = Assists.CreateInstance<IsChangedDetails>(dataTable, true);
+    IsChangedActions2.FillSearchField(isChangedDetails)
+    
+});          
 
 When("send to customs", () => {
     
@@ -24,12 +26,12 @@ When("send to customs", () => {
 });
      
      
-
 Then("the declaration should reset", (dataTable) => {
 
     let isChangedDetails = Assists.CreateInstance<IsChangedDetails>(dataTable, true);
     Actions.SendToCustomsButtonSimulator1(isChangedDetails)
 });
+
 //#endregion
 
 
@@ -37,16 +39,18 @@ Then("the declaration should reset", (dataTable) => {
 
 Given("the user change the Cargo serial data",(dataTable) => {
     let isChangedDetails = Assists.CreateInstance<IsChangedDetails>(dataTable, true);
-    IsChangedAction2.ChangeInCargoSerialData(isChangedDetails)
+    IsChangedActions2.ChangeInCargoSerialData(isChangedDetails);
+    
 });
 
+
  When("save the declaration",()  => {
-    IsChangedAction2.SaveDeclaretion()
+    IsChangedActions2.SaveDeclaretion()
 
 });
 
 Then ("the changes should saved successfully", () => {
-    IsChangedAction2.AssertSaveDeclaretion()
+    IsChangedActions2.AssertSaveDeclaretion()
  });
 
 //#endregion
@@ -55,12 +59,12 @@ Then ("the changes should saved successfully", () => {
 //#region Declaration to Payment 
 
 When("the screen of Declaration to Payment is open",()  => {
-    IsChangedAction2.SendDeclarationToPayment()
+    IsChangedActions2.SendDeclarationToPayment()
 
 });
 
 Then ("the Button Save in the Declaration Payment screen should be disabled successfully {string}", (condition) => {
-    IsChangedAction2.AssertSendDeclarationToPayment(condition)
+    IsChangedActions2.AssertSendDeclarationToPayment(condition)
  });
 
  

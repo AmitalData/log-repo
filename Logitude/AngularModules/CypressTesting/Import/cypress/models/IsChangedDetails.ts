@@ -1,5 +1,6 @@
 export interface IsChangedDetails {
 
+    File: string,
     Filter: string,
     SendButton: string,
     DeclarationStatus: string,

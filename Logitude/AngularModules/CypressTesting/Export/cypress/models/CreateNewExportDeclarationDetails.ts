@@ -7,7 +7,7 @@ export interface CreateNewExportDeclarationDetails {
     ExporterNumber: string, // מספר יצואן 
     DeclarationTypeCode: string,//סוג הצהרה
     ProcedureCurrentCode: string,//   קוד סוג תהליך
-    ClientSearch: string,//  קוד סוג יצואן מעביר
+    TransferExporterCode: string,//  קוד סוג יצואן מעביר
     DeclarationDocumentTypeCode: string,// סוג הצהרה קשורה
     DeclarationDocumentId: string,// מספר הצהרה קשורה
     DestinationCountryCode: string,// ארץ יעד

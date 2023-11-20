@@ -4,9 +4,9 @@ Feature: Is Changed1
 
     Scenario: Send declaration to customs
         Given the user logged in and navigates to Import workspace
-        And Filter for Correct Draft Declaration 
-            | DeclarationStatus  | 13 |
-
+        And Search for File 
+        | File  | 51340545 |
+        
         When send to customs 
         | Scen  | הצהרת יבוא תקינה  |
 

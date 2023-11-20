@@ -12,19 +12,25 @@ export function NavigatesImportDeclarationWorkspace()
     
 }
 
-export function FillIsChanged(isChangedDetails: IsChangedDetails)
-{
-    
-    cy.Click(IsChangedSelectors.IsChangedFilterOpen,null,true)
-    cy.FillLogLov(IsChangedSelectors.IsChangedDeclarationStatus,isChangedDetails.DeclarationStatus,true);
-    cy.FillLogLov(IsChangedSelectors.IsChangedFilterCust,isChangedDetails.Cust,true);
-    cy.get(IsChangedSelectors.SearchField).focus();
-    cy.Click(IsChangedSelectors.IsChangedFilterClose,null,true)
-    cy.wait(2000);
-    cy.Click(IsChangedSelectors.IsChangedDeclaration1, null)
-    cy.wait(2000);
+export function FillSearchField(isChangedDetails: IsChangedDetails) {
+    cy.FillLogTextBox(IsChangedSelectors.SearchField, isChangedDetails.File, true);
+    cy.Click(IsChangedSelectors.IsChangedDeclaration1, null);
 
 }
+
+// export function FillIsChanged(isChangedDetails: IsChangedDetails)
+// {
+    
+//     //cy.Click(IsChangedSelectors.IsChangedFilterOpen,null,true)
+//     cy.FillLogLov(IsChangedSelectors.IsChangedDeclarationStatus,isChangedDetails.DeclarationStatus,true);
+//     cy.FillLogLov(IsChangedSelectors.IsChangedFilterCust,isChangedDetails.Cust,true);
+//     cy.get(IsChangedSelectors.SearchField).focus();
+//     //cy.Click(IsChangedSelectors.IsChangedFilterClose,null,true)
+//     cy.wait(2000);
+//     cy.Click(IsChangedSelectors.IsChangedDeclaration1, null);
+//     cy.wait(2000);
+
+// }
 
 //תבוצע פניית API שתאפס את השדה IsChanged
 // הועבר ל - Actions כדי שכולם יוכלו להשתמש בפונקציה

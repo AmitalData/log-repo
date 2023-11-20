@@ -14,6 +14,7 @@ export function NavigatesImportDeclarationWorkspace() {
 
 export function FillSearchField(searchFieldDetails: SearchFieldDetails) {
     cy.FillLogTextBox(SearchFieldSelectors.SearchField, searchFieldDetails.SecondCargoID, true);
+    cy.Click(SearchFieldSelectors.Declaration1, null);
 
 }
 

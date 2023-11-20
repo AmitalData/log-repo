@@ -4,14 +4,14 @@ Feature: Is Changed2
 
     Scenario: Send declaration to customs
         Given the user logged in and navigates to Import workspace
-        And Filter for Correct Draft Declaration 
-            | DeclarationStatus  | 13 |
+        And Search for File 
+             | File  | 51340545 |
 
         When send to customs 
              | Scen  | הצהרת יבוא תקינה  |
 
         Then the declaration should reset 
-            | Scen1  | הצהרת יבוא תקינה  | 
+             | Scen1  | הצהרת יבוא תקינה  | 
        
 
     Scenario: Change in Cargo serial data
