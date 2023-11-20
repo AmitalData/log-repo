@@ -190,7 +190,7 @@
              [ngStyle]="{'display': _DropdownDisplay  }"
              style="position: fixed;z-index: 1;background-color : aquamarine;">
             <ul class="x-button-drop-menu">
-                <li>
+                <li *ngIf="IsSendAmendmentDeclarationButton != ButtonText">
                     <span style="cursor:default;" *ngIf="CustomSendOptionsButtonCanForcePersonalSign">
                         <!---->
                         <table style="margin-right: -22px; cursor:default;">

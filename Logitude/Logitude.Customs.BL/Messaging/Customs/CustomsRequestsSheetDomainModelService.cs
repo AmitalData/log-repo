@@ -399,12 +399,12 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 //    return true;
                 //}
 
-                var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
-                var feature = features.Features.FirstOrDefault(x => x.Code == "EscapeSign");
-                if (feature != null)
-                {
-                    return true;
-                }
+                //var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
+                //var feature = features.Features.FirstOrDefault(x => x.Code == "EscapeSign");
+                //if (feature != null)
+                //{
+                //    return true;
+                //}
                 
                 if (requestParams.MainInterfaceCode == "2715" //D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService
                 &&
@@ -564,7 +564,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             //}
 
             //im+eitan : in worker role no need to check 
-            if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower()))
+            if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower())  && RequestParams.InterfaceTypeCode!="8235")
             {
                 //2715 build from  UCBUD2LT --if (RequestParams.InterfaceTypeCode == "UCBUD2LT")
                 {
