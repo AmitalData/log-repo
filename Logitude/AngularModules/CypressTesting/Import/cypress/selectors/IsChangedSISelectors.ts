@@ -2,7 +2,6 @@ export class IsChangedSISelectors {
 
     public static readonly GeneralMHDeclarationsTab = "#GeneralMHDeclarations"
     public static readonly IsChangedFilterOpen ="td img[src*=FiltersOpen]" //'[src="./Images/FiltersOpen.png"]';
-    //public static readonly IsChangedDeclarationStatus = '#Customs\\.Declaration_TextValue_1';
     public static readonly IsChangedDeclarationStatus = '#Customs\\.Declaration_TextValue';
     public static readonly IsChangedFilterClose ="td img[src*=FiltersClose]" //'[src="./Images/FiltersClose.png"]';
     public static readonly IsChangedDeclaration1 ="logitude-grid table tr:eq(1)";

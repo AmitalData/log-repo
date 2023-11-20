@@ -14,6 +14,7 @@ export class RequestAliases {
     public static readonly ARInvoicesRequest = 'ARInvoicesRequest';
     public static readonly ARInvoicesPutRequest = 'ARInvoicesPutRequest';
     public static readonly DeclarationRequest = 'DeclarationRequest';
+    public static readonly SupplierInvoiceRequest = 'SupplierInvoiceRequest';
     public static readonly APInvoiceView = 'APInvoiceView';
     public static readonly ARInvoiceviews = 'ARInvoiceviews';
     public static readonly ARInvoiceViewsGetByFilters = "ARInvoiceViewsGetByFilters"

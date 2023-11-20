@@ -24,6 +24,7 @@ export class URLs {
 
 
     public static readonly Declarations = '**/declarations';
+    public static readonly SupplierInvoice = '**/supplierinvoices';
 
 
     public static GetFilterSearch(filterBy: string) {

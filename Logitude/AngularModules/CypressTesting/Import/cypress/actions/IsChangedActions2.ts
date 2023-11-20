@@ -13,34 +13,39 @@ export function NavigatesImportDeclarationWorkspace()
 }
 
 
-export function FillIsChanged(isChangedDetails: IsChangedDetails)
-{
-    
-    cy.Click(IsChangedSelectors.IsChangedFilterOpen,null,true)
-    cy.FillLogLov(IsChangedSelectors.IsChangedDeclarationStatus,isChangedDetails.DeclarationStatus,true);
-    cy.get(IsChangedSelectors.SearchField).focus();
-    cy.Click(IsChangedSelectors.IsChangedFilterClose,null,true)
-    cy.wait(2000);
-    cy.Click(IsChangedSelectors.IsChangedDeclaration1, null)
+export function FillSearchField(isChangedDetails: IsChangedDetails) {
+    cy.FillLogTextBox(IsChangedSelectors.SearchField, isChangedDetails.File, true);
+    cy.Click(IsChangedSelectors.IsChangedDeclaration1, null);
 
 }
+
 
 //תבוצע פניית API שתאפס את השדה IsChanged
 
 
-
-
-debugger
 export function ChangeInCargoSerialData(isChangedDetails: IsChangedDetails)
 {
-
-  //cy.get('IsChangedquantity').clear();
-
-  cy.get(IsChangedSelectors.IsChangedquantity).clear();
-
-  //cy.FillLogLov(IsChangedSelectors.IsChangedquantity,isChangedDetails["Quantity"],true)
-
+  FillInRowTable('כמות',isChangedDetails.Quantity);
+  //cy.get(IsChangedSelectors.IsChangedquantity).clear();
 }
+
+
+export function FillInRowTable(headerText: string, value: string) {
+    cy.get(`.ag-header-cell div:contains("${headerText}")`).each(ele => {
+        if(ele.text() != headerText)return;
+        const id = ele.attr('id')  
+            if (id?.indexOf('HeaderTemplateDiv') > -1) {
+                let i = id.replace('HeaderTemplateDiv', '');
+                FillGLAccount('[index="' + i + '"]', value,);
+            }
+    })
+}
+
+export function FillGLAccount(selector, value) {
+    cy.get(selector).type(value);
+    
+}
+
 
 
 export function SaveDeclaretion()

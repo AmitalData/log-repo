@@ -4,17 +4,20 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { IsChangedDetails } from '../../models/IsChangedDetails';
 import * as Actions from '../../actions/Actions';
 
+var isChangedDetails;
+
 //#region Send declaration to customs
 Given("the user logged in and navigates to Import workspace", () => {
     cy.Login();
     Actions.NavigatesImportDeclarationWorkspace()
 });
 
-Given("Filter for Correct Draft Declaration", (dataTable) => {
-    IsChangedActions1.NavigatesImportDeclarationWorkspace()
-    let isChangedDetails = Assists.CreateInstance<IsChangedDetails>(dataTable, true);
-    IsChangedActions1.FillIsChanged(isChangedDetails)
-});
+Given("Search for File", (dataTable) => {
+    
+    isChangedDetails = Assists.CreateInstance<IsChangedDetails>(dataTable, true);
+    IsChangedActions1.FillSearchField(isChangedDetails)
+    
+});              
 
 When("send to customs", () => {
     //let isChangedDetails = Assists.CreateInstance<IsChangedDetails>(dataTable, true);

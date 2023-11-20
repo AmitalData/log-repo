@@ -10,6 +10,9 @@ export class SearchFieldSelectors {
 
     public static readonly FindDecInGrid = "logitude-grid table tr:eq(4) td>div:contains('{0}')";
 
-    public static readonly FindSecondCargoIDInGrid = "logitude-grid table tr:eq(9) td>div:contains('{0}')";
+    //public static readonly FindSecondCargoIDInGrid = "logitude-grid table tr:eq(9) td>div:contains('{0}')";
+    public static readonly FindSecondCargoIDInGrid = "#Customs\\.Consignment_SecondCargoID";
+
+    public static readonly Declaration1 ="#LogGrid_0_0LogGridRows_0_0";
 
 }

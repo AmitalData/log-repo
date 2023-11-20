@@ -3,10 +3,10 @@ Feature: Is Changed
     The user send declaration to customs
 
     Scenario: Send declaration to customs
+
         Given the user logged in and navigates to Import workspace
-        And Filter for Correct Draft Declaration 
-            | DeclarationStatus  | 13  |
-            | Cust  | Automation Tests |
+        And Search for File 
+        | File  | 51340545 |
 
         When send to customs 
         | Scen  | הצהרת יבוא תקינה  |

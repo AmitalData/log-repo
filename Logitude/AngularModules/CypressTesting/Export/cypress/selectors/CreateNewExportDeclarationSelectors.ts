@@ -12,10 +12,10 @@ export class CreateNewExportDeclarationSelectors {
 
     public static readonly DeclarationOfficeHandlCode ='#Customs\\.Declaration_DeclarationOfficeHandlerCode';
     public static readonly ExportDeclarationOfficeCode = '#Customs\\.Declaration_ExportDeclarationOfficeCode';
-    public static readonly ExporterNumber = '#CustomsClient_Search';
+    public static readonly ExporterNumber = '#ExporterImporterCode';// מספר יצואן
     public static readonly DeclarationTypeCode ='#Customs\\.Declaration_DeclarationTypeCode';
     public static readonly ProcedureCurrentCode ='#Customs\\.Declaration_ProcedureCurrentCode';
-    public static readonly ClientSearch = '#CustomsClient_Search'//'#SearchBoxDivId2'//קוד סוג יצואן מעביר
+    public static readonly TransferExporterCode = '#TransferExporterCode'//קוד סוג יצואן מעביר
     public static readonly DeclarationDocumentTypeCode ='#Customs\\.Declaration_DeclarationDocumentTypeCode';
     public static readonly DeclarationDocumentId ='#Customs\\.Declaration_DeclarationDocumentId';
     public static readonly DestinationCountryCode ='#Customs\\.Declaration_DestinationCountryCode';

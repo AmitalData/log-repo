@@ -18,9 +18,9 @@ Feature: Create New Export Declaration
             | DeclarationOfficeHandlCode  | בית מכס נתב   |
             | ExportDeclarationOfficeCode | בית מכס נתב   |
             | ExporterNumber              | 510182462      |
-            | DeclarationTypeCode         | הצהרת יצוא     |
-            | ProcedureCurrentCode        |  יצוא מסחרי    | 
-            | ClientSearch                | 510273394       |
+            | DeclarationTypeCode         | הצהרת יצוא    |
+            | ProcedureCurrentCode        |  יצוא מסחרי   | 
+            | TransferExporterCode        | 510273394      |
             | DeclarationDocumentTypeCode | הצהרת יצוא     |
             | DeclarationDocumentId       | 23042891149326  |
            

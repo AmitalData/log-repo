@@ -35,11 +35,10 @@ export function FillNewExportDeclaration(createNewExportDeclarationDetails: Crea
 
    cy.FillLogLov(CreateNewExportDeclarationSelectors.DeclarationOfficeHandlCode,createNewExportDeclarationDetails.DeclarationOfficeHandlCode, true);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.ExportDeclarationOfficeCode,createNewExportDeclarationDetails.ExportDeclarationOfficeCode, true);
-   cy.FillLogTextBox(CreateNewExportDeclarationSelectors.ExporterNumber,createNewExportDeclarationDetails.ExporterNumber,true);
-   cy.FillLogLov(CreateNewExportDeclarationSelectors.DeclarationTypeCode,createNewExportDeclarationDetails.DeclarationTypeCode,true);
+   cy.get(CreateNewExportDeclarationSelectors.ExporterNumber).type(createNewExportDeclarationDetails.ExporterNumber);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.ProcedureCurrentCode,createNewExportDeclarationDetails.ProcedureCurrentCode,true);
+   cy.get(CreateNewExportDeclarationSelectors.TransferExporterCode).type(createNewExportDeclarationDetails.TransferExporterCode);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.DeclarationDocumentTypeCode,createNewExportDeclarationDetails.DeclarationDocumentTypeCode,true);
-   cy.FillLogTextBox(CreateNewExportDeclarationSelectors.ClientSearch,createNewExportDeclarationDetails.ClientSearch,true);
    cy.FillLogTextBox(CreateNewExportDeclarationSelectors.DeclarationDocumentId,createNewExportDeclarationDetails.DeclarationDocumentId,true);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.DestinationCountryCode,createNewExportDeclarationDetails.DestinationCountryCode,true);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.AutonomyRegionTypeCode,createNewExportDeclarationDetails.AutonomyRegionTypeCode,true);
@@ -47,7 +46,6 @@ export function FillNewExportDeclaration(createNewExportDeclarationDetails: Crea
    cy.FillLogTextBox(CreateNewExportDeclarationSelectors.RecipientName,createNewExportDeclarationDetails.RecipientName,true);
    cy.FillLogTextBox(CreateNewExportDeclarationSelectors.RecipientAddress,createNewExportDeclarationDetails.RecipientAddress,true);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.RecipientIssueCountryCode,createNewExportDeclarationDetails.RecipientIssueCountryCode,true);
-   //cy.FillLogLov(CreateNewExportDeclarationSelectors.TransportType,createNewExportDeclarationDetails.TransportType,true);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.CargoType,createNewExportDeclarationDetails.CargoType,true);
    cy.FillLogTextBox(CreateNewExportDeclarationSelectors.FirstCargoID,createNewExportDeclarationDetails.FirstCargoID,true);
    cy.FillLogTextBox(CreateNewExportDeclarationSelectors.SecondCargoID,createNewExportDeclarationDetails.SecondCargoID,true);
