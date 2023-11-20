@@ -49,7 +49,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public virtual void OnApproveUpdatingFillArrangeJournalPMResetControlAccount()
         {
-            if (_JournalPM.StatusCode != "6"|| _JournalPM.StatusCode != "2")
+            if (_JournalPM.StatusCode != "6")
             {
                 throw new ApplicationException("occure only OnApproveUpdating");
             }
