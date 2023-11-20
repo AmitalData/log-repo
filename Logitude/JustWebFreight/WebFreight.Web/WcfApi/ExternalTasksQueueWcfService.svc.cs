@@ -1,9 +1,14 @@
 ﻿///#define tzuri_req
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.SQL;
 using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -12,6 +17,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -19,11 +25,14 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using System.Threading;
+using System.Transactions;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
+using System.Data.Entity.Infrastructure;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -37,6 +46,434 @@ namespace WebFreight.Web.WcfApi
 
 
 #if !tzuri_req
+        public Response GetDataCFIRDEC( Dictionary<string, string> queryParams, int tenant)
+        {
+            var response = new Response();
+            try
+            {
+
+                if (tenant == 0)
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = "Tenant parameter is missing.";
+                    return (response);
+                }
+                string log_level = "";
+                if(queryParams.ContainsKey("LOG_LEVEL")) log_level= queryParams["LOG_LEVEL"];
+                string inv_field_list = queryParams["INV_FIELD_LIST"];
+                string dec_field_list = queryParams["DEC_FIELD_LIST"];
+                string mod_field_list = queryParams["MOD_FIELD_LIST"];
+                string sup_field_list = queryParams["SUP_FIELD_LIST"];
+
+                string det_field_list = queryParams["DET_FIELD_LIST"];
+                string con_field_list = queryParams["CON_FIELD_LIST"];
+
+                string dec_list = queryParams["DEC_LIST"];
+                Dictionary<string, string> all_results = new Dictionary<string, string>();
+
+                string sqlQuery = $"select {inv_field_list} from customs.SUPPLIERINVOICES where DECLARATIONID in ({dec_list})  and tenant={tenant}";
+                if (log_level == "DEBUG") all_results.Add("SI_SQL", sqlQuery);
+
+                var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                    connection.Open();
+
+
+                    
+                    using (var cmd = new SqlCommand(sqlQuery, connection))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    List<List<string>> all_lines = new List<List<string>>();
+                                    Dictionary<string, string> results = new Dictionary<string, string>();
+                                    List<string> one_line = new List<string>();
+                                    Console.WriteLine(reader.ToString());
+                                    string dec_id = "";
+                                    string inv_counter = "";
+                                    string key = "";
+                                    string vendor_id = "";
+                                    for (int pos = 0; reader.FieldCount > pos; pos++)
+                                    {
+                                        if(reader.GetName(pos)== "DECLARATIONID")
+                                        { dec_id = reader[pos].ToString();key = dec_id; }
+                                        if (reader.GetName(pos) == "INVOICECOUNTERKEY")
+                                        { key = $"{key}_{reader[pos].ToString()}"; inv_counter = reader[pos].ToString(); }
+                                        if (reader.GetName(pos) == "VENDORID")
+                                        { vendor_id = reader[pos].ToString(); }
+                                        one_line.Add(reader[pos].ToString());
+                                    }
+                                    all_lines.Add(one_line);
+
+                                    if (!string.IsNullOrEmpty(vendor_id))
+                                    {
+                                        sqlQuery = $"select VENDORNUMBER,VENDORNAME from customs.CUSTOMSVENDORS where ID='{vendor_id}' and tenant={tenant}";
+                                        get_table_lines("A28", sqlQuery, ref results, connection, log_level);//CUSTOMSVENDORS
+                                    }
+
+                                    results.Add("SI", JsonConvert.SerializeObject(all_lines));//SUPPLIERINVOICES
+                                    
+                                    sqlQuery = $"select {dec_field_list} from customs.DECLARATIONS where id='{dec_id}' and tenant={tenant}";
+                                    get_table_lines("DEC",sqlQuery, ref results, connection, log_level);//DECLARATIONS
+
+                                    sqlQuery = $"select {con_field_list} from customs.CONSIGNMENTS where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    get_table_lines("CON",sqlQuery, ref results, connection, log_level);//CONSIGNMENTS
+
+                                    sqlQuery = $"select {det_field_list} from customs.DECLARATIONTAXES where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    get_table_lines("DET",sqlQuery, ref results, connection, log_level);//DECLARATIONTAXES
+
+                                    sqlQuery = $"select {mod_field_list} from customs.SUPPLIERINVOICEMODIFICATIONS where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and tenant={tenant}";
+                                    get_table_lines("SIM",sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEMODIFICATIONS
+
+                                    sqlQuery = $"select {sup_field_list} from customs.SUPPLIERINVOICEITEMS where DECLARATIONID='{dec_id}' and COUNTERKEY={inv_counter} and tenant={tenant}";
+                                    get_table_lines("SII",sqlQuery,  ref results, connection, log_level);//SUPPLIERINVOICEITEMS
+
+                                    sqlQuery = $"select CURRENCYTYPECODE from customs.SUPPLIERINVOICEFREIGHTAMOUNTS where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and tenant={tenant}";
+                                    get_table_lines("A29",sqlQuery , ref results, connection, log_level);//SUPPLIERINVOICEFREIGHTAMOUNTS
+
+
+
+                                    sqlQuery = $"select LINENUMBER from customs.SUPPLIERINVOICEITEMS where DECLARATIONID='{dec_id}' and COUNTERKEY='{inv_counter}' and tenant={tenant}";
+                                    List<List<string>> line_list = get_table_lines_list(sqlQuery, connection);
+                                    foreach (List<string> line_num in line_list)
+                                    {
+                                        sqlQuery = $"select sum(TAXAMOUNT) from customs.SUPPLIERINVOICEITEMSTAXES where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and LINENUMBER={line_num[0]} and TAXTYPECODE='1' and tenant={tenant}";
+                                        get_table_lines($"A19_1_{line_num[0]}", sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEITEMSTAXES
+
+                                        sqlQuery = $"select sum(TAXAMOUNT) from customs.SUPPLIERINVOICEITEMSTAXES where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and LINENUMBER={line_num[0]} and TAXTYPECODE='15' and tenant={tenant}";
+                                        get_table_lines($"A19_15_{line_num[0]}", sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEITEMSTAXES
+
+                                        sqlQuery = $"select sum(TAXAMOUNT) from customs.SUPPLIERINVOICEITEMSTAXES where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and LINENUMBER={line_num[0]} and TAXTYPECODE='16' and tenant={tenant}";
+                                        get_table_lines($"A19_16_{line_num[0]}", sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEITEMSTAXES
+
+                                        sqlQuery = $"select TAXRATE from customs.SUPPLIERINVOICEITEMSTAXES where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and LINENUMBER={line_num[0]} and TAXTYPECODE='1' and tenant={tenant}";
+                                        get_table_lines($"A30_{line_num[0]}", sqlQuery, ref results, connection, log_level);//SUPPLIERINVOICEITEMSTAXES
+
+                                        sqlQuery = $"select CERTIFICATENUMBER from customs.SUPPLIERINVIOCEITEMCERTIFICATS where DECLARATIONID='{dec_id}' and INVOICECOUNTERKEY={inv_counter} and LINENUMBER={line_num[0]} and tenant={tenant}";
+                                        get_table_lines($"A31_{line_num[0]}", sqlQuery, ref results, connection, log_level);//SUPPLIERINVIOCEITEMCERTIFICATS
+                                    }
+
+                                    sqlQuery = $"select distinct TYPECODE from customs.SUPPLIERINVOICEMODIFICATIONS where DECLARATIONID='{dec_id}' and tenant={tenant}";
+                                    line_list = get_table_lines_list(sqlQuery, connection);
+                                    foreach (List<string> line_num in line_list)
+                                    {
+                                        sqlQuery = $"select EXTRANUMERICDATA from customs.MODIFICATIONANDDISCOUNTTYPES where CODE='{line_num[0]}'";
+                                        get_table_lines($"A32_{line_num[0]}", sqlQuery, ref results, connection, log_level);//MODIFICATIONANDDISCOUNTTYPES
+                                    }
+
+
+                                    sqlQuery = $"Select ID from customs.CUSTOMSCOLLATERALS where DECLARATIONID ='{dec_id}' AND TENANT={tenant}";
+                                    line_list = get_table_lines_list(sqlQuery, connection);//CUSTOMSCOLLATERALS
+                                    List<string> id_list = new List<string>();
+                                    foreach (List<string> line_num in line_list)
+                                    {
+                                        id_list.Append(line_num[0]);
+                                    }
+
+                                    if (id_list.Count > 0)
+                                    {
+                                        string id_str = string.Join("','",id_list);
+
+                                        sqlQuery = $"Select CUSTOMSTAPGFILE,CUSTOMSNUMERAL from customs.CUSTOMSCOLLATERALSANSWERS where CUSTOMSCOLLATERALID in ('{id_str}') AND TENANT={tenant}";
+                                        get_table_lines("A34", sqlQuery, ref results, connection, log_level);//CUSTOMSCOLLATERALSANSWERS
+                                    }
+
+
+
+
+                                    sqlQuery = $"Select ID from customs.CUSTOMSCOLLATERALS where DECLARATIONID ='{dec_id}' AND COLLATERALREQUESTSTATUSCODE='2' AND TENANT={tenant}";
+                                    line_list = get_table_lines_list(sqlQuery, connection);//CUSTOMSCOLLATERALS
+                                    id_list = new List<string>();
+                                    foreach (List<string> line_num in line_list)
+                                    {
+                                        id_list.Append(line_num[0]);
+                                    }
+
+                                    if (id_list.Count > 0)
+                                    {
+                                        string id_str = string.Join("','", id_list);
+
+                                        sqlQuery = $"Select sum(ALLOCATEDAMOUNT) from customs.CUSTOMSCOLLATERALSANSWERS where CUSTOMSCOLLATERALID in ('{id_str}') AND TENANT={tenant}";
+                                        get_table_lines("A35", sqlQuery, ref results, connection, log_level);//CUSTOMSCOLLATERALSANSWERS
+                                    }
+
+
+
+
+                                    sqlQuery = $"Select Sum(GROSSMASSMEASURE) from customs.CONSIGNMENTPACKAGES where DECLARATIONID = '{dec_id}' and PACKAGEMEASUREQUALIFIERCODE = '2' AND TENANT = {tenant}";
+                                    get_table_lines("A36", sqlQuery, ref results, connection, log_level);//CONSIGNMENTPACKAGES
+
+
+
+                                    all_results.Add(key, JsonConvert.SerializeObject(results));
+                                }
+                            }
+
+                        }
+                    }
+                    response.HasError = false;
+                    //results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
+                    //results.Add("sql_query", sqlQuery);
+                    response.Result = JsonConvert.SerializeObject(all_results);
+                }
+                return (response);
+            }
+            catch (Exception ex)
+            {
+                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+                return (response);
+            }
+        }
+
+
+        void get_table_lines(string id,string sqlQuery,ref Dictionary<string, string> results, SqlConnection connection,string log_level)
+        {
+            List<List<string>> all_lines = new List<List<string>>();
+            using (var cmd = new SqlCommand(sqlQuery, connection))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Console.WriteLine(reader.ToString());
+                            List<string> one_line = new List<string>();
+
+                            for (int pos = 0; reader.FieldCount > pos; pos++)
+                            {
+                                one_line.Add(reader[pos].ToString());
+                            }
+                            all_lines.Add(one_line);
+                        }
+                        
+                    }
+
+                }
+            }
+            if (log_level == "DEBUG") results.Add($"{id}_SQL", sqlQuery);
+            results.Add(id, JsonConvert.SerializeObject(all_lines));
+            
+            return;
+        }
+
+        List<List<string>> get_table_lines_list(string sqlQuery, SqlConnection connection)
+        {
+            List<List<string>> all_lines = new List<List<string>>();
+            using (var cmd = new SqlCommand(sqlQuery, connection))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Console.WriteLine(reader.ToString());
+                            List<string> one_line = new List<string>();
+
+                            for (int pos = 0; reader.FieldCount > pos; pos++)
+                            {
+                                one_line.Add(reader[pos].ToString());
+                            }
+                            all_lines.Add(one_line);
+                        }
+
+                    }
+
+                }
+            }
+            return (all_lines);
+        }
+
+        public Response LGTQuery(string queryId, Dictionary<string, string> queryParams, int tenant)
+        {
+            var response = new Response();
+            try
+            {
+                tenant = 6;//temppppp
+
+                //SecurityUtility.AuthenticationOnTenant(tenant);
+                //SecurityUtility.CheckContactFeature("Quote", "UPDATE", tenant);//UPDATE//READ
+                //var context = Simplog.Data.ShipmentsModel.ShipmentsContext.GetContext(tenant);
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant1 = 0;
+                    if(authToken != null) tenant1 = authToken.Tenant; 
+                }
+
+                if (tenant == 0)
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = "Tenant parameter is missing.";
+                    return (response);
+                }
+
+                if (queryId == "CFIRDEC")
+                {
+                    response = GetDataCFIRDEC(queryParams,  tenant);
+                    return (response);
+                }
+
+                List<CFILOGIAPI> logi_list = new List<CFILOGIAPI>();  // to do call once !!!!!!!!!!!!!!!!!!!!!!!!!
+                logi_list = CFILOGIAPITask.GetLogiOcc();
+                CFILOGIAPI sql_logi = logi_list.Where(x => x.CODE == queryId).FirstOrDefault();
+
+                if (sql_logi == null)
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = $"Query id {queryId} not found.";
+                    return (response);
+                }
+
+                string sqlQuery = sql_logi.TEMPLATE_SQL;
+                if (string.IsNullOrEmpty(sqlQuery))
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = $"Query id {queryId} has no sql.";
+                    return (response);
+                }
+                if (sql_logi.HAS_TENANT && sqlQuery.IndexOf("@Tenant") == -1)
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = $"Query id {queryId} has no @Tenant parameter.";
+                    return (response);
+                }
+
+
+
+
+
+                //tenant = 6;
+                //string id = "1-110456";
+                var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                    connection.Open();
+                    //sqlQuery = "SELECT IMPORTERID,ID from Customs.DECLARATIONS where (ID = @LOGITUDE_FILE ) AND TENANT = @Tenant";
+                    using (var cmd = new SqlCommand(sqlQuery, connection))
+                    {
+                        //cmd.Parameters.Add(new SqlParameter("@LOGITUDE_FILE", id));
+                        foreach (var field in queryParams)
+                        {
+                            cmd.Parameters.Add(new SqlParameter($"@{field.Key}", field.Value));
+                        }
+                        if (sql_logi.HAS_TENANT) cmd.Parameters.Add(new SqlParameter("@Tenant", tenant));
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            List<List<string>> all_lines = new List<List<string>>();
+                            Dictionary<string, string> results = new Dictionary<string, string>();
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    Console.WriteLine(reader.ToString());
+                                    List<string> one_line = new List<string>();
+
+                                    for (int pos = 0; reader.FieldCount > pos; pos++)
+                                    {
+                                        one_line.Add(reader[pos].ToString());
+                                    }
+                                    all_lines.Add(one_line);
+                                }
+                            }
+                            response.HasError = false;
+                            results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
+                            results.Add("sql_query", sqlQuery);
+                            response.Result = JsonConvert.SerializeObject(results);
+                        }
+                    }
+                }
+                return (response);
+            }
+            catch (Exception ex)
+            {
+                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+                return (response);
+            }
+
+        }
+        public Response LGTQueryExample(string queryId, Dictionary<string, string> queryParams, int tenant)
+        {
+            var response = new Response();
+            try
+            {
+                //SecurityUtility.AuthenticationOnTenant(tenant);
+                //SecurityUtility.CheckContactFeature("Quote", "UPDATE", tenant);//UPDATE//READ
+                //var context = Simplog.Data.ShipmentsModel.ShipmentsContext.GetContext(tenant);
+
+                tenant = 6;
+                string id = "1-110456";
+                var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                    connection.Open();
+                    string sqlQuery = "SELECT IMPORTERID,ID from Customs.DECLARATIONS where (ID = @LOGITUDE_FILE ) AND TENANT = @Tenant";
+                    using (var cmd = new SqlCommand(sqlQuery, connection))
+                    {
+                        cmd.Parameters.Add(new SqlParameter("@LOGITUDE_FILE", id));
+                        cmd.Parameters.Add(new SqlParameter("@Tenant", tenant));
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Console.WriteLine(reader.ToString());
+                            }
+                        }
+                    }
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+                return response;
+            }
+
+        }
+
+
+        public Response LGTQueryOld(string queryId, Dictionary<string, string> queryParams, int tenant)
+        {
+            Response res = new Response();
+
+            res.HasError = false;
+            res.Result = "big data";
+
+            return (res);
+        }
         public string GetTaskFromQueue(int tenant, int priority)
         {
             Envelope envelope = new Envelope();
