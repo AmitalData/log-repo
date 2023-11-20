@@ -1152,6 +1152,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 //if (documentPointerItem.Child1EntityCode == "SupplierInvoice" && documentPointerItem.Child1EntityId == supplierInvoicePM.InvoiceCounterKey.ToString() && documentPointerItem.Child2EntityCode == null && documentPointerItem.Child3EntityCode == null)
                 //{
+                if(customsDocumentPM.OcrStatusCode == "3" && !string.IsNullOrEmpty(customsDocumentPM.OcrId))//הוצאה מתור קלדנים
+                {
+                    OcrDocumentQueryService ocrDocumentQueryService = new OcrDocumentQueryService(_context);
+                    string RemoveFromTypingOcr = ocrDocumentQueryService.RemoveFromTypingQueue(customsDocumentPM.Tenant, customsDocumentPM.OcrId);
+                    LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "RemoveFromTypingOcr: "  + RemoveFromTypingOcr + Environment.NewLine);
+
+
+                }
                 if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId)) // Mirit 22/12/15 19136
                 {
                     var declarationGoodsShipmentAdditionalDocument = new DeclarationGoodsShipmentAdditionalDocument();

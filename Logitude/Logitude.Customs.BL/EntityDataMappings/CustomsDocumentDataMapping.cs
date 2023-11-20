@@ -13,6 +13,7 @@ using Logitude.Customs.Data;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.Security;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -92,7 +93,18 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     {
                         entityPM.Name = documentsFiling.DocumentType.Name;
                     }
-
+                    if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant))
+                    {
+                        OcrDocumentQueryService ocrDocumentQueryService = new OcrDocumentQueryService(entityPOCO.Tenant);
+                        var ocrDocument = ocrDocumentQueryService.GetOcrDocumentByDocumentFilingId(entityPOCO.DocumentsFilingId, entityPOCO.Tenant);
+                        if (ocrDocument != null )
+                        {
+                            entityPM.OcrStatusCode = ocrDocument.StatusCode;
+                            entityPM.OcrReference = ocrDocument.Reference;
+                            entityPM.OcrScore = entityPM.OcrScore = ocrDocument?.Score ?? 0;
+                            entityPM.OcrId = ocrDocument?.OcrId;
+                        }
+                    }
 
                 }
 

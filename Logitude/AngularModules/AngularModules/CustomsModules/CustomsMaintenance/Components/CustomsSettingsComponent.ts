@@ -298,6 +298,9 @@ export class CustomsSettingsComponent
     get HSMToken() { return this.entityPM != null ? this.entityPM.HSMToken : null; }
     set HSMToken(value) { this.entityPM.HSMToken = value; }
 
+    get OcrToken() { return this.entityPM != null ? this.entityPM.OcrToken : null; }
+    set OcrToken(value) { this.entityPM.OcrToken = value; }
+
     //#endregion
     ClearCache(){
 
