@@ -55,7 +55,7 @@ namespace Logitude.Customs.Data.Repsitories
                     on a.CardId equals Card.Id into qCards
                     from Card in qCards.DefaultIfEmpty()
                     where a.Distr == Distr && (a.Branch.Code == BranchCode || BranchCode == "NON") && (Card.Code == CardCode || CardCode == "NON")  && a.Tenant == Tenant && b.Code == DefaultTypeCode
-                    select a.Value).FirstOrDefault();
+                    select a.DefValue).FirstOrDefault();
             return query;
         }
 
@@ -66,7 +66,7 @@ namespace Logitude.Customs.Data.Repsitories
                  join b in context.DefaultTypes
                  on a.DefaultTypeId equals b.Id
                  where a.Distr == Distr && (a.Branch.Code == BranchCode || BranchCode == "NON") && a.CardId == CardId && a.Tenant == Tenant && b.Code == DefaultTypeCode
-                 select a.Value).FirstOrDefault();
+                 select a.DefValue).FirstOrDefault();
             return query;
         }
         public DefaultValue GetSingleByDefaultTypeId(string defTypeId, int tenant)

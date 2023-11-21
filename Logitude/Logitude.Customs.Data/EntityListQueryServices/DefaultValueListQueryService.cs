@@ -38,8 +38,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          CardId = a.CardId,
 					
 					                          ShortValue = a.ShortValue,
-					
-					                          Value = a.Value,
+
+                                              DefValue = a.DefValue,
 					
 		                    	            });
             return query;
