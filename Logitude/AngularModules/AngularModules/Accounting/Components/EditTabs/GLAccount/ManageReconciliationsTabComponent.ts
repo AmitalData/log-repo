@@ -1,18 +1,20 @@
-import {Component, OnInit, Output, EventEmitter, AfterViewInit, ChangeDetectorRef, Input, ViewChild}  from '@angular/core';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {GLAccountPM} from '../../../EntityPMs/GLAccountPM';
-import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit, ChangeDetectorRef, Input, ViewChild } from '@angular/core';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { GLAccountPM } from '../../../EntityPMs/GLAccountPM';
+import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogGridComponent } from 'Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent';
 import { Operators } from 'Accounting/DataContracts/Operators';
+import { ReconcileEventManager } from 'Accounting/Utilities/ReconcileEventManager';
+import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 
 @Component({
-    
+
     templateUrl: './ManageReconciliationsTabComponent.html',
 })
 
@@ -21,11 +23,12 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     public ObjectTableName = "GLAccount";
     public DataContext = this;
 
-    @ViewChild('DataGrid') DataGrid:LogGridComponent;
+    @ViewChild('DataGrid') DataGrid: LogGridComponent;
 
     // Events
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
+    public SelectedLines: ObservableCollection = new ObservableCollection([]);
 
     // Filters
     dateFilter: FilterItem;
@@ -36,41 +39,41 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     private _entityListService: EntityListService = new EntityListService();
 
     public isRTL: boolean = false;
-    public JournalNumber:string=""
+    public JournalNumber: string = ""
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
-        
+
         super();
         this.EntityPM = entityArgs.EntityPM;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         //#region Default date filter value
-        if( AppTool.IsNullOrEmpty(entityArgs.EditComponent.JournalNumber) ){
+        if (AppTool.IsNullOrEmpty(entityArgs.EditComponent.JournalNumber)) {
             var today = new Date();
             this.ToDate = new Date();
             var lastmonth = today.setMonth(today.getMonth() - 1); // month backward 
-            
-            this.FromDate = new Date(lastmonth); 
+
+            this.FromDate = new Date(lastmonth);
         }
-        else{
-           
-            this.ToDate =new Date()
-            this.FromDate =new Date(new Date('01/01/2010').setHours(2));
-            this.JournalNumber=entityArgs.EditComponent?.JournalNumber;
+        else {
+
+            this.ToDate = new Date()
+            this.FromDate = new Date(new Date('01/01/2010').setHours(2));
+            this.JournalNumber = entityArgs.EditComponent?.JournalNumber;
         }
-        
+
         //#endregion
 
     }
-   
-    
+
+
 
     ngOnInit() {
-        
+
         this.BuildColumns();
         this.ReloadData();
-       
+
     }
-    
+
 
     //#region Filters Properties
     private fromDate: Date;
@@ -99,15 +102,15 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         }
     }
     operatorsList =
-    [{Code:Operators.Equals, EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
-        {Code:Operators.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
-        {Code:Operators.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
-        {Code:Operators.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
-        {Code:Operators.LessThanOrEqual, EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
-        {Code:Operators.GreaterThanOrEqual, EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
-        {Code:Operators.Between, EnglishName: 'Between', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Between") },
-    ];
-    selectedAmountOperator:{Code:string, EnglishName: string, LocalName: string };
+        [{ Code: Operators.Equals, EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
+        { Code: Operators.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
+        { Code: Operators.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
+        { Code: Operators.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
+        { Code: Operators.LessThanOrEqual, EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
+        { Code: Operators.GreaterThanOrEqual, EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
+        { Code: Operators.Between, EnglishName: 'Between', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Between") },
+        ];
+    selectedAmountOperator: { Code: string, EnglishName: string, LocalName: string };
     amount: number;
     amountFrom: number;
     amountTo: number;
@@ -134,13 +137,13 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
             this.RefreshButtonClicked();
         }
     }
-    AmountOperatorChanged($event){
+    AmountOperatorChanged($event) {
         this.selectedAmountOperator = $event;
-        this.Amount=null;
+        this.Amount = null;
         this.AmountTextChanged(this.Amount);
     }
     AmountTextChanged(num) {
-        if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)&& this.selectedAmountOperator ) {
+        if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount) && this.selectedAmountOperator) {
             var amountFieldName = 'TransactionAmount';
             this.timerToken = setTimeout(() => {
                 if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)) {
@@ -155,7 +158,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         } else {
             this.timerToken = setTimeout(() => {
                 this.amountFieldFilter = null;
-                    this.RefreshButtonClicked();
+                this.RefreshButtonClicked();
             }, 700);
         }
     }
@@ -169,11 +172,11 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     }
 
     private filterByAmountFromAndTo() {
-        if (!AppTool.IsNullOrEmpty(this.amountFrom) && !AppTool.IsNullOrEmpty(this.amountTo) && this.selectedAmountOperator ) {
+        if (!AppTool.IsNullOrEmpty(this.amountFrom) && !AppTool.IsNullOrEmpty(this.amountTo) && this.selectedAmountOperator) {
             var amountFieldName = 'TransactionAmount';
             this.timerToken = setTimeout(() => {
                 if (!AppTool.IsNullOrEmpty(this.amountFrom) && !AppTool.IsNullOrEmpty(this.amountTo)) {
-                    this.amountFieldFilter = new FilterItem(amountFieldName,this.amountFrom, this.amountTo, null, this.selectedAmountOperator.Code, true, false, false, "number", false);
+                    this.amountFieldFilter = new FilterItem(amountFieldName, this.amountFrom, this.amountTo, null, this.selectedAmountOperator.Code, true, false, false, "number", false);
                     this.RefreshButtonClicked();
                 } else {
                     this.amountFieldFilter = null;
@@ -184,7 +187,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         } else {
             this.timerToken = setTimeout(() => {
                 this.amountFieldFilter = null;
-                    this.RefreshButtonClicked();
+                this.RefreshButtonClicked();
             }, 700);
         }
     }
@@ -200,11 +203,22 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     BuildColumns() {
         this.columns = [];
         this.columns.push({
+            FieldName: 'SelectCheckBox',
+            DataTypeCode: 'Boolean',
+            Display: '',
+            Styles: { width: '30px' },
+            HtmlListComponentName: 'ManageReconciliationListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ManageReconciliationListTemplate',
+            IsCustomTemplate: true
+        });
+        this.columns.push({
             FieldName: 'Number',
             DataTypeCode: 'String',
             //Display: 'Reconciliation No.',
             Display: TextCodeTranslator.Translate("Reconciliation.F.Number"),
             Styles: { width: '140px' },
+            HtmlListComponentName: 'ManageReconciliationListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ManageReconciliationListTemplate',
             IsCustomTemplate: true
         });
         this.columns.push({
@@ -213,8 +227,8 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
             //Display: 'Create Date',
             Display: TextCodeTranslator.Translate("Reconciliation.F.CreateDate"),
             Styles: { width: '130px' },
-            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentName: 'ManageReconciliationListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ManageReconciliationListTemplate',
             IsCustomTemplate: true
         });
         this.columns.push({
@@ -223,6 +237,8 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
             //Display: 'Created By',
             Display: TextCodeTranslator.Translate("Reconciliation.F.CreatedByUserName"),
             Styles: { width: '200px' },
+            HtmlListComponentName: 'ManageReconciliationListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ManageReconciliationListTemplate',
             IsCustomTemplate: true
         });
 
@@ -236,7 +252,19 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
             HtmlListComponentName: 'ManageReconciliationListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ManageReconciliationListTemplate',
         });
-        //this.CustomColumnsReady.emit(this.columns);
+        ReconcileEventManager.ManageReconciliationCheckBoxChecked.subscribe(($event) => {
+            if (!AppTool.IsNullOrEmpty($event)) {
+                if ($event.isChecked) {
+                    if (!ReconcileEventManager._SelectedItems.Collection.includes($event.line)) {
+                        ReconcileEventManager._SelectedItems.Insert($event.line);
+                    }
+                } else {
+                    if (ReconcileEventManager._SelectedItems.Collection.includes($event.line)) {
+                        ReconcileEventManager._SelectedItems.Remove($event.line);
+                    }
+                }
+            }
+        });
     }
 
     DataSource = {
@@ -268,7 +296,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         if (this.amountFieldFilter) {
             filters.AdditionalFilters.push(this.amountFieldFilter);
         }
-        
+
 
         filters.PageSize = 50;
         filters.PageIndex = 0;
@@ -277,7 +305,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         filters.SortBy = "CreateDate";
         filters.SortDirection = "Descending";
 
-      filters.addAdditionalFilter("AccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("AccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
 
         //#endregion
@@ -297,10 +325,29 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
 
     // returned value{ colDef, colIndex, rowData, rowIndex }
     onRowSelected(item) {
+        if (ReconcileEventManager.SupperssOnRowSelectedAction) {
+            ReconcileEventManager.SupperssOnRowSelectedAction = false;
+            return;
+        }
         if (!AppTool.IsNullOrEmpty(item)) {
             var lineData = item.rowData;
             var entityId = lineData.Id;
             this.OpenReco(entityId);
+        }
+    }
+
+    AllSelectedClicked(event){
+        this.IsAllSelected = event;
+    }
+
+    isAllSelected: boolean = false;
+    get IsAllSelected() { return this.isAllSelected; }
+    set IsAllSelected(value: boolean) {
+        if (this.isAllSelected != value) {
+            this.isAllSelected = value;
+            ReconcileEventManager.IsAllSelected=value;
+            this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
+
         }
     }
 
