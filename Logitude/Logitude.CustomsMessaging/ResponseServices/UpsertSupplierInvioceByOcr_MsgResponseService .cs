@@ -431,7 +431,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (supplierInvoiceItem.TryGetValue("Description", out string description))
                     {
-                        supplierInvoiceItemPM.ItemDescription = description;
+                        if(description.Length > 256)
+                            supplierInvoiceItemPM.ItemDescription = description.Substring(0, 256);
+                        else
+                            supplierInvoiceItemPM.ItemDescription = description;
                     }
                     if (supplierInvoiceItem.TryGetValue("Line_Amount_after_discount", out string lineAmountAfterDiscount) && decimal.TryParse(lineAmountAfterDiscount, out decimal lineAmount))
                     {
