@@ -99,7 +99,7 @@ export class JournalValidator
 
         var errors = [];
 
-        if (entityPM.StatusCode == "1" || entityPM.StatusCode == "2" || entityPM.StatusCode == "3")
+        if (entityPM.StatusCode == "1" || entityPM.StatusCode == "2" || entityPM.StatusCode == "3" || entityPM.StatusCode == "6" )
         {
 
             var cSum: number = 0;
