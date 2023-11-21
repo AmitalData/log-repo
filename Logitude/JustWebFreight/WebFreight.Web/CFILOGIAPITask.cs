@@ -70,7 +70,6 @@ namespace WebFreight.Web
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
 <OCC>
-<OCC>
 <DAT name=""CODE"">A69</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>select ClassificationCode, TradeAgreemenCode, OriginCountryCode, InvoiceQuantityType</DAT>
 <DAT name=""REFERENCE"">CENFMAIN.Lp_UpdateCars</DAT>
@@ -80,7 +79,6 @@ namespace WebFreight.Web
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
 <OCC>
-<OCC>
 <DAT name=""CODE"">A70</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>select * from SupplierInvioceItemsCertificates</DAT>
 <DAT name=""REFERENCE"">CENFMAIN.Lp_UpdateCars</DAT>
@@ -89,7 +87,6 @@ namespace WebFreight.Web
 <DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select * from SupplierInvioceItemsCertificates where Tenant=@Tenant and  DeclarationId=@DeclarationId and InvoiceCounterKey=@InvoiceCounterKey and LineNumber=@LineNumber</DAT>
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
-<OCC>
 <OCC>
 <DAT name=""CODE"">A1</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT LoadingFactor</DAT>
