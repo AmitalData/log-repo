@@ -1300,7 +1300,7 @@ namespace Logitude.Accounting.Data.Repositories
         public List<GLAccount> GetAllInActivityAccountsByTenant(int tenant)
         {
             List<GLAccount> accounts = ((from a in context.GLAccounts
-                                         where a.ChartOfAccountsTypeCode == "3" && a.Inactive == true && (tenant == 0 || a.Tenant == tenant)
+                                         where a.Inactive == true && a.Tenant == tenant
                                          select a).ToList());
 
             return accounts;
