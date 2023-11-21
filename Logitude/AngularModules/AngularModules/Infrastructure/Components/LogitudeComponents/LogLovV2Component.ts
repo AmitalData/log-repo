@@ -1768,7 +1768,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     Populate(searchText: string, setFirstAsSelected: boolean = false) {
         this.oldsearchText=this.oldsearchText==null?"":this.oldsearchText;
         if (searchText?.length > this.oldsearchText?.length ){
-            if (!AppTool.IsNullOrEmpty(searchText) && ( (isNaN(+searchText)&&!AppTool.IsNullOrEmpty(this.StartSearchFromChar) && searchText?.length <= this.StartSearchFromChar)  ||(!AppTool.IsNullOrEmpty(this.StartSearchFromNumber) && !isNaN(+searchText) && searchText?.length <= this.StartSearchFromNumber)))
+            if (!AppTool.IsNullOrEmpty(searchText) && ( (isNaN(+searchText)&&!AppTool.IsNullOrEmpty(this.StartSearchFromChar) && searchText?.length < this.StartSearchFromChar)  ||(!AppTool.IsNullOrEmpty(this.StartSearchFromNumber) && !isNaN(+searchText) && searchText?.length < this.StartSearchFromNumber)))
             return;
          }
         this.LovMessage = null;
