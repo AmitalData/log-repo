@@ -73,6 +73,7 @@ namespace Logitude.Accounting.BL.Utils
                 int tenant = gLAccountMultiToCurrencyArg.Tenant;
                 string myGLAccountId = gLAccountMultiToCurrencyArg.AccountId;
                 string toCurrencyId = gLAccountMultiToCurrencyArg.ToCurrencyId;
+                bool toMulti = toCurrencyId == "MULTI";
 
                 _badList = new List<string>();
                 _TransactionsMade = 0;
@@ -113,7 +114,16 @@ namespace Logitude.Accounting.BL.Utils
                         this.AddErrorRow($"GLAccount id={gLAccountPM} display={gLAccountPM.DisplayNumber} is a control account");
                         _errors = true;
                     }
-                    else if ((!gLAccountPM.IsMultiCurrency.HasValue || gLAccountPM.IsMultiCurrency.Value == false) && !String.IsNullOrEmpty(gLAccountPM.CurrencyId) && gLAccountPM.CurrencyId != toCurrencyId) 
+                    else if (toMulti && (!gLAccountPM.IsMultiCurrency.HasValue || gLAccountPM.IsMultiCurrency.Value == false))
+                    {
+                        this.AddErrorRow($"GLAccount id={gLAccountPM} display={gLAccountPM.DisplayNumber} is not a multi-currency account");
+                        _errors = true;
+                    }
+                    else if (toMulti && (gLAccountPM.IsMultiCurrency.HasValue && gLAccountPM.IsMultiCurrency.Value == true))
+                    {
+                        only_part_2 = true;
+                    }
+                    else if (!toMulti && (!gLAccountPM.IsMultiCurrency.HasValue || gLAccountPM.IsMultiCurrency.Value == false) && !String.IsNullOrEmpty(gLAccountPM.CurrencyId) && gLAccountPM.CurrencyId != toCurrencyId)
                     {
                         string code = null;
                         var accCurrency = currencyQueryService.GetCurrencyById(gLAccountPM.CurrencyId, tenant);
@@ -133,7 +143,7 @@ namespace Logitude.Accounting.BL.Utils
 
                 // Check Currency 
                 Currency currency = null;
-                if (!_errors)
+                if (!_errors && !toMulti)
                 {
                     if (String.IsNullOrWhiteSpace(toCurrencyId))
                     {
@@ -153,10 +163,19 @@ namespace Logitude.Accounting.BL.Utils
                 }
                 TenantQuery tenantQuery = new TenantQuery(tenant);
                 TenantPM tPM = tenantQuery.GetSinglePM(tenant);
-                string accountingCurrencyId = tPM.CurrencyId;
-                string recoMethod = toCurrencyId != accountingCurrencyId ? ReconcileMethodValues.ForeignCurrency : ReconcileMethodValues.LocalCurrency;
+                string accountingCurrencyId = tPM.CurrencyId; 
+                
+                string recoMethod = null;
+                if (toMulti)
+                {
+                    recoMethod = ReconcileMethodValues.LocalCurrency;
+                }
+                else
+                {
+                    recoMethod = toCurrencyId != accountingCurrencyId ? ReconcileMethodValues.ForeignCurrency : ReconcileMethodValues.LocalCurrency;
+                }
                 // Check Ledger Transactions 
-                if (!_errors)
+                if (!_errors && !toMulti)
                 {
                     bool othercurr = ledgerTransactionQueryService.CheckIfLedgerTransactionOtherCurrencyExist(myGLAccountId, toCurrencyId, tenant);
                     if (othercurr)
@@ -171,7 +190,7 @@ namespace Logitude.Accounting.BL.Utils
                 string strConnString = TenantServerConfigration.GetDbConnection(tenant);
 
                 // Change Currency 
-                if (!_errors && !only_part_2)
+                if (!_errors && !only_part_2 && !toMulti)
                 {
                     if ((!gLAccountPM.IsMultiCurrency.HasValue || gLAccountPM.IsMultiCurrency.Value == false) && gLAccountPM.CurrencyId == toCurrencyId)
                     {

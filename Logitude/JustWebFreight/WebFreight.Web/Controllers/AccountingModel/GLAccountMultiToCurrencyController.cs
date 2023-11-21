@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
             if (String.IsNullOrWhiteSpace(toCurrencyId) && String.IsNullOrWhiteSpace(toCurrencyCode))
             {
-                message = "CurrencyId or Code is a must";
+                message = "CurrencyId, Code or MULTI is a must";
                 return isSuccess;
             }
 
@@ -143,16 +143,23 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
             if (String.IsNullOrWhiteSpace(toCurrencyId))
             {
-
-                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Currency accCurrency = currencyQueryService.GetCurrencyByCode(toCurrencyCode, tenant);
-                if (accCurrency == null)
+                if (toCurrencyCode.ToUpperInvariant() == "MULTI")
                 {
-                    message = "Currency {toCurrencyCode} not found";
-                    return isSuccess;
+                    toCurrencyId = "MULTI";
                 }
-                toCurrencyId = accCurrency.Id;
+                else
+                {
+                    Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Currency accCurrency = currencyQueryService.GetCurrencyByCode(toCurrencyCode, tenant);
+                    if (accCurrency == null)
+                    {
+                        message = "Currency {toCurrencyCode} not found";
+                        return isSuccess;
+                    }
+                    toCurrencyId = accCurrency.Id;
+                }
             }
-            else
+
+            else if (toCurrencyId.ToUpperInvariant() != "MULTI") 
             {
                 var curr = currencyQueryService.GetCurrencyById(toCurrencyId, tenant);
                 if (curr == null)
@@ -161,6 +168,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     return isSuccess;
                 }
             }
+            if (toCurrencyId.ToUpperInvariant() == "MULTI") toCurrencyId = "MULTI";
+
             if (!String.IsNullOrEmpty(batch) && (batch == "1" || batch.ToUpperInvariant() == "TRUE"))
             {
                 v_batch = true;
