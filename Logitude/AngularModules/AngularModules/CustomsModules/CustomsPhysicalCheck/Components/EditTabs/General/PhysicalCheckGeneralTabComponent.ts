@@ -216,7 +216,7 @@ export class PhysicalCheckGeneralTabComponent
 
     checkEarlierDateFeature() {
         debugger
-        return FeatureLocator.HasFeaturePermession("PhysicalCheck", "TaxDeductionReport.Features.EarlierDateFeature") ? true : false;
+        return FeatureLocator.HasFeaturePermession("PhysicalCheck", "EarlierDateFeature");
     }
 
     SetEarlierDateFieldsEnable(enable: boolean) {
