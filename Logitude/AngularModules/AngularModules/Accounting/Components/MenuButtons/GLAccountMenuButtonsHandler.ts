@@ -147,9 +147,9 @@ export class GLAccountMenuButtonsHandler {
                             }
                         case "CancelSelectedReco":
                             {
-                                 button.IsDisabled = true;
+                                 button.IsDisabled = false;
                                  break;
-                        }
+                            }
 
                     }
                     
@@ -244,7 +244,7 @@ export class GLAccountMenuButtonsHandler {
     }
     CancelReconciles(){
     }
-    
+
     ReconcileButtonClicked() {
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
