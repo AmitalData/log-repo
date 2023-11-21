@@ -95,7 +95,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.RequestDetails).HasColumnName("RequestDetails").HasMaxLength(100).IsUnicode(true);
 
-            this.Property(t => t.BringQueueForwardIndicatorS).HasColumnName("BringQueueForwardIndicatorS").IsRequired().HasMaxLength(3).IsUnicode(true);
+            this.Property(t => t.BringQueueForwardIndicatorS).HasColumnName("BringQueueForwardIndicatorS").HasMaxLength(3).IsUnicode(true);
         }
     }
 }

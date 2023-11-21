@@ -257,7 +257,7 @@
     Type="nvarchar"
     Size="3">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
