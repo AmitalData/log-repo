@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DefaultValueUpdateClass
    {  		
-		public const string HashString = "1f344c4596ff130da5f56d3c4c5c568d";
+		public const string HashString = "565eb3d2f778c031be2fac0de7272ba0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Default Value",
-			      				    Code =  "29cf",
+			      				    Code =  "fc9f",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -451,7 +451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Value",
+					 						FieldName =  "DefValue",
 					  						ObjectTableName =  "Customs.DefaultValue",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -469,9 +469,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Value",
-					  						ListPropertyPath =  "Value",
-					  						DisplayInLookUpIndex =  0,
+					  						PMPropertyPath =  "DefValue",
+					  						ListPropertyPath =  "DefValue",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -488,10 +487,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Value",
-					  						DefaultText =  "Value",
-					  						ListFieldLable =  "ValueListLable",
-					  						ListLableDefaultText =  "Value",
+					  						FullFieldLable =  "DefValue",
+					  						DefaultText =  "Def Value",
+					  						ListFieldLable =  "DefValueListLable",
+					  						ListLableDefaultText =  "Def Value",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
