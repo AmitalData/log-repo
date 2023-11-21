@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr>
         <td>
             <div class="TableHolder">
@@ -114,6 +114,10 @@
                             </div>
                             <div style="width: 30px;" [style.float]="isRTL ? 'left' : 'right'" >
                                 <!--<IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()"></IconButton>-->
+                            </div>
+                            <div style="display: inline-block; width: 40px; padding: 0 15px;">
+                                <CheckBox title="Select All" style="position: absolute; top: 12px;"
+                                 (Checked)="AllSelectedClicked($event)"></CheckBox>
                             </div>
                         </td>
 
