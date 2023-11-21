@@ -167,7 +167,7 @@ export class JournalMenuButtonsHandler {
         const JournalAccountingEntity = "1";
         const RevaluationAccountingEntity = "8";
         const AdjustmentAccountingEntity = "10";
-        const ApprovedStatusCode = "2";
+        const ApprovedStatusCode = "6";
         const VoidedStatusCode = "3";
 
 
