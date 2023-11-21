@@ -49,7 +49,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public virtual void OnApproveUpdatingFillArrangeJournalPMResetControlAccount()
         {
-            if (_JournalPM.StatusCode != "6")
+            if (_JournalPM.StatusCode != "6" && _JournalPM.StatusCode != "2")
             {
                 throw new ApplicationException("occure only OnApproveUpdating");
             }
@@ -191,7 +191,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 CreateGLAccountTotalByMonthFromLedger();
                 CheckGLAccountTotalByMonth();
-                if (_JournalPM.StatusCode == "6")
+                if (_JournalPM.StatusCode == "6" || _JournalPM.StatusCode == "2")
                 {
                     CreateControlGLAccountTotalByMonthFromLedger();
                     CheckControlGLAccountTotalByMonths();
