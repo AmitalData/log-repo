@@ -462,7 +462,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 this.ValidationErrorsList = mm.ErrorsArray;
                 this.CurrentSession.StopBusyIndicator();
             }
+            this.RefreshButtonClicked()
             this.CurrentSession.StopBusyIndicator();
+          
         });
     }
 
@@ -485,7 +487,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 this.ValidationErrorsList = mm.ErrorsArray;
                 this.CurrentSession.StopBusyIndicator();
             }
+            this.RefreshButtonClicked()
             this.CurrentSession.StopBusyIndicator();
+           
         });
     }
     public GetAPIFilters() {
@@ -558,6 +562,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     public ChangeCheckBoxesStateExt: EventEmitter<any> = new EventEmitter();
 
     public FuncTransactionSelectedLine(result: any) {
+        debugger
         this.TransactionSelectedLines.Clear();
         let emittedArray = result.map((res: ReconcileExternalPageLinePM) => ({ rowData: res, IsChecked: true, RowIndex: -1, ById: true })); //result.map(res=>(new LineModel(res,this,-1)));//[];
         let selectedLines = result.map(res => (new TransactionLineModel(res, this, -1)));
@@ -567,6 +572,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     public FuncExtPageSelectedLines(result: any) {
         this.ExtPageSelectedLines.Clear();
         let emittedArray = result.map((res: ReconcileExternalPageLinePM) => ({ rowData: res, IsChecked: true, RowIndex: -1, ById: true })); //result.map(res=>(new LineModel(res,this,-1)));//[];
+        debugger
         let selectedLines = result.map(res => (new ExtPageLineModel(res, this, -1)));
         this.ExtPageSelectedLines.InsertCollection(selectedLines);
         this.ChangeCheckBoxesStateExt.emit(emittedArray);
