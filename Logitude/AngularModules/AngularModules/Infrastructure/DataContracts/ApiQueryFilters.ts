@@ -98,6 +98,14 @@ export class ApiQueryFilters {
             this.AdditionalFilters.splice(index, 1);
         }
     }
+
+    removeAdditionalFilterForNoneLookUpfilter(FieldName: string) {
+      var item = this.AdditionalFilters.filter(d=> d.FieldName == FieldName)[0];
+      if (item) {
+          var index = this.AdditionalFilters.indexOf(item);
+          this.AdditionalFilters.splice(index, 1);
+      }
+    }
     
     pushAdditionalFilter(params:ApiQueryFiltersAddParams){
       if (!params.IsCacheOnClient) {

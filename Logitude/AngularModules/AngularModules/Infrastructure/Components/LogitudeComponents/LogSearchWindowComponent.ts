@@ -873,7 +873,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
                         if (this.LookUpTable.CacheOnClient) {
                             CachedDataManager.RefreshTableData(this.ObjectTableName, true);
-                        }
+                        }                       
                         //var list = myResponse;
                         //if (myResponse instanceof ServiceResponse) {
                         //    list = myResponse.Result;
@@ -897,8 +897,11 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
     CloseButtonClicked() {
         //this.CurrentSession.CloseCurrentWindow();
+        if(this.QueryFilterItems){
+            this.QueryFilterItems.removeAdditionalFilterForNoneLookUpfilter("CardSearchField");
+        }
+        
         this.CurrentSession.CloseCurrentWindowEmit(null);
-
     }
     TextChanged(searchtext) {
         if (searchtext != null && searchtext != undefined) {
@@ -922,6 +925,9 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
                 this.Args.SelectedItem = entityList;
                 var args = selectedEntityId + ',' + entityList.Tenant + ',' + this.LanguageFilterValue;
                 // Close windoew with Args
+                if(this.QueryFilterItems){
+                    this.QueryFilterItems.removeAdditionalFilterForNoneLookUpfilter("CardSearchField");
+                }
                 this.CurrentSession.CloseCurrentWindowEmit(args);
             }
         }

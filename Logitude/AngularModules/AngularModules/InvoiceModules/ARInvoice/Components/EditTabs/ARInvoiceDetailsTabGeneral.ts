@@ -67,8 +67,11 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public AllowVatTypes: boolean = true;
     public IsUsingVirtuallization: boolean = false;
     public InvoicePartners: InvoicePartnerType[] = [];
+
     public PartnerTypeComboBoxIsDisabled: boolean = true;
+    public BillToFilter:ApiQueryFilters;
     constructor(private entityArgs: EntityArgs, private cdRef: ChangeDetectorRef) {
+
         super();
         // this.CurrentSession.StartBusyIndicatorLoading();
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
@@ -99,6 +102,11 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
     }
 
+
+    InitLOVBillToFilters() {
+        this.BillToFilter = new ApiQueryFilters();
+        this.BillToFilter.addAdditionalFilter("ActiveGLAccount", true, null, null, "Equals", true, false, false, "Boolean");
+    }
 
     public SelectedPartnerType: InvoicePartnerType = null;
     public BillToDependencyValue1: string;
@@ -136,6 +144,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     private InitializeBillToLov() {
+        this.InitLOVBillToFilters();
         if (this.IsAccountingActivated) {
             this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
             this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
