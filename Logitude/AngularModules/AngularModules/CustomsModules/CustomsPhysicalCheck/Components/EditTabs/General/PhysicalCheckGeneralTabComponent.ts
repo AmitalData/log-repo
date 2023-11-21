@@ -106,6 +106,7 @@ export class PhysicalCheckGeneralTabComponent
                                
             });
         });
+       
 
     }
 
@@ -158,7 +159,17 @@ export class PhysicalCheckGeneralTabComponent
                     }
                 })
             );
+
+            // todo: BringQueueForwardIndicatorStatus=004  יש להציג הודעה “הקדמת תור הועברה לבחינה של עובד מכס”
+            this.ShowAlertBringQueueForwardIndicatorStatus();
         }
+    }
+
+    ShowAlertBringQueueForwardIndicatorStatus() {
+        debugger
+        // if(this.EntityPM.BringQueueForwardIndicatorStatus== "4"){
+        //     var msg= "יש להציג הודעה “הקדמת תור הועברה לבחינה של עובד מכס";
+        // }
     }
 
     // log tab
@@ -202,6 +213,18 @@ export class PhysicalCheckGeneralTabComponent
         this.SetDateEnable(false);
         
     }
+
+    checkEarlierDateFeature() {
+        debugger
+        return FeatureLocator.HasFeaturePermession("PhysicalCheck", "EarlierDateFeature");
+    }
+
+    SetEarlierDateFieldsEnable(enable: boolean) {
+        this.UIProperties.SetEnabled("RequestToAdvanceAQueue", this.ObjectTableName, enable);
+        this.UIProperties.SetEnabled(" RequestDetails", this.ObjectTableName, enable);
+        debugger
+    }
+    
     SetDateEnable(enable: boolean) {
         this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, enable);

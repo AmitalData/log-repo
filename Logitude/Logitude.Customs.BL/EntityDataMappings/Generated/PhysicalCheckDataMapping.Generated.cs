@@ -55,7 +55,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SealNumber, 
 	         CheckAuthorityAttenderTypeID, 
 	         CheckAuthorityAttenderTypeName, 
-	         CheckAnwserStatus,
+	         CheckAnwserStatus, 
+	         RequestToAdvanceAQueue, 
+	         RequestDetails, 
+	         BringQueueForwardIndicatorS,
 	      }
 
 
@@ -111,7 +114,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CheckAuthorityAttenderTypeID, 
 	         CheckAuthorityAttenderTypeName, 
 	         CheckAnwserStatus, 
-	         SearchResultName,
+	         SearchResultName, 
+	         RequestToAdvanceAQueue, 
+	         RequestDetails, 
+	         BringQueueForwardIndicatorS,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -283,6 +289,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CheckAnwserStatus))
             {
 				entityPOCO.CheckAnwserStatus = entityPM.CheckAnwserStatus;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestToAdvanceAQueue))
+            {
+				entityPOCO.RequestToAdvanceAQueue = entityPM.RequestToAdvanceAQueue;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestDetails))
+            {
+				entityPOCO.RequestDetails = entityPM.RequestDetails;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BringQueueForwardIndicatorS))
+            {
+				entityPOCO.BringQueueForwardIndicatorS = entityPM.BringQueueForwardIndicatorS;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -461,6 +482,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CheckAnwserStatus = entityPOCO.CheckAnwserStatus;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestToAdvanceAQueue))
+            {
+					entityPM.RequestToAdvanceAQueue = entityPOCO.RequestToAdvanceAQueue;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestDetails))
+            {
+					entityPM.RequestDetails = entityPOCO.RequestDetails;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BringQueueForwardIndicatorS))
+            {
+					entityPM.BringQueueForwardIndicatorS = entityPOCO.BringQueueForwardIndicatorS;
+            }
+
 		}
 
 		public void PMToOldPM(PhysicalCheckPM entityPM, PhysicalCheckPM oldEntityPM)
@@ -632,6 +668,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CheckAnwserStatus = entityPM.CheckAnwserStatus;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestToAdvanceAQueue))
+            {
+                oldEntityPM.RequestToAdvanceAQueue = entityPM.RequestToAdvanceAQueue;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestDetails))
+            {
+                oldEntityPM.RequestDetails = entityPM.RequestDetails;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BringQueueForwardIndicatorS))
+            {
+                oldEntityPM.BringQueueForwardIndicatorS = entityPM.BringQueueForwardIndicatorS;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(PhysicalCheckPM entityPM)
@@ -644,6 +695,18 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.RequestToAdvanceAQueue)) //T4 find type == nText 
+            {
+                entityPM.RequestToAdvanceAQueue = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.RequestToAdvanceAQueue));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.RequestDetails)) //T4 find type == nText 
+            {
+                entityPM.RequestDetails = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.RequestDetails));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.BringQueueForwardIndicatorS)) //T4 find type == nText 
+            {
+                entityPM.BringQueueForwardIndicatorS = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.BringQueueForwardIndicatorS));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
