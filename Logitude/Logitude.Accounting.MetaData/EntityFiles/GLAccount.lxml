@@ -16028,6 +16028,13 @@
         IndexOrder="0"
         LocalDefaultText="&quot;הפעל מחדש&quot;"
         IsPackagable="true" />
+      <MenuItem
+        EventCode="&quot;CancelSelectedReco&quot;"
+        DefaultText="&quot;Cancel Selected Reconciles&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="1"
+        LocalDefaultText="&quot;ביטול התאמות מסומנות&quot;"
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>

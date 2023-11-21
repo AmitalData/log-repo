@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-
-		public const string HashString = "60f2cd719406e3038d84b70865281721";
+		public const string HashString = "db815a9abfec48bb8656c08a86d3aeeb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13410,6 +13409,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   Feature GLAccountFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
              			   Feature GLAccountFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccountReactivate", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reactivate", NameTextCodeDefaultText = "Reactivate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
+             			   Feature GLAccountFeature_MB12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelSelectedReco", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.CancelSelectedReconciles", NameTextCodeDefaultText = "Cancel Selected Reconciles", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -13499,6 +13499,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  GLAccountFeature_MB11.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton GLAccountMenuButton12 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "CancelSelectedReco",
+						Index = 1, 
+						IsActive = true,
+						LabelTextCodeCode = "GLAccount.B.CancelSelectedReconciles",
+						LabelTextCodeDefaultText = "Cancel Selected Reconciles",
+						Tenant = 0,
+						MenuButtonGroupId = GLAccountMenuButtonGroup.Id,
+						ParentMenuButtonId = GLAccountMenuButton1.Id,
+						ObjectTableId = GLAccountObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  GLAccountFeature_MB12.Id,
+						Style = null,
+						LocalDefaultText = "ביטול התאמות מסומנות",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  GLAccountFeature_MB12.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

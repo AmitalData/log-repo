@@ -145,7 +145,14 @@ export class GLAccountMenuButtonsHandler {
 
                                 break;
                             }
+                        case "CancelSelectedReco":
+                            {
+                                 button.IsDisabled = true;
+                                 break;
+                        }
+
                     }
+                    
                 }
             }
         }
@@ -197,6 +204,11 @@ export class GLAccountMenuButtonsHandler {
 
                         break;
                     }
+                case "CancelSelectedReco":
+                    {
+                        this.CancelReconciles();
+                        break;
+                    }
             }
         } else {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
@@ -230,7 +242,9 @@ export class GLAccountMenuButtonsHandler {
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
     }
-
+    CancelReconciles(){
+    }
+    
     ReconcileButtonClicked() {
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
