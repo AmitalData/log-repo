@@ -54,7 +54,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Value"
+    Name="DefValue"
     Type="nvarchar"
     Size="-1">
     <Constraints

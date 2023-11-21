@@ -181,25 +181,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string value ;
+	  private string defValue ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Value  
+       public string DefValue  
 	   {
 	    
 	     get
 		{
-		   return value;
+		   return defValue;
 		 }
 		 set
 		 {
-		   if(value != value)
+		   if(defValue != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Value",OldValue=value,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefValue",OldValue=defValue,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   value=value;
+		   defValue=value;
 		   }
 			
 		 }

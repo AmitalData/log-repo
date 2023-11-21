@@ -15,7 +15,7 @@ export class DefaultValueList {
 	BranchId: string;
 	CardId: string;
 	ShortValue: string;
-	Value: string;
+	DefValue: string;
 	
 }
  

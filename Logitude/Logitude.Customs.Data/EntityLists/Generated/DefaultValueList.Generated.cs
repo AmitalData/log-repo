@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ShortValue  { get; set; }
        [DataMember]
-       public string Value  { get; set; }
+       public string DefValue  { get; set; }
    }
 
 }

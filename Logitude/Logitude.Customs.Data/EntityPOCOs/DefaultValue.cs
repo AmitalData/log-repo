@@ -39,8 +39,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CardId { get; set; }
         [Column("ShortValue")]
 	    public string ShortValue { get; set; }
-        [Column("Value")]
-	    public string Value { get; set; }
+        [Column("DefValue")]
+	    public string DefValue { get; set; }
     }
 }
 	 

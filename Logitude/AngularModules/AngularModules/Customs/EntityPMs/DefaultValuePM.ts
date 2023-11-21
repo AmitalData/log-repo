@@ -59,9 +59,9 @@ export class DefaultValuePM {
     public set ShortValue(newValue: string) { if (this.shortValue != newValue) { this.shortValue = newValue; this.MarkAsDirty("ShortValue"); } }
        
 	 
-    private value: string;
-    public get Value() { return this.value; }
-    public set Value(newValue: string) { if (this.value != newValue) { this.value = newValue; this.MarkAsDirty("Value"); } }
+    private defValue: string;
+    public get DefValue() { return this.defValue; }
+    public set DefValue(newValue: string) { if (this.defValue != newValue) { this.defValue = newValue; this.MarkAsDirty("DefValue"); } }
        
 	 
 
