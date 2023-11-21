@@ -126,6 +126,12 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CheckAuthorityAttenderTypeName { get; set; }
         [Column("CheckAnwserStatus")]
 	    public int? CheckAnwserStatus { get; set; }
+        [Column("RequestToAdvanceAQueue")]
+	    public string RequestToAdvanceAQueue { get; set; }
+        [Column("RequestDetails")]
+	    public string RequestDetails { get; set; }
+        [Column("BringQueueForwardIndicatorS")]
+	    public string BringQueueForwardIndicatorS { get; set; }
     }
 }
 	 
