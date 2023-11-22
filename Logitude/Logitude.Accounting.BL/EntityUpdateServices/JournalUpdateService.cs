@@ -622,7 +622,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void CreateJournalAdditionalDataForARInvoiceJournal(JournalPM journal)
         {
-            if (journal.AccountingEntityCode == JournalAccountingEntities.ARInvoice)
+            if (journal.AccountingEntityCode == JournalAccountingEntities.ARInvoice && (String.IsNullOrEmpty(journal.ExternalSystem) || journal.ExternalSystem != "AMITAL"))
             {
                 JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(null, journal);
                 SaveJournalAdditionalData(journalAdditionalDataPM);
@@ -630,7 +630,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void CreateJournalAdditionalDataForEachDebitInputLine(JournalPM journal)
         {
-            if (journal.AccountingEntityCode != JournalAccountingEntities.ARInvoice)
+            if (journal.AccountingEntityCode != JournalAccountingEntities.ARInvoice && (String.IsNullOrEmpty(journal.ExternalSystem) || journal.ExternalSystem != "AMITAL"))
             {
                 List<JournalLinePM> jourlDebitInputLines = SelectJournalDebitLinesFromJournalLines(journal);
                 foreach (JournalLinePM journalLine in jourlDebitInputLines)
