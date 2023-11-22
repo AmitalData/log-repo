@@ -64,7 +64,7 @@ namespace WebFreight.Web.WcfApi
 				string Bol = "";
 				if (Type == "c_id")
 				{
-					var arrayReferenceNo = ReferenceNo.Split(',');
+					var arrayReferenceNo = ReferenceNo?.Split(',');
 					ReferenceNo = arrayReferenceNo != null && arrayReferenceNo?.Count() > 0 ? arrayReferenceNo[0] : ReferenceNo;
 					Bol = arrayReferenceNo != null && arrayReferenceNo?.Count() > 1 ? arrayReferenceNo[1] : "";
 
