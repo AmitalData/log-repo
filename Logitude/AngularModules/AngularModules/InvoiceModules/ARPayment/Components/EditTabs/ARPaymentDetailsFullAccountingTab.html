@@ -918,6 +918,16 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
+
+                                    <!-- Reference -->
+                                    <log-column [width]="'100'" [header]="'Journal.CH.AccountingEntityNameListLable' | TextCodeTranslationPipe"
+                                    [Alignment]="isRTL ? 'right' : 'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                            {{item.Reference3}}
+                                        </log-cell-template>
+                                    </ng-template>
+                                  </log-column>
                                 </logitude-edit-grid>
 
                                 <div *ngIf="TransactionsList?.Length == 0 && !_loading" id="{{'ARPaymentSpinner' | IdGeneratorAsyncPipe | async}}" class="NoDataText">

@@ -7,6 +7,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.CloseTables;
+using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -30,7 +31,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         LedgerTransaction paymentTransaction;
         List<LedgerTransactionPM> transactions;
-
+        private ARInvoiceQuery aRInvoiceQuery;
         public ARPaymentInvoicesTransactionFetcher(string arpaymentId, string glaccountId, int tenant)
         {
             this.tenant = tenant;
@@ -41,6 +42,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 paymentTransaction = GetPaymentTransaction();
 
             transactions = new List<LedgerTransactionPM>();
+            aRInvoiceQuery = new ARInvoiceQuery(tenant);
         }
 
         public List<LedgerTransactionPM> FetchSorted()
@@ -140,6 +142,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             FillTransactionsAmountToReconcile(reconciledTransactions);
 
+            reconciledTransactions = SetRefernceToLedgerTransaction(reconciledTransactions);
+
             return reconciledTransactions;
         }
 
@@ -227,11 +231,64 @@ namespace Logitude.Accounting.BL.CoreBL
                         && d.IsReconciled == false
                         && d.SourceTypeCode == CloseTables.AccountingEntityValues.ARInvoice)
                     .OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
-
+         
             var transactionsList = invoicesTransactions.ToList();
+            transactionsList = SetRefernceToLedgerTransaction(transactionsList);
             return transactionsList;
         }
 
+        private List<LedgerTransactionPM> SetRefernceToLedgerTransaction(List<LedgerTransactionPM> transactionsList)
+        {
+            var transactionsListSourceId = transactionsList.Select(tr => tr.SourceId).ToList();
+            List<ARInvoicePM> aRInvoicePMs = aRInvoiceQuery.GetARInvoicePMsByIdList(transactionsListSourceId, tenant).ToList();
+            transactionsList = transactionsList.Join(aRInvoicePMs, ledger => ledger.SourceId, arInvoice => arInvoice.Id, (ledger, arInvoice) => newLedgerTransactionPM(ledger, arInvoice)).ToList();
+            return transactionsList;
+        }
+
+        private LedgerTransactionPM newLedgerTransactionPM(LedgerTransactionPM ledgerTransaction,ARInvoicePM aRInvoicePM)
+        {
+            return new LedgerTransactionPM()
+            {
+                IsReconciled = ledgerTransaction.IsReconciled,
+                Id = ledgerTransaction.Id,
+                Tenant = ledgerTransaction.Tenant,
+                JournalId = ledgerTransaction.JournalId,
+                JournalLineNumber = ledgerTransaction.JournalLineNumber,
+                CreateDate = ledgerTransaction.CreateDate,
+                ControlAccountId = ledgerTransaction.ControlAccountId,
+                AccountId = ledgerTransaction.AccountId,
+                AccountingDate = ledgerTransaction.AccountingDate,
+                DocumentDate = ledgerTransaction.DocumentDate,
+                DueDate = ledgerTransaction.DueDate,
+                LocalAmountDebit = ledgerTransaction.LocalAmountDebit,
+                LocalAmountCredit = ledgerTransaction.LocalAmountCredit,
+                CurrencyId = ledgerTransaction.CurrencyId,
+                ForeignAmountDebit = ledgerTransaction.ForeignAmountDebit,
+                ForeignAmountCredit = ledgerTransaction.ForeignAmountCredit,
+                ExchangeRate = ledgerTransaction.ExchangeRate,
+                Reference1 = ledgerTransaction.Reference1,
+                Reference2 = ledgerTransaction.Reference2,
+                Reference3 = aRInvoicePM.ShipmentsNumbers,
+                OpenAmount = ledgerTransaction.OpenAmount,
+                OppositeAccountId = ledgerTransaction.OppositeAccountId,
+                SearchFields = ledgerTransaction.SearchFields,
+                JournalNumber = ledgerTransaction.JournalNumber,
+                CurrencyCode = ledgerTransaction.CurrencyCode,
+                OpenAmountCurrencyId = ledgerTransaction.OpenAmountCurrencyId,
+                Notes = ledgerTransaction.Notes,
+                InternalNote = ledgerTransaction.InternalNote,
+                UpdateDateTime = ledgerTransaction.UpdateDateTime,
+                UpdatedByUserName = ledgerTransaction.UpdatedByUserName,
+                AmountToReconcile = ledgerTransaction.AmountToReconcile,
+                Mark = ledgerTransaction.Mark,
+                SourceId = ledgerTransaction.SourceId,
+                SourceNumber = ledgerTransaction.SourceNumber,
+                SourceTypeCode = ledgerTransaction.SourceTypeCode,
+                IsExternalReconcile = ledgerTransaction.IsExternalReconcile,
+                InReconcileProgress = ledgerTransaction.InReconcileProgress,
+                ReconcileRemarks = ledgerTransaction.ReconcileRemarks,
+            };
+        }
         private LedgerTransaction GetPaymentTransaction()
         {
             JournalPM paymentJournal = GetPaymentJournal(paymentId);
