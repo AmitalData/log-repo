@@ -464,7 +464,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             }
             this.RefreshButtonClicked()
             this.CurrentSession.StopBusyIndicator();
-          
+
         });
     }
 
@@ -489,7 +489,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             }
             this.RefreshButtonClicked()
             this.CurrentSession.StopBusyIndicator();
-           
+
         });
     }
     public GetAPIFilters() {
@@ -513,7 +513,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
         // filters.addAdditionalFilter("DueDate", "#today", null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
-        
+
         if (this.ObjectTableName == "BankAccount" && this.filterSelectedValue != 'filter_Bank')
             filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
@@ -534,7 +534,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             var refDateFilter = new FilterItem("ReferenceDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
             filters.AdditionalFilters.push(refDateFilter);
         }
-         if (this.searchFieldFilter) {
+        if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
         if (this.openAmountFilter) {
@@ -547,7 +547,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.GetCount = true;
         filters.SortBy = this.ExtPageDataSource.sortingCol;
         filters.SortDirection = this.ExtPageDataSource.sortingDir;
-       
+
         var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
 
         if (!this.showInProgessLines) {
@@ -556,7 +556,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         }
         return filters;
 
-       this.entityListService.getExternalReoncilioationsByFilter("ReconcileExternalPage", objectTable.Id, this.EntityPM.Id, filters);
+        this.entityListService.getExternalReoncilioationsByFilter("ReconcileExternalPage", objectTable.Id, this.EntityPM.Id, filters);
     }
     public ChangeCheckBoxesState: EventEmitter<any> = new EventEmitter();
     public ChangeCheckBoxesStateExt: EventEmitter<any> = new EventEmitter();
@@ -912,6 +912,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             const rowId = row.Id;
             const RowIndex = $event.rowIndex;
             const index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);
+           
             if (index < 0) {
 
                 this.PushLine(row, RowIndex);
@@ -990,7 +991,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
         // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
         filters.addAdditionalFilter("DueDate", "#today", null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
-        
+
         if (this.ObjectTableName == "BankAccount" && this.filterSelectedValue != 'filter_Bank')
             filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
@@ -1046,7 +1047,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
 
     PushLine(row, RowIndex) {
-        
+        let countLines:number = 500;
         var index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
 
@@ -1069,6 +1070,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             //     this.TransactionFireCheckBoxChecked.emit({ rowData: ledger.LedgerTransactionPM, IsChecked: false, RowIndex: RowIndex, ById: true });
             // }
             // else
+
+
             {
                 this.TransactionSelectedLines.Insert(ledger);
                 this.CalculateTotals();
@@ -1076,6 +1079,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 this.ValidationErrorsList = [];
             }
 
+            if (this.TransactionSelectedLines.Length >= this.TransactionDataSource.rowCount || this.TransactionSelectedLines.Length >= countLines)
+                this._isAllSelected = true;
         }
     }
 
@@ -1095,7 +1100,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         this.TransactionSelectedLines.Remove(this.TransactionSelectedLines.Collection.find(c => c.Id == id));
         this.CalculateTotals();
-
+        this._isAllSelected = false;
 
     }
 
@@ -1107,7 +1112,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
 
     CalculateTotals() {
-        
+
         this.accountTransactionsTotal = 0;
         var total = 0;
         for (let line of this.TransactionSelectedLines.Collection) {
@@ -1305,6 +1310,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     ExtPagePushLine(row, RowIndex) {
         var index = this.ExtPageSelectedLines.Collection.findIndex(c => c.Id == row.Id);
+        let countLines:number = 500;
         if (index < 0) { // DNE
             row.AmountToReconcile = row.CreditAmount != 0 ? row.CreditAmount : row.DebitAmount;
 
@@ -1325,6 +1331,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 this.ExtPageFireCheckBoxChecked.emit({ rowData: row, IsChecked: true, RowIndex: RowIndex });
                 this.ValidationErrorsList = [];
             }
+            if (this.ExtPageSelectedLines.Length >= this.ExtPageDataSource.rowCount || this.ExtPageSelectedLines.Length >= countLines)
+               this._isAllSelectedExt = true;
 
         }
     }
@@ -1347,6 +1355,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         this.ExtPageSelectedLines.Remove(this.ExtPageSelectedLines.Collection.find(c => c.Id == id));
         this.CalculateExtPageTotals();
+        this._isAllSelectedExt = false;
     }
 
     ExtPageCheckBoxValueChanged(Row) {
@@ -1504,7 +1513,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
             // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
             filters.addAdditionalFilter("DueDate", "#today", null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
-            
+
             if (this.ObjectTableName == "BankAccount")
                 filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
