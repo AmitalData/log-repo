@@ -282,8 +282,19 @@
         font-size: 14px;
         color: #09a6d8;
         padding: 10px 5px;
+        display: inline-block;
+        vertical-align: middle;
     }
 
+    .selectAllCheckBox {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .exportToExcel { 
+        display: inline-block;
+        vertical-align: middle;
+    }
     /* list styles */
     ul.horizontal-list {
         list-style: none;
@@ -749,20 +760,17 @@
             <!-- Section B -->
             <td style="width: 50%;padding: 0px 8px;">
                 <table>
-
                     <!-- subtitle -->
                     <tr>
                         <td>
-                            <div style="display: inline-block; width: 40px; padding: 0 15px;">
-                                <CheckBox title="Select All" style="position: absolute; top: 12px;"
-                                    [IsChecked]="isAllSelected" (Checked)="isAllSelected = $event"></CheckBox>
-                            </div>
-                            <div style="display: inline-block;">
+                            <CheckBox class="selectAllCheckBox" title="Select All" 
+                                [IsChecked]="isAllSelected" (Checked)="isAllSelected = $event"></CheckBox>
                                 <div class="SubTitle">
                                     {{'ReconcileExternalPage.O.Transactions' | TextCodeTranslationPipe}}
                                     ({{IsAutoReconcile ? TransactionSelectedLines.Length : transCount}})
                                 </div>
-                            </div>
+                            <IconButton class="exportToExcel" [Name]="'Excel'" (click)="ExportTransactions()" [disabled]="false">
+                            </IconButton>
                         </td>
                     </tr>
 
@@ -770,7 +778,9 @@
                     <tr *ngIf="!IsAutoReconcile">
                         <td style="height: 100%; padding-bottom: 3px; vertical-align: top;">
                             <div class="GeneratedGridContainer" style="height: calc(100% - 20px)" *ngIf="LoadGrids">
-                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'LedgerTransaction'"
+                                <logitude-grid GridWidth="100%" 
+                                               GridHeight="100%"
+                                               [ObjectTable]="'LedgerTransaction'"
                                     [dataSource]="TransactionDataSource"
                                     [FireCheckBoxChecked]="TransactionFireCheckBoxChecked"
                                     [MenuHeaderchangeevent]="TransactionMenuHeaderchangeevent"
@@ -973,20 +983,26 @@
                         (Checked)="isAllSelectedExt = $event"></CheckBox>
                 </div>
                 <div style="display: inline-block;">
-                    <div class="SubTitle">
+                            <CheckBox class="selectAllCheckBox" title="Select All"
+                                [IsChecked]="isAllSelectedExt" (Checked)="isAllSelectedExt = $event"></CheckBox>
+                            <div class="SubTitle">
                         {{ExternalPagesTitle}}
                         ({{IsAutoReconcile ? ExtPageSelectedLines.Length : extPageCount}})
                     </div>
-                </div>
-            </td>
+                            <IconButton class="exportToExcel" [Name]="'Excel'" (click)="ExportExternalTransactions()" [disabled]="false">
+                            </IconButton>
+                        </td>
         </tr>
 
         <!-- Grid -->
         <tr *ngIf="!IsAutoReconcile">
             <td colspan="3" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
                 <div class="GeneratedGridContainer" style="height: calc(100% - 20px)" *ngIf="LoadGrids">
-                    <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'ReconcileExternalPageLine'"
-                        [dataSource]="ExtPageDataSource" [FireCheckBoxChecked]="ExtPageFireCheckBoxChecked"
+                                <logitude-grid GridWidth="100%"
+                                               GridHeight="100%"
+                                               [ObjectTable]="'ReconcileExternalPageLine'" 
+                                               [dataSource]="ExtPageDataSource"
+                                               [FireCheckBoxChecked]="ExtPageFireCheckBoxChecked"
                         [MenuHeaderchangeevent]="ExtPageMenuHeaderchangeevent" [columns]="ExtPageColumns"
                         [autoLoad]="true" [QueryChangeEvent]="ExtPageonQueryChangeEvent" [IsCustomTemplate]="true"
                         [PassAdditionalDataToTemplates]="true" (CountReady)="onCountReadyExtPage($event)"

@@ -83,6 +83,14 @@ export class Export2ExcelControl {
             });
 
         }
+        else if (this.QueryType == "DraftReconciliationExt") {
+            var reconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
+            reconciliationExtendedPMService.PostReconcileExtExcelData(this.ReconcileExcelDataArgs).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) this.CompleteExcelData(myResponse.Result);
+                else this.CompleteExcelData("Faild");
+            });
+
+        }
         else {
             this.WebFreightDomainService = new WebFreightDomainService();
             this.ObjectTableName = args.currentObjectTable;

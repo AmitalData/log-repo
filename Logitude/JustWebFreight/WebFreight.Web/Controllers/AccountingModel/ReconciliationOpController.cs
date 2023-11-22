@@ -50,6 +50,7 @@ using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Data.EntityMapping;
 using Intuit.Ipp.Data;
+using System.Collections;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
@@ -935,19 +936,28 @@ tenant);
 
             ExportToExcelArgs excelArgs = BuildExportToExcelArguments(args);
             var excelFile = new ExportToExcelHelper().ExportDataToExcel(excelArgs);
-            BlobFileInfo fileInfo = SaveFileToStorage(args, excelFile);
+            BlobFileInfo fileInfo = SaveFileToStorage(args.Tenant, excelFile);
 
             return Request.CreateResponse(HttpStatusCode.OK, fileInfo.FileName);
         }
+        public HttpResponseMessage PostReconcileExtExcelData(ReconcileExtExcelDataArgs args)
+        {
+            SecurityUtility.AuthenticationOnTenant(args.Tenant);
 
-        private static BlobFileInfo SaveFileToStorage(ReconcileExcelDataArgs args, byte[] excelFile)
+            ExportToExcelArgs excelArgs = BuildExportToExtExcelArguments(args);
+            var excelFile = new ExportToExcelHelper().ExportDataToExcel(excelArgs);
+            BlobFileInfo fileInfo = SaveFileToStorage(args.Tenant, excelFile);
+
+            return Request.CreateResponse(HttpStatusCode.OK, fileInfo.FileName);
+        }
+        private static BlobFileInfo SaveFileToStorage(int tenant, byte[] excelFile)
         {
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
                 FileName = "DraftReconciliation-" + DateTime.Now.ToShortDateString(),
                 FolderName = "others",
                 Extension = "xls",
-                Tenant = args.Tenant,
+                Tenant = tenant,
                 FileSize = excelFile.Length,
             };
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
@@ -965,7 +975,22 @@ tenant);
                 QueryPM = new QueryPM()
                 {
                     ObjectTableName = "Reconciliation",
-                    DisplayText = "Draft Reconciliation",
+                    DisplayText = args.Title,
+                    Tenant = args.Tenant
+                }
+            };
+        }
+        private static ExportToExcelArgs BuildExportToExtExcelArguments(ReconcileExtExcelDataArgs args)
+        {
+            return new ExportToExcelArgs()
+            {
+                Data = args.Data.GetEnumerator(),
+                QueryColumns = args.QueryColumns,
+                Tenant = args.Tenant,
+                QueryPM = new QueryPM()
+                {
+                    ObjectTableName = "Reconciliation",
+                    DisplayText = args.Title,
                     Tenant = args.Tenant
                 }
             };
@@ -985,6 +1010,7 @@ tenant);
 
     public class ReconcileExcelDataArgs
     {
+        public string Title { get; set; } = "Draft Reconciliation";
         public List<LedgerTransactionPM> Data { get; set; }
         public List<QueryColumnPM> QueryColumns { get; set; }
         public int Tenant { get; set; }
@@ -992,5 +1018,12 @@ tenant);
     public class CancelRecoRequest
     {
         public List<string> SelectedIds { get; set; }
+    }
+    public class ReconcileExtExcelDataArgs
+    {
+        public string Title { get; set; } = "Draft Reconciliation";
+        public List<ReconcileExternalPageLinePM> Data { get; set; }
+        public List<QueryColumnPM> QueryColumns { get; set; }
+        public int Tenant { get; set; }
     }
 }
