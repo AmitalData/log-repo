@@ -91,6 +91,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     _AccountingPaymentMethodListService = new AccountingPaymentMethodListService();
     public PartnerTypes: PartnerTypeList[] = [];
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
+    public BillToFilter:ApiQueryFilters;
     get TextStore()
     {
         return TextStore;
@@ -185,6 +186,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.InitializeBillToLov();
         this.getPartnerTypes();
     }
+
+    InitLOVBillToFilters() {
+        this.BillToFilter = new ApiQueryFilters();
+        this.BillToFilter.addAdditionalFilter("ActiveGLAccount", true, null, null, "Equals", true, false, false, "Boolean");
+    }
     GetFullAccountingSettings() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.entityListService.getSingle(SessionLocator.TenantPM.Id.toString(), "FullAccountingSetting").then((res: any) => {
@@ -271,7 +277,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
 
     private InitializeBillToLov() {
-
+        this.InitLOVBillToFilters();
         this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
         this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
         this.BillToLovSizeForFullAccounting = 550;
