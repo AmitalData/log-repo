@@ -240,55 +240,20 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<LedgerTransactionPM> SetRefernceToLedgerTransaction(List<LedgerTransactionPM> transactionsList)
         {
             var transactionsListSourceId = transactionsList.Select(tr => tr.SourceId).ToList();
-            List<ARInvoicePM> aRInvoicePMs = aRInvoiceQuery.GetARInvoicePMsByIdList(transactionsListSourceId, tenant).ToList();
-            transactionsList = transactionsList.Join(aRInvoicePMs, ledger => ledger.SourceId, arInvoice => arInvoice.Id, (ledger, arInvoice) => newLedgerTransactionPM(ledger, arInvoice)).ToList();
+            List<ARInvoicePM> aRInvoicePMList = aRInvoiceQuery.GetARInvoicePMsByIdList(transactionsListSourceId, tenant).ToList();
+            
+            foreach(LedgerTransactionPM ledgerTransaction in transactionsList)
+            {
+                ARInvoicePM aRInvoicePM = aRInvoicePMList.Where(arInvoice => arInvoice.Id == ledgerTransaction.SourceId).FirstOrDefault();
+                if(aRInvoicePM != null)
+                {
+                    ledgerTransaction.Reference3 = aRInvoicePM.ShipmentsNumbers;
+                }
+            }
+           
             return transactionsList;
         }
 
-        private LedgerTransactionPM newLedgerTransactionPM(LedgerTransactionPM ledgerTransaction,ARInvoicePM aRInvoicePM)
-        {
-            return new LedgerTransactionPM()
-            {
-                IsReconciled = ledgerTransaction.IsReconciled,
-                Id = ledgerTransaction.Id,
-                Tenant = ledgerTransaction.Tenant,
-                JournalId = ledgerTransaction.JournalId,
-                JournalLineNumber = ledgerTransaction.JournalLineNumber,
-                CreateDate = ledgerTransaction.CreateDate,
-                ControlAccountId = ledgerTransaction.ControlAccountId,
-                AccountId = ledgerTransaction.AccountId,
-                AccountingDate = ledgerTransaction.AccountingDate,
-                DocumentDate = ledgerTransaction.DocumentDate,
-                DueDate = ledgerTransaction.DueDate,
-                LocalAmountDebit = ledgerTransaction.LocalAmountDebit,
-                LocalAmountCredit = ledgerTransaction.LocalAmountCredit,
-                CurrencyId = ledgerTransaction.CurrencyId,
-                ForeignAmountDebit = ledgerTransaction.ForeignAmountDebit,
-                ForeignAmountCredit = ledgerTransaction.ForeignAmountCredit,
-                ExchangeRate = ledgerTransaction.ExchangeRate,
-                Reference1 = ledgerTransaction.Reference1,
-                Reference2 = ledgerTransaction.Reference2,
-                Reference3 = aRInvoicePM.ShipmentsNumbers,
-                OpenAmount = ledgerTransaction.OpenAmount,
-                OppositeAccountId = ledgerTransaction.OppositeAccountId,
-                SearchFields = ledgerTransaction.SearchFields,
-                JournalNumber = ledgerTransaction.JournalNumber,
-                CurrencyCode = ledgerTransaction.CurrencyCode,
-                OpenAmountCurrencyId = ledgerTransaction.OpenAmountCurrencyId,
-                Notes = ledgerTransaction.Notes,
-                InternalNote = ledgerTransaction.InternalNote,
-                UpdateDateTime = ledgerTransaction.UpdateDateTime,
-                UpdatedByUserName = ledgerTransaction.UpdatedByUserName,
-                AmountToReconcile = ledgerTransaction.AmountToReconcile,
-                Mark = ledgerTransaction.Mark,
-                SourceId = ledgerTransaction.SourceId,
-                SourceNumber = ledgerTransaction.SourceNumber,
-                SourceTypeCode = ledgerTransaction.SourceTypeCode,
-                IsExternalReconcile = ledgerTransaction.IsExternalReconcile,
-                InReconcileProgress = ledgerTransaction.InReconcileProgress,
-                ReconcileRemarks = ledgerTransaction.ReconcileRemarks,
-            };
-        }
         private LedgerTransaction GetPaymentTransaction()
         {
             JournalPM paymentJournal = GetPaymentJournal(paymentId);
