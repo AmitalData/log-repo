@@ -977,21 +977,20 @@
         <!-- subtitle -->
         <tr>
             <td colspan="3">
-
+        
                 <div style="display: inline-block; width: 40px; padding: 0 15px;">
                     <CheckBox title="Select All" style="position: absolute; top: 12px;" [IsChecked]="isAllSelectedExt"
                         (Checked)="isAllSelectedExt = $event"></CheckBox>
                 </div>
-                <div style="display: inline-block;">
-                            <CheckBox class="selectAllCheckBox" title="Select All"
-                                [IsChecked]="isAllSelectedExt" (Checked)="isAllSelectedExt = $event"></CheckBox>
-                            <div class="SubTitle">
-                        {{ExternalPagesTitle}}
-                        ({{IsAutoReconcile ? ExtPageSelectedLines.Length : extPageCount}})
-                    </div>
-                            <IconButton class="exportToExcel" [Name]="'Excel'" (click)="ExportExternalTransactions()" [disabled]="false">
-                            </IconButton>
-                        </td>
+                <CheckBox class="selectAllCheckBox" title="Select All" [IsChecked]="isAllSelectedExt"
+                    (Checked)="isAllSelectedExt = $event"></CheckBox>
+                <div class="SubTitle">
+                    {{ExternalPagesTitle}}
+                    ({{IsAutoReconcile ? ExtPageSelectedLines.Length : extPageCount}})
+                </div>
+                <IconButton class="exportToExcel" [Name]="'Excel'" (click)="ExportExternalTransactions()" [disabled]="false">
+                </IconButton>
+            </td>
         </tr>
 
         <!-- Grid -->
