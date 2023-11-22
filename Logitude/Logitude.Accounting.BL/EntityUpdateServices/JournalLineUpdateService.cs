@@ -37,6 +37,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 throw new ApplicationException("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
             }
+
+            // check payment terms and add days to due date if needed.
+            ProcessGLAccountPaymentTerms(entityPM);
+
             base.OnCreating(entityPM, entityParentPM);
         }
 
@@ -52,9 +56,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new ApplicationException("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
                 //throw new ApplicationException("BLException :Approved Journal Can Only Change To Voided");
             }
-
-            // check payment terms and add days to due date if needed.
-            ProcessGLAccountPaymentTerms(entityPM);
 
             base.OnUpdating(entityPM);
         }
