@@ -254,10 +254,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private LoadTaxPercentage() {
         if (this.IsFullAccounting)
         {
-            const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
-            if(nonIsraeliVendor) {
-                this.TaxDeductionPercentage = 0;
-            } else {
+           
 
                 this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
                     var myResponse: ServiceResponse = myResult;
@@ -266,15 +263,25 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                             this.IsNoVendorTax = myResponse.Result.IsDefault;
                             this.TaxDeductionPercentage = myResponse.Result.Percentage;
                         }
+                        
                         else {
-                            this.IsNoVendorTax = myResponse.Result.IsDefault;
+                            const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
+
+                            if(nonIsraeliVendor){
+                                this.TaxDeductionPercentage = 0;
+
+                            }
+                            else{
+                                this.IsNoVendorTax = myResponse.Result.IsDefault;
+
+                            }
                         }
                     }
                     else {
                         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     }
                 });
-            }
+            
 
         }
     }
