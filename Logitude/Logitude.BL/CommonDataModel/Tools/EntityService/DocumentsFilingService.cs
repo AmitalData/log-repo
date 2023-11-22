@@ -47,6 +47,7 @@ using Logitude.Customs.Def.EntityPMs;
 using System.Xml.Linq;
 using Logitude.BL.CommonDataModel.Helpers;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -467,17 +468,29 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
         }
 
-        private async void TryBuildUD2LT(DocumentsFilingPM extDocPM)
+        private  void TryBuildUD2LT(DocumentsFilingPM extDocPM)
         {
-			await Task.Run(() =>
-			{
-				ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
-				myICreateUD2LTService.JustDoIt(extDocPM);
-			});
 			
+			ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
+
+			// Start a transaction
+			using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
+			{
+				try
+				{
+					myICreateUD2LTService.JustDoIt(extDocPM);
+					// Commit the transaction if everything is successful
+					transactionScope.Complete();
+				}
+				catch (Exception ex)
+				{
+					// Handle the exception or log it
+					LogitudeSettings.HandleLogMe("Error in ICreateUD2LTService JustDoIt: " + ex.Message, true, "CreateUD2LTService.Error", DateTime.Now);
+				}
+			}
 
 		}
-        private async void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
+        private  void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
         {
             DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(extDocPM.Tenant);
             var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", extDocPM.Tenant,true);
@@ -491,10 +504,25 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     this.HaveENDOC_DocumentsFilingMetaDataValues = true;
                 }
             }
-			await Task.Run(() =>
+			Task.Run(() =>
 			{
-				ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
-		        myISendBondedCustomDocumentService.JustDoIt(extDocPM);
+			    ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
+                
+			    // Start a transaction
+			    using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
+			    {
+			    	try
+			    	{
+			    		myISendBondedCustomDocumentService.JustDoIt(extDocPM);
+			    		// Commit the transaction if everything is successful
+			    		transactionScope.Complete();
+			    	}
+			    	catch (Exception ex)
+			    	{
+			    		// Handle the exception or log it
+			    		LogitudeSettings.HandleLogMe("Error in ISendBondedCustomDocumentService JustDoIt: " + ex.Message, true, "ISendBondedCustomDocumentService.Error", DateTime.Now);
+			    	}
+			    }
 			});
 
 		}
