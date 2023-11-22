@@ -12,6 +12,9 @@ import { LogGridComponent } from 'Infrastructure/Components/LogitudeComponents/L
 import { Operators } from 'Accounting/DataContracts/Operators';
 import { ReconcileEventManager } from 'Accounting/Utilities/ReconcileEventManager';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { ReconciliationExtendedPMService } from 'Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
 
@@ -334,6 +337,32 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
             var entityId = lineData.Id;
             this.OpenReco(entityId);
         }
+    }
+
+    CancelSelectedRecoButtonClicked(){
+        const selectedIds: string[] = ReconcileEventManager._SelectedItems?.Collection?.reduce(
+            (acc, item) => acc.concat(item.Id),
+            [] as string[]
+        ) || [];
+        const confirmWindow = new ConfirmWindow();
+        const msg = TextCodeTranslator.Translate("GLAccount.O.CancelSelectedRecoConfirm");
+        confirmWindow.Show(msg);
+    
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                const service = new ReconciliationExtendedPMService();
+                service.CancelSelectedReco(selectedIds).subscribe(
+                    (response: ServiceResponse) => {
+                        // Handle success if needed
+                        console.log('Reconciliation canceled successfully', response);
+                    },
+                    (error) => {
+                        // Handle error
+                        console.error('Error canceling reconciliation', error);
+                    }
+                );
+            }
+        });
     }
 
     AllSelectedClicked(event){

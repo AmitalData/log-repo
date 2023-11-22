@@ -16107,13 +16107,6 @@
         IndexOrder="0"
         LocalDefaultText="&quot;הפעל מחדש&quot;"
         IsPackagable="true" />
-      <MenuItem
-        EventCode="&quot;CancelSelectedReco&quot;"
-        DefaultText="&quot;Cancel Selected Reconciles&quot;"
-        MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="1"
-        LocalDefaultText="&quot;ביטול התאמות מסומנות&quot;"
-        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>
@@ -18832,6 +18825,18 @@
       LocalDefaultText="&quot;יתרת סגירה לפי יתרה לגביה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.CancelSelectedReco&quot;"
+      DefaultText="&quot;Cancel Selected Reconciles&quot;"
+      LocalDefaultText="&quot;ביטול התאמות מסומנות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.CancelSelectedRecoConfirm&quot;"
+      DefaultText="&quot;The process of canceling the adjustments to the marked lines will be performed in the background and will last several minutes during which time it will not be possible to stop the process, do you approve?&quot;"
+      LocalDefaultText="&quot;תהליך ביטול ההתאמות לשורות שסומנו יבוצע ברקע וימשך מספר דקות בזמן זה לא ניתן יהיה לעצור את התהליך, האם אתה מאשר?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -18875,6 +18880,15 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;GLAccount.Features.SalesmanAging&quot;"
       FeatureDefaultText="&quot;Aging Report Salesman Restrictions&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CancelSelectedReco&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;GLAccount.Features.CancelSelectedReco&quot;"
+      FeatureDefaultText="&quot;Cancel Selected Reconcile&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
