@@ -467,13 +467,17 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
         }
 
-        private void TryBuildUD2LT(DocumentsFilingPM extDocPM)
+        private async void TryBuildUD2LT(DocumentsFilingPM extDocPM)
         {
-            ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;     
-			myICreateUD2LTService.JustDoIt(extDocPM);
+			await Task.Run(() =>
+			{
+				ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
+				myICreateUD2LTService.JustDoIt(extDocPM);
+			});
+			
 
 		}
-        private void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
+        private async void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
         {
             DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(extDocPM.Tenant);
             var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", extDocPM.Tenant,true);
@@ -487,10 +491,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     this.HaveENDOC_DocumentsFilingMetaDataValues = true;
                 }
             }
-            ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
-		    myISendBondedCustomDocumentService.JustDoIt(extDocPM);
-			
-        }
+			await Task.Run(() =>
+			{
+				ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
+		        myISendBondedCustomDocumentService.JustDoIt(extDocPM);
+			});
+
+		}
 
         
         private void AddDocumentBackupLog()
