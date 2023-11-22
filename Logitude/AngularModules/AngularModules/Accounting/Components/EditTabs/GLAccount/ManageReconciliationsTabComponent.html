@@ -7,7 +7,7 @@
                     <tr class="TabTitleRow">
                         <td>{{'Accounting.General.O.ManageReconciliation' | TextCodeTranslationPipe}}</td>
                         <td style="width: 57px;">
-                            <button class="Button" (click)="CancelSelectedRecoButtonClicked()">{{'GLAccount.O.CancelSelectedReco' | TextCodeTranslationPipe}}</button>
+                            <button  *ngIf="CancelSelectedRecoFeature" class="Button" (click)="CancelSelectedRecoButtonClicked()">{{'GLAccount.O.CancelSelectedReco' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
 
@@ -118,7 +118,7 @@
                             <div style="width: 30px;" [style.float]="isRTL ? 'left' : 'right'" >
                                 <!--<IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()"></IconButton>-->
                             </div>
-                            <div style="display: inline-block; width: 40px; padding: 0 15px;">
+                            <div  *ngIf="CancelSelectedRecoFeature" style="display: inline-block; width: 40px; padding: 0 15px;">
                                 <CheckBox title="Select All" style="position: absolute; top: 12px;"
                                  (Checked)="AllSelectedClicked($event)"></CheckBox>
                             </div>

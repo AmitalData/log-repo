@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "54e22951d85083586bd21cc5c056262c";
+		public const string HashString = "ffd770ddfd82ff60604566c23f2eeb91";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14006,6 +14006,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOCancelSelectedReco = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CancelSelectedReco", DefaultText = "Cancel Selected Reconciles",LocalDefaultText = @"ביטול התאמות מסומנות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOCancelSelectedRecoConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CancelSelectedRecoConfirm", DefaultText = "The process of canceling the adjustments to the marked lines will be performed in the background and will last several minutes during which time it will not be possible to stop the process, do you approve?",LocalDefaultText = @"תהליך ביטול ההתאמות לשורות שסומנו יבוצע ברקע וימשך מספר דקות בזמן זה לא ניתן יהיה לעצור את התהליך, האם אתה מאשר?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountONoSelectedItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSelectedItems", DefaultText = "No Selected Items",LocalDefaultText = @"לא נבחרו התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
