@@ -36,9 +36,8 @@ namespace TrackedShipmentsAPI.Services
 
         public Dictionary<string, string> wwEventsMapping = new Dictionary<string, string>
         {
-            { GATE_IN_AT_POL, "origin" },
-            { ARRIVAL_AT_POL, "pol_arrival" },
-            { LOADED_AT_POL, "pol_loaded" },
+		    { GATE_IN_AT_POL, "pol_arrival" },
+			{ LOADED_AT_POL, "pol_loaded" },
             { EMPTY_TO_SHIPPER, "empty_pickup" },
             { PICKUP_AT_SHIPPER, "origin_pickup" },
             { GATE_OUT_OF_POD, "pod_departure" },
@@ -167,18 +166,16 @@ namespace TrackedShipmentsAPI.Services
                 aggregatedEventsJson[$"{prefix}_planned_initial"] = "";
                 aggregatedEventsJson[$"{prefix}_actual"] = GetEventData(events, key, true);
                 aggregatedEventsJson[$"{prefix}_planned_last"] = GetEventData(events, key, false);
+				Event matchingEventByKey = filteredEvents.FirstOrDefault((item) => item.description == key);
+				Port port = matchingEventByKey?.portId != null ? portsDict[matchingEventByKey?.portId ?? ""] : new Port();
+				AddLocData(json, port, prefix);
+			}
 
-                Event matchingEventByKey = filteredEvents.FirstOrDefault((item) => item.description == key);
-                if (matchingEventByKey?.description == ARRIVAL_AT_POL)
-                {
-                    aggregatedEventsJson[$"pol_vsldeparture_planned_last"] = GetEventData(events, key, false);
-                }
+			Event arrivalAtPolEvent = filteredEvents.FirstOrDefault((item) => item.description == ARRIVAL_AT_POL);
+			Port arrivalAtPolPort = arrivalAtPolEvent?.portId != null ? portsDict[arrivalAtPolEvent?.portId ?? ""] : new Port();
+			AddLocData(json, arrivalAtPolPort, "origin");
 
-                Port port = matchingEventByKey?.portId != null ? portsDict[matchingEventByKey?.portId ?? ""] : new Port();
-                AddLocData(json, port, prefix);
-            }
-            
-            MergeToMainJson(json, aggregatedEventsJson);
+			MergeToMainJson(json, aggregatedEventsJson);
         }
 
         public string GetDateByActual(Timestamps timestamps, bool actualField) {
@@ -348,8 +345,11 @@ namespace TrackedShipmentsAPI.Services
                             ""status"": """",
                             ""lifecycle_status"": """",
                             ""id_date"": ""{(carrierLatestStatus?.timestamps?.datetime != null ? DateTime.ParseExact(carrierLatestStatus?.timestamps?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
+                            ""origin_planned_initial"": """",
+                            ""origin_actual"": """",
+                            ""origin_planned_last"": """",
                             ""pol_vsldeparture_planned_initial"": ""{data?.shipment?.initialCarrierETD?.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}"",
-                            ""pol_vsldeparture_planned_last"": """",
+                            ""pol_vsldeparture_planned_last"": ""{GetEventData(events, ARRIVAL_AT_POL, false)}"",
                             ""pol_vsldeparture_actual"": ""{(polLocMilestone?.departure?.timestamps?.carrier?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.carrier?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
                             ""pol_vsldeparture_detected"": ""{(polLocMilestone?.departure?.timestamps?.predicted?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.predicted?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
                             ""pod_vslarrival_planned_initial"": ""{data?.shipment?.initialCarrierETA?.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}"",
