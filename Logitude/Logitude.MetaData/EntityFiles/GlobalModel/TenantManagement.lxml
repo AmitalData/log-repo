@@ -15837,6 +15837,18 @@
       LocalDefaultText="&quot;Digital Portal Branding&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TenantManagement.TH.PermissionBuildMonthsLimit&quot;"
+      DefaultText="&quot;The value can be number from 1 to 84 only&quot;"
+      LocalDefaultText="&quot;ניתן להכניס ערך מ1 עד 84 בלבד&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TenantManagement.TH.CargoTrackingFromBranding&quot;"
+      DefaultText="&quot;Cargo tracking shipments build - from branding settings&quot;"
+      LocalDefaultText="&quot;Cargo tracking shipments build - from branding settings&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

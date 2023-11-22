@@ -987,7 +987,7 @@
                                                     <div class="mobile-font-12" *ngIf="step.ToPortLabel != null">
                                                         &nbsp;>
                                                         <span
-                                                            [attr.title]="step.ToolTipToPortLabel != null ? step.ToolTipToPortLabel : step.ToPortLabel?.length > 5 ? step.ToPortLabel : ''">{{GetSlice(step.ToPortLabel,5)}}</span>
+                                                            [attr.title]="step.ToolTipToPortLabel != null ? step.ToolTipToPortLabel : step.ToPortLabel?.length > 5 ? step.ToPortLabel : ''"> {{GetSlice(step.ToPortLabel,5)}}</span>
                                                     </div>
                                                 </div>
                                                 <div *ngIf="step.Type != null"
@@ -1002,7 +1002,7 @@
                                                    
                                                 </div>
                                                 <div class="route-description TextTrimming" [title]="step.Description">
-                                                    {{step.Description}}
+                                                    {{checkDescriptionShipping(step.Description)}}
                                                 </div>
                                                 <div class="routes">
                                                     <div *ngFor="let direction of step.Directions"
@@ -1267,9 +1267,15 @@
 
                                 </div>
                                 <div class="body bordered" [class.show]="partnerCard.ShowDetails">
-                                    <div class="partner-address" [innerHTML]="partnerCard.Address||'No address'">
+                                    <div class="partner-address" [innerHTML]="splitAddressAndPhone(partnerCard.Address).address||'No address'">
                                         <!-- {{partnerCard.Address}} -->
                                     </div>
+                                    <div class="partner-address" style="display: flex;">
+                                        <label class="partner-address" > Phone:&nbsp;  </label>
+                                        <custom-label [width]="139"  class="partner-address">
+                                           {{splitAddressAndPhone(partnerCard.Address).phone ||'No address'}}</custom-label> 
+                                    </div>
+    
 
                                     <!-- <div class="partner-mobile">Phone: {{partnerCard.PhoneNumber}}</div> -->
                                     <!-- <div class="partner-mobile">{{partnerCard.FaxNumber}}</div> -->

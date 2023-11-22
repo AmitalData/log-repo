@@ -42,6 +42,7 @@ using Logitude.BL.QuoteModel.Tools.EntityService;
 using Simplog.Data.QuoteModel.Repositories;
 using Logitude.BL.QuoteModel.EntityOtherServices;
 using Logitude.Server.Tools.StorageService;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 {
@@ -275,9 +276,34 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 }
                 else
                 {
-
-                    QuoteTemplateReportHelper quoteTemplateReportHelper = new QuoteTemplateReportHelper();
-                    result = quoteTemplateReportHelper.BuildQuoteTemplatePdfReport(quoteId, quoteTemplateId, userId, tenant, null, authToken.Tenant);
+                    if (FeatureToggleHelper.HasFeatureToggle("UQD", tenant))
+                    {
+                        string communicationLogId = Communications.AddCommunicationLog(new CommunicationsParams()
+                        {
+                            LoggingEntityId = quoteId,
+                            Tenant = tenant,
+                            CommunicationLogTypeCode = "Q",
+                            Priority = 1,
+                            InOut = "O",
+                            Status = "W",
+                            Subject = "Preview Quote Document",
+                            FolderName = "Other",
+                            ByteData = new byte[0]
+                        });
+                        IQueueService queueservice = new DbQueueService();
+                        queueservice.InitializeQueue("DocumentsExecutionQueue", tenant);
+                        queueservice.Send(new Dictionary<string, string>() {
+                        { "Tenant", tenant.ToString() },
+                        { "communicationLogId", communicationLogId },
+                        { "quoteTemplateId", quoteTemplateId },
+                        { "updatedByUserId", userId },
+                    }, tenant, null, null);
+                        return Request.CreateResponse(HttpStatusCode.OK, communicationLogId);
+                    }
+                    else {
+                        QuoteTemplateReportHelper quoteTemplateReportHelper = new QuoteTemplateReportHelper();
+                        result = quoteTemplateReportHelper.BuildQuoteTemplatePdfReport(quoteId, quoteTemplateId, userId, tenant, null, authToken.Tenant);
+                    }
                 }
 
 

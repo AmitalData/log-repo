@@ -28,6 +28,7 @@ using Logitude.BL.QuoteModel.Tools.EntityService;
 using Simplog.Data.QuoteModel;
 using Microsoft.Practices.Unity;
 using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
 {
@@ -184,6 +185,33 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                         IQuotesContext MyContext = QuotesContext.GetContext(tenant.Value);
                         QuoteService service = new QuoteService(MyContext, tenant.Value, email);
                         var pdfData = service.BuildQuoteTemplatePdfDocument(commLog.EntityId, int.Parse(versionNumber), quoteTemplateId, updatedByUserId, tenant.Value, Boolean.Parse(isGenerate));
+                        storageservice.Write(pdfData, fileInfo);
+                        commLog.CommunicationStatusTypeCode = "D";
+                        commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
+                        commLog.DoneDateUTC = DateTime.UtcNow;
+                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
+                        commLog.LastStatusDateUTC = DateTime.UtcNow;
+                        communicationLogRep.Update(commLog);
+                        communicationLogRep.SubmitChanges();
+                        scope.Complete();
+                    }
+                    queueService.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant.Value, null, "F", null + DateTime.Now.ToString(), ex.Message);
+                    queueService.Complete();
+                }
+            }
+            else if (commLog != null && commLog.Subject == "Preview Quote Document")
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        QuoteTemplateReportHelper quoteTemplateReportHelper = new QuoteTemplateReportHelper();
+                        var pdfData = quoteTemplateReportHelper.BuildQuoteTemplatePdfReport(commLog.EntityId, quoteTemplateId, updatedByUserId, tenant.Value, null, tenant.Value);
+
                         storageservice.Write(pdfData, fileInfo);
                         commLog.CommunicationStatusTypeCode = "D";
                         commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);

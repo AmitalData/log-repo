@@ -168,6 +168,9 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     }
                     break;
 
+                    case "closingVATReport":                   
+                        return ClosingVATReport(tenant, _TextBoxParam);                    
+
                 default:
                     return new GateWayTesterResult()
                     {
@@ -224,8 +227,6 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
-
-     
 
         private GateWayTesterResult Aging_Click(int tenant, string textBoxParam)
         {
@@ -348,7 +349,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             return gateWayTesterResult;
         }
 
-
+        
         private GateWayTesterResult InterestReport_Click(int tenant, string textBoxParam)
         {
 
@@ -1173,6 +1174,40 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
                 gateWayTesterResult.Log= LogMessagingUtil.Instance.ToString();
             }
+            return gateWayTesterResult;
+        }
+
+        private GateWayTesterResult ClosingVATReport(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+
+            try
+            {
+                dynamic param = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
+                TaxReport taxReportPM = new TaxReportQueryService(tenant).GetByReportNunber(param.reportNumber?.ToString());
+
+                string batchId = new BatchClosingTaxReportJournalTask(null)
+                    .CreateQBatchTaskExecution<BatchClosingTaxReportJournalTaskArgs>(
+                    new BatchClosingTaxReportJournalTaskArgs()
+                    {
+                        TaxReportId = taxReportPM.Id,
+                        Tenant = param.tenant,
+                    }
+                    , tenant, "Closing Tax Report Journal", false);
+
+                gateWayTesterResult.Log = "Success create batch";
+                gateWayTesterResult.JsonOut = batchId;
+            }
+            catch (Exception e)
+            {
+                gateWayTesterResult.ExceptionMess = e.ToString();
+            }
+            finally
+            {
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+
             return gateWayTesterResult;
         }
     }

@@ -39,6 +39,7 @@ using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers;
 using Logitude.Accounting.Data.Repositories;
 using System.Web;
+using Logitude.Accounting.Def.EntityPMs;
 
 namespace CommunicationWorkerRole.Services
 {
@@ -70,6 +71,7 @@ namespace CommunicationWorkerRole.Services
         {
             try
             {
+
                 SchedulerDetails schedulerDetails = GetSchedulerDetails(reportTask);
                 reportTask.CreatedBy = schedulerDetails.ReportDetails.CreatedByUserId;
                 ReportFliter reportFilter = GetReportFilters(reportTask, schedulerDetails);
@@ -202,7 +204,9 @@ namespace CommunicationWorkerRole.Services
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Validate Selected Partners"));
             ValidateResult result = ValidateSelectedPartners(schedulerDetails.ReportDetails.ReportFilterItems, reportTask.Tenant, additionalValidate);
             ValidateResult gLAccountBalanceInLocalValidateResult = ValidateGLAccountBalanceInLocalCurrency(schedulerDetails.ReportDetails.ReportFilterItems, stiReport, reportTask.Tenant);
-            if (result.IsValid && gLAccountBalanceInLocalValidateResult.IsValid)
+            ValidateResult gLAccountLocalBalanceInDueValidateResult = ValidateGLAccountLocalBalanceInDue(schedulerDetails.ReportDetails.ReportFilterItems, stiReport, reportTask.Tenant, gLAccountId);
+
+            if (result.IsValid && gLAccountBalanceInLocalValidateResult.IsValid && gLAccountLocalBalanceInDueValidateResult.IsValid)
             {
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
                 SendHtmlDocument(new SendHtmlDocumentArgs() { documentId = documentId, recepients = reportRecepients, reportTask = reportTask, stiReport = stiReport });
@@ -547,6 +551,30 @@ namespace CommunicationWorkerRole.Services
                 result.IsValid = CompareBalanceInLocalCurrencyWithLocalClosedBalance(Convert.ToDecimal(balanceInLocalCurrency), ledgerTransactionsDataProvider.LocalClosedBalance, balanceInLocalCurrencyOperator);
                 if (!result.IsValid)
                     result.ErrorMessage = "The E-mail was not sent, the GLaccount local closed balance " + getOperatorName(balanceInLocalCurrencyOperator) + " the closed balance in local currency";
+            }
+            return result;
+        }
+
+        private ValidateResult ValidateGLAccountLocalBalanceInDue(List<QueryFilterItem> reportFilterItems, StiReport stiReport, int tenant,string gLAccountId)
+        {
+            ValidateResult result = new ValidateResult() { IsValid = true, ErrorMessage = "" };
+            string LocalBalanceInDue = GetFilterFieldValueByName(reportFilterItems, "LocalBalanceInDue");
+            string LocalBalanceInDueOperator = GetFilterFieldOperatorByName(reportFilterItems, "LocalBalanceInDue");
+            GLAccountMoreDataPM accountMoreData=null;
+            if (gLAccountId != null)
+            {
+                GLAccountMoreDataQueryService accountMoreDataQueryService = new GLAccountMoreDataQueryService(tenant);
+                 accountMoreData = accountMoreDataQueryService.GetSingle(gLAccountId,false,false);
+
+            }
+            if (stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").Any() && !string.IsNullOrWhiteSpace(LocalBalanceInDue)
+                && !string.IsNullOrWhiteSpace(LocalBalanceInDueOperator) &&accountMoreData!=null)
+            {
+                var stiBusinessObjectData = stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").FirstOrDefault();
+                var ledgerTransactionsDataProvider = stiBusinessObjectData != null ? (LedgerTransactionsDataProvider)stiBusinessObjectData.BusinessObjectValue : null;
+                result.IsValid = CompareBalanceInLocalCurrencyWithLocalClosedBalance(Convert.ToDecimal(LocalBalanceInDue), accountMoreData.LocalBalanceInDue, LocalBalanceInDueOperator);
+                if (!result.IsValid)
+                    result.ErrorMessage = "The E-mail was not sent, the GLaccount closing balance according to the balance In Due " + getOperatorName(LocalBalanceInDueOperator) + " the closing balance according to the balance In Due";
             }
             return result;
         }

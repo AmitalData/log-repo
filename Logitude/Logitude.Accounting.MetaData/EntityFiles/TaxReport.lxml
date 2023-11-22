@@ -3428,6 +3428,12 @@
       LocalDefaultText="&quot;הפעולה ליצירת פקודת יומן והתאמות לדוח המע''מ , נתמכת החל מדוח 05.22 בלבד &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.CloseJournalRunInBackground&quot;"
+      DefaultText="&quot;Creating journal will be done in the background and may take several minutes&quot;"
+      LocalDefaultText="&quot;יצירת פקודת היומן תעשה ברקע והיא עשויה לקחת מספר דקות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

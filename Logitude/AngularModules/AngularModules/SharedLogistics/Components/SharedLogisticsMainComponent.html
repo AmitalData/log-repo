@@ -81,6 +81,7 @@ Test:hover {
                                                     <p [attr.data-cy]="'Documents Permissions'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="DocumentsPermissionsLinkClick()">Documents Permissions</p>
                                                     <p [attr.data-cy]="'Partners Permissions'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="PartnersPermissionsLinkClick()">Partners Permissions</p>
                                                     <p [attr.data-cy]="'Money Permissions'" *ngIf="SharedTitleType != 'CargoTracking'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="MoneyPermissionsLinkClick()">Money Permissions</p>
+                                                    <p [attr.data-cy]="'Events'"  *ngIf="SharedTitleType == 'CargoTracking' && CargoTrackingPublicShowEvents || CargoTrackingPrivateShowEvents" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="EventsLinkClick()">Events</p>
                                                 </div>
                                             </div>
 

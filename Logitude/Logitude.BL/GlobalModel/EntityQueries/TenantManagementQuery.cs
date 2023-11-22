@@ -119,6 +119,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return domain;
         }
+
+        public int GetShipmentBuildMonth(int tenant)
+        {
+            double? res = (from a in repository.context.TenantManagements 
+            where a.Id == tenant && a.ActivatePrivateSite
+            select a.PermissionBuildMonths).ToList().FirstOrDefault();
+            
+            return res != null ? (int)res.Value : 6;
+        }
+
         public TenantManagementPM GetSinglePM(int id)
         {
             string entityName = "TenantManagementPM" + id;
@@ -1584,6 +1594,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     Price = a.Price,
                     TotalPrice = a.TotalPrice,
                 });
+        }
+
+        public List<TenantManagement> GetWhereHavePermissionBuildMonths()
+        {
+            var q = from a in repository.context.TenantManagements
+                    where a.PermissionBuildMonths != null
+            select a;
+
+            return q.ToList();
         }
     }
 }

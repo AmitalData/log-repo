@@ -34,6 +34,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
 using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.Batch;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -538,22 +539,20 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
-                int tenant = GetAuthinticatedTenant();
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    TaxReportClosingService closingService = new TaxReportClosingService(tenant, taxReportId);
-                    closingService.CloseTaxReport();
+                int tenant = GetAuthinticatedTenant();                
+                string batchId = new BatchClosingTaxReportJournalTask(null).CreateQBatchTaskExecution<BatchClosingTaxReportJournalTaskArgs>(
+                    new BatchClosingTaxReportJournalTaskArgs()
+                    {
+                        TaxReportId = taxReportId,
+                        Tenant = tenant
+                    }, tenant, "Closing Tax Report Journal", false);
 
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, closingService.journalPM);
-                }
-
+                return Request.CreateResponse(HttpStatusCode.OK, batchId);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
         }
 
         public HttpResponseMessage PostCancelClosingJournal(string taxReportId)

@@ -525,37 +525,37 @@
                                     (click)="LabelClicked()">
                                     {{'Accounting.O.ReconcileAccordingTo' | TextCodeTranslationPipe}}:
                                 </li>
-
+                                
                                 <!-- Amount Checkbox -->
-                                <li float-start style="padding: 0 8px;padding-top: 5px;">
+                                <li float-start style="padding: 0 8px;padding-top: 5px;" [style.padding-right]="isRTL ? 'initial' : '30px'">
                                     <CheckBox [IsChecked]="AmountCheckBoxChecked"
                                               (Checked)="AmountCheckBoxChecked = $event"></CheckBox>
                                 </li>
                                 <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'"
-                                    [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">
+                                     style="padding-top: 4px;">
                                     {{'Accounting.General.O.Amount' | TextCodeTranslationPipe}}
                                 </li>
 
                                 <!-- Reference Date Checkbox -->
-                                <li float-start style="padding: 0 8px;padding-top: 5px;">
+                                <li float-start style="padding: 0 8px;padding-top: 5px;" [style.padding-right]="isRTL ? 'initial' : '30px'">
                                     <CheckBox [IsChecked]="ReferenceDateCheckBoxChecked"
                                               (Checked)="ReferenceDateCheckBoxChecked = $event"></CheckBox>
                                 </li>
                                 <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'"
-                                    [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">
+                                     style="padding-top: 4px;">
                                     {{'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe}}
                                 </li>
 
                                 <!-- Reference Checkbox -->
-                                <li float-start style="padding: 0 8px;padding-top: 5px;">
+                                <li float-start style="padding: 0 8px;padding-top: 5px;" [style.padding-right]="isRTL ? 'initial' : '30px'">
                                     <CheckBox [IsChecked]="ReferenceCheckBoxChecked"
                                               (Checked)="ReferenceCheckBoxChecked = $event"></CheckBox>
                                 </li>
                                 <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'"
-                                    [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">
+                                     style="padding-top: 4px;">
                                     {{'Accounting.General.O.Reference' | TextCodeTranslationPipe}}
                                 </li>
-
+                                
                                 <!-- Auto Reco Button -->
                                 <li float-start style="padding: 0 15px;padding-top: 2px;">
                                     <button class="Button"
@@ -597,7 +597,10 @@
                                             border-left: 1px solid #d6d6d6;
                                             border-right: 1px solid #d6d6d6;"></div>
                                 </li>
-
+                                  <!-- Refresh Button -->
+                                <li float-start style="padding: 0 15px;padding-top: 2px;">
+                                    <IconButton [Name]="'refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                                </li>
 
                             </ul>
 
@@ -709,10 +712,6 @@
                                                    (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                                 </li>
 
-                                <!-- Refresh Button -->
-                                <li float-start style="padding: 0 15px;padding-top: 2px;">
-                                    <IconButton [Name]="'refresh'" (click)="RefreshButtonClicked()"></IconButton>
-                                </li>
 
 
                             </ul>
@@ -807,8 +806,8 @@
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
-                                    </log-column>
-
+                                    </log-column> 
+                                    
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'SourceNumber'"
                                                 [header]="'LedgerTransaction.F.Source' | TextCodeTranslationPipe"
                                                 [width]="'100'" [binding]="'Source'">

@@ -1287,6 +1287,15 @@ namespace Logitude.Accounting.Data.Repositories
 
 
         }
+
+        public List<GLAccount> GetAllActivityAccountsByTenant(int tenant)
+        {
+            List<GLAccount> accounts = ((from a in context.GLAccounts
+                                 where a.ChartOfAccountsTypeCode == "3" && a.Inactive == false && (tenant == 0 || a.Tenant == tenant)
+                                 select a).ToList());
+
+            return accounts;
+        }
     }
 
     public class GLAccountAndMoreDTO//: GLAccount

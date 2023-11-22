@@ -474,10 +474,7 @@
                     </td>
 
                     <td style="width: 200px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                        <!-- <LogTextBox [InputType]="'double'" [NoObjectField]="true"
-                        [ObjectFieldName]="'BalanceInLocalCurrency'" [Text]="BalanceInLocalCurrency" [HideColumns]="true"
-                        (ValueChanged)="AmountTextChanged($event)" [DebounceTime]="400"
-                        [ObjectTableName]="'Reconciliation'" [DataContext]="this"></LogTextBox> -->
+                       
                         <LogTextBox style="display: block;width: 150px;" [ObjectFieldName]="'BalanceInLocalCurrency'" [InputType]="'decimal'"
                         [DataContext]="DataContext" [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true" [Text]="BalanceInLocalCurrency"
                         ></LogTextBox>
@@ -489,7 +486,32 @@
                     </td>
                     <td></td>
                 </tr>
+                <tr [hidden]="!IsSchedulerReport" class="FieldRow">
+                    <td style="width:210px">
+                        <LogLabel [ObjectFieldName]="'LocalBalanceInDue'"
+                                  [Text]="'GLAccount.O.ClosingBalanceAccordingToTheBalanceInDue' | TextCodeTranslationPipe"
+                                  [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
+                        </LogLabel>
+                    </td>
+                    <td>
+                            <ComboBox style="display: block;width: 200px;" [ItemsSource]="operatorsList" [Binding]="'LocalName'"
+                                      [SelectedItem]="selectedAmountOperatorLocalBalanceInDue"
+                                      (SelectedItemChanged)="AmountOperatorLocalBalanceInDueChanged($event)"></ComboBox>
+                    </td>
 
+                    <td style="width: 200px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                       
+                        <LogTextBox style="display: block;width: 150px;" [ObjectFieldName]="'LocalBalanceInDue'" [InputType]="'decimal'"
+                        [DataContext]="DataContext" [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true" [Text]="LocalBalanceInDue"
+                        ></LogTextBox>
+                    </td>
+                    <td style="width: 200px"><div></div></td>
+                    <td><div></div></td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td></td>
+                </tr>
                 <tr [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)" style="height: 15px;">
                     <div></div>
                 </tr>

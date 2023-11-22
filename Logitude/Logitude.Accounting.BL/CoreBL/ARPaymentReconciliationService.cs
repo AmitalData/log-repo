@@ -94,7 +94,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //decimal recoAmount = entityPM.ReconciliationLines.Where(d => d.TransactionId == transaction.Id).FirstOrDefault().ReconciliationAmount;
 
                     CaclulateInvoiceAmount(invoice, transaction, entityPM);
-                    CaclulateInvoiceStatus(invoice, entityPM.AccountReconcileMethodCode);
+                    CaclulateInvoiceStatus(invoice, entityPM.AccountReconcileMethodCode, transaction);
 
                     invoiceService.Update(invoice);
                 }
@@ -216,27 +216,48 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             return invoicesPM.Where(invoice => invoice.StatusCode != autoCreditedInvoiceStatusCode).ToList();
         }
-        private void CaclulateInvoiceStatus(ARInvoicePM invoice, string reconcileMethodCode)
+        private void CaclulateInvoiceStatus(ARInvoicePM invoice, string reconcileMethodCode, LedgerTransactionPM transaction)
         {
+            if (FeatureToggleHelper.HasFeatureToggle("ILO", transaction.Tenant))
+            {
+                var transactionAmount = reconcileMethodCode == ReconcileMethodValues.LocalCurrency ? transaction.LocalAmountDebit : transaction.ForeignAmountDebit;
+                if (transaction.OpenAmount <= 0)
+                {
+                    invoice.IsClosed = true;
+                    invoice.StatusCode = ARInvoiceStatusValues.Paid;
+                }
+                else if (transaction.OpenAmount < transactionAmount)
+                {
+                    invoice.IsClosed = false;
+                    invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
+                }
+                else
+                {
+                    invoice.IsClosed = false;
+                    invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
+                }
+            }
+            else {
+                var invoiceAmount = invoice.AmountInInvoiceCurrency;
+                if (invoice.AmountDue <= 0)
+                {
+                    invoice.IsClosed = true;
+                    invoice.StatusCode = ARInvoiceStatusValues.Paid;
+                }
+                else if (invoice.AmountDue < invoiceAmount)
+                {
+                    invoice.IsClosed = false;
+                    invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
+                }
+                else
+                {
+                    invoice.IsClosed = false;
+                    invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
+
+                }
+            }
+
             
-            var invoiceAmount = invoice.AmountInInvoiceCurrency;
-
-            if (invoice.AmountDue <= 0)
-            {
-                invoice.IsClosed = true;
-                invoice.StatusCode = ARInvoiceStatusValues.Paid;
-            }
-            else if (invoice.AmountDue < invoiceAmount)
-            {
-                invoice.IsClosed = false;
-                invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
-            }
-            else
-            {
-                invoice.IsClosed = false;
-                invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
-
-            }
         }
         private void CaclulateInvoiceAmount(ARInvoicePM invoice, LedgerTransactionPM transaction, ReconciliationPM recoPM)
         {

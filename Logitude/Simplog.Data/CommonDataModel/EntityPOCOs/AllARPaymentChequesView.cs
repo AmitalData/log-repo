@@ -13,7 +13,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string BillToId { get; set; }
-        public string GLAccountId { get; set; }
+        public string AccountId { get; set; }
         public DateTime ValueDate { get; set; }
         public string Type { get; set; }
         public string AccountingEntityReference { get; set; }

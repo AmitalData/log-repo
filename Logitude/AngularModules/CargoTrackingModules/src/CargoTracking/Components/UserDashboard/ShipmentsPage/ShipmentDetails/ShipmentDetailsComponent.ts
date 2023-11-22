@@ -9,36 +9,36 @@ import {
     OnInit,
     Inject
 } from '@angular/core';
-import {Router, ActivatedRoute, Data} from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 
-import {FormBuilder} from '@angular/forms';
-import {CargoTrackingSearchService} from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
-import {CargoTrackingShipmentList} from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
-import {CargoTrackingBrandingData} from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import { FormBuilder } from '@angular/forms';
+import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
+import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import {
     CargoTrackingShipmentWithMilestones,
     Milestone
 } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
-import {CargoTrackingPortService} from '../../../../Services/Others/CargoTrackingPortService';
-import {CargoTrackingShipmentService} from '../../../../Services/Others/CargoTrackingShipmentService';
-import {CargoTrackingShipmentCustomsData} from "../../../../DataContracts/CargoTrackingShipmentCustomsData";
-import {DocumentDownloadService} from '../../../../Services/Others/DocumentDownloadService';
-import {MessageWindowComponent} from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
-import {CargoTrackingShipmentOrderService} from '../../../../Services/Others/CargoTrackingShipmentOrderService';
-import {MatDialog} from '@angular/material/dialog';
-import {DatePipe} from '@angular/common';
+import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
+import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
+import { CargoTrackingShipmentCustomsData } from "../../../../DataContracts/CargoTrackingShipmentCustomsData";
+import { DocumentDownloadService } from '../../../../Services/Others/DocumentDownloadService';
+import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { CargoTrackingShipmentOrderService } from '../../../../Services/Others/CargoTrackingShipmentOrderService';
+import { MatDialog } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 import {
     CargoTrackingShipmentExtendedService
 } from 'src/CargoTracking/Services/Others/CargoTrackingShipmentExtendedService';
-import {CargoTrackingShipmentMappedPM} from 'src/CargoTracking/DataContracts/CargoTrackingShipmentMappedPM';
+import { CargoTrackingShipmentMappedPM } from 'src/CargoTracking/DataContracts/CargoTrackingShipmentMappedPM';
 import {
     CargoTrackingBrandingDataExtendedService
 } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
-import {ServiceHelper} from 'src/CargoTracking/Utilities/ServiceHelper';
-import {ServiceResponse} from 'src/CargoTracking/DataContracts/ServiceResponse';
-import {DeclarationApprovalArgs} from 'src/CargoTracking/DataContracts/DeclarationApprovalArgs';
-import {RootContext} from 'src/CargoTracking/Utilities/RootContext';
-import {MilestoneCodes} from 'src/CargoTracking/Constants/MilestoneCodes';
+import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
+import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { DeclarationApprovalArgs } from 'src/CargoTracking/DataContracts/DeclarationApprovalArgs';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
 
 const mobileScreenMaxWidth = 470;
 
@@ -68,6 +68,8 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     @Input() DetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
 
     cargoTrackingShipmentPM: CargoTrackingShipmentMappedPM = new CargoTrackingShipmentMappedPM();
+
+
 
     public isLoading: boolean = true;
     showMoreReferences: boolean = false;
@@ -160,16 +162,16 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     get ShowEventPanel() {
         return this.cargoTrackingShipmentPM.CargoTrackingPrivateShowEvents;
     }
-    
+
     constructor(private router: Router,
-                private route: ActivatedRoute,
-                private cargoTrackingShipmentService: CargoTrackingShipmentService,
-                private cargoTrackingShipmentExtendedService: CargoTrackingShipmentExtendedService,
-                private brandingService: CargoTrackingBrandingDataExtendedService,
-                private documentDownloadService: DocumentDownloadService,
-                public dialog: MatDialog,
-                private datePipe: DatePipe,
-                @Inject('BASE_URL') baseUrl: string) {
+        private route: ActivatedRoute,
+        private cargoTrackingShipmentService: CargoTrackingShipmentService,
+        private cargoTrackingShipmentExtendedService: CargoTrackingShipmentExtendedService,
+        private brandingService: CargoTrackingBrandingDataExtendedService,
+        private documentDownloadService: DocumentDownloadService,
+        public dialog: MatDialog,
+        private datePipe: DatePipe,
+        @Inject('BASE_URL') baseUrl: string) {
         this.baseURL = baseUrl;
 
         this.GetIdFromURI();
@@ -184,6 +186,22 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
         this.LoadCargoShipmentPM();
     }
 
+
+    checkDescriptionShipping(description: string): string {
+        let mainCarniageLes = "MainCarniageLes";
+        return description.includes(mainCarniageLes.toLocaleLowerCase()) ? " " : description;
+    }
+
+    splitAddressAndPhone(addressString: string) {
+        const parts = addressString.split('Phone: ');
+
+        if (parts.length === 1) {
+            return { address: parts[0], phone: '' }; // If "Phone: " was not found in the string, assume the whole string as the address.
+        }
+        else {
+            return { address: parts[0], phone: parts[1] };
+        }
+    }
 
     private GetIdFromURI() {
 
@@ -251,7 +269,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     }
 
     private InitializeComponent(result: any) {
-        this.cargoTrackingShipmentPM = result; 
+        this.cargoTrackingShipmentPM = result;
         this.BuildShipmentReferences();
 
         this.SetCustomsOrForwarderFields();
@@ -279,58 +297,57 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
         this.SetDocumentPDF();
     }
 
-   
+
     private SetDocumentPDF() {
-       
+
         var DocumentToShow = this.cargoTrackingShipmentPM.DocumentsFilings.filter(x => x.DocumentTypeCode == "MNO");
-        this.cargoTrackingShipmentPM.DocumentsFilings=this.cargoTrackingShipmentPM.DocumentsFilings.sort((a, b) => {
+        this.cargoTrackingShipmentPM.DocumentsFilings = this.cargoTrackingShipmentPM.DocumentsFilings.sort((a, b) => {
             if (a.CreateDate < b.CreateDate) {
-              return 1; 
+                return 1;
             }
             if (a.CreateDate > b.CreateDate) {
-              return -1; 
+                return -1;
             }
-            return 0; 
-          });
-          
-          
-          
-        if(DocumentToShow==null||DocumentToShow.length==0) {
-            this.IsPDF=false;
+            return 0;
+        });
+
+
+
+        if (DocumentToShow == null || DocumentToShow.length == 0) {
+            this.IsPDF = false;
         }
-        else 
-        {
-         
-            if(DocumentToShow.length>1) DocumentToShow = DocumentToShow.sort((a, b) => <any>new Date(b.CreateDate) - <any>new Date(a.CreateDate));
+        else {
 
-            this.cargoTrackingShipmentExtendedService.GetFilingAttachPdfReport(DocumentToShow[0].DocumentId,this.tenant).subscribe((response: ServiceResponse) => {
-               if (response) {
-                this.IsPDF=true
+            if (DocumentToShow.length > 1) DocumentToShow = DocumentToShow.sort((a, b) => <any>new Date(b.CreateDate) - <any>new Date(a.CreateDate));
 
-                   var buffer = this.base64ToBufferConvertor(response.toString());
-                   var blob = new Blob([buffer], { type: 'application/pdf' });
-                   var objectURL = URL.createObjectURL(blob);
-                   this.IFrameURI = objectURL;
-               }
+            this.cargoTrackingShipmentExtendedService.GetFilingAttachPdfReport(DocumentToShow[0].DocumentId, this.tenant).subscribe((response: ServiceResponse) => {
+                if (response) {
+                    this.IsPDF = true
+
+                    var buffer = this.base64ToBufferConvertor(response.toString());
+                    var blob = new Blob([buffer], { type: 'application/pdf' });
+                    var objectURL = URL.createObjectURL(blob);
+                    this.IFrameURI = objectURL;
+                }
             });
-        
+
         }
 
-      
 
 
-      
+
+
     }
-    public  base64ToBufferConvertor(str: string) {
+    public base64ToBufferConvertor(str: string) {
         str = window.atob(str); // creates a ASCII string
         var buffer = new ArrayBuffer(str.length),
-          view = new Uint8Array(buffer);
+            view = new Uint8Array(buffer);
         for (var i = 0; i < str.length; i++) {
-          view[i] = str.charCodeAt(i);
+            view[i] = str.charCodeAt(i);
         }
-    
+
         return buffer;
-    
+
     }
     private BuildShipmentReferences() {
         this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ?
@@ -353,7 +370,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
             this.ShipmentReferences.push(this.cargoTrackingShipmentPM.SHOBookingConfirmationNumber);
     }
 
-    OpenReferencesMessageWindow(references: any[], isMobile: boolean ,event) {
+    OpenReferencesMessageWindow(references: any[], isMobile: boolean, event) {
         if (!references)
             return;
 
@@ -363,12 +380,12 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
                 title: 'References',
                 description: isMobile ? references.slice(1, references.length + 1).join("\n") : references.slice(3, references.length + 1).join("\n"),
             },
-            
+
             position: {
                 top: event.clientY + 'px',
                 left: event.clientX + 'px',
-              },
-          
+            },
+
         });
     }
 
@@ -623,12 +640,12 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     }
 
     SetTypeTitle() {
-        
-       if (this.cargoTrackingShipmentPM.EntityType == 'O') {
+
+        if (this.cargoTrackingShipmentPM.EntityType == 'O') {
             this.TypeTitle = "SHIPMENT TYPE";
         }
-        else 
-        this.TypeTitle = "PACKAGE TYPE";
+        else
+            this.TypeTitle = "PACKAGE TYPE";
     }
 
     SetHasContainersDetails() {
@@ -826,7 +843,6 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     //#endregion
 
     GetSlice(text: string, numberOfCharacter) {
-
         var result = text
         if (text?.length > numberOfCharacter && !this.IsMobileView) {
             if (!this.ContainsHebrew(text))
@@ -881,7 +897,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
         var panelElement = document.getElementById(panelName) as HTMLElement;
         if (panelElement) {
             panelElement.scrollIntoView();
-            if ((panelName == this.PartnersPanel && panelElement.clientHeight > this.MaxHeightForPartnersPanel&&!this.ShowEventPanel) || (panelName != this.EventsPanel&&this.ShowEventPanel)||(panelName != this.PartnersPanel&&!this.ShowEventPanel) )
+            if ((panelName == this.PartnersPanel && panelElement.clientHeight > this.MaxHeightForPartnersPanel && !this.ShowEventPanel) || (panelName != this.EventsPanel && this.ShowEventPanel) || (panelName != this.PartnersPanel && !this.ShowEventPanel))
                 document.getElementsByTagName('html')[0].scrollTop -= 113;
 
         }

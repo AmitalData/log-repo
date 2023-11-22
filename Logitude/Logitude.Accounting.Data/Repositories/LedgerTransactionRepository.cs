@@ -1611,7 +1611,15 @@ on record.JournalId equals j.Id
                     select a);
 
         }
-        
+        public IQueryable<LedgerTransaction> GetByJournalIdAndForeignAmountCreditNotEqualZero(string journalId, int tenant)
+        {
+
+            return (from a in context.LedgerTransactions
+                    where a.JournalId == journalId && a.Tenant == tenant && a.ForeignAmountCredit != 0
+                    select a);
+
+        }
+
         public List<GLAccountTotalByMonthsDTO> GetControllerTotalDateType1(int tenant)
         {
             return (from a in context.LedgerTransactions

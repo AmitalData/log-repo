@@ -187,6 +187,10 @@
       <Project>{ba2a42b8-a348-4d44-984c-1d718cb20b6f}</Project>
       <Name>CommunicationWorkerRole</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Logitude\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj">
+      <Project>{6b7fb227-28d2-45b8-b079-2e2f4251510d}</Project>
+      <Name>Logitude.CargoTracking.BL</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Debug\WorkerRoleName.xml" />

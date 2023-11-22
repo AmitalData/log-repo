@@ -22,6 +22,8 @@ namespace Logitude.CargoTracking.Def.DataContracts
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public bool OperationalOpenedOnly { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
 
     }
 }
