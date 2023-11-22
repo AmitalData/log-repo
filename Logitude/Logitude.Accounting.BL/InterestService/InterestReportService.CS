@@ -477,7 +477,7 @@ namespace Logitude.Accounting.BL.InterestService
             }
 
             IQueryable<InterestTransactionList> interestTransactionLists = (from a in MyContext.InterestReportLines.Include("InterestTransaction").Include("InterestTransaction.GLAccount")
-                                                                            where a.Tenant == Tenant  &&a.InterestReportId == ReportId && a.InterestTransaction.GLAccountId !=null && a.InterestTransaction.GLAccount.ActiveForInterest ==true   && a.InterestTransaction.IsCancelled == false
+                                                                            where a.Tenant == Tenant  &&a.InterestReportId == ReportId && a.InterestTransaction.GLAccountId !=null && a.InterestTransaction.IsCancelled == false
                                                                             select new InterestTransactionList()
                                                                             {
                                                                                 Id=a.InterestTransactionId,
