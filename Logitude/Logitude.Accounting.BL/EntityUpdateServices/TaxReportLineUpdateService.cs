@@ -384,7 +384,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             }
             
-            if (entityPM.StatusCode != "2" && entityPM.StatusCode != "1")
+            if (entityPM.StatusCode != "2" && entityPM.StatusCode != "1" && entityPM.StatusCode != "7")// these statuses are stronger than 11 
             {
                 string[] validStatuses = { "C", "H", "K", "P", "R", "T" };
 
