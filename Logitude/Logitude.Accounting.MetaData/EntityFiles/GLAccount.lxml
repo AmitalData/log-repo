@@ -13744,7 +13744,7 @@
     ForeignEntity="&quot;PaymentTerm&quot;"
     DontBuildRelationOnDB="false"
     NavigationPropertyName="&quot;PaymentTerm&quot;"
-    IsPrimaryKey="true"
+    IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"

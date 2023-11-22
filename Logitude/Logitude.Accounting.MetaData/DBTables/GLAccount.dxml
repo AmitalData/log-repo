@@ -424,8 +424,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
@@ -460,7 +459,7 @@
   <Relation
     ForeignKeyColumn="ControlAccountId"
     ReferencedTable="GLAccounts"
-    ReferencedColumn="Id,PaymentTerms"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="AutomaticReconcileId"
