@@ -61,16 +61,24 @@ namespace WebFreight.Web.WcfApi
 		{
 			try
 			{
+				string Bol = "";
+				if (Type == "c_id")
+				{
+					var arrayReferenceNo = ReferenceNo.Split(',');
+					ReferenceNo = arrayReferenceNo != null && arrayReferenceNo?.Count() > 0 ? arrayReferenceNo[0] : ReferenceNo;
+					Bol = arrayReferenceNo != null && arrayReferenceNo?.Count() > 1 ? arrayReferenceNo[1] : "";
+
+				}
 				string WindWardSettings = LogitudeSettings.WindWardSettings;
 				var WindWardSettingsArray = WindWardSettings?.Split(',');
 				var WWtenant = WindWardSettingsArray != null && WindWardSettingsArray?.Count() > 2 ? WindWardSettingsArray[2] : "";
 				if (!string.IsNullOrEmpty(WWtenant))
 				{
 					WriteLogMe("UnitedRequest Insert WindWard: "+ WWtenant, null, "UpsertTrackedShipments");
-					var Res = await WindWard(Convert.ToInt32(WWtenant), ScacCode, ReferenceNo, Type);
+					var Res = await WindWard(Convert.ToInt32(WWtenant), ScacCode, ReferenceNo, Type, Bol);
 					WriteLogMe("UnitedRequest After WindWard: " + WWtenant, Res, "UpsertTrackedShipments");
 
-				}
+				}				
 				return OceanInsight(Tenant, ScacCode, ReferenceNo, Type);
 			}
 			catch (Exception ex)
@@ -87,7 +95,7 @@ namespace WebFreight.Web.WcfApi
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 			Response response = new Response();
 			try
-			{
+			{				
 				SecurityUtility.AuthenticationOnTenant(Tenant);
 				string OIToken = LogitudeSettings.OceanInsightsToken;
 				//SecurityUtility.CheckContactFeature("Shipment", "UPDATE", entityPM.Tenant);//UPDATE//READ
@@ -282,7 +290,7 @@ namespace WebFreight.Web.WcfApi
 				return response;
 			}
 		}
-		private async Task<Response> WindWard(int WWtenant, string ScacCode, string ReferenceNo, string Type)
+		private async Task<Response> WindWard(int WWtenant, string ScacCode, string ReferenceNo, string Type,string Bol = "")
         {
 			WriteLogMe("UnitedRequest ENTER WindWard: " + WWtenant, null, "UpsertTrackedShipments");
 
@@ -331,7 +339,7 @@ namespace WebFreight.Web.WcfApi
 					if (OceanInsightsRequestPm == null)
 					{
 						string JobNumber = GetJobNumber(WWtenant, ScacCode, ReferenceNo, Type);
-						var WWResult = await UpsertTrackedShipments(ScacCode, ReferenceNo, Type, JobNumber);
+						var WWResult = await UpsertTrackedShipments(ScacCode, ReferenceNo, Type, JobNumber, Bol);
 
 						 Result = WWResult.v_result;
 						 Status = WWResult.status;
@@ -370,7 +378,7 @@ namespace WebFreight.Web.WcfApi
 					if (string.IsNullOrEmpty(OceanInsightsRequestPm.OceanInsigntId))
 					{
 						string JobNumber = GetJobNumber(WWtenant, ScacCode, ReferenceNo, Type);
-						var WWResult = await UpsertTrackedShipments(ScacCode, ReferenceNo, Type, JobNumber);
+						var WWResult = await UpsertTrackedShipments(ScacCode, ReferenceNo, Type, JobNumber, Bol);
 
 						Result = WWResult.v_result;
 						Status = WWResult.status;
@@ -480,7 +488,7 @@ namespace WebFreight.Web.WcfApi
 			}
 		}
 
-		private async Task<Result> UpsertTrackedShipments(string carrierSCAC, string ReferenceNo, string Type, string JobNumber)
+		private async Task<Result> UpsertTrackedShipments(string carrierSCAC, string ReferenceNo, string Type, string JobNumber,string Bol = "")
 		{
 			Result Result=new Result();
 		
@@ -503,6 +511,7 @@ namespace WebFreight.Web.WcfApi
 				if (Type == "c_id")
 				{
 					trackedShipmentModel.containerNumber = ReferenceNo;
+					trackedShipmentModel.bol = !string.IsNullOrEmpty(Bol)? Bol:null;
 				}
 				else
 				{
