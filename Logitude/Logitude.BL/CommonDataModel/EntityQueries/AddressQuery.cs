@@ -143,6 +143,42 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
+        public AddressPM GetAddressByCardId(string cardId, int tenant)
+        {
+            return (from a in repository.context.Addresses.Include("Country").Include("State")
+                    where a.Tenant == tenant
+                    && a.CardId == cardId && a.AddressTypeId == "M"
+                    select new AddressPM()
+                    {
+                        Address1 = a.Address1,
+                        Address2 = a.Address2,
+                        AddressTypeId = a.AddressTypeId,
+                        ATTN = a.ATTN,
+                        CardId = a.CardId,
+                        SearchFields = a.SearchFields,
+                        City = a.City,
+                        CountryId = a.CountryId,
+                        Description = a.Description,
+                        FaxNumber = a.FaxNumber,
+                        Id = a.Id,
+                        Name = a.Name,
+                        PhoneNumber = a.PhoneNumber,
+                        StateId = a.StateId,
+                        Tenant = a.Tenant,
+                        ZipCode = a.ZipCode,
+                        InActive = a.InActive,
+                        IsLocalLanguage = a.IsLocalLanguage,
+                        CountryCode = a.Country != null ? a.Country.Code : null,
+                        CountryEnglishName = a.Country != null ? a.Country.EnglishName : null,
+                        CountryName = a.Country != null ? (a.IsLocalLanguage ? a.Country.LocalName : a.Country.EnglishName) : null,
+                        StateCode = a.State != null ? a.State.Code : null,
+                        StateEnglishName = a.State != null ? a.State.EnglishName : null,
+                        HasStates = a.Country == null ? false : a.Country.HasStates,
+                        IsStateRequired = a.Country == null ? false : a.Country.IsStateRequired,
+                    }).FirstOrDefault();
+
+        }
+
         public AddressPM GetSingleAddressPM(string id, int tenant)
         {
             AddressPM instance = null;
