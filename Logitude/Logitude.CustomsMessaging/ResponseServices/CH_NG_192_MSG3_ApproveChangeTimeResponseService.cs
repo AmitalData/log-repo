@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 using UnifreightIIG.Common.ChangingTimeServiceReference;
 using UnifreightIIG.Common.MessageLib.Unifreight.FuStatus;
 using UnifreightIIG.Common.MessageLib.Unifreight.Transmission;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
+using UnifreightIIG.Common.TheGateway;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -142,24 +145,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         physicalCheckUpdateService.Update(phsicalCheckPM, true);
                     }
                     break;
-
-                // todo: case requestType=004 && requestType=005
                 case 4:
-                    //phsicalCheckPM.BringQueueForwardIndicatorStatus = 4;
+                    phsicalCheckPM.BringQueueForwardIndicatorS = "4";
                     break;
                 case 5:
-                    //phsicalCheckPM.BringQueueForwardIndicatorStatus = 5;
-                    // Build status “PCB”  in unifreight custom file(see document)
-
+                    phsicalCheckPM.BringQueueForwardIndicatorS = "5";
+                    var myDeleteEventContextTagModel = new EventContextTagModel()
+                    {
+                        CallProccessID = EventContextTagModel.ProccessEnum.CH_NG_192_MSG1_QueueAdvanceDeniedResponseService,
+                        EventCode = "PCB",
+                        EventRemarks = "Queue advance denied",
+                        FUStatusRemarks = "הקדמת תור נדחתה"
+                    };
+                    phsicalCheckPM.CurrentContextTag = myDeleteEventContextTagModel;
+                    phsicalCheckPM.ChangeSetOp = ChangeSetOperation.Update;
+                    physicalCheckUpdateService.Update(phsicalCheckPM, true);
                     break;
-
-
-
-
             }
         }
 
        
+      
     }
-  
+
 }

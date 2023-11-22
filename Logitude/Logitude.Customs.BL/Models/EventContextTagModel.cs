@@ -15,6 +15,7 @@ namespace Logitude.Customs.BL.Models
             CH_NG_190_MSG1_NoticeToClientResponseServiceInsert,
             CH_NG_190_MSG1_NoticeToClientResponseServiceUpdate,
             CH_NG_190_MSG1_NoticeToClientResponseServiceDelete,
+            CH_NG_192_MSG1_QueueAdvanceDeniedResponseService,
             TSH_MSG7_AgentPaymentReplyResponseService,
             Deficit_NG_5009_MSG14_FirstAndSeconderyRequirementsMessageResponseService,
             GRNT_MSG15_createGurateeRequestInfoResponseService,

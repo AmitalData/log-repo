@@ -146,6 +146,15 @@ namespace Logitude.Customs.Def.ClosedTable
                 ActiveInExport = false,
                 //IsCustomerView = true
             });
+            all.Add(new NotificationDefinitionDetails() // moran 11.8.14 - Task 7092 
+            {
+                Code = "192F",
+                EnglishName = "Queue advance denied",
+                LocalName = "הקדמת תור נדחתה",
+                AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+                //IsCustomerView = true
+            });
 
             all.Add(new NotificationDefinitionDetails() // moran 9.9.14 - Task 7885 
             {
