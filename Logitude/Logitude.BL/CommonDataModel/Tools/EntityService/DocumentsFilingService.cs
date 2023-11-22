@@ -470,24 +470,26 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private  void TryBuildUD2LT(DocumentsFilingPM extDocPM)
         {
-			
-			ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
-
-			// Start a transaction
-			using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
+			Task.Run(() =>
 			{
-				try
-				{
-					myICreateUD2LTService.JustDoIt(extDocPM);
-					// Commit the transaction if everything is successful
-					transactionScope.Complete();
-				}
-				catch (Exception ex)
-				{
-					// Handle the exception or log it
-					LogitudeSettings.HandleLogMe("Error in ICreateUD2LTService JustDoIt: " + ex.Message, true, "CreateUD2LTService.Error", DateTime.Now);
-				}
-			}
+				ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
+
+			    // Start a transaction
+			    using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
+			    {
+			    	try
+			    	{
+			    		myICreateUD2LTService.JustDoIt(extDocPM);
+			    		// Commit the transaction if everything is successful
+			    		transactionScope.Complete();
+			    	}
+			    	catch (Exception ex)
+			    	{
+			    		// Handle the exception or log it
+			    		LogitudeSettings.HandleLogMe("Error in ICreateUD2LTService JustDoIt: " + ex.Message, true, "CreateUD2LTService.Error", DateTime.Now);
+			    	}
+			    }
+			});
 
 		}
         private  void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
