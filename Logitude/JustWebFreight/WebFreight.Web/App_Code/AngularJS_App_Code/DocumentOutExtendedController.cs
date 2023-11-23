@@ -621,7 +621,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     #endregion
                 }
 
-                else if (objectTableName == "Report")
+                else if (objectTableName == "Report" && !string.IsNullOrWhiteSpace(gLAccountId))
                 {
                     #region Report
 
