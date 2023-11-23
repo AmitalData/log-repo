@@ -472,32 +472,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
 			Task.Run(async () =>
 			{
-			
-
-				ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
-
-				// Start a transaction
-				using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
-				{
-					try
-					{
-						LogitudeSettings.HandleLogMe("TOOK 1: ", true, "123", DateTime.Now);
-						myICreateUD2LTService.JustDoIt(extDocPM);
-						LogitudeSettings.HandleLogMe("TOOK 2: ", true, "123", DateTime.Now);
-						// Commit the transaction if everything is successful
-						transactionScope.Complete();
-					}
-					catch (Exception ex)
-					{
-						// Handle the exception or log it
-						LogitudeSettings.HandleLogMe("Error in ICreateUD2LTService JustDoIt: " + ex.Message, true, "CreateUD2LTService.Error", DateTime.Now);
-					}
-				}
-				await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for 1 second
-				LogitudeSettings.HandleLogMe("TOOK 3: " , true, "123", DateTime.Now);
-			}).ContinueWith(async task1 =>
-			{
-				LogitudeSettings.HandleLogMe("TOOK 4: ", true, "123", DateTime.Now);
 				ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
 
 				// Start a transaction
@@ -505,11 +479,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 				{
 					try
 					{
-						LogitudeSettings.HandleLogMe("TOOK 5: ", true, "123", DateTime.Now);
+						LogitudeSettings.HandleLogMe("TOOK 1: ", true, "123", DateTime.Now);
 
 						myISendBondedCustomDocumentService.JustDoIt(extDocPM);
 						// Commit the transaction if everything is successful
-						LogitudeSettings.HandleLogMe("TOOK 6: ", true, "123", DateTime.Now);
+						LogitudeSettings.HandleLogMe("TOOK 2: ", true, "123", DateTime.Now);
 
 						transactionScope.Complete();
 					}
@@ -519,7 +493,31 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 						LogitudeSettings.HandleLogMe("Error in ISendBondedCustomDocumentService JustDoIt: " + ex.Message, true, "ISendBondedCustomDocumentService.Error", DateTime.Now);
 					}
 				}
+				await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for 1 second
+				LogitudeSettings.HandleLogMe("TOOK 3: " , true, "123", DateTime.Now);
+			}).ContinueWith(async task1 =>
+			{
+				LogitudeSettings.HandleLogMe("TOOK 4: ", true, "123", DateTime.Now);
 
+				ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
+
+				// Start a transaction
+				using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
+				{
+					try
+					{
+						LogitudeSettings.HandleLogMe("TOOK 5: ", true, "123", DateTime.Now);
+						myICreateUD2LTService.JustDoIt(extDocPM);
+						LogitudeSettings.HandleLogMe("TOOK 6: ", true, "123", DateTime.Now);
+						// Commit the transaction if everything is successful
+						transactionScope.Complete();
+					}
+					catch (Exception ex)
+					{
+						// Handle the exception or log it
+						LogitudeSettings.HandleLogMe("Error in ICreateUD2LTService JustDoIt: " + ex.Message, true, "CreateUD2LTService.Error", DateTime.Now);
+					}
+				}
 			});
 
 		}
