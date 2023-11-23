@@ -29,328 +29,457 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
+            FullAccountingSetting fullAccountingSettings = context.FullAccountingSettings.Where(a => a.Tenant == loggedUser.Tenant).FirstOrDefault();
+            IQueryable<GLAccountList> query;
 
-
-            IQueryable<GLAccountList> query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
+            if (fullAccountingSettings.IsSecurityLevelActivated)
+            {
+                query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                              //  join ledgerTransactions in context.LedgerTransactions on a.Id equals ledgerTransactions.AccountId
-                                               join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
-                                               join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
 
-                                               join AgingDatas in context.GLAccountAgingDatas on a.Id equals AgingDatas.AccountId
-                                               join RecocileDatas in context.GLAccountRecocileDatas on a.Id equals RecocileDatas.AccountId
-                                               into RecocileDatasjoin
-                                               from RecocileDatas in RecocileDatasjoin.DefaultIfEmpty()
+                         where a.Tenant == loggedUser.Tenant
+                         join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
+                         join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
 
-                                               join fullAccountingSettings in context.FullAccountingSettings on a.Tenant equals fullAccountingSettings.Tenant
-
-                                               join CardsDatas in context.GLAccountCardsDatas on a.CardsDataId equals CardsDatas.Id
-
-                                               into CardsDatasjoin
-                                               from CardsDatas in CardsDatasjoin.DefaultIfEmpty()
-
-                                               join FollowUpDatas in context.GLAccountFollowUpDatas on a.Id equals FollowUpDatas.GlAccountId
-                                               into FollowUpDatasjoin
-                                               join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
-                                               
-                                               from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
-
-                                               select new GLAccountList()
-                                               {
-                                                   Id = a.Id,
-                                                   Tenant = a.Tenant,
-                                                   InternalNumber = a.InternalNumber,
-                                                   InterestCreditLimit = a.InterestCreditLimit,
-                                                   InterestOpenBalance = a.InterestOpenBalance,
-                                                   AccountTypeCode = a.AccountTypeCode,
-                                                   DisplayNumber = a.DisplayNumber,
-                                                   EnglishName = a.EnglishName,
-                                                   LocalName = a.LocalName,
-                                                   SearchFields = a.SearchFields,
-                                                   IsMultiCurrency = a.IsMultiCurrency,
-                                                   CurrencyId = a.CurrencyId,
-                                                   RevenueExpenseType = a.RevenueExpenseType,
-                                                   IsControlAccount = a.IsControlAccount,
-                                                   ChartOfAccountsId = a.ChartOfAccountsId,
-                                                   Inactive = a.Inactive,
-                                                   ReconcileMethodCode = a.ReconcileMethodCode,
-                                                   ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
-                                                   AccountTypeName = a.GLAccountType != null ? a.GLAccountType.EnglishName : null,
-                                                   RevenueExpenseName = a.RevenueExpense != null ? a.RevenueExpense.EnglishName : null,
-                                                   ReconcileMethodName = a.ReconcileMethod != null ? a.ReconcileMethod.EnglishName : null,
-                                                   ReconcileMethodLocalName = a.ReconcileMethod != null ? a.ReconcileMethod.LocalName : null,
-                                                   CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
-                                                   ChartOfAccountsTypeName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
-                                                   ChartOfAccountsTypeEnglishName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
-                                                   ChartOfAccountsTypeLocalName = chartOfAccountsType != null ? chartOfAccountsType.LocalName : null,
-                                                   CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
-                                                   CurrencySign = a.IsMultiCurrency == true ? "" : a.Currency != null ? a.Currency.Sign : null,
-                                                   ControlAccountName = a.ControlAccount != null ? a.ControlAccount.EnglishName : null,
-                                                   ControlAccountId = a.ControlAccountId,
-                                                   ControlAccountNumber = a.ControlAccount != null ? a.ControlAccount.DisplayNumber : null,
-                                                   ChartOfAccountsName = chartOfAccount != null ? chartOfAccount.LocalName : null,
-                                                   ChartOfAccountsEnglishName = chartOfAccount != null ? chartOfAccount.EnglishName : null,
-                                                   ChartOfAccountsLocalName = chartOfAccount != null ? chartOfAccount.LocalName : null,
-                                                   CardsDataId = a.CardsDataId,
-                                                   PostponedChequesCommission = a.PostponedChequesCommission,
-                                                   ActiveStatusName = a.Inactive == false ? active : inactive,
-                                                   AutomaticReconcileId = a.AutomaticReconcileId,
-                                                   AutomaticReconcileName = a.AutomaticReconcile != null ?
-                                               !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
-                                               !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
-                                               a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
-                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
-                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField3.EnglishName
-                                               : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
-                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
-                                               : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
-                                               : null,
-                                                   AutomaticReconcileLocalName = a.AutomaticReconcile != null ?
-                                               !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
-                                               !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
-                                               a.AutomaticReconcile.AutomaticReconcileField1.LocalName
-                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
-                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField3.LocalName
-                                               : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
-                                               + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
-                                               : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
-                                               : null,
-                                                   PreviousEnglishName = a.PreviousEnglishName,
-                                                   PreviousEnglishNameChangeDate = a.PreviousEnglishNameChangeDate,
-                                                   PreviousLocalName = a.PreviousLocalName,
-                                                   PreviousLocalNameChangeDate = a.PreviousLocalNameChangeDate,
-                                                   PreviousNumber = a.PreviousNumber,
-                                                   PreviousNumberChangeDate = a.PreviousNumberChangeDate,
-                                                   PreviousChartOfAccountsId = a.PreviousChartOfAccountsId,
-                                                   PreviousChartOfAccountsChangeDate = a.PreviousChartOfAccountsChangeDate,
-                                                   //ClientName = a.Client != null ? a.Client.Card.EnglishName : null,
-                                                   //VendorName = a.Vendor != null ? a.Vendor.Card.EnglishName : null,
-                                                   //ClientId = a.ClientId,
-                                                   //VendorId = a.VendorId,
-                                                   CustomerGLAccountId = a.CustomerGLAccountId,
-                                                   //BalanceInLocalCurrency = MoreDatas.BalanceInLocalCurrency,
-                                                   RevaluationEnabled = a.RevaluationEnabled,
-                                                   //ClientCode = a.Client != null ? a.Client.Card.Code : null,
-                                                   //VendorCode = a.Vendor != null ? a.Vendor.Card.Code : null,
-                                                   ParentAccountId = a.ParentAccountId,
-                                                   IsVATExempt = a.IsVATExempt,
-                                                   //LocalBalanceInDue = MoreDatas.LocalBalanceInDue,
-                                                   NextDueDate = MoreDatas.NextDueDate,
-                                                   //TotalOpenChequesInLocalCur = MoreDatas.TotalOpenChequesInLocalCur,
-                                                   //TotFutureOpenChequesInLocalCur = MoreDatas.TotFutureOpenChequesInLocalCur,
-
-                                                   //BalanceInForeignCurrency = MoreDatas.BalanceInForeignCurrency,
-                                                   //ForeignBalanceInDue = MoreDatas.ForeignBalanceInDue,
+                         join AgingDatas in context.GLAccountAgingDatas on a.Id equals AgingDatas.AccountId
+                         join RecocileDatas in context.GLAccountRecocileDatas on a.Id equals RecocileDatas.AccountId
+                         into RecocileDatasjoin
+                         from RecocileDatas in RecocileDatasjoin.DefaultIfEmpty()
 
 
-                                                   DeductionFileNumber = a.DeductionFileNumber,
+                         join CardsDatas in context.GLAccountCardsDatas on a.CardsDataId equals CardsDatas.Id
 
-                                                   //categories
-                                                   Category1Name = a.Category1.EnglishName,
-                                                   Category2Name = a.Category2.EnglishName,
-                                                   Category3Name = a.Category3.EnglishName,
-                                                   Category4Name = a.Category4.EnglishName,
-                                                   Category5Name = a.Category5.EnglishName,
-                                                   Category1LocalName = a.Category1.LocalName,
-                                                   Category2LocalName = a.Category2.LocalName,
-                                                   Category3LocalName = a.Category3.LocalName,
-                                                   Category4LocalName = a.Category4.LocalName,
-                                                   Category5LocalName = a.Category5.LocalName,
+                         into CardsDatasjoin
+                         from CardsDatas in CardsDatasjoin.DefaultIfEmpty()
 
+                         join FollowUpDatas in context.GLAccountFollowUpDatas on a.Id equals FollowUpDatas.GlAccountId
+                         into FollowUpDatasjoin
+                         join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
 
-                                                   ActiveForInterest = a.ActiveForInterest,
-                                                   ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
-                                                   MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
-                                                   InterestCalculationStartDate = a.InterestCalculationStartDate,
+                         from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
 
+                         select new GLAccountList()
+                         {
+                             Id = a.Id,
+                             Tenant = a.Tenant,
+                             InternalNumber = a.InternalNumber,
+                             InterestCreditLimit = a.InterestCreditLimit,
+                             InterestOpenBalance = a.InterestOpenBalance,
+                             AccountTypeCode = a.AccountTypeCode,
+                             DisplayNumber = a.DisplayNumber,
+                             EnglishName = a.EnglishName,
+                             LocalName = a.LocalName,
+                             SearchFields = a.SearchFields,
+                             IsMultiCurrency = a.IsMultiCurrency,
+                             CurrencyId = a.CurrencyId,
+                             RevenueExpenseType = a.RevenueExpenseType,
+                             IsControlAccount = a.IsControlAccount,
+                             ChartOfAccountsId = a.ChartOfAccountsId,
+                             Inactive = a.Inactive,
+                             ReconcileMethodCode = a.ReconcileMethodCode,
+                             ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                             AccountTypeName = a.GLAccountType != null ? a.GLAccountType.EnglishName : null,
+                             RevenueExpenseName = a.RevenueExpense != null ? a.RevenueExpense.EnglishName : null,
+                             ReconcileMethodName = a.ReconcileMethod != null ? a.ReconcileMethod.EnglishName : null,
+                             ReconcileMethodLocalName = a.ReconcileMethod != null ? a.ReconcileMethod.LocalName : null,
+                             CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
+                             ChartOfAccountsTypeName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
+                             ChartOfAccountsTypeEnglishName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
+                             ChartOfAccountsTypeLocalName = chartOfAccountsType != null ? chartOfAccountsType.LocalName : null,
+                             CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                             CurrencySign = a.IsMultiCurrency == true ? "" : a.Currency != null ? a.Currency.Sign : null,
+                             ControlAccountName = a.ControlAccount != null ? a.ControlAccount.EnglishName : null,
+                             ControlAccountId = a.ControlAccountId,
+                             ControlAccountNumber = a.ControlAccount != null ? a.ControlAccount.DisplayNumber : null,
+                             ChartOfAccountsName = chartOfAccount != null ? chartOfAccount.LocalName : null,
+                             ChartOfAccountsEnglishName = chartOfAccount != null ? chartOfAccount.EnglishName : null,
+                             ChartOfAccountsLocalName = chartOfAccount != null ? chartOfAccount.LocalName : null,
+                             CardsDataId = a.CardsDataId,
+                             PostponedChequesCommission = a.PostponedChequesCommission,
+                             ActiveStatusName = a.Inactive == false ? active : inactive,
+                             AutomaticReconcileId = a.AutomaticReconcileId,
+                             AutomaticReconcileName = a.AutomaticReconcile != null ?
+                         !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
+                         !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
+                         a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField3.EnglishName
+                         : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
+                         : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
+                         : null,
+                             AutomaticReconcileLocalName = a.AutomaticReconcile != null ?
+                         !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
+                         !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
+                         a.AutomaticReconcile.AutomaticReconcileField1.LocalName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField3.LocalName
+                         : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
+                         : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
+                         : null,
+                             PreviousEnglishName = a.PreviousEnglishName,
+                             PreviousEnglishNameChangeDate = a.PreviousEnglishNameChangeDate,
+                             PreviousLocalName = a.PreviousLocalName,
+                             PreviousLocalNameChangeDate = a.PreviousLocalNameChangeDate,
+                             PreviousNumber = a.PreviousNumber,
+                             PreviousNumberChangeDate = a.PreviousNumberChangeDate,
+                             PreviousChartOfAccountsId = a.PreviousChartOfAccountsId,
+                             PreviousChartOfAccountsChangeDate = a.PreviousChartOfAccountsChangeDate,
+                             CustomerGLAccountId = a.CustomerGLAccountId,
+                             RevaluationEnabled = a.RevaluationEnabled,
+                             ParentAccountId = a.ParentAccountId,
+                             IsVATExempt = a.IsVATExempt,
+                             NextDueDate = MoreDatas.NextDueDate,
+                             DeductionFileNumber = a.DeductionFileNumber,
 
-                                                   // Created & Updated
-                                                   CreateDate = a.CreateDate,
-                                                   CreatedByLocalName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
-                                                   CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
-                                                   UpdateDate = a.UpdateDate,
-                                                   UpdatedByLocalName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
-                                                   UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.EnglishName : null,
-                                                   ExcludeFromDeductionReport = a.ExcludeFromDeductionReport,
-                                                   AllowEditChequePayToName = a.AllowEditChequePayToName,
-
-                                                   ConsolidationVat = a.ConsolidationVat,
-                                                   IsEquipmentVendor = a.IsEquipmentVendor,
-                                                   //CustomerGLAccountName = a.CustomerGLAccount.LocalName !=null? a.CustomerGLAccount.LocalName : a.CustomerGLAccount.EnglishName,
-                                                   //CustomerGLAccountNumber = a.CustomerGLAccount.DisplayNumber,
-                                                   //ParentAccountName = a.ParentAccount.LocalName != null ? a.ParentAccount.LocalName : a.CustomerGLAccount.EnglishName,
-                                                   //ParentAccountNumber = a.ParentAccount.DisplayNumber,
-
-                                                   // GLaccount Aging Datas
-                                                   //Period0 = AgingDatas.Period0,
-                                                   //Period1 = AgingDatas.Period1,
-                                                   //Period2 = AgingDatas.Period2,
-                                                   //Period3 = AgingDatas.Period3,
-                                                   //Period4 = AgingDatas.Period4,
-                                                   //Period5 = AgingDatas.Period5,
-                                                   //PeriodPast = AgingDatas.PeriodPast,
-                                                   //PeriodFuture = AgingDatas.PeriodFuture,
-                                                   TotalOpenTransactions = AgingDatas.TotalOpenTransactions,
-
-                                                   FirstPeriodsMonths = fullAccountingSettings.FirstPeriodsMonths,
-                                                   SecondPeriodsMonths = fullAccountingSettings.SecondPeriodsMonths,
-                                                   ThirdPeriodsMonths = fullAccountingSettings.ThirdsPeriodsMonths,
-
-                                                   //CalculatedAgingPeriod1 = (fullAccountingSettings.FirstPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                   //                         + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                   //                         + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                   //                         + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                   //                         + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                   //                         + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                   //                         + (fullAccountingSettings.FirstPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0)
-                                                   //                         ,
-
-                                                   //CalculatedAgingPeriod2 = (fullAccountingSettings.SecondPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                   //                         + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                   //                         + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                   //                         + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                   //                         + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                   //                         + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                   //                         + (fullAccountingSettings.SecondPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0)
-                                                   //                         ,
-
-
-                                                   //CalculatedAgingPeriod3 = (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                   //                         + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                   //                         + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                   //                         + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                   //                         + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                   //                         + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                   //                         + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0)
-                                                   //                         ,
-
-
-                                                   // GLAccount Recocile Datas
-                                                   LastReconciledBy = RecocileDatas == null ? null : RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
-                                                   LastReconcileDate = RecocileDatas == null ? null : RecocileDatas.LastReconcileDateTime,
-
-                                                   // GLAccount Cards Datas
-                                                   CreditLimit = CardsDatas != null ? CardsDatas.CreditLimit : null,
-                                                   VatNumber = CardsDatas != null ? CardsDatas.VatNumber : null,
-                                                   PaymentTerm = CardsDatas != null ? CardsDatas.PaymentTerm.LocalName == null ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName : null,
-                                                   TotalOpenShipments = CardsDatas != null ? CardsDatas.TotalOpenShipments : null,
-                                                   Phone = CardsDatas != null ? CardsDatas.Phone : null,
-                                                   Salesman = CardsDatas != null ? CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
-                                                   Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
-                                                   CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
-
-                                                   // GLAccount Follow Up Datas
-                                                   FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
-                                                   FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null,
-                                                   InsuredCreditLimit = CardsDatas != null ? CardsDatas.InsuredcreditLimit : null,
-                                                   ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel,
-
-                                                   IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
-                                                   Access = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))),
-                                                   //Access = glaccount.Access,
+                             Category1Name = a.Category1.EnglishName,
+                             Category2Name = a.Category2.EnglishName,
+                             Category3Name = a.Category3.EnglishName,
+                             Category4Name = a.Category4.EnglishName,
+                             Category5Name = a.Category5.EnglishName,
+                             Category1LocalName = a.Category1.LocalName,
+                             Category2LocalName = a.Category2.LocalName,
+                             Category3LocalName = a.Category3.LocalName,
+                             Category4LocalName = a.Category4.LocalName,
+                             Category5LocalName = a.Category5.LocalName,
 
 
-                                                   Period0 = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period0 : 0,//GetPeriodValue("0", glaccount, loggedUser.SecurityLevel),
-                                                   Period1 = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period1 : 0,
-                                                   Period2 = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period2 : 0,
-                                                   Period3 = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period3 : 0,
-                                                   Period4 = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period4 : 0,
-                                                   Period5 = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period5 : 0,
-                                                   PeriodFuture = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.PeriodFuture : 0,//GetPeriodValue("Future", glaccount, loggedUser.SecurityLevel),
-                                                   PeriodPast = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.PeriodPast : 0,//GetPeriodValue("Past", glaccount, loggedUser.SecurityLevel),
+                             ActiveForInterest = a.ActiveForInterest,
+                             ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
+                             MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
+                             InterestCalculationStartDate = a.InterestCalculationStartDate,
 
-                                                   BalanceInForeignCurrency = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.BalanceInForeignCurrency : 0,
-                                                   BalanceInLocalCurrency = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.BalanceInLocalCurrency : 0,
-                                                   ForeignBalanceInDue = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.ForeignBalanceInDue : 0,
-                                                   LocalBalanceInDue = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.LocalBalanceInDue : 0,
-                                                   CalculatedAgingPeriod1 = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
-                                                            (fullAccountingSettings.FirstPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                                            + (fullAccountingSettings.FirstPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
-                                                   CalculatedAgingPeriod2 = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
-                                                            (fullAccountingSettings.SecondPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                                            + (fullAccountingSettings.SecondPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
-                                                   CalculatedAgingPeriod3 = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
-                                                            (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                                            + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
-                                                   TotalOpenChequesInLocalCur = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotalOpenChequesInLocalCur : 0,
-                                                   TotFutureOpenChequesInLocalCur = (!fullAccountingSettings.IsSecurityLevelActivated
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
 
-                                                   Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
+                             // Created & Updated
+                             CreateDate = a.CreateDate,
+                             CreatedByLocalName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
+                             CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                             UpdateDate = a.UpdateDate,
+                             UpdatedByLocalName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
+                             UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.EnglishName : null,
+                             ExcludeFromDeductionReport = a.ExcludeFromDeductionReport,
+                             AllowEditChequePayToName = a.AllowEditChequePayToName,
 
-                                                  CreditUsed = (CardsDatas.CreditLimit ?? 0)  
-                                                  - (double)(MoreDatas.BalanceInLocalCurrency ) 
-                                                  - (double)(MoreDatas.TotFutureOpenChequesInLocalCur ??0) 
-                                                  - (double)(CardsDatas.TotalOpenShipments ?? 0),
+                             ConsolidationVat = a.ConsolidationVat,
+                             IsEquipmentVendor = a.IsEquipmentVendor,
 
-                                                   InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
-                                                   ( (CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100 ),
+                             TotalOpenTransactions = AgingDatas.TotalOpenTransactions,
+
+                             FirstPeriodsMonths = fullAccountingSettings.FirstPeriodsMonths,
+                             SecondPeriodsMonths = fullAccountingSettings.SecondPeriodsMonths,
+                             ThirdPeriodsMonths = fullAccountingSettings.ThirdsPeriodsMonths,
+
+
+                             LastReconciledBy = RecocileDatas == null ? null : RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
+                             LastReconcileDate = RecocileDatas == null ? null : RecocileDatas.LastReconcileDateTime,
+
+                             // GLAccount Cards Datas
+                             CreditLimit = CardsDatas != null ? CardsDatas.CreditLimit : null,
+                             VatNumber = CardsDatas != null ? CardsDatas.VatNumber : null,
+                             PaymentTerm = CardsDatas != null ? CardsDatas.PaymentTerm.LocalName == null ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName : null,
+                             TotalOpenShipments = CardsDatas != null ? CardsDatas.TotalOpenShipments : null,
+                             Phone = CardsDatas != null ? CardsDatas.Phone : null,
+                             Salesman = CardsDatas != null ? CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
+                             Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
+                             CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
+
+                             // GLAccount Follow Up Datas
+                             FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
+                             FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null,
+                             InsuredCreditLimit = CardsDatas != null ? CardsDatas.InsuredcreditLimit : null,
+                             ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel,
+
+                             IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
+                             Access = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))),
+                             //Access = glaccount.Access,
+
+
+                             Period0 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period0 : 0,//GetPeriodValue("0", glaccount, loggedUser.SecurityLevel),
+                             Period1 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period1 : 0,
+                             Period2 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period2 : 0,
+                             Period3 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period3 : 0,
+                             Period4 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period4 : 0,
+                             Period5 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period5 : 0,
+                             PeriodFuture = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.PeriodFuture : 0,//GetPeriodValue("Future", glaccount, loggedUser.SecurityLevel),
+                             PeriodPast = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.PeriodPast : 0,//GetPeriodValue("Past", glaccount, loggedUser.SecurityLevel),
+
+                             BalanceInForeignCurrency = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.BalanceInForeignCurrency : 0,
+                             BalanceInLocalCurrency = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.BalanceInLocalCurrency : 0,
+                             ForeignBalanceInDue = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.ForeignBalanceInDue : 0,
+                             LocalBalanceInDue = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.LocalBalanceInDue : 0,
+                             CalculatedAgingPeriod1 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
+                                      (fullAccountingSettings.FirstPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
+                             CalculatedAgingPeriod2 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
+                                      (fullAccountingSettings.SecondPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
+                             CalculatedAgingPeriod3 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
+                                      (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
+                             TotalOpenChequesInLocalCur = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotalOpenChequesInLocalCur : 0,
+                             TotFutureOpenChequesInLocalCur = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
+
+                             Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
+
+                             CreditUsed = (decimal)(CardsDatas.CreditLimit ?? 0)
+                            - (MoreDatas.BalanceInLocalCurrency)
+                            -(MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
+                            -(CardsDatas.TotalOpenShipments ?? 0),
+
+                             InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
+                             ((CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100),
 
 
 
-                                               }); ;
+                         }); ;
+            }
+            else
+            {
+                query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
+                                             //  join ledgerTransactions in context.LedgerTransactions on a.Id equals ledgerTransactions.AccountId
 
-            /*
-                                                query = query.ToList().Select(a =>
-                                                {
-                                                    a.CreditUsed = (decimal)(a.CreditLimit ?? 0)
-                                                                   - (a.BalanceInLocalCurrency ?? 0)
-                                                                   - (a.TotFutureOpenChequesInLocalCur ?? 0)
-                                                                   -( a.TotalOpenShipments ?? 0);
-                                                    return a;
-                                                }).AsQueryable();*/
+                         where a.Tenant == loggedUser.Tenant
+                         join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
+                         join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
+
+                         join AgingDatas in context.GLAccountAgingDatas on a.Id equals AgingDatas.AccountId
+                         join RecocileDatas in context.GLAccountRecocileDatas on a.Id equals RecocileDatas.AccountId
+                         into RecocileDatasjoin
+                         from RecocileDatas in RecocileDatasjoin.DefaultIfEmpty()
 
 
-            return query;
+                         join CardsDatas in context.GLAccountCardsDatas on a.CardsDataId equals CardsDatas.Id
+
+                         into CardsDatasjoin
+                         from CardsDatas in CardsDatasjoin.DefaultIfEmpty()
+
+                         join FollowUpDatas in context.GLAccountFollowUpDatas on a.Id equals FollowUpDatas.GlAccountId
+                         into FollowUpDatasjoin
+                         join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
+
+                         from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
+
+                         select new GLAccountList()
+                         {
+                             Id = a.Id,
+                             Tenant = a.Tenant,
+                             InternalNumber = a.InternalNumber,
+                             InterestCreditLimit = a.InterestCreditLimit,
+                             InterestOpenBalance = a.InterestOpenBalance,
+                             AccountTypeCode = a.AccountTypeCode,
+                             DisplayNumber = a.DisplayNumber,
+                             EnglishName = a.EnglishName,
+                             LocalName = a.LocalName,
+                             SearchFields = a.SearchFields,
+                             IsMultiCurrency = a.IsMultiCurrency,
+                             CurrencyId = a.CurrencyId,
+                             RevenueExpenseType = a.RevenueExpenseType,
+                             IsControlAccount = a.IsControlAccount,
+                             ChartOfAccountsId = a.ChartOfAccountsId,
+                             Inactive = a.Inactive,
+                             ReconcileMethodCode = a.ReconcileMethodCode,
+                             ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                             AccountTypeName = a.GLAccountType != null ? a.GLAccountType.EnglishName : null,
+                             RevenueExpenseName = a.RevenueExpense != null ? a.RevenueExpense.EnglishName : null,
+                             ReconcileMethodName = a.ReconcileMethod != null ? a.ReconcileMethod.EnglishName : null,
+                             ReconcileMethodLocalName = a.ReconcileMethod != null ? a.ReconcileMethod.LocalName : null,
+                             CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
+                             ChartOfAccountsTypeName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
+                             ChartOfAccountsTypeEnglishName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
+                             ChartOfAccountsTypeLocalName = chartOfAccountsType != null ? chartOfAccountsType.LocalName : null,
+                             CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                             CurrencySign = a.IsMultiCurrency == true ? "" : a.Currency != null ? a.Currency.Sign : null,
+                             ControlAccountName = a.ControlAccount != null ? a.ControlAccount.EnglishName : null,
+                             ControlAccountId = a.ControlAccountId,
+                             ControlAccountNumber = a.ControlAccount != null ? a.ControlAccount.DisplayNumber : null,
+                             ChartOfAccountsName = chartOfAccount != null ? chartOfAccount.LocalName : null,
+                             ChartOfAccountsEnglishName = chartOfAccount != null ? chartOfAccount.EnglishName : null,
+                             ChartOfAccountsLocalName = chartOfAccount != null ? chartOfAccount.LocalName : null,
+                             CardsDataId = a.CardsDataId,
+                             PostponedChequesCommission = a.PostponedChequesCommission,
+                             ActiveStatusName = a.Inactive == false ? active : inactive,
+                             AutomaticReconcileId = a.AutomaticReconcileId,
+                             AutomaticReconcileName = a.AutomaticReconcile != null ?
+                         !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
+                         !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
+                         a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField3.EnglishName
+                         : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
+                         : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
+                         : null,
+                             AutomaticReconcileLocalName = a.AutomaticReconcile != null ?
+                         !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
+                         !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
+                         a.AutomaticReconcile.AutomaticReconcileField1.LocalName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField3.LocalName
+                         : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
+                         + "+" + a.AutomaticReconcile.AutomaticReconcileField2.LocalName
+                         : a.AutomaticReconcile.AutomaticReconcileField1.LocalName
+                         : null,
+                             PreviousEnglishName = a.PreviousEnglishName,
+                             PreviousEnglishNameChangeDate = a.PreviousEnglishNameChangeDate,
+                             PreviousLocalName = a.PreviousLocalName,
+                             PreviousLocalNameChangeDate = a.PreviousLocalNameChangeDate,
+                             PreviousNumber = a.PreviousNumber,
+                             PreviousNumberChangeDate = a.PreviousNumberChangeDate,
+                             PreviousChartOfAccountsId = a.PreviousChartOfAccountsId,
+                             PreviousChartOfAccountsChangeDate = a.PreviousChartOfAccountsChangeDate,
+                             CustomerGLAccountId = a.CustomerGLAccountId,
+                             RevaluationEnabled = a.RevaluationEnabled,
+                             ParentAccountId = a.ParentAccountId,
+                             IsVATExempt = a.IsVATExempt,
+                             NextDueDate = MoreDatas.NextDueDate,
+                             DeductionFileNumber = a.DeductionFileNumber,
+
+                             Category1Name = a.Category1.EnglishName,
+                             Category2Name = a.Category2.EnglishName,
+                             Category3Name = a.Category3.EnglishName,
+                             Category4Name = a.Category4.EnglishName,
+                             Category5Name = a.Category5.EnglishName,
+                             Category1LocalName = a.Category1.LocalName,
+                             Category2LocalName = a.Category2.LocalName,
+                             Category3LocalName = a.Category3.LocalName,
+                             Category4LocalName = a.Category4.LocalName,
+                             Category5LocalName = a.Category5.LocalName,
+
+
+                             ActiveForInterest = a.ActiveForInterest,
+                             ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
+                             MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
+                             InterestCalculationStartDate = a.InterestCalculationStartDate,
+
+
+                             // Created & Updated
+                             CreateDate = a.CreateDate,
+                             CreatedByLocalName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
+                             CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                             UpdateDate = a.UpdateDate,
+                             UpdatedByLocalName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
+                             UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.EnglishName : null,
+                             ExcludeFromDeductionReport = a.ExcludeFromDeductionReport,
+                             AllowEditChequePayToName = a.AllowEditChequePayToName,
+
+                             ConsolidationVat = a.ConsolidationVat,
+                             IsEquipmentVendor = a.IsEquipmentVendor,
+
+                             TotalOpenTransactions = AgingDatas.TotalOpenTransactions,
+
+                             FirstPeriodsMonths = fullAccountingSettings.FirstPeriodsMonths,
+                             SecondPeriodsMonths = fullAccountingSettings.SecondPeriodsMonths,
+                             ThirdPeriodsMonths = fullAccountingSettings.ThirdsPeriodsMonths,
+
+
+                             LastReconciledBy = RecocileDatas == null ? null : RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
+                             LastReconcileDate = RecocileDatas == null ? null : RecocileDatas.LastReconcileDateTime,
+
+                             // GLAccount Cards Datas
+                             CreditLimit = CardsDatas != null ? CardsDatas.CreditLimit : null,
+                             VatNumber = CardsDatas != null ? CardsDatas.VatNumber : null,
+                             PaymentTerm = CardsDatas != null ? CardsDatas.PaymentTerm.LocalName == null ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName : null,
+                             TotalOpenShipments = CardsDatas != null ? CardsDatas.TotalOpenShipments : null,
+                             Phone = CardsDatas != null ? CardsDatas.Phone : null,
+                             Salesman = CardsDatas != null ? CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
+                             Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
+                             CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
+
+                             // GLAccount Follow Up Datas
+                             FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
+                             FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null,
+                             InsuredCreditLimit = CardsDatas != null ? CardsDatas.InsuredcreditLimit : null,
+                             ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel,
+
+                             IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
+                             Access = !fullAccountingSettings.IsSecurityLevelActivated,
+
+                             Period0 = AgingDatas.Period0,
+                             Period1 = AgingDatas.Period1,
+                             Period2 = AgingDatas.Period2,
+                             Period3 = AgingDatas.Period3,
+                             Period4 = AgingDatas.Period4,
+                             Period5 = AgingDatas.Period5,
+                             PeriodFuture = AgingDatas.PeriodFuture,//GetPeriodValue("Future", glaccount, loggedUser.SecurityLevel),
+                             PeriodPast = AgingDatas.PeriodPast,//GetPeriodValue("Past", glaccount, loggedUser.SecurityLevel),
+                             BalanceInForeignCurrency = MoreDatas.BalanceInForeignCurrency,
+                             BalanceInLocalCurrency = MoreDatas.BalanceInLocalCurrency,
+                             ForeignBalanceInDue = MoreDatas.ForeignBalanceInDue,
+                             LocalBalanceInDue = MoreDatas.LocalBalanceInDue,
+                             CalculatedAgingPeriod1 =
+                                      (fullAccountingSettings.FirstPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0),
+                             CalculatedAgingPeriod2 =
+                                      (fullAccountingSettings.SecondPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0),
+                             CalculatedAgingPeriod3 =
+                                      (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0),
+                             TotalOpenChequesInLocalCur = MoreDatas.TotalOpenChequesInLocalCur,
+                             TotFutureOpenChequesInLocalCur = MoreDatas.TotFutureOpenChequesInLocalCur,
+                             Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
+
+                             CreditUsed = (decimal)(CardsDatas.CreditLimit ?? 0)
+                            - (MoreDatas.BalanceInLocalCurrency)
+                            - (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
+                            - (CardsDatas.TotalOpenShipments ?? 0),
+
+                             InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
+                             ((CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100),
+
+                         });
+            }
+
+                return query;
         }
         public List<GLAccountList> GetListShort(QueryOperations queryOperations, int tenant)
         {
