@@ -8134,7 +8134,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="100"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     MultiLine="false"
@@ -8150,6 +8150,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;ARPayment&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -8162,7 +8163,7 @@
     DefaultText="&quot;Bill To&quot;"
     FullLocalDefaultText="&quot;לקוח&quot;"
     ListFieldLable="&quot;BillToLocalNameListLable&quot;"
-    ListLableDefaultText="&quot;Bill To&quot;"
+    ListLableDefaultText="&quot;Bill To Local Name&quot;"
     ListLocalDefaultText="&quot;לקוח&quot;"
     IsNullable="true"
     IsForeignKey="false"
@@ -9860,51 +9861,56 @@
       <QueryColumn
         QueryCode="&quot;All Payments&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;BillToName&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Payments&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;RegisterDate&quot;"
+        ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Payments&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;PaymentCurrencyCode&quot;"
+        ObjectFieldName="&quot;RegisterDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Payments&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;CreateDate&quot;"
+        ObjectFieldName="&quot;PaymentCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Payments&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Payments&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;StatusName&quot;"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Payments&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;PaymentMethodName&quot;"
+        ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Payments&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;AmountInPaymentCurrency&quot;"
+        ObjectFieldName="&quot;PaymentMethodName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Payments&quot;"
         IndexOrder="9"
-        ObjectFieldName="&quot;OpenAmount&quot;"
+        ObjectFieldName="&quot;AmountInPaymentCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Payments&quot;"
         IndexOrder="10"
+        ObjectFieldName="&quot;OpenAmount&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Payments&quot;"
+        IndexOrder="11"
         ObjectFieldName="&quot;InternalNotes&quot;"
         ColumnWidth="130" />
     </QueryColumns>
