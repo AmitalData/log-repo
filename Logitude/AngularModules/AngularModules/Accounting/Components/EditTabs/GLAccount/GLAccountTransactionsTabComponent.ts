@@ -85,7 +85,6 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
-        debugger
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.UsingLogGridV2 = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0]? true : false;
         this._entityListService = new EntityListService();
