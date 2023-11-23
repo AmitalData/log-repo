@@ -161,6 +161,17 @@ namespace Logitude.Accounting.Data.Repositories
 
         }
 
+        public IQueryable<GLAccount> GetGlaAccountByJouranlIdAndJournalLineNumber(int tenant, string JournalId, int JournalLineNumber)
+        {
+            var query = from g in context.GLAccounts
+                        join l in context.LedgerTransactions on g.Id equals l.AccountId
+                        join j in context.JournalLines on new { JournalId = l.JournalId, LineNumber = l.JournalLineNumber } equals new { JournalId = j.JournalId, LineNumber = j.Line }
+                        where l.Tenant == tenant && l.JournalId == JournalId && l.JournalLineNumber == JournalLineNumber
+                        select g;
+
+            return query.Distinct();
+        }
+
         public List<GLAccount> GetChildAccountsByChartOfAccountIdList(List<String> chartOfAccountIdList, int tenant)
         {
             return GetQChildAccountsByChartOfAccountIdList(chartOfAccountIdList, tenant).ToList();

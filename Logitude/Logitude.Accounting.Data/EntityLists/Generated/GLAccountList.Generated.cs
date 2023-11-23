@@ -35,6 +35,8 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string CurrencyId  { get; set; }
        [DataMember]
+       public string PaymentTerms { get; set; }
+       [DataMember]
        public string RevenueExpenseType  { get; set; }
        [DataMember]
        public bool? IsControlAccount  { get; set; }

@@ -8,6 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -35,6 +42,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 throw new ApplicationException("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
             }
+
+            
             base.OnCreating(entityPM, entityParentPM);
         }
 
@@ -53,5 +62,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             base.OnUpdating(entityPM);
         }
+
     }
 }
