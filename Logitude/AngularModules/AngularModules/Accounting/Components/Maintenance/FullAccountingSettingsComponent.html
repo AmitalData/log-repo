@@ -396,6 +396,24 @@
                                                         </td>
                                                     </tr>
 
+                                                    <!-- OppositeAccountNumber -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'OppositeAccountNumber'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <CheckBox
+                                                                [IsChecked]="OppositeAccountNumber"
+                                                                (Checked)="OppositeAccountNumber = $event">
+                                                            </CheckBox>
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
                                                     <!-- IsSecurityLevelActivated -->
                                                     <tr class="FormFieldRow">
                                                         <td>
