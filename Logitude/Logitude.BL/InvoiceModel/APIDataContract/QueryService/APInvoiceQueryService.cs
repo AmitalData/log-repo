@@ -394,7 +394,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                 else
                 {
-                    throw new ApplicationException("No Shipment Found");
+                    TenantQuery tenantQuery = new TenantQuery(tenant);
+                    TenantPM tPM = tenantQuery.GetSinglePM(tenant);
+                    if (!(tPM != null && tPM.AccountingActivated)) 
+                    {
+                        throw new ApplicationException("No Shipment Found");
+                    }
                 }
             }
         }
