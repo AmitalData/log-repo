@@ -294,9 +294,9 @@ export class FullAccountingSettingPM {
     public set TaxInstitutionGLAccountId(newValue: string) { if (this.taxInstitutionGLAccountId != newValue) { this.taxInstitutionGLAccountId = newValue; this.MarkAsDirty("TaxInstitutionGLAccountId"); } }
        
 	 
-    private hSM: string;
+    private hSM: number;
     public get HSM() { return this.hSM; }
-    public set HSM(newValue: string) { if (this.hSM != newValue) { this.hSM = newValue; this.MarkAsDirty("HSM"); } }
+    public set HSM(newValue: number) { if (this.hSM != newValue) { this.hSM = newValue; this.MarkAsDirty("HSM"); } }
        
 	 
     private hSMtoken: string;

@@ -1262,12 +1262,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string hSM ;
+	  private int? hSM ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string HSM  
+       public int? HSM  
 	   {
 	    
 	     get
@@ -1278,7 +1278,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(hSM != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSM",OldValue=hSM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSM",OldValue=hSM,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   hSM=value;
 		   }

@@ -263,8 +263,7 @@
   </Column>
   <Column
     Name="HSM"
-    Type="varchar"
-    Size="-1">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>

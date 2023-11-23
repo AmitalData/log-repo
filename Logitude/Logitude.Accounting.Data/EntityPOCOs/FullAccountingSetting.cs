@@ -151,7 +151,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	      
         public virtual GLAccount TaxInstitutionGLAccount { get; set; }
         [Column("HSM")]
-	    public string HSM { get; set; }
+	    public int? HSM { get; set; }
         [Column("HSMtoken")]
 	    public string HSMtoken { get; set; }
         [Column("HSMaddress")]
