@@ -13707,7 +13707,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="15"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     Operator="&quot;Equals&quot;"
