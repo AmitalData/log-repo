@@ -85,6 +85,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
+        debugger
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.UsingLogGridV2 = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0]? true : false;
         this._entityListService = new EntityListService();
@@ -107,6 +108,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         //Set Currency LOV editability
         if (this.EntityPM.IsMultiCurrency) {
             this.UIProperties.SetEnabled("CurrencyId", "GLAccount", true);
+            if(this.EntityPM?.GLAccountCurrencies.length > 0)
+                this.splittedByCurrencyCheckBox = true;
         } else {
             this.UIProperties.SetEnabled("CurrencyId", "GLAccount", false);
         }
@@ -131,7 +134,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.GetTransactionsCurrencies();
         this.GetFullAccountingSettings();
         if(this.isFullAccounting)
-        this.SetGLAccountsFromDateInLocalStorage();
+        this.SetGLAccountsFromDateInLocalStorage();            
 
     }
     SetGLAccountsFromDateInLocalStorage(){
@@ -411,6 +414,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     private attachedGLAccountCheckBox: boolean = false;
     get AttachedGLAccountCheckBox() { return this.attachedGLAccountCheckBox; }
     set AttachedGLAccountCheckBox(value: boolean) {
+        debugger
         if (this.attachedGLAccountCheckBox != value) {
             this.attachedGLAccountCheckBox = value;
             this.RefreshButtonClicked();
