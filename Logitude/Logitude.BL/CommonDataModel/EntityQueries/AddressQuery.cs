@@ -147,7 +147,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             return (from a in repository.context.Addresses.Include("Country").Include("State")
                     where a.Tenant == tenant
-                    && a.CardId == cardId && a.AddressTypeId == "M"
+                    && a.CardId == cardId && (a.AddressTypeId == "B" || a.AddressTypeId == "M" || a.AddressTypeId == "O")
                     select new AddressPM()
                     {
                         Address1 = a.Address1,
