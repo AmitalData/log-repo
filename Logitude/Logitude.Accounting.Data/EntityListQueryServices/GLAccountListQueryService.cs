@@ -26,6 +26,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
         public IQueryable<GLAccountList> GetIqueryableList(IQueryable<GLAccount> iQueryable, User loggedUser)
         {
+         
+
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
@@ -223,31 +225,31 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.LocalBalanceInDue : 0,
                              CalculatedAgingPeriod1 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
-                                      (fullAccountingSettings.FirstPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
+                                      (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period0") != -1 ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period1") != -1 ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period2") != -1 ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period3") != -1 ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period4") != -1 ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period5") != -1 ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("PeriodPast") != -1 ? AgingDatas.PeriodPast : 0) : 0,
                              CalculatedAgingPeriod2 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
-                                      (fullAccountingSettings.SecondPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
+                                      (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period0") != -1 ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period1") != -1 ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period2") != -1 ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period3") != -1 ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period4") != -1 ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period5") != -1 ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("PeriodPast") != -1 ? AgingDatas.PeriodPast : 0) : 0,
                              CalculatedAgingPeriod3 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
-                                      (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
+                                      (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period0")!=-1  ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period1") !=-1 ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period2")!=-1 ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period3")!=-1?  AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period4") !=-1? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period5")!=-1 ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("PeriodPast") !=-1? AgingDatas.PeriodPast : 0) : 0,
                              TotalOpenChequesInLocalCur = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotalOpenChequesInLocalCur : 0,
                              TotFutureOpenChequesInLocalCur = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
@@ -441,34 +443,35 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              ForeignBalanceInDue = MoreDatas.ForeignBalanceInDue,
                              LocalBalanceInDue = MoreDatas.LocalBalanceInDue,
                              CalculatedAgingPeriod1 =
-                                      (fullAccountingSettings.FirstPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                      + (fullAccountingSettings.FirstPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0),
+                                      (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period0") != -1 ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period1") != -1 ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period2") != -1 ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period3") != -1 ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period4") != -1 ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period5") != -1 ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("PeriodPast") != -1 ? AgingDatas.PeriodPast : 0),
                              CalculatedAgingPeriod2 =
-                                      (fullAccountingSettings.SecondPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                      + (fullAccountingSettings.SecondPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0),
+                                      (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period0") != -1 ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period1") != -1 ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period2") != -1 ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period3") != -1 ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period4") != -1 ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period5") != -1 ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("PeriodPast") != -1 ? AgingDatas.PeriodPast : 0),
                              CalculatedAgingPeriod3 =
-                                      (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period4") ? AgingDatas.Period4 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period5") ? AgingDatas.Period5 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0),
+                                      (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period0") != -1 ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period1") != -1 ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period2") != -1 ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period3") != -1 ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period4") != -1 ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period5") != -1 ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("PeriodPast") != -1 ? AgingDatas.PeriodPast : 0),
                              TotalOpenChequesInLocalCur = MoreDatas.TotalOpenChequesInLocalCur,
                              TotFutureOpenChequesInLocalCur = MoreDatas.TotFutureOpenChequesInLocalCur,
                              Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
+                           
 
-                             CreditUsed = (decimal)(CardsDatas.CreditLimit ?? 0)
+                             CreditUsed =( (((decimal)((int)(CardsDatas.CreditLimit??0 * 10000))) / 10000) )
                             - (MoreDatas.BalanceInLocalCurrency)
                             - (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
                             - (CardsDatas.TotalOpenShipments ?? 0),
