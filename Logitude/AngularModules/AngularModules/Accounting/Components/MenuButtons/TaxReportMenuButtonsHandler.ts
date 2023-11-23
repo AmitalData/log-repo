@@ -76,6 +76,14 @@ export class TaxReportMenuButtonsHandler {
                             button.IsDisabled = this.EntityPM.StatusCode != TaxReportStatus.TransmittedAndClosingJournal;
                             break;
                         }
+                        case "RecalculateReport":{
+                            if(this.EntityPM.CanRecalculate){
+                                button.IsDisabled = false;
+                            }
+                            else{
+                                button.IsDisabled = true;
+                            }
+                        }
                     }
 
                     this.SetMenuButtonEnabilityAccordingToCancelationProgress(button);
@@ -204,6 +212,9 @@ export class TaxReportMenuButtonsHandler {
                     this.CancelClosingJournal();
                     break;
                 }
+                case "RecalculateReport":{
+                    this.ConfirmRecalculatingReport();
+                }
 
         }
 
@@ -228,6 +239,21 @@ export class TaxReportMenuButtonsHandler {
                 });
             }
         });
+    }
+
+    ConfirmRecalculatingReport() {
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate('InterestReport.O.Approve');
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate('InterestReport.O.Cancel');
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.RecalculateData=true;
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+            }
+        });
+        confirmWindow.Show(TextCodeTranslator.Translate('TaxReport.O.ConfirmRecalculateReport'));
     }
 
     private StartBusyIndicator(message: string) {

@@ -224,6 +224,16 @@ export class TaxReportPM {
     public set ClosingJournalId(newValue: string) { if (this.closingJournalId != newValue) { this.closingJournalId = newValue; this.MarkAsDirty("ClosingJournalId"); } }
        
 	 
+    private recalculateData: boolean;
+    public get RecalculateData() { return this.recalculateData; }
+    public set RecalculateData(newValue: boolean) { if (this.recalculateData != newValue) { this.recalculateData = newValue; this.MarkAsDirty("RecalculateData"); } }
+       
+	 
+    private canRecalculate: boolean;
+    public get CanRecalculate() { return this.canRecalculate; }
+    public set CanRecalculate(newValue: boolean) { if (this.canRecalculate != newValue) { this.canRecalculate = newValue; this.MarkAsDirty("CanRecalculate"); } }
+       
+	 
 
     public OldEntityPM: TaxReportPM;
 		
