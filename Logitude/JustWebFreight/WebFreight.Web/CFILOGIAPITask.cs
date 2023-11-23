@@ -74,8 +74,8 @@ namespace WebFreight.Web
 <DAT name=""NAME_ENG"" xml:space='preserve'>select ClassificationCode, TradeAgreemenCode, OriginCountryCode, InvoiceQuantityType</DAT>
 <DAT name=""REFERENCE"">CENFMAIN.Lp_UpdateCars</DAT>
 <DAT name=""PARAMETERS"">ClassificationCode=True&uSEP;TradeAgreemenCode=True&uSEP;OriginCountryCode=True&uSEP;InvoiceQuantityType=True</DAT>
-<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select ClassificationCode, TradeAgreemenCode, OriginCountryCode, InvoiceQuantityType from SupplierInvoiceItems where Tenant='P1' and  DeclarationId='P2' and CounterKey='P3' and LineNumber='P4'</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select ClassificationCode, TradeAgreemenCode, OriginCountryCode, InvoiceQuantityType from SupplierInvoiceItems where Tenant=@Tenant and  DeclarationId=@DeclarationId and CounterKey=@CounterKey and LineNumber=@LineNumber</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select ClassificationCode, TradeAgreemenCode, OriginCountryCode, InvoiceQuantityType from Customs.SupplierInvoiceItems where Tenant='P1' and  DeclarationId='P2' and CounterKey='P3' and LineNumber='P4'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select ClassificationCode, TradeAgreemenCode, OriginCountryCode, InvoiceQuantityType from Customs.SupplierInvoiceItems where Tenant=@Tenant and  DeclarationId=@DeclarationId and CounterKey=@CounterKey and LineNumber=@LineNumber</DAT>
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
 <OCC>
