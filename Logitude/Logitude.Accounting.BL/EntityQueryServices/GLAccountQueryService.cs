@@ -102,13 +102,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 select a.Id);
             return q;
         }
-        //public IQueryable<GLAccount> GetGlaAccountByJouranlIdAndJournalLineNumber(int tenant, string JournalId, int JournalLineNumber)
-        //{
-        //    var q = (
-        //        from a in this.repository.GetGlaAccountByJouranlIdAndJournalLineNumber(tenant, JournalId, JournalLineNumber)
-        //        select a);
-        //    return q;
-        //}
+        
         public GLAccountPM GetGlaAccountByJouranlIdAndJournalLineNumber(int tenant, string JournalId, int JournalLineNumber)
         {
             var glAccountPM = (
