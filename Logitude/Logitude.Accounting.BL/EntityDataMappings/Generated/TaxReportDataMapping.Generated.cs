@@ -98,7 +98,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InputsTaxAmountRound, 
 	         ReconciliationsNumbers, 
 	         ClosingJournalNumber, 
-	         ClosingJournalId,
+	         ClosingJournalId, 
+	         RecalculateData, 
+	         CanRecalculate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
