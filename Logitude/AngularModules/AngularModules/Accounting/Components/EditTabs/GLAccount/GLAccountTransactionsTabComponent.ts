@@ -413,7 +413,6 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     private attachedGLAccountCheckBox: boolean = false;
     get AttachedGLAccountCheckBox() { return this.attachedGLAccountCheckBox; }
     set AttachedGLAccountCheckBox(value: boolean) {
-        debugger
         if (this.attachedGLAccountCheckBox != value) {
             this.attachedGLAccountCheckBox = value;
             this.RefreshButtonClicked();
