@@ -10,6 +10,11 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -39,7 +44,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             // check payment terms and add days to due date if needed.
-            ProcessGLAccountPaymentTerms(entityPM);
+            ProcessGLAccountPaymentTerms(entityPM, entityParentPM);
 
             base.OnCreating(entityPM, entityParentPM);
         }
@@ -60,13 +65,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.OnUpdating(entityPM);
         }
 
-        private void ProcessGLAccountPaymentTerms(JournalLinePM entityPM)
+        private void ProcessGLAccountPaymentTerms(JournalLinePM entityPM,JournalPM entityParentPM)
         {
-            JournalQueryService journalQueryService = new JournalQueryService((MainContext as IAccountingContext));
-            JournalPM journal = journalQueryService.GetSingle(entityPM.JournalId, false, false);
+            
+            JournalPM journal = entityParentPM;
 
-            LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService((MainContext as IAccountingContext));
-            LedgerTransactionPM ledgerTransaction = ledgerTransactionQueryService.GetLedgerTransactionPMByJournalId(entityPM.JournalId, entityPM.Tenant);
 
             GLAccountQueryService glAccountQueryService = new GLAccountQueryService((MainContext as IAccountingContext));
             GLAccountPM glAccount = glAccountQueryService.GetGlaAccountByJouranlIdAndJournalLineNumber(entityPM.Tenant, entityPM.JournalId, entityPM.Line);
@@ -79,13 +82,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (journal.ExternalSystem == "UNIFREIGHT" && journal.AccountingEntityCode == "1" && entityPM.ActionCode == "1")
             {
-                if(glAccount.PaymentTerms != null)
-                {
-                    if (int.TryParse(glAccount.PaymentTerms, out int paymentTermDays))
-                    {
-                        entityPM.DueDate = ledgerTransaction.DocumentDate.AddDays(paymentTermDays);
-                    }
-                }
+                UpdateDueDate(glAccount, entityPM);
             }
 
 
@@ -96,14 +93,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             // Journallines.actioncode = 1 > והתנועה היא מתוך שורת פקודת יומן בזכות
 
 
-            if (glAccount.ChartOfAccountsTypeCode == "4" && journal.AccountingEntityCode == "4" && entityPM.ActionCode == "1" )
+            if (glAccount != null && glAccount.ChartOfAccountsTypeCode == "4" && journal.AccountingEntityCode == "4" && entityPM.ActionCode == "1" )
             {
-                if (glAccount.PaymentTerms != null)
+                UpdateDueDate(glAccount, entityPM);
+            }
+        }
+
+
+        private void UpdateDueDate(GLAccountPM glAccount, JournalLinePM entityPM)
+        {
+            if (glAccount.PaymentTerms != null)
+            {
+                PaymentTermRepository paymentTermQueryService = new PaymentTermRepository((MainContext as ICommonDataContext));
+                int paymentTermDays = paymentTermQueryService.GetSinglePaymentTerm(glAccount.PaymentTerms).Days;
+                if(paymentTermDays != 0)
                 {
-                    if (int.TryParse(glAccount.PaymentTerms, out int paymentTermDays))
-                    {
-                        entityPM.DueDate = ledgerTransaction.DocumentDate.AddDays(paymentTermDays);
-                    }
+                    LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService((MainContext as IAccountingContext));
+                    LedgerTransactionPM ledgerTransaction = ledgerTransactionQueryService.GetLedgerTransactionPMByJournalId(entityPM.JournalId, entityPM.Tenant);
+                    entityPM.DueDate = ledgerTransaction.DocumentDate.AddDays(paymentTermDays);
                 }
             }
         }
