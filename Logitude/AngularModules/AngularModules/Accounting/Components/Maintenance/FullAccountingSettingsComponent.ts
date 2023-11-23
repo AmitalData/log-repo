@@ -203,6 +203,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         SessionLocator.TenantPM.AccountingActivated = this.AccountingActivated;
 
     }
+
     public activateSecurityLevel: boolean = false;
     public enableAllFields: boolean = false;
     SetUIProperties() {
@@ -232,6 +233,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         var UsingSecurityLevelFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAL")[0];
         if (UsingSecurityLevelFeatureToggle) this.activateSecurityLevel = true;
         this.UIProperties.SetEnabled("IsSecurityLevelActivated", this.ObjectTableName, (this.enableAllFields && this.activateSecurityLevel));
+        this.UIProperties.SetEnabled("OppositeAccountNumber", this.ObjectTableName, this.enableAllFields);
 
     }
 
@@ -555,6 +557,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     set IsSecurityLevelActivated(value: boolean) {
         if (this.EntityPM.IsSecurityLevelActivated != value) {
             this.EntityPM.IsSecurityLevelActivated = value;
+            this.SetUIProperties();
+        }
+    }
+    get OppositeAccountNumber() { return this.EntityPM.OppositeAccountNumber; }
+    set OppositeAccountNumber(value: boolean) {
+        if (this.EntityPM.OppositeAccountNumber != value) {
+            this.EntityPM.OppositeAccountNumber = value;
             this.SetUIProperties();
         }
     }
