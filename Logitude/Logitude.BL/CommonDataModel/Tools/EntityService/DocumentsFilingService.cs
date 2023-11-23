@@ -489,6 +489,25 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 			    		LogitudeSettings.HandleLogMe("Error in ICreateUD2LTService JustDoIt: " + ex.Message, true, "CreateUD2LTService.Error", DateTime.Now);
 			    	}
 			    }
+			}).ContinueWith(task1 =>
+			{
+				ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
+
+				// Start a transaction
+				using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
+				{
+					try
+					{
+						myISendBondedCustomDocumentService.JustDoIt(extDocPM);
+						// Commit the transaction if everything is successful
+						transactionScope.Complete();
+					}
+					catch (Exception ex)
+					{
+						// Handle the exception or log it
+						LogitudeSettings.HandleLogMe("Error in ISendBondedCustomDocumentService JustDoIt: " + ex.Message, true, "ISendBondedCustomDocumentService.Error", DateTime.Now);
+					}
+				}
 			});
 
 		}
@@ -506,26 +525,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     this.HaveENDOC_DocumentsFilingMetaDataValues = true;
                 }
             }
-			Task.Run(() =>
-			{
-			    ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
-                
-			    // Start a transaction
-			    using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
-			    {
-			    	try
-			    	{
-			    		myISendBondedCustomDocumentService.JustDoIt(extDocPM);
-			    		// Commit the transaction if everything is successful
-			    		transactionScope.Complete();
-			    	}
-			    	catch (Exception ex)
-			    	{
-			    		// Handle the exception or log it
-			    		LogitudeSettings.HandleLogMe("Error in ISendBondedCustomDocumentService JustDoIt: " + ex.Message, true, "ISendBondedCustomDocumentService.Error", DateTime.Now);
-			    	}
-			    }
-			});
+			
 
 		}
 
