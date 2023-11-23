@@ -68,7 +68,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
             GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(entityPOCO.Tenant);
-            var accountMoreData = gLAccountMoreDataQueryService.GetSingle(entityPOCO.AccountId, false, true);
+            var accountMoreData = gLAccountMoreDataQueryService.GetSingle(entityPOCO.AccountId, false, false);
             if (accountMoreData != null)
             {
                 //entityPM.TotalAmount = accountMoreData.BalanceInForeignCurrency;
