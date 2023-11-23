@@ -3413,12 +3413,14 @@
         DefaultText="&quot;Create closing journal&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="4"
+        LocalDefaultText="&quot;יצירת פקודת סגירה&quot;"
         IsPackagable="false" />
       <MenuItem
         EventCode="&quot;TRCCJ&quot;"
         DefaultText="&quot;Cancel Closing Journal&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="5"
+        LocalDefaultText="&quot;ביטול פקודת סגירה&quot;"
         IsPackagable="false" />
     </MenuButton>
     <MenuButton
