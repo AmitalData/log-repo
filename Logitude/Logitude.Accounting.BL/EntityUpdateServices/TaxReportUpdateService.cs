@@ -430,7 +430,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             entityPM.StatusCode = "P";
             entityPM.RecalculateData = true;
-            TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
+            TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant, entityPM.RecalculateData);
         }
         
        

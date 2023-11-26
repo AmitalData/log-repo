@@ -19,6 +19,7 @@ using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
@@ -1228,10 +1229,10 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        public static BatchTaskExecutionPM CreateTaxReportFileInBatch(string taxReportId, int tenant)
+        public static BatchTaskExecutionPM CreateTaxReportFileInBatch(string taxReportId, int tenant,bool RecalculateData=false)
         {
            
-            PNCFileArgs args = new PNCFileArgs() { ReportId = taxReportId, Tenant = tenant };
+            PNCFileArgs args = new PNCFileArgs() { ReportId = taxReportId, Tenant = tenant, RecalculateData = RecalculateData };
             var stringwriter = new System.IO.StringWriter();
             var serializer = new XmlSerializer(typeof(PNCFileArgs));
             serializer.Serialize(stringwriter, args);
@@ -1278,6 +1279,8 @@ namespace Logitude.Accounting.BL.CoreBL
         public string ReportId { get; set; }
         public int Tenant { get; set; }
         public bool TestingMode { get; set; }
+        public bool RecalculateData { get; set; }
+
     }
     public struct TaxReportLineType
     {
