@@ -4427,6 +4427,19 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                     this.entityPM.OriginCountryCode = clientItemPM?.OriginCountryCode;
                                     this.entityPM.OriginCountryName = clientItemPM?.OriginCountryName;
                                 }
+                                if(!AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode))
+                                {
+                                    this.Parent.quantityTypeMessageService.GetQuantityType(this.entityPM.ClassificationCode, this.Parent.declarationPM.Direction === 'E').subscribe((myServiceResponse: ServiceResponse) => {
+                                        if (!myServiceResponse.HasError && myServiceResponse.Result != null) {
+                                            this.entityPM.InvoiceQuantityType = myServiceResponse.Result;
+                                            this.QunatityTypeCode = "(" + myServiceResponse.Result + ")";
+                                           
+                                        }
+                    
+                    
+                    
+                                    });
+                                }
 
 
                             }
