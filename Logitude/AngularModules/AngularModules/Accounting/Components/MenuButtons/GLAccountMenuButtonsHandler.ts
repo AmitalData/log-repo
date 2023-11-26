@@ -216,13 +216,14 @@ export class GLAccountMenuButtonsHandler {
         myGLAccountListService.getSingle(this.EntityPM.Id)
             .subscribe((response: ServiceResponse) => {
                 var gLAccount: GLAccountList = response.Result as GLAccountList;
-
-                if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) {
+                
+                if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) 
                     this.SetReactivateAccount(inactive);
-                } else {
-                    if (!inactive) {
-                        this.SetReactivateAccount(inactive);
-                    }
+                
+                else if (!inactive) 
+                    this.SetReactivateAccount(inactive);
+                
+                else {
                     this.entityArgs.EditComponent.ValidationErrorsList = [];
                     this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
                 }
