@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ChargesTypeUpdateClass
    {  		
-		public const string HashString = "a53c91f25496015d36552aa1d296b1c4";
+		public const string HashString = "0076a67469e34646d852c4bf7e69abb8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -103,6 +103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  true,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -1746,6 +1747,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VatTypeId",
 					  						DefaultText =  "VAT Type",
+					  						FullLocalDefaultText =  "סוג מע\"מ",
+					  						ListFieldLable =  "VatTypeIdListLable",
+					  						ListLableDefaultText =  "VAT Type",
+					  						ListLocalDefaultText =  "סוג מע\"מ",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "VatType",
 					  						NavigationPropertyName =  "VatType",
@@ -1814,6 +1819,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChargesGroupCode",
 					  						DefaultText =  "Group Code",
+					  						FullLocalDefaultText =  "קוד קבוצה",
+					  						ListFieldLable =  "ChargesGroupCodeListLable",
+					  						ListLableDefaultText =  "Group Code",
+					  						ListLocalDefaultText =  "קוד קבוצה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3078,10 +3087,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VatTypeName",
 					  						DefaultText =  "Vat Type",
-					  						FullLocalDefaultText =  "VatTypeName",
+					  						FullLocalDefaultText =  "סוג מע\"מ",
 					  						ListFieldLable =  "VatTypeNameListLable",
 					  						ListLableDefaultText =  "Vat Type",
-					  						ListLocalDefaultText =  "Vat Type",
+					  						ListLocalDefaultText =  "סוג מע\"מ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
