@@ -263,14 +263,15 @@
   </Column>
   <Column
     Name="HSM"
-    Type="int">
+    Type="varchar"
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="HSMtoken"
     Type="varchar"
-    Size="36">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

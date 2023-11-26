@@ -37,8 +37,18 @@ using WebFreight.Web.Security;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using System.IdentityModel.Metadata;
+using Logitude.BL.DataContracts;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using DocumentsFiling = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentsFiling;
+using Logitude.AmitalMessaging.Infrastructure.Transmission;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Accounting.Def.EntityPMs;
+using System.Linq.Dynamic.Core;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -286,6 +296,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 {
                     DocumentHelper documentHelper = new DocumentHelper();
                     documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant, null, createDocumentOutArgs.DocumentTypeTemplateId);
+                  if (createDocumentOutArgs.SignHSM)
+                    {
+                        IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+                        FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(createDocumentOutArgs.Tenant);
+
+                        if(accountingSettings.AccountingActivated && !string.IsNullOrEmpty(accountingSettings.HSM) &&! string.IsNullOrEmpty(accountingSettings.HSMaddress )&& !string.IsNullOrEmpty(accountingSettings.HSMtoken))
+
+                        this.CheckDetailsToHSM(documentOutPM.Id,createDocumentOutArgs.Tenant, accountingSettings);
+                        
+                    }
+              
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
@@ -295,8 +316,64 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public void CheckDetailsToHSM(string documentOutId,int tenant, FullAccountingSettingPM accountingSettings)
+        {
+            DocumentHelper documentHelper = new DocumentHelper();
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+            ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
 
 
+            var documentsFiling = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault();
+            ARInvoice invocie = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
+
+            if (invocie != null)
+            {
+                string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie.BillToId, tenant);
+                if (!string.IsNullOrEmpty(contactEmail))
+                {
+                    this.CreatePdfDoc(documentsFiling, invocie);
+                    documentHelper.StartSignPDFInvoice(invocie, invocie.Tenant, repository, contactEmail,  accountingSettings);
+                }
+
+            }
+
+        }
+        private void CreatePdfDoc(DocumentsFiling documentsFiling, ARInvoice invocie)
+        {
+
+            ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(invocie.Tenant);
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(invocie.Tenant);
+            DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentsFiling.DocumentTypeId, documentsFiling.Id, invocie.Tenant);
+
+            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(invocie.Tenant);
+            var objectTable = objectTableRepository.GetObjectTableByName("ARInvoice", invocie.Tenant, true);
+
+            documentTypePM.DocumentTypeCopies.ForEach(doc =>
+            {
+                exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, invocie.Id, objectTable.Id, null, null, documentsFiling.Id, invocie.Tenant, doc.Id, resolveLoggingUserId);
+            });
+
+        }
+
+        private string IsSignatureHtmlPresentByBillToId(string Billto,int tenant)
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+
+            if (string.IsNullOrEmpty(Billto)) return "";
+            var EmailForSendingSingArinvoice = (from customer in objectContext.Customers
+                                                where customer.Id == Billto
+                                                // join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
+                                                select customer.EmailForSendingSingArinvoice).FirstOrDefault();
+            string email = "";
+            if (!string.IsNullOrEmpty(EmailForSendingSingArinvoice))
+            {
+                  email = objectContext.Contacts.Where(contact => contact.Id == EmailForSendingSingArinvoice ).FirstOrDefault().Email;
+                if(!string.IsNullOrEmpty(email))
+                   return email;
+            }
+            return email;
+        }
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];

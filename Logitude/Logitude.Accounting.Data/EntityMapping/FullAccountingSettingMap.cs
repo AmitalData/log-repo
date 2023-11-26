@@ -97,9 +97,9 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.TaxInstitutionGLAccountId).HasColumnName("TaxInstitutionGLAccountId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.HSM).HasColumnName("HSM");
+            this.Property(t => t.HSM).HasColumnName("HSM").IsMaxLength().IsUnicode(false);
 
-            this.Property(t => t.HSMtoken).HasColumnName("HSMtoken").HasMaxLength(36).IsUnicode(false);
+            this.Property(t => t.HSMtoken).HasColumnName("HSMtoken").HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.HSMaddress).HasColumnName("HSMaddress").HasMaxLength(50).IsUnicode(false);
 

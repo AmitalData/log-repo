@@ -601,22 +601,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     // Signed 
 
     get HSM(){return this.EntityPM.HSM;}
-    set HSM(hsm:number){
+    set HSM(hsm:string){
+        var validateHsmResult=this.ValidateHsm(hsm);
+        this.UIProperties.SetValidity("HSM", this.ObjectTableName, validateHsmResult.valid, validateHsmResult.errorMsg);
 
-        if(hsm != null) {
-        if (hsm.toString().length != 3) {
-            this.UIProperties.SetValidity("HSM", this.ObjectTableName, false, "HSM must be 3 digits");
-           
-        } else {
-            this.UIProperties.SetValidity("HSM", this.ObjectTableName, true, "");
-        }
-    }
         if(this.EntityPM.HSM != hsm) {
-            
             this.EntityPM.HSM = hsm;
-          
         }
-      
     }
 
 
@@ -680,6 +671,20 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    ValidateHsm(hsm){
+        var res={
+            valid:true,
+            errorMsg:''
+        };
+        if(hsm != null) {
+            if (hsm.length >15) {
+                res.valid=false;
+                res.errorMsg="HSM maximum size can be 15 digits";
+            }
+        }
+        return res;
+    }
+
 
     ValidateSigned() {
        
@@ -689,12 +694,12 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, true, "");
         this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, true, "");
 
-        if(this.HSM != null) {
-            if (this.HSM.toString().length != 3) {
-                this.ValidationErrorsList.push("HSM must be 3 digits");
-                this.UIProperties.SetValidity("HSM", this.ObjectTableName, false, "HSM must be 3 digits");
-            }
+        var validateHsmResult=this.ValidateHsm(this.HSM);
+        if (!validateHsmResult.valid) {
+            this.ValidationErrorsList.push(validateHsmResult.errorMsg);
         }
+        this.UIProperties.SetValidity("HSM", this.ObjectTableName, validateHsmResult.valid, validateHsmResult.errorMsg);
+        
         
 
         if(this.HSMtoken != null ){

@@ -66,6 +66,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                              .Include("SATInvoiceStatus")
                                              .Include("SATTransferStatus")
                                              .Include("Branch")
+                                             .Include("ARInvoicesSignedStatus")
                                              .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
 
             if (entityPOCO != null)
@@ -1535,7 +1536,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             string[] invoiceStatusCodes = { "DR", "LL" };
 
-            var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
+            var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch").Include("ARInvoicesSignedStatus")
                          select new ARInvoiceList()
                          {
                              IsClosed = entity.IsClosed,
@@ -1680,7 +1681,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              DocumentTemplateId = entity.DocumentTemplateId,
                              TotalAmountNotForTaxReport =
                                  (entity.SubTotalInLocalCurrency ?? 0)
-                                 - (double)(entity.TotalAmountForTaxReport ?? 0)
+                                 - (double)(entity.TotalAmountForTaxReport ?? 0),
+                             IsSigned= entity.IsSigned,
+                             IsSignedName=entity.ARInvoicesSignedStatus.LocalName,
                          };
 
             return result;
@@ -1980,6 +1983,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               SATCancelReasonCode = a.SATCancelReasonCode,
                                               TotalEquation = a.TotalEquation,
                                               DocumentTemplateId = a.DocumentTemplateId,
+                                              IsSigned=a.IsSigned,
                                           }).ToList();
             return invoices;
         }
@@ -2123,6 +2127,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     TransferStatusCode_Original = entityPOCO.TransferStatusCode,
                     IsTransferStarted_Original = entityPOCO.IsTransferStarted,
                     TransferError_Original = entityPOCO.TransferError,
+                    IsSigned=entityPOCO.IsSigned,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;

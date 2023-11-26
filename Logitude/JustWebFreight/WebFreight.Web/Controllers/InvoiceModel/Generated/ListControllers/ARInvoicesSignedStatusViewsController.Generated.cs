@@ -5,44 +5,53 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Logitude.BL.Helpers;
-using Logitude.BL.InvoiceModel.CustomFilters;
-using Logitude.BL.InvoiceModel.EntityLists;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.TreeFilterQuery;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using WebFreight.Web.Security;
+using WebFreight.Web.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
-using System.Web;
 using System.Web.Http;
+using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
-using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
 using WebFreight.Web.DataContracts;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
-
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Logitude.Server.Tools.TreeFilterQuery;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Simplog.Data.InvoiceModel;
+using Logitude.BL.InvoiceModel;
+using Logitude.BL.InvoiceModel.EntityLists;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Simplog.Data.InvoiceModel.Repositories;
 namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
-{
+{ 
 
-
-    public partial class ARInvoiceViewsController : ApiController
+    
+    public partial class ARInvoicesSignedStatusViewsController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string code)
         {
 		  try
             {
@@ -50,31 +59,23 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("ARInvoice", "READ", authToken.Tenant);
 				
 		    	IInvoiceContext MyContext = InvoiceContext.GetContext(authToken.Tenant);
-				ARInvoiceRepository  aRInvoiceRepository = new ARInvoiceRepository(MyContext);
-				ARInvoiceList entityList = null;
-				ARInvoice entityPoco = aRInvoiceRepository.GetSingleARInvoice(id , authToken.Tenant);
-
-				if (entityPoco != null)
+				ARInvoicesSignedStatusRepository  aRInvoicesSignedStatusRepository = new ARInvoicesSignedStatusRepository(MyContext);
+				ARInvoicesSignedStatusList entityList = null;
+				ARInvoicesSignedStatus entityPoco = aRInvoicesSignedStatusRepository.GetSingleARInvoicesSignedStatus(code );
+                
+                if (entityPoco != null)
 				{
-									List<ARInvoice> singleEntityList = new List<ARInvoice>();
+									List<ARInvoicesSignedStatus> singleEntityList = new List<ARInvoicesSignedStatus>();
 					singleEntityList.Add(entityPoco);
 
-					ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
-					IQueryable<ARInvoice> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<ARInvoiceList> iQueryableEntityList = aRInvoiceQuery.GetIQueryableEntityList(iQueryable);
+					ARInvoicesSignedStatusQuery aRInvoicesSignedStatusQuery = new ARInvoicesSignedStatusQuery(aRInvoicesSignedStatusRepository);
+					IQueryable<ARInvoicesSignedStatus> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<ARInvoicesSignedStatusList> iQueryableEntityList = aRInvoicesSignedStatusQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
-				if (entityList != null)
-				{
-                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                	customFieldResolver.SetCustomFieldsValues("ARInvoice",  authToken.Tenant, new List<ARInvoiceList> { entityList }.Cast<object>().ToList());
- 	
-					entityList = ARInvoiceAPiHelper.ApplyFilters(entityList, authToken.Tenant);
-				}
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
@@ -95,20 +96,17 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("ARInvoice", "READ", authToken.Tenant);
 
 
 				IInvoiceContext MyContext = InvoiceContext.GetContext(authToken.Tenant);
-				ARInvoiceRepository  aRInvoiceRepository = new ARInvoiceRepository(MyContext);
-				IQueryable<ARInvoice> entityPocos = aRInvoiceRepository.GetARInvoices(authToken.Tenant);
+				ARInvoicesSignedStatusRepository  aRInvoicesSignedStatusRepository = new ARInvoicesSignedStatusRepository(MyContext);
+				IQueryable<ARInvoicesSignedStatus> entityPocos = aRInvoicesSignedStatusRepository.GetARInvoicesSignedStatuses();
 
-				ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
-			    IQueryable<ARInvoiceList> entityLists = aRInvoiceQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderByDescending(d => d.CreateDate);
-				List<ARInvoiceList> listResult = entityLists.ToList();
+				ARInvoicesSignedStatusQuery aRInvoicesSignedStatusQuery = new ARInvoicesSignedStatusQuery(aRInvoicesSignedStatusRepository);
+			    IQueryable<ARInvoicesSignedStatusList> entityLists = aRInvoicesSignedStatusQuery.GetIQueryableEntityList(entityPocos);
+				entityLists = entityLists.OrderBy(d => d.Code);
+				List<ARInvoicesSignedStatusList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                customFieldResolver.SetCustomFieldsValues("ARInvoice", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -128,22 +126,20 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				                
-				SecurityUtility.CheckContactFeature("ARInvoice", "READ", authToken.Tenant);
-	
+				
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "ARInvoice",
+                    ObjectTableName = "ARInvoicesSignedStatus",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "ARInvoices",
+                    QuerySection = "ARInvoicesSignedStatuses",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
-				List<ObjectField> ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice",tenant);
-               List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+				List<ObjectField> ARInvoicesSignedStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoicesSignedStatus",tenant);
+                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
                     object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
@@ -165,7 +161,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = ARInvoiceObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = ARInvoicesSignedStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -192,7 +188,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = ARInvoiceObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = ARInvoicesSignedStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -214,14 +210,13 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 }
 
 
-                ARInvoiceAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
                 
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "ARInvoice",
+                     ObjectTableName = "ARInvoicesSignedStatus",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,
@@ -230,41 +225,31 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
-              
+                ARInvoicesSignedStatusRepository  aRInvoicesSignedStatusRepository = new ARInvoicesSignedStatusRepository(MyContext);
+                IQueryable<ARInvoicesSignedStatus> entityPocos = aRInvoicesSignedStatusRepository.GetARInvoicesSignedStatuses();
 
-                if (FeatureToggleHelper.HasFeatureToggle("SCD", tenant))
-                {
-                  MyContext = InvoiceContext.GetSecContext(tenant);
-                }
-                ARInvoiceRepository  aRInvoiceRepository = new ARInvoiceRepository(MyContext);
-                IQueryable<ARInvoice> entityPocos = aRInvoiceRepository.GetARInvoices(tenant);
-
-                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
+                ARInvoicesSignedStatusQuery aRInvoicesSignedStatusQuery = new ARInvoicesSignedStatusQuery(aRInvoicesSignedStatusRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
-				                
-				ARInvoiceCustomFilter customfilters = new ARInvoiceCustomFilter(tenant);
-                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-	            entityPocos = ARInvoiceAPiHelper.ApplyFilters(entityPocos, tenant);
-
-                entityPocos = genericFilter.GetFilteredQuery<ARInvoice>(nonListQueryOperation, entityPocos);
+				
+                entityPocos = genericFilter.GetFilteredQuery<ARInvoicesSignedStatus>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<ARInvoiceList> entityLists = aRInvoiceQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<ARInvoicesSignedStatusList> entityLists = aRInvoicesSignedStatusQuery.GetIQueryableEntityList(entityPocos);
 
-                entityLists = genericFilter.GetFilteredQuery<ARInvoiceList>(listQueryOperation, entityLists);
-                entityLists = new TreeFilterQueryService().Apply<ARInvoiceList>(entityLists , treeFilterQueryArgs);
+                entityLists = genericFilter.GetFilteredQuery<ARInvoicesSignedStatusList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<ARInvoicesSignedStatusList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
-                   PropertyInfo propInfo = typeof(ARInvoiceList).GetProperty(queryOperations.SortByColumnName);
+                   PropertyInfo propInfo = typeof(ARInvoicesSignedStatusList).GetProperty(queryOperations.SortByColumnName);
                    
 
-                   ObjectField objectField = (from a in ARInvoiceObjectFields
+                   ObjectField objectField = (from a in ARInvoicesSignedStatusObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -272,7 +257,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                    {
                     if (objectField.IsCustom)
                     {
-                        entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
+                        entityLists = sortClass.GetSorterQuery<ARInvoicesSignedStatusList, string>(queryOperations, entityLists);
                     }
                     else
                     {
@@ -282,41 +267,41 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                         case "text":
 						case "lookup":
                             {
-                                entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ARInvoicesSignedStatusList, string>(queryOperations, entityLists);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                entityLists = sortClass.GetSorterQuery<ARInvoiceList, double>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ARInvoicesSignedStatusList, double>(queryOperations, entityLists);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                entityLists = sortClass.GetSorterQuery<ARInvoiceList, DateTime>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ARInvoicesSignedStatusList, DateTime>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                entityLists = sortClass.GetSorterQuery<ARInvoiceList, int>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ARInvoicesSignedStatusList, int>(queryOperations, entityLists);
                                 break;
                             }
                         case "boolean":
                             {
-                                entityLists = sortClass.GetSorterQuery<ARInvoiceList, bool>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ARInvoicesSignedStatusList, bool>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                entityLists = sortClass.GetSorterQuery<ARInvoiceList, decimal>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ARInvoicesSignedStatusList, decimal>(queryOperations, entityLists);
                                 break;
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderByDescending(d => d.CreateDate);
+                                entityLists = entityLists.OrderBy(d => d.Code);
                                 break;
                             }
                     }
@@ -325,7 +310,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderByDescending(d => d.CreateDate);
+                entityLists = entityLists.OrderBy(d => d.Code);
             } 
 
 			ServiceResponse response = new ServiceResponse();
@@ -341,9 +326,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
-			   List<ARInvoiceList> listResult = entityLists.ToList();
-               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-               customFieldResolver.SetCustomFieldsValues("ARInvoice", authToken.Tenant, listResult.Cast<object>().ToList());
+			   List<ARInvoicesSignedStatusList> listResult = entityLists.ToList();
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
