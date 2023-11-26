@@ -298,7 +298,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
                         FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(createDocumentOutArgs.Tenant);
 
-                        if(accountingSettings.AccountingActivated)
+                        if(accountingSettings.AccountingActivated && !string.IsNullOrEmpty(accountingSettings.HSM) &&! string.IsNullOrEmpty(accountingSettings.HSMaddress )&& !string.IsNullOrEmpty(accountingSettings.HSMtoken))
 
                         this.CheckDetailsToHSM(documentOutPM.Id,createDocumentOutArgs.Tenant, accountingSettings);
                         
