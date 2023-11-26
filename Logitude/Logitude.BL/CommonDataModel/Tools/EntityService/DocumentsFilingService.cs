@@ -468,9 +468,30 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
         }
 
-        private  void TryBuildUD2LT(DocumentsFilingPM extDocPM)
+        private  void MyTryBuildUD2LT(DocumentsFilingPM extDocPM)
         {
-			Task.Run(async () =>
+			Task.Run(() =>
+			{
+				ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
+
+			    // Start a transaction
+			    using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
+			    {
+			    	try
+			    	{
+						LogitudeSettings.HandleLogMe("TOOK 1: ", true, "123", DateTime.Now);
+						myICreateUD2LTService.JustDoIt(extDocPM);
+						LogitudeSettings.HandleLogMe("TOOK 2: ", true, "123", DateTime.Now);
+						// Commit the transaction if everything is successful
+						transactionScope.Complete();
+			    	}
+			    	catch (Exception ex)
+			    	{
+			    		// Handle the exception or log it
+			    		LogitudeSettings.HandleLogMe("Error in ICreateUD2LTService JustDoIt: " + ex.Message, true, "CreateUD2LTService.Error", DateTime.Now);
+			    	}
+			    }
+			}).ContinueWith(task1 =>
 			{
 				ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
 
@@ -479,12 +500,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 				{
 					try
 					{
-						LogitudeSettings.HandleLogMe("TOOK 1: ", true, "123", DateTime.Now);
-
+						LogitudeSettings.HandleLogMe("TOOK 3: ", true, "123", DateTime.Now);
 						myISendBondedCustomDocumentService.JustDoIt(extDocPM);
+						LogitudeSettings.HandleLogMe("TOOK 4: ", true, "123", DateTime.Now);
 						// Commit the transaction if everything is successful
-						LogitudeSettings.HandleLogMe("TOOK 2: ", true, "123", DateTime.Now);
-
 						transactionScope.Complete();
 					}
 					catch (Exception ex)
@@ -493,35 +512,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 						LogitudeSettings.HandleLogMe("Error in ISendBondedCustomDocumentService JustDoIt: " + ex.Message, true, "ISendBondedCustomDocumentService.Error", DateTime.Now);
 					}
 				}
-				await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for 1 second
-				LogitudeSettings.HandleLogMe("TOOK 3: " , true, "123", DateTime.Now);
-			}).ContinueWith(async task1 =>
-			{
-				LogitudeSettings.HandleLogMe("TOOK 4: ", true, "123", DateTime.Now);
-
-				ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
-
-				// Start a transaction
-				using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
-				{
-					try
-					{
-						LogitudeSettings.HandleLogMe("TOOK 5: ", true, "123", DateTime.Now);
-						myICreateUD2LTService.JustDoIt(extDocPM);
-						LogitudeSettings.HandleLogMe("TOOK 6: ", true, "123", DateTime.Now);
-						// Commit the transaction if everything is successful
-						transactionScope.Complete();
-					}
-					catch (Exception ex)
-					{
-						// Handle the exception or log it
-						LogitudeSettings.HandleLogMe("Error in ICreateUD2LTService JustDoIt: " + ex.Message, true, "CreateUD2LTService.Error", DateTime.Now);
-					}
-				}
 			});
 
 		}
-        private  void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
+        private  void MyTrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
         {
             DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(extDocPM.Tenant);
             var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", extDocPM.Tenant,true);
@@ -538,9 +532,31 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 			
 
 		}
+		private void TryBuildUD2LT(DocumentsFilingPM extDocPM)
+		{
+			ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
+			myICreateUD2LTService.JustDoIt(extDocPM);
 
-        
-        private void AddDocumentBackupLog()
+		}
+		private void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
+		{
+			DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(extDocPM.Tenant);
+			var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", extDocPM.Tenant, true);
+
+			if (ENDOC != null)
+			{
+				if (extDocPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeCode == "ENDOC")
+					||
+					extDocPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeId == ENDOC.Id))
+				{
+					this.HaveENDOC_DocumentsFilingMetaDataValues = true;
+				}
+			}
+			ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
+			myISendBondedCustomDocumentService.JustDoIt(extDocPM);
+		}
+
+		private void AddDocumentBackupLog()
         {
             var OTName = ObjectTableRepository.GetSingleObjectTable(entityPM.ObjectTableId, tenant, false);
             DocumentFilingBackupSettingQuery documentFilingBackupSettingQuery = new DocumentFilingBackupSettingQuery(tenant);
@@ -1219,10 +1235,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             if (LogitudeSettings.IsCostomsDeploy && extDocPM.IsHybrid)//avoid non stop 
             {
-                TryBuildUD2LT(extDocPM);
-                TrySendBondedCustomDocument(extDocPM);
+				bool IsSendInTask = Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("SDT", extDocPM.Tenant);
+				if (!IsSendInTask) 
+                { 
+                    TryBuildUD2LT(extDocPM);
+                    TrySendBondedCustomDocument(extDocPM);
+				}
+                else
+                {
+					MyTryBuildUD2LT(extDocPM);
+					MyTrySendBondedCustomDocument(extDocPM);
+				}
 
-            }
+			}
            
             if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))
             {
