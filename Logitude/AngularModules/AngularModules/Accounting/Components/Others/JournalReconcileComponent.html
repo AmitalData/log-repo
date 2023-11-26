@@ -120,7 +120,9 @@
                                     [DependencyFilter2Value]="'1'"
                                     [QueryFilterItems]="GLAccountsFilterItems"
                                     (SelectedItemChanged)="GLAccount = $event"
-                                    [SelectedValue]="GLAccountId">
+                                    [SelectedValue]="GLAccountId"
+                                    [StartSearchFromChar]="3"
+                                    [StartSearchFromNumber]="6">
                             </LogLov>
                         </td>
                         <td style="width: 180px;" *ngIf="IsCustomerCare">
@@ -131,7 +133,9 @@
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'GLAccount'"
                                     (SelectedItemChanged)="GLAccount = $event"
-                                    [SelectedValue]="GLAccountId">
+                                    [SelectedValue]="GLAccountId"
+                                    [StartSearchFromChar]="3"
+                                    [StartSearchFromNumber]="6">
                             </LogLov>
                         </td>
                         <td><div></div></td>
