@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "f92bf5123ca98e46fa44eb9ebf4e9ba1";
+		public const string HashString = "68131b064eea06220d90a69179cf5c79";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3052,7 +3052,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              			   Feature TaxReportFeature_MB05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRCCJ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.CancelClosingJournal", NameTextCodeDefaultText = "Cancel Closing Journal", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
                    
     
-			   Feature TaxReportFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REBB", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Rebuild", NameTextCodeDefaultText = "Rebuild", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
+			   Feature TaxReportFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REBB", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Rebuild", NameTextCodeDefaultText = "Rebuild", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
 
  
 
@@ -3179,7 +3179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  TaxReportFeature_MB04.Id,
 						Style = null,
-						LocalDefaultText = "יצירת פקודת סגירה",
+						LocalDefaultText = null,
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  TaxReportFeature_MB04.FeatureUniqeCode,
@@ -3199,7 +3199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  TaxReportFeature_MB05.Id,
 						Style = null,
-						LocalDefaultText = "ביטול פקודת סגירה",
+						LocalDefaultText = null,
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  TaxReportFeature_MB05.FeatureUniqeCode,
