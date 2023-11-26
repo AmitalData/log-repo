@@ -545,7 +545,7 @@ namespace Logitude.Accounting.BL.CoreBL
             groupedTransactionsDictionary.TryGetValue(key, out List<MyLedgerTransaction> pageLineMatchedTransactions);
 
             // get not used transaction matched with page line
-            if (pageLineMatchedTransactions != null && Convert.ToDecimal(key) > 0)
+            if (pageLineMatchedTransactions != null)
                 return pageLineMatchedTransactions
                     .FirstOrDefault(trans =>
                         !matchedLines.Select(d => d.LedgerTransactionId).Contains(trans.Id)
