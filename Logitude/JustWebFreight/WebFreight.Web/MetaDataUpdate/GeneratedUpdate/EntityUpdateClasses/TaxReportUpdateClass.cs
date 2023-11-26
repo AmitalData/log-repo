@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "6ec092cd09b31a9e28f627f9a0541522";
+		public const string HashString = "68131b064eea06220d90a69179cf5c79";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3052,7 +3052,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              			   Feature TaxReportFeature_MB05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRCCJ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.CancelClosingJournal", NameTextCodeDefaultText = "Cancel Closing Journal", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
                    
     
-			   Feature TaxReportFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REBB", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Rebuild", NameTextCodeDefaultText = "Rebuild", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
+			   Feature TaxReportFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REBB", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Rebuild", NameTextCodeDefaultText = "Rebuild", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
 
  
 

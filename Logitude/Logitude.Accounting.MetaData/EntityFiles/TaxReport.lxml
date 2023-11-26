@@ -3427,7 +3427,7 @@
       MenuButtonType="&quot;button&quot;"
       IndexOrder="0"
       LocalDefaultText="&quot;בניה מחדש&quot;"
-      IsPackagable="false" />
+      IsPackagable="true" />
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes>
