@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-
-		public const string HashString = "d0362cd760408ccae1525da4dd234ada";
+		public const string HashString = "9b1558a1442362d6b301cbaa60a3e5ca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14199,6 +14198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsSigned",
 					  						DefaultText =  "Is Signed",
+					  						FullLocalDefaultText =  "קוד סטטוס חתימה",
 					  						ListFieldLable =  "IsSignedListLable",
 					  						ListLableDefaultText =  "Is Signed",
 					  						ListLocalDefaultText =  "קוד סטטוס חתימה",
@@ -14453,6 +14453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsSignedName",
 					  						DefaultText =  "Is Signed Name",
+					  						FullLocalDefaultText =  "סטטוס חתימה",
 					  						ListFieldLable =  "IsSignedNameListLable",
 					  						ListLableDefaultText =  "Is Signed Name",
 					  						ListLocalDefaultText =  "סטטוס חתימה",
