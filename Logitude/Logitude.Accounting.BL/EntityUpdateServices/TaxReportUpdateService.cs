@@ -418,12 +418,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 // entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
                 ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
                 entityPM.UpdatedByUserName = loggedContact.LocalName != null ? loggedContact.LocalName : loggedContact.EnglishName;
-
+                if (entityPM.RecalculateData)
+                {
+                    CreateBatchTaskExecutionForRecalculatingData(entityPM);
+                }
             }
 
             base.OnUpdating(entityPM, entityPOCO);
         }
-
+        private void CreateBatchTaskExecutionForRecalculatingData(TaxReportPM entityPM)
+        {
+            entityPM.StatusCode = "P";
+            entityPM.RecalculateData = true;
+            TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
+        }
+        
+       
         private void CancelTaxReport(TaxReportPM entityPM)
         {
             CheckLaterReports(entityPM);

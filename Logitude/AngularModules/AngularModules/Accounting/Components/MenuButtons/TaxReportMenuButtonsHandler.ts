@@ -76,7 +76,7 @@ export class TaxReportMenuButtonsHandler {
                             button.IsDisabled = this.EntityPM.StatusCode != TaxReportStatus.TransmittedAndClosingJournal;
                             break;
                         }
-                        case "RecalculateReport":{
+                        case "REBB":{ // Rebuild
                             if(this.EntityPM.CanRecalculate){
                                 button.IsDisabled = false;
                             }
@@ -212,7 +212,7 @@ export class TaxReportMenuButtonsHandler {
                     this.CancelClosingJournal();
                     break;
                 }
-                case "RecalculateReport":{
+                case "REBB":{
                     this.ConfirmRecalculatingReport();
                 }
 
