@@ -179,7 +179,6 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-
     }
 
     ngAfterViewInit(): void {
@@ -201,6 +200,11 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
         else {
             return { address: parts[0], phone: parts[1] };
         }
+    }
+
+    IsExport:boolean = false;
+    CheckIsExport() {
+        this.IsExport =  this.cargoTrackingShipmentPM.DirectionId === ShipmentDirections.Export;
     }
 
     private GetIdFromURI() {
@@ -270,6 +274,8 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
 
     private InitializeComponent(result: any) {
         this.cargoTrackingShipmentPM = result;
+        this.CheckIsExport();
+
         this.BuildShipmentReferences();
 
         this.SetCustomsOrForwarderFields();
