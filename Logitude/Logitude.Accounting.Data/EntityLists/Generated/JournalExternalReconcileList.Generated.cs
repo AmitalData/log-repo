@@ -14,6 +14,10 @@ namespace Logitude.Accounting.Data.EntityLists
    {
           [DataMember]
        public string ReconcileExternalPageLineId  { get; set; }
+       [DataMember]
+       public string JournalNumber  { get; set; }
+       [DataMember]
+       public string OriginalJournalId  { get; set; }
    }
 
 }

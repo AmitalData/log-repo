@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalReconcileUpdateClass
    {  		
-		public const string HashString = "0d47216a534b464b1b44c9dbc7608bfa";
+
+		public const string HashString = "861f3a08546644e9a8be63aa9cdad49e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,9 +129,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "פ יומן תנעות להתאמה",
+			      				    LocalDefaultText =  "פ יומן תנעות להתםמה",
 			      				    DefaultText =  "Journal Reconcile With Transactions ID",
 			      				    Code =  "f106",
+
 			      				    Name =  "JournalReconcile Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -522,10 +524,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconciliationAmount",
 					  						DefaultText =  "Reconciliation Amount",
-					  						FullLocalDefaultText =  "סכום מותאם",
+					  						FullLocalDefaultText =  "סכום מותםם",
 					  						ListFieldLable =  "ReconciliationAmountListLable",
 					  						ListLableDefaultText =  "Reconciliation Amount",
-					  						ListLocalDefaultText =  "סכום מותאם",
+					  						ListLocalDefaultText =  "סכום מותםם",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -591,6 +593,132 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IsPartialListLable",
 					  						ListLableDefaultText =  "Partial",
 					  						ListLocalDefaultText =  "חלקי",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "JournalNumber",
+					  						ObjectTableName =  "JournalReconcile",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "JournalNumber",
+					  						ListPropertyPath =  "JournalNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "JournalReconcile",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "JournalNumber",
+					  						DefaultText =  "Journal Number",
+					  						FullLocalDefaultText =  "מספר פקודה",
+					  						ListFieldLable =  "JournalNumberListLable",
+					  						ListLableDefaultText =  "Journal Number",
+					  						ListLocalDefaultText =  "מספר פקודה",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "OriginalJournalId",
+					  						ObjectTableName =  "JournalReconcile",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "OriginalJournalId",
+					  						ListPropertyPath =  "OriginalJournalId",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "JournalReconcile",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "OriginalJournalId",
+					  						DefaultText =  "OriginalJournalId",
+					  						ListFieldLable =  "OriginalJournalIdListLable",
+					  						ListLableDefaultText =  "OriginalJournalId",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -693,13 +821,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable JournalReconcileObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "JournalReconcile" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode JournalReconcileTextCode_JournalReconcileOTotalReconciliationAmountIsZero = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.TotalReconciliationAmountIsZero", DefaultText = "Total ReconciliationAmount is zero",LocalDefaultText = @".לא ניתן לבצע את הפעולה , הסכום להתאמה בתנועה השתנה", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode JournalReconcileTextCode_JournalReconcileOTotalReconciliationAmountIsZero = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.TotalReconciliationAmountIsZero", DefaultText = "Total ReconciliationAmount is zero",LocalDefaultText = @".לם ניתן לבצע םת הפעולה , הסכום להתםמה בתנועה השתנה", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode JournalReconcileTextCode_JournalReconcileOCantReconcileLedgerTransactionsMoreOne = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.CantReconcileLedgerTransactionsMoreOne", DefaultText = "It is not possible to reconcile ledger transactions for more than one currency.",LocalDefaultText = @"לא אופיינה התאמת תנועות ליותר ממטבע אחד", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode JournalReconcileTextCode_JournalReconcileOCantReconcileLedgerTransactionsMoreOne = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.CantReconcileLedgerTransactionsMoreOne", DefaultText = "It is not possible to reconcile ledger transactions for more than one currency.",LocalDefaultText = @"לם םופיינה התםמת תנועות ליותר ממטבע םחד", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode JournalReconcileTextCode_JournalReconcileOCurrencyRateDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.CurrencyRateDoesNotExist", DefaultText = "The currency rate does not exist in the currency rate table",LocalDefaultText = @"שער המטבע לא קיים בטבלת שערי המטבעות", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode JournalReconcileTextCode_JournalReconcileOCurrencyRateDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.CurrencyRateDoesNotExist", DefaultText = "The currency rate does not exist in the currency rate table",LocalDefaultText = @"שער המטבע לם קיים בטבלת שערי המטבעות", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode JournalReconcileTextCode_JournalReconcileOReconcileProgressByAnother = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.ReconcileProgressByAnother", DefaultText = "There are ledger transactions that have been marked in reconcile progress by another user or session, you must refresh, exit the reconciliation screen without saving the rows and re-enter",LocalDefaultText = @"ישנן תנועות שסומנו ונמצאות בתהליך התאמה על ידי משתמש או סשן אחר, יש לבצע רענון לצאת ממסך התאמות ללא שמירת השורות ולהיכנס מחדש", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode JournalReconcileTextCode_JournalReconcileOReconcileProgressByAnother = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.ReconcileProgressByAnother", DefaultText = "There are ledger transactions that have been marked in reconcile progress by another user or session, you must refresh, exit the reconciliation screen without saving the rows and re-enter",LocalDefaultText = @"ישנן תנועות שסומנו ונמצםות בתהליך התםמה על ידי משתמש םו סשן םחר, יש לבצע רענון לצםת ממסך התםמות ללם שמירת השורות ולהיכנס מחדש", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

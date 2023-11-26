@@ -57,6 +57,16 @@ export class JournalExternalReconcilePM {
     public set SkipAccountsValidation(newValue: boolean) { if (this.skipAccountsValidation != newValue) { this.skipAccountsValidation = newValue; this.MarkAsDirty("SkipAccountsValidation"); } }
        
 	 
+    private journalNumber: string;
+    public get JournalNumber() { return this.journalNumber; }
+    public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
+       
+	 
+    private originalJournalId: string;
+    public get OriginalJournalId() { return this.originalJournalId; }
+    public set OriginalJournalId(newValue: string) { if (this.originalJournalId != newValue) { this.originalJournalId = newValue; this.MarkAsDirty("OriginalJournalId"); } }
+       
+	 
 
     public OldEntityPM: JournalExternalReconcilePM;
 	
