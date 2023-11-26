@@ -59,8 +59,11 @@
         vertical-align: MIDDLE;
         padding-left: 23PX;
     }
+    .success {
+        direction:ltr;
+    }
 </style>
-<div class="success">{{SuccessRow}}</div>
+<div *ngIf="ShowSuccessRow" class="success GreenInfo">{{SuccessRow}}</div>
 <div *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
     <table>
         <tr style="height:1px;">
