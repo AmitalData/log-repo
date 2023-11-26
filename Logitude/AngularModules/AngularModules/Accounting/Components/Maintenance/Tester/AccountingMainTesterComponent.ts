@@ -527,7 +527,7 @@ Line3
     UploadExpenses_Click() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 750;
-        logitudeWindow.Title = "Upload Expenses";
+        logitudeWindow.Title = "Upload Deduction details";
         logitudeWindow.Show('./Accounting/Components/Maintenance/UploadExpensesComponent');
     }
 
