@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "a1dbda1db65fdce6fdf4f32f4ccbe31f";
+		public const string HashString = "980b5e13115dc522f63e2dad6f26b06e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1757,6 +1757,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1770,6 +1771,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ARInvoice",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						Code =  "ARInvoiceTypeCode",
@@ -14159,8 +14161,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "IsSigned",
 					  						ObjectTableName =  "ARInvoice",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "ARInvoicesSignedStatus",
+					  						FieldsDataType =  "Boolean",
 					  						MinLength =  1,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
@@ -14202,7 +14203,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ListFieldLable =  "IsSignedListLable",
 					  						ListLableDefaultText =  "Is Signed",
 					  						ListLocalDefaultText =  "קוד סטטוס חתימה",
-					  						IsForeignKey =  true,
+					  						IsForeignKey =  false,
 					  						ForeignEntity =  "ARInvoicesSignedStatus",
 					  						NavigationPropertyName =  "ARInvoicesSignedStatus",
 					  						IsMaxLength =  false,
