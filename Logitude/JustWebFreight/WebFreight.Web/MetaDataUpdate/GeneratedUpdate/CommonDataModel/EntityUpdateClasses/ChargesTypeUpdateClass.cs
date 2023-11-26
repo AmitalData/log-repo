@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ChargesTypeUpdateClass
    {  		
-		public const string HashString = "7076ad8d048581f67617e46fcf27c782";
+		public const string HashString = "0076a67469e34646d852c4bf7e69abb8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1753,10 +1753,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VatTypeId",
 					  						DefaultText =  "VAT Type",
-					  						FullLocalDefaultText =  "סוג מעמ",
+					  						FullLocalDefaultText =  "סוג מע\"מ",
 					  						ListFieldLable =  "VatTypeIdListLable",
 					  						ListLableDefaultText =  "VAT Type",
-					  						ListLocalDefaultText =  "סוג מעמ",
+					  						ListLocalDefaultText =  "סוג מע\"מ",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "VatType",
 					  						NavigationPropertyName =  "VatType",
@@ -3103,10 +3103,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VatTypeName",
 					  						DefaultText =  "Vat Type",
-					  						FullLocalDefaultText =  "VatTypeName",
+					  						FullLocalDefaultText =  "סוג מע\"מ",
 					  						ListFieldLable =  "VatTypeNameListLable",
 					  						ListLableDefaultText =  "Vat Type",
-					  						ListLocalDefaultText =  "Vat Type",
+					  						ListLocalDefaultText =  "סוג מע\"מ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
