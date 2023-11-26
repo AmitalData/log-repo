@@ -894,7 +894,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             shipments = FilterTransportMode(shipmentSearchInput, shipments);
             shipments = FilterDirections(shipmentSearchInput, shipments);
             shipments = FilterShipmentsWhichMoreFilter(shipmentSearchInput, shipments);
-            shipments = FilterShipmentsDate(shipmentSearchInput, shipments);
+            shipments = FilterShipmentsDate(shipmentSearchInput, shipments, context);
 
             return shipments;
         }
@@ -943,13 +943,19 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments;
         }
 
-        private static IQueryable<CargoTrackingShipmentList> FilterShipmentsDate(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+        private static IQueryable<CargoTrackingShipmentList> FilterShipmentsDate(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments, ICargoTrackingContext context)
         {
-            if (shipmentSearchInput.FromDate.HasValue)
-                shipments = shipments.Where(d => d.CreateDate >= shipmentSearchInput.FromDate);
-
-            if (shipmentSearchInput.ToDate.HasValue)
-                shipments = shipments.Where(d => d.CreateDate <= shipmentSearchInput.ToDate);
+            if (shipmentSearchInput.FromDate.HasValue || shipmentSearchInput.ToDate.HasValue)
+                shipments = shipments.Join(context.CargoTrackingShipmentSearches,
+                    shipment => shipment.EntityId,
+                    search => search.ShipmentId,
+                    (shipment, search) =>
+                        new { shipment = shipment, shipmentDate = search.ShipmentDate })
+                    .Where(x => 
+                       (shipmentSearchInput.FromDate.HasValue && x.shipmentDate >= shipmentSearchInput.FromDate) ||
+                       (shipmentSearchInput.ToDate.HasValue && x.shipmentDate <= shipmentSearchInput.ToDate)
+                       )
+                    .Select(x => x.shipment);
 
             return shipments;
         }
