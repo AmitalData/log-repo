@@ -18,6 +18,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Data.CustomFilters;
+using System.Web;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -26,12 +27,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
         public IQueryable<GLAccountList> GetIqueryableList(IQueryable<GLAccount> iQueryable, User loggedUser)
         {
-         
 
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
-            FullAccountingSetting fullAccountingSettings = context.FullAccountingSettings.Where(a => a.Tenant == loggedUser.Tenant).FirstOrDefault();
+            FullAccountingSetting fullAccountingSettings = context.FullAccountingSettings.Where(a => a.Tenant ==tenant).FirstOrDefault();
             IQueryable<GLAccountList> query;
 
             if (fullAccountingSettings.IsSecurityLevelActivated)
@@ -39,7 +42,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                              //  join ledgerTransactions in context.LedgerTransactions on a.Id equals ledgerTransactions.AccountId
 
-                         where a.Tenant == loggedUser.Tenant
+                         where a.Tenant == tenant
                          join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
                          join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
 
@@ -274,7 +277,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                              //  join ledgerTransactions in context.LedgerTransactions on a.Id equals ledgerTransactions.AccountId
 
-                         where a.Tenant == loggedUser.Tenant
+                         where a.Tenant == tenant
                          join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
                          join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
 
