@@ -586,7 +586,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set IsSigned(value: string) {
         if (this.EntityPM.IsSigned != value) {
             this.EntityPM.IsSigned = value;
-            this.ComputeRelativeRateDate();
         }
     }
 
