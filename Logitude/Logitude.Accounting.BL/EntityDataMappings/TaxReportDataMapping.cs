@@ -68,7 +68,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.StatusLocalName = status.LocalName;
                 }
                 entityPM.StatusCode = entityPOCO.StatusCode;
+                if (entityPM.StatusCode == "D" || entityPM.StatusCode == "E")
+                {
+                    entityPM.CanRecalculate = true;
+                }
             }
+           
             text = "TaxReportDataMapping.CustomPOCOToPM(*7*): " + entityPM.Id + " PM.StatusCode : " + entityPM.StatusCode + ",  POCO.StatusCode : " + entityPOCO.StatusCode;
             ULog(text, stopLogAt);
 
