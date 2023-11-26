@@ -374,6 +374,19 @@
                                                 </log-cell-template>
                                             </ng-template>
                                         </log-column>
+                                        <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'JournalReconcile.F.JournalNumber' | TextCodeTranslationPipe" [width]="'100'" [binding]="'JournalNumber'">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                        <div [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            <a style="cursor:pointer" (click)="OpenJournal(item.OriginalJournalId)" href="javascript:;">
+                                                                {{item.JournalNumber}}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
 
 
 
@@ -421,7 +434,19 @@
                                                 </log-cell-template>
                                             </ng-template>
                                         </log-column>
-
+                                        <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'JournalExternalReconcile.F.JournalNumber' | TextCodeTranslationPipe" [width]="'100'" [binding]="'JournalNumber'">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                        <div [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            <a style="cursor:pointer" (click)="OpenJournal(item.OriginalJournalId)" href="javascript:;">
+                                                                {{item.JournalNumber}}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
 
 
                                     </logitude-edit-grid>

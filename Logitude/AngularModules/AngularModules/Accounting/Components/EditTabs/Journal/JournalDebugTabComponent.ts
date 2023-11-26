@@ -212,13 +212,23 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
                 });
             this.LedgerTransactiongetGetRows();
             this.InterestTransactionGetRows()
-            //this.JournalAdditionalDataGetRows();
+            //this.JournalAdditionalDataGetRows();            
             this.JournalReconciles.InsertCollection(this.EntityPM.JournalReconciles);
             this.JournalExternalReconciles.InsertCollection(this.EntityPM.JournalExternalReconciles);
         }
 
     }
-
+    OpenJournal(id: string) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
 
     ngOnInit() {
         this.CurrentSession.LostFocusEvent.subscribe((res) => {
