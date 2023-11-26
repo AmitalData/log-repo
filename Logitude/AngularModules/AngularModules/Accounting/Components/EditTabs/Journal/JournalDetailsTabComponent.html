@@ -89,30 +89,95 @@
     font-size: 11px;
     color: #4F4F4F;
   }
+
+  .add-line{
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 5px;
+  }
+
+  .add-btn{
+    display: table-cell;
+  }
+
+  .last-col{
+    vertical-align: bottom;
+    text-align: right;
+    padding-bottom: 6px;
+  }
+
+  .number-input-wrapper{
+    width: 90px;
+    display: inline-block;
+  }
+
+  .add-line-wrapper{
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .top-table{
+    table-layout: fixed;
+    font-size: 16px;
+    text-align: right;
+  }
+
+  .blue{
+    font-size: 16px;
+    color: #1B90CB;
+  }
+
+  .permission{
+    display:inline-block;
+    margin-left:10px;
+  }
+
+  .permission-td{
+    padding-right: 18px;
+  }
 </style>
 
 
 <table>
-  <tr>
+<tr>
     <td>
-      <div class="TableHolder">
-        <table>
-          <tr class="TabTitleRow">
-            <td>
-              <table>
+        <div class="TableHolder">
+            <table>
                 <tr>
-                    <td style="width:120px">{{'Accounting.General.O.Details' | TextCodeTranslationPipe}}<div style="width: 60px; float: right;">
-                    </div></td>
                     <td>
-                        <div class="MediaFill">
-                            <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0" [ItemsSource]="EntityWarningsList" [HideHeader]="true"></WarningSummary>
-                        </div>
+                        <table class="top-table">
+                            <tr>
+                                <td class="blue">{{'Accounting.General.O.Details' | TextCodeTranslationPipe}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="permission-td">
+                                    <div>
+                                        <div class="permission">
+                                            {{'Journal.O.PermissionSetting' | TextCodeTranslationPipe}}
+                                        </div>
+                                        <div class="number-input-wrapper">
+                                            <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1"
+                                                [max]="maxSecurityLevel" [allowNull]="true"
+                                                [isDisabled]="!IsSecurityLevelOK || journalDisabled || !IsSecurityLevelVisible">
+                                            </NumberInput>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="MediaFill">
+                                        <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0" [ItemsSource]="EntityWarningsList" [HideHeader]="true"></WarningSummary>
+                                    </div>
 
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
-            </table>
-            </td>
-          </tr>
 
           <!-- header -->
           <tr style="height: 140px;">
@@ -120,7 +185,7 @@
               <div [style.opacity]="Opacity" [style.pointer-events]="PointerEvents">
                 <table>
                     <tr class="FormFieldRow">
-                        <td style="width: 400px;">
+                        <td style="width: 330px;">
                             <table>
                                 <!-- Date -->
                                 <tr class="FormFieldRow">
@@ -182,18 +247,14 @@
 
                             </table>
                         </td>
-                        <td style="width: 200px;">
-                            <div></div>
-                        </td>
-                        <td>
+                        <td *ngIf="(IsSecurityLevelOK==null || IsSecurityLevelOK) && EntityPM.StatusCode!= '2'" style="width: 220px; margin-right: 10px; padding-right: 20px;">
                             <table>
-                                <!-- References -->
                                 <tr>
-                                    <td style="width:200px;">
-                                        <div *ngIf="!Approved" style="width:200px">
+                                    <td>
+                                        <div *ngIf="!Approved">
                                             <table>
                                                 <tr class="FormFieldRow">
-                                                    <td style="width: 200px">
+                                                    <td>
                                                         <LogTextBox [ObjectFieldName]="'Reference1'" [InputType]="'ntext'" [DataContext]="DataContext"
                                                                     [Placeholder]="txt_Reference+ ' 1'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                     </td>
@@ -222,16 +283,12 @@
                                                     </td>
                                                 </tr>
                                             </table>
-
                                         </div>
                                     </td>
-
                                 </tr>
-
-
                                 <!-- Notes -->
                                 <tr class="FormFieldRow">
-                                    <td style="width: 200px;">
+                                    <td>
                                         <LogTextBox [ObjectFieldName]="'Notes'" [InputType]="'ntext'" [DataContext]="DataContext"
                                                     [Placeholder]="'Accounting.General.O.Notes' | TextCodeTranslationPipe" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                     </td>
@@ -247,34 +304,15 @@
 
                             </table>
                         </td>
-                        <td style="width: 200px;">
-                            <div></div>
+                        <td class="last-col">
+                            <div>
+                                <div class="add-line-wrapper">
+                                    <div class="add-line">{{'JournalLine.O.AddLine' | TextCodeTranslationPipe}}</div>
+                                    <IconButton [Name]="'Add'" [disabled]="journalDisabled" (click)="AddLine()" class="add-btn"></IconButton>
+                                </div>
+                            </div>
                         </td>
-                        <td *ngIf="IsSecurityLevelVisible" style="width: 210px">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-
-                  
-                            </table>
-                        </td>
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
+                  </tr>
                   <tr>
                     <td>
                       <div></div>
@@ -288,38 +326,6 @@
 
           <!--<tr style="height: 20px;"><td><div></div></td></tr>-->
           <!-- Journal Rows -->
-          <tr style="height: 20px;">
-            <td style="padding: 4px;">
-                <table>
-                    <tr>
-                        <!-- SecurityLevel -->
-
-                        <td>
-                            <div style="float: right; padding: 4px; width: 1400px;">
-                            </div>
-                        </td>
-                        <td>
-                            <div style="width:120px">
-                                <LogLabel [ObjectFieldName]="'SecurityLevel'" [ObjectTableName]="ObjectTableName"
-                                          [DataContext]="DataContext"></LogLabel>
-                               </div>
-                        </td>
-
-                        <td style="top:10px;">
-                            <div style="width:90px">
-                                <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1" [max]="maxSecurityLevel" [allowNull]="true" [isDisabled]="!IsSecurityLevelOK || journalDisabled || !IsSecurityLevelVisible"></NumberInput>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <IconButton [Name]="'Add'" [disabled]="journalDisabled" (click)="AddLine()" [style.float]="isRTL ? 'right' : 'left'"></IconButton>
-                            </div>
-                        </td>
-                       
-                    </tr>
-              </table>
-            </td>
-          </tr>
 
           <tr>
             <!--<td colspan="2">

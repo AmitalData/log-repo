@@ -39,7 +39,7 @@
   ParentTableName="Journal"
   LocalDefaultText="&quot;שורת פקודה&quot;"
   DefaultText="&quot;Journal Line&quot;"
-  Code="&quot;a386&quot;"
+  Code="&quot;ef37&quot;"
   Name="&quot;JournalLine Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -3546,6 +3546,12 @@
       Code="&quot;JournalLine.O.CorrectDigit&quot;"
       DefaultText="&quot;Check digit is incorrect ,the correct digit is &quot;"
       LocalDefaultText="&quot; ספרת הביקורת שגויה , הספרה הנכונה היא &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;JournalLine.O.AddLine&quot;"
+      DefaultText="&quot;Add Line&quot;"
+      LocalDefaultText="&quot;הוספת שורה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
