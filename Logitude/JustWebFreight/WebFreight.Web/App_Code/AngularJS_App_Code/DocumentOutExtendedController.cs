@@ -334,12 +334,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     this.CreatePdfDoc(documentsFiling, invocie);
                     documentHelper.StartSignPDFInvoice(invocie, invocie.Tenant, repository, contactEmail,  accountingSettings);
                 }
-
-
             }
-
-            }
-
         }
         private void CreatePdfDoc(DocumentsFiling documentsFiling, ARInvoice invocie)
         {
