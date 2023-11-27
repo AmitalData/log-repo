@@ -550,14 +550,17 @@ export class ARInvoiceMenuButtonsHandler {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
                     if (this.isPrintRequested) {
-                        var isShowPrintWindow:boolean = this.menuButtonClicked.EventCode == "PrintInvoice";
+                        var isShowPrintWindow:Boolean = this.menuButtonClicked.EventCode == "PrintInvoice";
                         this.InitializePrinting(true,isShowPrintWindow);
                     }
                     else {
                         if (this.addDocumentFilling)
                             this.InitializePrinting(false,false);
                     }
-                    
+                    else {
+                        if (this.addDocumentFilling)
+                            this.InitializePrinting(false);
+                    }
                     if (this.isRunningBatchTaskExecution) {
 
                         this.isRunningBatchTaskExecution = false;
