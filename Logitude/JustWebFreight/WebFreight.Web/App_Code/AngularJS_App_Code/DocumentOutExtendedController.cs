@@ -38,8 +38,6 @@ using WebFreight.Web.Security;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityPOCOs;
 using System.IdentityModel.Metadata;
 using Logitude.BL.DataContracts;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -49,6 +47,8 @@ using Logitude.AmitalMessaging.Infrastructure.Transmission;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Accounting.Def.EntityPMs;
 using System.Linq.Dynamic.Core;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
