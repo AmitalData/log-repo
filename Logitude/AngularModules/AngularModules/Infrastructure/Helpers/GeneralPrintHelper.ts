@@ -69,7 +69,8 @@ export class GeneralPrintHelper {
         return SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ARP")[0];
     }
 
-    ShowPrintControl(documentTypeTemplate: string = null,StatusCode:string = null,ApprovedDate:Date = null, showController: boolean = true,ShowPrintWindow:Boolean = true) {
+    ShowPrintControl(documentTypeTemplate: string = null,StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true, showController: boolean = true) {
+
         if (this.IsStartPrint) return;
         let apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.GetAll = true;
@@ -83,7 +84,7 @@ export class GeneralPrintHelper {
                 if (this.documentTypeList) {
                     if (this.documentTypeList.DocumentTypeDefaultReportTemplateId) {
 
-                        this.GetDocumentOut(documentTypeTemplate, StatusCode, ApprovedDate, showController,ShowPrintWindow);
+                            this.GetDocumentOut(documentTypeTemplate,StatusCode,ApprovedDate,ShowPrintWindow, showController);
 
 
                     }
@@ -106,7 +107,7 @@ export class GeneralPrintHelper {
     }
 
 
-    GetDocumentOut(documentTypeTemplate: string = null, StatusCode: string = null, ApprovedDate: Date = null, showController: boolean = true,ShowPrintWindow:Boolean = true) {
+    GetDocumentOut(documentTypeTemplate:string = null,StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true, showController: boolean = true) {
         
         var signHSM=!showController
 
@@ -129,7 +130,7 @@ export class GeneralPrintHelper {
                                 this.documentOutPM = myResult;
 
 
-                                this.LoadDocumentTypePm(StatusCode, ApprovedDate, showController,ShowPrintWindow);
+                                    this.LoadDocumentTypePm(StatusCode,ApprovedDate,ShowPrintWindow,showController);
 
                             }
                         }
@@ -143,7 +144,7 @@ export class GeneralPrintHelper {
                 }
                 else {
 
-                    this.LoadDocumentTypePm(StatusCode, ApprovedDate, showController,ShowPrintWindow);
+                        this.LoadDocumentTypePm(StatusCode,ApprovedDate,ShowPrintWindow,showController);
 
                 }
             }
@@ -157,8 +158,8 @@ export class GeneralPrintHelper {
     }
 
 
-    public LoadDocumentTypePm(StatusCode: string = null, ApprovedDate: Date = null, showController: boolean = true,ShowPrintWindow:Boolean = true) {
-        this.documentTypePMService.getSingleDocumentType(this.documentTypeList.Id, this.documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+    LoadDocumentTypePm(StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true, showController: boolean = true) {
+        this.documentTypePMService.getSingleDocumentType(this.documentTypeList.Id, this.documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -186,10 +187,8 @@ export class GeneralPrintHelper {
             }
         });
     }
-
-
-    LoadPrintControl(StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true) {
-
+ 
+    LoadPrintControl(StatusCode: string = null, ApprovedDate: Date = null,ShowPrintWindow:Boolean = true) {
 
         this.IsStartPrint = false;
         this.CurrentSession.StopBusyIndicator();

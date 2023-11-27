@@ -68,8 +68,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsUsingVirtuallization: boolean = false;
     public InvoicePartners: InvoicePartnerType[] = [];
 
-    public PartnerTypeComboBoxIsDisabled: boolean = true;
     public BillToFilter:ApiQueryFilters;
+    public PartnerTypeComboBoxIsDisabled: boolean = true;
     constructor(private entityArgs: EntityArgs, private cdRef: ChangeDetectorRef) {
 
         super();
@@ -596,13 +596,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.myRelativeRateDate = value;
         }
     }
-    get ExchangeRateDate() { return this.EntityPM.ExchangeRateDate; }
+    get ExchangeRateDate (){ return this.EntityPM.ExchangeRateDate; }
     set ExchangeRateDate(value: Date) {
         if (this.EntityPM.ExchangeRateDate != value) {
             this.EntityPM.ExchangeRateDate = value;
             this.ComputeRelativeRateDate();
         }
     }
+
 
     ComputeRelativeRateDate() {
         this.RelativeRateDate = DateTool.GetRelativeRateDate(this.InvoiceDate, this.ExchangeRateDate, "old");

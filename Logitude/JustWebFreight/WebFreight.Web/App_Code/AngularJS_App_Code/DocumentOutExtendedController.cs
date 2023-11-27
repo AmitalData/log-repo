@@ -335,6 +335,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     documentHelper.StartSignPDFInvoice(invocie, invocie.Tenant, repository, contactEmail,  accountingSettings);
                 }
 
+
+            }
+
             }
 
         }

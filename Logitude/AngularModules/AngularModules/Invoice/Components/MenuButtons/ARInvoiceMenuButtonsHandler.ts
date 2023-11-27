@@ -24,7 +24,6 @@ import { DocumentsFilingExtendedPMService } from '../../../Common/Services/Exten
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { ConsilidationInvoiceDomainService } from '../../Services/ConsilidationInvoiceDomainService';
 import { ShipmentDomainService } from '../../../Shipment/Services/ShipmentDomainService';
-
 import { escapeLeadingUnderscores } from 'typescript';
 
 export class ARInvoiceMenuButtonsHandler {
@@ -35,7 +34,6 @@ export class ARInvoiceMenuButtonsHandler {
 
     private IsConfirmationMessageForCriedtNoteVisible:boolean=false;
     private menuButtonClicked: MenuButtonPM;
-
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
 
     //private RelativeRateDate: String; 
@@ -558,6 +556,10 @@ export class ARInvoiceMenuButtonsHandler {
                     else {
                         if (this.addDocumentFilling)
                             this.InitializePrinting(false,false);
+                    }
+                    else {
+                        if (this.addDocumentFilling)
+                            this.InitializePrinting(false);
                     }
                     if (this.isRunningBatchTaskExecution) {
 
@@ -1392,8 +1394,7 @@ export class ARInvoiceMenuButtonsHandler {
         }
     }
 
-    InitializePrinting(showController: boolean = true,ShowPrintWindow:Boolean = true) {
-        
+    InitializePrinting(ShowPrintWindow:Boolean = true,showController: boolean = true) {      
         this.addDocumentFilling=false
 
         var myEntityId: string = null;
@@ -1419,7 +1420,7 @@ export class ARInvoiceMenuButtonsHandler {
             myDocumentTypeCode = "999C";
             myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
 
-            this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference, StatusCode, ApprovedDate, showController,ShowPrintWindow);
+            this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode,ApprovedDate,ShowPrintWindow, showController);
 
         }
         else if (this.EntityPM.IsGeneralInvoice) {
@@ -1433,13 +1434,12 @@ export class ARInvoiceMenuButtonsHandler {
 
             if (SessionLocator.TenantPM.AccountingActivated == true) {
 
-                this.PrintFullAccountingInvoice(showController,ShowPrintWindow);
+                this.PrintFullAccountingInvoice(ShowPrintWindow,showController);
 
             }
             else {
-
-
-                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference, StatusCode, ApprovedDate, showController,ShowPrintWindow);
+               
+                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode,ApprovedDate,ShowPrintWindow,showController);
 
 
             }
@@ -1455,7 +1455,7 @@ export class ARInvoiceMenuButtonsHandler {
                 myObjectTableName = "Master";
                 myDocumentTypeCode = "999M";
 
-                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference, StatusCode, ApprovedDate, showController,ShowPrintWindow);
+                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode,ApprovedDate,ShowPrintWindow,showController);
 
             }
 
@@ -1463,7 +1463,7 @@ export class ARInvoiceMenuButtonsHandler {
                 myObjectTableName = "Shipment";
                 myDocumentTypeCode = "999CI";
 
-                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference, StatusCode, ApprovedDate, showController,ShowPrintWindow);
+                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode,ApprovedDate,ShowPrintWindow,showController);
 
             }
 
@@ -1481,7 +1481,7 @@ export class ARInvoiceMenuButtonsHandler {
                         myDocumentTypeCode = "999S";
 
 
-                        this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference, StatusCode, ApprovedDate, showController,ShowPrintWindow);
+                        this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference,StatusCode,ApprovedDate,ShowPrintWindow,showController);
 
                     }
                 });
@@ -1489,15 +1489,14 @@ export class ARInvoiceMenuButtonsHandler {
         }
     }
 
-    StartPrinting(myEntityId: string, myChildEntityId: string, myObjectTableName: string, mychildObjectTableId: string, myDocumentTypeCode: string, myReference: string, StatusCode: string, ApprovedDate: Date = null, showController: boolean = true,ShowPrintWindow:Boolean = true) {
-
+    StartPrinting(myEntityId: string, myChildEntityId: string, myObjectTableName: string, mychildObjectTableId: string, myDocumentTypeCode: string, myReference: string,StatusCode:string,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true, showController: boolean = true) {
         
         var myPrintHelper = new GeneralPrintHelper(myObjectTableName, myDocumentTypeCode, myEntityId, myChildEntityId, myReference, mychildObjectTableId);
         if (myPrintHelper.IsLoadPrintControl) {
             ServiceLocator.SendTotangoUserActivity("ARInvoice", "PrintInvoice");
 
 
-            myPrintHelper.ShowPrintControl(this.EntityPM.DocumentTemplateId, StatusCode, ApprovedDate, showController,ShowPrintWindow);
+            myPrintHelper.ShowPrintControl(this.EntityPM.DocumentTemplateId,StatusCode,ApprovedDate,ShowPrintWindow,showController);
 
 
 
@@ -1523,7 +1522,7 @@ export class ARInvoiceMenuButtonsHandler {
 
     }
 
-    private PrintFullAccountingInvoice(showController: boolean = true,ShowPrintWindow:Boolean = true) {
+    private PrintFullAccountingInvoice(ShowPrintWindow:Boolean = true,showController: boolean = true) {
 
         var StatusCode: string = null;
         var ApprovedDate: Date = null;
@@ -1543,7 +1542,7 @@ export class ARInvoiceMenuButtonsHandler {
         }
         else {
 
-            this.StartPrinting(this.EntityPM.Id, null, "ARInvoice", null, "999G", !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber, StatusCode, ApprovedDate, showController,ShowPrintWindow);
+            this.StartPrinting(this.EntityPM.Id, null, "ARInvoice", null, "999G", !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber,StatusCode,ApprovedDate,ShowPrintWindow,showController);
 
         }
     }

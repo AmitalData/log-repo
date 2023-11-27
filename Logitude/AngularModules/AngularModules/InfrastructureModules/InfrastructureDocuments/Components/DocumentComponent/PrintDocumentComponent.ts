@@ -109,6 +109,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         
         var entityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         var IsFromInterestBatchInvoice = false;
+
         this.Signed=entityPM?.IsSigned!=null && entityPM?.IsSigned!=2?true:false;
         if( entityPM.IsFromInterestBatchInvoice) {
             IsFromInterestBatchInvoice = true;
