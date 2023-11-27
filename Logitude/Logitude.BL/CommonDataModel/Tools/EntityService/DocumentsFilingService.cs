@@ -491,9 +491,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 			    		LogitudeSettings.HandleLogMe("Error in ICreateUD2LTService JustDoIt: " + ex.Message, true, "CreateUD2LTService.Error", DateTime.Now);
 			    	}
 			    }
-				await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for 1 second
+				await Task.Delay(TimeSpan.FromSeconds(3)); // Delay for 1 second
 
-			}).ContinueWith(async task1 =>
+			}).ContinueWith(task1 =>
 			{
 				ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
 
