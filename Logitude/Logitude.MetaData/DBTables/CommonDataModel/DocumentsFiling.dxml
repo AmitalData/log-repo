@@ -213,6 +213,13 @@
       Nullable="true" />
   </Column>
   <Column
+  Name="ComputedCustomerDocumentId"
+  Type="varchar"
+  Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="CustomerTenantNumber"
     Type="int">
     <Constraints
@@ -396,11 +403,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="DocumentId"
-    ReferencedTable="Documents"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ChildObjectTableId"
     ReferencedTable="ObjectTables"
