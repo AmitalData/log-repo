@@ -491,7 +491,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 			    		LogitudeSettings.HandleLogMe("Error in ICreateUD2LTService JustDoIt: " + ex.Message, true, "CreateUD2LTService.Error", DateTime.Now);
 			    	}
 			    }
+				LogitudeSettings.HandleLogMe("TOOK 5: ", true, "123", DateTime.Now);
 				await Task.Delay(TimeSpan.FromSeconds(3)); // Delay for 1 second
+				LogitudeSettings.HandleLogMe("TOOK 6: ", true, "123", DateTime.Now);
 
 			}).ContinueWith(task1 =>
 			{
