@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankDepositUpdateClass
    {  		
-		public const string HashString = "45f97969c1b51cab69faaf80bda93ff1";
+		public const string HashString = "8f3babdd7033a37c41e1ec1361a96901";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2218,7 +2218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query TodayDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_1.Id, NameTextCodeCode = BankDepositTextCode_1.Code, ObjectTableName = "BankDeposit", Code = "TodayDeposits",  QueryGroupCode = "BNKD", IndexOrder = 1, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_1.Id,FeatureUniqeCode= BankDepositFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query TodayDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_1.Id, NameTextCodeCode = BankDepositTextCode_1.Code, ObjectTableName = "BankDeposit", Code = "TodayDeposits",  QueryGroupCode = "BNKD", IndexOrder = 1, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_1.Id,FeatureUniqeCode= BankDepositFeature_1.FeatureUniqeCode, DefaultSortName = "DepositNumber", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn TodayDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankDeposit.DepositNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
@@ -2239,7 +2239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query cashDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_2.Id, NameTextCodeCode = BankDepositTextCode_2.Code, ObjectTableName = "BankDeposit", Code = "cashDeposits",  QueryGroupCode = "BNKD", IndexOrder = 2, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_2.Id,FeatureUniqeCode= BankDepositFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query cashDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_2.Id, NameTextCodeCode = BankDepositTextCode_2.Code, ObjectTableName = "BankDeposit", Code = "cashDeposits",  QueryGroupCode = "BNKD", IndexOrder = 2, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_2.Id,FeatureUniqeCode= BankDepositFeature_2.FeatureUniqeCode, DefaultSortName = "DepositNumber", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn cashDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankDeposit.DepositNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
@@ -2260,7 +2260,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query chequeDepositQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_3.Id, NameTextCodeCode = BankDepositTextCode_3.Code, ObjectTableName = "BankDeposit", Code = "chequeDeposit",  QueryGroupCode = "BNKD", IndexOrder = 3, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_3.Id,FeatureUniqeCode= BankDepositFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query chequeDepositQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_3.Id, NameTextCodeCode = BankDepositTextCode_3.Code, ObjectTableName = "BankDeposit", Code = "chequeDeposit",  QueryGroupCode = "BNKD", IndexOrder = 3, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_3.Id,FeatureUniqeCode= BankDepositFeature_3.FeatureUniqeCode, DefaultSortName = "DepositNumber", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn chequeDepositQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankDeposit.DepositNumber" , ColumnWidth = 130 }, addedQueryColumns);
 

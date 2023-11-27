@@ -110,7 +110,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.DepositNumber);
+                                query2 = query2.OrderByDescending(d => d.DepositNumber);
                                 break;
                             }
                     }
@@ -119,7 +119,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.DepositNumber);
+                query2 = query2.OrderByDescending(d => d.DepositNumber);
             }
 			if(!queryOperations.GetAll)
 			{
