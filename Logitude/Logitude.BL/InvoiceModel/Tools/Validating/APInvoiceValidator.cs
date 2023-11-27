@@ -144,7 +144,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             ValidateOnVoid(entityPM);
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
-            ValidateFullAccounting(entityPM);
+            ValidateFullAccounting(entityPM, isNew);
             ValidateExternalAPI(entityPM, commonContext);
             ValidateUnUpdateFields(entityPM, entityPOCO, isNew);
         }
@@ -725,7 +725,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
         }
 
-        public static void ValidateFullAccounting(APInvoicePM invoicePM)//int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
+        public static void ValidateFullAccounting(APInvoicePM invoicePM,bool inNew)//int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
         {
             Tenant tenantPOCO = GetTenant(invoicePM.Tenant);
 
@@ -733,7 +733,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 string errors = "";
                 ValidateInvoiceGLaccount(invoicePM, ref errors, invoicePM.Tenant);
-                ValidateAccountingPeriod(invoicePM, ref errors, invoicePM.Tenant);
+                if(inNew)
+                     ValidateAccountingPeriod(invoicePM, ref errors, invoicePM.Tenant);
                 ThrowErrors(errors);
             }
         }
