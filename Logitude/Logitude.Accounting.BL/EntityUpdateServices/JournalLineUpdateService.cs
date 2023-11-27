@@ -72,7 +72,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 string accountId = journalLine.ActionCode == "1" ? journalLine.CreditAccountId : journalLine.ActionCode == "2" ? journalLine.DebitAccountId : null;
                 if(accountId != null)
                 {
-                    GLAccountQueryService glAccountQueryService = new GLAccountQueryService((MainContext as IAccountingContext)); 
+                    GLAccountQueryService glAccountQueryService = new GLAccountQueryService(journalLine.Tenant); 
                     GLAccountPM glAccount = glAccountQueryService.GetSingle(accountId, false, false);
 
                     // 3. כאשר נוצרת תנועה בזכות מתוך שורת פקודת יומן בזכות  לכרטיס ספק
