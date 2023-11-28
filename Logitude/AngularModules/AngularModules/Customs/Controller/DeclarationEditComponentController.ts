@@ -108,7 +108,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 return;
             }
             //if (!(this._CurrentEntity.IsConvertedDeclaration || this._CurrentEntity.IsConnectedToUnifreight)) {        
-                if (!(this._CurrentEntity.IsConnectedToUnifreight)) {
+                if ((!(this._CurrentEntity.IsConnectedToUnifreight))&& this._CurrentEntity.Direction != "E" ) {
                     this._ControllerOn = false;
                     resolve(this._ControllerOn);
                     return;
