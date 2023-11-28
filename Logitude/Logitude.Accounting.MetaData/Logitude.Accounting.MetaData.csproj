@@ -77,6 +77,7 @@
     <Content Include="DBScripts\20220912_0000_AddInterestsForCancelledARPayments.axml" />
     <Content Include="DBScripts\20220721_164759_ARInvoiceOppositeJournalCreditLinesNewLogic.axml" />
     <Content Include="DBScripts\202207041224_ARInvoiceOppositeJournalCreditLines.axml" />
+    <None Include="DBOthers\Views\AllARPaymentChequesViews.dxml" />
     <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
     <None Include="DBScripts\202308211244_UpdateInterestReportSearchFields.sxml" />
     <None Include="DBScripts\202308141215_UpdateInterestReportSearchFields.sxml" />
