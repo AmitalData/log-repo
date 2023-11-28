@@ -374,7 +374,7 @@ export class SendDeclarationService implements OnDestroy {
                 var errorsList = response.Result.RequiredFields;
                 var warningList = responseWarning?.Result?.RequiredFields;
                 var headerAlertRequier=this.EntityPM.Direction=='I'?"Customs.General.O.RequiredFields":"Customs.General.O.RequiredFieldsOrAlert"
-                if (errorsList.length == 0 || this.EntityPM.IsAmendment) {
+                if (errorsList.length == 0) {
                     if (AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) || true) { //|| !ScriptableGatewayUtil.AmitalBrowserInUse) { i put true temporarly--MM
                         if (warningList.length > 0) {
                             this.ValidationWarning = this.GetWarningList(warningList);
