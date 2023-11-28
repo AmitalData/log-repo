@@ -248,7 +248,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
             );
         //let unifreightEntity: string = this._CurrentEntity.Direction == "E" ? "BFIFILE" : "CFIFILEM";
         AmitalGatewayUtil.Instance.DeclarationMessaging
-            .RaiseBFIFILMLockReturnBFIFILMAlreadyLock(
+            .RaiseBFIFILELockReturnBFIFILEAlreadyLock(
                 this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id,
                 //this.GetType().Name
                 "DeclarationEditComponentController-BFIFILM",
@@ -325,11 +325,11 @@ export class DeclarationEditComponentController implements IEditComponentControl
             else{
                 if (!AppTool.IsNullOrEmpty(onCallBack)) {
                     setTimeout(() => {
-                        AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
+                        AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILE(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
     
                     }, 300);
                 } else {
-                      AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
+                      AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILE(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
                 }
 
             }
