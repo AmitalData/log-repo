@@ -1007,9 +1007,9 @@ export class AmitalGatewayUtil {
         public static get ResponseCFIFILMAlreadyLockMessgae() { return "Response.CFIFILMAlreadyLockMessgae"; }
         public static get RaiseInstructionReturnCanIContinueMessage() { return "RaiseInstructionReturnCanIContinueMessage"; }
         public static get RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage() { return "RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage"; }
-        public static get RaiseBFIFILMLockReturnBFIFILMAlreadyLockMessage() { return "RaiseBFIFILMLockReturnBFIFILMAlreadyLockMessage"; }
+        public static get RaiseBFIFILELockReturnBFIFILEAlreadyLockMessage() { return "RaiseBFIFILELockReturnBFIFILEAlreadyLockMessage"; }
         public static get RaiseUnlockCFIFILEMMessage() { return "RaiseUnlockCFIFILEMMessage"; }
-        public static get RaiseUnlockBFIFILEMMessage() { return "RaiseUnlockBFIFILEMMessage"; }
+        public static get RaiseUnlockBFIFILEMessage() { return "RaiseUnlockBFIFILEMessage"; }
         public static get PrintStimulReturnCanIContinue() { return "Response.PrintStimulReturnCanIContinue"; }
         public static get RaisePrintStimulReturnCanIContinueMessage() { return "RaisePrintStimulReturnCanIContinueMessage"; }  //Yuval Chalup 26.07.2015 TASK-14849
         public static get ResponseInstructionCancel() { return "Response.InstructionCancel"; } //Yuval Chalup 11.10.2015 AMI-54798
@@ -1110,7 +1110,7 @@ export class AmitalGatewayUtil {
                 unifreightMessageM,
                 "DeclarationEditControlViewModelController.OnFirstTimeSingleDataLoaded.RaiseCheckCFIFILMLockReturnIsCFIFILMLock");
         }
-        public static RaiseBFIFILMLockReturnBFIFILMAlreadyLock
+        public static RaiseBFIFILELockReturnBFIFILEAlreadyLock
         (UnifreightEntityNumber: string,
             LogitudeEntityNumber: string, ViewModelName: string, UnifreightEntity: string) {
 
@@ -1120,11 +1120,11 @@ export class AmitalGatewayUtil {
         unifreightMessageM.Requset.push(["ExpectedCallBack", AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseCFIFILMAlreadyLockKey]);
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-            "ScriptableGatewayUtil.RaiseBFIFILMLockReturnBFIFILMAlreadyLock",
+            "ScriptableGatewayUtil.RaiseBFIFILELockReturnBFIFILEAlreadyLock",
             "BFIHMAIN.LogitudeTask",
-            AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseBFIFILMLockReturnBFIFILMAlreadyLockMessage,
+            AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseBFIFILELockReturnBFIFILEAlreadyLockMessage,
             unifreightMessageM,
-            "DeclarationEditControlViewModelController.OnFirstTimeSingleDataLoaded.RaiseCheckBFIFILEMLockReturnIsBFIFILEMLock");
+            "DeclarationEditControlViewModelController.OnFirstTimeSingleDataLoaded.RaiseCheckBFIFILELockReturnIsBFIFILELock");
     }
 
         public static RaiseUnlockCFIFILEM(UnifreightEntityNumber, LogitudeEntityNumber,
@@ -1141,7 +1141,7 @@ export class AmitalGatewayUtil {
                 unifreightMessageM,
                 "DeclarationEditControlViewModelController.OnFirstTimeSingleDataLoaded.RaiseCheckCFIFILMLockReturnIsCFIFILMLock");
         }
-        public static RaiseUnlockBFIFILEM(UnifreightEntityNumber, LogitudeEntityNumber,
+        public static RaiseUnlockBFIFILE(UnifreightEntityNumber, LogitudeEntityNumber,
             HaveSaved: boolean) {
 
 
@@ -1149,11 +1149,11 @@ export class AmitalGatewayUtil {
             unifreightMessageM.Requset.push(["HaveSaved", HaveSaved.toString()]);
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-                "ScriptableGatewayUtil.RaiseUnlockBFIFILEM",
+                "ScriptableGatewayUtil.RaiseUnlockBFIFILE",
                 "BFIHMAIN.LogitudeTask",
-                AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILEMMessage,
+                AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILEMessage,
                 unifreightMessageM,
-                "DeclarationEditControlViewModelController.OnFirstTimeSingleDataLoaded.RaiseCheckBFIFILEMLockReturnIsBFIFILEMLock");
+                "DeclarationEditControlViewModelController.OnFirstTimeSingleDataLoaded.RaiseCheckBFIFILELockReturnIsBFIFILELock");
         }
         //<--- Yuval Chalup 26.07.2015 TASK-14849
         public static RaisePrintStimulReturnCanIContinue(
