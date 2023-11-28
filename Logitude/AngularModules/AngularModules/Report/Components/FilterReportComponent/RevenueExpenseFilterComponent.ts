@@ -1,7 +1,7 @@
 
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ReportsPreviewComponent } from '../../Components/ReportsPreviewComponent';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
 import { ReportFliter } from '../../Components/Filters/ReportFliter';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
@@ -15,6 +15,7 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { ChartOfAccountsTypeListService } from 'Accounting/Services/StandardLists/ChartOfAccountsTypeListService';
 import { ChartOfAccountListService } from 'Accounting/Services/StandardLists/ChartOfAccountListService';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { ComboBoxWithInCheckBox } from 'Controls/ComboBoxWithInCheckBox';
 
 
 
@@ -32,6 +33,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     chartOfAccountsTypeListService: ChartOfAccountsTypeListService = new ChartOfAccountsTypeListService();
     chartOfAccountListService: ChartOfAccountListService = new ChartOfAccountListService();
     entityResourceService: EntityResourceService = new EntityResourceService();
+    @ViewChild("comboBoxWithCheckBoxChartOfAccountsComboBoxValue") comboBoxWithCheckBox: ComboBoxWithInCheckBox;
 
     GLAccountHtmlinputId: string;
     ChartofaccountHtmlinputId: string;
@@ -182,8 +184,10 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
             this.idFilter = null;
             this.getChartOfAccounts();
         }
-    }
+        this.resetCheckBoxTitle();
 
+    }
+    
     private chartOfAccountsComboBoxValue: string;
     public get ChartOfAccountsComboBoxValue(): string {
         return this.chartOfAccountsComboBoxValue;
@@ -202,6 +206,11 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         });
     }
 
+    resetCheckBoxTitle() {
+        if(this.selectedChartOfAccounts.length > 0){
+            this.comboBoxWithCheckBox.TotalPickedItems = " ";
+        }
+    }
     GetDropDownItemsData() {
 
         this.getChartOfAccounts();
@@ -242,6 +251,8 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked == true);
         this.idFilter = this.selectedChartOfAccountsTypes.length == 1 ? this.selectedChartOfAccountsTypes[0].Code : null;
         this.getChartOfAccounts();
+        
+        this.resetCheckBoxTitle();
     }
 
     private idFilter: string = null;
@@ -342,7 +353,6 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         }
     }
     RunReport() {
-        debugger
         this.ValidationErrorsList = this.ValidateFilters();
         if (this.ValidationErrorsList.length == 0) {
 
@@ -397,12 +407,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
 
             this.ReportsPreview.CleanPartnersObslist();
 
-
-
-            debugger
             this.ReportsPreview.GenerateReport(this.reportFliter, true);
-
-
         }
 
     }

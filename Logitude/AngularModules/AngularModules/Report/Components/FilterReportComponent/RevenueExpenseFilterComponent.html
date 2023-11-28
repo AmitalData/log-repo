@@ -139,7 +139,7 @@
                             <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccounts" 
                                 [SelectedItem]="ChartOfAccountsComboBoxValue" (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
                                 [SelectionType]="showLocal?'קבוצה':'Product'"
-                                (SelectedItemChanged)="ChartOfAccountsComboBoxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
+                                (SelectedItemChanged)="ChartOfAccountsComboBoxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'" #comboBoxWithCheckBoxChartOfAccountsComboBoxValue></ComboBoxWithInCheckBox>
                         </div>
                     </div>
                   </td>
