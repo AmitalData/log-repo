@@ -180,4 +180,4 @@ export class TenantManagementList {
 		ServiceAgreementURL: string;
 		EcommerceSupportEmail: string;
 	
-}
+}
