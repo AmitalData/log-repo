@@ -1007,7 +1007,9 @@ export class AmitalGatewayUtil {
         public static get ResponseCFIFILMAlreadyLockMessgae() { return "Response.CFIFILMAlreadyLockMessgae"; }
         public static get RaiseInstructionReturnCanIContinueMessage() { return "RaiseInstructionReturnCanIContinueMessage"; }
         public static get RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage() { return "RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage"; }
+        public static get RaiseBFIFILMLockReturnBFIFILMAlreadyLockMessage() { return "RaiseBFIFILMLockReturnBFIFILMAlreadyLockMessage"; }
         public static get RaiseUnlockCFIFILEMMessage() { return "RaiseUnlockCFIFILEMMessage"; }
+        public static get RaiseUnlockBFIFILEMMessage() { return "RaiseUnlockBFIFILEMMessage"; }
         public static get PrintStimulReturnCanIContinue() { return "Response.PrintStimulReturnCanIContinue"; }
         public static get RaisePrintStimulReturnCanIContinueMessage() { return "RaisePrintStimulReturnCanIContinueMessage"; }  //Yuval Chalup 26.07.2015 TASK-14849
         public static get ResponseInstructionCancel() { return "Response.InstructionCancel"; } //Yuval Chalup 11.10.2015 AMI-54798
@@ -1108,7 +1110,22 @@ export class AmitalGatewayUtil {
                 unifreightMessageM,
                 "DeclarationEditControlViewModelController.OnFirstTimeSingleDataLoaded.RaiseCheckCFIFILMLockReturnIsCFIFILMLock");
         }
+        public static RaiseBFIFILMLockReturnBFIFILMAlreadyLock
+        (UnifreightEntityNumber: string,
+            LogitudeEntityNumber: string, ViewModelName: string, UnifreightEntity: string) {
 
+        var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName
+            , UnifreightEntity);
+        unifreightMessageM.LogitudeCommandId
+        unifreightMessageM.Requset.push(["ExpectedCallBack", AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseCFIFILMAlreadyLockKey]);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "ScriptableGatewayUtil.RaiseBFIFILMLockReturnBFIFILMAlreadyLock",
+            "BFIHMAIN.LogitudeTask",
+            AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseBFIFILMLockReturnBFIFILMAlreadyLockMessage,
+            unifreightMessageM,
+            "DeclarationEditControlViewModelController.OnFirstTimeSingleDataLoaded.RaiseCheckBFIFILEMLockReturnIsBFIFILEMLock");
+    }
 
         public static RaiseUnlockCFIFILEM(UnifreightEntityNumber, LogitudeEntityNumber,
             HaveSaved: boolean) {
@@ -1124,7 +1141,20 @@ export class AmitalGatewayUtil {
                 unifreightMessageM,
                 "DeclarationEditControlViewModelController.OnFirstTimeSingleDataLoaded.RaiseCheckCFIFILMLockReturnIsCFIFILMLock");
         }
+        public static RaiseUnlockBFIFILEM(UnifreightEntityNumber, LogitudeEntityNumber,
+            HaveSaved: boolean) {
 
+
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, "", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
+            unifreightMessageM.Requset.push(["HaveSaved", HaveSaved.toString()]);
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.RaiseUnlockBFIFILEM",
+                "BFIHMAIN.LogitudeTask",
+                AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILEMMessage,
+                unifreightMessageM,
+                "DeclarationEditControlViewModelController.OnFirstTimeSingleDataLoaded.RaiseCheckBFIFILEMLockReturnIsBFIFILEMLock");
+        }
         //<--- Yuval Chalup 26.07.2015 TASK-14849
         public static RaisePrintStimulReturnCanIContinue(
             UnifreightEntityNumber: string,

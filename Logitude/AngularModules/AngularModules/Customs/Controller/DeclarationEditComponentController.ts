@@ -113,10 +113,10 @@ export class DeclarationEditComponentController implements IEditComponentControl
                     resolve(this._ControllerOn);
                     return;
                 }
-           
+           if(this._CurrentEntity.Direction != "E")
             this.RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve)
-
-
+           else
+            this.RaiseBFIFILMLockReturnBFIFILMAlreadyLock(resolve)
         });
     }
     private RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve) {
@@ -187,6 +187,75 @@ export class DeclarationEditComponentController implements IEditComponentControl
 
             );
     }
+
+    private RaiseBFIFILMLockReturnBFIFILMAlreadyLock(resolve) {
+        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+            .subscribe(
+
+                (myUnifreightMessageM: UnifreightMessageM) => {
+                    if (
+                        myUnifreightMessageM.LogitudeViewModel == "DeclarationEditComponentController-BFIFILM" &&
+                        (myUnifreightMessageM.LogitudeEntity == "Customs.Declaration" || myUnifreightMessageM.LogitudeEntity == "Declaration") &&
+                        myUnifreightMessageM.LogitudeEntityNumber == this._CurrentEntity.Id) {
+                        sub.unsubscribe();
+
+                        //let ResponseInstructionCancel = false;
+                        //let listRes = myUnifreightMessageM.Response.filter(itm =>
+                        //    itm[0] == AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseInstructionCancel);
+                        //if (listRes.length > -1 && !AppTool.IsNullOrEmpty(listRes[0])) {
+                        //    if (!AppTool.IsNullOrEmpty(listRes[0][1])) {
+                        //        ResponseInstructionCancel = (listRes[0][1].toLowerCase() == 'true');
+                        //    }
+                        //}
+                        let ResponseInstructionCancel = this.GetBoolean(myUnifreightMessageM, AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseInstructionCancel)
+                        if (ResponseInstructionCancel) {
+                            this.ToCancell = true;
+                            resolve(this._ControllerOn);
+                            //this.CurrentSession.RealCloseCurrentEditComponent();
+                            return;
+                        }
+                        this._InDisplayModeCFIFILMLockMMessage = "";
+                        let IsAlreadyLock = this.GetBoolean(myUnifreightMessageM, AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseCFIFILMAlreadyLockKey)
+                        if (IsAlreadyLock) {
+                            this._InDisplayModeCFIFILMLockMMessage = "ההצהרה נעולה";
+                            this._UnifaceExclusiveAlreadyLocked = this.InDisplayMode = true;
+                            let responseCFIFILMAlreadyLockMessgae = UnifreightMessageM.GetStringValue(myUnifreightMessageM, AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseCFIFILMAlreadyLockMessgae);
+                            if (!AppTool.IsNullOrEmpty(responseCFIFILMAlreadyLockMessgae)) {
+                                this._InDisplayModeCFIFILMLockMMessage = responseCFIFILMAlreadyLockMessgae;
+                            }
+
+                            resolve(this._ControllerOn);
+                            //**********to lock menu buttons and save button --- mohammad bug 30289***************************//
+                            var args: MenuButtonsStateChangedEventArgs = new MenuButtonsStateChangedEventArgs();
+                            args.MenuButtonsStates = {};
+                            args.MenuButtonsStates["SendDeclaration"] = true;
+                            MenuButtonsEvents.MenuButtonsStateChanged.emit(args);
+
+                            if (this.CurrentSession.CurrentEditComponent) {
+                                this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                            }
+                            //**************************************************************************//
+
+                            //this.CurrentSession.RealCloseCurrentEditComponent();
+                            return;
+                        }
+
+                        this._UnifaceExclusiveAlreadyLocked = this.InDisplayMode = false;
+                        this._InDisplayModeCFIFILMLockMMessage = "";
+                        resolve(this._ControllerOn);
+                    }
+                }
+            );
+        //let unifreightEntity: string = this._CurrentEntity.Direction == "E" ? "BFIFILE" : "CFIFILEM";
+        AmitalGatewayUtil.Instance.DeclarationMessaging
+            .RaiseBFIFILMLockReturnBFIFILMAlreadyLock(
+                this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id,
+                //this.GetType().Name
+                "DeclarationEditComponentController-BFIFILM",
+                AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(this._CurrentEntity.Direction)
+
+            );
+    }
     ForceCheckIfLockWhileReload() {
         this._UnifaceExclusiveAlreadyLocked = true;
     }
@@ -200,8 +269,12 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 resolve();
                 return;
             }
-            setTimeout(() => { this.RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve); }, 500)
-
+         
+            if(this._CurrentEntity.Direction != "E")
+              setTimeout(() => { this.RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve); }, 500)
+            else
+              setTimeout(() => { this.RaiseBFIFILMLockReturnBFIFILMAlreadyLock(resolve); }, 500)
+          
         });
     }
     OnCloseEditControl(onCallBack?: () => void) {
@@ -238,14 +311,26 @@ export class DeclarationEditComponentController implements IEditComponentControl
                         }
                     }
                 );
-
-            if (!AppTool.IsNullOrEmpty(onCallBack)) {
-                setTimeout(() => {
+           if(this._CurrentEntity.Direction!="E"){
+                if (!AppTool.IsNullOrEmpty(onCallBack)) {
+                    setTimeout(() => {
+                        AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockCFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
+    
+                    }, 300);
+                } else {
                     AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockCFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
-
-                }, 300);
-            } else {
-                AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockCFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
+    
+                }
+            }
+            else{
+                if (!AppTool.IsNullOrEmpty(onCallBack)) {
+                    setTimeout(() => {
+                        AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
+    
+                    }, 300);
+                } else {
+                      AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockBFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
+                }
 
             }
 
