@@ -809,7 +809,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'ForeignAmount'
         });
-        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmount", 'String', TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmount") + ' (' + this.openAmountCurrency + ')'));
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmount", 'Decimal', TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmount") + ' (' + this.openAmountCurrency + ')'));
 
         this.TransactionsColumns.push({
             FieldName: 'Reference1',
@@ -1245,7 +1245,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Amount'
         });
-        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Amount",'String',TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount")));
+        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Amount",'Decimal',TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount")));
 
         this.ExtPageColumns.push({
             FieldName: 'Reference',
