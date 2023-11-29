@@ -9,6 +9,9 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Runtime.Remoting.Contexts;
+using Simplog.Data.InfrastructureModel;
+using System.Transactions;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -31,7 +34,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
 
 
-        public IQueryable<CustomPickListPM> GetCustomPickListPMsByTenant(int tenant)
+        public IQueryable<CustomPickListPM> GetCustomPickListPMsByTenant1(int tenant)
         {
 
             IQueryable<CustomPickListPM> customPickLists = from a in repository.context.CustomPickLists
@@ -48,12 +51,42 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return customPickLists;
         }
+		public  IQueryable<CustomPickListPM> GetCustomPickListPMsByTenant(int tenant)
+		{
+			IQueryable<CustomPickListPM> customPickLists;
+			string listName = "CustomPickLists" + tenant;
+
+			if (CacheManager.CacheWrapper.Get(listName) == null)
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{					
+				       customPickLists = from a in repository.context.CustomPickLists
+															   where a.Tenant == tenant
+															   select new CustomPickListPM()
+															   {
+																   Id = a.Id,
+																   Code = a.Code,
+																   Tenant = a.Tenant,
+																   Value = a.Value,
+																   IsMultipleChoice = a.IsMultipleChoice,
+
+															   };
+
+			    }
+				
+				CacheManager.CacheWrapper.Insert(listName, customPickLists, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+			}
+			else
+			{
+				customPickLists = (IQueryable<CustomPickListPM>)CacheManager.CacheWrapper.Get(listName);
+			}
+			return customPickLists;
+		}
 
 
 
 
-
-        public IQueryable<CustomPickListPM> GetCustomPickListPMsByCode(int tenant, string code)
+		public IQueryable<CustomPickListPM> GetCustomPickListPMsByCode(int tenant, string code)
         {
 
             IQueryable<CustomPickListPM> customPickLists = from a in repository.context.CustomPickLists
