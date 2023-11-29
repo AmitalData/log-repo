@@ -5,6 +5,8 @@ using System.Web;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.InfrastructureModel.Mapping;
+using System.Transactions;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -27,12 +29,33 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             webFreightContext = WebFreightContext.GetContext(tenant);
         }
 
-        public IQueryable<CustomPickList> GetCustomPickLists(int tenant)
+        public IQueryable<CustomPickList> GetCustomPickLists1(int tenant)
         {
-            return context.CustomPickLists.Where(t=>t.Tenant == tenant);
-        }
+			return context.CustomPickLists.Where(t=>t.Tenant == tenant);
+		}
 
-        public CustomPickList GetSingleCustomPickList(string id,int tenant)
+		public IQueryable<CustomPickList> GetCustomPickLists(int tenant)
+		{
+			IQueryable<CustomPickList> customPickLists;
+			string listName = "CustomPickList" + tenant;
+
+			if (CacheManager.CacheWrapper.Get(listName) == null)
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{
+					customPickLists = context.CustomPickLists.Where(t => t.Tenant == tenant);
+				}
+
+				CacheManager.CacheWrapper.Insert(listName, customPickLists, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+			}
+			else
+			{
+				customPickLists = (IQueryable<CustomPickList>)CacheManager.CacheWrapper.Get(listName);
+			}
+			return customPickLists;
+		}
+
+		public CustomPickList GetSingleCustomPickList(string id,int tenant)
         {
             return (from a in context.CustomPickLists  where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();   
         }
