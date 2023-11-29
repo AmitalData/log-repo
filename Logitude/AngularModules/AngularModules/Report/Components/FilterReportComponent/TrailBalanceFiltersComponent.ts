@@ -119,7 +119,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
             .subscribe((arg: any) =>
             {
                 this.chartOfAccounts = arg.Result;                
-                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`}}).sort((a, b) => a.Code.localeCompare(b.Code));
+                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`}}).sort((a, b) => a.Code - b.Code);
             });
     }
     private getChartOfAccountsTypes()
