@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "18aed57f48ca1bb6cb51694e1d2b23d6";
+		public const string HashString = "cb02192cffee94deba742c5486f760f8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -21830,11 +21830,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateClassificationCode", DefaultText = "Update Classification Code",LocalDefaultText = @"עדכון פרט מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiClassificationCode", DefaultText = "This screen allows to multi update Classification Code",LocalDefaultText = @"מסך זה מאפשר לעדכן את פרט המכס באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד התהליך ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiClassificationCode", DefaultText = "This screen allows to multi update Classification Code",LocalDefaultText = @"מסך זה מאפשר לעדכן את פרט המכס באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בפרט המכס ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoClassificationCode", DefaultText = "Update Items with no Classification Code",LocalDefaultText = @"עדכן פריטים ללא פרט מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateProtocolCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateProtocolCode", DefaultText = "Update Protocol Code",LocalDefaultText = @"עדכון קוד פרוטוקול", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiProtocolCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiProtocolCode", DefaultText = "This screen allows to multi update Protocol Code",LocalDefaultText = @"מסך זה מאפשר לעדכן את קוד הפרוטוקול באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד פרוטוקול ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoProtocolCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoProtocolCode", DefaultText = "Update Items with no Protocol Code",LocalDefaultText = @"עדכן פריטים ללא קוד פרוטוקול", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateTradeAgreement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateTradeAgreement", DefaultText = "Update Trade Agreement",LocalDefaultText = @"עדכון קוד הסכם", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiTradeAgreement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiTradeAgreement", DefaultText = "This screen allows to multi update Trade Agreement",LocalDefaultText = @"מסך זה מאפשר לעדכן את קוד ההסכם באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד הסכם ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoTradeAgreement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoTradeAgreement", DefaultText = "Update Items with no Trade Agreement",LocalDefaultText = @"עדכן פריטים ללא קוד הסכם", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOMultiQantityType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiQantityType", DefaultText = "This screen allows to multi update Qantity Type",LocalDefaultText = @"מסך זה מאפשר לעדכן את סוג היחידה באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בסוג יחידה ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoQuantityType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoQuantityType", DefaultText = "Update Items with no Quantity Type",LocalDefaultText = @"עדכן פריטים ללא סוג יחידה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);   
 	    
 }
 
