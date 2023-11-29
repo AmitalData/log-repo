@@ -38,7 +38,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<ChartOfAccountsType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ChartOfAccountsType> iQueryable)
         {
-            if (queryOperations != null && queryOperations.QueryFilterItems.Where(item => item.FieldName == "isRevenueExpenseFilter") != null)
+            if (queryOperations != null && queryOperations.QueryFilterItems.FirstOrDefault(item => item.FieldName == "isRevenueExpenseFilter") != null)
             {
                 iQueryable = iQueryable.Where(d => d.Code == "1" || d.Code == "2");
             }
