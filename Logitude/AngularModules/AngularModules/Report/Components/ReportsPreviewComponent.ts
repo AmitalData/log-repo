@@ -310,14 +310,15 @@ export class ReportsPreviewComponent implements AfterViewInit {
         }
     }
 
-    ValiditySelectedTemplate() {
+    ValiditySelectedTemplate():boolean {
 
         if (AppTool.IsNullOrEmpty(this.ReportFliter.DefaultTemplateId)) {
             var messageWindow = new MessageWindow();
             messageWindow.Show("Please select a template");
             this.IsUsedReportsRunUsingWR = false;
-            return;
+            return false;
         }
+        return true;
     }
 
 
@@ -332,8 +333,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.IsRunReportSucceeded = false;
                 this.IsRunReportFailed = false;
 
-                this.ValiditySelectedTemplate();
-
+                var isValid = this.ValiditySelectedTemplate();
+                if (!isValid) {
+                    this.StopBusyIndicator();
+                    return;
+                }
                 this.StartBusyIndicator("Generating...");
 
                 if (this.ReportsRunUsingWR && !this.IsHaveRunReportViewWorkerRoleToggleFeature) {
@@ -360,6 +364,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
             }
 
             else {
+                var isValid = this.ValiditySelectedTemplate();
+                if (!isValid) {
+                    this.StopBusyIndicator();
+                    return;
+                }
                 this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true);
             }
         }
