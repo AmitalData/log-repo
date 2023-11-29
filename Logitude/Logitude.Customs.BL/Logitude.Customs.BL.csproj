@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmitalContextUtil.cs" />
+    <Compile Include="BL\AutoPaymentService.cs" />
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
     <Compile Include="BL\CreateContainerization.cs" />
     <Compile Include="BL\CancelOldCommunicationLogs.cs" />

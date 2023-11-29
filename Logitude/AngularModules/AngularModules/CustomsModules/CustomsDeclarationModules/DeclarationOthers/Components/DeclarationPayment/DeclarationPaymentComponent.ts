@@ -105,7 +105,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     _2LogBankList: boolean = false;
     IsDisplayMessage: boolean;
     DisplayAutomaticPayment: boolean = true;
-    DisplayIsRepeatPayment: boolean = false;
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
     _CourierWorksheet: DeclarationCourierStatusList;
     _TestCase: TestCase;
@@ -144,18 +143,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     }
 
-    OnCheckedIsRepeatPayment(event) {
-
-        
-        if (event.target.checked) {
-
-            this.SendButtonEnabled = true;
-            this.DisplayIsRepeatPayment = false;
-        }
-        
-        
-        this.IsRepeatPayment = Boolean(event.target.checked);
-    }
+   
 
 
     OnCheckedAutomaticPayment(event) {
@@ -357,11 +345,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.paymentPM.IsProcessA = newValue;
     }
 
-    public get IsRepeatPayment() { return this.paymentPM.IsRepeatPayment == null ? false : this.paymentPM.IsRepeatPayment; }
-    public set IsRepeatPayment(newValue: boolean) {
-        this.paymentPM.IsRepeatPayment = newValue;
-    }
-
+ 
     public get SignatoryIdentification() { return this.paymentPM.SignatoryIdentification; }
     public set SignatoryIdentification(newValue: string) {
         this.paymentPM.SignatoryIdentification = newValue;
@@ -644,7 +628,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         // create new entity if there is no payment
         if (AppTool.IsNullOrEmpty(this.paymentPM)) {
-            this.paymentPM = new DeclarationPaymentPM();
+            this.paymentPM = new DeclarationPaymentPM(null);
         }
 
         this.IsDisplayOnlyAutomaticPayment = (this.DeclarationPM.AvailabilityDate != null && this.DeclarationPM.AvailabilityDate.toString() != '0001-01-01T00:00:00' && !this.paymentPM.AutomaticPayment);
@@ -1212,14 +1196,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         }
 
-        if (!AppTool.IsNullOrEmpty(entityPM.PaymentDate) && !AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods.find(d => d.MethodTypeCode == "2"))) {
-            if (!this.IsRepeatPayment)
-            this.DisplayIsRepeatPayment = true;
-
-        }
-
         this.SetScreenFieldsEditability();
-    }
+    } 
 
     public DrawMe: boolean = true;
     public ShowStorageStatusMessage: boolean;

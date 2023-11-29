@@ -607,6 +607,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
+        public string LoginUserId = "";
 		public bool IsSendFromAutoClosing = false;
 		public bool IgnoreSendFailure = false;
         private bool _AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady;
@@ -782,7 +783,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     FutureSendDateTime = date,
                     RequestVIAChangeDue = date.HasValue ? string.Concat("נרשמה בקשה מתוזמנת לשעה ", date.GetValueOrDefault().ToShortTimeString()) : "",
                     ParentId = entityPM.ParentRequestId,
-					IsFromAutoClosing = IsSendFromAutoClosing
+					IsFromAutoClosing = IsSendFromAutoClosing,
+                   
+                    
 
 				};
                 if (String.IsNullOrWhiteSpace(declarationId) && !String.IsNullOrWhiteSpace(entityPM.ClaimId))
@@ -801,7 +804,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var document = documentrepository.GetSingleDocument(entityPM.Tenant, entityPM.DocumentsFilingId);
                 var mySBQMessage = new SBQMessageService();
 
-                requestParams.LoggingUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant); ;
+                requestParams.LoggingUserId =!string.IsNullOrEmpty(LoginUserId)? LoginUserId: AuthenticationUtil.ResolveUserId(entityPM.Tenant); ;
                 requestParams.RequestName = "CustomsDocument Request";
                 requestParams.ResponseName = "שליחת צרופה " + entityPM.ExternalAttachmentId;
                 requestParams.InterfaceTypeCode = "2715";

@@ -193,7 +193,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 						var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(requestParams.Tenant);
 						var declarationPM = declarationQueryService.GetSingle(requestParams.DeclaretionId, false, false);
 						ICustomsAutoDecClosing CustomsAutoDecClosing = ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new ParameterOverride("", 1)) as ICustomsAutoDecClosing;
-						CustomsAutoDecClosing.Send8235(declarationPM);
+						CustomsAutoDecClosing.Send8235(declarationPM, requestParams.LoggingUserId);
 					}
                 }
             }
