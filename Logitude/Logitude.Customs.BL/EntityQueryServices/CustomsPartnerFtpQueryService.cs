@@ -44,5 +44,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pms;
 
         }
+        public List<CustomsPartnerFtpPM> GetListBy(int tenant, string InterfaceName, string PartnerCode, string TypeCode)
+        {
+            var q = this.repository.GetAll(tenant).Where(r => r.InterfaceName.Contains(InterfaceName) && r.PartnerCode == PartnerCode && r.TypeCode == TypeCode);
+            var list = q.ToList();
+            if (list == null)
+            {
+                return new List<CustomsPartnerFtpPM>();
+            }
+            List<CustomsPartnerFtpPM> listPM=new List<CustomsPartnerFtpPM>();
+            foreach(var p in list)
+            {
+                listPM.Add(this.GetEntityPM(p));
+            }
+            return listPM;
+
+        }
     }
 }
