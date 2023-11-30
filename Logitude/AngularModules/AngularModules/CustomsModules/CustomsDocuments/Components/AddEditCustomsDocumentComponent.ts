@@ -874,18 +874,16 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     connectTo: number;
 
     ConnectedItemSelectionChanged(index: number) {
+        this.connectTo = index;
         if (index != 0) {
             var selectInvoicesOnly = true;
             if (index == 2) {
                 selectInvoicesOnly = false;
             }
-
-            this.connectTo = index;
             this.ShowSelectionComponent(selectInvoicesOnly);
-
         }
 
-
+        
     }
 
     //if(index != 0) {
