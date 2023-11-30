@@ -10,9 +10,6 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
-  SupportSubEntity="false"
-  ApplyGenericCustomFields="false"
-  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -43,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סטטוס פקודה&quot;"
   DefaultText="&quot;Journal Status Type&quot;"
-  Code="&quot;d210&quot;"
+  Code="&quot;79d9&quot;"
   Name="&quot;JournalStatusType Query Group&quot;"
   CloseTableCode="&quot;JournalStatusID&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -60,7 +57,6 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
-  TenantZeroData="false"
   Code1="&quot;5da0&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -522,12 +518,6 @@
       EnglishName="&quot;Cancelled&quot;"
       SearchFields="&quot;5,Cancelled,מבוטל&quot;"
       LocalName="&quot;מבוטל&quot;"
-      Inactive="false" />
-    <Record
-      JournalStatusID="&quot;6&quot;"
-      LocalName="&quot;בעיבוד&quot;"
-      SearchFields="&quot;6,in processing,בעיבוד&quot;"
-      EnglishName="&quot;In processing&quot;"
       Inactive="false" />
   </Records>
   <DataContracts>

@@ -71,7 +71,7 @@ export class JournalMenuButtonsHandler {
 
                         case "JournalSave": // save and close
                             {
-                                if (this.EntityPM.StatusCode == "6" || this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode ) {
+                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode ) {
                                     button.IsDisabled = true;
                                 }
 
@@ -82,7 +82,7 @@ export class JournalMenuButtonsHandler {
                             }
                         case "JournalApprove":
                             {
-                                if (this.EntityPM.StatusCode == "6" ||  this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == this.CancelledStatusCode  ) {
+                                if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == this.CancelledStatusCode  ) {
                                     button.IsDisabled = true;
                                 }
 
@@ -93,7 +93,7 @@ export class JournalMenuButtonsHandler {
                             }
                         case "JournalSaveAsDraft":
                             {
-                                if (this.EntityPM.StatusCode == "2" ||this.EntityPM.StatusCode == "6" ) {
+                                if (this.EntityPM.StatusCode == "2") {
                                     button.IsHidden = true;
                                 }
 
@@ -143,7 +143,7 @@ export class JournalMenuButtonsHandler {
                             }
                         case "CopyJournal":
                             {
-                                if ((this.EntityPM.StatusCode == "2" ||this.EntityPM.StatusCode == "6"  )&& this.EntityPM.AccountingEntityCode == "1") {
+                                if (this.EntityPM.StatusCode == "2"   && this.EntityPM.AccountingEntityCode == "1") {
                                     button.IsDisabled = false;
 
                                 }
@@ -217,7 +217,7 @@ export class JournalMenuButtonsHandler {
                 }
             case "JournalApprove":
                 {
-                    this.EntityPM.StatusCode = "6"; // Approved
+                    this.EntityPM.StatusCode = "2"; // Approved
                     this.EntityPM.JournalLines?.forEach(x => {
                         if (x.AccountingDate instanceof Date) {
                           x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000));
