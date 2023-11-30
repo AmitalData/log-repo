@@ -227,7 +227,7 @@ namespace Logitude.Accounting.Data.Repositories
                      where a.Tenant == tenant
                      //where a.QueueId == null
                      where !a.IsLedgerCreated//index 
-                     where (a.StatusCode == "6" || a.StatusCode == "3")
+                     where (a.StatusCode == "2" || a.StatusCode == "3")
                      //3 voided 
                      //2	Approved	מאושר	2,Approved,מאושר	0
                      //to be continue ... a new field have to create !!!

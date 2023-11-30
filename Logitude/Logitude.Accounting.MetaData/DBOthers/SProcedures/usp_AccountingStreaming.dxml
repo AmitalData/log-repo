@@ -77,7 +77,7 @@ print N'FETCH NEXT FROM Journal_cursor:' + @pJournalId
 
 print N'Check  Journal_cursor'
 	if (@QueueId is not null) RAISERROR (51000,-1,-1 , 'The journal already Streamed have QUEUEID !!');   
-	If (@StatusCode != '6') RAISERROR (52000,-1,-1 ,'The journal not in StatusCode 6 !! occure only OnApproveUpdating');   
+	If (@StatusCode != '2') RAISERROR (52000,-1,-1 ,'The journal not in StatusCode 2 !! occure only OnApproveUpdating');   
 	
 	
 	
