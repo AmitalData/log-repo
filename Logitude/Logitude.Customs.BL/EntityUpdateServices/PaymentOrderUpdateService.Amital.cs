@@ -49,7 +49,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             ICustomContext customContext = CustomContext.GetContext(dirtyEntityPM.Tenant);
             CustomsSettingQueryService settingService = new CustomsSettingQueryService(customContext);
-            bool isConnectedToUniFreight = settingService.GetSettingByTenantN(dirtyEntityPM.Tenant).IsConnectedToUniFreight;
+            bool isConnectedToUniFreight = settingService.GetSingleByTenant(dirtyEntityPM.Tenant).IsConnectedToUniFreight;
             this._DirtyEntityPM = dirtyEntityPM;
             this._LoggingUserId = AuthenticationUtil.ResolveUserId(dirtyEntityPM.Tenant);
             string loggingUserId = this._LoggingUserId;
