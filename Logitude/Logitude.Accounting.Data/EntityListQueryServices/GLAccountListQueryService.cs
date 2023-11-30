@@ -327,11 +327,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                    Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
 
-                                                   CreditUsed = (decimal)(CardsDatas.CreditLimit ?? 0)
-                                                  - (decimal)(MoreDatas.BalanceInLocalCurrency)
-                                                  - (decimal)(MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
-                                                  - (decimal)(CardsDatas.TotalOpenShipments ?? 0),
-
+                                                   CreditUsed =0.0,//libby to fix
+                             
                                                    InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
                                                    ((CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100),
 
