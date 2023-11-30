@@ -249,8 +249,17 @@ namespace Logitude.Customs.Data.Repsitories
                     select a.CourierHAWB).FirstOrDefault();
 
         }
+		public string GetIntegratorCodeById(string courierMasterID, int tenant)
+		{
+			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+			return (from a in context.CourierMasters
+					where a.Id == courierMasterID
+					where a.Tenant == tenant
+					select a.IntegratorCode).FirstOrDefault();
 
-        public Declaration GetAcceptDeclarationAmendmentByCustomsFile(string customFileNo, int tenant)
+		}
+
+		public Declaration GetAcceptDeclarationAmendmentByCustomsFile(string customFileNo, int tenant)
         {
 
             //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)

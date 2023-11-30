@@ -47,7 +47,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             
     private void UpdateUnifreight(PaymentOrderPM dirtyEntityPM)
         {
-            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyEntityPM.Tenant).IsConnectedToUniFreight;
+            ICustomContext customContext = CustomContext.GetContext(dirtyEntityPM.Tenant);
+            CustomsSettingQueryService settingService = new CustomsSettingQueryService(customContext);
+            bool isConnectedToUniFreight = settingService.GetSettingByTenantN(dirtyEntityPM.Tenant).IsConnectedToUniFreight;
             this._DirtyEntityPM = dirtyEntityPM;
             this._LoggingUserId = AuthenticationUtil.ResolveUserId(dirtyEntityPM.Tenant);
             string loggingUserId = this._LoggingUserId;
