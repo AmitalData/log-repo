@@ -31,23 +31,12 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             PNCFileArgs parameterArgs = serializer.Deserialize(stringReader) as PNCFileArgs;
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(parameterArgs.Tenant);
             TaxReportPM taxReportPM = taxReportQueryService.GetSingle(parameterArgs.ReportId, false, false);
-            if (parameterArgs.RecalculateData)
-            {
-
-            }
-            else
-            {
-                IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
-
-
-                TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
-
-                // Call the service
-                List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(taxReportPM, parameterArgs.Tenant);
-                TaxReportService.CalculateReportTotals(taxReportPM, lines);
-                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                taxReportUpdateService.Update(taxReportPM, true);
-            }
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
+            List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(taxReportPM, parameterArgs.Tenant,parameterArgs.RecalculateData);
+            TaxReportService.CalculateReportTotals(taxReportPM, lines);
+            taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+            taxReportUpdateService.Update(taxReportPM, true);
         }
 
 
