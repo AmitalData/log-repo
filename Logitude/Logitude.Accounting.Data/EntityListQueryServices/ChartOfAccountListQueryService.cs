@@ -47,10 +47,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             {
                 iQueryable = iQueryable.Where(item => IsRevenueExpenseFilter.FieldValue.ToString() == item.TypeCode);
             }
-            else
-            {
-                iQueryable = iQueryable.Where(item => item.TypeCode == "1" || item.TypeCode == "2");
-            }
             return iQueryable;
 		}
 
