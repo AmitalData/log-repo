@@ -34,7 +34,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
 
 
-        public IQueryable<CustomPickListPM> GetCustomPickListPMsByTenant1(int tenant)
+        public IQueryable<CustomPickListPM> GetCustomPickListPMsByTenant(int tenant)
         {
 
             IQueryable<CustomPickListPM> customPickLists = from a in repository.context.CustomPickLists
@@ -51,16 +51,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return customPickLists;
         }
-		public  IQueryable<CustomPickListPM> GetCustomPickListPMsByTenant(int tenant)
+		public  List<CustomPickListPM> GetCustomPickListPMsByTenantCash(int tenant)
 		{
-			IQueryable<CustomPickListPM> customPickLists;
+			List<CustomPickListPM> customPickLists;
 			string listName = "CustomPickLists" + tenant;
 
 			if (CacheManager.CacheWrapper.Get(listName) == null)
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{					
-				       customPickLists = from a in repository.context.CustomPickLists
+				       customPickLists = (from a in repository.context.CustomPickLists
 															   where a.Tenant == tenant
 															   select new CustomPickListPM()
 															   {
@@ -70,7 +70,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 																   Value = a.Value,
 																   IsMultipleChoice = a.IsMultipleChoice,
 
-															   };
+															   }).ToList();
 
 			    }
 				
@@ -78,7 +78,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 			}
 			else
 			{
-				customPickLists = (IQueryable<CustomPickListPM>)CacheManager.CacheWrapper.Get(listName);
+				customPickLists = (List<CustomPickListPM>)CacheManager.CacheWrapper.Get(listName);
 			}
 			return customPickLists;
 		}

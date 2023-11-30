@@ -29,31 +29,32 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             webFreightContext = WebFreightContext.GetContext(tenant);
         }
 
-        public IQueryable<CustomPickList> GetCustomPickLists1(int tenant)
+        public IQueryable<CustomPickList> GetCustomPickLists(int tenant)
         {
 			return context.CustomPickLists.Where(t=>t.Tenant == tenant);
 		}
 
-		public IQueryable<CustomPickList> GetCustomPickLists(int tenant)
+		public List<CustomPickList> GetCustomPickListsCash(int tenant)
 		{
-			IQueryable<CustomPickList> customPickLists;
+			List<CustomPickList> customPickLists;
 			string listName = "CustomPickList" + tenant;
 
 			if (CacheManager.CacheWrapper.Get(listName) == null)
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{
-					customPickLists = context.CustomPickLists.Where(t => t.Tenant == tenant);
+					customPickLists = context.CustomPickLists.Where(t => t.Tenant == tenant).ToList();
 				}
 
 				CacheManager.CacheWrapper.Insert(listName, customPickLists, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
 			}
 			else
 			{
-				customPickLists = (IQueryable<CustomPickList>)CacheManager.CacheWrapper.Get(listName);
+				customPickLists = (List<CustomPickList>)CacheManager.CacheWrapper.Get(listName);
 			}
 			return customPickLists;
 		}
+
 
 		public CustomPickList GetSingleCustomPickList(string id,int tenant)
         {
